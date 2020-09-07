@@ -104,6 +104,8 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01On
 
 In this document, a _partially-sampled random number_ (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see "Properties" later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
+PSRNs specified here store a fractional part with an arbitrary number of digits, and an optional integer part (floor of the number's absolute value) and an optional sign.  If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].
+
 This section specifies two kinds of PSRNs: uniform and exponential.
 
 <a id=Uniform_Partially_Sampled_Random_Numbers></a>
@@ -154,16 +156,42 @@ An algorithm that samples from a continuous distribution using PSRNs has the fol
 <a id=Comparisons></a>
 ### Comparisons
 
-Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using an algorithm similar to the following. The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
+Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.
+
+The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
 1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
-2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
+2. Return `true` if **a** is negative and **b** is not, or if floor(**a**) is less than floor(**b**), or `false` if floor(**a**) is greater than floor(**b**).
 3. Set _i_ to 0.
-4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next. For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)  Do the same for **b**.
-5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
-6. Add 1 to _i_ and go to step 4.
+4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
+5. If **a** is non-negative, return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
+6. If **a** is negative, return `false` if **a**'s fractional part is less than **b**'s, or `true` if **a**'s fractional part is greater than **b**'s.
+7. Add 1 to _i_ and go to step 4.
 
-**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
+**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
+
+The **RandLessReal** algorithm compares a PSRN **a** with a real number **b** and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
+
+1. If **a**'s integer part or sign is unsampled, or if **b** is 0 or less, return an error.
+2. Calculate floor(**b**), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to **b** minus _bi_.)
+3. Return `true` if floor(**a**) is less than _bi_, or `false` if floor(**a**) is greater than _bi_.
+4. Set _i_ to 0.
+5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
+6. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
+7. Let _ad_ be the digit at position _i_ of **a**'s fractional part.
+8. Return `true` if&mdash;
+    - _ad_ is less than _d_ and **a** is non-negative,
+    - _ad_ is greater than _d_ and **a** is negative,
+    - _**b** is not known to be rational_, **a** is negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is less than **b** almost surely), or
+    - _**b** is known to be rational_, **a** is negative, and _bf_ is 0 (indicating **a** is less than **b** almost surely).
+9. Return `false` if&mdash;
+    - _ad_ is less than _d_ and **a** is negative,
+    - _ad_ is greater than _d_ and **a** is non-negative,
+    - _**b** is not known to be rational_, **a** is non-negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is greater than **b** almost surely), or
+    - _**b** is known to be rational_, **a** is non-negative, and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
+10. Add 1 to _i_ and go to step 5.
+
+**URandLessReal** is a version of **RandLessReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
 <a id=Arithmetic></a>
 ### Arithmetic
@@ -190,12 +218,12 @@ Finally, arithmetic with partially-sampled numbers may be possible if the result
 
 There are two algorithms for sampling uniform partially-sampled random numbers given another number.
 
-The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**) almost surely.  This algorithm assumes **b**'s integer part was already sampled, and the algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromReal** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
+The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**) almost surely.  This algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromReal** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
 
-1. Create an empty uniform PSRN **a**.  Let &beta; be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).
-2. Set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is **b**'s integer part (e.g., `RNDINT(0, bi)`).  If **a**'s integer part is less than _bi_, return **a**.
+1. Create an empty uniform PSRN **a**.  Let &beta; be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).  If **b**'s integer part or sign is unsampled, or if it's less than 0, return an error.
+2. Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is floor(**b**) (e.g., `RNDINT(0, bi)`).  If floor(**a**) is less than _bi_, return **a**.
 3. We now sample **a**'s fractional part.  Set _i_ to 0.
-4. If **b**'s integer part is 0 and its fractional part begins with a sampled 0-digit, set _i_ to the number of sampled zeros at the beginning of **b**'s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append _i_ zeros to **a**'s fractional part.  (For example, if **b** is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin **b**'s fractional part, so _i_ is set to 3 and three zeros are appended to **a**'s fractional part.)
+4. If floor(**b**) is 0 and **b**'s fractional part begins with a sampled 0-digit, set _i_ to the number of sampled zeros at the beginning of **b**'s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append _i_ zeros to **a**'s fractional part.  (For example, if **b** is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin **b**'s fractional part, so _i_ is set to 3 and three zeros are appended to **a**'s fractional part.)
 5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
 6. If the digit at position _i_ of **b**'s fractional part is unsampled, sample the digit at that position according to the kind of PSRN **b** is. (For example, if **b** is a uniform PSRN and &beta; is 2, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
 7. If the digit at position _i_ of **a**'s fractional part is less than the corresponding digit for **b**, return **a**.
@@ -207,8 +235,8 @@ The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**
 1. If **b** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
 3. Calculate floor(**b**), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to **b** minus _bi_.)
-4. If _bi_ is equal to **b**, set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\) (e.g., `RNDINTEXC(0, bi)`), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
-5. Set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\] (e.g., `RNDINT(0, bi)`), then if **a**'s integer part is less than _bi_, return **a**.
+4. If _bi_ is equal to **b**, set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\) (e.g., `RNDINTEXC(0, bi)`), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
+5. Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\] (e.g., `RNDINT(0, bi)`), then if **a**'s integer part is less than _bi_, return **a**.
 6. We now sample **a**'s fractional part.  Set _i_ to 0.
 7. If _bi_ is 0 and not equal to **b**, then do the following in a loop:
     1. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (&beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary). (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
@@ -216,7 +244,7 @@ The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**
 8. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
 9. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
 10. Let _ad_ be the digit at position _i_ of **a**'s fractional part.  If _ad_ is less than _d_, return **a**.
-11. _If **b** is not known to be rational:_ If _ad_ is greater than _d_, or if all the digits after the one at position _i_ of **b**'s fractional part are zeros, then remove all digits from **a**'s fractional part, then go to step 6.
+11. _If **b** is not known to be rational:_ If _ad_ is greater than _d_, or if all the digits after the digit at position _i_ of **b**'s fractional part are zeros, then remove all digits from **a**'s fractional part, then go to step 6.
 12. _If **b** is known rational:_ If _ad_ is greater than _d_, or if _bf_ is 0, then remove all digits from **a**'s fractional part, then set _bf_ to **b** minus _bi_, then go to step 6.
 13. Add 1 to _i_ and go to step 8.
 
@@ -339,7 +367,7 @@ Note that a beta(1/_x_, 1) random number is the same as a uniform random number 
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution
 
-We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.
+We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the &lambda; parameter's numerator and denominator, respectively.  (Because exponential random numbers are always non-negative, the e-rand's sign is implicitly positive).
 
 To sample bit _k_ after the binary point of an exponential random number with rate &lambda; (where _k_ = 1 means the first digit after the point, _k_ = 2 means the second, etc.), call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _k_.
 
