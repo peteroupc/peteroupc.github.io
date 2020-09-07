@@ -256,7 +256,7 @@
 
 <ol>
 <li>Create an empty uniform PSRN <strong>a</strong>.  Let &beta; be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).</li>
-<li>Set <strong>a</strong>&#39;s integer part to a integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part.  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>Set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part.  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If <strong>b</strong>&#39;s integer part is 0 and its fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
 <li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer digits, sample digit <em>i</em> of <strong>a</strong> by setting the digit at position <em>i</em> to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
@@ -272,7 +272,7 @@
 <li>If <strong>b</strong> is 0 or less, return an error.</li>
 <li>Create an empty uniform PSRN <strong>a</strong>.</li>
 <li>Set <em>bi</em> to floor(<strong>b</strong>), then subtract <em>bi</em> from <strong>b</strong>.</li>
-<li>Set <strong>a</strong>&#39;s integer part to a integer chosen uniformly at random in [0, <em>bi</em>].  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>Set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>].  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>Multiply <strong>b</strong> by &beta; (where &beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then set <em>bi</em> to floor(<strong>b</strong>), then subtract <em>bi</em> from <strong>b</strong>.</li>
 <li>If <em>bi</em> is 0, append a 0-digit to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em>, then go to step 6.</li>
