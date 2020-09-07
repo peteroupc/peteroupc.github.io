@@ -53,13 +53,18 @@
 <li><a href="#Comparisons"><strong>Comparisons</strong></a></li>
 <li><a href="#Arithmetic"><strong>Arithmetic</strong></a></li>
 </ul></li>
+<li><a href="#Sampling_Uniform_and_Exponential_PSRNs"><strong>Sampling Uniform and Exponential PSRNs</strong></a>
+
+<ul>
+<li><a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a></li>
+<li><a href="#Sampling_E_rands"><strong>Sampling E-rands</strong></a></li>
+</ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a>
 
 <ul>
 <li><a href="#SampleGeometricBag"><strong>SampleGeometricBag</strong></a></li>
 <li><a href="#FillGeometricBag"><strong>FillGeometricBag</strong></a></li>
 <li><a href="#kthsmallest"><strong>kthsmallest</strong></a></li>
-<li><a href="#Sampling_E_rands"><strong>Sampling E-rands</strong></a></li>
 <li><a href="#Power_of_Uniform_Sub_Algorithm"><strong>Power-of-Uniform Sub-Algorithm</strong></a></li>
 </ul></li>
 <li><a href="#Algorithms_for_the_Beta_and_Exponential_Distributions"><strong>Algorithms for the Beta and Exponential Distributions</strong></a>
@@ -173,7 +178,7 @@
 <ul>
 <li>The beta and continuous Bernoulli distributions, as discussed later in this document.</li>
 <li>The standard normal distribution, as shown in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> by running Karney&#39;s Algorithm N and filling unsampled digits uniformly at random.</li>
-<li>For uniform distributions in [0, <em>n</em>) (not just [0, 1]), a partially-sampled version might be trivial by first ensuring that the first &quot;few&quot; digits are such that the resulting number will be less than <em>n</em>, via rejection sampling.</li>
+<li>Sampling uniform distributions in [0, <em>n</em>) (not just [0, 1]), is described later in &quot;<a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a>&quot;.)</li>
 </ul>
 
 <p>For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup><a href="#Note10"><strong>(10)</strong></a></sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution (see also (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>).</p>
@@ -190,7 +195,7 @@
 <li>The algorithm relies only on a source of random bits for randomness.</li>
 <li>The algorithm does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.</li>
 <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
-<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the  rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> suggests Wasserstein L<sub>&infin;</sub> distance as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
+<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the  rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> suggests Wasserstein L<sub>&infin;</sub> distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
@@ -229,11 +234,74 @@
 <p>Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.</p>
 
 <ul>
-<li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function, and the calculations can incur rounding errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
+<li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
 <li>For some distributions (including the uniform and exponential distributions), the digit probabilities don&#39;t depend on previous digits, only on the position of the digit.  In this case, however, there appear to be limits on how practical this approach is; see the <a href="#Setting_Digits_by_Digit_Probabilities"><strong>appendix</strong></a> for details.</li>
 </ul>
 
-<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known density function (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note15"><strong>(15)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that density function may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
+<p>Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known probability density function (PDF) (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note15"><strong>(15)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then <em>X</em><sup>3</sup> is distributed as <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
+
+<p><a id=Sampling_Uniform_and_Exponential_PSRNs></a></p>
+
+<h2>Sampling Uniform and Exponential PSRNs</h2>
+
+<p>&nbsp;</p>
+
+<p><a id=Sampling_Uniform_PSRNs></a></p>
+
+<h3>Sampling Uniform PSRNs</h3>
+
+<p>There are two algorithms for sampling uniform partially-sampled random numbers given another number.</p>
+
+<p>The <strong>RandUniform</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than another PSRN (<strong>b</strong>).  This algorithm assumes <strong>b</strong>&#39;s integer part was already sampled, and the algorithm samples digits of <strong>b</strong>&#39;s fractional part as necessary.  This algorithm should not be used if <strong>b</strong> is known to be an exact rational number, since this algorithm could overshoot the value <strong>b</strong> had (or appeared to have) at the beginning of the algorithm; instead, the <strong>RandUniformFromRational</strong> algorithm, given later, should be used.  (For example, if <strong>b</strong> is 3.425..., one possible result of this algorithm is <strong>a</strong> = 3.42574... and <strong>b</strong> = 3.42575... Note that in this example, 3.425... is not considered an exact number.)</p>
+
+<ol>
+<li>Create an empty uniform PSRN <strong>a</strong>.  Let &beta; be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).</li>
+<li>Set <strong>a</strong>&#39;s integer part to a integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part.  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>Set <em>i</em> to 0.</li>
+<li>If <strong>b</strong>&#39;s integer part is 0 and its fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer digits, sample digit <em>i</em> of <strong>a</strong> by setting the digit at position <em>i</em> to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>If <strong>b</strong>&#39;s fractional part has <em>i</em> or fewer digits, sample digit <em>i</em> of <strong>b</strong> according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and &beta; is 2, this can be done by generating <code>RNDINTEXC(2)</code>.)</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than the corresponding digit for <strong>b</strong>, return <strong>a</strong>.</li>
+<li>If that digit is greater, then remove all digits from <strong>a</strong>&#39;s integer and fractional parts, then go to step 2.</li>
+<li>Add 1 to <em>i</em> and go to step 5.</li>
+</ol>
+
+<p>The <strong>RandUniformFromRational</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than an exact rational number <strong>b</strong>.</p>
+
+<ol>
+<li>If <strong>b</strong> is 0 or less, return an error.</li>
+<li>Create an empty uniform PSRN <strong>a</strong>.</li>
+<li>Set <em>bi</em> to floor(<strong>b</strong>), then subtract <em>bi</em> from <strong>b</strong>.</li>
+<li>Set <strong>a</strong>&#39;s integer part to a integer chosen uniformly at random in [0, <em>bi</em>].  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>Set <em>i</em> to 0.</li>
+<li>Multiply <strong>b</strong> by &beta; (where &beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then set <em>bi</em> to floor(<strong>b</strong>), then subtract <em>bi</em> from <strong>b</strong>.</li>
+<li>If <em>bi</em> is 0, append a 0-digit to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em>, then go to step 6.</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer digits, sample digit <em>i</em> of <strong>a</strong> by setting the digit at position <em>i</em> to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>Multiply <strong>b</strong> by &beta;, then set <em>bi</em> to floor(<strong>b</strong>), then subtract <em>bi</em> from <strong>b</strong>.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>If that digit is greater than <em>bi</em>, or if <strong>b</strong> is 0, then remove all digits from <strong>a</strong>&#39;s integer and fractional parts, then go to step 2.</li>
+<li>Add 1 to <em>i</em> and go to step 8.</li>
+</ol>
+
+<p><a id=Sampling_E_rands></a></p>
+
+<h3>Sampling E-rands</h3>
+
+<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter &lambda; of the exponential distribution):</p>
+
+<ul>
+<li>While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.</li>
+<li>If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup><em>k</em></sup>)) is heads, the exponential random number is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
+</ul>
+
+<p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for &lambda; = 1.</p>
+
+<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued &lambda; parameters:</p>
+
+<ol>
+<li>One to simulate a probability of the form <code>exp(-x/y)</code> (here, the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
+<li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (here, the <strong>LogisticExp</strong> algorithm described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
+</ol>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -303,26 +371,6 @@
 <li>Take the <code>k</code>th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part <code>bitcount</code> many digits (similarly to <strong>FillGeometricBag</strong> above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn&#39;t use this alternative.)</li>
 </ol>
 
-<p><a id=Sampling_E_rands></a></p>
-
-<h3>Sampling E-rands</h3>
-
-<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter &lambda; of the exponential distribution):</p>
-
-<ul>
-<li>While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.</li>
-<li>If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup><em>k</em></sup>)) is heads, the exponential random number is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
-</ul>
-
-<p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for &lambda; = 1.</p>
-
-<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued &lambda; parameters:</p>
-
-<ol>
-<li>One to simulate a probability of the form <code>exp(-x/y)</code> (here, the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
-<li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (here, the <strong>LogisticExp</strong> algorithm described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
-</ol>
-
 <p><a id=Power_of_Uniform_Sub_Algorithm></a></p>
 
 <h3>Power-of-Uniform Sub-Algorithm</h3>
@@ -332,7 +380,7 @@
 <p>It makes use of a number of algorithms as follows:</p>
 
 <ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone density functions</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone PDFs</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, <em>U</em><sup><em>px</em>/<em>py</em></sup> is distributed as <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
 <li>It uses a number of Bernoulli factory algorithms, including <strong>SampleGeometricBag</strong> and some algorithms described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
 </ul>
 
@@ -693,10 +741,10 @@ def exprand(lam):
 
 <h3>Beta Sampler: Known Issues</h3>
 
-<p>In the beta sampler, the bigger <code>alpha</code> or <code>beta</code> is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because <code>max(u^(alpha-1)*(1-u)^(beta-1))</code>, the peak of the density, approaches 0 as the parameters get bigger.  One idea to solve this issue is to expand the density so that the acceptance rate increases.  The following was tried:</p>
+<p>In the beta sampler, the bigger <code>alpha</code> or <code>beta</code> is, the smaller the area of acceptance becomes (and the more likely random numbers get rejected by this method, raising its run-time).  This is because <code>max(u^(alpha-1)*(1-u)^(beta-1))</code>, the peak of the PDF, approaches 0 as the parameters get bigger.  One idea to solve this issue is to find an expanded version of the PDF so that the acceptance rate increases.  The following was tried:</p>
 
 <ul>
-<li>Estimate an upper bound for the peak of the density <code>peak</code>, given <code>alpha</code> and <code>beta</code>.</li>
+<li>Estimate an upper bound for the peak of the PDF <code>peak</code>, given <code>alpha</code> and <code>beta</code>.</li>
 <li>Calculate a largest factor <code>c</code> such that <code>peak * c = m &lt; 0.5</code>.</li>
 <li>Use Huber&#39;s <code>linear_lowprob</code> Bernoulli factory (implemented in <em>bernoulli.py</em>) (Huber 2016)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, taking the values found for <code>c</code> and <code>m</code>.  Testing shows that the choice of <code>m</code> is crucial for performance.</li>
 </ul>
@@ -995,7 +1043,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ol>
 <li>Create an &quot;empty&quot; uniform PSRN (or &quot;geometric bag&quot;).  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that geometric bag.</li>
-<li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the density function for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s density function is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given interval in [0, 1]&mdash;</p>
+<li><p>As the geometric bag builds up a uniform random number, accept the number with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the geometric bag. <em>f</em> is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s PDF is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given interval in [0, 1]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere,</li>
@@ -1109,7 +1157,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
-<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s density function.</p>
+<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
 
 <p>Although existing work shows lower bounds on the number of random bits an algorithm will need on average, most algorithms will generally not achieve these lower bounds in practice.</p>
 
@@ -1144,7 +1192,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><strong>FillGeometricBag</strong>&#39;s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than <code>p</code>. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>. (This complexity could be increased by 1 bit if <strong>FillGeometricBag</strong> is implemented with a rounding mechanism other than simple truncation.)</p>
 
-<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to [0, &gamma;]. (In this document, the geometric(<code>n</code>) distribution has the density function <code>pow(x, n) * (1 - x)</code>.)</p>
+<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to [0, &gamma;]. (In this document, the geometric(<code>n</code>) distribution has the PDF <code>pow(x, n) * (1 - x)</code>.)</p>
 
 <ul>
 <li>Optimal lower bound: Has a complicated formula for general &gamma;, but approaches <code>log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))</code> = 2.579730853... bits with increasing &gamma;.</li>
@@ -1287,7 +1335,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Additional Examples of Arbitrary-Precision Samplers</h3>
 
-<p>As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function: <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note16"><strong>(16)</strong></a></sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it&#39;s an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -1362,15 +1410,15 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note25"><strong>(25)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
 
-<p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>density function</em>, except if the sequence has the form&mdash;</p>
+<p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>PDF</em>, except if the sequence has the form&mdash;</p>
 
 <ul>
 <li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>),</li>
 </ul>
 
-<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous density function even if <em>z</em>(<em>j</em>) converges to 1.</p>
+<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
 
-<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this probability function (which is proportional to the density function) will often show whether the function is discontinuous:</p>
+<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this probability function (which is proportional to the PDF) will often show whether the function is discontinuous:</p>
 
 <ul>
 <li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>
@@ -1378,7 +1426,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>The relative probability for <em>x</em> is <em>t</em>(<em>x</em>) / (argmax<sub><em>z</em></sub> <em>t</em>(<em>z</em>)).</li>
 </ul>
 
-<p>It appears that the distribution&#39;s density function will be discontinuous unless&mdash;</p>
+<p>It appears that the distribution&#39;s PDF will be discontinuous unless&mdash;</p>
 
 <ul>
 <li>the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and</li>
