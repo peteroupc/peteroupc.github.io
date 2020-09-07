@@ -184,10 +184,10 @@ Finally, arithmetic with partially-sampled numbers may be possible if the result
 
 There are two algorithms for sampling uniform partially-sampled random numbers given another number.
 
-The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**).  This algorithm assumes **b**'s integer part was already sampled, and the algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be an exact rational number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromRational** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
+The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**) almost surely.  This algorithm assumes **b**'s integer part was already sampled, and the algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be an exact rational number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromRational** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
 
 1. Create an empty uniform PSRN **a**.  Let &beta; be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).
-2. Set **a**'s integer part to an integer chosen uniformly at random in [0, _bi_], where _bi_ is **b**'s integer part.  If **a**'s integer part is less than _bi_, return **a**.
+2. Set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is **b**'s integer part (e.g., `RNDINT(0, bi)`).  If **a**'s integer part is less than _bi_, return **a**.
 3. Set _i_ to 0.
 4. If **b**'s integer part is 0 and its fractional part begins with a sampled 0-digit, set _i_ to the number of sampled zeros at the beginning of **b**'s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append _i_ zeros to **a**'s fractional part.  (For example, if **b** is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin **b**'s fractional part, so _i_ is set to 3 and three zeros are appended to **a**'s fractional part.)
 5. If the digit at position _i_ of **a** is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
@@ -196,19 +196,21 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 8. If that digit is greater, then remove all digits from **a**'s integer and fractional parts, then go to step 2.
 8. Add 1 to _i_ and go to step 5.
 
-The **RandUniformFromRational** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than an exact rational number **b**.
+The **RandUniformFromRational** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than an exact rational number **b** almost surely.
 
 1. If **b** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
-3. Set _bi_ to floor(**b**), then subtract _bi_ from **b**.
-4. Set **a**'s integer part to an integer chosen uniformly at random in [0, _bi_].  If **a**'s integer part is less than _bi_, return **a**.
-5. Set _i_ to 0.
-6. Multiply **b** by &beta; (where &beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then set _bi_ to floor(**b**), then subtract _bi_ from **b**.
-7. If _bi_ is 0, append a 0-digit to **a**'s fractional part, then add 1 to _i_, then go to step 6.
+3. Set _bi_ to floor(**b**), and set _bf_ to **b** minus _bi_.
+4. If _bf_ is 0, set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\) (e.g., `RNDINTEXC(0, bi)`), then return **a**.
+5. Set **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\] (e.g., `RNDINT(0, bi)`), then if **a**'s integer part is less than _bi_, return **a**.
+6. Set _i_ to 0.
+7. If _bi_ is 0 and _bf_ is greater than 0, then do the following in a loop:
+    1. Multiply _bf_ by &beta; (where &beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then set _d_ to floor(_bf_), then subtract _d_ from _bf_.
+    2. If _d_ is 0, append a 0-digit to **a**'s fractional part, then add 1 to _i_.  Otherwise, break from this loop.
 8. If the digit at position _i_ of **a** is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
-9. Multiply **b** by &beta;, then set _bi_ to floor(**b**), then subtract _bi_ from **b**.
-10. If the digit at position _i_ of **a**'s fractional part is less than _bi_, return **a**.
-11. If that digit is greater than _bi_, or if **b** is 0, then remove all digits from **a**'s integer and fractional parts, then go to step 2.
+9. Multiply _bf_ by &beta;, then set _d_ to floor(_bf_), then subtract _d_ from _bf_.
+10. If the digit at position _i_ of **a**'s fractional part is less than _d_, return **a**.
+11. If that digit is greater than _d_, or if _bf_ is 0, then remove all digits from **a**'s integer and fractional parts, then go to step 2.
 12. Add 1 to _i_ and go to step 8.
 
 <a id=Sampling_E_rands></a>
