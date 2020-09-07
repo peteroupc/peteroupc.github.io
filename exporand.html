@@ -151,7 +151,15 @@
 
 <p>In this document, a <em>partially-sampled random number</em> (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see &quot;Properties&quot; later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.</p>
 
-<p>PSRNs specified here store a fractional part with an arbitrary number of digits, and an optional integer part (floor of the number&#39;s absolute value) and an optional sign.  If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].</p>
+<p>PSRNs specified here store&mdash;</p>
+
+<ul>
+<li>a <em>fractional part</em> with an arbitrary number of digits,</li>
+<li>an optional <em>integer part</em> (floor of the number&#39;s absolute value), and</li>
+<li>an optional <em>sign</em> (positive or negative).</li>
+</ul>
+
+<p>If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].</p>
 
 <p>This section specifies two kinds of PSRNs: uniform and exponential.</p>
 
@@ -222,7 +230,7 @@
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part.  Do the same for <strong>b</strong>.</li>
-<li>Return <code>true</code> if <strong>a</strong> is negative and <strong>b</strong> is not, or if floor(<strong>a</strong>) is less than floor(<strong>b</strong>), or <code>false</code> if floor(<strong>a</strong>) is greater than floor(<strong>b</strong>).</li>
+<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return <code>true</code> if <strong>a</strong> is negative and <code>false</code> if non-negative.  If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>false</code> if greater.  If <strong>a</strong> is negative, return <code>false</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>true</code> if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
 <li>If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
@@ -235,9 +243,9 @@
 <p>The <strong>RandLessReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or <code>false</code> otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>b</strong> is 0 or less, return an error.</li>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
 <li>Calculate floor(<strong>b</strong>), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.)</li>
-<li>Return <code>true</code> if floor(<strong>a</strong>) is less than <em>bi</em>, or <code>false</code> if floor(<strong>a</strong>) is greater than <em>bi</em>.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bi</em>&#39;s sign, return <code>true</code> if <strong>a</strong> is negative and <code>false</code> if non-negative.  If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or <code>false</code> if greater.  If <strong>a</strong> is negative, return <code>false</code> if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or <code>true</code> if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
@@ -299,13 +307,13 @@
 
 <ol>
 <li>Create an empty uniform PSRN <strong>a</strong>.  Let &beta; be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).  If <strong>b</strong>&#39;s integer part or sign is unsampled, or if it&#39;s less than 0, return an error.</li>
-<li>Set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is floor(<strong>b</strong>) (e.g., <code>RNDINT(0, bi)</code>).  If floor(<strong>a</strong>) is less than <em>bi</em>, return <strong>a</strong>.</li>
+<li>Set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part (e.g., <code>RNDINT(0, bi)</code>).  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
 <li>We now sample <strong>a</strong>&#39;s fractional part.  Set <em>i</em> to 0.</li>
-<li>If floor(<strong>b</strong>) is 0 and <strong>b</strong>&#39;s fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
+<li>If <strong>b</strong>&#39;s integer part is 0 and <strong>b</strong>&#39;s fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
 <li>If the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part is unsampled, sample the digit at that position according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and &beta; is 2, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than the corresponding digit for <strong>b</strong>, return <strong>a</strong>.</li>
-<li>If that digit is greater, then remove all digits from <strong>a</strong>&#39;s fractional part, then go to step 3.</li>
+<li>If that digit is greater, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then go to step 2.</li>
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
@@ -327,8 +335,8 @@
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
 <li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  If <em>ad</em> is less than <em>d</em>, return <strong>a</strong>.</li>
-<li><em>If <strong>b</strong> is not known to be rational:</em> If <em>ad</em> is greater than <em>d</em>, or if all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros, then remove all digits from <strong>a</strong>&#39;s fractional part, then go to step 6.</li>
-<li><em>If <strong>b</strong> is known rational:</em> If <em>ad</em> is greater than <em>d</em>, or if <em>bf</em> is 0, then remove all digits from <strong>a</strong>&#39;s fractional part, then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>, then go to step 6.</li>
+<li><em>If <strong>b</strong> is not known to be rational:</em> If <em>ad</em> is greater than <em>d</em>, or if all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then go to step 5.</li>
+<li><em>If <strong>b</strong> is known rational:</em> If <em>ad</em> is greater than <em>d</em>, or if <em>bf</em> is 0, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>, then go to step 5.</li>
 <li>Add 1 to <em>i</em> and go to step 8.</li>
 </ol>
 
