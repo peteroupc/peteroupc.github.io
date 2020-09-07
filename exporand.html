@@ -41,6 +41,7 @@
 <li><a href="#About_This_Document"><strong>About This Document</strong></a></li>
 </ul></li>
 <li><a href="#Contents"><strong>Contents</strong></a></li>
+<li><a href="#Notation"><strong>Notation</strong></a></li>
 <li><a href="#About_the_Beta_Distribution"><strong>About the Beta Distribution</strong></a></li>
 <li><a href="#About_the_Exponential_Distribution"><strong>About the Exponential Distribution</strong></a></li>
 <li><a href="#About_Partially_Sampled_Random_Numbers"><strong>About Partially-Sampled Random Numbers</strong></a>
@@ -114,6 +115,12 @@
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
+<p><a id=Notation></a></p>
+
+<h2>Notation</h2>
+
+<p>In this document, <code>RNDINT(x)</code> is a uniformly-distributed random integer in the interval [0, x], <code>RNDINTEXC(x)</code> is a uniformly-distributed random integer in the interval [0, x), and <code>RNDU01OneExc()</code> is a uniformly-distributed random real number in the interval [0, 1).</p>
+
 <p><a id=About_the_Beta_Distribution></a></p>
 
 <h2>About the Beta Distribution</h2>
@@ -136,7 +143,7 @@
 
 <p>The <em>exponential distribution</em> takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.</p>
 
-<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01()) / lamda</code>, where <code>RNDU01()</code> is a uniform random number in the interval [0, 1).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
+<p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01OneExc()) / lamda</code>.  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
 
 <p><a id=About_Partially_Sampled_Random_Numbers></a></p>
 
@@ -213,7 +220,7 @@
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part.  Do the same for <strong>b</strong>.</li>
 <li>Return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
 <li>Set <em>i</em> to 0.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong> is unsampled, sample the digit at that position (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next. For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)  Do the same for <strong>b</strong>.</li>
 <li>Return <code>true</code> if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
@@ -252,39 +259,40 @@
 
 <p>There are two algorithms for sampling uniform partially-sampled random numbers given another number.</p>
 
-<p>The <strong>RandUniform</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than another PSRN (<strong>b</strong>) almost surely.  This algorithm assumes <strong>b</strong>&#39;s integer part was already sampled, and the algorithm samples digits of <strong>b</strong>&#39;s fractional part as necessary.  This algorithm should not be used if <strong>b</strong> is known to be an exact rational number, since this algorithm could overshoot the value <strong>b</strong> had (or appeared to have) at the beginning of the algorithm; instead, the <strong>RandUniformFromRational</strong> algorithm, given later, should be used.  (For example, if <strong>b</strong> is 3.425..., one possible result of this algorithm is <strong>a</strong> = 3.42574... and <strong>b</strong> = 3.42575... Note that in this example, 3.425... is not considered an exact number.)</p>
+<p>The <strong>RandUniform</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than another PSRN (<strong>b</strong>) almost surely.  This algorithm assumes <strong>b</strong>&#39;s integer part was already sampled, and the algorithm samples digits of <strong>b</strong>&#39;s fractional part as necessary.  This algorithm should not be used if <strong>b</strong> is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value <strong>b</strong> had (or appeared to have) at the beginning of the algorithm; instead, the <strong>RandUniformFromReal</strong> algorithm, given later, should be used.  (For example, if <strong>b</strong> is 3.425..., one possible result of this algorithm is <strong>a</strong> = 3.42574... and <strong>b</strong> = 3.42575... Note that in this example, 3.425... is not considered an exact number.)</p>
 
 <ol>
 <li>Create an empty uniform PSRN <strong>a</strong>.  Let &beta; be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).</li>
 <li>Set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part (e.g., <code>RNDINT(0, bi)</code>).  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
-<li>Set <em>i</em> to 0.</li>
+<li>We now sample <strong>a</strong>&#39;s fractional part.  Set <em>i</em> to 0.</li>
 <li>If <strong>b</strong>&#39;s integer part is 0 and its fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong> is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
-<li>If the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part is unsampled, sample the digit at that position according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and &beta; is 2, this can be done by generating <code>RNDINTEXC(2)</code>.)</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>If the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part is unsampled, sample the digit at that position according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and &beta; is 2, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than the corresponding digit for <strong>b</strong>, return <strong>a</strong>.</li>
-<li>If that digit is greater, then remove all digits from <strong>a</strong>&#39;s integer and fractional parts, then go to step 2.</li>
+<li>If that digit is greater, then remove all digits from <strong>a</strong>&#39;s fractional part, then go to step 3.</li>
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
-<p>The <strong>RandUniformFromRational</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than an exact rational number <strong>b</strong> almost surely.</p>
+<p>The <strong>RandUniformFromReal</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than a real number <strong>b</strong> almost surely.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>b</strong> is 0 or less, return an error.</li>
 <li>Create an empty uniform PSRN <strong>a</strong>.</li>
-<li>Set <em>bi</em> to floor(<strong>b</strong>), and set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.</li>
-<li>If <em>bf</em> is 0, set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>) (e.g., <code>RNDINTEXC(0, bi)</code>), then return <strong>a</strong>.</li>
+<li>Calculate floor(<strong>b</strong>), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.)</li>
+<li>If <em>bi</em> is equal to <strong>b</strong>, set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>) (e.g., <code>RNDINTEXC(0, bi)</code>), then return <strong>a</strong>.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)</li>
 <li>Set <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>] (e.g., <code>RNDINT(0, bi)</code>), then if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
-<li>Set <em>i</em> to 0.</li>
-<li>If <em>bi</em> is 0 and <em>bf</em> is greater than 0, then do the following in a loop:
+<li>We now sample <strong>a</strong>&#39;s fractional part.  Set <em>i</em> to 0.</li>
+<li>If <em>bi</em> is 0 and not equal to <strong>b</strong>, then do the following in a loop:
 
 <ol>
-<li>Multiply <em>bf</em> by &beta; (where &beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then set <em>d</em> to floor(<em>bf</em>), then subtract <em>d</em> from <em>bf</em>.</li>
+<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (&beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary). (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
 <li>If <em>d</em> is 0, append a 0-digit to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em>.  Otherwise, break from this loop.</li>
 </ol></li>
-<li>If the digit at position <em>i</em> of <strong>a</strong> is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
-<li>Multiply <em>bf</em> by &beta;, then set <em>d</em> to floor(<em>bf</em>), then subtract <em>d</em> from <em>bf</em>.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than <em>d</em>, return <strong>a</strong>.</li>
-<li>If that digit is greater than <em>d</em>, or if <em>bf</em> is 0, then remove all digits from <strong>a</strong>&#39;s integer and fractional parts, then go to step 2.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
+<li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  If <em>ad</em> is less than <em>d</em>, return <strong>a</strong>.</li>
+<li><em>If <strong>b</strong> is not known to be rational:</em> If <em>ad</em> is greater than <em>d</em>, or if all the digits after the one at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros, then remove all digits from <strong>a</strong>&#39;s fractional part, then go to step 6.</li>
+<li><em>If <strong>b</strong> is known rational:</em> If <em>ad</em> is greater than <em>d</em>, or if <em>bf</em> is 0, then remove all digits from <strong>a</strong>&#39;s fractional part, then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>, then go to step 6.</li>
 <li>Add 1 to <em>i</em> and go to step 8.</li>
 </ol>
 
@@ -333,7 +341,7 @@
 
 <ol>
 <li>Set <em>i</em> to 0.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong> is unsampled, sample the digit at that position (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, sample the digit at that position (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
 <li>Return 0 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 2 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 3.</li>
 </ol>
