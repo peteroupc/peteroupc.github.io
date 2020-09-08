@@ -46,14 +46,14 @@
 <li>If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>An algorithm found in (Morina et al. 2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;. (In fact, this appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.)</p>
+<p>An algorithm found in (Morina et al. 2019)<sup><a href="#Note4"><strong>(4)</strong></a></sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;. (In fact, this appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.)</p>
 
 <ol>
 <li>Throw a die twice (whose bias is unknown), call the results <em>X</em> and <em>Y</em>, respectively.</li>
 <li>If <em>X</em> is less than <em>Y</em>, return 0.  If <em>X</em> is greater than <em>Y</em>, return 1.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>Pae (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup> and (Pae and Loui 2006)<sup><a href="#Note6"><strong>(6)</strong></a></sup> characterize <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input&#39;s bias.<sup><a href="#Note7"><strong>(7)</strong></a></sup>  Among others, von Neumann&#39;s extractor and the one by Peres (1992)<sup><a href="#Note8"><strong>(8)</strong></a></sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:</p>
+<p>Pae (2005)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and (Pae and Loui 2006)<sup><a href="#Note7"><strong>(7)</strong></a></sup> characterize <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input&#39;s bias.<sup><a href="#Note8"><strong>(8)</strong></a></sup>  Among others, von Neumann&#39;s extractor and the one by Peres (1992)<sup><a href="#Note9"><strong>(9)</strong></a></sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:</p>
 
 <ol>
 <li>Create two empty lists named U and V. Then, while two or more bits remain:
@@ -68,11 +68,11 @@
 <li>Run this algorithm recursively, with the bits placed in V.</li>
 </ol>
 
-<p>A streaming algorithm, which builds something like an &quot;extractor tree&quot;, is another example of a randomness extractor (Zhou and Bruck 2012)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
+<p>A streaming algorithm, which builds something like an &quot;extractor tree&quot;, is another example of a randomness extractor (Zhou and Bruck 2012)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</p>
 
 <p>I maintain <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb"><strong>source code of this extractor and the Peres extractor</strong></a>, which also includes additional notes on randomness extraction.</p>
 
-<p>Pae&#39;s &quot;entropy-preserving&quot; binarization (Pae 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, <em>n</em>, is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
+<p>Pae&#39;s &quot;entropy-preserving&quot; binarization (Pae 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, <em>n</em>, is known. However, it is obviously not efficient if <em>n</em> is a large number.</p>
 
 <ol>
 <li>Let <em>f</em> be a number in the interval [0, <em>n</em>) that was previously randomly generated.  If <em>f</em> is greater than 0, output a 1 (and go to step 2).</li>
@@ -84,8 +84,8 @@
 <ul>
 <li>Different kinds of random numbers should not be mixed in the same extractor stream.  For example, if one source outputs random 6-sided die results, another source outputs random sums of rolling 2 six-sided dice, and a third source outputs coin flips with a bias of 0.75, there should be three extractor streams (for instance, three extractor trees that implement the Zhou and Bruck algorithm).</li>
 <li>Hash functions, such as those mentioned in my <a href="https://peteroupc.github.io/hqrand.html#Counter_Based_PRNGs"><strong>examples of high-quality PRNGs</strong></a>, also serve to produce random-behaving numbers from a variable number of bits.  In general, they can&#39;t be extracting functions; however, their output can serve as input to an extraction algorithm.</li>
-<li>Peres (1992)<sup><a href="#Note8"><strong>(8)</strong></a></sup> warns that if a program takes enough biased bits so that the extracting function outputs <em>m</em> bits with them, those <em>m</em> bits will not be uniformly distributed.  Instead, the extracting function should be passed blocks of biased bits, one block at a time (where each block should have a fixed length of at least 2 bits), until <em>m</em> bits or more are generated by the extractor this way.</li>
-<li>The lower bound on the average number of coin flips needed to turn a biased coin into an unbiased coin is as follows (and is a special case of the <em>entropy bound</em>; see, e.g., (Pae 2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, (Peres 1992)<sup><a href="#Note8"><strong>(8)</strong></a></sup>): ln(2) / ((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)), where &lambda; is the bias of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin is strongly biased towards heads or tails.</li>
+<li>Peres (1992)<sup><a href="#Note9"><strong>(9)</strong></a></sup> warns that if a program takes enough biased bits so that the extracting function outputs <em>m</em> bits with them, those <em>m</em> bits will not be uniformly distributed.  Instead, the extracting function should be passed blocks of biased bits, one block at a time (where each block should have a fixed length of at least 2 bits), until <em>m</em> bits or more are generated by the extractor this way.</li>
+<li>The lower bound on the average number of coin flips needed to turn a biased coin into an unbiased coin is as follows (and is a special case of the <em>entropy bound</em>; see, e.g., (Pae 2005)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, (Peres 1992)<sup><a href="#Note9"><strong>(9)</strong></a></sup>): ln(2) / ((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)), where &lambda; is the bias of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin is strongly biased towards heads or tails.</li>
 </ul>
 
 <p><a id=Notes></a></p>
@@ -97,13 +97,13 @@
 <li><small><sup id=Note2>(2)</sup> Frauchiger, D., Renner, R., Troyer, M., &quot;True randomness from realistic quantum devices&quot;, 2013.</small></li>
 <li><small><sup id=Note3>(3)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
 <li><small><sup id=Note4>(4)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></li>
-<li><small><sup id=Note5>(5)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note6>(6)</sup> Pae, S., Loui, M.C., &quot;Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution&quot;, <em>IEEE Transactions on Information Theory</em> 52(11), November 2006.</small></li>
-<li><small><sup id=Note7>(7)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can&#39;t be extracting, either.</small></li>
-<li><small><sup id=Note8>(8)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note9>(9)</sup> Zhou, H. and Bruck, J., &quot;<a href="https://arxiv.org/abs/1209.0730"><strong>Streaming algorithms for optimal generation of random bits</strong></a>&quot;, arXiv:1209.0730 [cs.IT], 2012.</small></li>
-<li><small><sup id=Note10>(10)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS].</small></li>
-<li><small><sup id=Note11>(11)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
+<li><small><sup id=Note5>(5)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
+<li><small><sup id=Note6>(6)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note7>(7)</sup> Pae, S., Loui, M.C., &quot;Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution&quot;, <em>IEEE Transactions on Information Theory</em> 52(11), November 2006.</small></li>
+<li><small><sup id=Note8>(8)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can&#39;t be extracting, either.</small></li>
+<li><small><sup id=Note9>(9)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note10>(10)</sup> Zhou, H. and Bruck, J., &quot;<a href="https://arxiv.org/abs/1209.0730"><strong>Streaming algorithms for optimal generation of random bits</strong></a>&quot;, arXiv:1209.0730 [cs.IT], 2012.</small></li>
+<li><small><sup id=Note11>(11)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS].</small></li>
 </ul>
 
 <p><a id=License></a></p>
