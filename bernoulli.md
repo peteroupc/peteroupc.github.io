@@ -976,7 +976,7 @@ The following algorithm is a special case of the convex combination method.  It 
 <a id=URandLessThanFraction></a>
 #### URandLessThanFraction
 
-The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out to be less than a fraction, _frac_, which is a number in the interval \[0, 1\].
+The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out almost surely to be less than a fraction, _frac_, which is a number in the interval \[0, 1\].
 
 1. If _frac_ is 0 or 1, return 0 or 1, respectively. (The case of 1 is a degenerate case since the PSRN could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
 2. Set _pt_ to 1/_base_, and set _i_ to 0. (_base_ is the base, or radix, of the PSRN's digits, such as 2 for binary or 10 for decimal.)
@@ -984,7 +984,20 @@ The following helper algorithm is used by some of the algorithms on this page.  
 4. Set _d2_ to floor(_frac_ / _pt_).  (For example, in base 2, set _d2_ to 0 if _frac_ is less than _pt_, or 1 otherwise.)
 5. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
 6. If _frac_ >= _pt_, subtract _pt_ from _frac_.
-7. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
+7. If _frac_ is 0, return 0 (indicating that the PSRN is greater than the original fraction almost surely).
+8. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
+
+The following version of the algorithm is used if the fraction is known as its numerator and denominator, _num_/_den_.
+
+1. If _num_ is 0, return 0.  If _num_ equals _den_, return 1.
+2. Set _pt_ to 1, and set _i_ to 0.
+3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
+4. Set _c_ to 1 if _num_ * _base_<sup>_pt_</sup> >= _den_, and 0 otherwise.
+5. Set _d2_ to floor(_num_ * _base_<sup>_pt_</sup> / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
+6. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
+7. If _c_ is 1, set _num_ to _num_ * _base_<sup>_pt_</sup> &minus; _den_, then multiply _den_ by _base_<sup>_pt_</sup>.
+8. If _num_ is 0, return 0.
+9. Add 1 to _pt_, add 1 to _i_, and go to step 3.
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1221,7 +1234,7 @@ _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the
 where&mdash;
 
 - EGF(&lambda;) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (&lambda;<sup>_k_</sup> * V(_k_) / _k_!) (the _exponential generating function_ or EGF, which completely determines a permutation class), and
-- V(_n_) is the number of _valid_ permutations of size _n_.
+- V(_n_) is the number of _valid_ permutations of size _n_ (and must be in the interval \[0, _n_!\]).
 
 Effectively, a geometric(&lambda;) random number _G_<sup>[**(7)**](#Note7)</sup> is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; &lambda;) * EGF(&lambda;).
 
@@ -1247,11 +1260,17 @@ The following Python functions use the SymPy computer algebra library to find pr
 ```
 def coeffext(f, x, power):
     # Extract a coefficient from a generating function
-    while True:
-      poly=Poly(series(f, x=x, n=power+2).removeO())
-      if power == 0:
-        return poly.coeff_monomial(1)
-      return poly.as_expr().coeff(x**power)
+    px = 2
+    for i in range(10):
+      try:
+        poly=Poly(series(f, x=x, n=power+px).removeO())
+        if power == 0:
+          return poly.coeff_monomial(1)
+        return poly.as_expr().coeff(x**power)
+      except:
+        px+=2
+    # Failed, assume 0
+    return 0
 
 def number_n_prob(f, x, n):
     # Probability that the number n is generated

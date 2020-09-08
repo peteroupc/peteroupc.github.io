@@ -240,7 +240,7 @@
 
 <p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</p>
 
-<p>The <strong>RandLessReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or <code>false</code> otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
+<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or <code>false</code> otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
@@ -269,7 +269,7 @@
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
-<p><strong>URandLessReal</strong> is a version of <strong>RandLessReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
+<p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
 
 <p><a id=Arithmetic></a></p>
 

@@ -33,7 +33,7 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 1. Flip a coin twice (whose bias is unknown).
 2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
-An algorithm from (Morina et al. 2019)<sup>[**(4)**](#Note4)</sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
+An algorithm found in (Morina et al. 2019)<sup>[**(4)**](#Note4)</sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability". (In fact, this appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(11)**](#Note11)</sup>.)
 
 1. Throw a die twice (whose bias is unknown), call the results _X_ and _Y_, respectively.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
@@ -77,6 +77,7 @@ Some additional notes:
 - <small><sup id=Note8>(8)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
 - <small><sup id=Note9>(9)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
 - <small><sup id=Note10>(10)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
+- <small><sup id=Note11>(11)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
 
 <a id=License></a>
 ## License

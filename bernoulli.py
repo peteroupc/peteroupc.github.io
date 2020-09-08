@@ -297,11 +297,14 @@ class Bernoulli:
                 return 1
             if mybit == 1 and bit == 0:
                 return 0
-            if cmpare:
+            if bit == 1:
                 # Subtract 2**-pt from frac
                 a = (a << pt) - b
                 b <<= pt
                 # frac-=Fraction(1,1<<pt)
+            # Frac is now 0, so result can only be 0
+            if a == 0:
+                return 0
             pt += 1
             i += 1
         return 0

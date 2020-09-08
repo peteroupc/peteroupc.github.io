@@ -176,7 +176,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
 
-The **RandLessReal** algorithm compares a PSRN **a** with a real number **b** and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
+The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
 1. If **a**'s integer part or sign is unsampled, return an error.
 2. Calculate floor(**b**), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to **b** minus _bi_.)
@@ -197,7 +197,7 @@ The **RandLessReal** algorithm compares a PSRN **a** with a real number **b** an
     - _**b** is known to be rational_, **a** is non-negative, and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
 10. Add 1 to _i_ and go to step 5.
 
-**URandLessReal** is a version of **RandLessReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
+**URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
 <a id=Arithmetic></a>
 ### Arithmetic

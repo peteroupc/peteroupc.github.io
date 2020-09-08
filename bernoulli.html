@@ -1280,7 +1280,7 @@
 
 <h4>URandLessThanFraction</h4>
 
-<p>The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out to be less than a fraction, <em>frac</em>, which is a number in the interval [0, 1].</p>
+<p>The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out almost surely to be less than a fraction, <em>frac</em>, which is a number in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>frac</em> is 0 or 1, return 0 or 1, respectively. (The case of 1 is a degenerate case since the PSRN could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
@@ -1289,7 +1289,22 @@
 <li>Set <em>d2</em> to floor(<em>frac</em> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <em>frac</em> is less than <em>pt</em>, or 1 otherwise.)</li>
 <li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
 <li>If <em>frac</em> &gt;= <em>pt</em>, subtract <em>pt</em> from <em>frac</em>.</li>
+<li>If <em>frac</em> is 0, return 0 (indicating that the PSRN is greater than the original fraction almost surely).</li>
 <li>Divide <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
+</ol>
+
+<p>The following version of the algorithm is used if the fraction is known as its numerator and denominator, <em>num</em>/<em>den</em>.</p>
+
+<ol>
+<li>If <em>num</em> is 0, return 0.  If <em>num</em> equals <em>den</em>, return 1.</li>
+<li>Set <em>pt</em> to 1, and set <em>i</em> to 0.</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>Set <em>c</em> to 1 if <em>num</em> * <em>base</em><sup><em>pt</em></sup> &gt;= <em>den</em>, and 0 otherwise.</li>
+<li>Set <em>d2</em> to floor(<em>num</em> * <em>base</em><sup><em>pt</em></sup> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
+<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
+<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>base</em><sup><em>pt</em></sup> &minus; <em>den</em>, then multiply <em>den</em> by <em>base</em><sup><em>pt</em></sup>.</li>
+<li>If <em>num</em> is 0, return 0.</li>
+<li>Add 1 to <em>pt</em>, add 1 to <em>i</em>, and go to step 3.</li>
 </ol>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
@@ -1858,7 +1873,7 @@ for i in range(iters):
 
 <ul>
 <li>EGF(&lambda;) = &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (&lambda;<sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!) (the <em>exponential generating function</em> or EGF, which completely determines a permutation class), and</li>
-<li>V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em>.</li>
+<li>V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em> (and must be in the interval [0, <em>n</em>!]).</li>
 </ul>
 
 <p>Effectively, a geometric(&lambda;) random number <em>G</em><sup><a href="#Note7"><strong>(7)</strong></a></sup> is accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.  The probability that <em>r</em> geometric random numbers are rejected this way is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>, where <em>p</em> = (1 &minus; &lambda;) * EGF(&lambda;).</p>
@@ -1888,11 +1903,17 @@ for i in range(iters):
 
 <pre>def coeffext(f, x, power):
     # Extract a coefficient from a generating function
-    while True:
-      poly=Poly(series(f, x=x, n=power+2).removeO())
-      if power == 0:
-        return poly.coeff_monomial(1)
-      return poly.as_expr().coeff(x**power)
+    px = 2
+    for i in range(10):
+      try:
+        poly=Poly(series(f, x=x, n=power+px).removeO())
+        if power == 0:
+          return poly.coeff_monomial(1)
+        return poly.as_expr().coeff(x**power)
+      except:
+        px+=2
+    # Failed, assume 0
+    return 0
 
 def number_n_prob(f, x, n):
     # Probability that the number n is generated
