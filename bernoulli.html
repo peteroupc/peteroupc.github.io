@@ -113,6 +113,7 @@
 <ul>
 <li><a href="#Convex_Combinations"><strong>Convex Combinations</strong></a></li>
 <li><a href="#Simulating_the_Probability_Generating_Function"><strong>Simulating the Probability Generating Function</strong></a></li>
+<li><a href="#Integrals"><strong>Integrals</strong></a></li>
 <li><a href="#URandLessThanFraction"><strong>URandLessThanFraction</strong></a></li>
 </ul></li>
 </ul></li>
@@ -1275,6 +1276,38 @@
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
 <li>Flip the input coin until the coin returns 0 or the coin is flipped <em>X</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 </ol>
+
+<p><a id=Integrals></a></p>
+
+<h4>Integrals</h4>
+
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how to turn an algorithm that simulates <em>f</em>(&lambda;) into an algorithm that simulates the following integral:</p>
+
+<ul>
+<li>(1/&lambda;) &int;<sub>[0, &lambda;]</sub> <em>f</em>(<em>u</em>) <em>du</em>, or equivalently,</li>
+<li>&int;<sub>[0, 1]</sub> <em>f</em>(<em>u</em> * &lambda;) <em>du</em>.</li>
+</ul>
+
+<p>This can be done by modifying the algorithm as follows:</p>
+
+<ul>
+<li>Create an empty uniform PSRN at the start of the algorithm.</li>
+<li>Instead of flipping the input coin, flip a coin that does the following: &quot;Flip the input coin, then call <strong>SampleGeometricBag</strong> on the uniform PSRN.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
+</ul>
+
+<p>I have found that it&#39;s possible to simulate the following integral, namely&mdash;</p>
+
+<ul>
+<li>&int;<sub>[<em>a</em>, <em>b</em>]</sub> <em>f</em>(<em>u</em>) <em>du</em>,</li>
+</ul>
+
+<p>where [<em>a</em>, <em>b</em>] is [0, 1] or a closed interval therein, using different changes to the algorithm, namely:</p>
+
+<ul>
+<li>Add the following step at the start of the algorithm: &quot;Create an empty uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanFraction</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanFraction</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
+<li>Instead of flipping the input coin, flip a coin that does the following: &quot;Call <strong>SampleGeometricBag</strong> on the uniform PSRN and return the result.&quot;</li>
+<li>If the algorithm would return 1, return 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
+</ul>
 
 <p><a id=URandLessThanFraction></a></p>
 
