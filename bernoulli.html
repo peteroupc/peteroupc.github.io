@@ -114,7 +114,6 @@
 <li><a href="#Convex_Combinations"><strong>Convex Combinations</strong></a></li>
 <li><a href="#Simulating_the_Probability_Generating_Function"><strong>Simulating the Probability Generating Function</strong></a></li>
 <li><a href="#Integrals"><strong>Integrals</strong></a></li>
-<li><a href="#URandLessThanFraction"><strong>URandLessThanFraction</strong></a></li>
 </ul></li>
 </ul></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a>
@@ -166,7 +165,7 @@
 
 <ul>
 <li>&lambda; is the unknown probability of heads of the input coin.</li>
-<li>The <strong>SampleGeometricBag</strong> and <strong>URandLess</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
+<li>The <strong>SampleGeometricBag</strong>, <strong>URandLess</strong>, and <strong>URandLessThanReal</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 <li>The <code>ZeroOrOne</code> method should be implemented as shown in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.</li>
 <li>The instruction to &quot;generate a uniform random number&quot; can be implemented by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>uniform PSRN</strong></a> (most accurate) or by generating <code>RNDEXCRANGE(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
 <li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are uniform random numbers, it means to run the <strong>URandLess</strong> algorithm on the two PSRNs, or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate.</li>
@@ -229,8 +228,8 @@
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>d[n]</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>d[n]</em>.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -281,8 +280,8 @@
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -589,8 +588,8 @@
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2 &minus; 1) * (<em>n</em> * 2), then go to step 3.</li>
 </ol>
 
@@ -608,8 +607,8 @@
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
-<li>Run the <strong>URandLessThanFraction algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
+<li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2) * (<em>n</em> * 2 + 1), then go to step 3.</li>
 </ol>
 
@@ -1304,41 +1303,10 @@
 <p>where [<em>a</em>, <em>b</em>] is [0, 1] or a closed interval therein, using different changes to the algorithm, namely:</p>
 
 <ul>
-<li>Add the following step at the start of the algorithm: &quot;Create an empty uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanFraction</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanFraction</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
+<li>Add the following step at the start of the algorithm: &quot;Create an empty uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanReal</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanReal</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
 <li>Instead of flipping the input coin, flip a coin that does the following: &quot;Call <strong>SampleGeometricBag</strong> on the uniform PSRN and return the result.&quot;</li>
-<li>If the algorithm would return 1, return 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
+<li>If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
 </ul>
-
-<p><a id=URandLessThanFraction></a></p>
-
-<h4>URandLessThanFraction</h4>
-
-<p>The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out almost surely to be less than a fraction, <em>frac</em>, which is a number in the interval [0, 1].</p>
-
-<ol>
-<li>If <em>frac</em> is 0 or 1, return 0 or 1, respectively. (The case of 1 is a degenerate case since the PSRN could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
-<li>Set <em>pt</em> to 1/<em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of the PSRN&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
-<li>Set <em>d2</em> to floor(<em>frac</em> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <em>frac</em> is less than <em>pt</em>, or 1 otherwise.)</li>
-<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
-<li>If <em>frac</em> &gt;= <em>pt</em>, subtract <em>pt</em> from <em>frac</em>.</li>
-<li>If <em>frac</em> is 0, return 0 (indicating that the PSRN is greater than the original fraction almost surely).</li>
-<li>Divide <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
-</ol>
-
-<p>The following version of the algorithm is used if the fraction is known as its numerator and denominator, <em>num</em>/<em>den</em>.</p>
-
-<ol>
-<li>If <em>num</em> is 0, return 0.  If <em>num</em> equals <em>den</em>, return 1.</li>
-<li>Set <em>pt</em> to 1, and set <em>i</em> to 0.</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
-<li>Set <em>c</em> to 1 if <em>num</em> * <em>base</em><sup><em>pt</em></sup> &gt;= <em>den</em>, and 0 otherwise.</li>
-<li>Set <em>d2</em> to floor(<em>num</em> * <em>base</em><sup><em>pt</em></sup> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
-<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
-<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>base</em><sup><em>pt</em></sup> &minus; <em>den</em>, then multiply <em>den</em> by <em>base</em><sup><em>pt</em></sup>.</li>
-<li>If <em>num</em> is 0, return 0.</li>
-<li>Add 1 to <em>pt</em>, add 1 to <em>i</em>, and go to step 3.</li>
-</ol>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
 

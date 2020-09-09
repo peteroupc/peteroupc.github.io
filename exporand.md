@@ -164,33 +164,33 @@ An algorithm that samples from a continuous distribution using PSRNs has the fol
 
 Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.
 
-The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
+The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns 1 if **a** turns out to be less than **b** almost surely, or 0 otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
 1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
-2. If **a**'s sign is different from **b**'s sign, return `true` if **a** is negative and `false` if non-negative.  If **a** is non-negative, return `true` if **a**'s integer part is less than **b**'s, or `false` if greater.  If **a** is negative, return `false` if **a**'s integer part is less than **b**'s, or `true` if greater.
+2. If **a**'s sign is different from **b**'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
 3. Set _i_ to 0.
 4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
-5. If **a** is non-negative, return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
-6. If **a** is negative, return `false` if **a**'s fractional part is less than **b**'s, or `true` if **a**'s fractional part is greater than **b**'s.
+5. If **a** is non-negative, return 1 if **a**'s fractional part is less than **b**'s, or 0 if **a**'s fractional part is greater than **b**'s.
+6. If **a** is negative, return 0 if **a**'s fractional part is less than **b**'s, or 1 if **a**'s fractional part is greater than **b**'s.
 7. Add 1 to _i_ and go to step 4.
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
 
-The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns `true` if **a** turns out to be less than **b** almost surely, or `false` otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
+The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** almost surely, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
 1. If **a**'s integer part or sign is unsampled, return an error.
 2. Calculate floor(**b**), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to **b** minus _bi_.)
-3. If **a**'s sign is different from _bi_'s sign, return `true` if **a** is negative and `false` if non-negative.  If **a** is non-negative, return `true` if **a**'s integer part is less than _bi_, or `false` if greater.  If **a** is negative, return `false` if **a**'s integer part is less than _bi_, or `true` if greater.
+3. If **a**'s sign is different from _bi_'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than _bi_, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater.
 4. Set _i_ to 0.
 5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
 6. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
 7. Let _ad_ be the digit at position _i_ of **a**'s fractional part.
-8. Return `true` if&mdash;
+8. Return 1 if&mdash;
     - _ad_ is less than _d_ and **a** is non-negative,
     - _ad_ is greater than _d_ and **a** is negative,
     - _**b** is not known to be rational_, **a** is negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is less than **b** almost surely), or
     - _**b** is known to be rational_, **a** is negative, and _bf_ is 0 (indicating **a** is less than **b** almost surely).
-9. Return `false` if&mdash;
+9. Return 0 if&mdash;
     - _ad_ is less than _d_ and **a** is negative,
     - _ad_ is greater than _d_ and **a** is non-negative,
     - _**b** is not known to be rational_, **a** is non-negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is greater than **b** almost surely), or
@@ -198,6 +198,29 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 10. Add 1 to _i_ and go to step 5.
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
+
+The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is known to be a rational number.
+
+1. If **a**'s integer part or sign is unsampled, or if **a** is negative or its integer part is other than 0, return an error.  If **b** is 0 or less, return 0.  If **b** is 1 or greater, return 1. (The case of 1 is a degenerate case since **a** could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
+2. Set _pt_ to 1/_base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
+3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
+4. Set _d2_ to floor(**b** / _pt_).  (For example, in base 2, set _d2_ to 0 if **b** is less than _pt_, or 1 otherwise.)
+5. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
+6. If **b** >= _pt_, subtract _pt_ from **b**.
+7. If **b** is 0, return 0 (indicating that **a** is greater than the original fraction almost surely).
+8. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
+
+The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is a fraction known by its numerator and denominator, _num_/_den_.
+
+1. If the PSRN's integer part or sign is unsampled, if **a** is negative or its integer part is other than 0, or if _den_ is 0, return an error.  If _num_ and _den_ are both less than 0, set them to their absolute values.  If _num_ is 0, or if _num_ < 0 or _den_ < 0, return 0.  If _num_ >= _den_, return 1.
+2. Set _pt_ to 1, and set _i_ to 0.
+3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
+4. Set _c_ to 1 if _num_ * _base_<sup>_pt_</sup> >= _den_, and 0 otherwise.
+5. Set _d2_ to floor(_num_ * _base_<sup>_pt_</sup> / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
+6. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
+7. If _c_ is 1, set _num_ to _num_ * _base_<sup>_pt_</sup> &minus; _den_, then multiply _den_ by _base_<sup>_pt_</sup>.
+8. If _num_ is 0, return 0.
+9. Add 1 to _pt_, add 1 to _i_, and go to step 3.
 
 <a id=Arithmetic></a>
 ### Arithmetic
@@ -339,13 +362,13 @@ However, this algorithm supports only base 2.
 The power-of-uniform algorithm is as follows:
 
 1. Set _i_ to 1.
-2. Call the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", with parameters `a = 1, b = 2, x = py, y = px`.  If the call returns 1 and _i_ is less than _n_, add 1 to _i_ and repeat this step.  If the call returns 1 and _i_ is _n_ or greater, return 1 if the _complement_ flag is `true` or 0 otherwise (or return a geometric bag filled with exactly _n_ ones or zeros, respectively).
+2. Call the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", with parameters `a = 1, b = 2, x = py, y = px`.  If the call returns 1 and _i_ is less than _n_, add 1 to _i_ and repeat this step.  If the call returns 1 and _i_ is _n_ or greater, return 1 if the _complement_ flag is 1 or 0 otherwise (or return a geometric bag filled with exactly _n_ ones or zeros, respectively).
 3. As a result, we will now sample a number in the interval \[2<sup>&minus;_i_</sup>, 2<sup>&minus;(_i_ &minus; 1)</sup>).  We now have to generate a uniform random number _X_ in this interval, then accept it with probability (_py_ / (_px_ * 2<sup>_i_</sup>)) / _X_<sup>1 &minus; _py_ / _px_</sup>; the 2<sup>_i_</sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.
 4. Create an empty list to serve as a geometric bag, then create a _geobag_ input coin that returns the result of **SampleGeometricBag** on that geometric bag.
 5. Create a _powerbag_ input coin that does the following: "Call the  **algorithm for &lambda;<sup>_x_/_y_</sup>**, described in '[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html#lambda__x___y)', using the _geobag_ input coin and with _x_/_y_ = 1 &minus; _py_ / _px_, and return the result."
 6. Append _i_ &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.
 7. Call the **algorithm for ϵ / λ**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html#x03F5_lambda)", using the _powerbag_ input coin (which represents _b_) and with ϵ = _py_/(_px_ * 2<sup>_i_</sup>) (which represents _a_), thus returning 1 with probability _a_/_b_.  If the call returns 1, the geometric bag was accepted, so do the following:
-    1. If the _complement_ flag is `true`, make each zero-digit in the geometric bag a one-digit and vice versa.
+    1. If the _complement_ flag is 1, make each zero-digit in the geometric bag a one-digit and vice versa.
     2. Either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
 8. If the call to the algorithm for ϵ / λ returns 0, remove all but the first _i_ digits from the geometric bag, then go to step 7.
 
@@ -362,8 +385,8 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
 1. Special cases:
     - If _a_ = 1 and _b_ = 1, return a uniform random number whose fractional part has _p_ digits (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
     - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`, and fill it as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag** above).
-    - In the binary case, if _a_ is 1 and _b_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to `true`.
-    - In the binary case, if _b_ is 1 and _a_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to `false`.
+    - In the binary case, if _a_ is 1 and _b_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to 1.
+    - In the binary case, if _b_ is 1 and _a_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to 0.
 2. Create an empty list to serve as a "geometric bag".  Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given geometric bag.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given geometric bag.
 3. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
 4. Call the **algorithm for &lambda;<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _a_ &minus; 1)/1 (thus returning with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 3.
@@ -379,13 +402,13 @@ We also have the necessary building blocks to describe how to sample e-rands.  A
 
 To sample bit _k_ after the binary point of an exponential random number with rate &lambda; (where _k_ = 1 means the first digit after the point, _k_ = 2 means the second, etc.), call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _k_.
 
-The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns `true` if **a** turns out to be less than **b**, or `false` otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
+The **ExpRandLess** algorithm is a special case of the general **RandLess** algorithm given earlier.  It compares two e-rands **a** and **b** (and samples additional bits from them as necessary) and returns 1 if **a** turns out to be less than **b**, or 0 otherwise. (Note that **a** and **b** are allowed to have different &lambda; parameters.)
 
 1. If **a**'s integer part wasn't sampled yet, call the **algorithm for exp(&minus;_x_/_y_)** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
-2. Return `true` if **a**'s integer part is less than **b**'s, or `false` if **a**'s integer part is greater than **b**'s.
+2. Return 1 if **a**'s integer part is less than **b**'s, or 0 if **a**'s integer part is greater than **b**'s.
 3. Set _i_ to 0.
 4. If **a**'s fractional part has _i_ or fewer bits, call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
-5. Return `true` if **a**'s fractional part is less than **b**'s, or `false` if **a**'s fractional part is greater than **b**'s.
+5. Return 1 if **a**'s fractional part is less than **b**'s, or 0 if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
 The **ExpRandFill** algorithm takes an e-rand **a** and generates a number whose fractional part has `p` bits as follows:
@@ -1030,7 +1053,7 @@ As an additional example of how PSRNs can be useful, here we reimplement an exam
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
 3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
-4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns `true`, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
+4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns 1, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
 5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
 6. If _m_ is even, go to step 1.
 

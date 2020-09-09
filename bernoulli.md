@@ -92,7 +92,6 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
         - [**Integrals**](#Integrals)
-        - [**URandLessThanFraction**](#URandLessThanFraction)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
     - [**The Charts**](#The_Charts)
 - [**Notes**](#Notes)
@@ -130,7 +129,7 @@ The next section will show algorithms for a number of factory functions, allowin
 In the following algorithms:
 
 - &lambda; is the unknown probability of heads of the input coin.
-- The **SampleGeometricBag** and **URandLess** algorithms are described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
+- The **SampleGeometricBag**, **URandLess**, and **URandLessThanReal** algorithms are described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 - The `ZeroOrOne` method should be implemented as shown in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
 - The instruction to "generate a uniform random number" can be implemented by creating an empty [**uniform PSRN**](https://peteroupc.github.io/exporand.html) (most accurate) or by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are uniform random numbers, it means to run the **URandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
@@ -185,8 +184,8 @@ The following is the general algorithm for this kind of series, called the **gen
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
 4. If _n_ is even, set _u_ to _l_ + _w_ * _d[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _d[n]_.
-5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_ and go to step 3.
 
 If the alternating series has the form&mdash;
@@ -227,8 +226,8 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
 4. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
-5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_ and go to step 3.
 
 <a id=exp_lambda_1_minus_lambda></a>
@@ -458,8 +457,8 @@ The algorithm to simulate cos(&lambda;) follows.
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_. (Here we divide by the factorial of 2-times-_n_.)
-5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
 
 <a id=sin_lambda></a>
@@ -474,8 +473,8 @@ The algorithm to simulate sin(&lambda;) follows.
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_.
-5. Run the **URandLessThanFraction algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanFraction algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 3.
 
 <a id=lambda__x___y></a>
@@ -993,35 +992,9 @@ I have found that it's possible to simulate the following integral, namely&mdash
 
 where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
 
-- Add the following step at the start of the algorithm: "Create an empty uniform PSRN at the start of the algorithm.  Then if **URandLessThanFraction** on the PSRN and _a_ returns 1, or if **URandLessThanFraction** on the PSRN and _b_ returns 0, repeat this step."
+- Add the following step at the start of the algorithm: "Create an empty uniform PSRN at the start of the algorithm.  Then if **URandLessThanReal** on the PSRN and _a_ returns 1, or if **URandLessThanReal** on the PSRN and _b_ returns 0, repeat this step."
 - Instead of flipping the input coin, flip a coin that does the following: "Call **SampleGeometricBag** on the uniform PSRN and return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
-
-<a id=URandLessThanFraction></a>
-#### URandLessThanFraction
-
-The following helper algorithm is used by some of the algorithms on this page.  It returns 1 if a PSRN turns out almost surely to be less than a fraction, _frac_, which is a number in the interval \[0, 1\].
-
-1. If _frac_ is 0 or 1, return 0 or 1, respectively. (The case of 1 is a degenerate case since the PSRN could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
-2. Set _pt_ to 1/_base_, and set _i_ to 0. (_base_ is the base, or radix, of the PSRN's digits, such as 2 for binary or 10 for decimal.)
-3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
-4. Set _d2_ to floor(_frac_ / _pt_).  (For example, in base 2, set _d2_ to 0 if _frac_ is less than _pt_, or 1 otherwise.)
-5. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
-6. If _frac_ >= _pt_, subtract _pt_ from _frac_.
-7. If _frac_ is 0, return 0 (indicating that the PSRN is greater than the original fraction almost surely).
-8. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
-
-The following version of the algorithm is used if the fraction is known as its numerator and denominator, _num_/_den_.
-
-1. If _num_ is 0, return 0.  If _num_ equals _den_, return 1.
-2. Set _pt_ to 1, and set _i_ to 0.
-3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If there is no digit there, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
-4. Set _c_ to 1 if _num_ * _base_<sup>_pt_</sup> >= _den_, and 0 otherwise.
-5. Set _d2_ to floor(_num_ * _base_<sup>_pt_</sup> / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
-6. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
-7. If _c_ is 1, set _num_ to _num_ * _base_<sup>_pt_</sup> &minus; _den_, then multiply _den_ by _base_<sup>_pt_</sup>.
-8. If _num_ is 0, return 0.
-9. Add 1 to _pt_, add 1 to _i_, and go to step 3.
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts

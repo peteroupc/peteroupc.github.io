@@ -1955,7 +1955,11 @@ To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
 
-The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. See also (Grimme 2015)<sup>[**(76)**](#Note76)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
+The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. The special case of 3 points came from (Osada et al. 2002)<sup>[**(84)**](#Note84)</sup>. See also (Grimme 2015)<sup>[**(76)**](#Note76)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
+
+    METHOD VecAddProd(a, b, c)
+      for j in 0...size(a): a[j]=a[j]+b[j]*c
+    END METHOD
 
     METHOD RandomPointInSimplex(points):
        ret=NewList()
@@ -1964,23 +1968,25 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
          for i in 0...size(points[0]): AddItem(ret,points[0][i])
          return ret
        end
+       if size(points)==3
+         rs=sqrt(RNDU01()); r2=RNDU01()
+         ret=[0,0,0]
+         VecAddProd(ret,points[0],1.0-rs)
+         VecAddProd(ret,points[1],(1.0-r2)*rs)
+         VecAddProd(ret,points[2],r2*rs)
+         return ret
+       end
        gammas=NewList()
-       // Sample from a Dirichlet distribution
+       // Sample from the simplex
        for i in 0...size(points): AddItem(gammas, Expo(1))
-       tsum=0
-       for i in 0...size(gammas): tsum = tsum + gammas[i]
-       tot = 0
-       for i in 0...size(gammas) - 1
-           gammas[i] = gammas[i] / tsum
-           tot = tot + gammas[i]
-       end
-       tot = 1.0 - tot
+       tsum=Sum(gammas)
+       for i in 0...size(gammas): gammas[i] = gammas[i] / tsum
+       gammas[size(gammas)-1]=0 // To omit last gamma in sum
+       tot = 1.0 - Sum(gammas)
+       // Build the final point
        for i in 0...size(points[0]): AddItem(ret, points[0][i]*tot)
-       for i in 1...size(points)
-          for j in 0...size(points[0])
-             ret[j]=ret[j]+points[i][j]*gammas[i-1]
-          end
-       end
+       for i in 1...size(points): VecAddProd(
+          ret, points[i], gammas[i-1])
        return ret
     END METHOD
 
@@ -2149,6 +2155,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note81>(81)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note82>(82)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 - <small><sup id=Note83>(83)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note84>(84)</sup> Osada, R., Funkhouser, T., et al., "Shape Distributions", _ACM Transactions on Graphics 21(4), Oct. 2002.</small>
 
 <a id=Appendix></a>
 ## Appendix

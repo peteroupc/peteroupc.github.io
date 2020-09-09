@@ -226,31 +226,31 @@
 
 <p>Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.</p>
 
-<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or <code>false</code> otherwise (see also (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>)).</p>
+<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise (see also (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>)).</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part.  Do the same for <strong>b</strong>.</li>
-<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return <code>true</code> if <strong>a</strong> is negative and <code>false</code> if non-negative.  If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>false</code> if greater.  If <strong>a</strong> is negative, return <code>false</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>true</code> if greater.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
-<li>If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
-<li>If <strong>a</strong> is negative, return <code>false</code> if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or <code>true</code> if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
+<li>If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
+<li>If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 1 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
 <p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</p>
 
-<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or <code>false</code> otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
+<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
 <li>Calculate floor(<strong>b</strong>), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.)</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bi</em>&#39;s sign, return <code>true</code> if <strong>a</strong> is negative and <code>false</code> if non-negative.  If <strong>a</strong> is non-negative, return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or <code>false</code> if greater.  If <strong>a</strong> is negative, return <code>false</code> if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or <code>true</code> if greater.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bi</em>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
 <li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.</li>
-<li>Return <code>true</code> if&mdash;
+<li>Return 1 if&mdash;
 
 <ul>
 <li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is non-negative,</li>
@@ -258,7 +258,7 @@
 <li><em><strong>b</strong> is not known to be rational</em>, <strong>a</strong> is negative, and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
 <li><em><strong>b</strong> is known to be rational</em>, <strong>a</strong> is negative, and <em>bf</em> is 0 (indicating <strong>a</strong> is less than <strong>b</strong> almost surely).</li>
 </ul></li>
-<li>Return <code>false</code> if&mdash;
+<li>Return 0 if&mdash;
 
 <ul>
 <li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is negative,</li>
@@ -270,6 +270,33 @@
 </ol>
 
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
+
+<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is known to be a rational number.</p>
+
+<ol>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>a</strong> is negative or its integer part is other than 0, return an error.  If <strong>b</strong> is 0 or less, return 0.  If <strong>b</strong> is 1 or greater, return 1. (The case of 1 is a degenerate case since <strong>a</strong> could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
+<li>Set <em>pt</em> to 1/<em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>Set <em>d2</em> to floor(<strong>b</strong> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <strong>b</strong> is less than <em>pt</em>, or 1 otherwise.)</li>
+<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
+<li>If <strong>b</strong> &gt;= <em>pt</em>, subtract <em>pt</em> from <strong>b</strong>.</li>
+<li>If <strong>b</strong> is 0, return 0 (indicating that <strong>a</strong> is greater than the original fraction almost surely).</li>
+<li>Divide <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
+</ol>
+
+<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
+
+<ol>
+<li>If the PSRN&#39;s integer part or sign is unsampled, if <strong>a</strong> is negative or its integer part is other than 0, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
+<li>Set <em>pt</em> to 1, and set <em>i</em> to 0.</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>Set <em>c</em> to 1 if <em>num</em> * <em>base</em><sup><em>pt</em></sup> &gt;= <em>den</em>, and 0 otherwise.</li>
+<li>Set <em>d2</em> to floor(<em>num</em> * <em>base</em><sup><em>pt</em></sup> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
+<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
+<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>base</em><sup><em>pt</em></sup> &minus; <em>den</em>, then multiply <em>den</em> by <em>base</em><sup><em>pt</em></sup>.</li>
+<li>If <em>num</em> is 0, return 0.</li>
+<li>Add 1 to <em>pt</em>, add 1 to <em>i</em>, and go to step 3.</li>
+</ol>
 
 <p><a id=Arithmetic></a></p>
 
@@ -449,7 +476,7 @@
 
 <ol>
 <li>Set <em>i</em> to 1.</li>
-<li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is <code>true</code> or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
+<li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is 1 or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
 <li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>X</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>X</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
 <li>Create an empty list to serve as a geometric bag, then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that geometric bag.</li>
 <li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
@@ -457,7 +484,7 @@
 <li>Call the <strong>algorithm for ϵ / λ</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html#x03F5_lambda"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>powerbag</em> input coin (which represents <em>b</em>) and with ϵ = <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>), thus returning 1 with probability <em>a</em>/<em>b</em>.  If the call returns 1, the geometric bag was accepted, so do the following:
 
 <ol>
-<li>If the <em>complement</em> flag is <code>true</code>, make each zero-digit in the geometric bag a one-digit and vice versa.</li>
+<li>If the <em>complement</em> flag is 1, make each zero-digit in the geometric bag a one-digit and vice versa.</li>
 <li>Either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
 </ol></li>
 <li>If the call to the algorithm for ϵ / λ returns 0, remove all but the first <em>i</em> digits from the geometric bag, then go to step 7.</li>
@@ -481,8 +508,8 @@
 <ul>
 <li>If <em>a</em> = 1 and <em>b</em> = 1, return a uniform random number whose fractional part has <em>p</em> digits (for example, in the binary case, RandomBits(<em>p</em>) / 2<sup><em>p</em></sup> where <code>RandomBits(x)</code> returns an x-bit block of unbiased random bits).</li>
 <li>If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code>, and fill it as necessary to give the number a <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above).</li>
-<li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to <code>true</code>.</li>
-<li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to <code>false</code>.</li>
+<li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to 1.</li>
+<li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to 0.</li>
 </ul></li>
 <li>Create an empty list to serve as a &quot;geometric bag&quot;.  Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given geometric bag.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given geometric bag.</li>
 <li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
@@ -501,14 +528,14 @@
 
 <p>To sample bit <em>k</em> after the binary point of an exponential random number with rate &lambda; (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>k</em>.</p>
 
-<p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns <code>true</code> if <strong>a</strong> turns out to be less than <strong>b</strong>, or <code>false</code> otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different &lambda; parameters.)</p>
+<p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong>, or 0 otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different &lambda; parameters.)</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em> = &lambda;&#39;s numerator and <em>y</em> = &lambda;&#39;s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
-<li>Return <code>true</code> if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
+<li>Return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  Do the same for <strong>b</strong>.</li>
-<li>Return <code>true</code> if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or <code>false</code> if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
+<li>Return 1 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
@@ -1401,7 +1428,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
 <li>Set <em>m</em> to 1.</li>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>u</em> be the result.</li>
-<li>With probability 4/(4*<em>m</em>*<em>m</em> + 2*<em>m</em>), call the <strong>URandLess</strong> algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns <code>true</code>, call the <strong>algorithm for &pi; / 4</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)</li>
+<li>With probability 4/(4*<em>m</em>*<em>m</em> + 2*<em>m</em>), call the <strong>URandLess</strong> algorithm with parameters <em>u</em> and <em>ret</em> in that order, and if that call returns 1, call the <strong>algorithm for &pi; / 4</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, twice, and if both of these calls return 1, add 1 to <em>m</em> and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)</li>
 <li>If <em>m</em> is odd, fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
 <li>If <em>m</em> is even, go to step 1.</li>
 </ol>
