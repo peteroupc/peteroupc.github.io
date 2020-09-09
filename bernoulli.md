@@ -1135,14 +1135,14 @@ For example, if _f_(&lambda;) is a constant, non-randomized algorithms will gene
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
 
-A Bernoulli factory or another algorithm that produces heads with a given probability is the same as building an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  (In this note, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) As a result&mdash;
+A Bernoulli factory or another algorithm that produces heads with a given probability acts as an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>.  (In this note, an _unbiased probability estimator_ is an unbiased estimator whose estimates are in \[0, 1\] almost surely.) As a result&mdash;
 
 1. finding in some way an unbiased estimate of the input coin's probability of heads (&lambda;), such as by flipping the coin many times and averaging the results;
 2. calculating _v_ = _f_(&lambda;);
 3. generating a uniform random number in [0,1], call it _u_; and
 4. returning 1 if _u_ is less than _v_, or 0 otherwise,
 
-will simulate the probability _f_(&lambda;) in theory.  In practice, however, this method is prone to numerous errors, including errors in the estimate in step 1, and rounding and approximation errors in steps 2 and 3.  For this reason and also because "exact sampling" is the focus of this page, this document does not cover algorithms that directly estimate &lambda; (such as in step 1). As (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
+will simulate the probability _f_(&lambda;) in theory.  In practice, however, this method is prone to numerous errors, including estimation error in step 1, and rounding and approximation errors in steps 2 and 3.  For this reason and also because "exact sampling" is the focus of this page, this document does not cover algorithms that directly estimate &lambda; (such as in step 1). As (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup> says: "The difficulty here is that [&lambda;] is unknown.  It is easy to estimate [&lambda;], and therefore [_f_(&lambda;)].  However, to get a coin with an exact bias [_f_(&lambda;)] is harder", and that is what Bernoulli factory algorithms are designed to do.
 
 As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(6)**](#Note6)</sup>, however, if _f_(&lambda;) can't serve as a factory function, no unbiased probability estimator of that function is possible, since sampling it isn't possible.  For example, function A can't serve as a factory function, so no simulator (or unbiased probability estimator) for that function is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 
@@ -1252,7 +1252,7 @@ The following algorithm generates a random number that follows the von Neumann s
 3. With probability V(_G_)/_G_!, return _G_ (or _r_ if desired).  (In practice, the probability check is done by generating _G_ uniform random numbers and determining whether those numbers satisfy the given permutation class, or generating as many of those numbers as necessary to make this determination.  This is especially because _G_!, the factorial of _G_, can easily become very large.)
 4. Add 1 to _r_ and go to step 2.
 
-The following Python functions use the SymPy computer algebra library to find probabilities and other useful information for applying the von Neumann schema, given a permutation class's EGF.
+A variety of Bernoulli factory probability functions can arise from the von Neumann schema, depending on the EGF and which values of _G_ and/or _r_ the Bernoulli factory algorithm treats as heads or tails.  The following Python functions use the SymPy computer algebra library to find probabilities and other useful information for applying the von Neumann schema, given a permutation class's EGF.
 
 ```
 def coeffext(f, x, power):

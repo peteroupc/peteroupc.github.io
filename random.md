@@ -281,7 +281,7 @@ It is not recommended to seed PRNGs with timestamps, since they can carry the ri
 
 Some applications require multiple processes (including threads, tasks, or subtasks) to use [**reproducible "random" numbers**](#Manually_Seeded_PRNGs) for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.
 
-To reduce this correlation risk, the application can choose a [**high-quality PRNG that supports _streams_**](https://peteroupc.github.io/hqprng.md#prngs-with-stream-support) of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different _stream_ to each process.  For example, in some PRNGs, these _streams_ can be formed&mdash;
+To reduce this correlation risk, the application can choose a [**high-quality PRNG that supports _streams_**](https://peteroupc.github.io/hqprng.html#prngs-with-stream-support) of uncorrelated sequences (sequences that behave like independent random number sequences and don't overlap) and has an efficient way to assign a different _stream_ to each process.  For example, in some PRNGs, these _streams_ can be formed&mdash;
 
 - by initializing PRNGs with consecutive seeds (as in "counter-based" PRNGs (Salmon et al. 2011)<sup>[**(16)**](#Note16)</sup>), or
 - by discarding a fixed but huge number of PRNG outputs in an efficient way ("[**jump-ahead**](https://peteroupc.github.io/jump.html)").

@@ -403,7 +403,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>Some applications require multiple processes (including threads, tasks, or subtasks) to use <a href="#Manually_Seeded_PRNGs"><strong>reproducible &quot;random&quot; numbers</strong></a> for the same purpose.  An example is multiple instances of a simulation with random starting conditions.  However, noncryptographic PRNGs tend to produce number sequences that are correlated to each other, which is undesirable for simulations in particular.</p>
 
-<p>To reduce this correlation risk, the application can choose a <a href="https://peteroupc.github.io/hqprng.md#prngs-with-stream-support"><strong>high-quality PRNG that supports <em>streams</em></strong></a> of uncorrelated sequences (sequences that behave like independent random number sequences and don&#39;t overlap) and has an efficient way to assign a different <em>stream</em> to each process.  For example, in some PRNGs, these <em>streams</em> can be formed&mdash;</p>
+<p>To reduce this correlation risk, the application can choose a <a href="https://peteroupc.github.io/hqprng.html#prngs-with-stream-support"><strong>high-quality PRNG that supports <em>streams</em></strong></a> of uncorrelated sequences (sequences that behave like independent random number sequences and don&#39;t overlap) and has an efficient way to assign a different <em>stream</em> to each process.  For example, in some PRNGs, these <em>streams</em> can be formed&mdash;</p>
 
 <ul>
 <li>by initializing PRNGs with consecutive seeds (as in &quot;counter-based&quot; PRNGs (Salmon et al. 2011)<sup><a href="#Note16"><strong>(16)</strong></a></sup>), or</li>
