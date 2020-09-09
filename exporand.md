@@ -213,14 +213,14 @@ The following is a simpler way to implement **URandLessThanReal** when **a** is 
 The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is a fraction known by its numerator and denominator, _num_/_den_.
 
 1. If the PSRN's integer part or sign is unsampled, if **a** is negative or its integer part is other than 0, or if _den_ is 0, return an error.  If _num_ and _den_ are both less than 0, set them to their absolute values.  If _num_ is 0, or if _num_ < 0 or _den_ < 0, return 0.  If _num_ >= _den_, return 1.
-2. Set _pt_ to 1, and set _i_ to 0.
+2. Set _pt_ to _base_, and set _i_ to 0.
 3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
-4. Set _c_ to 1 if _num_ * _base_<sup>_pt_</sup> >= _den_, and 0 otherwise.
-5. Set _d2_ to floor(_num_ * _base_<sup>_pt_</sup> / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
+4. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.
+5. Set _d2_ to floor(_num_ * _pt_ / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
 6. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
-7. If _c_ is 1, set _num_ to _num_ * _base_<sup>_pt_</sup> &minus; _den_, then multiply _den_ by _base_<sup>_pt_</sup>.
+7. If _c_ is 1, set _num_ to _num_ * _pt_ &minus; _den_, then multiply _den_ by _pt_.
 8. If _num_ is 0, return 0.
-9. Add 1 to _pt_, add 1 to _i_, and go to step 3.
+9. Multiply _pt_ by _base_, add 1 to _i_, and go to step 3.
 
 <a id=Arithmetic></a>
 ### Arithmetic

@@ -288,14 +288,14 @@
 
 <ol>
 <li>If the PSRN&#39;s integer part or sign is unsampled, if <strong>a</strong> is negative or its integer part is other than 0, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
-<li>Set <em>pt</em> to 1, and set <em>i</em> to 0.</li>
+<li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0.</li>
 <li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
-<li>Set <em>c</em> to 1 if <em>num</em> * <em>base</em><sup><em>pt</em></sup> &gt;= <em>den</em>, and 0 otherwise.</li>
-<li>Set <em>d2</em> to floor(<em>num</em> * <em>base</em><sup><em>pt</em></sup> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
+<li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
+<li>Set <em>d2</em> to floor(<em>num</em> * <em>pt</em> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
 <li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
-<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>base</em><sup><em>pt</em></sup> &minus; <em>den</em>, then multiply <em>den</em> by <em>base</em><sup><em>pt</em></sup>.</li>
+<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>pt</em> &minus; <em>den</em>, then multiply <em>den</em> by <em>pt</em>.</li>
 <li>If <em>num</em> is 0, return 0.</li>
-<li>Add 1 to <em>pt</em>, add 1 to <em>i</em>, and go to step 3.</li>
+<li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
 </ol>
 
 <p><a id=Arithmetic></a></p>

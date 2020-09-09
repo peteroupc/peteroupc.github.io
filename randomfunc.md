@@ -603,12 +603,16 @@ Example criteria include checking&mdash;
     - was not chosen more often in a row than desired, or
     - is not included in a "blacklist" of numbers,
 - whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
+- whether a random point lies in a simple or complex shape,
 - whether a random string matches a regular expression, or
 - two or more of the foregoing criteria.
 
 (KD-trees, hash tables, red&ndash;black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
 
-> **Note:** All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(12)**](#Note12)</sup>
+> **Notes:**
+>
+> 1. The running time for rejection sampling depends on the acceptance rate, that is, how often the sampler accepts a sampled outcome rather than rejecting it.  In general, this rate is the number of acceptable outcomes divided by the total number of outcomes.
+> 2. All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(12)**](#Note12)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks

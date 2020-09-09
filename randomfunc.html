@@ -786,6 +786,7 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <li>is not included in a &quot;blacklist&quot; of numbers,</li>
 </ul></li>
 <li>whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),</li>
+<li>whether a random point lies in a simple or complex shape,</li>
 <li>whether a random string matches a regular expression, or</li>
 <li>two or more of the foregoing criteria.</li>
 </ul>
@@ -793,7 +794,12 @@ list by <code>RandomKItemsInOrder(list, n - k)</code>.</li>
 <p>(KD-trees, hash tables, red&ndash;black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)</p>
 
 <blockquote>
-<p><strong>Note:</strong> All rejection sampling strategies have a chance to reject data, so they all have a <em>variable running time</em> (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note12"><strong>(12)</strong></a></sup></p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The running time for rejection sampling depends on the acceptance rate, that is, how often the sampler accepts a sampled outcome rather than rejecting it.  In general, this rate is the number of acceptable outcomes divided by the total number of outcomes.</li>
+<li>All rejection sampling strategies have a chance to reject data, so they all have a <em>variable running time</em> (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn&#39;t been rejected this way by a task (which can fail at a very low rate).<sup><a href="#Note12"><strong>(12)</strong></a></sup></li>
+</ol>
 </blockquote>
 
 <p><a id=Random_Walks></a></p>
