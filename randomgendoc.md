@@ -682,6 +682,38 @@ CLASSES
      |
      |  gaussian_copula(self, cov)
      |
+     |  gbas(self, coin, k=385)
+     |      Estimates the bias of a coin.  GBAS = Gamma Bernoulli approximation scheme.
+     |      The algorithm is simple to describe: "Flip a coin until it shows heads
+     |         _k_ times.  The estimated bias is then `(k-1)/GammaDist(r, 1)`,
+     |         where _r_ is the total number of coin flips."
+     |      Reference: Huber, M., "An unbiased estimate for
+     |      the probability of heads on a coin where the relative error has a
+     |      distribution independent of the coin", arXiv:1309.5413v2  [math.ST], 2015.)
+     |      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+     |      k: Number of times the coin must return 1 (heads) before the estimation
+     |          stops.
+     |          To ensure an estimate whose relative error's absolute value exceeds
+     |          epsilon with probability at most delta, calculate the smallest
+     |          k such that:
+     |             gammainc(k,(k-1)/(1+epsilon)) +
+     |                 (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
+     |          (where gammainc is the regularized lower incomplete gamma function,
+     |          implemented, e.g., as scipy.special.gammainc), and set this parameter
+     |          to the calculated k value or higher.
+     |          The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
+     |          probability at most 0.05 (delta).
+     |          A simpler suggestion is k>=ceiling(-6*ln(2/delta)/((epsilon**2)*(4*epsilon-3))).
+     |          For both suggestions, epsilon is in the interval (0, 3/4) and delta is in (0, 1).
+     |          Note: "14/3" in the paper should probably read "4/3".
+     |
+     |  gbas01(self, coin, k=385)
+     |      Estimates the mean of a random variable lying in [0, 1].
+     |      This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
+     |      number is less the result of the given function or 0 otherwise.
+     |      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+     |      k: See gbas.
+     |
      |  geoellipsoid_point(self, a=6378.137, invf=298.2572236)
      |      Generates an independent and uniform random
      |      point on the surface of a geoellipsoid.  The

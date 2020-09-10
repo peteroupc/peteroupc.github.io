@@ -3139,6 +3139,46 @@ acap - Optional.  A setting used in the optimization process; an
         lat = math.atan2(math.sqrt(1 - latx * latx), latx) - math.pi * 0.5
         return [lat, lon]
 
+    def gbas(self, coin, k=385):
+        """Estimates the bias of a coin.  GBAS = Gamma Bernoulli approximation scheme.
+      The algorithm is simple to describe: "Flip a coin until it shows heads
+         _k_ times.  The estimated bias is then `(k-1)/GammaDist(r, 1)`,
+         where _r_ is the total number of coin flips."
+      Reference: Huber, M., "An unbiased estimate for
+      the probability of heads on a coin where the relative error has a
+      distribution independent of the coin", arXiv:1309.5413v2  [math.ST], 2015.)
+      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+      k: Number of times the coin must return 1 (heads) before the estimation
+          stops.
+          To ensure an estimate whose relative error's absolute value exceeds
+          epsilon with probability at most delta, calculate the smallest
+          k such that:
+             gammainc(k,(k-1)/(1+epsilon)) +
+                 (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
+          (where gammainc is the regularized lower incomplete gamma function,
+          implemented, e.g., as scipy.special.gammainc), and set this parameter
+          to the calculated k value or higher.
+          The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
+          probability at most 0.05 (delta).
+          A simpler suggestion is k>=ceiling(-6*ln(2/delta)/((epsilon**2)*(4*epsilon-3))).
+          For both suggestions, epsilon is in the interval (0, 3/4) and delta is in (0, 1).
+          Note: "14/3" in the paper should probably read "4/3".
+    """
+        r = 0
+        h = 0
+        while h < k:
+            h += coin()
+            r += 1
+        return (k - 1) / self.gamma(r, 1)
+
+    def gbas01(self, coin, k=385):
+        """ Estimates the mean of a random variable lying in [0, 1].
+      This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
+      number is less the result of the given function or 0 otherwise.
+      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+      k: See gbas. """
+        return gbas(lambda: (1 if self.rndu01() < coin() else 0), k)
+
     def _getSolTable(self, n, mn, mx, sum):
         t = [[0 for i in range(sum + 1)] for j in range(n + 1)]
         t[0][0] = 1
