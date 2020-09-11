@@ -37,8 +37,8 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**exp(&lambda; * _c_ &minus; _c_)**](#exp_lambda__c__minus__c)
         - [**exp(&minus;&lambda; &minus; _c_)**](#exp_minus_lambda_minus__c)
         - [**1/(1+&lambda;)**](#1_1_lambda)
-        - [**log(1+&lambda;)**](#log_1_lambda)
-        - [**1 &minus; log(1+&lambda;)**](#1_minus_log_1_lambda)
+        - [**ln(1+&lambda;)**](#ln_1_lambda)
+        - [**1 &minus; ln(1+&lambda;)**](#1_minus_ln_1_lambda)
         - [**_c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))**](#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d)
         - [**_c_ * &lambda; / (_c_ * &lambda; + _d_) or (_c_/_d_) * &lambda; / (1 + (_c_/_d_) * &lambda;))**](#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda)
         - [**1 / (_c_ + &lambda;)**](#1__c__lambda)
@@ -302,8 +302,8 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 1. With probability 1/2, return 1. (For example, generate an unbiased random bit and return 1 if that bit is 1.)
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
 
-<a id=log_1_lambda></a>
-#### log(1+&lambda;)
+<a id=ln_1_lambda></a>
+#### ln(1+&lambda;)
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
@@ -319,10 +319,10 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 2. With probability 1/2, flip the input coin and return the result.
 3. Call **SampleGeometricBag** on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
-<a id=1_minus_log_1_lambda></a>
-#### 1 &minus; log(1+&lambda;)
+<a id=1_minus_ln_1_lambda></a>
+#### 1 &minus; ln(1+&lambda;)
 
-Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it's 0 and vice versa).<sup>[**(11)**](#Note11)</sup>
+Invert the result of the algorithm for ln(1+&lambda;) (make it 1 if it's 0 and vice versa).<sup>[**(11)**](#Note11)</sup>
 
 <a id=c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d></a>
 #### _c_ * &lambda; * &beta; / (&beta; * (_c_ * &lambda; + _d_ * &mu;) &minus; (&beta; &minus; 1) * (_c_ + _d_))
@@ -1024,7 +1024,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 | (2/3)\*x/(1+(2/3)\*x) | ![**Simulated Mean for (2/3)\*x/(1+(2/3)\*x)**](bernoullicharts/2_3_x_1_2_3_x__mean.svg) | ![**Expected Bits Consumed by (2/3)\*x/(1+(2/3)\*x)**](bernoullicharts/2_3_x_1_2_3_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/2_3_x_1_2_3_x__bound.svg) |
 | (3/2)\*x/(1+(3/2)\*x) | ![**Simulated Mean for (3/2)\*x/(1+(3/2)\*x)**](bernoullicharts/3_2_x_1_3_2_x__mean.svg) | ![**Expected Bits Consumed by (3/2)\*x/(1+(3/2)\*x)**](bernoullicharts/3_2_x_1_3_2_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/3_2_x_1_3_2_x__bound.svg) |
 | 0.5\*x/(1+0.5\*x) | ![**Simulated Mean for 0.5\*x/(1+0.5\*x)**](bernoullicharts/0_5_x_1_0_5_x__mean.svg) | ![**Expected Bits Consumed by 0.5\*x/(1+0.5\*x)**](bernoullicharts/0_5_x_1_0_5_x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/0_5_x_1_0_5_x__bound.svg) |
-| 1 - log(1+x) (Alt. Series) | ![**Simulated Mean for 1 - log(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_-_log_1_x_alt_series__bound.svg) |
+| 1 - ln(1+x) (Alt. Series) | ![**Simulated Mean for 1 - ln(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1 - ln(1+x) (Alt. Series)**](bernoullicharts/1_-_log_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_-_log_1_x_alt_series__bound.svg) |
 | 1/(1+x) (Alt. Series) | ![**Simulated Mean for 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Alt. Series)**](bernoullicharts/1_1_x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_alt_series__bound.svg) |
 | 1/(1+x) (Even Parity) | ![**Simulated Mean for 1/(1+x) (Even Parity)**](bernoullicharts/1_1_x_even_parity__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Even Parity)**](bernoullicharts/1_1_x_even_parity__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_even_parity__bound.svg) |
 | 1/(1+x) (Two-Coin Special Case) | ![**Simulated Mean for 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by 1/(1+x) (Two-Coin Special Case)**](bernoullicharts/1_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/1_1_x_two-coin_special_case__bound.svg) |
@@ -1065,8 +1065,8 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 | exp(-x) (Alt. Series) | ![**Simulated Mean for exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Alt. Series)**](bernoullicharts/exp_-x_alt_series__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/exp_-x_alt_series__bound.svg) |
 | exp(-x) (Flajolet) | ![**Simulated Mean for exp(-x) (Flajolet)**](bernoullicharts/exp_-x_flajolet__mean.svg) | ![**Expected Bits Consumed by exp(-x) (Flajolet)**](bernoullicharts/exp_-x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/exp_-x_flajolet__bound.svg) |
 | exp(x)\*(1-x) | ![**Simulated Mean for exp(x)\*(1-x)**](bernoullicharts/exp_x_1-x__mean.svg) | ![**Expected Bits Consumed by exp(x)\*(1-x)**](bernoullicharts/exp_x_1-x__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/exp_x_1-x__bound.svg) |
-| log(1+x) (Flajolet) | ![**Simulated Mean for log(1+x) (Flajolet)**](bernoullicharts/log_1_x_flajolet__mean.svg) | ![**Expected Bits Consumed by log(1+x) (Flajolet)**](bernoullicharts/log_1_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/log_1_x_flajolet__bound.svg) |
-| log(1+x) (Two-Coin Special Case) | ![**Simulated Mean for log(1+x) (Two-Coin Special Case)**](bernoullicharts/log_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by log(1+x) (Two-Coin Special Case)**](bernoullicharts/log_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/log_1_x_two-coin_special_case__bound.svg) |
+| ln(1+x) (Flajolet) | ![**Simulated Mean for ln(1+x) (Flajolet)**](bernoullicharts/log_1_x_flajolet__mean.svg) | ![**Expected Bits Consumed by ln(1+x) (Flajolet)**](bernoullicharts/log_1_x_flajolet__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/log_1_x_flajolet__bound.svg) |
+| ln(1+x) (Two-Coin Special Case) | ![**Simulated Mean for ln(1+x) (Two-Coin Special Case)**](bernoullicharts/log_1_x_two-coin_special_case__mean.svg) | ![**Expected Bits Consumed by ln(1+x) (Two-Coin Special Case)**](bernoullicharts/log_1_x_two-coin_special_case__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/log_1_x_two-coin_special_case__bound.svg) |
 | pow(x,1/3) | ![**Simulated Mean for pow(x,1/3)**](bernoullicharts/pow_x_1_3__mean.svg) | ![**Expected Bits Consumed by pow(x,1/3)**](bernoullicharts/pow_x_1_3__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/pow_x_1_3__bound.svg) |
 | pow(x,2/1) | ![**Simulated Mean for pow(x,2/1)**](bernoullicharts/pow_x_2_1__mean.svg) | ![**Expected Bits Consumed by pow(x,2/1)**](bernoullicharts/pow_x_2_1__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/pow_x_2_1__bound.svg) |
 | pow(x,2/4) | ![**Simulated Mean for pow(x,2/4)**](bernoullicharts/pow_x_2_4__mean.svg) | ![**Expected Bits Consumed by pow(x,2/4)**](bernoullicharts/pow_x_2_4__bits.svg) | ![**Coin Flips for the Function**](bernoullicharts/pow_x_2_4__bound.svg) |

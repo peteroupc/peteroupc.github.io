@@ -383,15 +383,22 @@ The power-of-uniform algorithm is as follows:
 All the building blocks are now in place to describe a _new_ algorithm to sample the beta distribution, described as follows.  It takes three parameters: _a_ >= 1 and _b_ >= 1 (or one parameter is 1 and the other is greater than 0 in the binary case) are the parameters to the beta distribution, and _p_ > 0 is a precision parameter.
 
 1. Special cases:
-    - If _a_ = 1 and _b_ = 1, return a uniform random number whose fractional part has _p_ digits (for example, in the binary case, RandomBits(_p_) / 2<sup>_p_</sup> where `RandomBits(x)` returns an x-bit block of unbiased random bits).
-    - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`, and fill it as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag** above).
-    - In the binary case, if _a_ is 1 and _b_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to 1.
-    - In the binary case, if _b_ is 1 and _a_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to 0.
-2. Create an empty list to serve as a "geometric bag".  Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given geometric bag.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given geometric bag.
-3. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
-4. Call the **algorithm for &lambda;<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _a_ &minus; 1)/1 (thus returning with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 3.
-5. Call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = (_b_ &minus; 1)/1 (thus returning 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
-6. _U_ was accepted, so return the result of **FillGeometricBag**.
+    - If _a_ = 1 and _b_ = 1, return an empty geometric bag.
+    - If _a_ and _b_ are both integers, return the result of **kthsmallest** with `n = a - b + 1` and `k = a`
+    - In the binary case, if _a_ is 1 and _b_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_b_, and the _complement_ flag set to 1 (and in the form of a geometric bag).
+    - In the binary case, if _b_ is 1 and _a_ is less than 1, return the result of the **power-of-uniform sub-algorithm** described below, with _px_/_py_ = 1/_a_, and the _complement_ flag set to 0 (and in the form of a geometric bag).
+2. If _a_ > 2 and _b_ > 2, do the following steps, which split _a_ and _b_ into two parts that are faster to simulate (and implement the generalized rejection strategy in (Devroye 1986, top of page 47)<sup>[**(17)**](#Note17)</sup>):
+    1. Set _aintpart_ to floor(_a_) &minus; 1, set _bintpart_ to floor(_b_) &minus; 1, set _arest_ to _a_ &minus; _aintpart_, and set _brest_ to _b_ minus _bintpart_.
+    2. Run this algorithm recursively, but with _a_ = _aintpart_ and _b_ = _bintpart_. Set _bag_ to the geometric bag created by the run.
+    3. Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given geometric bag.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given geometric bag.
+    4. Call the **algorithm for &lambda;<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _arest_/1, then call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = _brest_/1. If both calls return 1, return _bag_. Otherwise, go to substep 2.
+3. Create an empty list to serve as a "geometric bag".  Create an input coin _geobag_ that returns the result of **SampleGeometricBag** using the given geometric bag.  Create another input coin _geobagcomp_ that returns the result of **SampleGeometricBagComplement** using the given geometric bag.
+4. Remove all digits from the geometric bag.  This will result in an empty uniform random number, _U_, for the following steps, which will accept _U_ with probability _U_<sup>a&minus;1</sup>*(1&minus;_U_)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+5. Call the **algorithm for &lambda;<sup>_x_/_y_</sup>**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the _geobag_ input coin and _x_/_y_ = _a_ &minus; 1)/1 (thus returning with probability _U_<sup>a&minus;1</sup>).  If the result is 0, go to step 4.
+6. Call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = (_b_ &minus; 1)/1 (thus returning 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that this step and the previous step don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
+7. _U_ was accepted, so return the result of **FillGeometricBag**.
+
+Once a geometric bag is accepted by the steps above, either return the geometric bag as is or fill the unsampled digits of the bag with uniform random digits as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag**), then return the resulting number.
 
 Note that a beta(1/_x_, 1) random number is the same as a uniform random number raised to the power of _x_.
 
@@ -443,21 +450,25 @@ def _toreal(ret, precision):
         # is merely for convenience.
         return ret*1.0/(1<<precision)
 
+def _urand_to_geobag(bag):
+  return [(bag[0]>>(bag[1]-1-i))&1 for i in range(bag[1])]
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
+    return bern.fill_geometric_bag(
+        _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision
+    )
+
+def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False, precision=53):
    if power<1:
      raise ValueError("Not supported")
    if power==1:
-     bag=[]
-     return bern.fill_geometric_bag(bag, precision)
+        return []  # Empty uniform random number
    i=1
    powerfrac=Fraction(power)
    powerrest=Fraction(1) - Fraction(1)/powerfrac
    # Choose an interval
    while bern.zero_or_one_power_ratio(1,2,
          powerfrac.denominator,powerfrac.numerator) == 1:
-      if i>=precision:
-          # Precision limit reached, so equivalent to endpoint
-         return 1.0 if complement else 0.0
       i+=1
    epsdividend = Fraction(1)/(powerfrac * 2**i)
    # -- A choice for epsdividend which makes eps_div
@@ -479,8 +490,7 @@ def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
       if bern.eps_div(bf, epsdividend) == 1:
           # Flip all bits if complement is true
           bag=[x if x==None else 1-x for x in bag] if complement else bag
-          ret=bern.fill_geometric_bag(bag, precision)
-          return ret
+          return bag
 
 def powerOfUniform(b, px, py, precision=53):
         # Special case of beta, returning power of px/py
@@ -488,54 +498,71 @@ def powerOfUniform(b, px, py, precision=53):
         # is in (0, 1].
         return betadist(b, py, px, 1, 1, precision)
 
-def betadist(b, ax, ay, bx, by, precision=53):
-        # Beta distribution for alpha>=1 and beta>=1
-        bag=[]
-        bpower=Fraction(bx, by)-1
-        apower=Fraction(ax, ay)-1
-        # Special case for a=b=1
-        if bpower==0 and apower==0:
-           return _toreal(random.randint(0, (1<<precision)-1), 1<<precision)
-        # Special case if a=1
-        if apower==0 and bpower<0:
-           return _power_of_uniform_greaterthan1(b, Fraction(by, bx), True, precision)
-        # Special case if b=1
-        if bpower==0 and apower<0:
-           return _power_of_uniform_greaterthan1(b, Fraction(ay, ax), False, precision)
-        # Special case if a and b are integers
-        if int(bpower) == bpower and int(apower) == apower:
-           a=int(Fraction(ax, ay))
-           b=int(Fraction(bx, by))
-           return _toreal(RandomGen().kthsmallest(a+b-1,a, \
-                  precision), precision)
-        if apower<=-1 or bpower<=-1: raise ValueError
-        # Create a "geometric bag" to hold a uniform random
-        # number (U), described by Flajolet et al. 2010
-        gb=lambda: b.geometric_bag(bag)
-        # Complement of "geometric bag"
-        gbcomp=lambda: b.geometric_bag(bag)^1
-        bPowerBigger=(bpower > apower)
+    return b.fill_geometric_bag(
+        betadist_geobag(b, ax, ay, bx, by), precision
+    )
+
+def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
+    """ Generates a beta-distributed random number with arbitrary
+          (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
+          (bx/by) are both 1 or greater, or if one of these parameters is
+         1 and the other is less than 1.
+         - b: Bernoulli object (from the "bernoulli" module).
+         - ax, ay: Numerator and denominator of first shape parameter.
+         - bx, by: Numerator and denominator of second shape parameter.
+         - precision: Number of bits after the point that the result will contain.
+        """
+    # Beta distribution for alpha>=1 and beta>=1
+    bag = []
+    afrac=(Fraction(ax) if ay==1 else Fraction(ax, ay))
+    bfrac=(Fraction(bx) if by==1 else Fraction(bx, by))
+    bpower = bfrac - 1
+    apower = afrac - 1
+    # Special case for a=b=1
+    if bpower == 0 and apower == 0:
+        return bag
+    # Special case if a=1
+    if apower == 0 and bpower < 0:
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(by, bx), True)
+    # Special case if b=1
+    if bpower == 0 and apower < 0:
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(ay, ax), False)
+    if apower <= -1 or bpower <= -1:
+        raise ValueError
+    # Special case if a and b are integers
+    if int(bpower) == bpower and int(apower) == apower:
+        a = int(afrac)
+        b = int(bfrac)
+        return _urand_to_geobag(randomgen.RandomGen().kthsmallest_urand(a + b - 1, a))
+    # Split a and b into two parts which are relatively trivial to simulate
+    if bfrac > 2 and afrac > 2:
+        bintpart = int(bfrac) - 1
+        aintpart = int(afrac) - 1
+        brest = bfrac - bintpart
+        arest = afrac - aintpart
+        # Generalized rejection method, p. 47
         while True:
-           # Create a uniform random number (U) bit-by-bit, and
-           # accept it with probability U^(a-1)*(1-U)^(b-1), which
-           # is the unnormalized PDF of the beta distribution
-           bag.clear()
-           r=1
-           if bPowerBigger:
-             # Produce 1 with probability (1-U)^(b-1)
-             r=b.power(gbcomp, bpower)
-             # Produce 1 with probability U^(a-1)
-             if r==1: r=b.power(gb, apower)
-           else:
-             # Produce 1 with probability U^(a-1)
-             r=b.power(gb, apower)
-             # Produce 1 with probability (1-U)^(b-1)
-             if r==1: r=b.power(gbcomp, bpower)
-           if r == 1:
-                 # Accepted, so fill up the "bag" and return the
-                 # uniform number
-                 ret=_fill_geometric_bag(b, bag, precision)
-                 return ret
+           bag = betadist_geobag(b, aintpart, 1, bintpart, 1)
+           gb = lambda: b.geometric_bag(bag)
+           gbcomp = lambda: b.geometric_bag(bag) ^ 1
+           if (b.power(gbcomp, brest)==1 and \
+              b.power(gb, arest)==1):
+              return bag
+    # Create a "geometric bag" to hold a uniform random
+    # number (U), described by Flajolet et al. 2010
+    gb = lambda: b.geometric_bag(bag)
+    # Complement of "geometric bag"
+    gbcomp = lambda: b.geometric_bag(bag) ^ 1
+    bp1=lambda: (1 if b.power(gbcomp, bpower)==1 and \
+            b.power(gb, apower)==1 else 0)
+    while True:
+        # Create a uniform random number (U) bit-by-bit, and
+        # accept it with probability U^(a-1)*(1-U)^(b-1), which
+        # is the unnormalized PDF of the beta distribution
+        bag.clear()
+        if bp1() == 1:
+            # Accepted
+            return ret
 
 def _fill_geometric_bag(b, bag, precision):
         ret=0

@@ -53,8 +53,8 @@
 <li><a href="#exp_lambda__c__minus__c"><strong>exp(&lambda; * <em>c</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#exp_minus_lambda_minus__c"><strong>exp(&minus;&lambda; &minus; <em>c</em>)</strong></a></li>
 <li><a href="#1_1_lambda"><strong>1/(1+&lambda;)</strong></a></li>
-<li><a href="#log_1_lambda"><strong>log(1+&lambda;)</strong></a></li>
-<li><a href="#1_minus_log_1_lambda"><strong>1 &minus; log(1+&lambda;)</strong></a></li>
+<li><a href="#ln_1_lambda"><strong>ln(1+&lambda;)</strong></a></li>
+<li><a href="#1_minus_ln_1_lambda"><strong>1 &minus; ln(1+&lambda;)</strong></a></li>
 <li><a href="#c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d"><strong><em>c</em> * &lambda; * &beta; / (&beta; * (<em>c</em> * &lambda; + <em>d</em> * &mu;) &minus; (&beta; &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c__lambda__c__lambda__d__or__c___d__lambda_1__c___d__lambda"><strong><em>c</em> * &lambda; / (<em>c</em> * &lambda; + <em>d</em>) or (<em>c</em>/<em>d</em>) * &lambda; / (1 + (<em>c</em>/<em>d</em>) * &lambda;))</strong></a></li>
 <li><a href="#1__c__lambda"><strong>1 / (<em>c</em> + &lambda;)</strong></a></li>
@@ -383,9 +383,9 @@
 <li>Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p><a id=log_1_lambda></a></p>
+<p><a id=ln_1_lambda></a></p>
 
-<h4>log(1+&lambda;)</h4>
+<h4>ln(1+&lambda;)</h4>
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
@@ -405,11 +405,11 @@
 <li>Call <strong>SampleGeometricBag</strong> on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p><a id=1_minus_log_1_lambda></a></p>
+<p><a id=1_minus_ln_1_lambda></a></p>
 
-<h4>1 &minus; log(1+&lambda;)</h4>
+<h4>1 &minus; ln(1+&lambda;)</h4>
 
-<p>Invert the result of the algorithm for log(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).<sup><a href="#Note11"><strong>(11)</strong></a></sup></p>
+<p>Invert the result of the algorithm for ln(1+&lambda;) (make it 1 if it&#39;s 0 and vice versa).<sup><a href="#Note11"><strong>(11)</strong></a></sup></p>
 
 <p><a id=c__lambda_beta_beta__c__lambda__d__mu_minus_beta_minus_1__c___d></a></p>
 
@@ -1379,9 +1379,9 @@
 <td><img src="bernoullicharts/0_5_x_1_0_5_x__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
-<td>1 - log(1+x) (Alt. Series)</td>
-<td><img src="bernoullicharts/1_-_log_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1 - log(1+x) (Alt. Series)**"></td>
-<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1 - log(1+x) (Alt. Series)**"></td>
+<td>1 - ln(1+x) (Alt. Series)</td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__mean.svg" alt="**Simulated Mean for 1 - ln(1+x) (Alt. Series)**"></td>
+<td><img src="bernoullicharts/1_-_log_1_x_alt_series__bits.svg" alt="**Expected Bits Consumed by 1 - ln(1+x) (Alt. Series)**"></td>
 <td><img src="bernoullicharts/1_-_log_1_x_alt_series__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
@@ -1625,15 +1625,15 @@
 <td><img src="bernoullicharts/exp_x_1-x__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
-<td>log(1+x) (Flajolet)</td>
-<td><img src="bernoullicharts/log_1_x_flajolet__mean.svg" alt="**Simulated Mean for log(1+x) (Flajolet)**"></td>
-<td><img src="bernoullicharts/log_1_x_flajolet__bits.svg" alt="**Expected Bits Consumed by log(1+x) (Flajolet)**"></td>
+<td>ln(1+x) (Flajolet)</td>
+<td><img src="bernoullicharts/log_1_x_flajolet__mean.svg" alt="**Simulated Mean for ln(1+x) (Flajolet)**"></td>
+<td><img src="bernoullicharts/log_1_x_flajolet__bits.svg" alt="**Expected Bits Consumed by ln(1+x) (Flajolet)**"></td>
 <td><img src="bernoullicharts/log_1_x_flajolet__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>
-<td>log(1+x) (Two-Coin Special Case)</td>
-<td><img src="bernoullicharts/log_1_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for log(1+x) (Two-Coin Special Case)**"></td>
-<td><img src="bernoullicharts/log_1_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by log(1+x) (Two-Coin Special Case)**"></td>
+<td>ln(1+x) (Two-Coin Special Case)</td>
+<td><img src="bernoullicharts/log_1_x_two-coin_special_case__mean.svg" alt="**Simulated Mean for ln(1+x) (Two-Coin Special Case)**"></td>
+<td><img src="bernoullicharts/log_1_x_two-coin_special_case__bits.svg" alt="**Expected Bits Consumed by ln(1+x) (Two-Coin Special Case)**"></td>
 <td><img src="bernoullicharts/log_1_x_two-coin_special_case__bound.svg" alt="**Coin Flips for the Function**"></td>
 </tr>
 <tr>

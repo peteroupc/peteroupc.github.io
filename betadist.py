@@ -17,6 +17,9 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
+def _urand_to_geobag(bag):
+    return [(bag[0] >> (bag[1] - 1 - i)) & 1 for i in range(bag[1])]
+
 def _geobag_to_urand(bag):
     bagc = 0
     bagv = 0
@@ -99,6 +102,9 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
             k += 1
 
 def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
+    return b.fill_geometric_bag(betadist_geobag(b, ax, ay, bx, by), precision)
+
+def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     """ Generates a beta-distributed random number with arbitrary
           (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
           (bx/by) are both 1 or greater, or if one of these parameters is
@@ -110,50 +116,52 @@ def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
         """
     # Beta distribution for alpha>=1 and beta>=1
     bag = []
-    bpower = Fraction(bx, by) - 1
-    apower = Fraction(ax, ay) - 1
+    afrac = Fraction(ax) if ay == 1 else Fraction(ax, ay)
+    bfrac = Fraction(bx) if by == 1 else Fraction(bx, by)
+    bpower = bfrac - 1
+    apower = afrac - 1
     # Special case for a=b=1
     if bpower == 0 and apower == 0:
-        return _toreal(random.randint(0, (1 << precision) - 1), 1 << precision)
+        return bag
     # Special case if a=1
     if apower == 0 and bpower < 0:
-        return _power_of_uniform_greaterthan1(b, Fraction(by, bx), True, precision)
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(by, bx), True)
     # Special case if b=1
     if bpower == 0 and apower < 0:
-        return _power_of_uniform_greaterthan1(b, Fraction(ay, ax), False, precision)
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(ay, ax), False)
     if apower <= -1 or bpower <= -1:
         raise ValueError
     # Special case if a and b are integers
     if int(bpower) == bpower and int(apower) == apower:
-        a = int(Fraction(ax, ay))
-        b = int(Fraction(bx, by))
-        return _toreal(RandomGen().kthsmallest(a + b - 1, a, precision), precision)
+        a = int(afrac)
+        b = int(bfrac)
+        return _urand_to_geobag(randomgen.RandomGen().kthsmallest_urand(a + b - 1, a))
+    # Split a and b into two parts which are relatively trivial to simulate
+    if bfrac > 2 and afrac > 2:
+        bintpart = int(bfrac) - 1
+        aintpart = int(afrac) - 1
+        brest = bfrac - bintpart
+        arest = afrac - aintpart
+        # Generalized rejection method, p. 47
+        while True:
+            bag = betadist_geobag(b, aintpart, 1, bintpart, 1)
+            gb = lambda: b.geometric_bag(bag)
+            gbcomp = lambda: b.geometric_bag(bag) ^ 1
+            if b.power(gbcomp, brest) == 1 and b.power(gb, arest) == 1:
+                return bag
     # Create a "geometric bag" to hold a uniform random
     # number (U), described by Flajolet et al. 2010
     gb = lambda: b.geometric_bag(bag)
     # Complement of "geometric bag"
     gbcomp = lambda: b.geometric_bag(bag) ^ 1
-    bPowerBigger = bpower > apower
+    bp1 = lambda: (
+        1 if b.power(gbcomp, bpower) == 1 and b.power(gb, apower) == 1 else 0
+    )
     while True:
         # Create a uniform random number (U) bit-by-bit, and
         # accept it with probability U^(a-1)*(1-U)^(b-1), which
         # is the unnormalized PDF of the beta distribution
         bag.clear()
-        r = 1
-        if bPowerBigger:
-            # Produce 1 with probability (1-U)^(b-1)
-            r = b.power(gbcomp, bpower)
-            # Produce 1 with probability U^(a-1)
-            if r == 1:
-                r = b.power(gb, apower)
-        else:
-            # Produce 1 with probability U^(a-1)
-            r = b.power(gb, apower)
-            # Produce 1 with probability (1-U)^(b-1)
-            if r == 1:
-                r = b.power(gbcomp, bpower)
-        if r == 1:
-            # Accepted, so fill up the "bag" and return the
-            # uniform number
-            ret = bern.fill_geometric_bag(b, bag, precision)
+        if bp1() == 1:
+            # Accepted
             return ret
