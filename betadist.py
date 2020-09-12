@@ -30,6 +30,105 @@ def _geobag_to_urand(bag):
         bagc += 1
     return [bagv, bagc]
 
+def exp_minus_x2y(self, f, y):
+    """ B(x) -> B(x*x*y) """
+    u = Fraction(1)
+    l = Fraction(0)
+    uw = 1
+    bag = []
+    n = 1
+    uy = Fraction(y)
+    fac = Fraction(1)
+    while True:
+        if uw != 0:
+            uw *= f()
+        if uw != 0:
+            uw *= f()
+        if n % 2 == 0:
+            u = l + uw * y / fac
+        else:
+            l = u - uw * y / fac
+        if self._uniform_less(bag, l) == 1:
+            return 1
+        if self._uniform_less(bag, u) == 0:
+            return 0
+        n += 1
+        fac *= n
+        y *= uy
+
+def exp_minus_xy(self, f, y):
+    """ B(x) -> B(x*y) """
+    u = Fraction(1)
+    l = Fraction(0)
+    uw = 1
+    bag = []
+    n = 1
+    uy = Fraction(y)
+    fac = Fraction(1)
+    while True:
+        if uw != 0:
+            uw *= f()
+        if n % 2 == 0:
+            u = l + uw * y / fac
+        else:
+            l = u - uw * y / fac
+        if self._uniform_less(bag, l) == 1:
+            return 1
+        if self._uniform_less(bag, u) == 0:
+            return 0
+        n += 1
+        fac *= n
+        y *= uy
+
+def sampleIntPlusBag(bern, bag, k):
+    """ Return 1 with probability (x+k)/2^bitlength(k). """
+    bitLength = k.bit_length()
+    r = 0
+    c = 0
+    sample = 0
+    while bern.randbit() == 0:
+        r += 1
+    if r < bitLength:
+        # Integer part, namely k
+        return (k >> (bitLength - 1 - r)) & 1
+    else:
+        # Fractional part, namely the bag
+        r -= bitLength
+        while len(bag) <= r:
+            bag.append(None)
+        if bag[r] == None:
+            bag[r] = bern.randbit()
+        return bag[r]
+
+def rayleigh(bern, s=1):
+    k = 0
+    # Choose a piece according to Rayleigh distribution function
+    while True:
+        # Conditional probability of each piece
+        # is 1-exp(-(k*2+1)/(2*s**2))
+        emparam = Fraction(k * 2 + 1, 2 * s * s)
+        if bern.zero_or_one_exp_minus(emparam.numerator, emparam.denominator) == 0:
+            break
+        k += 1
+    # In the chosen piece, sample (x+k)*exp(-(x+k)**2/(2*s*s))
+    while True:
+        y = 2 * s * s
+        bag = []
+        gb = lambda: bern.geometric_bag(bag)
+        # Break exp into exp(-x**2/y) * exp(-k**2/y) * exp(-x*k*2/y) and sample.
+        # Then divide bag by 2^piecebits and thus sample (x+k)/2**piecebits.
+        # The rest of the PDF's piece is a normalization constant and doesn't
+        # affect the result of the sampling
+        ky = Fraction(k * k, y)
+        if (
+            bern.zero_or_one_exp_minus(ky.numerator, ky.denominator) == 1
+            and exp_minus_x2y(bern, gb, Fraction(1) / y) == 1
+            and exp_minus_xy(bern, gb, Fraction(k * 2) / y) == 1
+            and sampleIntPlusBag(bern, bag, k) == 1
+        ):
+            # Accepted
+            return bern.fill_geometric_bag(bag) + k
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return bern.fill_geometric_bag(
         _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision
@@ -164,4 +263,4 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
         bag.clear()
         if bp1() == 1:
             # Accepted
-            return ret
+            return bag

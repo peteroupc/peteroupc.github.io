@@ -31,6 +31,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Algorithms for Functions of &lambda;**](#Algorithms_for_Functions_of_lambda)
         - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
+        - [**exp(&minus; (&lambda;<sup>_k_</sup> * _x_))**](#exp_minus_lambda__k___x)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**(1&minus;&lambda;)/cos(&lambda;)**](#1_minus_lambda_cos_lambda)
         - [**(1&minus;&lambda;) * tan(&lambda;)**](#1_minus_lambda_tan_lambda)
@@ -229,6 +230,19 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
 6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_ and go to step 3.
+
+<a id=exp_minus_lambda__k___x></a>
+#### exp(&minus; (&lambda;<sup>_k_</sup> * _x_))
+
+In the following algorithm, _k_ is an integer greater than 0, and _x_ is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup>_k_</sup>\*_x_ + &lambda;<sup>2\*_k_</sup>\*_x_/2! &minus; &lambda;<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
+
+1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.  Set _y_ to _x_.
+2. Create an empty uniform PSRN.
+3. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.
+4. If _n_ is even, set _u_ to _l_ + _w_ * _x_.  Otherwise, set _l_ to _u_ &minus; _w_ * _x_.
+5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+7. Add 1 to _n_, add _x_ to _y_, and go to step 3.
 
 <a id=exp_lambda_1_minus_lambda></a>
 #### exp(&lambda;)*(1&minus;&lambda;)
