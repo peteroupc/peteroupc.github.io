@@ -32,6 +32,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&minus;(&lambda;<sup>_k_</sup> * _x_))**](#exp_minus_lambda__k___x)
+        - [**exp(&minus;(&lambda;<sup>_k_</sup> * (_x_ + _m_)))**](#exp_minus_lambda__k___x___m)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**(1&minus;&lambda;)/cos(&lambda;)**](#1_minus_lambda_cos_lambda)
         - [**(1&minus;&lambda;) * tan(&lambda;)**](#1_minus_lambda_tan_lambda)
@@ -244,6 +245,14 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
 6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_, add _x_ to _y_, and go to step 3.
+
+<a id=exp_minus_lambda__k___x___m></a>
+#### exp(&minus;(&lambda;<sup>_k_</sup> * (_x_ + _m_)))
+
+In the following algorithm, _k_ and _m_ are both integers greater than 0, and _x_ is a rational number in the interval (0, 1].
+
+1. Call the **algorithm for exp(&minus;&lambda;<sup>_k_</sup> * _x_)** _m_ times with _k_ = _k_ and _x_ = 1.  If any of these calls returns 0, return 0.
+2. Call the **algorithm for exp(&minus;&lambda;<sup>_k_</sup> * _x_)** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
 
 <a id=exp_lambda_1_minus_lambda></a>
 #### exp(&lambda;)*(1&minus;&lambda;)

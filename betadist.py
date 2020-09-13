@@ -30,7 +30,7 @@ def _geobag_to_urand(bag):
         bagc += 1
     return [bagv, bagc]
 
-def exp_minus_x2y(self, f, y):
+def exp_minus_x2y(self, f, y, pwr=2):
     """ B(x) -> B(x*x*y) """
     u = Fraction(1)
     l = Fraction(0)
@@ -40,10 +40,9 @@ def exp_minus_x2y(self, f, y):
     uy = Fraction(y)
     fac = Fraction(1)
     while True:
-        if uw != 0:
-            uw *= f()
-        if uw != 0:
-            uw *= f()
+        for i in range(pwr):
+            if uw != 0:
+                uw *= f()
         if n % 2 == 0:
             u = l + uw * y / fac
         else:

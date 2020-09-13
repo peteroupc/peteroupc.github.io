@@ -48,6 +48,7 @@
 <li><a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a></li>
 <li><a href="#exp_minus_lambda"><strong>exp(&minus;&lambda;)</strong></a></li>
 <li><a href="#exp_minus_lambda__k___x"><strong>exp(&minus;(&lambda;<sup><em>k</em></sup> * <em>x</em>))</strong></a></li>
+<li><a href="#exp_minus_lambda__k___x___m"><strong>exp(&minus;(&lambda;<sup><em>k</em></sup> * (<em>x</em> + <em>m</em>)))</strong></a></li>
 <li><a href="#exp_lambda_1_minus_lambda"><strong>exp(&lambda;)*(1&minus;&lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda_cos_lambda"><strong>(1&minus;&lambda;)/cos(&lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda_tan_lambda"><strong>(1&minus;&lambda;) * tan(&lambda;)</strong></a></li>
@@ -301,6 +302,17 @@
 <li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
 <li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em>, add <em>x</em> to <em>y</em>, and go to step 3.</li>
+</ol>
+
+<p><a id=exp_minus_lambda__k___x___m></a></p>
+
+<h4>exp(&minus;(&lambda;<sup><em>k</em></sup> * (<em>x</em> + <em>m</em>)))</h4>
+
+<p>In the following algorithm, <em>k</em> and <em>m</em> are both integers greater than 0, and <em>x</em> is a rational number in the interval (0, 1].</p>
+
+<ol>
+<li>Call the <strong>algorithm for exp(&minus;&lambda;<sup><em>k</em></sup> * <em>x</em>)</strong> <em>m</em> times with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
+<li>Call the <strong>algorithm for exp(&minus;&lambda;<sup><em>k</em></sup> * <em>x</em>)</strong> once, with <em>k</em> = <em>k</em> and <em>x</em> = <em>x</em>.  Return the result of this call.</li>
 </ol>
 
 <p><a id=exp_lambda_1_minus_lambda></a></p>

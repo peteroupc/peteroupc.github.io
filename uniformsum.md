@@ -322,11 +322,10 @@ The following is an arbitrary-precision sampler for the Rayleigh distribution wi
 
 1. Set _k_ to 0, and set _y_ to 2 * _s_ * _s_.
 2. With probability exp(&minus;(_k_ * 2 + 1)/_y_), go to step 3.  Otherwise, add 1 to _k_ and repeat this step.  (The probability check should be done with the **exp(&minus;_x_/_y_) algorithm** in "Bernoulli Factory Algorithms", with _x_/_y_ = (_k_ * 2 + 1)/_y_.)
-3. Now we sample the piece located at [_k_, _k_ + 1).
-4. Create an empty uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
-5. Set _ky_ to _k_ * _k_ / _y_.
-6. At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.  Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(&lambda;<sup>_k_</sup> * _x_) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the same algorithm using the same input coin, _x_ = _k_ * 2 / _y_, and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN and go to step 4.
-7. If the uniform PSRN, call it _ret_, was accepted by step 6, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _k_ + _ret_.
+3. (Now we sample the piece located at [_k_, _k_ + 1).)  Create an empty uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
+4. Set _ky_ to _k_ * _k_ / _y_.
+5. (At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(&lambda;<sup>_k_</sup> * _x_)) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the same algorithm using the same input coin, _x_ = _k_ * 2 / _y_, and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN and go to step 4.
+7. If the uniform PSRN, call it _ret_, was accepted by step 5, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _k_ + _ret_.
 
 The sub-algorithm below simulates (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
 
