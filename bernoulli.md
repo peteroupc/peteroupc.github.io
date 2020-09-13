@@ -31,7 +31,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Algorithms for Functions of &lambda;**](#Algorithms_for_Functions_of_lambda)
         - [**Certain Power Series**](#Certain_Power_Series)
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
-        - [**exp(&minus; (&lambda;<sup>_k_</sup> * _x_))**](#exp_minus_lambda__k___x)
+        - [**exp(&minus;(&lambda;<sup>_k_</sup> * _x_))**](#exp_minus_lambda__k___x)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**(1&minus;&lambda;)/cos(&lambda;)**](#1_minus_lambda_cos_lambda)
         - [**(1&minus;&lambda;) * tan(&lambda;)**](#1_minus_lambda_tan_lambda)
@@ -77,6 +77,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1 / &phi;**](#1_phi)
         - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
         - [**1/sqrt(2)**](#1_sqrt_2)
+        - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
         - [**&pi; / 12**](#pi_12)
         - [**&pi; / 4**](#pi_4)
@@ -232,9 +233,9 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 7. Add 1 to _n_ and go to step 3.
 
 <a id=exp_minus_lambda__k___x></a>
-#### exp(&minus; (&lambda;<sup>_k_</sup> * _x_))
+#### exp(&minus;(&lambda;<sup>_k_</sup> * _x_))
 
-In the following algorithm, _k_ is an integer greater than 0, and _x_ is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup>_k_</sup>\*_x_ + &lambda;<sup>2\*_k_</sup>\*_x_/2! &minus; &lambda;<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
+In the following algorithm, which applies the general martingale algorithm, _k_ is an integer greater than 0, and _x_ is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup>_k_</sup>\*_x_ + &lambda;<sup>2\*_k_</sup>\*_x_/2! &minus; &lambda;<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.  Set _y_ to _x_.
 2. Create an empty uniform PSRN.
@@ -805,6 +806,14 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If _pos_ is 1, return 1 with probability 1/2.  If _pos_ is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.
 2. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 1.
+
+<a id=tanh_1_2_or_exp_1_minus_1_exp_1_1></a>
+#### tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)
+
+The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
+
+1. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
+2. Run this algorithm recursively, but with _k_ = _k_ + 4.  If the result is 1, return 0.  Otherwise, go to step 1.
 
 <a id=arctan__x___y___y___x></a>
 #### arctan(_x_/_y_) \* _y_/_x_

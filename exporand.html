@@ -405,16 +405,16 @@
 <ol>
 <li> Set <em>N</em> to 0.</li>
 <li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
-<li> If the item at position <em>N</em> in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag&#39;s capacity as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the geometric bag where no digit was sampled yet.)</li>
+<li> If the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the uniform PSRN as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the uniform PSRN where no digit was sampled yet.)</li>
 <li> Return the item at position <em>N</em>.</li>
 </ol>
 
 <p>For another base (radix), such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
 
 <ol>
-<li>Set <em>i</em> to 0.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, sample the digit at that position (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
-<li>Return 0 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 2 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
+<li>Set <em>i</em> to 0, and set <strong>b</strong> to an empty uniform PSRN.</li>
+<li>If the digit at position <em>i</em> of the input PSRN&#39;s fractional part is unsampled, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
+<li>Return 1 if the input PSRN&#39;s fractional part is less than <strong>b</strong>&#39;s, or  0 if the input PSRN&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 3.</li>
 </ol>
 

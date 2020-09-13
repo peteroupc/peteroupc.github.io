@@ -302,6 +302,40 @@ def ratio_of_uniform(bern):
              return intpart + bern.fill_geometric_bag(bag)
 ```
 
+<a id=Rayleigh_Distribution></a>
+### Rayleigh Distribution
+
+1. Set _k_ to 0, and set _y_ to 2 * _s_ * _s_.
+2. With probability exp(&minus;(_k_ * 2 + 1)/_y_), go to step 3.  Otherwise, add 1 to _k_ and repeat this step.  (The probability check should be done with the **exp(&minus;_x_/_y_) algorithm** in "Bernoulli Factory Algorithms", with _x_/_y_ = (_k_ * 2 + 1)/_y_.)
+3. Now we sample the piece located at [_k_, _k_ + 1).
+4. Create an empty uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
+5. Set _ky_ to _k_ * _k_ / _y_.
+6. At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.  Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(&lambda;<sup>_k_</sup> * _x_) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the same algorithm using the same input coin, _x_ = _k_ * 2 / _y_, and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN and go to step 4.
+7. If the uniform PSRN, call it _ret_, was accepted by step 6, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _k_ + _ret_.
+
+The sub-algorithm below simulates (_U_+_k_)/_base_^_z_, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
+
+For base 2:
+
+1.  Set _N_ to 0.
+2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
+3.  If _N_ is less than _z_, return rem(_k_ / 2<sup>_z_ &minus; 1 &minus; _N_</sup>, 2).  (Alternatively, shift _k_ to the right, by _z_ &minus; 1 &minus; _N_ bits, then return _k_ _AND_ 1, where "_AND_" is a bitwise AND-operation.)
+4.  Subtract _z_ from _N_.  Then, if the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the uniform PSRN's capacity as necessary.
+4.  Return the item at position _N_.
+
+For bases other than 2:
+
+For another base (radix), such as 10 for decimal, this can be implemented as follows (based on **URandLess**):
+
+1. Set _i_ to 0, and set **b** to an empty uniform PSRN.
+2. If _i_ is less than z:
+    1. Set _da_ to rem(_k_ / 2<sup>_z_ &minus; 1 &minus; _i_</sup>, _base_), and set _db_ to a digit chosen uniformly at random, and append the result to that fractional part's digit expansion.
+    2. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
+3. If _i_ is _z_ or greater:
+    1. If the digit at position (_i_ &minus; _z_) in the input PSRN's fractional part, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
+    2. Return 1 if the input PSRN's fractional part is less than **b**'s, or 0 if the input PSRN's fractional part is greater than **b**'s.
+4. Add 1 to _i_ and go to step 3.
+
 <a id=Notes></a>
 ## Notes
 

@@ -47,7 +47,7 @@
 <ul>
 <li><a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a></li>
 <li><a href="#exp_minus_lambda"><strong>exp(&minus;&lambda;)</strong></a></li>
-<li><a href="#exp_minus_lambda__k___x"><strong>exp(&minus; (&lambda;<sup><em>k</em></sup> * <em>x</em>))</strong></a></li>
+<li><a href="#exp_minus_lambda__k___x"><strong>exp(&minus;(&lambda;<sup><em>k</em></sup> * <em>x</em>))</strong></a></li>
 <li><a href="#exp_lambda_1_minus_lambda"><strong>exp(&lambda;)*(1&minus;&lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda_cos_lambda"><strong>(1&minus;&lambda;)/cos(&lambda;)</strong></a></li>
 <li><a href="#1_minus_lambda_tan_lambda"><strong>(1&minus;&lambda;) * tan(&lambda;)</strong></a></li>
@@ -96,6 +96,7 @@
 <li><a href="#1_phi"><strong>1 / &phi;</strong></a></li>
 <li><a href="#sqrt_2_minus_1"><strong>sqrt(2) &minus; 1</strong></a></li>
 <li><a href="#1_sqrt_2"><strong>1/sqrt(2)</strong></a></li>
+<li><a href="#tanh_1_2_or_exp_1_minus_1_exp_1_1"><strong>tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)</strong></a></li>
 <li><a href="#arctan__x___y___y___x"><strong>arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong></a></li>
 <li><a href="#pi_12"><strong>&pi; / 12</strong></a></li>
 <li><a href="#pi_4"><strong>&pi; / 4</strong></a></li>
@@ -288,9 +289,9 @@
 
 <p><a id=exp_minus_lambda__k___x></a></p>
 
-<h4>exp(&minus; (&lambda;<sup><em>k</em></sup> * <em>x</em>))</h4>
+<h4>exp(&minus;(&lambda;<sup><em>k</em></sup> * <em>x</em>))</h4>
 
-<p>In the following algorithm, <em>k</em> is an integer greater than 0, and <em>x</em> is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup><em>k</em></sup>*<em>x</em> + &lambda;<sup>2*<em>k</em></sup>*<em>x</em>/2! &minus; &lambda;<sup>3*<em>k</em></sup>*<em>x</em>/3!, ..., and the coefficients are 1, <em>x</em>, <em>x</em>/(2!), <em>x</em>/(3!), ....</p>
+<p>In the following algorithm, which applies the general martingale algorithm, <em>k</em> is an integer greater than 0, and <em>x</em> is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup><em>k</em></sup>*<em>x</em> + &lambda;<sup>2*<em>k</em></sup>*<em>x</em>/2! &minus; &lambda;<sup>3*<em>k</em></sup>*<em>x</em>/3!, ..., and the coefficients are 1, <em>x</em>, <em>x</em>/(2!), <em>x</em>/(3!), ....</p>
 
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.  Set <em>y</em> to <em>x</em>.</li>
@@ -1049,6 +1050,17 @@
 <ol>
 <li>If <em>pos</em> is 1, return 1 with probability 1/2.  If <em>pos</em> is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.</li>
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p><a id=tanh_1_2_or_exp_1_minus_1_exp_1_1></a></p>
+
+<h4>tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)</h4>
+
+<p>The algorithm begins with <em>k</em> equal to 2.  Then the following steps are taken.</p>
+
+<ol>
+<li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
+<li>Run this algorithm recursively, but with <em>k</em> = <em>k</em> + 4.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=arctan__x___y___y___x></a></p>

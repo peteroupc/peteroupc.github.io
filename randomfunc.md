@@ -1510,7 +1510,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 - If the sequence outputs numbers in the interval \[0, 1\], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each
 number in the sequence.
 
-In most cases, pseudorandom number generators (or other kinds of RNGs) can be used to generate a "seed" to start the low-discrepancy sequence at.  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling.
+The points of a low-discrepancy sequence can be "scrambled" with the help of a pseudorandom number generator (or another kind of RNG).  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020)<sup>[**(85)**](#Note85)</sup>
 
 <a id=Notes_on_Randomization_Involving_Real_Numbers></a>
 ### Notes on Randomization Involving Real Numbers
@@ -2160,6 +2160,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note82>(82)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note83>(83)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 - <small><sup id=Note84>(84)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note85>(85)</sup> Owen, A.B., 2020. "[On dropping the first Sobol' point](https://arxiv.org/abs/2008.08051)", arXiv:2008.08051 [math-NA], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix

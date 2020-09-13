@@ -1835,7 +1835,7 @@ END METHOD
 number in the sequence.</li>
 </ul>
 
-<p>In most cases, pseudorandom number generators (or other kinds of RNGs) can be used to generate a &quot;seed&quot; to start the low-discrepancy sequence at.  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling.</p>
+<p>The points of a low-discrepancy sequence can be &quot;scrambled&quot; with the help of a pseudorandom number generator (or another kind of RNG).  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020)<sup><a href="#Note85"><strong>(85)</strong></a></sup></p>
 
 <p><a id=Notes_on_Randomization_Involving_Real_Numbers></a></p>
 
@@ -2595,6 +2595,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note82>(82)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></li>
 <li><small><sup id=Note83>(83)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning randomization features provided by SQL dialects.</small></li>
 <li><small><sup id=Note84>(84)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></li>
+<li><small><sup id=Note85>(85)</sup> Owen, A.B., 2020. &quot;<a href="https://arxiv.org/abs/2008.08051">On dropping the first Sobol&#39; point</a>&quot;, arXiv:2008.08051 [math-NA], 2020.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

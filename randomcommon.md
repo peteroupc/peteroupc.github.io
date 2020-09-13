@@ -115,7 +115,7 @@ With that said, the following specific situations tend to come up in random reco
 
 - Querying one random record from a database.
 - Querying a specified number of random records from a database.
-- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random number in (0, 1)) (see also (Efraimidis 2015)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
+- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random number in (0, 1)) (see also (Arratia 2002)<sup>[**(4)**](#Note4)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
 
 <a id=Random_Character_Strings></a>
 ## Random Character Strings
@@ -133,7 +133,7 @@ However, the following are some of the many considerations involving random stri
 
 _Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
 
-The algorithm shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.  See "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)" for a survey of algorithms.
+The algorithm shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(3)**](#Note3)</sup>.  See "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)" for a survey of algorithms.
 
 Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:
 
@@ -163,8 +163,8 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 
 - <small><sup id=Note1>(1)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 - <small><sup id=Note2>(2)</sup> Goualard, F., "[**Generating Random Floating-Point Numbers by Dividing Integers: a Case Study**](https://hal.archives-ouvertes.fr/hal-02427338/)", 2020.</small>
-- <small><sup id=Note3>(3)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
-- <small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+- <small><sup id=Note3>(3)</sup> Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+- <small><sup id=Note4>(4)</sup> Arratia, R., "On the amount of dependence in the prime factorization of a uniform random integer", _Contemporary Combinatorics_ 10(29), 91, 2002.</small>
 
 <a id=License></a>
 ## License

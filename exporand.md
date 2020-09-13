@@ -307,14 +307,14 @@ The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base
 
 1.  Set _N_ to 0.
 2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
-3.  If the item at position _N_ in the geometric bag (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the geometric bag's capacity as necessary.  (As a result of this step, there may be "gaps" in the geometric bag where no digit was sampled yet.)
+3.  If the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the uniform PSRN as necessary.  (As a result of this step, there may be "gaps" in the uniform PSRN where no digit was sampled yet.)
 4.  Return the item at position _N_.
 
 For another base (radix), such as 10 for decimal, this can be implemented as follows (based on **URandLess**):
 
-1. Set _i_ to 0.
-2. If the digit at position _i_ of **a**'s fractional part is unsampled, sample the digit at that position (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
-3. Return 0 if **a**'s fractional part is less than **b**'s, or 2 if **a**'s fractional part is greater than **b**'s.
+1. Set _i_ to 0, and set **b** to an empty uniform PSRN.
+2. If the digit at position _i_ of the input PSRN's fractional part is unsampled, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
+3. Return 1 if the input PSRN's fractional part is less than **b**'s, or  0 if the input PSRN's fractional part is greater than **b**'s.
 4. Add 1 to _i_ and go to step 3.
 
 For more on why these two algorithms are equivalent, see the appendix.
