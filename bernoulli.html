@@ -298,7 +298,7 @@
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.  Set <em>y</em> to <em>x</em>.</li>
 <li>Create an empty uniform PSRN.</li>
 <li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the coin returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>x</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>x</em>.</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>y</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>y</em>.</li>
 <li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>l</em>.  If the algorithm returns 1, return 1.</li>
 <li>Run the <strong>URandLessThanReal algorithm</strong> on the PSRN and <em>u</em>.  If the algorithm returns 0, return 0.</li>
 <li>Add 1 to <em>n</em>, add <em>x</em> to <em>y</em>, and go to step 3.</li>

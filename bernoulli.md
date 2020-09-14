@@ -241,7 +241,7 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.  Set _y_ to _x_.
 2. Create an empty uniform PSRN.
 3. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.
-4. If _n_ is even, set _u_ to _l_ + _w_ * _x_.  Otherwise, set _l_ to _u_ &minus; _w_ * _x_.
+4. If _n_ is even, set _u_ to _l_ + _w_ * _y_.  Otherwise, set _l_ to _u_ &minus; _w_ * _y_.
 5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
 6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
 7. Add 1 to _n_, add _x_ to _y_, and go to step 3.
