@@ -228,7 +228,7 @@ Arithmetic between two PSRNs is not always trivial.
 
 - The naïve approach of adding, multiplying or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(13)**](#Note13)</sup>) may result in a partially-sampled number _C_ that is not close to the ideal distribution once additional digits of _C_ are sampled uniformly at random (see properties 4 and 5 above).  For example, say we have two uniform PSRNs: _A_ = 0.12345... and _B_ = 0.38901....  They represent random numbers in the intervals \[0.12345, 0.12346\] and \[0.38901, 0.38902\], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result _C_ lies in \[0.12345 + 0.38901, 0.12346 + 0.38902\] = \[0.51246, 0.51248\].  However, the resulting random number is _not_ uniformly distributed in \[0.51246, 0.51248\], so that simply choosing a uniform random number in the interval won't work.
 - On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include:
-    - Adding 1/2 to a uniform PSRN provided _b_ (the base, or radix, of the PSRN digits) is even, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
+    - Adding 1/2 to a uniform PSRN provided _b_ (the base, or radix, of the PSRN's digits) is even, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
     - Negation, likewise mentioned in Karney.
     - Adding a constant with a terminating base-_b_ expansion to a uniform PSRN.
     - Operations affecting the PSRN's integer part only.
