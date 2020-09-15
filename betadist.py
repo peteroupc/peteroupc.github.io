@@ -99,6 +99,148 @@ def sampleIntPlusBag(bern, bag, k):
             bag[r] = bern.randbit()
         return bag[r]
 
+def _add_neg_power_of_base(psrn, pwr, digits=2):
+    """ Adds digits^(-pwr) to a PSRN. """
+    if pwr <= 0:
+        raise ValueError
+    i = pwr - 1
+    incr = -1 if psrn[0] < 0 else 1
+    while i >= 0:
+        psrn[2][i] += incr
+        if psrn[2][i] < 0:
+            psrn[2][i] += digits
+        elif psrn[2][i] > digits:
+            psrn[2][i] -= digits
+        else:
+            return psrn
+        i -= 1
+    psrn[1] += incr
+    return psrn
+
+def add_psrns(psrn1, psrn2, digits=2):
+    """ Adds two partially-sampled random numbers.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the first PSRN.  Fractional part is a list of digits
+            after the point, starting with the first.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the second PSRN.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
+        raise ValueError
+    for i in range(len(psrn1[2])):
+        psrn1[2][i] = (
+            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
+        )
+    for i in range(len(psrn2)):
+        psrn2[2][i] = (
+            random.randint(0, digits - 1) if psrn2[2][i] == None else psrn2[2][i]
+        )
+    while len(psrn1[2]) < len(psrn2[2]):
+        psrn1[2].append(random.randint(0, digits - 1))
+    while len(psrn1[2]) > len(psrn2[2]):
+        psrn2[2].append(random.randint(0, digits - 1))
+    digitcount = len(psrn1[2])
+    cpsrn = _add_psrns_internal(
+        psrn1[0], psrn1[1], psrn1[2], psrn2[0], psrn2[1], psrn2[2], digits
+    )
+    # If negative, adjust to the correct region
+    targetd = 1 if cpsrn[0] < 0 else 0
+    if targetd == 1:
+        _add_neg_power_of_base(cpsrn, digitcount)
+    if digits == 2 and cpsrn[0] >= 0:
+        g = 0
+        d = random.randint(0, 1)
+        while random.randint(0, 1) == 1:
+            g += 1
+        while len(cpsrn[2]) <= g + digitcount:
+            cpsrn[2].append(None)
+        cpsrn[2][g + digitcount] = d
+        if d == 0:
+            _add_neg_power_of_base(cpsrn, digitcount)
+    else:
+        sampleresult = 0
+        d = random.randint(0, 1)
+        while True:
+            bag = []
+            sampleresult = 1
+            i = 0
+            while True:
+                while len(bag) <= i:
+                    bag.append(None)
+                if bag[i] == None:
+                    bag[i] = random.randint(0, digits - 1)
+                a1 = bag[i]
+                b1 = random.randint(0, digits - 1)
+                if a1 < b1:
+                    sampleresult = 0
+                if a1 > b1:
+                    sampleresult = 1
+                if a1 != b1:
+                    break
+                i += 1
+            if d == sampleresult:
+                for v in bag:
+                    cpsrn[2].append(v)
+                if d == targetd:
+                    _add_neg_power_of_base(cpsrn, digitcount)
+                break
+    return cpsrn
+
+def _add_psrns_internal(asign, aint, afrac, bsign, bint, bfrac, digits=2):
+    # For this to work, fractional parts must have the same
+    # length and all their digits must be sampled
+    if len(afrac) != len(bfrac):
+        raise ValueError
+    if aint < 0 or bint < 0 or digits < 2:
+        raise ValueError
+    if asign == bsign:
+        # Addition
+        cfrac = [0 for i in range(len(afrac))]
+        carry = 0
+        i = len(afrac) - 1
+        while i >= 0:
+            b = afrac[i] + bfrac[i] + carry
+            cfrac[i] = b % digits if b >= digits else b
+            carry = 1 if b >= digits else 0
+            i -= 1
+        ci = aint + bint + carry
+        return [asign, ci, cfrac]
+    else:
+        # Subtraction
+        aIsLess = False
+        if aint != bint:
+            aIsLess = aint < bint
+        else:
+            for i in range(len(afrac)):
+                if afrac[i] != bfrac[i]:
+                    aIsLess = afrac[i] < bfrac[i]
+                    break
+        if aIsLess:
+            tmp = aint
+            aint = bint
+            bint = tmp
+            tmp = afrac
+            afrac = bfrac
+            bfrac = tmp
+            tmp = asign
+            asign = bsign
+            bsign = tmp
+        cfrac = [0 for i in range(len(afrac))]
+        carry = 0
+        i = len(afrac) - 1
+        while i >= 0:
+            b = afrac[i] - bfrac[i] - carry
+            if b < 0:
+                cfrac[i] = b + digits
+                carry = 1
+            else:
+                cfrac[i] = b
+                carry = 0
+            i -= 1
+        ci = abs(aint - bint - carry)
+        csign = asign
+        return [csign, ci, cfrac]
+
 def rayleigh(bern, s=1):
     k = 0
     # Choose a piece according to Rayleigh distribution function

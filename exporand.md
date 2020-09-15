@@ -103,11 +103,11 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01On
 
 In this document, a _partially-sampled random number_ (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see "Properties" later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
 
-PSRNs specified here store&mdash;
+PSRNs specified here store:
 
-- a _fractional part_ with an arbitrary number of digits,
-- an optional _integer part_ (floor of the number's absolute value), and
-- an optional _sign_ (positive or negative).
+- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, their unsampled status can be noted in a way that distinguishes them from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).
+- An optional _integer part_ (floor of the number's absolute value).
+- An optional _sign_ (positive or negative).
 
 If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].
 
@@ -169,8 +169,9 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 2. If **a**'s sign is different from **b**'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
 3. Set _i_ to 0.
 4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
-5. If **a** is non-negative, return 1 if **a**'s fractional part is less than **b**'s, or 0 if **a**'s fractional part is greater than **b**'s.
-6. If **a** is negative, return 0 if **a**'s fractional part is less than **b**'s, or 1 if **a**'s fractional part is greater than **b**'s.
+5. Let _da_ be the digit at that position _i_ of **a**'s fractional part, and let _db_ be **b**'s corresponding digit.
+5. If **a** is non-negative, return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
+6. If **a** is negative, return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
 7. Add 1 to _i_ and go to step 4.
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
@@ -307,19 +308,19 @@ One of them is the "geometric bag" technique by Flajolet and others (2010)<sup>[
 <a id=SampleGeometricBag></a>
 ### SampleGeometricBag
 
-The algorithm **SampleGeometricBag** is a Bernoulli factory algorithm.  For base 2, the algorithm is described as follows (see (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup>):
-
-1.  Set _N_ to 0.
-2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
-3.  If the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the uniform PSRN as necessary.  (As a result of this step, there may be "gaps" in the uniform PSRN where no digit was sampled yet.)
-4.  Return the item at position _N_.
-
-For another base (radix), such as 10 for decimal, this can be implemented as follows (based on **URandLess**):
+The algorithm **SampleGeometricBag** returns 1 with a probability built up by a uniform PSRN.  (Flajolet et al., 2010)<sup>[**(7)**](#Note7)</sup> described an algorithm for the base-2 (binary) case, but that algorithm is difficult to apply to other digit bases.  Thus the following is a general version of the algorithm for any digit base.
 
 1. Set _i_ to 0, and set **b** to an empty uniform PSRN.
-2. If the digit at position _i_ of the input PSRN's fractional part is unsampled, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
-3. Return 1 if the input PSRN's fractional part is less than **b**'s, or  0 if the input PSRN's fractional part is greater than **b**'s.
-4. Add 1 to _i_ and go to step 3.
+2. If the item at position _i_ of the input PSRN's fractional part is unsampled (that is, not set to a digit), set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
+3. Let _da_ be the digit at that position _i_ of the input PSRN's fractional part, and let _db_ be the corresponding digit for **b**.  Return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
+5. Add 1 to _i_ and go to step 2.
+
+For base 2, the following **SampleGeometricBag** algorithm can be used, which is closer to the one given in the Flajolet paper:
+
+1.  Set _N_ to 0.
+2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step. (When the algorithm moves to the next step, _N_ is a geometric(1/2) random number.)
+3.  If the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the uniform PSRN as necessary.  (As a result of this step, there may be "gaps" in the uniform PSRN where no digit was sampled yet.)
+4.  Return the item at position _N_.
 
 For more on why these two algorithms are equivalent, see the appendix.
 

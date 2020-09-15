@@ -452,7 +452,15 @@ def ratio_of_uniform(bern):
 <li>Set the digit at position (<em>g</em> + <em>digitcount</em>) of <strong>c</strong>&#39;s fractional part to <em>d</em> (positions start at 0 in the PSRN, and digits between the positions (<em>digitcount</em> &minus; 1) and (<em>g</em> + <em>digitcount</em>) will be unsampled).</li>
 <li>If <em>d</em> is 0, sum the constant 2<sup>&minus;<em>digitcount</em></sup> into <strong>c</strong>.</li>
 </ol></li>
-<li>Otherwise, let <em>base</em> be that base, then apply the algorithm for sampling the sum of two uniform random numbers given earlier (except the PSRN the algorithm creates is not filled with digits after being accepted), multiply the resulting PSRN by <em>base</em><sup>&minus;<em>digitcount</em></sup> (which in most cases amounts to shifting the PSRN&#39;s digits &quot;to the right&quot; by <em>digitcount</em> digits), and sum that PSRN into <strong>c</strong>.</li>
+<li>Otherwise:
+
+<ol>
+<li>Generate an unbiased random bit, call it <em>d</em>. Create an empty uniform PSRN, call it _ret.</li>
+<li>Remove all digits from <em>ret</em>.</li>
+<li>Call the <strong>SampleGeometricBag</strong> algorithm on <em>ret</em>.  If the result of the call (which can be 0 or 1) is not equal to <em>d</em>, go to step 2.</li>
+<li>Append the digits (both sampled and unsampled) of <em>ret</em>&#39;s fractional part into <strong>c</strong>&#39;s fractional part.</li>
+<li>If <em>d</em> is 0 and <strong>c</strong> is non-negative, or if <em>d</em> is 1 and <strong>c</strong> is negative, sum the constant 2<sup>&minus;<em>digitcount</em></sup> into <strong>c</strong>.</li>
+</ol></li>
 </ol>
 
 <p>And the following Python code implements this algorithm.</p>
@@ -495,14 +503,36 @@ def add_psrns(psrn1, psrn2, digits=2):
     digitcount=len(psrn1[2])
     cpsrn=_add_psrns_internal(psrn1[0],psrn1[1],psrn1[2], \
         psrn2[0],psrn2[1],psrn2[2],digits)
-    d=random.randint(0,1)
+    # If negative, adjust to the correct region
+    targetd=1 if cpsrn[0]&lt;0 else 0
+    if targetd==1: add_neg_power_of_base(cpsrn,digitcount)
     if digits==2 and cpsrn[0]&gt;=0:
         g=0
+        d=random.randint(0,1)
         while random.randint(0,1)==1: g+=1
         while len(cpsrn[2])&lt;=g+digitcount: cpsrn[2].append(None)
         cpsrn[2][g+digitcount]=d
         if d==0: add_neg_power_of_base(cpsrn,digitcount)
-    # TODO
+    else:
+        sampleresult=0
+        d=random.randint(0,1)
+        while True:
+           bag=[]
+           sampleresult=1
+           i=0
+           while True:
+              while len(bag)&lt;=i: bag.append(None)
+              if bag[i]==None: bag[i]=random.randint(0,digits-1)
+              a1=bag[i]
+              b1=random.randint(0,digits-1)
+              if a1&lt;b1: sampleresult=0
+              if a1&gt;b1: sampleresult=1
+              if a1!=b1: break
+              i+=1
+           if d==sampleresult:
+              for v in bag: cpsrn[2].append(v)
+              if d==targetd: add_neg_power_of_base(cpsrn,digitcount)
+              break
     return cpsrn
 
 def _add_psrns_internal(asign, aint, afrac, bsign, bint, bfrac, digits=2):
@@ -521,7 +551,7 @@ def _add_psrns_internal(asign, aint, afrac, bsign, bint, bfrac, digits=2):
          carry=1 if b&gt;=digits else 0
          i-=1
       ci=aint+bint+carry
-      return asign, ci, cfrac
+      return [asign, ci, cfrac]
     else:
       # Subtraction
       aIsLess=False
@@ -548,7 +578,7 @@ def _add_psrns_internal(asign, aint, afrac, bsign, bint, bfrac, digits=2):
          i-=1
       ci=abs(aint-bint-carry)
       csign=asign
-      return csign, ci, cfrac
+      return [csign, ci, cfrac]
 </pre>
 
 <p><a id=Rayleigh_Distribution></a></p>
