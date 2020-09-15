@@ -1144,9 +1144,9 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note30>(30)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note31>(31)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note32>(32)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note33>(33)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-- <small><sup id=Note34>(34)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
-- <small><sup id=Note35>(35)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
+- <small><sup id=Note33>(33)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
+- <small><sup id=Note34>(34)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note35>(35)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1163,7 +1163,7 @@ In fact, there is a lower bound on the average number of coin flips needed to tu
 &nbsp;&nbsp;&nbsp;&nbsp;((&tau; &minus; 1) * ln(1 &minus; &tau;) &minus; &tau; * ln(&tau;)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)).
 
-For example, if _f_(&lambda;) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is &lambda;).  Note that this formula only works if nothing but coin flips is allowed as randomness.  (For certain values of &lambda;, Kozen (2014)<sup>[**(35)**](#Note35)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)
+For example, if _f_(&lambda;) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is &lambda;).  Note that this formula only works if nothing but coin flips is allowed as randomness.  (For certain values of &lambda;, Kozen (2014)<sup>[**(33)**](#Note33)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
@@ -1219,7 +1219,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(8)**](#Note8)</sup>, (Devroye and Gravel 2015)<sup>[**(33)**](#Note33)</sup>:
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(8)**](#Note8)</sup>, (Devroye and Gravel 2015)<sup>[**(34)**](#Note34)</sup>:
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
@@ -1276,7 +1276,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_, except every second integer is 0 instead), and
 - alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(_n_) starting at _n_ = 0 is A000111, except every other integer starting with the first is 0 instead),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(34)**](#Note34)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(35)**](#Note35)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 
