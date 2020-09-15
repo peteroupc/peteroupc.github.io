@@ -37,7 +37,7 @@ The samplers given below for the uniform sum logically work as follows:
 
     - _f_&prime;(_x_) = (&Sigma;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * ((_x_ + _i_) &minus; _k_)<sup>_n_ &minus; 1</sup> * sign((_x_ + _i_) &minus; _k_)) / (2*(n&minus;1)!),
 
-    where _x_ is a real number in \[0, 1\].  Since _f_&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by _f_&prime;. (Bernstein polynomials are the backbone of the well-known Bézier curve.) A Bernstein polynomial has the form&mdash;
+    where _x_ is a real number in \[0, 1\], and choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is the binomial coefficient.  Since _f_&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by _f_&prime;. (Bernstein polynomials are the backbone of the well-known Bézier curve.) A Bernstein polynomial has the form&mdash;
 
     - &Sigma;<sub>_k_ = 0, ..., _m_</sub> choose(_m_, _k_) * _x_<sup>_k_</sup> * (1 &minus; _x_)<sup>_m_ &minus; _k_</sup> * _a_\[_k_\],
 
@@ -164,11 +164,11 @@ The following algorithm samples the sum of two uniform random numbers.
 
 1. Create an empty uniform PSRN (partially-sampled random number), call it _ret_.
 2. Generate an unbiased random bit.
-2. Remove all digits from _ret_.  (This algorithm works for digits of any base, including base 10 for decimal, or base 2 for binary.)
-3. Call the **SampleGeometricBag** algorithm on _ret_, then generate an unbiased random bit.
-4. If the bit generated in step 2 is 1 and the result of **SampleGeometricBag** is 1, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
-5. If the bit generated in step 2 is 0 and the result of **SampleGeometricBag** is 0, fill _ret_ as in step 4, and return 1 + _ret_.
-6. Go to step 3.
+3. Remove all digits from _ret_.  (This algorithm works for digits of any base, including base 10 for decimal, or base 2 for binary.)
+4. Call the **SampleGeometricBag** algorithm on _ret_, then generate an unbiased random bit.
+5. If the bit generated in step 2 is 1 and the result of **SampleGeometricBag** is 1, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+6. If the bit generated in step 2 is 0 and the result of **SampleGeometricBag** is 0, fill _ret_ as in step 4, and return 1 + _ret_.
+7. Go to step 3.
 
 For base 2, the following algorithm also works, using certain "tricks" described in the next section.
 

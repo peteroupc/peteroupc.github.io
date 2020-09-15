@@ -47,7 +47,7 @@
 <li><em>f</em>&prime;(<em>x</em>) = (&Sigma;<sub><em>k</em> = 0, ..., <em>n</em></sub> (&minus;1)<sup><em>k</em></sup> * choose(<em>n</em>, <em>k</em>) * ((<em>x</em> + <em>i</em>) &minus; <em>k</em>)<sup><em>n</em> &minus; 1</sup> * sign((<em>x</em> + <em>i</em>) &minus; <em>k</em>)) / (2*(n&minus;1)!),</li>
 </ul>
 
-<p>where <em>x</em> is a real number in [0, 1].  Since <em>f</em>&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by <em>f</em>&prime;. (Bernstein polynomials are the backbone of the well-known Bézier curve.) A Bernstein polynomial has the form&mdash;</p>
+<p>where <em>x</em> is a real number in [0, 1], and choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is the binomial coefficient.  Since <em>f</em>&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by <em>f</em>&prime;. (Bernstein polynomials are the backbone of the well-known Bézier curve.) A Bernstein polynomial has the form&mdash;</p>
 
 <ul>
 <li>&Sigma;<sub><em>k</em> = 0, ..., <em>m</em></sub> choose(<em>m</em>, <em>k</em>) * <em>x</em><sup><em>k</em></sup> * (1 &minus; <em>x</em>)<sup><em>m</em> &minus; <em>k</em></sup> * <em>a</em>[<em>k</em>],</li>

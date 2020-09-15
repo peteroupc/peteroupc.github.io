@@ -232,7 +232,7 @@
 <li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
-<li>Let <em>da</em> be the digit at that position <em>i</em> of <strong>a</strong>&#39;s fractional part, and let <em>db</em> be <strong>b</strong>&#39;s corresponding digit.</li>
+<li>Let <em>da</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part, and let <em>db</em> be <strong>b</strong>&#39;s corresponding digit.</li>
 <li>If <strong>a</strong> is non-negative, return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
 <li>If <strong>a</strong> is negative, return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
@@ -413,7 +413,7 @@
 <ol>
 <li>Set <em>i</em> to 0, and set <strong>b</strong> to an empty uniform PSRN.</li>
 <li>If the item at position <em>i</em> of the input PSRN&#39;s fractional part is unsampled (that is, not set to a digit), set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
-<li>Let <em>da</em> be the digit at that position <em>i</em> of the input PSRN&#39;s fractional part, and let <em>db</em> be the corresponding digit for <strong>b</strong>.  Return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
+<li>Let <em>da</em> be the digit at position <em>i</em> of the input PSRN&#39;s fractional part, and let <em>db</em> be the corresponding digit for <strong>b</strong>.  Return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
 <li>Add 1 to <em>i</em> and go to step 2.</li>
 </ol>
 
@@ -438,7 +438,7 @@
 
 <ol>
 <li>For each position in [0, <code>p</code>), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag&#39;s capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.)</li>
-<li>Take the first <code>p</code> digits of the geometric bag and return &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>, where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
+<li>Take the first <code>p</code> digits of the geometric bag and return &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>, where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> were already sampled [that is, set to a digit], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
 </ol>
 
 <p><a id=kthsmallest></a></p>

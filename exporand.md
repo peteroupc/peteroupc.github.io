@@ -169,7 +169,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 2. If **a**'s sign is different from **b**'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
 3. Set _i_ to 0.
 4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
-5. Let _da_ be the digit at that position _i_ of **a**'s fractional part, and let _db_ be **b**'s corresponding digit.
+5. Let _da_ be the digit at position _i_ of **a**'s fractional part, and let _db_ be **b**'s corresponding digit.
 5. If **a** is non-negative, return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 6. If **a** is negative, return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
 7. Add 1 to _i_ and go to step 4.
@@ -312,7 +312,7 @@ The algorithm **SampleGeometricBag** returns 1 with a probability built up by a 
 
 1. Set _i_ to 0, and set **b** to an empty uniform PSRN.
 2. If the item at position _i_ of the input PSRN's fractional part is unsampled (that is, not set to a digit), set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part's digit expansion.  Do the same for **b**.
-3. Let _da_ be the digit at that position _i_ of the input PSRN's fractional part, and let _db_ be the corresponding digit for **b**.  Return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
+3. Let _da_ be the digit at position _i_ of the input PSRN's fractional part, and let _db_ be the corresponding digit for **b**.  Return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
 5. Add 1 to _i_ and go to step 2.
 
 For base 2, the following **SampleGeometricBag** algorithm can be used, which is closer to the one given in the Flajolet paper:
@@ -332,7 +332,7 @@ For more on why these two algorithms are equivalent, see the appendix.
 **FillGeometricBag** takes a geometric bag and generates a number whose fractional part has `p` digits as follows:
 
 1. For each position in \[0, `p`), if the item at that position is not a digit, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the geometric bag's capacity as necessary. (See also (Oberhoff 2018, sec. 8)<sup>[**(11)**](#Note11)</sup>.)
-2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` are set to 0 or 1, then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
+2. Take the first `p` digits of the geometric bag and return &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` were already sampled \[that is, set to a digit\], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
 
 <a id=kthsmallest></a>
 ### kthsmallest
