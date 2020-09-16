@@ -197,6 +197,13 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
     - _**b** is known to be rational_, **a** is non-negative, and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
 10. Add 1 to _i_ and go to step 5.
 
+An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup>[**(26)**](#Note26)</sup>):
+
+- (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= &beta;<sup>&minus;_i_ &minus; 1</sup>.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point.  For example, if **b** is &pi;, &beta; is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
+- (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point.
+- (8.) Return 1 if _ak_ <= _bk_ &minus; 2, or if **a** is negative and all the digits after the digit at position _i_ of **b**'s fractional part are zeros.
+- (9.) Return 0 if _ak_ >= _bk_ + 1, or if **a** is non-negative and all the digits after the digit at position _i_ of **b**'s fractional part are zeros.
+
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
 The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is known to be a rational number.
@@ -1049,6 +1056,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note23>(23)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 - <small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[**The expected bit complexity of the von Neumann rejection algorithm**](https://arxiv.org/abs/1511.02273)", arXiv:1511.02273 [cs.IT], 2016.</small>
 - <small><sup id=Note25>(25)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.</small>
+- <small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1104,6 +1112,8 @@ def example_4_2_1(rg, bern, precision=53):
              return randomgen.urandfill(rg,ret,precision)/(1<<precision)
           else: break
 ```
+
+Another example is a sampler for the Rayleigh distribution, given in [**another page**](https://peteroupc.github.io/uniformsum.html).
 
 <a id=Equivalence_of_SampleGeometricBag_Algorithms></a>
 ### Equivalence of SampleGeometricBag Algorithms

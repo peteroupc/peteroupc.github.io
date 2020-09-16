@@ -269,6 +269,15 @@
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
+<p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>):</p>
+
+<ul>
+<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.  For example, if <strong>b</strong> is &pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
+<li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.</li>
+<li>(8.) Return 1 if <em>ak</em> &lt;= <em>bk</em> &minus; 2, or if <strong>a</strong> is negative and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros.</li>
+<li>(9.) Return 0 if <em>ak</em> &gt;= <em>bk</em> + 1, or if <strong>a</strong> is non-negative and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros.</li>
+</ul>
+
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
 
 <p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is known to be a rational number.</p>
@@ -1427,6 +1436,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note23>(23)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
 <li><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></li>
 <li><small><sup id=Note25>(25)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.</small></li>
+<li><small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, Entropy 2019(21)(92), doi:10.3390/e21010092.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1486,6 +1496,8 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
              return randomgen.urandfill(rg,ret,precision)/(1&lt;&lt;precision)
           else: break
 </pre>
+
+<p>Another example is a sampler for the Rayleigh distribution, given in <a href="https://peteroupc.github.io/uniformsum.html"><strong>another page</strong></a>.</p>
 
 <p><a id=Equivalence_of_SampleGeometricBag_Algorithms></a></p>
 

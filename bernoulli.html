@@ -935,7 +935,7 @@
 
 <h4>Digit Expansions</h4>
 
-<p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).  The following assumes that the probability is in [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated &quot;on-the-fly&quot;.</p>
+<p>Probabilities can be expressed as a digit expansion (of the form <code>0.dddddd...</code>).  The following algorithm returns 1 with probability <code>p</code> and 0 otherwise, where <code>p</code> is a probability in the interval [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated &quot;on-the-fly&quot;.</p>
 
 <p>In the algorithm (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note8"><strong>(8)</strong></a></sup>), <code>BASE</code> is the digit base, such as 2 for binary or 10 for decimal.</p>
 
@@ -1868,7 +1868,7 @@ for i in range(iters):
 <li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
 <li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
 </ol></li>
-<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi; and <em>k</em> is 2, <em>pk</em> is 314.</li>
+<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi;, <em>b</em> is 10, and <em>k</em> is 2, <em>pk</em> is 314.</li>
 <li>If <em>pk</em> + 1 &lt;= <em>v</em>, return 0. If <em>pk</em> &minus; 2 &gt;= <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
 </ol>
 
