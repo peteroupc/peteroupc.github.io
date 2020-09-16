@@ -33,7 +33,7 @@
 
 <p>Another notable trend is that these topics were asked for programming languages where convenient APIs for these tasks were missing. This is why I recommend that <a href="https://peteroupc.github.io/random.html#Implementing_New_RNG_APIs"><strong>new programming language APIs</strong></a> <em>provide functionality covering the topics above in their standard libraries</em>, to ease the burden of programmers using that language.</p>
 
-<p>The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Random Number Generation and Sampling Methods</strong></a>&quot;.</p>
+<p>The following sections will detail the topics given above, with suggestions on how to solve them.  Many of the links point to sections of my article &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;.</p>
 
 <p>The <a href="https://peteroupc.github.io/pseudocode.html"><strong>pseudocode conventions</strong></a> apply to this document.</p>
 
@@ -62,7 +62,7 @@
 
 <h2>Uniform Numbers in a Range</h2>
 
-<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a> and &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot; for a survey of algorithms.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a> and &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <pre>function randomInt(minInclusive, maxExclusive) {
   var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -90,7 +90,7 @@
 <li>C&#39;s <code>rand</code> function produces random integers in a predetermined range ([0, <code>RAND_MAX</code>]) that is not within the application&#39;s control.  This is just one of a <a href="https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465"><strong>host of issues with <code>rand</code></strong></a>, by the way (unspecified algorithm, yet is initializable with &quot;srand&quot; for repeatability; non-thread-safety; unspecified distribution; historical implementations had weak low bits; etc.).</li>
 </ul>
 
-<p>For algorithms on generating uniform random <em>floating-point numbers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats"><strong>&quot;For Floating-Point Number Formats&quot;</strong></a>.  Floating-point number generation has a number of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., <code>Math.random()*x</code> in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard 2020<sup><a href="#Note2"><strong>(2)</strong></a></sup>).</p>
+<p>For algorithms on generating uniform random <em>floating-point numbers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats"><strong>&quot;For Floating-Point Number Formats&quot;</strong></a>.  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., <code>Math.random()*x</code> in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard 2020<sup><a href="#Note2"><strong>(2)</strong></a></sup>).</p>
 
 <p><a id=Choosing_Random_Items></a></p>
 
