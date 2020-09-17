@@ -65,6 +65,7 @@
 <li><code><a href="#FromBoolean_bool">FromBoolean(bool)</a></code> - Converts a boolean value (true or false) to an arbitrary-precision integer.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code><a href="#FromBytes_byte_bool">FromBytes(byte[], bool)</a></code> - Initializes an arbitrary-precision integer from an array of bytes.</li>
+<li><code><a href="#FromBytes_byte_int_int_bool">FromBytes(byte[], int, int, bool)</a></code> - Initializes an arbitrary-precision integer from a portion of an array of bytes.</li>
 <li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
@@ -978,6 +979,60 @@ The parameter  <i>bytes</i>
 is null.</li>
 </ul>
 
+<p><a id="FromBytes_byte_int_int_bool"></a></p>
+
+<h3>FromBytes</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromBytes(
+    byte[] bytes,
+    int offset,
+    int length,
+    bool littleEndian);
+</pre>
+
+<p>Initializes an arbitrary-precision integer from a portion of an array of bytes. The portion of the byte array is encoded using the following rules:</p>
+
+<ul>
+<li><p>Positive numbers have the first byte&#39;s highest bit cleared, and negative numbers have the bit set.</p></li>
+<li><p>The last byte contains the lowest 8-bits, the next-to-last contains the next lowest 8 bits, and so on. For example, the number 300 can be encoded as  <code>0x01, 0x2C</code>  and 200 as  <code>0x00,
+        0xC8</code> . (Note that the second example contains a set high bit in  <code>0xC8</code> , so an additional 0 is added at the start to ensure it&#39;s interpreted as positive.)</p></li>
+<li><p>To encode negative numbers, take the absolute value of the number, subtract by 1, encode the number into bytes, and toggle each bit of each byte. Any further bits that appear beyond the most significant bit of the number will be all ones. For example, the number -450 can be encoded as  <code>0xfe, 0x70</code>  and -52869 as  <code>0xff, 0x31, 0x7B</code> . (Note that the second example contains a cleared high bit in  <code>0x31, 0x7B</code> , so an additional 0xff is added at the start to ensure it&#39;s interpreted as negative.)</p></li>
+</ul>
+
+<p>For little-endian, the byte order is reversed from the byte order just discussed.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bytes</i>: A byte array consisting of the two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) of the arbitrary-precision integer to create. The byte array is encoded using the rules given in the FromBytes(bytes, offset, length, littleEndian) overload.</p></li>
+<li><p><i>offset</i>: An index starting at 0 showing where the desired portion of  <i>bytes</i>
+begins.</p></li>
+<li><p><i>length</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
+(but not more than  <i>bytes</i>
+&#39;s length).</p></li>
+<li><p><i>littleEndian</i>: If true, the byte order is little-endian, or least-significant-byte first. If false, the byte order is big-endian, or most-significant-byte first.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer. Returns 0 if the byte array&#39;s length is 0.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
+The parameter  <i>bytes</i>
+is null.</p></li>
+<li><p>System.ArgumentException:
+Either  <i>offset</i>
+or  <i>length</i>
+is less than 0 or greater than  <i>bytes</i>
+&#39;s length, or  <i>bytes</i>
+&#39;s length minus  <i>offset</i>
+is less than  <i>length</i>
+.</p></li>
+</ul>
+
 <p><a id="FromInt16_short"></a></p>
 
 <h3>FromInt16</h3>
@@ -1568,6 +1623,8 @@ The parameter  <i>bigintSecond</i>
 is null.</p></li>
 <li><p>System.DivideByZeroException:
 Attempted to divide by zero.</p></li>
+<li><p>System.ArgumentException:
+bigPower is negative; doesn&#39;t satisfy shiftBits&lt;16; doesn&#39;t satisfy sqroot.Sign&gt;= 0</p></li>
 </ul>
 
 <p><a id="GetBits_int_int"></a></p>

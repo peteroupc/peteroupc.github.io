@@ -474,7 +474,7 @@ This algorithm adapts the general martingale algorithm for this function's serie
 - the lower and upper truncations are in the interval [0, 1],
 - each lower truncation is greater than or equal to the previous lower truncation almost surely,
 - each upper truncation is less than or equal to the previous upper truncation almost surely, and
-- the lower and upper truncations converge from below and above to &lambda;.
+- the lower and upper truncations have an expected value that approaches &lambda; from below and above.
 
 The algorithm to simulate cos(&lambda;) follows.
 
