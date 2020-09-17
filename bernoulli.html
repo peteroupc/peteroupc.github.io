@@ -1299,10 +1299,13 @@
 <p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note30"><strong>(30)</strong></a></sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note8"><strong>(8)</strong></a></sup>: Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (<em>d</em>).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be <em>d</em>).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that <em>k</em> is odd and <em>d</em> is less than <em>x</em> is&mdash;</p>
 
 <ul>
-<li><p>(&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>). &nbsp;&nbsp;&nbsp;(*)</p>
+<li>(&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(*)</li>
+</ul>
 
-<p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For the algorithm in this section&mdash;</p></li>
-<li><p>DPDF is the uniform(0,1) distribution&#39;s PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and</p></li>
+<p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For the algorithm in this section&mdash;</p>
+
+<ul>
+<li>DPDF is the uniform(0,1) distribution&#39;s PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and</li>
 <li>ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply <em>z</em><sup>2</sup>,</li>
 </ul>
 
@@ -1314,7 +1317,7 @@
 
 <p>and thus erf(<em>x</em>)/erf(1).</p>
 
-<p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)<em>sqrt(&pi;)/2 (and the denominator in the formulas (\</em>) and (**) above becomes 1).</p>
+<p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in the formulas (*) and (**) above becomes 1).</p>
 
 <p><a id=General_Algorithms></a></p>
 

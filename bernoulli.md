@@ -994,9 +994,9 @@ In the following algorithm, _x_ is a real number in the interval [0, 1].
 
 In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(30)**](#Note30)</sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(8)**](#Note8)</sup>: Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (_d_).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _d_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _k_ is odd and _d_ is less than _x_ is&mdash;
 
-- (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_). &nbsp;&nbsp;&nbsp;(\*)
+- (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_), &nbsp;&nbsp;&nbsp;(\*)
 
- where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For the algorithm in this section&mdash;
+where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For the algorithm in this section&mdash;
 
 - DPDF is the uniform(0,1) distribution's PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and
 - ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply _z_<sup>2</sup>,
@@ -1007,7 +1007,7 @@ and thus this formula becomes&mdash;
 
 and thus erf(_x_)/erf(1).
 
-If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)*sqrt(&pi;)/2 (and the denominator in the formulas (\*) and (\*\*) above becomes 1).
+If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 (and the denominator in the formulas (\*) and (\*\*) above becomes 1).
 
 <a id=General_Algorithms></a>
 ### General Algorithms
