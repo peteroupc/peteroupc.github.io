@@ -244,8 +244,8 @@
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
-<li>Calculate floor(<strong>b</strong>), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.)</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bi</em>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
+<li>Set <em>bs</em> to &minus;1 if <strong>b</strong> is less than 0, or 1 otherwise. Calculate floor(abs(<strong>b</strong>)), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to abs(<strong>b</strong>) minus <em>bi</em>.)</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
@@ -274,8 +274,8 @@
 <ul>
 <li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.  For example, if <strong>b</strong> is &pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
 <li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.</li>
-<li>(8.) Return 1 if <em>ak</em> &lt;= <em>bk</em> &minus; 2, or if <strong>a</strong> is negative and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros.</li>
-<li>(9.) Return 0 if <em>ak</em> &gt;= <em>bk</em> + 1, or if <strong>a</strong> is non-negative and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros.</li>
+<li>(8.) Return 1 if <em>ak</em> &lt;= <em>bk</em> &minus; 2.</li>
+<li>(9.) Return 0 if <em>ak</em> &gt;= <em>bk</em> + 1.</li>
 </ul>
 
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
@@ -285,7 +285,7 @@
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>a</strong> is negative or its integer part is other than 0, return an error.  If <strong>b</strong> is 0 or less, return 0.  If <strong>b</strong> is 1 or greater, return 1. (The case of 1 is a degenerate case since <strong>a</strong> could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
 <li>Set <em>pt</em> to 1/<em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
 <li>Set <em>d2</em> to floor(<strong>b</strong> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <strong>b</strong> is less than <em>pt</em>, or 1 otherwise.)</li>
 <li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
 <li>If <strong>b</strong> &gt;= <em>pt</em>, subtract <em>pt</em> from <strong>b</strong>.</li>
@@ -296,9 +296,9 @@
 <p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
 
 <ol>
-<li>If the PSRN&#39;s integer part or sign is unsampled, if <strong>a</strong> is negative or its integer part is other than 0, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
-<li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0.</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of the uniform PSRN.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <strong>a</strong> is negative or its integer part is other than 0, return an error. If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
+<li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
 <li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
 <li>Set <em>d2</em> to floor(<em>num</em> * <em>pt</em> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
 <li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
@@ -1380,7 +1380,7 @@ def contbernoullidist(b, lamda, precision=53):
 <ol>
 <li>Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1 and/or a mean other than an integer?</li>
 <li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
-<li>What are exact formulas for the digit probabilities when arithmetic is carried out between two PSRNs (such as addition, multiplication, division, and powering)?</li>
+<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic"><strong>Arithmetic</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as multiplication, division, etc.?</li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>

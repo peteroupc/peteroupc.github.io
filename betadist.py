@@ -117,6 +117,125 @@ def _add_neg_power_of_base(psrn, pwr, digits=2):
     psrn[1] += incr
     return psrn
 
+def psrn_complement(x):
+    for i in range(len(x[2])):
+        if x[2][i] != None:
+            x[2][i] = 1 - x[2][i]
+    return x
+
+def forsythe_prob2(rg, bern, x):
+    # Returns true with probability x*exp(1-x), where x is in [0, 1].
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    while True:
+        # 1 minus maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
+        ret = rg.kthsmallest_urand(2, 2)
+        ret = [1, 0, _urand_to_geobag(ret)]  # Convert to PSRN format
+        ret = psrn_complement(ret)  # 1 minus ret
+        k = 1
+        u = ret
+        while True:
+            v = [1, 0, []]
+            if psrn_less(u, v):
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_rational_01(ret, x) else 0
+
+def forsythe_prob(rg, bern, m, n):
+    # Returns true with probability gamma(m,n)/gamma(m,1),
+    # where gamma(.) is the lower incomplete gamma function.
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    while True:
+        # Maximum of m uniform(0,1) random numbers, or beta(m,1)
+        ret = rg.kthsmallest_urand(m, m)
+        ret = [1, 0, _urand_to_geobag(ret)]
+        k = 1
+        u = ret
+        while True:
+            v = [1, 0, []]
+            if psrn_less(u, v):
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_rational_01(ret, n) else 0
+
+def psrn_less(psrn1, psrn2):
+    if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
+        raise ValueError
+    if psrn1[0] != psrn2[0]:
+        return 1 if psrn1[0] < 0 else 0
+    if psrn1[0] >= 0:
+        if psrn1[1] < psrn2[1]:
+            return 1
+        if psrn1[1] > psrn2[1]:
+            return 0
+    if psrn1[0] < 0:
+        if psrn1[1] < psrn2[1]:
+            return 0
+        if psrn1[1] > psrn2[1]:
+            return 1
+    index = 0
+    while True:
+        # Fill with next bit in a's uniform number
+        while len(psrn1[2]) <= index:
+            psrn1[2].append(None)
+        if psrn1[2][index] == None:
+            psrn1[2][index] = random.randint(0, 1)
+        # Fill with next bit in b's uniform number
+        while len(psrn2[2]) <= index:
+            psrn2[2].append(None)
+        if psrn2[2][index] == None:
+            psrn2[2][index] = random.randint(0, 1)
+        aa = psrn1[2][index]
+        bb = psrn2[2][index]
+        if aa < bb:
+            return True
+        if aa > bb:
+            return False
+        index += 1
+
+def psrn_less_than_rational_01(psrn1, rat):
+    rat = Fraction(rat)
+    num = rat.numerator
+    den = rat.denominator
+    if den == 0:
+        raise ValueError
+    if num < 0 and den < 0:
+        num = abs(num)
+        den = abs(den)
+    if num == 0:
+        return 0
+    if num < 0 or den < 0:
+        return 0
+    if num >= den:
+        return 1
+    pt = 2
+    index = 0
+    while True:
+        # Fill with next bit in a's uniform number
+        while len(psrn1[2]) <= index:
+            psrn1[2].append(None)
+        if psrn1[2][index] == None:
+            psrn1[2][index] = random.randint(0, 1)
+        d1 = psrn1[2][index]
+        c = 1 if num * pt >= den else 0
+        d2 = int(num * pt / den)
+        if d1 < d2:
+            return 1
+        if d1 > d2:
+            return 0
+        if c == 1:
+            num = num * pt - den
+            den *= pt
+        if num == 0:
+            return 0
+        pt *= 2
+        index += 1
+
 def add_psrns(psrn1, psrn2, digits=2):
     """ Adds two partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
