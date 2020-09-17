@@ -91,6 +91,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
         - [**Polylogarithmic Constants**](#Polylogarithmic_Constants)
         - [**&zeta;(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta_3_3_4_and_Other_Zeta_Related_Constants)
+        - [**erf(_x_)/erf(1)**](#erf__x__erf_1)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
@@ -978,6 +979,33 @@ This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 
 2. With probability 1/2, return 1.
 3. Call **SampleGeometricBag** on each of the _k_ PSRNs.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
+<a id=erf__x__erf_1></a>
+#### erf(_x_)/erf(1)
+
+In the following algorithm, _x_ is a real number in the interval [0, 1].
+
+1. Create an empty uniform PSRN, call it _ret_.
+2. Set _u_ to _ret_.
+3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Create two empty uniform PSRNs, call them _a_ and _b_.
+4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
+5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
+6. If _k_ is odd, call the **URandLessThanReal algorithm** on _u_ and _x_, and return the result.
+
+In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(35)**](#Note35)</sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(36)**](#Note36)</sup>: Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (_d_).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _d_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _k_ is odd and _d_ is less than _x_ is&mdash;
+
+- (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_).
+
+ where `DPDF` is the probability density function (PDF) of _D_, and `ECDF` is the cumulative distribution function  (CDF) of _E_.  For the algorithm in this section&mdash;
+
+- `DPDF` is the uniform(0,1) distribution's PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and
+- `ECDF` is the CDF for the maximum of two uniform(0,1) random numbers, which is simply _z_<sup>2</sup>,
+
+and thus this formula becomes&mdash;
+
+- (&int;<sub>[0, _x_]</sub> exp(_z_<sup>2</sup>) _dz_) / (&int;<sub>[0, 1]</sub> exp(_z_<sup>2</sup>) _dz_).
+
+and thus erf(_x_)/erf(1).
+
 <a id=General_Algorithms></a>
 ### General Algorithms
 
@@ -1144,9 +1172,11 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note30>(30)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note31>(31)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note32>(32)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note33>(33)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
-- <small><sup id=Note34>(34)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-- <small><sup id=Note35>(35)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
+- <small><sup id=Note33>(33)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note34>(34)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
+- <small><sup id=Note35>(35)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
+- <small><sup id=Note36>(36)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note37>(37)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1163,7 +1193,7 @@ In fact, there is a lower bound on the average number of coin flips needed to tu
 &nbsp;&nbsp;&nbsp;&nbsp;((&tau; &minus; 1) * ln(1 &minus; &tau;) &minus; &tau; * ln(&tau;)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)).
 
-For example, if _f_(&lambda;) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is &lambda;).  Note that this formula only works if nothing but coin flips is allowed as randomness.  (For certain values of &lambda;, Kozen (2014)<sup>[**(33)**](#Note33)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)
+For example, if _f_(&lambda;) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is &lambda;).  Note that this formula only works if nothing but coin flips is allowed as randomness.  (For certain values of &lambda;, Kozen (2014)<sup>[**(37)**](#Note37)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
@@ -1219,7 +1249,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(8)**](#Note8)</sup>, (Devroye and Gravel 2015)<sup>[**(34)**](#Note34)</sup>:
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(8)**](#Note8)</sup>, (Devroye and Gravel 2015)<sup>[**(33)**](#Note33)</sup>:
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
@@ -1276,7 +1306,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_, except every second integer is 0 instead), and
 - alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(_n_) starting at _n_ = 0 is A000111, except every other integer starting with the first is 0 instead),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(35)**](#Note35)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(34)**](#Note34)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 

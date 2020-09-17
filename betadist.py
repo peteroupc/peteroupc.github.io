@@ -117,25 +117,44 @@ def _add_neg_power_of_base(psrn, pwr, digits=2):
     psrn[1] += incr
     return psrn
 
-def psrn_complement(x):
-    for i in range(len(x[2])):
-        if x[2][i] != None:
-            x[2][i] = 1 - x[2][i]
-    return x
-
 def forsythe_prob2(rg, bern, x):
     # Returns true with probability x*exp(1-x), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
     # Non-Uniform Random Variate Generation.
     while True:
         # 1 minus maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
-        ret = rg.kthsmallest_urand(2, 2)
-        ret = [1, 0, _urand_to_geobag(ret)]  # Convert to PSRN format
-        ret = psrn_complement(ret)  # 1 minus ret
+        ret1 = psrn_new_01()
+        ret2 = psrn_new_01()
+        ret = None
+        if psrn_less(ret1, ret2):
+            ret = psrn_complement(ret2)
+        else:
+            ret = psrn_complement(ret1)
         k = 1
         u = ret
         while True:
-            v = [1, 0, []]
+            v = psrn_new_01()
+            if psrn_less(u, v):
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_rational_01(ret, x) else 0
+
+def forsythe_prob3(rg, bern, x):
+    # Returns true with probability erf(x)/erf(1), where x is in [0, 1].
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    while True:
+        # Maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(1-x)
+        ret = psrn_new_01()
+        k = 1
+        u = ret
+        while True:
+            # Generate v as the maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
+            ret1 = psrn_new_01()
+            ret2 = psrn_new_01()
+            v = ret2 if psrn_less(ret1, ret2) else ret1
             if psrn_less(u, v):
                 break
             k += 1
@@ -155,13 +174,22 @@ def forsythe_prob(rg, bern, m, n):
         k = 1
         u = ret
         while True:
-            v = [1, 0, []]
+            v = psrn_new_01()
             if psrn_less(u, v):
                 break
             k += 1
             u = v
         if k % 2 == 1:
             return 1 if psrn_less_than_rational_01(ret, n) else 0
+
+def psrn_complement(x):
+    for i in range(len(x[2])):
+        if x[2][i] != None:
+            x[2][i] = 1 - x[2][i]
+    return x
+
+def psrn_new_01():
+    return [1, 0, []]
 
 def psrn_less(psrn1, psrn2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
