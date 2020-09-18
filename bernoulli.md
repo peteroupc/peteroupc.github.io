@@ -33,6 +33,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**exp(&minus;&lambda;)**](#exp_minus_lambda)
         - [**exp(&minus;(&lambda;<sup>_k_</sup> * _x_))**](#exp_minus_lambda__k___x)
         - [**exp(&minus;(&lambda;<sup>_k_</sup> * (_x_ + _m_)))**](#exp_minus_lambda__k___x___m)
+        - [**exp(&minus;(&lambda; + _m_)<sup>_k_</sup>)**](#exp_minus_lambda__m___k)
         - [**exp(&lambda;)*(1&minus;&lambda;)**](#exp_lambda_1_minus_lambda)
         - [**(1&minus;&lambda;)/cos(&lambda;)**](#1_minus_lambda_cos_lambda)
         - [**(1&minus;&lambda;) * tan(&lambda;)**](#1_minus_lambda_tan_lambda)
@@ -237,23 +238,39 @@ On the other hand, this third algorithm converges quickly everywhere in (0, 1). 
 <a id=exp_minus_lambda__k___x></a>
 #### exp(&minus;(&lambda;<sup>_k_</sup> * _x_))
 
-In the following algorithm, which applies the general martingale algorithm, _k_ is an integer greater than 0, and _x_ is a rational number in the interval (0, 1].  It represents the series 1 &minus; &lambda;<sup>_k_</sup>\*_x_ + &lambda;<sup>2\*_k_</sup>\*_x_/2! &minus; &lambda;<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
+In the following algorithm, which applies the general martingale algorithm, _k_ is an integer 0 or greater, and _x_ is a rational number in the interval \[0, 1\].  It represents the series 1 &minus; &lambda;<sup>_k_</sup>\*_x_ + &lambda;<sup>2\*_k_</sup>\*_x_/2! &minus; &lambda;<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
 
-1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.  Set _y_ to _x_.
-2. Create an empty uniform PSRN.
-3. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.
-4. If _n_ is even, set _u_ to _l_ + _w_ * _y_.  Otherwise, set _l_ to _u_ &minus; _w_ * _y_.
-5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-7. Add 1 to _n_, add _x_ to _y_, and go to step 3.
+1. Special cases: If _x_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _x_, and return the result.
+2. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.  Set _z_ to _x_.
+3. Create an empty uniform PSRN.
+4. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.
+5. If _n_ is even, set _u_ to _l_ + _w_ * _z_.  Otherwise, set _l_ to _u_ &minus; _w_ * _z_.
+6. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
+7. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
+8. Add 1 to _n_, add _x_ to _z_, and go to step 4.
 
 <a id=exp_minus_lambda__k___x___m></a>
 #### exp(&minus;(&lambda;<sup>_k_</sup> * (_x_ + _m_)))
 
-In the following algorithm, _k_ and _m_ are both integers greater than 0, and _x_ is a rational number in the interval (0, 1].
+In the following algorithm, _k_ and _m_ are both integers greater than 0, and _x_ is a rational number in the interval \[0, 1\].
 
 1. Call the **algorithm for exp(&minus;&lambda;<sup>_k_</sup> * _x_)** _m_ times with _k_ = _k_ and _x_ = 1.  If any of these calls returns 0, return 0.
-2. Call the **algorithm for exp(&minus;&lambda;<sup>_k_</sup> * _x_)** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
+2. If _x_ is 0, return 1.
+3. Call the **algorithm for exp(&minus;&lambda;<sup>_k_</sup> * _x_)** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
+
+<a id=exp_minus_lambda__m___k></a>
+#### exp(&minus;(&lambda; + _m_)<sup>_k_</sup>)
+
+In the following algorithm, _m_ and _k_ are both integers 0 or greater.
+
+1. If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = 1/1, and return the result.
+2. If _k_ is 1 and _m_ is 0, run the **algorithm for exp(&minus;&lambda;)** and return the result.
+3. Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_<sup>_k_</sup> / 1.  If the algorithm returns 0, return 0.
+4. Run the **algorithm for exp(&minus;&lambda;)**, but with an input coin that does the following: "Flip the input coin _k_ times.  If any of the flips returns 0, return 0.  Otherwise, return 1".  If the algorithm returns 0, return 0.
+5. Set _i_ to 1, then while _i_ < _k_:
+     1. Set _z_ to choose(_k_, _i_) * _m_<sup>_k_ &minus; _i_</sup>. (Here, choose(_k_, _i_) is a binomial coefficient.)
+     2. Run the **algorithm for exp(&minus;(&lambda;<sup>_k_</sup> * _x_))** _z_ times, with _k_ = _i_ and _x_ = 1.  If any of these calls returns 0, return 0.
+6. Return 1.
 
 <a id=exp_lambda_1_minus_lambda></a>
 #### exp(&lambda;)*(1&minus;&lambda;)
