@@ -110,6 +110,7 @@
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
 <li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
+<li><a href="#Simulating_the_Logistic_Distribution"><strong>Simulating the Logistic Distribution</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1568,6 +1569,22 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 </ul>
 
 <p>It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).</p>
+
+<p><a id=Simulating_the_Logistic_Distribution></a></p>
+
+<h3>Simulating the Logistic Distribution</h3>
+
+<p>The following algorithm generates a random number that follows the logistic distribution.</p>
+
+<ol>
+<li>Set <em>k</em> to 0.</li>
+<li>With probability 1 &minus; (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.</li>
+<li>Set <em>f</em> to a uniform random number in the interval [0, 1].</li>
+<li>With probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.</li>
+<li>Return a number that is (<em>f</em> + <em>k</em>) with probability 1/2, and &minus;(<em>f</em> + <em>k</em>) otherwise.</li>
+</ol>
+
+<p>The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), in step 2.  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(<em>k</em>)) and the series for 1/(1+exp(<em>k</em>+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.</p>
 
 <p><a id=License></a></p>
 

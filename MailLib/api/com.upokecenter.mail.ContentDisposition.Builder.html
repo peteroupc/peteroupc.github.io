@@ -33,12 +33,12 @@ Irrelevant for content dispositions; will be removed in the future.</li>
 Deprecated.
 Irrelevant for content dispositions; will be removed in the future.
 Irrelevant for content dispositions; will be removed in the future.</li>
-<li><code>DispositionBuilder RemoveParameter​(java.lang.String name)</code><br>
+<li><code>ContentDisposition.Builder RemoveParameter​(java.lang.String name)</code><br>
 Removes a parameter from this content disposition.</li>
 <li><code>void setDispositionType​(java.lang.String value)</code><br></li>
-<li><code>DispositionBuilder SetDispositionType​(java.lang.String str)</code><br>
+<li><code>ContentDisposition.Builder SetDispositionType​(java.lang.String str)</code><br>
 Sets the disposition type, such as &quot;inline&quot;.</li>
-<li><code>DispositionBuilder SetParameter​(java.lang.String name,
+<li><code>ContentDisposition.Builder SetParameter​(java.lang.String name,
         java.lang.String value)</code><br>
 Sets a parameter of this content disposition.</li>
 <li><code>ContentDisposition ToDisposition()</code><br>
@@ -185,7 +185,7 @@ false</code>.</li>
 
 <h3>SetDispositionType</h3>
 
-<pre>public DispositionBuilder SetDispositionType​(java.lang.String str)
+<pre>public ContentDisposition.Builder SetDispositionType​(java.lang.String str)
 </pre>
 
 <p>Sets the disposition type, such as &quot;inline&quot;. This method enables the pattern
@@ -214,7 +214,7 @@ false</code>.</li>
 
 <h3>RemoveParameter</h3>
 
-<pre>public DispositionBuilder RemoveParameter​(java.lang.String name)
+<pre>public ContentDisposition.Builder RemoveParameter​(java.lang.String name)
 </pre>
 
 <p>Removes a parameter from this content disposition. Does nothing if the
@@ -244,7 +244,7 @@ lower-case letters.).</li>
 
 <h3>SetParameter</h3>
 
-<pre>public DispositionBuilder SetParameter​(java.lang.String name, java.lang.String value)
+<pre>public ContentDisposition.Builder SetParameter​(java.lang.String name, java.lang.String value)
 </pre>
 
 <p>Sets a parameter of this content disposition.</p>

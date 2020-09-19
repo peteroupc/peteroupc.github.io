@@ -72,6 +72,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
     - [**Oberhoff's "Exact Rejection Sampling" Method**](#Oberhoff_s_Exact_Rejection_Sampling_Method)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
+    - [**Simulating the Logistic Distribution**](#Simulating_the_Logistic_Distribution)
 - [**License**](#License)
 
 <a id=Notation></a>
@@ -1168,6 +1169,19 @@ It appears that the distribution's PDF will be continuous only if&mdash;
 - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
 
 It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).
+
+<a id=Simulating_the_Logistic_Distribution></a>
+### Simulating the Logistic Distribution
+
+The following algorithm generates a random number that follows the logistic distribution.
+
+1. Set _k_ to 0.
+2. With probability 1 &minus; (1+exp(_k_))/(1+exp(_k_+1)), go to step 3.  Otherwise, add 1 to _k_ and repeat this step.
+3. Set _f_ to a uniform random number in the interval \[0, 1\].
+4. With probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.
+5. Return a number that is (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
+
+The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(_k_))/(1+exp(_k_+1)), in step 2.  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(_k_)) and the series for 1/(1+exp(_k_+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.
 
 <a id=License></a>
 ## License
