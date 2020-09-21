@@ -1176,7 +1176,7 @@ It may be that something similar applies for &beta; other than 2 (non-base-2 or 
 The following algorithm generates a random number that follows the logistic distribution.
 
 1. Set _k_ to 0.
-2. With probability 1 &minus; (1+exp(_k_))/(1+exp(_k_+1)), go to step 3.  Otherwise, add 1 to _k_ and repeat this step.
+2. With probability 1 &minus; (1+exp(_k_))/(1+exp(_k_+1)), add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
 3. Set _f_ to a uniform random number in the interval \[0, 1\].
 4. With probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.
 5. Return a number that is (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.

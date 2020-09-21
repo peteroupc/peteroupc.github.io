@@ -244,7 +244,6 @@ A _nondeterministic source_ is a source that doesn't give the same output for th
 - timings of interrupts and disk accesses,
 - timings of keystrokes and/or other input device interactions,
 - thermal noise,
-- the output of assembly instructions specially dedicated to random number generation, such as RdSeed,
 - the output generated with A. Seznec's technique called hardware volatile entropy gathering and expansion (HAVEGE), provided a high-resolution counter is available, and
 - differences between two high-resolution counter values taken in quick succession (such as in "Jitter RNG"; see (M&uuml;ller)<sup>[**(11)**](#Note11)</sup>).
 

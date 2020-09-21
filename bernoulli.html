@@ -112,6 +112,8 @@
 <li><a href="#Polylogarithmic_Constants"><strong>Polylogarithmic Constants</strong></a></li>
 <li><a href="#zeta_3_3_4_and_Other_Zeta_Related_Constants"><strong>&zeta;(3) * 3 / 4 and Other Zeta-Related Constants</strong></a></li>
 <li><a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a></li>
+<li><a href="#2_1_exp_2_or_1_exp_0_1_exp_1"><strong>2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))</strong></a></li>
+<li><a href="#1_exp_1_1_exp_2"><strong>(1 + exp(1)) / (1 + exp(2))</strong></a></li>
 </ul></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
 
@@ -1270,7 +1272,7 @@
 <li>Call <strong>SampleGeometricBag</strong> on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)</li>
 </ol>
 
-<p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus;(<em>k</em> &minus; 1)</sup>) where <em>k</em> &gt;= 2, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
+<p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus;(<em>k</em> &minus; 1)</sup>) where <em>k</em> &gt;= 2 is an integer, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
 
 <ol>
 <li>Create <em>k</em> empty uniform PSRNs.</li>
@@ -1294,10 +1296,10 @@
 <li>Go to step 1.</li>
 </ol>
 
-<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note29"><strong>(29)</strong></a></sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (<em>d</em>).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be <em>d</em>).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that <em>k</em> is odd and <em>d</em> is less than <em>x</em> is&mdash;</p>
+<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note29"><strong>(29)</strong></a></sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (&delta;).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that &delta; is less than <em>x</em> given that <em>k</em> is odd is&mdash;</p>
 
 <ul>
-<li>(&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(*)</li>
+<li>(&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 1)</li>
 </ul>
 
 <p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For the algorithm in this section&mdash;</p>
@@ -1310,12 +1312,44 @@
 <p>and thus this formula becomes&mdash;</p>
 
 <ul>
-<li>(&int;<sub>[0, <em>x</em>]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(**)</li>
+<li>(&int;<sub>[0, <em>x</em>]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 2)</li>
 </ul>
 
 <p>and thus erf(<em>x</em>)/erf(1).</p>
 
-<p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in the formulas (*) and (**) above becomes 1).</p>
+<p>If <em>D</em>, <em>E</em>, &delta;, and <em>k</em> are as defined earlier, the probability that &delta; is less than <em>x</em> given that <em>k</em> <strong>is even</strong> is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (see also (Monahan 1979)<sup><a href="#Note37"><strong>(37)</strong></a></sup>).</p>
+
+<p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in formulas 1 and 2 above becomes 1).</p>
+
+<p><a id=2_1_exp_2_or_1_exp_0_1_exp_1></a></p>
+
+<h4>2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))</h4>
+
+<p>This algorithm takes advantage of formula 3 mentioned in the section on the algorithm for &quot;erf(<em>x</em>)/erf(1)&quot;).  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>)))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
+
+<ol>
+<li>Create an empty <strong>exponential PSRN</strong> <em>ex</em>, then set <em>k</em> to 1.</li>
+<li>Set <em>u</em> to <em>ex</em>.</li>
+<li>Create an empty <strong>uniform PSRN</strong> <em>v</em>.</li>
+<li>Set <em>stop</em> to 1 if <em>v</em> turns out to be greater than <em>u</em>, and 0 otherwise.</li>
+<li>If <em>stop</em> is 1 and <em>k</em> <strong>is even</strong>, return a number that is 0 if <em>ex</em> turns out to be <strong>less than 1</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>
+<li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
+</ol>
+
+<p><a id=1_exp_1_1_exp_2></a></p>
+
+<h4>(1 + exp(1)) / (1 + exp(2))</h4>
+
+<p>This algorithm takes advantage of the theorem mentioned in the section on the algorithm for &quot;erf(<em>x</em>)/erf(1)&quot;).  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, <em>z</em>)) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
+
+<ol>
+<li>Create an empty <strong>exponential PSRN</strong> <em>ex</em>, then set <em>k</em> to 1.</li>
+<li>Set <em>u</em> to <em>ex</em>.</li>
+<li>Create an empty <strong>uniform PSRN</strong> <em>v</em>.</li>
+<li>Set <em>stop</em> to 1 if <em>v</em> turns out to be greater than <em>u</em>, and 0 otherwise.</li>
+<li>If <em>stop</em> is 1 and <em>k</em> <strong>is odd</strong>, return a number that is 0 if <em>ex</em> turns out to be <strong>less than 1/2</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>
+<li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
+</ol>
 
 <p><a id=General_Algorithms></a></p>
 
@@ -1812,6 +1846,7 @@
 <li><small><sup id=Note34>(34)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v5"><strong>Sampling with arbitrary precision</strong></a>&quot;, arXiv:1502.02539v5 [cs.IT], 2015.</small></li>
 <li><small><sup id=Note35>(35)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small></li>
 <li><small><sup id=Note36>(36)</sup> Flajolet, P., Sedgewick, R., &quot;Analytic Combinatorics&quot;, 2009.</small></li>
+<li><small><sup id=Note37>(37)</sup> Monahan, J.. “Extensions of von Neumann’s method for generating random variables.” Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
