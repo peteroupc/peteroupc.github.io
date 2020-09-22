@@ -1288,11 +1288,11 @@
 
 <ol>
 <li>Create an empty uniform PSRN, call it <em>ret</em>.</li>
-<li>Set <em>u</em> to <em>ret</em>.</li>
+<li>Set <em>u</em> to <em>ret</em>, and set <em>k</em> to 1.</li>
 <li>(In this and the next step, we create <em>v</em>, which is the maximum of two uniform [0, 1] random numbers.) Create two empty uniform PSRNs, call them <em>a</em> and <em>b</em>.</li>
 <li>If <em>a</em> is less than <em>b</em>, set <em>v</em> to <em>b</em>. Otherwise, set <em>v</em> to <em>a</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>, set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
-<li>If <em>k</em> is odd, call the <strong>URandLessThanReal algorithm</strong> on <em>u</em> and <em>x</em>, and return the result.</li>
+<li>If <em>k</em> is odd, call the <strong>URandLessThanReal algorithm</strong> on <em>ret</em> and <em>x</em>, and return the result.</li>
 <li>Go to step 1.</li>
 </ol>
 
@@ -1312,12 +1312,12 @@
 <p>and thus this formula becomes&mdash;</p>
 
 <ul>
-<li>(&int;<sub>[0, <em>x</em>]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(<em>z</em><sup>2</sup>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 2)</li>
+<li>(&int;<sub>[0, <em>x</em>]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 2)</li>
 </ul>
 
 <p>and thus erf(<em>x</em>)/erf(1).</p>
 
-<p>If <em>D</em>, <em>E</em>, &delta;, and <em>k</em> are as defined earlier, the probability that &delta; is less than <em>x</em> given that <em>k</em> <strong>is even</strong> is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (see also (Monahan 1979)<sup><a href="#Note37"><strong>(37)</strong></a></sup>).</p>
+<p>If <em>D</em>, <em>E</em>, &delta;, and <em>k</em> are as defined earlier, the probability that &delta; is less than <em>x</em> given that <em>k</em> <strong>is even</strong> is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 3; see also (Monahan 1979)<sup><a href="#Note37"><strong>(37)</strong></a></sup>).</p>
 
 <p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in formulas 1 and 2 above becomes 1).</p>
 

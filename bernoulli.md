@@ -986,11 +986,11 @@ This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 
 In the following algorithm, _x_ is a real number in the interval [0, 1].
 
 1. Create an empty uniform PSRN, call it _ret_.
-2. Set _u_ to _ret_.
+2. Set _u_ to _ret_, and set _k_ to 1.
 3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Create two empty uniform PSRNs, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
 5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
-6. If _k_ is odd, call the **URandLessThanReal algorithm** on _u_ and _x_, and return the result.
+6. If _k_ is odd, call the **URandLessThanReal algorithm** on _ret_ and _x_, and return the result.
 7. Go to step 1.
 
 In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(7)**](#Note7)</sup>: Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (&delta;).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that &delta; is less than _x_ given that _k_ is odd is&mdash;
@@ -1004,11 +1004,11 @@ where DPDF is the probability density function (PDF) of _D_, and ECDF is the cum
 
 and thus this formula becomes&mdash;
 
-- (&int;<sub>[0, _x_]</sub> exp(_z_<sup>2</sup>) _dz_) / (&int;<sub>[0, 1]</sub> exp(_z_<sup>2</sup>) _dz_), &nbsp;&nbsp;&nbsp;(Formula 2)
+- (&int;<sub>[0, _x_]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_) / (&int;<sub>[0, 1]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_), &nbsp;&nbsp;&nbsp;(Formula 2)
 
 and thus erf(_x_)/erf(1).
 
-If _D_, _E_, &delta;, and _k_ are as defined earlier, the probability that &delta; is less than _x_ given that _k_ **is even** is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (see also (Monahan 1979)<sup>[**(37)**](#Note37)</sup>).
+If _D_, _E_, &delta;, and _k_ are as defined earlier, the probability that &delta; is less than _x_ given that _k_ **is even** is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 3; see also (Monahan 1979)<sup>[**(37)**](#Note37)</sup>).
 
 If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 (and the denominator in formulas 1 and 2 above becomes 1).
 
