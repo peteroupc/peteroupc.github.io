@@ -1318,8 +1318,8 @@ Examples of permutation classes include&mdash;
 - single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;)); V(_n_) = (_n_ &minus; 1)!)
 - sorted permutations (EGF(&lambda;) = Set(&lambda;) = exp(&lambda;); V(_n_) = 1),
 - all permutations (EGF(&lambda;) = Seq(&lambda;) = 1/(1 &minus; &lambda;); V(_n_) = _n_!),
-- alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_, except every second integer is 0 instead), and
-- alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(_n_) starting at _n_ = 0 is A000111, except every other integer starting with the first is 0 instead),
+- alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
+- alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
 using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(36)**](#Note36)</sup>.
 
@@ -1400,9 +1400,11 @@ Consider the following algorithm:
 3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
 4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
 
-This algorithm returns the number _n_ with a probability given by the following recursive formula (which relates to the truncation of the Taylor series for exp(&minus;_x_)):
+This algorithm returns the number _n_ with a probability given by the following recursive formula:
 
-_C_(_n_) = (&Sigma;<sub>_j_ = 2, ..., _n_ + 1</sub> (&minus;1)<sup>_j_</sup>/_j_!) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) ).
+_C_(_n_) = (1 &minus; _a_<sub>_n_ + 1</sub>/(_a_<sub>_n_</sub> * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) ),
+
+where _a_<sub>_i_</sup> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_.
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)

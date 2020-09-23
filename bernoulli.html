@@ -1986,8 +1986,8 @@ for i in range(iters):
 <li>single-cycle permutations (EGF(&lambda;) = Cyc(&lambda;) = ln(1/(1 &minus; &lambda;)); V(<em>n</em>) = (<em>n</em> &minus; 1)!)</li>
 <li>sorted permutations (EGF(&lambda;) = Set(&lambda;) = exp(&lambda;); V(<em>n</em>) = 1),</li>
 <li>all permutations (EGF(&lambda;) = Seq(&lambda;) = 1/(1 &minus; &lambda;); V(<em>n</em>) = <em>n</em>!),</li>
-<li>alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>, except every second integer is 0 instead), and</li>
-<li>alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is A000111, except every other integer starting with the first is 0 instead),</li>
+<li>alternating permutations of even size (EGF(&lambda;) = 1/cos(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000364"><strong>A000364</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>), and</li>
+<li>alternating permutations of odd size (EGF(&lambda;) = tan(&lambda;); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
 <p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note36"><strong>(36)</strong></a></sup>.</p>
@@ -2082,9 +2082,11 @@ def valid_perm(f, x, n):
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 2.</li>
 </ol>
 
-<p>This algorithm returns the number <em>n</em> with a probability given by the following recursive formula (which relates to the truncation of the Taylor series for exp(&minus;<em>x</em>)):</p>
+<p>This algorithm returns the number <em>n</em> with a probability given by the following recursive formula:</p>
 
-<p><em>C</em>(<em>n</em>) = (&Sigma;<sub><em>j</em> = 2, ..., <em>n</em> + 1</sub> (&minus;1)<sup><em>j</em></sup>/<em>j</em>!) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) ).</p>
+<p><em>C</em>(<em>n</em>) = (1 &minus; <em>a</em><sub><em>n</em> + 1</sub>/(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) ),</p>
+
+<p>where <em>a</em><sub><em>i</em></sup> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</p>
 
 <p><a id=Other_Algorithms_for_exp_minus_lambda></a></p>
 
