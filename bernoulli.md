@@ -139,10 +139,15 @@ The next section will show algorithms for a number of factory functions, allowin
 In the following algorithms:
 
 - &lambda; is the unknown probability of heads of the input coin.
-- The **SampleGeometricBag**, **URandLess**, and **URandLessThanReal** algorithms are described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
+- The **SampleGeometricBag**, **RandLess**, and **URandLessThanReal** algorithms are described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 - The `ZeroOrOne` method should be implemented as shown in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
-- The instruction to "generate a uniform random number" can be implemented by creating an empty [**uniform PSRN**](https://peteroupc.github.io/exporand.html) (most accurate) or by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
-- Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are uniform random numbers, it means to run the **URandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
+- The instruction to "generate a uniform random number" can be implemented&mdash;
+    - by creating a [**uniform PSRN**](https://peteroupc.github.io/exporand.html) with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or
+    - by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
+- The instruction to "generate an exponential random number" can be implemented&mdash;
+    - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
+    - by generating `-ln(1/RNDEXCRANGE(0, 1))` (less accurate).
+- Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are partially-sampled random numbers (PSRNs), it means to run the **RandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce rounding error.
 
 The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.
@@ -191,12 +196,11 @@ where _d_\[_i_\] are all in the interval [0, 1] and form a non-increasing sequen
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.
 
 1. Let _d[0]_, _d[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _d[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-2. Create an empty uniform PSRN.
+2. Generate a uniform random number _ret_.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
 4. If _n_ is even, set _u_ to _l_ + _w_ * _d[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _d[n]_.
-5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-7. Add 1 to _n_ and go to step 3.
+5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
+6. Add 1 to _n_ and go to step 3.
 
 If the alternating series has the form&mdash;
 
@@ -210,12 +214,11 @@ then modify the general martingale algorithm by adding the following after step 
 This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(7)**](#Note7)</sup>.) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-2. Create an empty uniform PSRN.
+2. Generate a uniform random number _ret_.
 3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
 4. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
-5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-7. Add 1 to _n_ and go to step 3.
+5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
+6. Add 1 to _n_ and go to step 3.
 
 See the appendix for other algorithms.
 
@@ -226,12 +229,11 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 
 1. Special cases: If _x_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _x_, and return the result.
 2. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-3. Create an empty uniform PSRN.
+3. Generate a uniform random number _ret_.
 4. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _x_ and 0 otherwise.
 5. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-7. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-8. Add 1 to _n_ and go to step 4.
+6. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
+7. Add 1 to _n_ and go to step 4.
 
 <a id=exp_minus_lambda__k___x___m></a>
 #### exp(&minus;(&lambda;<sup>_k_</sup> * (_x_ + _m_)))
@@ -453,7 +455,7 @@ Works only if _c_ > 0.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Generate an empty uniform PSRN.
+1. Create an empty uniform PSRN.
 2. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
 3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
 
@@ -482,12 +484,11 @@ This algorithm adapts the general martingale algorithm for this function's serie
 The algorithm to simulate cos(&lambda;) follows.
 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, set _n_ to 1, and set _fac_ to 2.
-2. Create an empty uniform PSRN.
+2. Generate a uniform random number _ret_.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_. (Here we divide by the factorial of 2-times-_n_.)
-5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
+5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
+6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
 
 <a id=sin_lambda></a>
 #### sin(&lambda;)
@@ -498,12 +499,11 @@ The algorithm to simulate sin(&lambda;) follows.
 
 1. Flip the input coin.  If it returns 0, return 0.
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, set _n_ to 1, and set _fac_ to 6.
-2. Create an empty uniform PSRN.
+2. Generate a uniform random number _ret_.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_.
-5. Run the **URandLessThanReal algorithm** on the PSRN and _l_.  If the algorithm returns 1, return 1.
-6. Run the **URandLessThanReal algorithm** on the PSRN and _u_.  If the algorithm returns 0, return 0.
-7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 3.
+5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
+6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 3.
 
 <a id=lambda__x___y></a>
 #### &lambda;<sup>_x_/_y_</sup>
@@ -987,12 +987,12 @@ This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 
 
 In the following algorithm, _x_ is a real number in the interval [0, 1].
 
-1. Create an empty uniform PSRN, call it _ret_.
+1. Generate a uniform random number, call it _ret_.
 2. Set _u_ to _ret_, and set _k_ to 1.
-3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Create two empty uniform PSRNs, call them _a_ and _b_.
+3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Generate two uniform random numbers, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
 5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
-6. If _k_ is odd, call the **URandLessThanReal algorithm** on _ret_ and _x_, and return the result.
+6. If _k_ is odd, return 1 if _ret_ is less than _x_, or 0 otherwise. (For example, if _ret_ is implemented as a uniform PSRN, call the **URandLessThanReal algorithm** on _ret_ and _x_, and return the result.)
 7. Go to step 1.
 
 In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup>.  See the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix for more information.
@@ -1002,11 +1002,11 @@ In fact, this algorithm takes advantage of a theorem related to the Forsythe met
 
 This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
 
-1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
+1. Generate an **exponential** random number _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
-3. Create an empty **uniform PSRN** _v_.
-4. Set _stop_ to 1 if _u_ turns out to be less than _v_, and 0 otherwise.
-5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ turns out to be **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
+3. Generate a **uniform** random number _v_.
+4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
+5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ is **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 
 <a id=1_exp_1_1_exp_2></a>
@@ -1014,11 +1014,11 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 
 This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
 
-1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
+1. Generate an **exponential** random number _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
-3. Create an empty **uniform PSRN** _v_.
-4. Set _stop_ to 1 if _u_ turns out to be less than _v_, and 0 otherwise.
-5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ turns out to be **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
+3. Generate a **uniform** random number _v_.
+4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
+5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ is **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 
 <a id=General_Algorithms></a>
@@ -1395,9 +1395,9 @@ and thus erf(_x_)/erf(1).  If the last step in the algorithm reads "Return 0" ra
 
 Consider the following algorithm:
 
-1. Create an empty uniform PSRN _u_, then set _k_ to 1.
-2. Create another empty uniform PSRN _v_.
-3. If _k_ is odd and _u_ turns out to be less than _v_, or if _k_ is even and _v_ turns out to be less than _u_, return _k_.
+1. Generate a uniform random number _u_, then set _k_ to 1.
+2. Generate another uniform random number _v_.
+3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
 4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
 
 This algorithm returns the number _n_ with a probability given by the following recursive formula (which relates to the truncation of the Taylor series for exp(&minus;_x_)):

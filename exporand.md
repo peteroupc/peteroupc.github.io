@@ -166,7 +166,7 @@ Two PSRNs, each of a different distribution but storing digits of the same base 
 
 The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns 1 if **a** turns out to be less than **b** almost surely, or 0 otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
-1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part.  Do the same for **b**.
+1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part according to the kind of PSRN **a** is.  Do the same for **b**.
 2. If **a**'s sign is different from **b**'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
 3. Set _i_ to 0.
 4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
@@ -435,7 +435,7 @@ The **ExpRandLess** algorithm is a special case of the general **RandLess** algo
 1. If **a**'s integer part wasn't sampled yet, call the **algorithm for exp(&minus;_x_/_y_)** with _x_ = &lambda;'s numerator and _y_ = &lambda;'s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for **b**.
 2. Return 1 if **a**'s integer part is less than **b**'s, or 0 if **a**'s integer part is greater than **b**'s.
 3. Set _i_ to 0.
-4. If **a**'s fractional part has _i_ or fewer bits, call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  Do the same for **b**.
+4. If **a**'s fractional part has _i_ or fewer bits, call the **LogisticExp** algorithm with _x_ = &lambda;'s numerator, _y_ = &lambda;'s denominator, and _prec_ = _i_ + 1, and append the result to that fractional part's binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for **b**.
 5. Return 1 if **a**'s fractional part is less than **b**'s, or 0 if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
