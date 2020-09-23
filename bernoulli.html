@@ -140,7 +140,7 @@
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
 <li><a href="#Probabilities_Arising_from_the_Forsythe_Method"><strong>Probabilities Arising from the Forsythe Method</strong></a></li>
-<li><a href="#Probabilities_Arising_from_Alternating_Sequences"><strong>Probabilities Arising from Alternating Sequences</strong></a></li>
+<li><a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a></li>
 <li><a href="#Other_Algorithms_for_exp_minus_lambda"><strong>Other Algorithms for exp(&minus;&lambda;)</strong></a></li>
 <li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1_pi"><strong>Sketch of Derivation of the Algorithm for 1 / &pi;</strong></a></li>
 </ul></li>
@@ -2069,9 +2069,9 @@ def valid_perm(f, x, n):
 
 <p>and thus erf(<em>x</em>)/erf(1).  If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in Formulas 1 and 3 becomes 1).</p>
 
-<p><a id=Probabilities_Arising_from_Alternating_Sequences></a></p>
+<p><a id=Probabilities_Arising_from_Certain_Permutations></a></p>
 
-<h3>Probabilities Arising from Alternating Sequences</h3>
+<h3>Probabilities Arising from Certain Permutations</h3>
 
 <p>Consider the following algorithm:</p>
 
@@ -2082,11 +2082,34 @@ def valid_perm(f, x, n):
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 2.</li>
 </ol>
 
-<p>This algorithm returns the number <em>n</em> with a probability given by the following recursive formula:</p>
+<p>This algorithm generates an alternating sequence of a random length, and in so doing, it returns the number <em>n</em> with a probability given by the following recursive formula:</p>
 
 <p><em>C</em>(<em>n</em>) = (1 &minus; <em>a</em><sub><em>n</em> + 1</sub>/(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) ),</p>
 
-<p>where <em>a</em><sub><em>i</em></sup> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</p>
+<p>where <em>a</em><sub><em>i</em></sub> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</p>
+
+<p>Inspired by the <a href="#The_von_Neumann_schema"><strong>von Neumann schema</strong></a> given earlier in this appendix, we can extend the algorithm to certain kinds of permutation as follows:</p>
+
+<ol>
+<li>Create an empty list.</li>
+<li>Generate a uniform random number <em>u</em>, and add <em>u</em> to the list.</li>
+<li>If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.</li>
+</ol>
+
+<p>This algorithm returns the number <em>n</em> with the following probability:</p>
+
+<p><em>C</em>(<em>n</em>) = (1 &minus; V(<em>n</em> + 1)/(V(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) ),</p>
+
+<p>where <em>V</em>(<em>n</em>) is the number of valid permutations of size <em>n</em>. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!], except that <em>V</em>(0) can be 0. <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(&lambda;)+sec(&lambda;).</p>
+
+<p>For either algorithm, the probability that the generated <em>n</em>&mdash;</p>
+
+<ul>
+<li>is odd is 1 &minus; 1 / EGF(1), or</li>
+<li>is even is 1 / EGF(1).</li>
+</ul>
+
+<p>For example, if the second algorithm treates sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+sec(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+sec(1)).</p>
 
 <p><a id=Other_Algorithms_for_exp_minus_lambda></a></p>
 
