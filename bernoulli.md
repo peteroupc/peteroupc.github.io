@@ -110,6 +110,8 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
+        - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
+    - [**Probabilities Arising from Alternating Sequences**](#Probabilities_Arising_from_Alternating_Sequences)
     - [**Other Algorithms for exp(&minus;&lambda;)**](#Other_Algorithms_for_exp_minus_lambda)
     - [**Sketch of Derivation of the Algorithm for 1 / &pi;**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
 - [**License**](#License)
@@ -993,29 +995,12 @@ In the following algorithm, _x_ is a real number in the interval [0, 1].
 6. If _k_ is odd, call the **URandLessThanReal algorithm** on _ret_ and _x_, and return the result.
 7. Go to step 1.
 
-In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(7)**](#Note7)</sup>: Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (&delta;).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that &delta; is less than _x_ given that _k_ is odd is&mdash;
-
-- (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_), &nbsp;&nbsp;&nbsp;(Formula 1)
-
-where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For the algorithm in this section&mdash;
-
-- DPDF is the uniform(0,1) distribution's PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and
-- ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply _z_<sup>2</sup>,
-
-and thus this formula becomes&mdash;
-
-- (&int;<sub>[0, _x_]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_) / (&int;<sub>[0, 1]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_), &nbsp;&nbsp;&nbsp;(Formula 2)
-
-and thus erf(_x_)/erf(1).
-
-If _D_, _E_, &delta;, and _k_ are as defined earlier, the probability that &delta; is less than _x_ given that _k_ **is even** is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 3; see also (Monahan 1979)<sup>[**(37)**](#Note37)</sup>).
-
-If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 (and the denominator in formulas 1 and 2 above becomes 1).
+In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup>.  See the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix for more information.
 
 <a id=2_1_exp_2_or_1_exp_0_1_exp_1></a>
 #### 2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))
 
-This algorithm takes advantage of formula 3 mentioned in the section on the algorithm for "erf(_x_)/erf(1)").  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
+This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
 
 1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
@@ -1027,7 +1012,7 @@ This algorithm takes advantage of formula 3 mentioned in the section on the algo
 <a id=1_exp_1_1_exp_2></a>
 #### (1 + exp(1)) / (1 + exp(2))
 
-This algorithm takes advantage of the theorem mentioned in the section on the algorithm for "erf(_x_)/erf(1)").  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
+This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
 
 1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
@@ -1383,6 +1368,41 @@ def valid_perm(f, x, n):
 ```
 
 > **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.
+
+<a id=Probabilities_Arising_from_the_Forsythe_Method></a>
+#### Probabilities Arising from the Forsythe Method
+
+The Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup> gives rise to a class of interesting probability functions.
+
+Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (&delta;).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that &delta; is less than _x_ given that&mdash;
+
+- _k_ is odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(7)**](#Note7)</sup>), or
+- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(37)**](#Note37)</sup>),
+
+where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For example, the algorithm to simulate [**erf(_x_)/erf(1)**](#erf__x__erf_1) uses the fact that when&mdash;
+
+- DPDF is the uniform(0,1) distribution's PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and
+- ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply _z_<sup>2</sup>,
+
+then Formula 1 above becomes&mdash;
+
+- (&int;<sub>[0, _x_]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_) / (&int;<sub>[0, 1]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_), &nbsp;&nbsp;&nbsp;(Formula 3)
+
+and thus erf(_x_)/erf(1).  If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 (and the denominator in Formulas 1 and 3 becomes 1).
+
+<a id=Probabilities_Arising_from_Alternating_Sequences></a>
+### Probabilities Arising from Alternating Sequences
+
+Consider the following algorithm:
+
+1. Create an empty uniform PSRN _u_, then set _k_ to 1.
+2. Create another empty uniform PSRN _v_.
+3. If _k_ is odd and _u_ turns out to be less than _v_, or if _k_ is even and _v_ turns out to be less than _u_, return _k_.
+4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
+
+This algorithm returns the number _n_ with a probability given by the following recursive formula (which relates to the truncation of the Taylor series for exp(&minus;_x_)):
+
+_C_(_n_) = (&Sigma;<sub>_j_ = 2, ..., _n_ + 1</sub> (&minus;1)<sup>_j_</sup>/_j_!) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) ).
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)

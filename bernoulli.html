@@ -138,7 +138,12 @@
 <li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
-<li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
+<li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a>
+
+<ul>
+<li><a href="#Probabilities_Arising_from_the_Forsythe_Method"><strong>Probabilities Arising from the Forsythe Method</strong></a></li>
+</ul></li>
+<li><a href="#Probabilities_Arising_from_Alternating_Sequences"><strong>Probabilities Arising from Alternating Sequences</strong></a></li>
 <li><a href="#Other_Algorithms_for_exp_minus_lambda"><strong>Other Algorithms for exp(&minus;&lambda;)</strong></a></li>
 <li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1_pi"><strong>Sketch of Derivation of the Algorithm for 1 / &pi;</strong></a></li>
 </ul></li>
@@ -1296,36 +1301,13 @@
 <li>Go to step 1.</li>
 </ol>
 
-<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note29"><strong>(29)</strong></a></sup> and given as Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (&delta;).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that &delta; is less than <em>x</em> given that <em>k</em> is odd is&mdash;</p>
-
-<ul>
-<li>(&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 1)</li>
-</ul>
-
-<p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For the algorithm in this section&mdash;</p>
-
-<ul>
-<li>DPDF is the uniform(0,1) distribution&#39;s PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and</li>
-<li>ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply <em>z</em><sup>2</sup>,</li>
-</ul>
-
-<p>and thus this formula becomes&mdash;</p>
-
-<ul>
-<li>(&int;<sub>[0, <em>x</em>]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 2)</li>
-</ul>
-
-<p>and thus erf(<em>x</em>)/erf(1).</p>
-
-<p>If <em>D</em>, <em>E</em>, &delta;, and <em>k</em> are as defined earlier, the probability that &delta; is less than <em>x</em> given that <em>k</em> <strong>is even</strong> is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 3; see also (Monahan 1979)<sup><a href="#Note37"><strong>(37)</strong></a></sup>).</p>
-
-<p>If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in formulas 1 and 2 above becomes 1).</p>
+<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.  See the section &quot;<a href="#Probabilities_Arising_from_the_Forsythe_Method"><strong>Probabilities Arising from the Forsythe Method</strong></a>&quot; in the appendix for more information.</p>
 
 <p><a id=2_1_exp_2_or_1_exp_0_1_exp_1></a></p>
 
 <h4>2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))</h4>
 
-<p>This algorithm takes advantage of formula 3 mentioned in the section on the algorithm for &quot;erf(<em>x</em>)/erf(1)&quot;).  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>)))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
+<p>This algorithm takes advantage of formula 2 mentioned in the section &quot;<a href="#Probabilities_Arising_from_the_Forsythe_Method"><strong>Probabilities Arising from the Forsythe Method</strong></a>&quot; in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>)))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
 
 <ol>
 <li>Create an empty <strong>exponential PSRN</strong> <em>ex</em>, then set <em>k</em> to 1.</li>
@@ -1340,7 +1322,7 @@
 
 <h4>(1 + exp(1)) / (1 + exp(2))</h4>
 
-<p>This algorithm takes advantage of the theorem mentioned in the section on the algorithm for &quot;erf(<em>x</em>)/erf(1)&quot;).  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, <em>z</em>)) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
+<p>This algorithm takes advantage of the theorem mentioned in the section &quot;<a href="#Probabilities_Arising_from_the_Forsythe_Method"><strong>Probabilities Arising from the Forsythe Method</strong></a>&quot; in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, <em>z</em>))) * exp(&minus;<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, <em>z</em>)) * exp(&minus;<em>z</em>) <em>dz</em>).</p>
 
 <ol>
 <li>Create an empty <strong>exponential PSRN</strong> <em>ex</em>, then set <em>k</em> to 1.</li>
@@ -2055,6 +2037,51 @@ def valid_perm(f, x, n):
 <blockquote>
 <p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.</p>
 </blockquote>
+
+<p><a id=Probabilities_Arising_from_the_Forsythe_Method></a></p>
+
+<h4>Probabilities Arising from the Forsythe Method</h4>
+
+<p>The Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note29"><strong>(29)</strong></a></sup> gives rise to a class of interesting probability functions.</p>
+
+<p>Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (&delta;).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be &delta;).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that &delta; is less than <em>x</em> given that&mdash;</p>
+
+<ul>
+<li><em>k</em> is odd is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note7"><strong>(7)</strong></a></sup>), or</li>
+<li><em>k</em> is even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also (Monahan 1979)<sup><a href="#Note37"><strong>(37)</strong></a></sup>),</li>
+</ul>
+
+<p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For example, the algorithm to simulate <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a> uses the fact that when&mdash;</p>
+
+<ul>
+<li>DPDF is the uniform(0,1) distribution&#39;s PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and</li>
+<li>ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply <em>z</em><sup>2</sup>,</li>
+</ul>
+
+<p>then Formula 1 above becomes&mdash;</p>
+
+<ul>
+<li>(&int;<sub>[0, <em>x</em>]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>) / (&int;<sub>[0, 1]</sub> exp(&minus;(<em>z</em><sup>2</sup>)) <em>dz</em>), &nbsp;&nbsp;&nbsp;(Formula 3)</li>
+</ul>
+
+<p>and thus erf(<em>x</em>)/erf(1).  If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 (and the denominator in Formulas 1 and 3 becomes 1).</p>
+
+<p><a id=Probabilities_Arising_from_Alternating_Sequences></a></p>
+
+<h3>Probabilities Arising from Alternating Sequences</h3>
+
+<p>Consider the following algorithm:</p>
+
+<ol>
+<li>Create an empty uniform PSRN <em>u</em>, then set <em>k</em> to 1.</li>
+<li>Create another empty uniform PSRN <em>v</em>.</li>
+<li>If <em>k</em> is odd and <em>u</em> turns out to be less than <em>v</em>, or if <em>k</em> is even and <em>v</em> turns out to be less than <em>u</em>, return <em>k</em>.</li>
+<li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 2.</li>
+</ol>
+
+<p>This algorithm returns the number <em>n</em> with a probability given by the following recursive formula:</p>
+
+<p><em>C</em>(<em>n</em>) = (&Sigma;<sub><em>j</em> = 2, ..., <em>n</em> + 1</sub> (&minus;1)<sup><em>j</em></sup>/<em>j</em>!) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) ).</p>
 
 <p><a id=Other_Algorithms_for_exp_minus_lambda></a></p>
 
