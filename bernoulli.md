@@ -110,7 +110,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
-        - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
+    - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
     - [**Probabilities Arising from Alternating Sequences**](#Probabilities_Arising_from_Alternating_Sequences)
     - [**Other Algorithms for exp(&minus;&lambda;)**](#Other_Algorithms_for_exp_minus_lambda)
     - [**Sketch of Derivation of the Algorithm for 1 / &pi;**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
@@ -147,7 +147,7 @@ In the following algorithms:
 
 The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.
 
-The algorithms assume that a source of random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
+The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
 
 Bernoulli factory algorithms that simulate _f_(&lambda;) are equivalent to unbiased estimators of _f_(&lambda;). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
 
@@ -1005,7 +1005,7 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
 3. Create an empty **uniform PSRN** _v_.
-4. Set _stop_ to 1 if _v_ turns out to be greater than _u_, and 0 otherwise.
+4. Set _stop_ to 1 if _u_ turns out to be less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ turns out to be **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 
@@ -1017,7 +1017,7 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 1. Create an empty **exponential PSRN** _ex_, then set _k_ to 1.
 2. Set _u_ to _ex_.
 3. Create an empty **uniform PSRN** _v_.
-4. Set _stop_ to 1 if _v_ turns out to be greater than _u_, and 0 otherwise.
+4. Set _stop_ to 1 if _u_ turns out to be less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ turns out to be **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
 6. Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 
@@ -1370,7 +1370,7 @@ def valid_perm(f, x, n):
 > **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.
 
 <a id=Probabilities_Arising_from_the_Forsythe_Method></a>
-#### Probabilities Arising from the Forsythe Method
+### Probabilities Arising from the Forsythe Method
 
 The Forsythe method of random sampling (Forsythe 1972)<sup>[**(29)**](#Note29)</sup> gives rise to a class of interesting probability functions.
 
