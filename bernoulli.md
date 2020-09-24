@@ -1400,30 +1400,32 @@ Consider the following algorithm:
 3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
 4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
 
-This algorithm generates an alternating sequence of a random length, and in so doing, it returns the number _n_ with a probability given by the following recursive formula:
+This algorithm generates an alternating sequence of a random length, and in so doing, it returns the number _n_ with the following probability:
 
-_C_(_n_) = (1 &minus; _a_<sub>_n_ + 1</sub>/(_a_<sub>_n_</sub> * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) ),
+_C_(_n_) = (1 &minus; _a_<sub>_n_ + 1</sub>/(_a_<sub>_n_</sub> * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) )<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;= (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!,
 
 where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_.
 
 Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can extend the algorithm to certain kinds of permutation as follows:
 
 1. Create an empty list.
-2. Generate a uniform random number _u_, and add _u_ to the list.
+2. Generate a uniform random number _u_, and append _u_ to the end of the list.
 3. If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.
 
 This algorithm returns the number _n_ with the following probability:
 
-_C_(_n_) = (1 &minus; V(_n_ + 1)/(V(_n_) * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) ),
+_G_(_n_) = (1 &minus; _V_(_n_ + 1)/(_V_(_n_) * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _G_(_j_) )<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;= (_V_(_n_) * (_n_ + 1) &minus; _V_(_n_ + 1)) / (_V_(0) * (_n_ + 1)!),
 
-where _V_(_n_) is the number of valid permutations of size _n_. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\], except that _V_(0) can be 0. _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(&lambda;)+sec(&lambda;).
+where _V_(_n_) is the number of valid permutations of size _n_. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(&lambda;)+sec(&lambda;).
 
 For either algorithm, the probability that the generated _n_&mdash;
 
 - is odd is 1 &minus; 1 / EGF(1), or
 - is even is 1 / EGF(1).
 
-For example, if the second algorithm treates sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+sec(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+sec(1)).
+For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+sec(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+sec(1)).
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)
