@@ -1335,6 +1335,8 @@ A variety of Bernoulli factory probability functions can arise from the von Neum
 ```
 def coeffext(f, x, power):
     # Extract a coefficient from a generating function
+    # NOTE: Can also be done with just the following line:
+    # return diff(f,(x,power)).subs(x,0)/factorial(power)
     px = 2
     for i in range(10):
       try:
@@ -1418,14 +1420,15 @@ This algorithm returns the number _n_ with the following probability:
 _G_(_n_) = (1 &minus; _V_(_n_ + 1)/(_V_(_n_) * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _G_(_j_) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (_V_(_n_) * (_n_ + 1) &minus; _V_(_n_ + 1)) / (_V_(0) * (_n_ + 1)!),
 
-where _V_(_n_) is the number of valid permutations of size _n_. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(&lambda;)+sec(&lambda;).
+where _V_(_n_) is the number of valid permutations of size _n_. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(&lambda;)+1/cos(&lambda;).
 
 For either algorithm, the probability that the generated _n_&mdash;
 
 - is odd is 1 &minus; 1 / EGF(1), or
-- is even is 1 / EGF(1).
+- is even is 1 / EGF(1), or
+- is less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).
 
-For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+sec(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+sec(1)).
+For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+1/cos(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)
