@@ -123,6 +123,7 @@
 <li><a href="#Integrals"><strong>Integrals</strong></a></li>
 </ul></li>
 </ul></li>
+<li><a href="#Open_Questions"><strong>Open Questions</strong></a></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a>
 
 <ul>
@@ -1406,6 +1407,16 @@
 <li>If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
 </ul>
 
+<p><a id=Open_Questions></a></p>
+
+<h2>Open Questions</h2>
+
+<ul>
+<li>Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(<em>k</em>)) and the series for 1/(1+exp(<em>k</em>+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.</li>
+<li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
+<li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a> in the appendix.</li>
+</ul>
+
 <p><a id=Correctness_and_Performance_Charts></a></p>
 
 <h2>Correctness and Performance Charts</h2>
@@ -2119,12 +2130,21 @@ def valid_perm(f, x, n):
 <p><strong>Open Questions:</strong></p>
 
 <ol>
-<li>In the first algorithm, step 1, assume we generate a random number of an arbitrary distribution (such as beta) rather than uniform.  What is then the probability of generating a random number <em>n</em>?</li>
-<li>In the first algorithm, step 2, assume we generate a random arbitrary-distributed number.  What is then the probability of generating a random number <em>n</em>?</li>
-<li>Given the assumptions in both 1 and 2, what is then the probability of generating a random number <em>n</em>?</li>
-<li>In the second algorithm if the first random number in the list is arbitrarily distributed, what is then the probability of generating a random number <em>n</em>?</li>
-<li>In the second algorithm if each random number in the list beyond the first follows the same but arbitrary distribution, what is the probability of generating a random number <em>n</em>?</li>
-<li>Given the assumptions in both 5 and 6, what is then the probability of generating a random number <em>n</em>?</li>
+<li>In the first algorithm, what is the probability of generating a random number <em>n</em> (or generating any of a set of values of <em>n</em>)&mdash;
+
+<ul>
+<li>if <em>u</em> (step 1) has an arbitrary (not necessarily uniform) distribution?</li>
+<li>if <em>v</em> (step 2) follows the same but arbitrary distribution?</li>
+<li>if the previous two conditions are given?</li>
+</ul></li>
+<li>In the second algorithm, what is the probability of generating a random number <em>n</em> (or generating any of a set of values of <em>n</em>)&mdash;
+
+<ul>
+<li>if the first random number in the list has an arbitrary (not necessarily uniform) distribution?</li>
+<li>if each random number in the list beyond the first follows the same but arbitrary distribution?</li>
+<li>if the previous two conditions are given?</li>
+</ul></li>
+<li>In the second algorithm, what distribution does the first number in the list follow when the algorithm returns <em>n</em> (or one of a set of values of <em>n</em>), with or without the conditions given in question 2?  For example, if the algorithm treats sorted permutations as valid, it is known since von Neumann&#39;s 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of <em>n</em>.</li>
 </ol>
 
 <p><a id=Other_Algorithms_for_exp_minus_lambda></a></p>

@@ -99,6 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
         - [**Integrals**](#Integrals)
+- [**Open Questions**](#Open_Questions)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
     - [**The Charts**](#The_Charts)
 - [**Notes**](#Notes)
@@ -1071,6 +1072,13 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 - Instead of flipping the input coin, flip a coin that does the following: "Call **SampleGeometricBag** on the uniform PSRN and return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
+<a id=Open_Questions></a>
+## Open Questions
+
+- Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(_k_))/(1+exp(_k_+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(_k_)) and the series for 1/(1+exp(_k_+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.
+- Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+- See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations) in the appendix.
+
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
 
@@ -1432,12 +1440,15 @@ For example, if the second algorithm treats sorted permutations as valid (making
 
 **Open Questions:**
 
-1. In the first algorithm, step 1, assume we generate a random number of an arbitrary distribution (such as beta) rather than uniform.  What is then the probability of generating a random number _n_?
-2. In the first algorithm, step 2, assume we generate a random arbitrary-distributed number.  What is then the probability of generating a random number _n_?
-3. Given the assumptions in both 1 and 2, what is then the probability of generating a random number _n_?
-4. In the second algorithm if the first random number in the list is arbitrarily distributed, what is then the probability of generating a random number _n_?
-5. In the second algorithm if each random number in the list beyond the first follows the same but arbitrary distribution, what is the probability of generating a random number _n_?
-6. Given the assumptions in both 5 and 6, what is then the probability of generating a random number _n_?
+1. In the first algorithm, what is the probability of generating a random number _n_ (or generating any of a set of values of _n_)&mdash;
+    - if _u_ (step 1) has an arbitrary (not necessarily uniform) distribution?
+    - if _v_ (step 2) follows the same but arbitrary distribution?
+    - if the previous two conditions are given?
+2. In the second algorithm, what is the probability of generating a random number _n_ (or generating any of a set of values of _n_)&mdash;
+    - if the first random number in the list has an arbitrary (not necessarily uniform) distribution?
+    - if each random number in the list beyond the first follows the same but arbitrary distribution?
+    - if the previous two conditions are given?
+3. In the second algorithm, what distribution does the first number in the list follow when the algorithm returns _n_ (or one of a set of values of _n_), with or without the conditions given in question 2?  For example, if the algorithm treats sorted permutations as valid, it is known since von Neumann's 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of _n_.
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)
