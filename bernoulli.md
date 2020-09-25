@@ -1190,8 +1190,8 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 - <small><sup id=Note33>(33)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note34>(34)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
 - <small><sup id=Note35>(35)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is &lambda;.</small>
-- <small><sup id=Note36>(36)</sup> Flajolet, P., Sedgewick, R., "Analytic Combinatorics", 2009.</small>
-- <small><sup id=Note37>(37)</sup> Monahan, J.. “Extensions of von Neumann’s method for generating random variables.” Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note36>(36)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note37>(37)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1429,6 +1429,15 @@ For either algorithm, the probability that the generated _n_&mdash;
 - is less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).
 
 For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(&lambda;)+1/cos(&lambda;)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
+
+**Open Questions:**
+
+1. In the first algorithm, step 1, assume we generate a random number of an arbitrary distribution (such as beta) rather than uniform.  What is then the probability of generating a random number _n_?
+2. In the first algorithm, step 2, assume we generate a random arbitrary-distributed number.  What is then the probability of generating a random number _n_?
+3. Given the assumptions in both 1 and 2, what is then the probability of generating a random number _n_?
+4. In the second algorithm if the first random number in the list is arbitrarily distributed, what is then the probability of generating a random number _n_?
+5. In the second algorithm if each random number in the list beyond the first follows the same but arbitrary distribution, what is the probability of generating a random number _n_?
+6. Given the assumptions in both 5 and 6, what is then the probability of generating a random number _n_?
 
 <a id=Other_Algorithms_for_exp_minus_lambda></a>
 ### Other Algorithms for exp(&minus;&lambda;)
