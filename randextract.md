@@ -33,10 +33,12 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 1. Flip a coin twice (whose bias is unknown).
 2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
-An algorithm found in (Morina et al. 2019)<sup>[**(4)**](#Note4)</sup> extends this to loaded dice.  Based on personal communication by K. Łatuszyński, perhaps this works for any distribution of random numbers, not just loaded dice, as the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability". (In fact, this appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(5)**](#Note5)</sup>.)
+An algorithm found in (Morina et al. 2019)<sup>[**(4)**](#Note4)</sup> extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
 1. Throw a die twice (whose bias is unknown), call the results _X_ and _Y_, respectively.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
+
+> **Note:** In fact, the algorithm above appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(5)**](#Note5)</sup>.  Moreover, based on results by De Schuymer and others (2005)<sup>[**(13)**](#Note13)</sup>, the algorithm works regardless of what numbers _X_ and _Y_ can take on and with what probability (as long as the same "die" is used and the throws are independent), and the algorithm even works if we use two "dice" that are "loaded" differently (as long as the chance that _X_ is less than _Y_ is the same as the chance that _X_ is greater, and the throws are independent).  For example, the algorithm above works even if we set _X_ and _Y_ to two independent Gaussian random numbers with the same mean and standard deviation.
 
 Pae (2005)<sup>[**(6)**](#Note6)</sup> and (Pae and Loui 2006)<sup>[**(7)**](#Note7)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(8)**](#Note8)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(9)**](#Note9)</sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:
 
@@ -79,6 +81,7 @@ Some additional notes:
 - <small><sup id=Note10>(10)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
 - <small><sup id=Note11>(11)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
 - <small><sup id=Note12>(12)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
+- <small><sup id=Note13>(13)</sup> De Schuymer, B., De Meyer, H., De Baets, B., "Cycle-transitive comparison of independent random variables", _Journal of Multivariate Analysis_ 96(2), 2005, pp. 352-373, [https://doi.org/10.1016/j.jmva.2004.10.011,](https://doi.org/10.1016/j.jmva.2004.10.011,) [http://www.sciencedirect.com/science/article/pii/S0047259X04002192.</small>](http://www.sciencedirect.com/science/article/pii/S0047259X04002192.</small>)
 
 <a id=License></a>
 ## License
