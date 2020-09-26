@@ -146,10 +146,10 @@ In the following algorithms:
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by generating `-ln(1/RNDEXCRANGE(0, 1))` (less accurate).
-- To **sample a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
+- To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
-- Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are partially-sampled random numbers (PSRNs), it means to run the **RandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+- Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 0. (Most accurate.)  For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
     - Generate a uniform random number _v_. The event occurs if _v_ is less than _x_.  (Less accurate.)
@@ -344,15 +344,15 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 
 1. Generate a uniform(0, 1) random number _u_.
 2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
-3. [**Sample the number _u_**](#Algorithms). If the result is 0, flip the input coin and return the result.
+3. [**Sample from the number _u_**](#Algorithms). If the result is 0, flip the input coin and return the result.
 4. Flip the input coin.  If it returns 0, return 0.
-5. [**Sample the number _u_**](#Algorithms). If the result is 0, return 0.  Otherwise, go to step 2.
+5. [**Sample from the number _u_**](#Algorithms). If the result is 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
 1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, flip the input coin and return the result.
-3. [**Sample the number _u_.**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample from the number _u_.**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
 <a id=1_minus_ln_1_lambda></a>
 #### 1 &minus; ln(1+&lambda;)
@@ -461,14 +461,14 @@ Works only if _c_ > 0.
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate a uniform(0, 1) random number _u_.
-2. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
-3. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
+2. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
+3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
 1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, return 1.
-3. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
 
 <a id=arctan_lambda></a>
 #### arctan(&lambda;)
@@ -550,10 +550,10 @@ Use the algorithm for &lambda;<sup>1/2</sup>.
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.
 
 1. Generate a uniform(0, 1) random number _u_.
-2. Create a secondary coin &mu; that does the following: "[**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
+2. Create a secondary coin &mu; that does the following: "[**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 0.
 4. With probability 1/2, flip the input coin and return the result.
-5. [**Sample the number _u_**](#Algorithms) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
+5. [**Sample from the number _u_**](#Algorithms) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
 <a id=arcsin_lambda_2></a>
 #### arcsin(&lambda;) / 2
@@ -840,15 +840,15 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 1. Generate a uniform(0, 1) random number _u_.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
-3. [**Sample the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 1.
+3. [**Sample from the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
-5. [**Sample the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
+5. [**Sample from the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
 1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, return 1.
-3. With probability _x_ * _x_/(_y_ * _y_), [**sample the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
+3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 2.
 
 <a id=pi_12></a>
@@ -979,13 +979,13 @@ The following algorithm simulates a polylogarithmic constant of the form Li<sub>
 
 1. Generate three uniform(0,1) random numbers.
 2. With probability 1/2, return 1.
-3. [**Sample each of the three numbers**](#Algorithms) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)
+3. [**Sample from each of the three numbers**](#Algorithms) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)
 
 This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 2<sup>&minus;(_k_ &minus; 1)</sup>) where _k_ >= 2 is an integer, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.
 
 1. Generate _k_ uniform(0,1) random numbers.
 2. With probability 1/2, return 1.
-3. [**Sample each of the _k_ numbers**](#Algorithms) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample from each of the _k_ numbers**](#Algorithms) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
 <a id=erf__x__erf_1></a>
 #### erf(_x_)/erf(1)
@@ -1064,7 +1064,7 @@ The following algorithm is a special case of the convex combination method.  It 
 This can be done by modifying the algorithm as follows:
 
 - Generate a uniform(0, 1) random number _u_ at the start of the algorithm.
-- Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+- Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample from the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 
 I have found that it's possible to simulate the following integral, namely&mdash;
 
@@ -1073,7 +1073,7 @@ I have found that it's possible to simulate the following integral, namely&mdash
 where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
 
 - Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random number _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
-- Instead of flipping the input coin, flip a coin that does the following: "[**Sample the number _u_**](#Algorithms) return the result."
+- Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
 <a id=Open_Questions></a>
