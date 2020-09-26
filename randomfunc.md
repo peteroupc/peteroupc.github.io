@@ -1827,7 +1827,7 @@ Most commonly used:
 - **Dice**: See [**Dice**](#Dice).
 - **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDU01()) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018)<sup>[**(1)**](#Note1)</sup>, as well as returning infinity if `RNDU01()` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDU01())`), chosen at random each time; an alternative is `ln(1/RNDU01ZeroExc())` mentioned in (Devroye 2006)<sup>[**(62)**](#Note62)</sup>.
 - **Extreme value distribution**: See generalized extreme value distribution.
-- **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution).  _3-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter. _4-parameter gamma distribution_: `pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value.
+- **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution). Generalized gamma distributions include the **Stacy distribution** (`pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter) and the **Amoroso distribution** (Crooks 2015)<sup>[**(86)**](#Note86)</sup>, (`pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
 - **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).  If the application can trade accuracy for speed: `floor(-Expo(1)/ln(1-p))` (Devroye 1996, p. 500)<sup>[**(67)**](#Note67)</sup> (ceil replaced with floor because this page defines geometric distribution differently).
 - **Gumbel distribution**: See generalized extreme value distribution.
@@ -2161,6 +2161,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note83>(83)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note84>(84)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 - <small><sup id=Note85>(85)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note86>(86)</sup> Crooks, G.E., "[The Amoroso Distribution](https://arxiv.org/abs/1005.3274v2)", arXiv:1005.3274v2 [math.ST], 2015.</small>
 
 <a id=Appendix></a>
 ## Appendix

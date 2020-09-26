@@ -1039,7 +1039,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns 
 >
 > 1. Example 1. Generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
 > 2. Example 2. Generate a Poisson(&mu;) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;&mu;) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(&mu;) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
-> 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(8)**](#Note8)</sup>: If we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
+> 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(8)**](#Note8)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
@@ -1077,7 +1077,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 
 - Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(_k_))/(1+exp(_k_+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(_k_)) and the series for 1/(1+exp(_k_+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
-- See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations) in the appendix.
+- See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1410,7 +1410,7 @@ Consider the following algorithm:
 3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
 4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
 
-This algorithm generates an alternating sequence of a random length, and in so doing, it returns the number _n_ with the following probability:
+This algorithm generates an alternating sequence of a random length, and in doing so, it returns the number _n_ with the following probability:
 
 _C_(_n_) = (1 &minus; _a_<sub>_n_ + 1</sub>/(_a_<sub>_n_</sub> * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!,

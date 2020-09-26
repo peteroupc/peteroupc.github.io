@@ -1360,7 +1360,7 @@
 <ol>
 <li>Example 1. Generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.</li>
 <li>Example 2. Generate a Poisson(&mu;) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;&mu;) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(&mu;) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
-<li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup>: If we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.</li>
+<li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.</li>
 </ol>
 </blockquote>
 
@@ -1414,7 +1414,7 @@
 <ul>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(<em>k</em>)) and the series for 1/(1+exp(<em>k</em>+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.</li>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
-<li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a> in the appendix.</li>
+<li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
 </ul>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
@@ -2095,7 +2095,7 @@ def valid_perm(f, x, n):
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 2.</li>
 </ol>
 
-<p>This algorithm generates an alternating sequence of a random length, and in so doing, it returns the number <em>n</em> with the following probability:</p>
+<p>This algorithm generates an alternating sequence of a random length, and in doing so, it returns the number <em>n</em> with the following probability:</p>
 
 <p><em>C</em>(<em>n</em>) = (1 &minus; <em>a</em><sub><em>n</em> + 1</sub>/(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>C</em>(<em>j</em>) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1) &minus; <em>a</em><sub><em>n</em> + 1</sub>) / (<em>n</em> + 1)!,</p>
