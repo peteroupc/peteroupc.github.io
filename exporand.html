@@ -154,7 +154,7 @@
 <p>PSRNs specified here store:</p>
 
 <ul>
-<li>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, their unsampled status can be noted in a way that distinguishes them from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).</li>
+<li>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, their unsampled status can be noted in a way that distinguishes them from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary digits.</li>
 <li>An optional <em>integer part</em> (floor of the number&#39;s absolute value).</li>
 <li>An optional <em>sign</em> (positive or negative).</li>
 </ul>
@@ -167,16 +167,14 @@
 
 <h3>Uniform Partially-Sampled Random Numbers</h3>
 
-<p>The most trivial example of a PSRN is that of the uniform distribution in [0, 1].  Such a random number can be implemented as a list of items, where each item is either a digit (such as zero or one for binary), or a placeholder value (which represents an unsampled digit), and represents a list of the digits after the radix point, from left to right, of a real number in the interval [0, 1], that is, the number&#39;s <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary digits).  This kind of number is referred to&mdash;</p>
+<p>The most trivial example of a PSRN is that of the uniform distribution.</p>
 
 <ul>
-<li>as a <em>geometric bag</em> in (Flajolet et al., 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup> (but only in the binary case), and</li>
-<li>as a <em>u-rand</em> in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
+<li>Flajolet et al. (2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup> use the term <em>geometric bag</em> to refer to a uniform PSRN in the interval [0, 1] that stores binary (base-2) digits, some of which may be unsampled.  In this case, the PSRN can consist of just a fractional part, which can be implemented as described earlier.</li>
+<li>(Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
 </ul>
 
-<p>Each additional digit is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.</p>
-
-<p>Note that the <em>u-rand</em> concept by Karney only contemplates sampling digits from left to right without any gaps, whereas the geometric bag concept is more general in this respect.</p>
+<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.</p>
 
 <p><a id=Exponential_Partially_Sampled_Random_Numbers></a></p>
 
@@ -427,7 +425,7 @@
 <p>The algorithm <strong>SampleGeometricBag</strong> returns 1 with a probability built up by a uniform PSRN.  (Flajolet et al., 2010)<sup><a href="#Note7"><strong>(7)</strong></a></sup> described an algorithm for the base-2 (binary) case, but that algorithm is difficult to apply to other digit bases.  Thus the following is a general version of the algorithm for any digit base.</p>
 
 <ol>
-<li>Set <em>i</em> to 0, and set <strong>b</strong> to an empty uniform PSRN.</li>
+<li>Set <em>i</em> to 0, and set <strong>b</strong> to a uniform PSRN with a positive sign and an integer part of 0.</li>
 <li>If the item at position <em>i</em> of the input PSRN&#39;s fractional part is unsampled (that is, not set to a digit), set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.), and append the result to that fractional part&#39;s digit expansion.  Do the same for <strong>b</strong>.</li>
 <li>Let <em>da</em> be the digit at position <em>i</em> of the input PSRN&#39;s fractional part, and let <em>db</em> be the corresponding digit for <strong>b</strong>.  Return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
 <li>Add 1 to <em>i</em> and go to step 2.</li>
@@ -468,7 +466,7 @@
 <p>The algorithm is as follows:</p>
 
 <ol>
-<li>Create <code>n</code> empty PSRNs.</li>
+<li>Create <code>n</code> uniform PSRNs with positive sign and an integer part of 0.</li>
 <li>Set <code>index</code> to 1.</li>
 <li>If <code>index &lt;= k</code> and <code>index + n &gt;= k</code>:
 
@@ -501,7 +499,7 @@
 <li>Set <em>i</em> to 1.</li>
 <li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is 1 or 0 otherwise (or return a geometric bag filled with exactly <em>n</em> ones or zeros, respectively).</li>
 <li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>X</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>X</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
-<li>Create an empty list to serve as a geometric bag, then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that geometric bag.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN (geometric bag), then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that geometric bag.</li>
 <li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
 <li>Append <em>i</em> &minus; 1 zero-digits followed by a single one-digit to the geometric bag.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.</li>
 <li>Call the <strong>algorithm for ϵ / λ</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html#x03F5_lambda"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>powerbag</em> input coin (which represents <em>b</em>) and with ϵ = <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>), thus returning 1 with probability <em>a</em>/<em>b</em>.  If the call returns 1, the geometric bag was accepted, so do the following:
@@ -529,7 +527,7 @@
 <li>Special cases:
 
 <ul>
-<li>If <em>a</em> = 1 and <em>b</em> = 1, return an empty geometric bag.</li>
+<li>If <em>a</em> = 1 and <em>b</em> = 1, return a positive-sign zero-integer-part uniform PSRN.</li>
 <li>If <em>a</em> and <em>b</em> are both integers, return the result of <strong>kthsmallest</strong> with <code>n = a - b + 1</code> and <code>k = a</code></li>
 <li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to 1 (and in the form of a geometric bag).</li>
 <li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, return the result of the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to 0 (and in the form of a geometric bag).</li>
@@ -542,8 +540,8 @@
 <li>Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given geometric bag.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given geometric bag.</li>
 <li>Call the <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>arest</em>/1, then call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = <em>brest</em>/1. If both calls return 1, return <em>bag</em>. Otherwise, go to substep 2.</li>
 </ol></li>
-<li>Create an empty list to serve as a &quot;geometric bag&quot;.  Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given geometric bag.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given geometric bag.</li>
-<li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
+<li>Create an positive-sign zero-integer-part uniform PSRN (geometric bag).  Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given geometric bag.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given geometric bag.</li>
+<li>Remove all digits from the geometric bag&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0, 1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
 <li>Call the <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>a</em> &minus; 1)/1 (thus returning with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 4.</li>
 <li>Call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = (<em>b</em> &minus; 1)/1 (thus returning 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that this step and the previous step don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
@@ -1219,9 +1217,9 @@ def exprandscore(ln,ld,ln2,ld2):
 <p>The algorithm for sampling the continuous Bernoulli distribution follows.  It uses an input coin that returns 1 with probability <code>lamda</code>.</p>
 
 <ol>
-<li>Create an empty list to serve as a &quot;geometric bag&quot;.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN (geometric bag).</li>
 <li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the input coin.</li>
-<li>Remove all digits from the geometric bag.  This will result in an empty uniform random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
+<li>Remove all digits from the geometric bag&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0,1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
 <li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin as the &lambda;-coin, and <strong>SampleGeometricBag</strong> as the &mu;-coin (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
 <li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> using the <strong>complementary lambda Bernoulli factory</strong> as the &lambda;-coin and <strong>SampleGeometricBagComplement</strong> algorithm as the &mu;-coin (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>

@@ -432,7 +432,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Flip the input coin.  If it returns 0, flip the coin again and return the result.</li>
 <li>Call the <strong>SampleGeometricBag</strong> algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.</li>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
@@ -442,7 +442,7 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
 <li>Call <strong>SampleGeometricBag</strong> on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -590,7 +590,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.</li>
 <li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -598,7 +598,7 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>With probability 1/2, return 1.</li>
 <li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -705,7 +705,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Create a secondary coin &mu; that does the following: &quot;Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 0.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
@@ -1092,7 +1092,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 1.</li>
 <li>Call <strong>SampleGeometricBag</strong> twice on the PSRN.  If either of these calls returns 0, return 1.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 0.</li>
@@ -1102,7 +1102,7 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create an empty uniform PSRN.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>With probability 1/2, return 1.</li>
 <li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), call <strong>SampleGeometricBag</strong> twice on the PSRN.  If both of these calls return 1, return 0.</li>
 <li>Go to step 2.</li>
@@ -1389,7 +1389,7 @@
 <p>This can be done by modifying the algorithm as follows:</p>
 
 <ul>
-<li>Create an empty uniform PSRN at the start of the algorithm.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.</li>
 <li>Instead of flipping the input coin, flip a coin that does the following: &quot;Flip the input coin, then call <strong>SampleGeometricBag</strong> on the uniform PSRN.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
 </ul>
 
@@ -1402,7 +1402,7 @@
 <p>where [<em>a</em>, <em>b</em>] is [0, 1] or a closed interval therein, using different changes to the algorithm, namely:</p>
 
 <ul>
-<li>Add the following step at the start of the algorithm: &quot;Create an empty uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanReal</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanReal</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
+<li>Add the following step at the start of the algorithm: &quot;Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanReal</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanReal</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
 <li>Instead of flipping the input coin, flip a coin that does the following: &quot;Call <strong>SampleGeometricBag</strong> on the uniform PSRN and return the result.&quot;</li>
 <li>If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
 </ul>

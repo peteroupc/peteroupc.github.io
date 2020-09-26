@@ -338,7 +338,7 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
 3. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.
 4. Flip the input coin.  If it returns 0, return 0.
@@ -346,7 +346,7 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. With probability 1/2, flip the input coin and return the result.
 3. Call **SampleGeometricBag** on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
@@ -456,13 +456,13 @@ Works only if _c_ > 0.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
 3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. With probability 1/2, return 1.
 3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
 
@@ -545,7 +545,7 @@ Use the algorithm for &lambda;<sup>1/2</sup>.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. Create a secondary coin &mu; that does the following: "Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 0.
 4. With probability 1/2, flip the input coin and return the result.
@@ -834,7 +834,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
 3. Call **SampleGeometricBag** twice on the PSRN.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
@@ -842,7 +842,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
-1. Create an empty uniform PSRN.
+1. Create a positive-sign zero-integer-part uniform PSRN.
 2. With probability 1/2, return 1.
 3. With probability _x_ * _x_/(_y_ * _y_), call **SampleGeometricBag** twice on the PSRN.  If both of these calls return 1, return 0.
 4. Go to step 2.
@@ -1059,7 +1059,7 @@ The following algorithm is a special case of the convex combination method.  It 
 
 This can be done by modifying the algorithm as follows:
 
-- Create an empty uniform PSRN at the start of the algorithm.
+- Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.
 - Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then call **SampleGeometricBag** on the uniform PSRN.  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 
 I have found that it's possible to simulate the following integral, namely&mdash;
@@ -1068,7 +1068,7 @@ I have found that it's possible to simulate the following integral, namely&mdash
 
 where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
 
-- Add the following step at the start of the algorithm: "Create an empty uniform PSRN at the start of the algorithm.  Then if **URandLessThanReal** on the PSRN and _a_ returns 1, or if **URandLessThanReal** on the PSRN and _b_ returns 0, repeat this step."
+- Add the following step at the start of the algorithm: "Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.  Then if **URandLessThanReal** on the PSRN and _a_ returns 1, or if **URandLessThanReal** on the PSRN and _b_ returns 0, repeat this step."
 - Instead of flipping the input coin, flip a coin that does the following: "Call **SampleGeometricBag** on the uniform PSRN and return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
