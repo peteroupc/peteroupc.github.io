@@ -106,11 +106,13 @@ In this document, a _partially-sampled random number_ (PSRN) is a data structure
 
 PSRNs specified here store:
 
-- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, their unsampled status can be noted in a way that distinguishes them from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The fractional part's digits form a so-called _digit expansion_ (e.g., _binary expansion_ in the case of binary digits.
-- An optional _integer part_ (floor of the number's absolute value).
+- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (e.g., _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.  For example, if the fractional part stores the base-10 digits \[1, 3, 5\], in that order, then it represents a random number in the interval \[0.135, 0.136\], reflecting the fact that the digits between 0.135 and 0.136 are unknown.
+- An optional _integer part_ (more specifically, the integer part [floor] of the number's absolute value).
 - An optional _sign_ (positive or negative).
 
 If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].
+
+PSRNs ultimately represent a random number between two others; one of the number's two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it's negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part \[3, 5, 6\] (in base 10), then the PSRN represents a random number in the interval \[3.356, 3.357\].  Here, one of the bounds is built using the PSRN's sign, integer part, and fractional part, and because the PSRN is negative, this is a lower bound.
 
 This section specifies two kinds of PSRNs: uniform and exponential.
 
@@ -344,7 +346,7 @@ For more on why these two algorithms are equivalent, see the appendix.
 **FillGeometricBag** takes a uniform PSRN and generates a number whose fractional part has `p` digits as follows:
 
 1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(11)**](#Note11)</sup>.)
-2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * `ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>, where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled \[that is, set to a digit\], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
+2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled \[that is, set to a digit\], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
 
 <a id=kthsmallest></a>
 ### kthsmallest
@@ -877,7 +879,7 @@ The algorithm for sampling the continuous Bernoulli distribution follows.  It us
 
 1. Create a positive-sign zero-integer-part uniform PSRN.
 2. Create a **complementary lambda Bernoulli factory** that returns 1 minus the result of the input coin.
-3. Remove all digits from the geometric PSRN's fractional part.  This will result in an "empty" uniform(0,1) random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
+3. Remove all digits from the uniform PSRN's fractional part.  This will result in an "empty" uniform(0,1) random number, _U_, for the following steps, which will accept _U_ with probability `lamda`<sup>_U_</sup>*(1&minus;`lamda`)<sup>1&minus;_U_</sup>) (the proportional probability for the beta distribution), as _U_ is built up.
 4. Call the **algorithm for &lambda;<sup>&mu;</sup>** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin as the &lambda;-coin, and **SampleGeometricBag** as the &mu;-coin (which will return 1 with probability `lamda`<sup>_U_</sup>).  If the result is 0, go to step 3.
 5. Call the **algorithm for &lambda;<sup>&mu;</sup>** using the **complementary lambda Bernoulli factory** as the &lambda;-coin and **SampleGeometricBagComplement** algorithm as the &mu;-coin (which will return 1 with probability (1-`lamda`)<sup>1&minus;_U_</sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don't depend on each other and can be done in either order without affecting correctness.)
 6. _U_ was accepted, so return the result of **FillGeometricBag**.
@@ -966,12 +968,12 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
 **FillGeometricBag**'s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than `p`. (For bases other than 2, sampling _each_ digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both **SampleGeometricBag** and **FillGeometricBag** with `p` bits, these two contribute, on average, anywhere from `p + g * 2` to `p + g * 4` bits to the complexity, where `g` is the number of calls to **SampleGeometricBag**. (This complexity could be increased by 1 bit if **FillGeometricBag** is implemented with a rounding mechanism other than simple truncation.)
 
-The complexity of the **algorithm for exp(&minus;_x_/_y_)** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>, but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to \[0, &gamma;\]. (In this document, the geometric(`n`) distribution has the PDF `pow(x, n) * (1 - x)`.)
+The complexity of the **algorithm for exp(&minus;_x_/_y_)** (which outputs 1 with probability exp(&minus;_x_/_y_)) was discussed in some detail by (Canonne et al. 2020)<sup>[**(22)**](#Note22)</sup>, but not in terms of its bit complexity.  The special case of &gamma; =_x_/_y_ = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a random number _G_, where _G_ is &gamma; or the number of successes before the first failure, whichever is less, and where a success has probility exp(&minus;1).
 
 - Optimal lower bound: Has a complicated formula for general &gamma;, but approaches `log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))` = 2.579730853... bits with increasing &gamma;.
 - Optimal upper bound: Optimal lower bound plus 2.
 - The actual implementation's average bit complexity is generally&mdash;
-    - the expected number of calls to the **algorithm for exp(&minus;_x_/_y_)** (with &gamma; = 1), which is the expected value of the truncated geometric distribution described above, times
+    - the expected number of calls to the **algorithm for exp(&minus;_x_/_y_)** (with &gamma; = 1), which is the expected value of _G_ as described above, times
     - the bit complexity for each such call.
 
 If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer _k_ with probability function&mdash;

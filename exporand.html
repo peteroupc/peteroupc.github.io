@@ -154,12 +154,14 @@
 <p>PSRNs specified here store:</p>
 
 <ul>
-<li>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, their unsampled status can be noted in a way that distinguishes them from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary digits.</li>
-<li>An optional <em>integer part</em> (floor of the number&#39;s absolute value).</li>
+<li>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.  For example, if the fractional part stores the base-10 digits [1, 3, 5], in that order, then it represents a random number in the interval [0.135, 0.136], reflecting the fact that the digits between 0.135 and 0.136 are unknown.</li>
+<li>An optional <em>integer part</em> (more specifically, the integer part [floor] of the number&#39;s absolute value).</li>
 <li>An optional <em>sign</em> (positive or negative).</li>
 </ul>
 
 <p>If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].</p>
+
+<p>PSRNs ultimately represent a random number between two others; one of the number&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random number in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is negative, this is a lower bound.</p>
 
 <p>This section specifies two kinds of PSRNs: uniform and exponential.</p>
 
@@ -452,7 +454,7 @@
 
 <ol>
 <li>For each position in [0, <code>p</code>), if the item at that position in the uniform PSRN&#39;s fractional part is unsampled, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part&#39;s capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.)</li>
-<li>Let <code>sign</code> be -1 if the PSRN is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * <code>ipart</code> + &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>, where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled [that is, set to a digit], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
+<li>Let <code>sign</code> be -1 if the PSRN is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>), where <em>b</em> is the base, or radix.  (If it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled [that is, set to a digit], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice.)</li>
 </ol>
 
 <p><a id=kthsmallest></a></p>
@@ -1219,7 +1221,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <ol>
 <li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the input coin.</li>
-<li>Remove all digits from the geometric PSRN&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0,1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
+<li>Remove all digits from the uniform PSRN&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0,1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
 <li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin as the &lambda;-coin, and <strong>SampleGeometricBag</strong> as the &mu;-coin (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
 <li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> using the <strong>complementary lambda Bernoulli factory</strong> as the &lambda;-coin and <strong>SampleGeometricBagComplement</strong> algorithm as the &mu;-coin (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
@@ -1322,7 +1324,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><strong>FillGeometricBag</strong>&#39;s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than <code>p</code>. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>. (This complexity could be increased by 1 bit if <strong>FillGeometricBag</strong> is implemented with a rounding mechanism other than simple truncation.)</p>
 
-<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a geometric(exp(&minus;1)) random number, but truncated to [0, &gamma;]. (In this document, the geometric(<code>n</code>) distribution has the PDF <code>pow(x, n) * (1 - x)</code>.)</p>
+<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a random number <em>G</em>, where <em>G</em> is &gamma; or the number of successes before the first failure, whichever is less, and where a success has probility exp(&minus;1).</p>
 
 <ul>
 <li>Optimal lower bound: Has a complicated formula for general &gamma;, but approaches <code>log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))</code> = 2.579730853... bits with increasing &gamma;.</li>
@@ -1330,7 +1332,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The actual implementation&#39;s average bit complexity is generally&mdash;
 
 <ul>
-<li>the expected number of calls to the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (with &gamma; = 1), which is the expected value of the truncated geometric distribution described above, times</li>
+<li>the expected number of calls to the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (with &gamma; = 1), which is the expected value of <em>G</em> as described above, times</li>
 <li>the bit complexity for each such call.</li>
 </ul></li>
 </ul>
