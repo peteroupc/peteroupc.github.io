@@ -178,7 +178,7 @@
 <li>&lambda; is the unknown probability of heads of the input coin.</li>
 <li>The <strong>SampleGeometricBag</strong>, <strong>RandLess</strong>, and <strong>URandLessThanReal</strong> algorithms are described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 <li>The <code>ZeroOrOne</code> method should be implemented as shown in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.</li>
-<li>The instruction to &quot;generate a uniform random number&quot; can be implemented&mdash;
+<li>The instruction to &quot;generate a uniform(0, 1) random number&quot; can be implemented&mdash;
 
 <ul>
 <li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform PSRN</strong></a> with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or</li>
@@ -189,6 +189,12 @@
 <ul>
 <li>by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>exponential PSRN</strong></a> (most accurate), or</li>
 <li>by generating <code>-ln(1/RNDEXCRANGE(0, 1))</code> (less accurate).</li>
+</ul></li>
+<li>To <strong>sample a random number <em>u</em></strong> means to generate a number that is 1 with probability <em>u</em> and 0 otherwise.
+
+<ul>
+<li>If the number is a uniform PSRN, call the <strong>SampleGeometricBag</strong> algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate).</li>
+<li>Otherwise, this can be implemented by generating another uniform random number <em>v</em> and generating 1 if <em>v</em> is less than <em>u</em> or 0 otherwise (less accurate).</li>
 </ul></li>
 <li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are partially-sampled random numbers (PSRNs), it means to run the <strong>RandLess</strong> algorithm on the two PSRNs, or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate.</li>
 <li>For best results, the algorithms should be implemented using exact rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby).  Floating-point arithmetic is discouraged because it can introduce rounding error.</li>
@@ -247,7 +253,7 @@
 
 <ol>
 <li>Let <em>d[0]</em>, <em>d[1]</em>, etc. be the first, second, etc. coefficients of the alternating series.  Set <em>u</em> to <em>d[0]</em>, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>d[n]</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>d[n]</em>.</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>.)</li>
@@ -268,7 +274,7 @@
 
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>.)</li>
@@ -286,7 +292,7 @@
 <ol>
 <li>Special cases: If <em>x</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>x</em>, and return the result.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the coin returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>.)</li>
@@ -336,7 +342,7 @@
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
 <li>Flip the input coin.  If it returns 0, return 1.</li>
-<li>Generate a uniform random number <em>U</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>U</em>.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, return 0.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
@@ -350,11 +356,11 @@
 <ol>
 <li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
 <li>If <em>G</em> is <strong>odd</strong>, return 0.</li>
-<li>Generate a uniform random number <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate a uniform(0, 1) random number <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
-<li>Generate a uniform random number <em>V</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>V</em>.</li>
 <li>If <em>i</em> is odd and <em>V</em> is less than <em>U</em>, return 0.</li>
 <li>If <em>i</em> is even and <em>U</em> is less than <em>V</em>, return 0.</li>
 <li>Add 1 to <em>i</em>, then set <em>U</em> to <em>V</em>.</li>
@@ -371,11 +377,11 @@
 <ol>
 <li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
 <li>If <em>G</em> is <strong>even</strong>, return 0.</li>
-<li>Generate a uniform random number <em>U</em>, then set <em>i</em> to 1.</li>
+<li>Generate a uniform(0, 1) random number <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
-<li>Generate a uniform random number <em>V</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>V</em>.</li>
 <li>If <em>i</em> is odd and <em>V</em> is less than <em>U</em>, return 0.</li>
 <li>If <em>i</em> is even and <em>U</em> is less than <em>V</em>, return 0.</li>
 <li>Add 1 to <em>i</em>, then set <em>U</em> to <em>V</em>.</li>
@@ -432,19 +438,19 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>Flip the input coin.  If it returns 0, flip the coin again and return the result.</li>
-<li>Call the <strong>SampleGeometricBag</strong> algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a>. If the result is 0, flip the input coin and return the result.</li>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Call the <strong>SampleGeometricBag</strong> algorithm with the PSRN.  If it returns 0, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a>. If the result is 0, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
-<li>Call <strong>SampleGeometricBag</strong> on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em>.</strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p><a id=1_minus_ln_1_lambda></a></p>
@@ -590,17 +596,17 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.</li>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, return 1.</li>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p><a id=arctan_lambda></a></p>
@@ -627,7 +633,7 @@
 
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 2.</li>
-<li>Generate a uniform random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>.)</li>
@@ -645,7 +651,7 @@
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
-<li>Generate a uniform random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>.)</li>
@@ -676,7 +682,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
+<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using partially-sampled random numbers (PSRNs), which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.</p>
 </blockquote>
 
 <p><a id=lambda_mu_3></a></p>
@@ -705,11 +711,11 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
-<li>Create a secondary coin &mu; that does the following: &quot;Call <strong>SampleGeometricBag</strong> twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
+<li>Create a secondary coin &mu; that does the following: &quot;<a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for &mu;<sup>1/2</sup></strong> using the secondary coin &mu;.  If it returns 0, return 0.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
-<li>Call <strong>SampleGeometricBag</strong> once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
 <p><a id=arcsin_lambda_2></a></p>
@@ -1092,19 +1098,19 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 1.</li>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN.  If either of these calls returns 0, return 1.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice.  If either of these calls returns 0, return 1.</li>
 <li>Generate a number that is 1 with probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), or 0 otherwise.  If the number is 0, return 0.</li>
-<li>Call <strong>SampleGeometricBag</strong> twice on the PSRN.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, return 1.</li>
-<li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), call <strong>SampleGeometricBag</strong> twice on the PSRN.  If both of these calls return 1, return 0.</li>
+<li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), <a href="#Algorithms"><strong>sample the number <em>u</em></strong></a> twice.  If both of these calls return 1, return 0.</li>
 <li>Go to step 2.</li>
 </ol>
 
@@ -1276,17 +1282,17 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  It can be seen as a triple integral whose integrand is 1/(1 + <em>a</em> * <em>b</em> * <em>c</em>), where <em>a</em>, <em>b</em>, and <em>c</em> are uniform random numbers.  This algorithm is given below, but using the two-coin special case instead of the even-parity construction.  Note that the triple integral in section 5 of the paper is &zeta;(3) * 3 / 4, not &zeta;(3) * 7 / 8.</p>
 
 <ol>
-<li>Create three empty uniform PSRNs.</li>
+<li>Generate three uniform(0,1) random numbers.</li>
 <li>With probability 1/2, return 1.</li>
-<li>Call <strong>SampleGeometricBag</strong> on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)</li>
+<li><a href="#Algorithms"><strong>Sample each of the three numbers</strong></a> generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)</li>
 </ol>
 
 <p>This can be extended to cover any constant of the form &zeta;(<em>k</em>) * (1 &minus; 2<sup>&minus;(<em>k</em> &minus; 1)</sup>) where <em>k</em> &gt;= 2 is an integer, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.</p>
 
 <ol>
-<li>Create <em>k</em> empty uniform PSRNs.</li>
+<li>Generate <em>k</em> uniform(0,1) random numbers.</li>
 <li>With probability 1/2, return 1.</li>
-<li>Call <strong>SampleGeometricBag</strong> on each of the <em>k</em> PSRNs.  If all <em>k</em> calls return 1, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Algorithms"><strong>Sample each of the <em>k</em> numbers</strong></a> generated in step 1.  If all <em>k</em> calls return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p><a id=erf__x__erf_1></a></p>
@@ -1296,7 +1302,7 @@
 <p>In the following algorithm, <em>x</em> is a real number in the interval [0, 1].</p>
 
 <ol>
-<li>Generate a uniform random number, call it <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random number, call it <em>ret</em>.</li>
 <li>Set <em>u</em> to <em>ret</em>, and set <em>k</em> to 1.</li>
 <li>(In this and the next step, we create <em>v</em>, which is the maximum of two uniform [0, 1] random numbers.) Generate two uniform random numbers, call them <em>a</em> and <em>b</em>.</li>
 <li>If <em>a</em> is less than <em>b</em>, set <em>v</em> to <em>b</em>. Otherwise, set <em>v</em> to <em>a</em>.</li>
@@ -1389,8 +1395,8 @@
 <p>This can be done by modifying the algorithm as follows:</p>
 
 <ul>
-<li>Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.</li>
-<li>Instead of flipping the input coin, flip a coin that does the following: &quot;Flip the input coin, then call <strong>SampleGeometricBag</strong> on the uniform PSRN.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
+<li>Generate a uniform(0, 1) random number <em>u</em> at the start of the algorithm.</li>
+<li>Instead of flipping the input coin, flip a coin that does the following: &quot;Flip the input coin, then <a href="#Algorithms"><strong>sample the number <em>u</em></strong></a>.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
 </ul>
 
 <p>I have found that it&#39;s possible to simulate the following integral, namely&mdash;</p>
@@ -1402,8 +1408,8 @@
 <p>where [<em>a</em>, <em>b</em>] is [0, 1] or a closed interval therein, using different changes to the algorithm, namely:</p>
 
 <ul>
-<li>Add the following step at the start of the algorithm: &quot;Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.  Then if <strong>URandLessThanReal</strong> on the PSRN and <em>a</em> returns 1, or if <strong>URandLessThanReal</strong> on the PSRN and <em>b</em> returns 0, repeat this step.&quot;</li>
-<li>Instead of flipping the input coin, flip a coin that does the following: &quot;Call <strong>SampleGeometricBag</strong> on the uniform PSRN and return the result.&quot;</li>
+<li>Add the following step at the start of the algorithm: &quot;Generate a uniform(0, 1) random number <em>u</em> at the start of the algorithm.  Then if <em>u</em> is less than <em>a</em> or is greater than <em>b</em>, repeat this step. (If <em>u</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal</strong> algorithm.)&quot;</li>
+<li>Instead of flipping the input coin, flip a coin that does the following: &quot;<a href="#Algorithms"><strong>Sample the number <em>u</em></strong></a> return the result.&quot;</li>
 <li>If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
 </ul>
 
@@ -1920,22 +1926,22 @@ for i in range(iters):
 <li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note4"><strong>(4)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
 </ul>
 
-<p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag&#39;s first few digits are zeros.</p>
+<p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the first few digits (after the point) of the uniform random number&#39;s fractional part are zeros.</p>
 
 <p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note34"><strong>(34)</strong></a></sup>:</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a partially-sampled uniform random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong>, the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, (Devroye and Gravel 2015)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
-<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the geometric bag&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
 <li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
 
 <ol>
-<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the geometric bag.</li>
-<li>Of the first <em>n</em> items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the geometric bag&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
+<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the uniform PSRN&#39;s fractional part.</li>
+<li>Of the first <em>n</em> digits (sampled and unsampled) in the PSRN&#39;s fractional part, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the PSRN&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
 <li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &lt;= 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
 </ol></li>
 <li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is &pi;, <em>b</em> is 10, and <em>k</em> is 2, <em>pk</em> is 314.</li>
@@ -2089,8 +2095,8 @@ def valid_perm(f, x, n):
 <p>Consider the following algorithm:</p>
 
 <ol>
-<li>Generate a uniform random number <em>u</em>, then set <em>k</em> to 1.</li>
-<li>Generate another uniform random number <em>v</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, then set <em>k</em> to 1.</li>
+<li>Generate another uniform(0, 1) random number <em>v</em>.</li>
 <li>If <em>k</em> is odd and <em>u</em> is less than <em>v</em>, or if <em>k</em> is even and <em>v</em> is less than <em>u</em>, return <em>k</em>.</li>
 <li>Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 2.</li>
 </ol>
@@ -2106,7 +2112,7 @@ def valid_perm(f, x, n):
 
 <ol>
 <li>Create an empty list.</li>
-<li>Generate a uniform random number <em>u</em>, and append <em>u</em> to the end of the list.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, and append <em>u</em> to the end of the list.</li>
 <li>If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.</li>
 </ol>
 
@@ -2158,11 +2164,11 @@ def valid_perm(f, x, n):
 <ol>
 <li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
 <li>If <em>G</em> is 0, return 1.</li>
-<li>Generate a uniform random number <em>w</em>, and set <em>i</em> to 1.</li>
+<li>Generate a uniform(0, 1) random number <em>w</em>, and set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
 
 <ol>
-<li>Generate a uniform random number <em>U</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>U</em>.</li>
 <li>If <em>w</em> is less than <em>U</em>, break out of this loop and go to step 1.</li>
 <li>Add 1 to <em>i</em>, and set <em>w</em> to <em>U</em>.</li>
 </ol></li>
@@ -2174,7 +2180,7 @@ def valid_perm(f, x, n):
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
 <li>Flip the input coin.  If the coin returns 0 and <em>k</em> is 0, return 1.  Otherwise, if the coin returns 0, return 0.</li>
-<li>Generate a uniform random number <em>U</em>.</li>
+<li>Generate a uniform(0, 1) random number <em>U</em>.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, go to step 1.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>

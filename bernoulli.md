@@ -142,12 +142,15 @@ In the following algorithms:
 - &lambda; is the unknown probability of heads of the input coin.
 - The **SampleGeometricBag**, **RandLess**, and **URandLessThanReal** algorithms are described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 - The `ZeroOrOne` method should be implemented as shown in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
-- The instruction to "generate a uniform random number" can be implemented&mdash;
+- The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform PSRN**](https://peteroupc.github.io/exporand.html) with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by generating `-ln(1/RNDEXCRANGE(0, 1))` (less accurate).
+- To **sample a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
+    - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate).
+    - Otherwise, this can be implemented by generating another uniform random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are partially-sampled random numbers (PSRNs), it means to run the **RandLess** algorithm on the two PSRNs, or do a less-than operation on _a_ and _b_, as appropriate.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce rounding error.
 
@@ -197,7 +200,7 @@ where _d_\[_i_\] are all in the interval [0, 1] and form a non-increasing sequen
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.
 
 1. Let _d[0]_, _d[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _d[0]_, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-2. Generate a uniform random number _ret_.
+2. Generate a uniform(0, 1) random number _ret_.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
 4. If _n_ is even, set _u_ to _l_ + _w_ * _d[n]_.  Otherwise, set _l_ to _u_ &minus; _w_ * _d[n]_.
 5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
@@ -215,7 +218,7 @@ then modify the general martingale algorithm by adding the following after step 
 This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is bounded from above for all choices of &lambda; and other parameters (Devroye 1986, esp. p. 717)<sup>[**(7)**](#Note7)</sup>.) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;&lambda;) can be rewritten as 1 &minus; &lambda; + &lambda;<sup>2</sup>/2 &minus; &lambda;<sup>3</sup>/6 + &lambda;<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-2. Generate a uniform random number _ret_.
+2. Generate a uniform(0, 1) random number _ret_.
 3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
 4. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
 5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
@@ -230,7 +233,7 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 
 1. Special cases: If _x_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _x_, and return the result.
 2. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
-3. Generate a uniform random number _ret_.
+3. Generate a uniform(0, 1) random number _ret_.
 4. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _x_ and 0 otherwise.
 5. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
 6. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
@@ -268,7 +271,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 1. Set _k_ and _w_ each to 0.
 2. Flip the input coin.  If it returns 0, return 1.
-3. Generate a uniform random number _U_.
+3. Generate a uniform(0, 1) random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
@@ -279,9 +282,9 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
 2. If _G_ is **odd**, return 0.
-3. Generate a uniform random number _U_, then set _i_ to 1.
+3. Generate a uniform(0, 1) random number _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random number _V_.
+    1. Generate a uniform(0, 1) random number _V_.
     2. If _i_ is odd and _V_ is less than _U_, return 0.
     3. If _i_ is even and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -294,9 +297,9 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
 2. If _G_ is **even**, return 0.
-3. Generate a uniform random number _U_, then set _i_ to 1.
+3. Generate a uniform(0, 1) random number _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random number _V_.
+    1. Generate a uniform(0, 1) random number _V_.
     2. If _i_ is odd and _V_ is less than _U_, return 0.
     3. If _i_ is even and _U_ is less than _V_, return 0.
     4. Add 1 to _i_, then set _U_ to _V_.
@@ -338,17 +341,17 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
+1. Generate a uniform(0, 1) random number _u_.
 2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
-3. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, flip the input coin and return the result.
+3. [**Sample the number _u_**](#Algorithms). If the result is 0, flip the input coin and return the result.
 4. Flip the input coin.  If it returns 0, return 0.
-5. Call the **SampleGeometricBag** algorithm with the PSRN.  If it returns 0, return 0.  Otherwise, go to step 2.
+5. [**Sample the number _u_**](#Algorithms). If the result is 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
+1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, flip the input coin and return the result.
-3. Call **SampleGeometricBag** on the PSRN, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample the number _u_.**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
 <a id=1_minus_ln_1_lambda></a>
 #### 1 &minus; ln(1+&lambda;)
@@ -456,15 +459,15 @@ Works only if _c_ > 0.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
-2. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
-3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
+1. Generate a uniform(0, 1) random number _u_.
+2. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
+3. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all &lambda; parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
+1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, return 1.
-3. Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
 
 <a id=arctan_lambda></a>
 #### arctan(&lambda;)
@@ -485,7 +488,7 @@ This algorithm adapts the general martingale algorithm for this function's serie
 The algorithm to simulate cos(&lambda;) follows.
 
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, set _n_ to 1, and set _fac_ to 2.
-2. Generate a uniform random number _ret_.
+2. Generate a uniform(0, 1) random number _ret_.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_. (Here we divide by the factorial of 2-times-_n_.)
 5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
@@ -500,7 +503,7 @@ The algorithm to simulate sin(&lambda;) follows.
 
 1. Flip the input coin.  If it returns 0, return 0.
 1. Set _u_ to 1, set _w_ to 1, set _l_ to 0, set _n_ to 1, and set _fac_ to 6.
-2. Generate a uniform random number _ret_.
+2. Generate a uniform(0, 1) random number _ret_.
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
 4. If _n_ is even, set _u_ to _l_ + _w_ / _fac_.  Otherwise, set _l_ to _u_ &minus; _w_ / _fac_.
 5. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**.)
@@ -523,7 +526,7 @@ In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent wor
 6. Return 0 with probability _x_/(_y_*_i_).
 7. Add 1 to _i_ and go to step 5.
 
-> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using PSRNs, which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.
+> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as &lambda; approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on &lambda; (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using partially-sampled random numbers (PSRNs), which exploits knowledge of &lambda; but is not the focus of this article since it involves arithmetic.
 
 <a id=lambda_mu_3></a>
 #### &lambda;<sup>&mu;</sup>
@@ -545,11 +548,11 @@ Use the algorithm for &lambda;<sup>1/2</sup>.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
-2. Create a secondary coin &mu; that does the following: "Call **SampleGeometricBag** twice on the PSRN, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
+1. Generate a uniform(0, 1) random number _u_.
+2. Create a secondary coin &mu; that does the following: "[**Sample the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for &mu;<sup>1/2</sup>** using the secondary coin &mu;.  If it returns 0, return 0.
 4. With probability 1/2, flip the input coin and return the result.
-5. Call **SampleGeometricBag** once on the PSRN, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
+5. [**Sample the number _u_**](#Algorithms) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
 <a id=arcsin_lambda_2></a>
 #### arcsin(&lambda;) / 2
@@ -834,17 +837,17 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
+1. Generate a uniform(0, 1) random number _u_.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
-3. Call **SampleGeometricBag** twice on the PSRN.  If either of these calls returns 0, return 1.
+3. [**Sample the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
-5. Call **SampleGeometricBag** twice on the PSRN.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
+5. [**Sample the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
-1. Create a positive-sign zero-integer-part uniform PSRN.
+1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, return 1.
-3. With probability _x_ * _x_/(_y_ * _y_), call **SampleGeometricBag** twice on the PSRN.  If both of these calls return 1, return 0.
+3. With probability _x_ * _x_/(_y_ * _y_), [**sample the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 2.
 
 <a id=pi_12></a>
@@ -973,22 +976,22 @@ The following algorithm simulates a polylogarithmic constant of the form Li<sub>
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  It can be seen as a triple integral whose integrand is 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform random numbers.  This algorithm is given below, but using the two-coin special case instead of the even-parity construction.  Note that the triple integral in section 5 of the paper is &zeta;(3) * 3 / 4, not &zeta;(3) * 7 / 8.
 
-1. Create three empty uniform PSRNs.
+1. Generate three uniform(0,1) random numbers.
 2. With probability 1/2, return 1.
-3. Call **SampleGeometricBag** on each of the three PSRNs.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform PSRNs.)
+3. [**Sample each of the three numbers**](#Algorithms) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)
 
 This can be extended to cover any constant of the form &zeta;(_k_) * (1 &minus; 2<sup>&minus;(_k_ &minus; 1)</sup>) where _k_ >= 2 is an integer, as suggested slightly by the Flajolet paper when it mentions &zeta;(5) * 31 / 32 (which should probably read &zeta;(5) * 15 / 16 instead), using the following algorithm.
 
-1. Create _k_ empty uniform PSRNs.
+1. Generate _k_ uniform(0,1) random numbers.
 2. With probability 1/2, return 1.
-3. Call **SampleGeometricBag** on each of the _k_ PSRNs.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample each of the _k_ numbers**](#Algorithms) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
 <a id=erf__x__erf_1></a>
 #### erf(_x_)/erf(1)
 
 In the following algorithm, _x_ is a real number in the interval [0, 1].
 
-1. Generate a uniform random number, call it _ret_.
+1. Generate a uniform(0, 1) random number, call it _ret_.
 2. Set _u_ to _ret_, and set _k_ to 1.
 3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Generate two uniform random numbers, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
@@ -1059,8 +1062,8 @@ The following algorithm is a special case of the convex combination method.  It 
 
 This can be done by modifying the algorithm as follows:
 
-- Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.
-- Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then call **SampleGeometricBag** on the uniform PSRN.  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+- Generate a uniform(0, 1) random number _u_ at the start of the algorithm.
+- Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 
 I have found that it's possible to simulate the following integral, namely&mdash;
 
@@ -1068,8 +1071,8 @@ I have found that it's possible to simulate the following integral, namely&mdash
 
 where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
 
-- Add the following step at the start of the algorithm: "Create a positive-sign zero-integer-part uniform PSRN at the start of the algorithm.  Then if **URandLessThanReal** on the PSRN and _a_ returns 1, or if **URandLessThanReal** on the PSRN and _b_ returns 0, repeat this step."
-- Instead of flipping the input coin, flip a coin that does the following: "Call **SampleGeometricBag** on the uniform PSRN and return the result."
+- Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random number _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
+- Instead of flipping the input coin, flip a coin that does the following: "[**Sample the number _u_**](#Algorithms) return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
 <a id=Open_Questions></a>
@@ -1267,18 +1270,18 @@ As this code shows, as _x_ (the probability of heads of the input coin) approach
 - The average number of coin flips needed by this algorithm will grow without bound as _x_ approaches 0, and Mendo (2019)<sup>[**(5)**](#Note5)</sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on _x_.
 - _x_<sup>_y_/_z_</sup> has a slope that tends to a vertical slope near 0, so that the so-called [**_Lipschitz condition_**](https://en.wikipedia.org/wiki/Lipschitz_continuity) is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup>[**(4)**](#Note4)</sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.
 
-Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the geometric bag's first few digits are zeros.
+Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the first few digits (after the point) of the uniform random number's fractional part are zeros.
 
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a geometric bag (a partially-sampled uniform random number or PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the geometric bag (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(7)**](#Note7)</sup>, (Devroye and Gravel 2015)<sup>[**(34)**](#Note34)</sup>:
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a partially-sampled uniform random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag**, the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(25)**](#Note25)</sup>, (Devroye 1986, p. 769)<sup>[**(7)**](#Note7)</sup>, (Devroye and Gravel 2015)<sup>[**(34)**](#Note34)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
 
 1. Set _v_ to 0 and _k_ to 1.
-2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the geometric bag's digits, and _d_ is a digit chosen uniformly at random.
+2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
 3. Calculate an approximation of _f_(_U_) as follows:
-    1. Set _n_ to the number of items (sampled and unsampled digits) in the geometric bag.
-    2. Of the first _n_ items in the geometric bag, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the geometric bag's digit expansion up to the first _n_ digits after the point.
+    1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
+    2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
     3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ &minus; _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
 4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi;, _b_ is 10, and _k_ is 2, _pk_ is 314.
 5. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
@@ -1405,8 +1408,8 @@ and thus erf(_x_)/erf(1).  If the last step in the algorithm reads "Return 0" ra
 
 Consider the following algorithm:
 
-1. Generate a uniform random number _u_, then set _k_ to 1.
-2. Generate another uniform random number _v_.
+1. Generate a uniform(0, 1) random number _u_, then set _k_ to 1.
+2. Generate another uniform(0, 1) random number _v_.
 3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
 4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
 
@@ -1420,7 +1423,7 @@ where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the se
 Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can extend the algorithm to certain kinds of permutation as follows:
 
 1. Create an empty list.
-2. Generate a uniform random number _u_, and append _u_ to the end of the list.
+2. Generate a uniform(0, 1) random number _u_, and append _u_ to the end of the list.
 3. If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.
 
 This algorithm returns the number _n_ with the following probability:
@@ -1459,9 +1462,9 @@ The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for g
 
 1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
 2. If _G_ is 0, return 1.
-3. Generate a uniform random number _w_, and set _i_ to 1.
+3. Generate a uniform(0, 1) random number _w_, and set _i_ to 1.
 4. While _i_ is less than _G_:
-    1. Generate a uniform random number _U_.
+    1. Generate a uniform(0, 1) random number _U_.
     2. If _w_ is less than _U_, break out of this loop and go to step 1.
     3. Add 1 to _i_, and set _w_ to _U_.
 5. Return 0.  (_G_ is now a Poisson(&lambda;) random number, but is other than 0.)
@@ -1470,7 +1473,7 @@ An alternative version of the algorithm above doesn't generate a geometric rando
 
 1. Set _k_ and _w_ each to 0.
 2. Flip the input coin.  If the coin returns 0 and _k_ is 0, return 1.  Otherwise, if the coin returns 0, return 0.
-3. Generate a uniform random number _U_.
+3. Generate a uniform(0, 1) random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
