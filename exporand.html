@@ -154,14 +154,16 @@
 <p>PSRNs specified here store:</p>
 
 <ul>
-<li>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.  For example, if the fractional part stores the base-10 digits [1, 3, 5], in that order, then it represents a random number in the interval [0.135, 0.136], reflecting the fact that the digits between 0.135 and 0.136 are unknown.</li>
+<li><p>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.</p>
+
+<p>For example, if the fractional part stores the base-10 digits [1, 3, 5], in that order, then it represents a random number in the interval [0.135, 0.136], reflecting the fact that the digits between 0.135 and 0.136 are unknown.</p></li>
 <li>An optional <em>integer part</em> (more specifically, the integer part [floor] of the number&#39;s absolute value).</li>
 <li>An optional <em>sign</em> (positive or negative).</li>
 </ul>
 
 <p>If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].</p>
 
-<p>PSRNs ultimately represent a random number between two others; one of the number&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random number in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is negative, this is a lower bound.</p>
+<p>PSRNs ultimately represent a random number between two others; one of the number&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random number in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.</p>
 
 <p>This section specifies two kinds of PSRNs: uniform and exponential.</p>
 
@@ -255,17 +257,25 @@
 
 <ul>
 <li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is non-negative,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is negative,</li>
-<li><em><strong>b</strong> is not known to be rational</em>, <strong>a</strong> is negative, and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
-<li><em><strong>b</strong> is known to be rational</em>, <strong>a</strong> is negative, and <em>bf</em> is 0 (indicating <strong>a</strong> is less than <strong>b</strong> almost surely).</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is negative, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong> is negative, and&mdash;
+
+<ul>
+<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
+<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is less than <strong>b</strong> almost surely).</li>
+</ul></li>
 </ul></li>
 <li>Return 0 if&mdash;
 
 <ul>
 <li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is negative,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is non-negative,</li>
-<li><em><strong>b</strong> is not known to be rational</em>, <strong>a</strong> is non-negative, and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely), or</li>
-<li><em><strong>b</strong> is known to be rational</em>, <strong>a</strong> is non-negative, and <em>bf</em> is 0 (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely).</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is non-negative, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong> is non-negative, and&mdash;
+
+<ul>
+<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely), or</li>
+<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely).</li>
+</ul></li>
 </ul></li>
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>

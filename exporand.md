@@ -106,13 +106,15 @@ In this document, a _partially-sampled random number_ (PSRN) is a data structure
 
 PSRNs specified here store:
 
-- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (e.g., _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.  For example, if the fractional part stores the base-10 digits \[1, 3, 5\], in that order, then it represents a random number in the interval \[0.135, 0.136\], reflecting the fact that the digits between 0.135 and 0.136 are unknown.
+- A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (e.g., _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.
+
+    For example, if the fractional part stores the base-10 digits \[1, 3, 5\], in that order, then it represents a random number in the interval \[0.135, 0.136\], reflecting the fact that the digits between 0.135 and 0.136 are unknown.
 - An optional _integer part_ (more specifically, the integer part [floor] of the number's absolute value).
 - An optional _sign_ (positive or negative).
 
 If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].
 
-PSRNs ultimately represent a random number between two others; one of the number's two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it's negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part \[3, 5, 6\] (in base 10), then the PSRN represents a random number in the interval \[3.356, 3.357\].  Here, one of the bounds is built using the PSRN's sign, integer part, and fractional part, and because the PSRN is negative, this is a lower bound.
+PSRNs ultimately represent a random number between two others; one of the number's two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it's negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part \[3, 5, 6\] (in base 10), then the PSRN represents a random number in the interval \[3.356, 3.357\].  Here, one of the bounds is built using the PSRN's sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.
 
 This section specifies two kinds of PSRNs: uniform and exponential.
 
@@ -188,14 +190,16 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 7. Let _ad_ be the digit at position _i_ of **a**'s fractional part.
 8. Return 1 if&mdash;
     - _ad_ is less than _d_ and **a** is non-negative,
-    - _ad_ is greater than _d_ and **a** is negative,
-    - _**b** is not known to be rational_, **a** is negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is less than **b** almost surely), or
-    - _**b** is known to be rational_, **a** is negative, and _bf_ is 0 (indicating **a** is less than **b** almost surely).
+    - _ad_ is greater than _d_ and **a** is negative, or
+    - _ad_ is equal to _d_, **a** is negative, and&mdash;
+        - _**b** is not known to be rational_ and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is less than **b** almost surely), or
+        - _**b** is known to be rational_ and _bf_ is 0 (indicating **a** is less than **b** almost surely).
 9. Return 0 if&mdash;
     - _ad_ is less than _d_ and **a** is negative,
-    - _ad_ is greater than _d_ and **a** is non-negative,
-    - _**b** is not known to be rational_, **a** is non-negative, and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is greater than **b** almost surely), or
-    - _**b** is known to be rational_, **a** is non-negative, and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
+    - _ad_ is greater than _d_ and **a** is non-negative, or
+    - _ad_ is equal to _d_, **a** is non-negative, and&mdash;
+        - _**b** is not known to be rational_ and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is greater than **b** almost surely), or
+        - _**b** is known to be rational_ and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
 10. Add 1 to _i_ and go to step 5.
 
 An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup>[**(13)**](#Note13)</sup>):
