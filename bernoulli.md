@@ -235,7 +235,7 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 1. Special cases: If _x_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _x_, and return the result.
 2. Set _u_ to 1, set _w_ to 1, set _l_ to 0, and set _n_ to 1.
 3. Generate a uniform(0, 1) random number _ret_.
-4. If _w_ is not 0, flip the input coin _k_ times or until the coin returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _x_ and 0 otherwise.
+4. If _w_ is not 0, flip the input coin _k_ times or until the flip returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _x_ and 0 otherwise.
 5. If _n_ is even, set _u_ to _l_ + _w_.  Otherwise, set _l_ to _u_ &minus; _w_.
 6. If _ret_ is less than _l_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 4.
@@ -281,7 +281,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **odd**, return 0.
 3. Generate a uniform(0, 1) random number _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
@@ -296,7 +296,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
-1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is **even**, return 0.
 3. Generate a uniform(0, 1) random number _U_, then set _i_ to 1.
 4. While _i_ is less than _G_:
@@ -312,7 +312,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 Used in (Dughmi et al. 2017)<sup>[**(8)**](#Note8)</sup> to apply an exponential weight (here, _c_) to an input coin.
 
 1. Generate a Poisson(_c_) random integer, call it _N_.
-2. Flip the input coin until the coin returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
+2. Flip the input coin until the flip returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
 
 <a id=exp_minus_lambda_minus__c></a>
 #### exp(&minus;&lambda; &minus; _c_)
@@ -373,7 +373,7 @@ This is the general two-coin algorithm of (Gonçalves et al., 2017)<sup>[**(9)**
 This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<sup>[**(12)**](#Note12)</sup>, (Morina et al., 2019)<sup>[**(13)**](#Note13)</sup>, is a special case of the two-coin algorithm above, but this time uses only one input coin.
 
 1. With probability _d_ / (_c_ + _d_), return 0.
-2. Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.
+2. Flip the input coin.  If the flip returns 1, return 1.  Otherwise, go to step 1.
 
 (Note that Huber \[2016\] specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)
 
@@ -383,7 +383,7 @@ This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<su
 In this algorithm, _c_ must be 1 or greater.  For example, this algorithm can simulate a probability of the form 1 / _z_, where _z_ is greater than 0 and made up of an integer part (_c_) and a fractional part (&lambda;) that can be simulated by a Bernoulli factory.  See also the algorithms for continued fractions.
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
-2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=d__lambda__c></a>
 #### (_d_ + &lambda;) / _c_
@@ -399,7 +399,7 @@ This algorithm currently works only if _d_ and _c_ are integers and 0 <= _d_ < _
 In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0, _c_\].  See also the algorithms for continued fractions.
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
-2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=d__mu__c__lambda></a>
 #### (_d_ + &mu;) / (_c_ + &lambda;)
@@ -409,7 +409,7 @@ Combines the algorithms in the previous two sections.  This algorithm currently 
 1. With probability _c_ / (1 + _c_), do the following:
     1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
     2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the &mu; input coin and return the result.  If neither is the case, go to the previous substep.
-2. Flip the &lambda; input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+2. Flip the &lambda; input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda_mu></a>
 #### &lambda; + &mu;
@@ -433,7 +433,7 @@ Combines the algorithms in the previous two sections.  This algorithm currently 
 Works only if _c_ > 0.
 
 1. With probability _c_/(1 + _c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
-2. Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.
+2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=1_minus_lambda></a>
 #### 1 &minus; &lambda;
@@ -1051,7 +1051,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(&lambda;) that returns 
 The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[&lambda;<sup>_X_</sup>\], that is, the expected or average value of &lambda;<sup>_X_</sup>.  **E**\[&lambda;<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(8)**](#Note8)</sup>.
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
-2. Flip the input coin until the coin returns 0 or the coin is flipped _X_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
+2. Flip the input coin until the flip returns 0 or the coin is flipped _X_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 
 <a id=Integrals></a>
 #### Integrals
@@ -1079,7 +1079,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 <a id=Open_Questions></a>
 ## Open Questions
 
-- Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(_k_))/(1+exp(_k_+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(_k_)) and the series for 1/(1+exp(_k_+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.
+- Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(_k_))/(1+exp(_k_+1)), without relying on floating-point arithmetic?
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 
@@ -1213,7 +1213,7 @@ Points with invalid &#x03F5; values were suppressed.  For the low-mean algorithm
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(30)**](#Note30)</sup>.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(5)**](#Note5)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(30)**](#Note30)</sup>.
 
 In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = _f_(&lambda;)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(31)**](#Note31)</sup>, (Peres 1992)<sup>[**(32)**](#Note32)</sup>) and is calculated as&mdash;
 
@@ -1338,7 +1338,7 @@ using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup
 The following algorithm generates a random number that follows the von Neumann schema.
 
 1. Set _r_ to 0. (This is the number of times the algorithm rejects a random number.)
-2. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+2. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 3. With probability V(_G_)/_G_!, return _G_ (or _r_ if desired).  (In practice, the probability check is done by generating _G_ uniform random numbers and determining whether those numbers satisfy the given permutation class, or generating as many of those numbers as necessary to make this determination.  This is especially because _G_!, the factorial of _G_, can easily become very large.)
 4. Add 1 to _r_ and go to step 2.
 
@@ -1461,7 +1461,7 @@ The following two algorithms also simulate exp(&minus;&lambda;), but converge sl
 
 The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number _G_<sup>[**(35)**](#Note35)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted (see "[**The von Neumann Schema**](#The_von_Neumann_Schema)" in the appendix).  The algorithm follows.
 
-1. Flip the input coin until the coin returns 0.  Then set _G_ to the number of times the coin returns 1 this way.
+1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is 0, return 1.
 3. Generate a uniform(0, 1) random number _w_, and set _i_ to 1.
 4. While _i_ is less than _G_:
@@ -1473,7 +1473,7 @@ The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for g
 An alternative version of the algorithm above doesn't generate a geometric random number at the outset.
 
 1. Set _k_ and _w_ each to 0.
-2. Flip the input coin.  If the coin returns 0 and _k_ is 0, return 1.  Otherwise, if the coin returns 0, return 0.
+2. Flip the input coin.  If the flip returns 0 and _k_ is 0, return 1.  Otherwise, if the flip returns 0, return 0.
 3. Generate a uniform(0, 1) random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.

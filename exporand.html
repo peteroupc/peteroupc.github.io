@@ -161,7 +161,7 @@
 <li>An optional <em>sign</em> (positive or negative).</li>
 </ul>
 
-<p>If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].</p>
+<p>If an implementation cares only about PSRNs in the interval [0, 1], it can store only a fractional part; in this case, the unstored integer part and sign are assumed to be 0 and positive, respectively.</p>
 
 <p>PSRNs ultimately represent a random number between two others; one of the number&#39;s two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it&#39;s negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part [3, 5, 6] (in base 10), then the PSRN represents a random number in the interval [3.356, 3.357].  Here, one of the bounds is built using the PSRN&#39;s sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.</p>
 
@@ -1593,7 +1593,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>Return a number that is (<em>f</em> + <em>k</em>) with probability 1/2, and &minus;(<em>f</em> + <em>k</em>) otherwise.</li>
 </ol>
 
-<p>The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), in step 2.  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(<em>k</em>)) and the series for 1/(1+exp(<em>k</em>+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.</p>
+<p>The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), in step 2.</p>
 
 <p><a id=License></a></p>
 

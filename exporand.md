@@ -112,7 +112,7 @@ PSRNs specified here store:
 - An optional _integer part_ (more specifically, the integer part [floor] of the number's absolute value).
 - An optional _sign_ (positive or negative).
 
-If the integer part and sign are not given, the PSRN is assumed to lie in the interval [0, 1].
+If an implementation cares only about PSRNs in the interval [0, 1], it can store only a fractional part; in this case, the unstored integer part and sign are assumed to be 0 and positive, respectively.
 
 PSRNs ultimately represent a random number between two others; one of the number's two bounds has the following form: sign * (integer part + fractional part), which is a lower bound if the PSRN is positive, or an upper bound if it's negative. For example, if the PSRN stores a positive sign, the integer 3, and the fractional part \[3, 5, 6\] (in base 10), then the PSRN represents a random number in the interval \[3.356, 3.357\].  Here, one of the bounds is built using the PSRN's sign, integer part, and fractional part, and because the PSRN is positive, this is a lower bound.
 
@@ -1184,7 +1184,7 @@ The following algorithm generates a random number that follows the logistic dist
 4. With probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.
 5. Return a number that is (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
 
-The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(_k_))/(1+exp(_k_+1)), in step 2.  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(_k_)) and the series for 1/(1+exp(_k_+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.
+The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(_k_))/(1+exp(_k_+1)), in step 2.
 
 <a id=License></a>
 ## License

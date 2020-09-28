@@ -297,7 +297,7 @@
 <li>Special cases: If <em>x</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>x</em>, and return the result.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
-<li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the coin returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
+<li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the flip returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
@@ -358,7 +358,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
+<li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>odd</strong>, return 0.</li>
 <li>Generate a uniform(0, 1) random number <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
@@ -379,7 +379,7 @@
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <ol>
-<li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
+<li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is <strong>even</strong>, return 0.</li>
 <li>Generate a uniform(0, 1) random number <em>U</em>, then set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
@@ -401,7 +401,7 @@
 
 <ol>
 <li>Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.</li>
-<li>Flip the input coin until the coin returns 0 or the coin is flipped <em>N</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>N</em> is 0); or return 0 otherwise.</li>
+<li>Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>N</em> is 0); or return 0 otherwise.</li>
 </ol>
 
 <p><a id=exp_minus_lambda_minus__c></a></p>
@@ -482,7 +482,7 @@
 
 <ol>
 <li>With probability <em>d</em> / (<em>c</em> + <em>d</em>), return 0.</li>
-<li>Flip the input coin.  If the coin returns 1, return 1.  Otherwise, go to step 1.</li>
+<li>Flip the input coin.  If the flip returns 1, return 1.  Otherwise, go to step 1.</li>
 </ol>
 
 <p>(Note that Huber [2016] specifies this Bernoulli factory in terms of a Poisson point process, which seems to require much more randomness on average.)</p>
@@ -495,7 +495,7 @@
 
 <ol>
 <li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
-<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+<li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=d__lambda__c></a></p>
@@ -517,7 +517,7 @@
 
 <ol>
 <li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
-<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+<li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=d__mu__c__lambda></a></p>
@@ -533,7 +533,7 @@
 <li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.</li>
 <li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the &mu; input coin and return the result.  If neither is the case, go to the previous substep.</li>
 </ol></li>
-<li>Flip the &lambda; input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+<li>Flip the &lambda; input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=lambda_mu></a></p>
@@ -566,7 +566,7 @@
 
 <ol>
 <li>With probability <em>c</em>/(1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
-<li>Flip the input coin.  If the coin returns 1, return 0.  Otherwise, go to step 1.</li>
+<li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=1_minus_lambda></a></p>
@@ -1382,7 +1382,7 @@
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
-<li>Flip the input coin until the coin returns 0 or the coin is flipped <em>X</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
+<li>Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 </ol>
 
 <p><a id=Integrals></a></p>
@@ -1422,7 +1422,7 @@
 <h2>Open Questions</h2>
 
 <ul>
-<li>Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), without relying on floating-point arithmetic?  While this expression can be expressed as an alternating series (by multiplying the individual terms of the series for (1+exp(<em>k</em>)) and the series for 1/(1+exp(<em>k</em>+1)) ), so that a Bernoulli factory algorithm could be built for this series, there is no simple formula to calculate the necessary coefficients of this series.</li>
+<li>Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), without relying on floating-point arithmetic?</li>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
 </ul>
@@ -1865,7 +1865,7 @@
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the coin returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.</p>
 
 <p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (&lambda;) into a coin with another bias (&tau; = <em>f</em>(&lambda;)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note31"><strong>(31)</strong></a></sup>, (Peres 1992)<sup><a href="#Note32"><strong>(32)</strong></a></sup>) and is calculated as&mdash;</p>
 
@@ -2017,7 +2017,7 @@ for i in range(iters):
 
 <ol>
 <li>Set <em>r</em> to 0. (This is the number of times the algorithm rejects a random number.)</li>
-<li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
+<li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>With probability V(<em>G</em>)/<em>G</em>!, return <em>G</em> (or <em>r</em> if desired).  (In practice, the probability check is done by generating <em>G</em> uniform random numbers and determining whether those numbers satisfy the given permutation class, or generating as many of those numbers as necessary to make this determination.  This is especially because <em>G</em>!, the factorial of <em>G</em>, can easily become very large.)</li>
 <li>Add 1 to <em>r</em> and go to step 2.</li>
 </ol>
@@ -2166,7 +2166,7 @@ def valid_perm(f, x, n):
 <p>The algorithm in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> calls for generating a Poisson(&lambda;) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(&lambda;) random number <em>G</em><sup><a href="#Note35"><strong>(35)</strong></a></sup>, then <em>G</em> uniform random numbers, then returning <em>G</em> only if all <em>G</em> uniform numbers are sorted (see &quot;<a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a>&quot; in the appendix).  The algorithm follows.</p>
 
 <ol>
-<li>Flip the input coin until the coin returns 0.  Then set <em>G</em> to the number of times the coin returns 1 this way.</li>
+<li>Flip the input coin until the flip returns 0.  Then set <em>G</em> to the number of times the flip returns 1 this way.</li>
 <li>If <em>G</em> is 0, return 1.</li>
 <li>Generate a uniform(0, 1) random number <em>w</em>, and set <em>i</em> to 1.</li>
 <li>While <em>i</em> is less than <em>G</em>:
@@ -2183,7 +2183,7 @@ def valid_perm(f, x, n):
 
 <ol>
 <li>Set <em>k</em> and <em>w</em> each to 0.</li>
-<li>Flip the input coin.  If the coin returns 0 and <em>k</em> is 0, return 1.  Otherwise, if the coin returns 0, return 0.</li>
+<li>Flip the input coin.  If the flip returns 0 and <em>k</em> is 0, return 1.  Otherwise, if the flip returns 0, return 0.</li>
 <li>Generate a uniform(0, 1) random number <em>U</em>.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, go to step 1.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
