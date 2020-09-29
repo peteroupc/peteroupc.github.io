@@ -3772,7 +3772,7 @@ _Non-Uniform Random Variate Generation_, 1986.
          for that parameter, the probability that a random number will
          be less than or equal to that parameter. Optional if a PDF is given.
          For best results, the CDF should be
-         monotonically nondecreasing everywhere in the
+         monotonically increasing everywhere in the
          interval [xmin, xmax] and must output values in [0, 1];
          for best results, the CDF should
          be increasing everywhere in [xmin, xmax].
@@ -5048,7 +5048,7 @@ class KVectorSampler:
          Parameters:
          - cdf: Cumulative distribution function (CDF) of the
             distribution.  The CDF must be
-            monotonically nondecreasing everywhere in the
+            monotonically increasing everywhere in the
             interval [xmin, xmax] and must output values in [0, 1];
             for best results, the CDF should
             be increasing everywhere in [xmin, xmax].
