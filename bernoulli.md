@@ -173,7 +173,7 @@ Mendo (2019)<sup>[**(5)**](#Note5)</sup> gave a Bernoulli factory algorithm for 
 
 &nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; &lambda;) + ... + _c_\[_i_\] * (1 &minus; &lambda;)<sup>_i_ + 1</sup> + ...),
 
-where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.  The algorithm follows:
+where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners" &mdash; and takes on a value that approaches 0 or 1 as the series approaches 0 or 1, respectively). The algorithm follows:
 
 1. Let _v_ be 1 and let _result_ be 1.
 2. Set _dsum_ to 0 and _i_ to 0.
