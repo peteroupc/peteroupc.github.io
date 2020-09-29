@@ -99,7 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
         - [**Integrals**](#Integrals)
-- [**Open Questions**](#Open_Questions)
+- [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
     - [**The Charts**](#The_Charts)
 - [**Notes**](#Notes)
@@ -1076,12 +1076,19 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 - Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
-<a id=Open_Questions></a>
-## Open Questions
+<a id=Requests_and_Open_Questions></a>
+## Requests and Open Questions
 
 - Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(_k_))/(1+exp(_k_+1)), without relying on floating-point arithmetic?
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
+- I request expressions of mathematical functions that can be expressed in any of the following ways:
+    - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
+    - Series expansions for alternating series whose coefficients are all in the interval [0, 1] and form a non-increasing sequence.  This is required for another class of power series.
+    - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be monotonically non-increasing or non-decreasing, respectively.
+    - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
+
+    All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as &pi; or sqrt(2)).  For example, a series expansion that _directly_ contains the constant &pi; is not desired; however, a series expansion that converges to a fraction of &pi; is.
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts

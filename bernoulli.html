@@ -123,7 +123,7 @@
 <li><a href="#Integrals"><strong>Integrals</strong></a></li>
 </ul></li>
 </ul></li>
-<li><a href="#Open_Questions"><strong>Open Questions</strong></a></li>
+<li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a>
 
 <ul>
@@ -1417,14 +1417,24 @@
 <li>If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (<em>b</em> &minus; <em>a</em>).</li>
 </ul>
 
-<p><a id=Open_Questions></a></p>
+<p><a id=Requests_and_Open_Questions></a></p>
 
-<h2>Open Questions</h2>
+<h2>Requests and Open Questions</h2>
 
 <ul>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1)), without relying on floating-point arithmetic?</li>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant &gamma;, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
+<li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
+
+<ul>
+<li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo&#39;s algorithm for <a href="#Certain_Power_Series"><strong>certain power series</strong></a>.</li>
+<li>Series expansions for alternating series whose coefficients are all in the interval [0, 1] and form a non-increasing sequence.  This is required for another class of power series.</li>
+<li>Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be monotonically non-increasing or non-decreasing, respectively.</li>
+<li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
+</ul>
+
+<p>All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as &pi; or sqrt(2)).  For example, a series expansion that <em>directly</em> contains the constant &pi; is not desired; however, a series expansion that converges to a fraction of &pi; is.</p></li>
 </ul>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
