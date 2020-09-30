@@ -248,7 +248,7 @@ Arithmetic between two PSRNs is not always trivial.
 - On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include:
     - Adding 1/2 to a uniform PSRN provided _b_ (the base, or radix, of the PSRN's digits) is even, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
     - Negation, likewise mentioned in Karney.
-    - Adding a constant with a terminating base-_b_ expansion to a uniform PSRN.
+    - Adding a constant with a terminating base-_b_ expansion to a uniform PSRN (but first making sure to sample digits as needed so that the PSRN's fractional part is at least as long as that constant's fractional part; otherwise, a bias can be introduced).
     - Operations affecting the PSRN's integer part only.
 
 Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.
@@ -1123,7 +1123,7 @@ A third example is the following new algorithm that generates a random number th
 1. Set _k_ to 0.
 2. Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
 3. Generate a uniform(0, 1) random number, call it _f_.
-4. (Steps 4 and 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
+4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
 5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
 6. With probability 1/2, accept _f_.  If _f_ is accepted this way,  fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.

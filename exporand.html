@@ -336,7 +336,7 @@
 <ul>
 <li>Adding 1/2 to a uniform PSRN provided <em>b</em> (the base, or radix, of the PSRN&#39;s digits) is even, as mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li>Negation, likewise mentioned in Karney.</li>
-<li>Adding a constant with a terminating base-<em>b</em> expansion to a uniform PSRN.</li>
+<li>Adding a constant with a terminating base-<em>b</em> expansion to a uniform PSRN (but first making sure to sample digits as needed so that the PSRN&#39;s fractional part is at least as long as that constant&#39;s fractional part; otherwise, a bias can be introduced).</li>
 <li>Operations affecting the PSRN&#39;s integer part only.</li>
 </ul></li>
 </ul>
@@ -1514,7 +1514,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>Set <em>k</em> to 0.</li>
 <li>Run the <strong>algorithm for (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1))</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
 <li>Generate a uniform(0, 1) random number, call it <em>f</em>.</li>
-<li>(Steps 4 and 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) With probability 1/2, go to step 3.</li>
+<li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) With probability 1/2, go to step 3.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
 <li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way,  fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return (<em>f</em> + <em>k</em>) with probability 1/2, and &minus;(<em>f</em> + <em>k</em>) otherwise.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
