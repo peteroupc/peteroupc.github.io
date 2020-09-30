@@ -1357,13 +1357,14 @@
 <p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  In this algorithm, <em>k</em> must be an integer 1 or greater.</p>
 
 <ol>
+<li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
 <li>Generate a uniform(0, 1) random number, call it <em>ret</em>.</li>
 <li>If <em>k</em> is 3 or greater, return 0 if <em>ret</em> is greater than 38/100, or 1 if <em>ret</em> is less than 36/100.  (This is an early return step.  If <em>ret</em> is implemented as a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Set <em>d</em> to 2.</li>
 <li>Calculate a lower and upper bound of exp(1) (<em>LB</em> and <em>UB</em>, respectively) in the form of rational numbers whose numerator has at most <em>d</em> digits, using the Citterio and Pavani algorithm.  For details, see the appendix.</li>
 <li>Set <em>rl</em> to (1+<em>LB</em><sup><em>k</em></sup>) / (1+<em>UB</em><sup><em>k</em> + 1</sup>), and set <em>ru</em> to (1+<em>UB</em><sup><em>k</em></sup>) / (1+<em>LB</em><sup><em>k</em> + 1</sup>); both these numbers should be calculated using rational arithmetic.</li>
 <li>If <em>ret</em> is greater than <em>ru</em>, return 0.  If <em>ret</em> is less than <em>rl</em>, return 1.  (If <em>ret</em> is implemented as a uniform PSRN, these comparisons should be done via <strong>URandLessThanReal</strong>.)</li>
-<li>Add 1 to <em>d</em> and go to step 4.</li>
+<li>Add 1 to <em>d</em> and go to step 5.</li>
 </ol>
 
 <p><a id=General_Algorithms></a></p>
@@ -1498,7 +1499,7 @@
 <li><small><sup id=Note29>(29)</sup> Borwein, J.M., Calkin, N.J., et al., &quot;Continued logarithms and associated continued fractions&quot;, 2016.</small></li>
 <li><small><sup id=Note30>(30)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
 <li><small><sup id=Note31>(31)</sup> Forsythe, G.E., &quot;Von Neumann&#39;s Comparison Method for Random Sampling from the Normal and Other Distributions&quot;, <em>Mathematics of Computation</em> 26(120), October 1972.</small></li>
-<li><small><sup id=Note32>(32)</sup> Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, <em>Mediterranean Journal of Mathematics</em> 13 (2016).</small></li>
+<li><small><sup id=Note32>(32)</sup> Citterio, M., Pavani, R., &quot;A Fast Computation of the Best <em>k</em>-Digit Rational Approximation to a Real Number&quot;, <em>Mediterranean Journal of Mathematics</em> 13 (2016).</small></li>
 <li><small><sup id=Note33>(33)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
 <li><small><sup id=Note34>(34)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
 <li><small><sup id=Note35>(35)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
@@ -1875,8 +1876,8 @@ def valid_perm(f, x, n):
 <li><strong>Ensure <em>n</em>:</strong> While <em>v</em> is less than or equal to <em>n</em>:
 
 <ol>
-<li>(Ensure partial denominator <em>v</em>, starting from 0, is available.) If <em>v</em> + 2 is less than the size of <em>a</em>, append <em>av</em>, 1, and 1, in that order, to the list <em>a</em>, then add 2 to <em>av</em>.</li>
-<li>(Calculate convergent <em>v</em>, starting from 0.) Append <em>a</em>[<em>n</em>+2] * <em>p</em>[<em>n</em>+1]+<em>p</em>[n] to the list <em>p</em>, and append <em>a</em>[<em>n</em>+2] * <em>q</em>[<em>n</em>+1]+<em>q</em>[n] to the list <em>q</em>.</li>
+<li>(Ensure partial denominator <em>v</em>, starting from 0, is available.) If <em>v</em> + 2 is greater than or equal to the size of <em>a</em>, append <em>av</em>, 1, and 1, in that order, to the list <em>a</em>, then add 2 to <em>av</em>.</li>
+<li>(Calculate convergent <em>v</em>, starting from 0.) Append <em>a</em>[<em>n</em>+2] * <em>p</em>[<em>n</em>+1]+<em>p</em>[n] to the list <em>p</em>, and append <em>a</em>[<em>n</em>+2] * <em>q</em>[<em>n</em>+1]+<em>q</em>[<em>n</em>] to the list <em>q</em>.</li>
 <li>(Finish.) Add 1 to <em>v</em>.</li>
 </ol></li>
 <li><strong>Get the numerator for convergent <em>n</em>:</strong> Ensure <em>n</em>, then return <em>p</em>[<em>n</em>+2].</li>

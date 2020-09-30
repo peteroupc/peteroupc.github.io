@@ -72,7 +72,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
     - [**Oberhoff's "Exact Rejection Sampling" Method**](#Oberhoff_s_Exact_Rejection_Sampling_Method)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
-    - [**Simulating the Logistic Distribution**](#Simulating_the_Logistic_Distribution)
 - [**License**](#License)
 
 <a id=Notation></a>
@@ -1119,6 +1118,16 @@ def example_4_2_1(rg, bern, precision=53):
 
 Another example is a sampler for the Rayleigh distribution, given in [**another page**](https://peteroupc.github.io/uniformsum.html).
 
+A third example is the following new algorithm that generates a random number that follows the logistic distribution.
+
+1. Set _k_ to 0.
+2. Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
+3. Generate a uniform(0, 1) random number, call it _f_.
+4. (Steps 4 and 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
+5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
+6. With probability 1/2, accept _f_.  If _f_ is accepted this way,  fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
+7. Run the **algorithm for exp(&minus;_k_/1)** and **sample _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
+
 <a id=Equivalence_of_SampleGeometricBag_Algorithms></a>
 ### Equivalence of SampleGeometricBag Algorithms
 
@@ -1172,17 +1181,6 @@ It appears that the distribution's PDF will be continuous only if&mdash;
 - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
 
 It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).
-
-<a id=Simulating_the_Logistic_Distribution></a>
-### Simulating the Logistic Distribution
-
-The following algorithm generates a random number that follows the logistic distribution.
-
-1. Set _k_ to 0.
-2. With probability 1 &minus; (1+exp(_k_))/(1+exp(_k_+1)), add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
-3. Set _f_ to a uniform random number in the interval \[0, 1\].
-4. With probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.
-5. Return a number that is (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
 
 <a id=License></a>
 ## License

@@ -1035,13 +1035,14 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 
 This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(32)**](#Note32)</sup>.  In this algorithm, _k_ must be an integer 1 or greater.
 
-1. Generate a uniform(0, 1) random number, call it _ret_.
-2. If _k_ is 3 or greater, return 0 if _ret_ is greater than 38/100, or 1 if _ret_ is less than 36/100.  (This is an early return step.  If _ret_ is implemented as a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-3. Set _d_ to 2.
-4. Calculate a lower and upper bound of exp(1) (_LB_ and _UB_, respectively) in the form of rational numbers whose numerator has at most _d_ digits, using the Citterio and Pavani algorithm.  For details, see the appendix.
-5. Set _rl_ to (1+_LB_<sup>_k_</sup>) / (1+_UB_<sup>_k_ + 1</sup>), and set _ru_ to (1+_UB_<sup>_k_</sup>) / (1+_LB_<sup>_k_ + 1</sup>); both these numbers should be calculated using rational arithmetic.
-6. If _ret_ is greater than _ru_, return 0.  If _ret_ is less than _rl_, return 1.  (If _ret_ is implemented as a uniform PSRN, these comparisons should be done via **URandLessThanReal**.)
-7. Add 1 to _d_ and go to step 4.
+1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
+2. Generate a uniform(0, 1) random number, call it _ret_.
+3. If _k_ is 3 or greater, return 0 if _ret_ is greater than 38/100, or 1 if _ret_ is less than 36/100.  (This is an early return step.  If _ret_ is implemented as a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+4. Set _d_ to 2.
+5. Calculate a lower and upper bound of exp(1) (_LB_ and _UB_, respectively) in the form of rational numbers whose numerator has at most _d_ digits, using the Citterio and Pavani algorithm.  For details, see the appendix.
+6. Set _rl_ to (1+_LB_<sup>_k_</sup>) / (1+_UB_<sup>_k_ + 1</sup>), and set _ru_ to (1+_UB_<sup>_k_</sup>) / (1+_LB_<sup>_k_ + 1</sup>); both these numbers should be calculated using rational arithmetic.
+7. If _ret_ is greater than _ru_, return 0.  If _ret_ is less than _rl_, return 1.  (If _ret_ is implemented as a uniform PSRN, these comparisons should be done via **URandLessThanReal**.)
+8. Add 1 to _d_ and go to step 5.
 
 <a id=General_Algorithms></a>
 ### General Algorithms
@@ -1146,7 +1147,7 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note29>(29)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
 - <small><sup id=Note30>(30)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 - <small><sup id=Note31>(31)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
-- <small><sup id=Note32>(32)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
+- <small><sup id=Note32>(32)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
 - <small><sup id=Note33>(33)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note34>(34)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note35>(35)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
@@ -1451,8 +1452,8 @@ Define the following operations:
 
 - **Setup:** Set _p_ to the list `[0, 1]`, set _q_ to the list `[1, 0]`, set _a_ to the list `[0, 0, 2, 1]` (two zeros, followed by the integer part and the first partial denominator of the continued fraction for exp(1)), set _v_ to 0, and set _av_ to 0.
 - **Ensure _n_:** While _v_ is less than or equal to _n_:
-    1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is less than the size of _a_, append _av_, 1, and 1, in that order, to the list _a_, then add 2 to _av_.
-    2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[n\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[n\] to the list _q_.
+    1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is greater than or equal to the size of _a_, append _av_, 1, and 1, in that order, to the list _a_, then add 2 to _av_.
+    2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[n\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[_n_\] to the list _q_.
     3. (Finish.) Add 1 to _v_.
 - **Get the numerator for convergent _n_:** Ensure _n_, then return _p_\[_n_+2\].
 - **Get convergent _n_:** Ensure _n_, then return _p_\[_n_+2\]/_q_\[_n_+2\].
