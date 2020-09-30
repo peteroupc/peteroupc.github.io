@@ -1184,8 +1184,6 @@ The following algorithm generates a random number that follows the logistic dist
 4. With probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>, go to step 5.  Otherwise, go to step 3.
 5. Return a number that is (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
 
-The difficulty here is that there is no simple Bernoulli factory algorithm to simulate (1+exp(_k_))/(1+exp(_k_+1)), in step 2.
-
 <a id=License></a>
 ## License
 
