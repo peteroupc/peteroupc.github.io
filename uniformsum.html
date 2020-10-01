@@ -20,6 +20,7 @@
 <li><a href="#Sum_of_Two_Uniform_Random_Numbers"><strong>Sum of Two Uniform Random Numbers</strong></a></li>
 <li><a href="#Sum_of_Three_Uniform_Random_Numbers"><strong>Sum of Three Uniform Random Numbers</strong></a></li>
 <li><a href="#Ratio_of_Two_Uniform_Random_Numbers"><strong>Ratio of Two Uniform Random Numbers</strong></a></li>
+<li><a href="#Reciprocal_of_Uniform_Random_Number"><strong>Reciprocal of Uniform Random Number</strong></a></li>
 <li><a href="#Addition_and_Subtraction_of_Two_PSRNs"><strong>Addition and Subtraction of Two PSRNs</strong></a></li>
 <li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -433,6 +434,19 @@ def ratio_of_uniform(bern):
             numerator_div(bern,1,intpart,bag)==1:
              return intpart + bern.fill_geometric_bag(bag)
 </pre>
+
+<p><a id=Reciprocal_of_Uniform_Random_Number></a></p>
+
+<h2>Reciprocal of Uniform Random Number</h2>
+
+<p>The reciprocal of a uniform random number has the PDF&mdash;</p>
+
+<ul>
+<li>1 / <em>x</em><sup>2</sup> if <em>x</em> &gt; 1, and</li>
+<li>0 otherwise.</li>
+</ul>
+
+<p>The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random numbers, except step 1 is omitted.</p>
 
 <p><a id=Addition_and_Subtraction_of_Two_PSRNs></a></p>
 

@@ -15,6 +15,7 @@ The algorithms on this page work no matter what base the digits of the partially
 - [**Sum of Two Uniform Random Numbers**](#Sum_of_Two_Uniform_Random_Numbers)
 - [**Sum of Three Uniform Random Numbers**](#Sum_of_Three_Uniform_Random_Numbers)
 - [**Ratio of Two Uniform Random Numbers**](#Ratio_of_Two_Uniform_Random_Numbers)
+- [**Reciprocal of Uniform Random Number**](#Reciprocal_of_Uniform_Random_Number)
 - [**Addition and Subtraction of Two PSRNs**](#Addition_and_Subtraction_of_Two_PSRNs)
 - [**Rayleigh Distribution**](#Rayleigh_Distribution)
 - [**Notes**](#Notes)
@@ -342,6 +343,16 @@ def ratio_of_uniform(bern):
             numerator_div(bern,1,intpart,bag)==1:
              return intpart + bern.fill_geometric_bag(bag)
 ```
+
+<a id=Reciprocal_of_Uniform_Random_Number></a>
+## Reciprocal of Uniform Random Number
+
+The reciprocal of a uniform random number has the PDF&mdash;
+
+- 1 / _x_<sup>2</sup> if _x_ > 1, and
+- 0 otherwise.
+
+The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random numbers, except step 1 is omitted.
 
 <a id=Addition_and_Subtraction_of_Two_PSRNs></a>
 ## Addition and Subtraction of Two PSRNs

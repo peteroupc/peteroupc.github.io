@@ -1454,7 +1454,7 @@ Define the following operations:
 - **Ensure _n_:** While _v_ is less than or equal to _n_:
     1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is greater than or equal to the size of _a_, append _av_, 1, and 1, in that order, to the list _a_, then add 2 to _av_.
     2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[n\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[_n_\] to the list _q_.
-    3. (Finish.) Add 1 to _v_.
+    3. Add 1 to _v_.
 - **Get the numerator for convergent _n_:** Ensure _n_, then return _p_\[_n_+2\].
 - **Get convergent _n_:** Ensure _n_, then return _p_\[_n_+2\]/_q_\[_n_+2\].
 - **Get semiconvergent _n_ given _d_:**
