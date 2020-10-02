@@ -143,16 +143,16 @@ In the following algorithms:
 - &lambda; is the unknown probability of heads of the input coin.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or
-    - by generating `RNDEXCRANGE(0, 1)` or `RNDINT(1000)` (less accurate).
+    - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
-    - by generating `-ln(1/RNDEXCRANGE(0, 1))` (less accurate).
+    - by generating `-ln(1/RNDRANGEMinExc(0, 1))` (less accurate).
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
-    - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 0. (Most accurate.)  For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
+    - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. (Most accurate.)  For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).
     - Generate a uniform random number _v_. The event occurs if _v_ is less than _x_.  (Less accurate.)
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce rounding error.
 
@@ -1033,7 +1033,7 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 <a id=1_exp__k__1_exp__k__1></a>
 #### (1 + exp(_k_)) / (1 + exp(_k_ + 1))
 
-This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(32)**](#Note32)</sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup>[**(6)**](#Note6)</sup> in this algorithm.  In this algorithm, _k_ must be an integer 1 or greater.
+This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(32)**](#Note32)</sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup>[**(6)**](#Note6)</sup> in this algorithm.  In this algorithm, _k_ must be an integer 0 or greater.
 
 1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
 2. Generate a uniform(0, 1) random number, call it _ret_.
@@ -1450,16 +1450,16 @@ The following implements the parts of Citterio and Pavani's algorithm (2016)<sup
 
 Define the following operations:
 
-- **Setup:** Set _p_ to the list `[0, 1]`, set _q_ to the list `[1, 0]`, set _a_ to the list `[0, 0, 2, 1]` (two zeros, followed by the integer part and the first partial denominator of the continued fraction for exp(1)), set _v_ to 0, and set _av_ to 0.
+- **Setup:** Set _p_ to the list `[0, 1]`, set _q_ to the list `[1, 0]`, set _a_ to the list `[0, 0, 2]` (two zeros, followed by the integer part and the first partial denominator of the continued fraction for exp(1)), set _v_ to 0, and set _av_ to 0.
 - **Ensure _n_:** While _v_ is less than or equal to _n_:
-    1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is greater than or equal to the size of _a_, append _av_, 1, and 1, in that order, to the list _a_, then add 2 to _av_.
-    2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[n\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[_n_\] to the list _q_.
+    1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is greater than or equal to the size of _a_, append 1, _av_, and 1, in that order, to the list _a_, then add 2 to _av_.
+    2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[n\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[_n_\] to the list _q_. (Positions in lists start at 0.  For example, _p_\[0\] means the first item in _p_; _p_\[1\] means the second; and so on.)
     3. Add 1 to _v_.
 - **Get the numerator for convergent _n_:** Ensure _n_, then return _p_\[_n_+2\].
 - **Get convergent _n_:** Ensure _n_, then return _p_\[_n_+2\]/_q_\[_n_+2\].
 - **Get semiconvergent _n_ given _d_:**
-    - Ensure _n_, then set _m_ to floor(((10<sup>_d_</sup>)&minus;1&minus;_p_\[_n_+1\])/_p_[_n_+2]).
-    - Return (_p_\[_n_+2\] \* _m_ +_p_[_n_+1]) / (_q_\[_n_+2\] \* _m_ +_q_[_n_+1]).
+    1. Ensure _n_, then set _m_ to floor(((10<sup>_d_</sup>)&minus;1&minus;_p_\[_n_+1\])/_p_[_n_+2]).
+    2. Return (_p_\[_n_+2\] \* _m_ +_p_[_n_+1]) / (_q_\[_n_+2\] \* _m_ +_q_[_n_+1]).
 
 Then the algorithm to calculate lower and upper bounds for exp(1), given _d_, is as follows:
 

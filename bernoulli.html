@@ -178,13 +178,13 @@
 
 <ul>
 <li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or</li>
-<li>by generating <code>RNDEXCRANGE(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
+<li>by generating <code>RNDRANGEMaxExc(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
 </ul></li>
 <li>The instruction to &quot;generate an exponential random number&quot; can be implemented&mdash;
 
 <ul>
 <li>by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>exponential PSRN</strong></a> (most accurate), or</li>
-<li>by generating <code>-ln(1/RNDEXCRANGE(0, 1))</code> (less accurate).</li>
+<li>by generating <code>-ln(1/RNDRANGEMinExc(0, 1))</code> (less accurate).</li>
 </ul></li>
 <li>To <strong>sample from a random number <em>u</em></strong> means to generate a number that is 1 with probability <em>u</em> and 0 otherwise.
 
@@ -196,7 +196,7 @@
 <li>Where a step in the algorithm says &quot;with probability <em>x</em>&quot; to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
 
 <ul>
-<li>Convert <em>x</em> to a rational number <em>y</em>/<em>z</em>, then call <code>ZeroOrOne(y, z)</code>.  The event occurs if the call returns 0. (Most accurate.)  For example, if an instruction says &quot;With probability 3/5, return 1&quot;, then implement it as &quot;Call <code>ZeroOrOne(3, 5)</code>. If the call returns 1, return 1.&quot;  <code>ZeroOrOne</code> is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.</li>
+<li>Convert <em>x</em> to a rational number <em>y</em>/<em>z</em>, then call <code>ZeroOrOne(y, z)</code>.  The event occurs if the call returns 1. (Most accurate.)  For example, if an instruction says &quot;With probability 3/5, return 1&quot;, then implement it as &quot;Call <code>ZeroOrOne(3, 5)</code>. If the call returns 1, return 1.&quot;  <code>ZeroOrOne</code> is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>.</li>
 <li>Generate a uniform random number <em>v</em>. The event occurs if <em>v</em> is less than <em>x</em>.  (Less accurate.)</li>
 </ul></li>
 <li>For best results, the algorithms should be implemented using exact rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby).  Floating-point arithmetic is discouraged because it can introduce rounding error.</li>
@@ -1354,7 +1354,7 @@
 
 <h4>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</h4>
 
-<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup><a href="#Note6"><strong>(6)</strong></a></sup> in this algorithm.  In this algorithm, <em>k</em> must be an integer 1 or greater.</p>
+<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup><a href="#Note6"><strong>(6)</strong></a></sup> in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
 
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
@@ -1872,22 +1872,22 @@ def valid_perm(f, x, n):
 <p>Define the following operations:</p>
 
 <ul>
-<li><strong>Setup:</strong> Set <em>p</em> to the list <code>[0, 1]</code>, set <em>q</em> to the list <code>[1, 0]</code>, set <em>a</em> to the list <code>[0, 0, 2, 1]</code> (two zeros, followed by the integer part and the first partial denominator of the continued fraction for exp(1)), set <em>v</em> to 0, and set <em>av</em> to 0.</li>
+<li><strong>Setup:</strong> Set <em>p</em> to the list <code>[0, 1]</code>, set <em>q</em> to the list <code>[1, 0]</code>, set <em>a</em> to the list <code>[0, 0, 2]</code> (two zeros, followed by the integer part and the first partial denominator of the continued fraction for exp(1)), set <em>v</em> to 0, and set <em>av</em> to 0.</li>
 <li><strong>Ensure <em>n</em>:</strong> While <em>v</em> is less than or equal to <em>n</em>:
 
 <ol>
-<li>(Ensure partial denominator <em>v</em>, starting from 0, is available.) If <em>v</em> + 2 is greater than or equal to the size of <em>a</em>, append <em>av</em>, 1, and 1, in that order, to the list <em>a</em>, then add 2 to <em>av</em>.</li>
-<li>(Calculate convergent <em>v</em>, starting from 0.) Append <em>a</em>[<em>n</em>+2] * <em>p</em>[<em>n</em>+1]+<em>p</em>[n] to the list <em>p</em>, and append <em>a</em>[<em>n</em>+2] * <em>q</em>[<em>n</em>+1]+<em>q</em>[<em>n</em>] to the list <em>q</em>.</li>
+<li>(Ensure partial denominator <em>v</em>, starting from 0, is available.) If <em>v</em> + 2 is greater than or equal to the size of <em>a</em>, append 1, <em>av</em>, and 1, in that order, to the list <em>a</em>, then add 2 to <em>av</em>.</li>
+<li>(Calculate convergent <em>v</em>, starting from 0.) Append <em>a</em>[<em>n</em>+2] * <em>p</em>[<em>n</em>+1]+<em>p</em>[n] to the list <em>p</em>, and append <em>a</em>[<em>n</em>+2] * <em>q</em>[<em>n</em>+1]+<em>q</em>[<em>n</em>] to the list <em>q</em>. (Positions in lists start at 0.  For example, <em>p</em>[0] means the first item in <em>p</em>; <em>p</em>[1] means the second; and so on.)</li>
 <li>Add 1 to <em>v</em>.</li>
 </ol></li>
 <li><strong>Get the numerator for convergent <em>n</em>:</strong> Ensure <em>n</em>, then return <em>p</em>[<em>n</em>+2].</li>
 <li><strong>Get convergent <em>n</em>:</strong> Ensure <em>n</em>, then return <em>p</em>[<em>n</em>+2]/<em>q</em>[<em>n</em>+2].</li>
 <li><strong>Get semiconvergent <em>n</em> given <em>d</em>:</strong>
 
-<ul>
+<ol>
 <li>Ensure <em>n</em>, then set <em>m</em> to floor(((10<sup><em>d</em></sup>)&minus;1&minus;<em>p</em>[<em>n</em>+1])/<em>p</em>[<em>n</em>+2]).</li>
 <li>Return (<em>p</em>[<em>n</em>+2] * <em>m</em> +<em>p</em>[<em>n</em>+1]) / (<em>q</em>[<em>n</em>+2] * <em>m</em> +<em>q</em>[<em>n</em>+1]).</li>
-</ul></li>
+</ol></li>
 </ul>
 
 <p>Then the algorithm to calculate lower and upper bounds for exp(1), given <em>d</em>, is as follows:</p>
