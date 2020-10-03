@@ -19,6 +19,7 @@ Open-source articles on programming subjects.
 * [How to Sample Unbounded Monotone Density Functions](./unbounded.html)
 * [Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers](./uniformsum.html)
 * [Bernoulli Factory Algorithms](./bernoulli.html)
+* [More Algorithms for Arbitrary-Precision Sampling](./morealg.html)
 * [Testing PRNGs for High-Quality Randomness](./randomtest.html)
 * [Examples of High-Quality PRNGs](./hqprng.html)
 * [Notes on Calculating Jump Parameters for Some PRNGs](./jump.html)

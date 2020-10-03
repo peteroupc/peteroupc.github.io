@@ -1091,7 +1091,7 @@ I have found that it's possible to simulate the following integral, namely&mdash
 where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
 
 - Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random number _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
-- Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) return the result."
+- Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) and return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
 <a id=Requests_and_Open_Questions></a>
