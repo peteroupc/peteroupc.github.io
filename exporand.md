@@ -280,7 +280,11 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 8. If that digit is greater, then discard **a**, then create a new empty uniform PSRN **a**, then go to step 2.
 9. Add 1 to _i_ and go to step 5.
 
-Karney (2014, end of sec. 4)<sup>[**(1)**](#Note1)</sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.
+> **Notes:**
+>
+> 1. Karney (2014, end of sec. 4)<sup>[**(1)**](#Note1)</sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.
+> 2. The **RandUniform** algorithm is equivalent to generating the product of a random number (**b**) with a uniform(0, 1) random number.
+> 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform(0, 1) random numbers.
 
 The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
@@ -1126,7 +1130,7 @@ A third example is the following new algorithm that generates a random number th
 4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
 5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
 6. With probability 1/2, accept _f_.  If _f_ is accepted this way,  fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return (_f_ + _k_) with probability 1/2, and &minus;(_f_ + _k_) otherwise.
-7. Run the **algorithm for exp(&minus;_k_/1)** and **sample _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
+7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Equivalence_of_SampleGeometricBag_Algorithms></a>
 ### Equivalence of SampleGeometricBag Algorithms

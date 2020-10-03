@@ -376,7 +376,15 @@
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
-<p>Karney (2014, end of sec. 4)<sup><a href="#Note1"><strong>(1)</strong></a></sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.</p>
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Karney (2014, end of sec. 4)<sup><a href="#Note1"><strong>(1)</strong></a></sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.</li>
+<li>The <strong>RandUniform</strong> algorithm is equivalent to generating the product of a random number (<strong>b</strong>) with a uniform(0, 1) random number.</li>
+<li>If <strong>b</strong> is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the <strong>RandUniform</strong> algorithm is equivalent to generating the product of two uniform(0, 1) random numbers.</li>
+</ol>
+</blockquote>
 
 <p>The <strong>RandUniformFromReal</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than a real number <strong>b</strong> almost surely.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
@@ -1517,7 +1525,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) With probability 1/2, go to step 3.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
 <li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way,  fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return (<em>f</em> + <em>k</em>) with probability 1/2, and &minus;(<em>f</em> + <em>k</em>) otherwise.</li>
-<li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
 </ol>
 
 <p><a id=Equivalence_of_SampleGeometricBag_Algorithms></a></p>

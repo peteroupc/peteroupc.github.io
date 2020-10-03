@@ -347,7 +347,7 @@ def ratio_of_uniform(bern):
 <a id=Reciprocal_of_Uniform_Random_Number></a>
 ## Reciprocal of Uniform Random Number
 
-The reciprocal of a uniform random number has the PDF&mdash;
+The reciprocal of a uniform(0, 1) random number has the PDF&mdash;
 
 - 1 / _x_<sup>2</sup> if _x_ > 1, and
 - 0 otherwise.
