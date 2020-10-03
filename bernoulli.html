@@ -927,26 +927,27 @@
 <p>An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two &quot;letters&quot;.  For example, in the case of <em>ternary stochastic grammars</em>, the alphabet size is 3 and &beta; is 3 in the algorithm above.  In general, for <em>&beta;-ary stochastic grammars</em>, the alphabet size is &beta;, which can be any integer 2 or greater.</p>
 
 <blockquote>
-<p><strong>Examples:</strong> The following are examples from the Flajolet paper.</p>
+<p><strong>Examples:</strong></p>
 
 <ol>
-<li>A <em>g</em>-letter binary word can be &quot;parsed&quot; as follows to determine whether that word encodes a ternary tree: &quot;3. If <em>g</em> is 0, return 0.  Otherwise, set <em>i</em> to 1 and <em>d</em> to 1.; 3a. Generate an unbiased random bit, then subtract 1 from <em>d</em> if that bit is 0, or add 2 to <em>d</em> otherwise.; 3b. Add 1 to <em>i</em>. Then, if <em>i</em> &lt; <em>g</em> and <em>d</em> &gt; 0, go to step 3a.; 3c. Return 1 if <em>d</em> is 0 and <em>i</em> is <em>g</em>, or 0 otherwise.&quot;</li>
-<li><p>If W(<em>g</em>), the number of valid <em>g</em>-letter words, has the form&mdash;</p>
+<li>The following is an example from the Flajolet paper. A <em>g</em>-letter binary word can be &quot;parsed&quot; as follows to determine whether that word encodes a ternary tree: &quot;3. If <em>g</em> is 0, return 0.  Otherwise, set <em>i</em> to 1 and <em>d</em> to 1.; 3a. Generate an unbiased random bit, then subtract 1 from <em>d</em> if that bit is 0, or add 2 to <em>d</em> otherwise.; 3b. Add 1 to <em>i</em>. Then, if <em>i</em> &lt; <em>g</em> and <em>d</em> &gt; 0, go to step 3a.; 3c. Return 1 if <em>d</em> is 0 and <em>i</em> is <em>g</em>, or 0 otherwise.&quot;</li>
+<li><p>Another example from the Flajolet paper: If W(<em>g</em>), the number of valid <em>g</em>-letter words, has the form&mdash;</p>
 
 <ul>
-<li>choose(<em>g</em>, <em>g</em>/<em>t</em>) * (&beta;&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup> if <em>g</em> is divisible by <em>t</em>, and</li>
+<li>choose(<em>g</em>, <em>g</em>/<em>t</em>) * (&beta;&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup> (the number of <em>g</em>-letter words with exactly <em>g</em>/<em>t</em> A&#39;s, for an alphabet size of &beta;) if <em>g</em> is divisible by <em>t</em>, and</li>
 <li>0 otherwise,</li>
 </ul>
 
 <p>where <em>t</em> is 2 or greater, step 3 of the algorithm can be done as follows: &quot;3. If <em>g</em> is not divisible by <em>t</em>, return 0. Otherwise, generate <em>g</em> uniform random integers in the interval [0, &beta;) (e.g., <em>g</em> unbiased random bits if &beta; is 2), then return 1 if exactly <em>g</em>/<em>t</em> zeros were generated this way, or 0 otherwise.&quot;</p></li>
-</ol>
-
-<p><strong>Note:</strong> The <em>square-root construction</em> sqrt(1 &minus; &lambda;) (mentioned in the Flajolet paper) can be expressed as a special case of a slightly different formula from the one given here, namely&mdash;<br/>&nbsp;&nbsp;&Sigma;<sub><em>k</em> = 0, 1, 2, ...</sub> (&lambda;<sup><em>k</em></sup> * (1 &minus; &lambda;) * choose(<em>k</em> * &alpha;, <em>k</em>) * (&beta;&minus;1)<sup><em>k</em>*&alpha; &minus; <em>k</em></sup> / &beta;<sup><em>k</em> * &alpha;</sup>).<br/>The square-root construction occurs if &alpha; = 2 and &beta; = 2.  Thus, the following replaces step 3 of the algorithm: &quot;3. Generate <em>g</em> * &alpha; uniform random integers in the interval [0, &beta;) (e.g., <em>g</em> unbiased random bits if &beta; is 2), then return 1 if exactly <em>g</em> zeros were generated this way, or 0 otherwise.&quot; If &beta; is 2 and &alpha; is 1, this formula simplifies to (2*&lambda;&minus;2)/(&lambda;&minus;2). Interestingly, I have found that if &alpha; is an integer 2 or greater, the formula simplifies to involve hypergeometric functions.  Specifically, the formula becomes&mdash;</p>
+<li><p>If W(<em>g</em>) has the form&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;choose(<em>g</em> * &alpha;, <em>g</em>) * (&beta;&minus;1)<sup><em>g</em>*&alpha; &minus; <em>g</em></sup> / &beta;<sup><em>g</em> * (&alpha;&minus;1)</sup>,<br/>where &alpha; is an integer 1 or greater, and &beta; is the alphabet size, then the following replaces step 3 of the algorithm: &quot;3. Generate <em>g</em> * &alpha; uniform random integers in the interval [0, &beta;) (e.g., <em>g</em> unbiased random bits if &beta; is 2), then return 1 if exactly <em>g</em> zeros were generated this way, or 0 otherwise.&quot;  If &alpha; = 2 and &beta; = 2, then this expresses the <em>square root construction</em> sqrt(1 &minus; &lambda;), mentioned in the Flajolet paper.  If &beta; is 2 and &alpha; is 1, the modified algorithm simulates the following probability: (2*&lambda;&minus;2)/(&lambda;&minus;2).  And interestingly, I have found that if &alpha; is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, the probability becomes&mdash;</p>
 
 <ul>
 <li>(1 &minus; &lambda;) * <sub>&alpha;&minus;1</sub><em>F</em><sub>&alpha;&minus;2</sub>(1/&alpha;, 2/&alpha;, ..., (&alpha;&minus;1)/&alpha;; 1/(&alpha;&minus;1), ..., (&alpha;&minus;2)/(&alpha;&minus;1); &lambda; * &alpha;<sup>&alpha;</sup>/((&alpha;&minus;1)<sup>&alpha;&minus;1</sup> * 2<sup>&alpha;</sup>)) if &beta; = 2, or more generally,</li>
 <li>(1 &minus; &lambda;) * <sub>&alpha;&minus;1</sub><em>F</em><sub>&alpha;&minus;2</sub>(1/&alpha;, 2/&alpha;, ..., (&alpha;&minus;1)/&alpha;; 1/(&alpha;&minus;1), ..., (&alpha;&minus;2)/(&alpha;&minus;1); &lambda;*&alpha;<sup>&alpha;</sup>*(&beta;&minus;1)<sup>&alpha;&minus;1</sup>/((&alpha;&minus;1)<sup>&alpha;&minus;1</sup> * &beta;<sup>&alpha;</sup>)).</li>
 </ul>
+
+<p>The ordinary generating function for this modified algorithm is thus&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;OGF(<em>z</em>) = <sub>&alpha;&minus;1</sub><em>F</em><sub>&alpha;&minus;2</sub>(1/&alpha;, 2/&alpha;, ..., (&alpha;&minus;1)/&alpha;; 1/(&alpha;&minus;1), ..., (&alpha;&minus;2)/(&alpha;&minus;1); <em>z</em>*&alpha;<sup>&alpha;</sup>*(&beta;&minus;1)<sup>&alpha;&minus;1</sup>/((&alpha;&minus;1)<sup>&alpha;&minus;1</sup> * &beta;<sup>&alpha;&minus;1</sup>)).</p></li>
+</ol>
 </blockquote>
 
 <p><a id=Expressions_Involving_Polylogarithms></a></p>
