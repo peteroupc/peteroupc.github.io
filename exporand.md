@@ -283,7 +283,7 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 > **Notes:**
 >
 > 1. Karney (2014, end of sec. 4)<sup>[**(1)**](#Note1)</sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.
-> 2. The **RandUniform** algorithm is equivalent to generating the product of a random number (**b**) with a uniform(0, 1) random number.
+> 2. The **RandUniform** algorithm is equivalent to generating the product of a random number (**b**) and a uniform(0, 1) random number.
 > 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform(0, 1) random numbers.
 
 The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
