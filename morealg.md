@@ -7,12 +7,14 @@ This page contains additional algorithms for arbitrary-precision random sampling
 * [**Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
 
+<a id=Bernoulli_Factories_and_Irrational_Number_Simulation></a>
 ## Bernoulli Factories and Irrational Number Simulation
 &nbsp;
 
+<a id=Certain_Numbers_Based_on_the_Golden_Ratio></a>
 ### Certain Numbers Based on the Golden Ratio
 
-The following algorithm given by Fishman and Miller <<2013|Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).>> finds the continued fraction expansion of certain numbers described as&mdash;
+The following algorithm given by Fishman and Miller (2013)<sup>[**(1)**](#Note1)</sup> finds the continued fraction expansion of certain numbers described as&mdash;
 
 - _G_(_m_, _&#x2113;_) = (_m_ + sqrt(_m_<sup>2</sup> + 4 * _&#x2113;_))/2<br>&nbsp;&nbsp;&nbsp;&nbsp;or (_m_ &minus; sqrt(_m_<sup>2</sup> + 4 * _&#x2113;_))/2,
 
@@ -40,6 +42,7 @@ An application of the continued fraction algorithm is the following algorithm th
 2. With probability _kp_/(1 + _kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the algorithm returns 1, return 0.  Otherwise, go to step 2.
 
+<a id=Arbitrary_Precision_Samplers></a>
 ## Arbitrary-Precision Samplers
 
 <a id=Rayleigh_Distribution></a>
@@ -76,6 +79,15 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
 
+<a id=Sum_of_Exponential_Random_Numbers></a>
+### Sum of Exponential Random Numbers
+
+An arbitrary-precision sampler for the sum of _n_ exponential random numbers (also known as the Erlang(_n_) or gamma(_n_) distribution is doable via partially-sampled uniform random numbers, though it is obviously inefficient for a large value of _n_.
+
+1. Generate _n_ uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney's improvement to that algorithm (Karney 2014)<sup>[**(2)**](#Note2)</sup>).  This algorithm won't work for exponential PSRNs (e-rands), described in my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
+2. Generate the sum of the random numbers generated in step 1 by applying the [**algorithm to add two PSRNs**](https://peteroupc.github.io/uniformsum.html#Addition_and_Subtraction_of_Two_PSRNs) given in another document.
+
+<a id=Mixtures></a>
 ### Mixtures
 
 A _mixture_ involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:
@@ -85,6 +97,12 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 - For each distribution, an arbitrary-precision sampler exists.
 
 One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details).
+
+<a id=Notes></a>
+## Notes
+
+- <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
+- <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[Sampling exactly from the normal distribution](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>
 ## License

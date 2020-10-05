@@ -1,0 +1,181 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:type" content="article"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1>More Algorithms for Arbitrary-Precision Sampling</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p>This page contains additional algorithms for arbitrary-precision random sampling (sampling that does not rely on floating-point arithmetic).  They may depend on algorithms given in the following pages:</p>
+
+<ul>
+<li><a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions</strong></a></li>
+<li><a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a></li>
+</ul>
+
+<p><a id=Bernoulli_Factories_and_Irrational_Number_Simulation></a></p>
+
+<h2>Bernoulli Factories and Irrational Number Simulation</h2>
+
+<p>&nbsp;</p>
+
+<p><a id=Certain_Numbers_Based_on_the_Golden_Ratio></a></p>
+
+<h3>Certain Numbers Based on the Golden Ratio</h3>
+
+<p>The following algorithm given by Fishman and Miller (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup> finds the continued fraction expansion of certain numbers described as&mdash;</p>
+
+<ul>
+<li><em>G</em>(<em>m</em>, <em>&#x2113;</em>) = (<em>m</em> + sqrt(<em>m</em><sup>2</sup> + 4 * <em>&#x2113;</em>))/2<br>&nbsp;&nbsp;&nbsp;&nbsp;or (<em>m</em> &minus; sqrt(<em>m</em><sup>2</sup> + 4 * <em>&#x2113;</em>))/2,</li>
+</ul>
+
+<p>whichever results in a real number greater than 1, where <em>m</em> is a positive integer and <em>&#x2113;</em> is either 1 or &minus;1.  In this case, <em>G</em>(1, 1) is the golden ratio.</p>
+
+<p>First, define the following operations:</p>
+
+<ul>
+<li><strong>Get the previous and next Fibonacci-based number given <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong>:
+
+<ol>
+<li>If <em>k</em> is 0 or less, return an error.</li>
+<li>Set <em>g0</em> to 0, <em>g1</em> to 1, <em>x</em> to 0, and <em>y</em> to 0.</li>
+<li>Do the following <em>k</em> times: Set <em>y</em> to <em>m</em> * <em>g1</em> + <em>&#x2113;</em> * <em>g0</em>, then set <em>x</em> to <em>g0</em>, then set <em>g0</em> to <em>g1</em>, then set <em>g1</em> to <em>y</em>.</li>
+<li>Return <em>x</em> and <em>y</em>, in that order.</li>
+</ol></li>
+<li><strong>Get the partial denominator given <em>pos</em>, <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong> (this partial denominator is part of the continued fraction expansion found by Fishman and Miller):
+
+<ol>
+<li><strong>Get the previous and next Fibonacci-based number given <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong>, call them <em>p</em> and <em>n</em>, respectively.</li>
+<li>If <em>&#x2113;</em> is 1 and <em>k</em> is odd, return <em>p</em> + <em>n</em>.</li>
+<li>If <em>&#x2113;</em> is &minus;1 and <em>pos</em> is 0, return <em>n</em> &minus; <em>p</em> &minus; 1.</li>
+<li>If <em>&#x2113;</em> is 1 and <em>pos</em> is 0, return (<em>n</em> + <em>p</em>) &minus; 1.</li>
+<li>If <em>&#x2113;</em> is &minus;1 and <em>pos</em> is even, return <em>n</em> &minus; <em>p</em> &minus; 2. (The paper had an error here; the correction given here was verified by Miller via personal communication.)</li>
+<li>If <em>&#x2113;</em> is 1 and <em>pos</em> is even, return (<em>n</em> + <em>p</em>) &minus; 2.</li>
+<li>Return 1.</li>
+</ol></li>
+</ul>
+
+<p>An application of the continued fraction algorithm is the following algorithm that generates 1 with probability <em>G</em>(<em>m</em>, <em>&#x2113;</em>)<sup>&minus;<em>k</em></sup> and 0 otherwise, where <em>k</em> is an integer that is 1 or greater (see &quot;Continued Fractions&quot; in my page on Bernoulli factory algorithms). The algorithm starts with <em>pos</em> = 0, then the following steps are taken:</p>
+
+<ol>
+<li><strong>Get the partial denominator given <em>pos</em>, <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong>, call it <em>kp</em>.</li>
+<li>With probability <em>kp</em>/(1 + <em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
+<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the algorithm returns 1, return 0.  Otherwise, go to step 2.</li>
+</ol>
+
+<p><a id=Arbitrary_Precision_Samplers></a></p>
+
+<h2>Arbitrary-Precision Samplers</h2>
+
+<p><a id=Rayleigh_Distribution></a></p>
+
+<h3>Rayleigh Distribution</h3>
+
+<p>The following is an arbitrary-precision sampler for the Rayleigh distribution with parameter <em>s</em>, which is a rational number greater than 0.</p>
+
+<ol>
+<li>Set <em>k</em> to 0, and set <em>y</em> to 2 * <em>s</em> * <em>s</em>.</li>
+<li>With probability exp(&minus;(<em>k</em> * 2 + 1)/<em>y</em>), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.  (The probability check should be done with the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with <em>x</em>/<em>y</em> = (<em>k</em> * 2 + 1)/<em>y</em>.)</li>
+<li>(Now we sample the piece located at [<em>k</em>, <em>k</em> + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of <strong>SampleGeometricBag</strong> on that uniform PSRN.</li>
+<li>Set <em>ky</em> to <em>k</em> * <em>k</em> / <em>y</em>.</li>
+<li>(At this point, we simulate exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(&lambda;<sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the same algorithm using the same input coin, <em>x</em> = <em>k</em> * 2 / <em>y</em>, and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
+<li>If the uniform PSRN, call it <em>ret</em>, was accepted by step 5, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>k</em> + <em>ret</em>.</li>
+</ol>
+
+<p>The sub-algorithm below simulates a probability equal to (<em>U</em>+<em>k</em>)/<em>base</em><sup><em>z</em></sup>, where <em>U</em> is the number built by the uniform PSRN, <em>base</em> is the base (radix) of digits stored by that PSRN, <em>k</em> is an integer 0 or greater, and <em>z</em> is the number of significant digits in <em>k</em> (for this purpose, <em>z</em> is 0 if <em>k</em> is 0).</p>
+
+<p>For base 2:</p>
+
+<ol>
+<li> Set <em>N</em> to 0.</li>
+<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
+<li> If <em>N</em> is less than <em>z</em>, return rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>N</em></sup>, 2).  (Alternatively, shift <em>k</em> to the right, by <em>z</em> &minus; 1 &minus; <em>N</em> bits, then return <em>k</em> <em>AND</em> 1, where &quot;<em>AND</em>&quot; is a bitwise AND-operation.)</li>
+<li> Subtract <em>z</em> from <em>N</em>.  Then, if the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the capacity of the uniform PSRN&#39;s fractional part as necessary.</li>
+<li> Return the item at position <em>N</em>.</li>
+</ol>
+
+<p>For bases other than 2, such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
+
+<ol>
+<li>Set <em>i</em> to 0.</li>
+<li>If <em>i</em> is less than <em>z</em>:
+
+<ol>
+<li>Set <em>da</em> to rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>i</em></sup>, <em>base</em>), and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>If <em>i</em> is <em>z</em> or greater:
+
+<ol>
+<li>If the digit at position (<em>i</em> &minus; <em>z</em>) in the uniform PSRN&#39;s fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.).</li>
+<li>Set <em>da</em> to the item at that position, and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>Add 1 to <em>i</em> and go to step 3.</li>
+</ol>
+
+<p><a id=Sum_of_Exponential_Random_Numbers></a></p>
+
+<h3>Sum of Exponential Random Numbers</h3>
+
+<p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution is doable via partially-sampled uniform random numbers, though it is obviously inefficient for a large value of <em>n</em>.</p>
+
+<ol>
+<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/uniformsum.html#Addition_and_Subtraction_of_Two_PSRNs"><strong>algorithm to add two PSRNs</strong></a> given in another document.</li>
+</ol>
+
+<p><a id=Mixtures></a></p>
+
+<h3>Mixtures</h3>
+
+<p>A <em>mixture</em> involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:</p>
+
+<ul>
+<li>There is a finite number of distributions to choose from.</li>
+<li>The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> exists.</li>
+<li>For each distribution, an arbitrary-precision sampler exists.</li>
+</ul>
+
+<p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<ul>
+<li><small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small></li>
+<li><small><sup id=Note2>(2)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2">Sampling exactly from the normal distribution</a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+</ul>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

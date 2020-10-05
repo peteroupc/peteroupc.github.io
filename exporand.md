@@ -1033,6 +1033,7 @@ The following are some additional articles I have written on the topic of random
 * [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
 * [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
+* [**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.html)
 * [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)
 * [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.html)
 
