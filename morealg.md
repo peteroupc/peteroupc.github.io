@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-This page contains additional algorithms for arbitrary-precision random sampling.  They may depend on algorithms given in the following pages:
+This page contains additional algorithms for arbitrary-precision random sampling (sampling that does not rely on floating-point arithmetic).  They may depend on algorithms given in the following pages:
 
 * [**Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
@@ -43,6 +43,16 @@ An application of the continued fraction algorithm is the following algorithm th
 ## Arbitrary-Precision Samplers
 
 None yet.
+
+### Mixtures
+
+A _mixture_ involves sampling one of two distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions hold:
+
+- There is a finite number of distributions to choose from.
+- The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) exists.
+- For each distribution, an arbitrary-precision sampler exists.
+
+One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details.
 
 <a id=License></a>
 ## License
