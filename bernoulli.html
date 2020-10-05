@@ -254,11 +254,11 @@
 <p>The following is the general algorithm for this kind of series, called the <strong>general martingale algorithm</strong>.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.</p>
 
 <ol>
-<li>Let <em>d[0]</em>, <em>d[1]</em>, etc. be the first, second, etc. coefficients of the alternating series.  Set <em>u</em> to <em>d[0]</em>, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
+<li>Let <em>d[0]</em>, <em>d[1]</em>, etc. be the first, second, etc. coefficients of the alternating series.  Set <em>u</em> to <em>d[0]</em>, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> * <em>d[n]</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> * <em>d[n]</em>.</li>
-<li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>d[n]</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>d[n]</em>.</li>
+<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -275,11 +275,11 @@
 <p>This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is <em>uniformly fast</em>, meaning the average running time is bounded from above for all choices of <em>&lambda;</em> and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.) This algorithm is adapted from the general martingale algorithm (in &quot;Certain Power Series&quot;, above), and makes use of the fact that exp(&minus;<em>&lambda;</em>) can be rewritten as 1 &minus; <em>&lambda;</em> + <em>&lambda;</em><sup>2</sup>/2 &minus; <em>&lambda;</em><sup>3</sup>/6 + <em>&lambda;</em><sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....</p>
 
 <ol>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
+<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -293,11 +293,11 @@
 
 <ol>
 <li>Special cases: If <em>x</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>x</em>, and return the result.</li>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, and set <em>n</em> to 1.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the flip returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
+<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 </ol>
 
@@ -634,11 +634,11 @@
 <p>The algorithm to simulate cos(<em>&lambda;</em>) follows.</p>
 
 <ol>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 2.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 2.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
-<li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
+<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2 &minus; 1) * (<em>n</em> * 2), then go to step 3.</li>
 </ol>
 
@@ -652,11 +652,11 @@
 
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>l</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>l</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>l</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
-<li>If <em>ret</em> is less than <em>l</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
+<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2) * (<em>n</em> * 2 + 1), then go to step 3.</li>
 </ol>
 

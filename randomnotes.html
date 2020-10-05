@@ -692,6 +692,10 @@ END METHOD
 </tr>
 </thead><tbody>
 <tr>
+<td>Linear search with cumulative weights</td>
+<td>The <code>WeightedChoice</code> pseudocode calculates a list of cumulative weights (also known as a <em>cumulative distribution table</em> or <em>CDT</em>), then generates a random number less than the sum of (original) weights, then does a linear scan of the new list to find the highest item whose cumulative weight does not exceed the random number.</td>
+</tr>
+<tr>
 <td><em>Fast Loaded Dice Roller</em> (Saad et al., 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</td>
 <td>Uses integer weights only, and samples using random bits (&quot;fair coins&quot;). This sampler comes within 6 bits, on average, of the optimal number of bits.</td>
 </tr>
@@ -724,8 +728,8 @@ END METHOD
 <td>Parallel weighted random samplers.</td>
 </tr>
 <tr>
-<td>Two- and multi-level search; flat method (Tang 2019)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.</td>
-<td></td>
+<td>(Tang 2019)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.</td>
+<td>Presents various algorithms, including two- and multi-level search, as well as linear search (with original weights), binary search (with cumulative weights), and a new &quot;flat&quot; method.</td>
 </tr>
 <tr>
 <td>&quot;Loaded Die from Biased Coins&quot;</td>
