@@ -394,3 +394,442 @@ _RCEILING = Context(rounding=decimal.ROUND_CEILING, prec=9999999999)
 _RFLOOR = Context(rounding=decimal.ROUND_FLOOR, prec=9999999999)
 _ZERO = Interval(0)
 _ONE = Interval(1)
+
+#
+#  Implements interval numbers and interval arithmetic, backed
+#  by Fractions.  Implements the interval arithmetic in
+#  Daumas, M., Lester, D., Muñoz, C., "Verified Real Number Calculations:
+#  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
+#
+
+class FInterval:
+    """ An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
+       the lower bound. """
+
+    def __new__(cl, v, sup=None, prec=None):
+        if isinstance(v, FInterval) and sup == None:
+            return v
+        scl = super(FInterval, cl)
+        self = scl.__new__(cl)
+        if isinstance(v, Decimal) and isinstance(sup, Decimal):
+            self.sup = Fraction(sup)
+            self.inf = Fraction(v)
+            return self
+        elif isinstance(v, int) and sup == None:
+            self.sup = Fraction(v)
+            self.inf = self.sup
+            if self.inf > self.sup:
+                raise ValueError
+            return self
+        elif isinstance(v, int) and isinstance(sup, int):
+            self.sup = Fraction(sup)
+            self.inf = Fraction(v)
+            if self.inf > self.sup:
+                raise ValueError
+            return self
+        inf = v
+        sup = v if sup == None else sup
+        self.sup = Fraction(sup)
+        self.inf = Fraction(inf)
+        if self.inf > self.sup:
+            raise ValueError
+        return self
+
+    def clamp(self, a, b):
+        if a > b:
+            raise ValueError
+        newinf = max(a, self.inf)
+        newsup = min(b, self.sup)
+        if self.inf == newinf and self.sup == newsup:
+            return self
+        return FInterval(newinf, newsup)
+
+    def clampleft(self, a):
+        newinf = max(a, self.inf)
+        newsup = max(newinf, self.sup)
+        if self.inf == newinf and self.sup == newsup:
+            return self
+        return FInterval(newinf, newsup)
+
+    def __max__(a, b):
+        b = FInterval(b)
+        return FInterval(min(a.sup, b.sup), max(a.sup, b.sup))
+
+    def __min__(a, b):
+        b = FInterval(b)
+        return FInterval(min(a.inf, b.inf), max(a.inf, b.inf))
+
+    def __add__(self, v):
+        y = FInterval(y)
+        return [self.inf + y.inf, self.sup + y.sup]
+
+    def __abs__(self):
+        return self.abs()
+
+    def negate(self):
+        return FInterval(-self.sup, -self.inf)
+
+    def __neg__(self):
+        return self.negate()
+
+    def __rsub__(self, v):
+        return FInterval(v) - self
+
+    def __rmul__(self, v):
+        return FInterval(v) * self
+
+    def __radd__(self, v):
+        return FInterval(v) + self
+
+    def __rtruediv__(self, v):
+        return FInterval(v) / self
+
+    def __sub__(self, v):
+        y = FInterval(v)
+        return FInterval(self.inf - y.sup, self.sup - y.inf)
+
+    def __mul__(self, v):
+        y = FInterval(v)
+        a = self.inf * y.inf
+        b = self.inf * y.sup
+        c = self.sup * y.inf
+        d = self.sup * y.sup
+        return FInterval(min([a, b, c, d]), max([a, b, c, d]))
+
+    def __truediv__(self, v):
+        y = FInterval(v)
+        if y.inf == 0 or y.sup == 0 or (y.inf < 0) != (y.sup < 0):
+            raise ValueError("can't divide")
+        return self * FInterval(1 / Fraction(y.sup), 1 / Fraction(y.inf))
+
+    def union(v):
+        y = FInterval(v)
+        return FInterval(min(self.inf, y.inf), max(self.sup, y.sup))
+
+    def mignitude(self):
+        if self.inf < 0 and self.sup > 0:
+            return Fraction(0)
+        return min(abs(self.sup), abs(self.inf))
+
+    def magnitude(self):
+        return max(abs(self.sup), abs(self.inf))
+
+    def sqrt(self, n):
+        return self.pow(FInterval(0.5), n)
+
+    def pi(n):
+        ab = FInterval._atanbounds(1, n)
+        return FInterval(16 * ab.inf - 4 * ab.sup, 16 * ab.sup - 4 * ab.inf)
+
+    def atan(self, n):
+        return FInterval(
+            FInterval._atanbounds(self.inf, n).inf,
+            FInterval._atanbounds(self.sup, n).sup,
+        )
+
+    def sin(self, n):
+        pi = FInterval.pi(n)
+        if self.containedIn(FInterval(-pi.inf / 2, pi.inf / 2)):
+            return FInterval(
+                FInterval._sinbounds(self.inf, n).inf,
+                FInterval._sinbounds(self.sup, n).sup,
+            )
+        elif self.containedIn(FInterval(pi.sup / 2, pi.inf)):
+            return FInterval(
+                FInterval._sinbounds(self.sup, n).inf,
+                FInterval._sinbounds(self.inf, n).sup,
+            )
+        elif self.containedIn(FInterval(0, pi.inf)):
+            return FInterval(
+                min(
+                    FInterval._sinbounds(self.inf, n).inf,
+                    FInterval._sinbounds(self.sup, n).inf,
+                ),
+                1,
+            )
+        elif self.containedIn(FInterval(-pi.inf, 0)):
+            return self.negate().sin(n).negate()
+        else:
+            return FInterval(-1, 1)
+
+    def cos(self, n):
+        pi = FInterval.pi(n)
+        if self.containedIn(FInterval(0, pi.inf)):
+            return FInterval(
+                FInterval._cosbounds(self.sup, n).inf,
+                FInterval._cosbounds(self.inf, n).sup,
+            )
+        elif self.containedIn(FInterval(-pi.inf, 0)):
+            return self.negate().cos(n)
+        elif self.containedIn(FInterval(-pi.inf / 2, pi.inf / 2)):
+            return FInterval(
+                min(
+                    FInterval._cosbounds(self.inf, n).inf,
+                    FInterval._cosbounds(self.sup, n).inf,
+                ),
+                1,
+            )
+        else:
+            return FInterval(-1, 1)
+
+    def tan(self, n):
+        pi = FInterval.pi(n + 5)
+        if not self.containedIn([-pi.inf / 2, pi.inf / 2]):
+            raise ValueError
+        sl = FInterval._sinbounds(self.inf, n + 5)
+        su = FInterval._sinbounds(self.sup, n + 5)
+        cl = FInterval._cosbounds(self.inf, n + 5)
+        cu = FInterval._cosbounds(self.sup, n + 5)
+        lower = sl.inf / cl.sup
+        upper = su.sup / cl.inf
+        if lower > upper:
+            raise ValueError
+        return FInterval(lower, upper)
+
+    def isAccurateTo(self, v):
+        # If upper bound on width is less than or equal to desired accuracy
+        return (FInterval(self.sup) - FInterval(self.inf)).sup <= FInterval(v).inf
+
+    def width(self):
+        return self.sup - self.inf
+
+    def log(self, n):
+        if not self.greaterThanScalar(0):
+            raise ValueError
+        return FInterval(
+            FInterval._logbounds(self.inf, n).inf, FInterval._logbounds(self.sup, n).sup
+        )
+
+    def abs(self):
+        if (self.inf < 0) != (self.sup < 0):
+            return FInterval(0, max(abs(self.inf), abs(self.sup)))
+        else:
+            a = abs(self.inf)
+            b = abs(self.sup)
+            return FInterval(min(a, b), max(a, b))
+
+    def _fracfloor(x):
+        ix = int(x)
+        if x >= 0:
+            return ix
+        if x != ix:
+            return ix - 1
+        return ix
+
+    def _fracceil(x):
+        ix = int(x)
+        if x < 0:
+            return ix
+        if x != ix:
+            return ix + 1
+        return ix
+
+    def floor(self):
+        floorinf = FInterval._fracfloor(self.inf)
+        floorsup = FInterval._fracfloor(self.sup)
+        return FInterval(min(floorinf, floorsup), max(floorinf, floorsup))
+
+    def ceil(self):
+        cinf = FInterval._fracceil(self.inf)
+        csup = FInterval._fracceil(self.sup)
+        return FInterval(min(cinf, csup), max(cinf, csup))
+
+    def rem(self, v):
+        return self - (self / v).floor() * v
+
+    def greaterThanScalar(self, a):
+        return self.inf > a
+
+    def greaterEqualScalar(self, a):
+        return self.inf >= a
+
+    def lessThanScalar(self, a):
+        return self.sup < a
+
+    def lessEqualScalar(self, a):
+        return self.sup <= a
+
+    def containedIn(self, y):
+        return y.inf <= self.inf and self.sup <= y.sup
+
+    def pow(self, v, n):
+        y = FInterval(v)
+        if y.inf == y.sup and int(y.inf) == y.inf and y.inf >= 0 and y.inf <= 32:
+            # Special case: Integer power
+            yn = int(y.inf)
+            if yn == 0:
+                return FInterval(1, 1)
+            if yn % 2 == 1 or self.inf >= 0:
+                return FInterval(self.inf ** yn, self.sup ** yn)
+            if self.sup <= 0:
+                return FInterval(self.sup ** yn, self.inf ** yn)
+            return FInterval(0, max(self.inf ** yn, self.sup ** yn))
+        if y.inf == y.sup and y.inf == Fraction(1, 2):
+            # Square root special case
+            if not self.greaterEqualScalar(0):
+                raise ValueError
+            return FInterval(
+                FInterval._sqrtbounds(self.inf, n).inf,
+                FInterval._sqrtbounds(self.sup, n).sup,
+            )
+        return (self.log(n) * y).exp(n)
+
+    def __pow__(self, v):
+        """ For convenience only. """
+        return self.pow(v, 5)
+
+    def _logbounds(x, n):
+        x = Fraction(x)
+        if x == 0:
+            raise ValueError
+        if x == 1:
+            return FInterval(0)
+        if x > 1 and x <= 2:
+            ret = Fraction(0)
+            for i in range(1, 2 * n + 1):
+                ret += (-1) ** (i + 1) * (x - 1) ** i / i
+            m = 2 * n + 1
+            upper = ret + (-1) ** (m + 1) * (x - 1) ** m / m
+            if ret > upper:
+                raise ValueError
+            return FInterval(ret, upper)
+        if x < 1:
+            lb = FInterval._logbounds(1 / x, n)
+            # NOTE: Correcting an error in arXiv version
+            # of the paper
+            lower = -lb.sup
+            upper = -lb.inf
+            if lower > upper:
+                raise ValueError
+            return FInterval(lower, upper)
+        # now, x>2
+        m = 0
+        while x > 2:
+            m += 1
+            x /= 2
+        l2 = FInterval._logbounds(2, n)
+        ly = FInterval._logbounds(x, n)
+        lower = m * l2.inf + ly.inf
+        upper = m * l2.sup + ly.sup
+        if lower > upper:
+            raise ValueError
+        return FInterval(lower, upper)
+
+    def _expbounds(x, n):
+        x = Fraction(x)
+        if x == 0:
+            return FInterval(1)
+        if x >= -1 and x < 0:
+            ret = Fraction(0)
+            fac = 1
+            for i in range(0, 2 * (n + 1) + 1):
+                ret += x ** i / fac
+                fac *= i + 1
+            m = 2 * (n + 1) + 1
+            bound = ret + x ** m / fac
+            if bound > ret:
+                raise ValueError
+            return FInterval(bound, ret)
+        if x < 1:
+            negfloor = -FInterval._fracfloor(x)
+            ex = FInterval._expbounds(x / negfloor, n)
+            lower = ex.inf ** negfloor
+            upper = ex.sup ** negfloor
+            if lower > upper:
+                raise ValueError
+            return FInterval(lower, upper)
+        else:
+            ex = FInterval._expbounds(-x, n)
+            lower = 1 / ex.sup
+            upper = 1 / ex.inf
+            if lower > upper:
+                raise ValueError
+            return FInterval(lower, upper)
+
+    def _sinbounds(x, n):
+        x = Fraction(x)
+        m = 2 * n if x < 0 else 2 * n + 1
+        ret = Fraction(0)
+        fac = 1
+        for i in range(1, m + 1):
+            ret += (-1) ** (i - 1) * x ** (2 * i - 1) / fac
+            fac *= 2 * i
+            fac *= 2 * i + 1
+        upbound = ret + (-1) ** (m + 1) * x ** (2 * (m + 1) - 1) / fac
+        if ret > upbound:
+            raise ValueError
+        return FInterval(ret, upbound)
+
+    def _cosbounds(x, n):
+        x = Fraction(x)
+        m = 2 * n if x < 0 else 2 * n + 1
+        ret = Fraction(0)
+        fac = 2
+        for i in range(1, m + 1):
+            ret += (-1) ** (i) * x ** (2 * i) / fac
+            fac *= 2 * i + 1
+            fac *= 2 * i + 2
+        upbound = ret + (-1) ** (m) * x ** (2 * (m)) / fac
+        if upbound > ret:
+            raise ValueError
+        return FInterval(1 + upbound, 1 + ret)
+
+    def _sqrtbounds(x, n):
+        x = Fraction(x)
+        upper = x / (x + 1)
+        for i in range(1, n):
+            upper = (upper + x / upper) / 2
+        lower = x / upper
+        if lower > upper:
+            raise ValueError
+        return FInterval(lower, upper)
+
+    def _atanbounds(x, n):
+        x = Fraction(x)
+        if x == 0:
+            return FInterval(0, 0)
+        if x == 1:
+            a1 = FInterval._atanbounds(Fraction(1, 5), n)
+            a2 = FInterval._atanbounds(Fraction(1, 239), n)
+            a3 = [
+                4 * a1.inf - a2.inf,
+                4 * a1.inf - a2.sup,
+                4 * a1.sup - a2.inf,
+                4 * a1.sup - a2.sup,
+            ]
+            # print(a3)
+            return FInterval(min(a3), max(a3))
+        if x > 0 and x < 1:
+            ret = Fraction(0)
+            # NOTE: Another error corrected in arXiv version
+            # of the paper: The series starts at i=0, not i=1
+            for i in range(0, 2 * n + 1):
+                ret += (-1) ** i * x ** (2 * i + 1) / (2 * i + 1)
+                # print("ret %f" % (ret))
+            m = 2 * n + 1
+            bound = ret + (-1) ** (m) * x ** (2 * m + 1) / (2 * m + 1)
+            # print("x %f, ret=%f, bound=%f" % (float(x),float(ret),float(bound)))
+            if ret < bound:
+                raise ValueError
+            return FInterval(bound, ret)
+        if x > 1:
+            pi = FInterval.pi(n)
+            at = FInterval._atanbounds(1 / x, n)
+            low = pi.inf / 2 - at.sup
+            high = pi.sup / 2 - at.inf
+            if low > high:
+                raise ValueError
+            return FInterval(low, high)
+        else:
+            at = FInterval._atanbounds(-x, n)
+            if -at.sup > -at.inf:
+                raise ValueError
+            return FInterval(-at.sup, -at.inf)
+
+    def exp(self, n):
+        return FInterval(
+            FInterval._expbounds(self.inf, n).inf, FInterval._expbounds(self.sup, n).sup
+        )
+
+    def __repr__(self):
+        return "[%s, %s]" % (float(self.inf), float(self.sup))

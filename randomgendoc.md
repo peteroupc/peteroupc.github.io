@@ -2163,7 +2163,111 @@ DESCRIPTION
 
 CLASSES
     builtins.object
+        FInterval
         Interval
+
+    class FInterval(builtins.object)
+     |  An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
+     |  the lower bound.
+     |
+     |  Methods defined here:
+     |
+     |  __abs__(self)
+     |
+     |  __add__(self, v)
+     |
+     |  __max__(a, b)
+     |
+     |  __min__(a, b)
+     |
+     |  __mul__(self, v)
+     |
+     |  __neg__(self)
+     |
+     |  __pow__(self, v)
+     |      For convenience only.
+     |
+     |  __radd__(self, v)
+     |
+     |  __repr__(self)
+     |      Return repr(self).
+     |
+     |  __rmul__(self, v)
+     |
+     |  __rsub__(self, v)
+     |
+     |  __rtruediv__(self, v)
+     |
+     |  __sub__(self, v)
+     |
+     |  __truediv__(self, v)
+     |
+     |  abs(self)
+     |
+     |  atan(self, n)
+     |
+     |  ceil(self)
+     |
+     |  clamp(self, a, b)
+     |
+     |  clampleft(self, a)
+     |
+     |  containedIn(self, y)
+     |
+     |  cos(self, n)
+     |
+     |  exp(self, n)
+     |
+     |  floor(self)
+     |
+     |  greaterEqualScalar(self, a)
+     |
+     |  greaterThanScalar(self, a)
+     |
+     |  isAccurateTo(self, v)
+     |
+     |  lessEqualScalar(self, a)
+     |
+     |  lessThanScalar(self, a)
+     |
+     |  log(self, n)
+     |
+     |  magnitude(self)
+     |
+     |  mignitude(self)
+     |
+     |  negate(self)
+     |
+     |  pi(n)
+     |
+     |  pow(self, v, n)
+     |
+     |  rem(self, v)
+     |
+     |  sin(self, n)
+     |
+     |  sqrt(self, n)
+     |
+     |  tan(self, n)
+     |
+     |  union(v)
+     |
+     |  width(self)
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  __new__(cl, v, sup=None, prec=None)
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |
+     |  __weakref__
+     |      list of weak references to the object (if defined)
 
     class Interval(builtins.object)
      |  An interval of two Decimal values.
