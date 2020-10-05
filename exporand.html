@@ -213,7 +213,7 @@
 <li>The algorithm relies only on a source of random bits for randomness.</li>
 <li>The algorithm does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.</li>
 <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
-<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the  rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> suggests Wasserstein L<sub>&infin;</sub> distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
+<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> suggests Wasserstein distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
@@ -1514,9 +1514,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
           else: break
 </pre>
 
-<p>Another example is a sampler for the Rayleigh distribution, given in <a href="https://peteroupc.github.io/uniformsum.html"><strong>another page</strong></a>.</p>
-
-<p>A third example is the following new algorithm that generates a random number that follows the logistic distribution.</p>
+<p>Another example is the following new algorithm that generates a random number that follows the logistic distribution.</p>
 
 <ol>
 <li>Set <em>k</em> to 0.</li>
