@@ -87,13 +87,14 @@ The following algorithm is an arbitrary-precision sampler for generating a point
 1. Generate two empty PSRNs, call them _x_ and _y_, with a positive sign, an integer part of 0, and an empty fractional part.
 2. Set _cx_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _xd_ to 0, _yd_ to 0, and _d_ to 1.
 3. Multiply _xd_ by _base_ and add a digit chosen uniformly at random to _xd_.  Then multiply _yd_ by _base_ and add a digit chosen uniformly at random to _yd_.
-4. If (_xd_ + 1) \* (_xd_ + 1) +  (_yd_ + 1) \* (_yd_ + 1) < _cx_<sup>2</sup>, then _xd_ and _yd_ lie inside the circle and are accepted.  If they are accepted this way, then at this point, _xd_ and _yd_ will each store the _d_ digits of a coordinate in the circle, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers; alternatively, _xd_ and _yd_ store the cosine and sine, respectively, of a randomly chosen angle.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate or cosine is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
+4. Set _lb_ to _xd_\*_xd_ + _yd_\*_yd_, and set _ub_ (_xd_ + 1) \* (_xd_ + 1) +  (_yd_ + 1) \* (_yd_ + 1).  (Here, _lb_ and _ub_ are lower and upper bounds, respectively, of the distance from the point (_xd_, _yd_) to the origin, scaled to _cx_<sup>2</sup> units.  These bounds can prove useful not just for implementing the uniform distribution inside a circle, but also the uniform distribution inside a shell or a set of concentric shells.)
+5. If _ub_ < _cx_<sup>2</sup>, then _xd_ and _yd_ lie inside the circle and are accepted.  If they are accepted this way, then at this point, _xd_ and _yd_ will each store the _d_ digits of a coordinate in the circle, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. Transfer the digits of _xd_ and _yd_ to _x_'s and _y_'s fractional parts, respectively.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, set _x_'s fractional part to \[3, 4, 2\].)
     2. Fill _x_ and _y_ each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
     3. With probability 1/2, set _x_'s sign to negative.  Then with probability 1/2, set _y_'s sign to negative.
     4. Return _x_ and _y_, in that order.
-5. If _xd_\*_xd_ + _yd_\*_yd_ > _cx_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
-6. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _cx_ by _base_, then 1 to _d_, then go to step 3.
+6. If _lb_ > _cx_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
+7. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _cx_ by _base_, then 1 to _d_, then go to step 3.
 
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers

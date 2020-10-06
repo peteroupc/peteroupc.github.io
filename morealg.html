@@ -123,7 +123,8 @@
 <li>Generate two empty PSRNs, call them <em>x</em> and <em>y</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
 <li>Set <em>cx</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>xd</em> to 0, <em>yd</em> to 0, and <em>d</em> to 1.</li>
 <li>Multiply <em>xd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>xd</em>.  Then multiply <em>yd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>yd</em>.</li>
-<li>If (<em>xd</em> + 1) * (<em>xd</em> + 1) +  (<em>yd</em> + 1) * (<em>yd</em> + 1) &lt; <em>cx</em><sup>2</sup>, then <em>xd</em> and <em>yd</em> lie inside the circle and are accepted.  If they are accepted this way, then at this point, <em>xd</em> and <em>yd</em> will each store the <em>d</em> digits of a coordinate in the circle, expressed as a number in the interval [0, 1], or more precisely, a range of numbers; alternatively, <em>xd</em> and <em>yd</em> store the cosine and sine, respectively, of a randomly chosen angle.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate or cosine is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
+<li>Set <em>lb</em> to <em>xd</em>*<em>xd</em> + <em>yd</em>*<em>yd</em>, and set <em>ub</em> (<em>xd</em> + 1) * (<em>xd</em> + 1) +  (<em>yd</em> + 1) * (<em>yd</em> + 1).  (Here, <em>lb</em> and <em>ub</em> are lower and upper bounds, respectively, of the distance from the point (<em>xd</em>, <em>yd</em>) to the origin, scaled to <em>cx</em><sup>2</sup> units.  These bounds can prove useful not just for implementing the uniform distribution inside a circle, but also the uniform distribution inside a shell or a set of concentric shells.)</li>
+<li>If <em>ub</em> &lt; <em>cx</em><sup>2</sup>, then <em>xd</em> and <em>yd</em> lie inside the circle and are accepted.  If they are accepted this way, then at this point, <em>xd</em> and <em>yd</em> will each store the <em>d</em> digits of a coordinate in the circle, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
 
 <ol>
 <li>Transfer the digits of <em>xd</em> and <em>yd</em> to <em>x</em>&#39;s and <em>y</em>&#39;s fractional parts, respectively.  The variable <em>d</em> tells how many digits to transfer this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, set <em>x</em>&#39;s fractional part to [3, 4, 2].)</li>
@@ -131,7 +132,7 @@
 <li>With probability 1/2, set <em>x</em>&#39;s sign to negative.  Then with probability 1/2, set <em>y</em>&#39;s sign to negative.</li>
 <li>Return <em>x</em> and <em>y</em>, in that order.</li>
 </ol></li>
-<li>If <em>xd</em>*<em>xd</em> + <em>yd</em>*<em>yd</em> &gt; <em>cx</em><sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.</li>
+<li>If <em>lb</em> &gt; <em>cx</em><sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.</li>
 <li>At this point, it is not known whether <em>xd</em> and <em>yd</em> lie inside the circle, so multiply <em>cx</em> by <em>base</em>, then 1 to <em>d</em>, then go to step 3.</li>
 </ol>
 
