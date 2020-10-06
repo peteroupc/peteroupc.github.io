@@ -5,16 +5,16 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p>This page contains additional algorithms for arbitrary-precision random sampling (sampling that does not rely on floating-point arithmetic).  They may depend on algorithms given in the following pages:</p>
+<p>This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:</p>
 
 <ul>
 <li><a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions</strong></a></li>
 <li><a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a></li>
 </ul>
 
-<p><a id=Bernoulli_Factories_and_Irrational_Number_Simulation></a></p>
+<p><a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a></p>
 
-<h2>Bernoulli Factories and Irrational Number Simulation</h2>
+<h2>Bernoulli Factories and Irrational Probability Simulation</h2>
 
 <p>&nbsp;</p>
 
@@ -113,6 +113,28 @@
 <li>Add 1 to <em>i</em> and go to step 3.</li>
 </ol>
 
+<p><a id=Uniform_Distribution_Inside_a_Circle></a></p>
+
+<h3>Uniform Distribution Inside a Circle</h3>
+
+<p>The following algorithm is an arbitrary-precision sampler for generating a point uniformly at random inside a circle centered at (0, 0) and with radius 1.  It adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note2"><strong>(2)</strong></a></sup>).</p>
+
+<ol>
+<li>Generate two empty PSRNs, call them <em>x</em> and <em>y</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
+<li>Set <em>cx</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>xd</em> to 0, <em>yd</em> to 0, and <em>d</em> to 1.</li>
+<li>Multiply <em>xd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>xd</em>.  Then multiply <em>yd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>yd</em>.</li>
+<li>If (<em>xd</em> + 1) * (<em>xd</em> + 1) +  (<em>yd</em> + 1) * (<em>yd</em> + 1) &lt; <em>cx</em><sup>2</sup>, then <em>xd</em> and <em>yd</em> lie inside the circle and are accepted.  If they are accepted this way, then at this point, <em>xd</em> and <em>yd</em> will each store the <em>d</em> digits of a coordinate in the circle, expressed as a number in the interval [0, 1], or more precisely, a range of numbers; alternatively, <em>xd</em> and <em>yd</em> store the cosine and sine, respectively, of a randomly chosen angle.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate or cosine is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
+
+<ol>
+<li>Transfer the digits of <em>xd</em> and <em>yd</em> to <em>x</em>&#39;s and <em>y</em>&#39;s fractional parts, respectively.  The variable <em>d</em> tells how many digits to transfer this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, set <em>x</em>&#39;s fractional part to [3, 4, 2].)</li>
+<li>Fill <em>x</em> and <em>y</em> each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
+<li>With probability 1/2, set <em>x</em>&#39;s sign to negative.  Then with probability 1/2, set <em>y</em>&#39;s sign to negative.</li>
+<li>Return <em>x</em> and <em>y</em>, in that order.</li>
+</ol></li>
+<li>If <em>xd</em>*<em>xd</em> + <em>yd</em>*<em>yd</em> &gt; <em>cx</em><sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.</li>
+<li>At this point, it is not known whether <em>xd</em> and <em>yd</em> lie inside the circle, so multiply <em>cx</em> by <em>base</em>, then 1 to <em>d</em>, then go to step 3.</li>
+</ol>
+
 <p><a id=Sum_of_Exponential_Random_Numbers></a></p>
 
 <h3>Sum of Exponential Random Numbers</h3>
@@ -120,7 +142,7 @@
 <p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of <em>n</em>.</p>
 
 <ol>
-<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note2"><strong>(2)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
 <li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/uniformsum.html#Addition_and_Subtraction_of_Two_PSRNs"><strong>algorithm to add two PSRNs</strong></a> given in another document.</li>
 </ol>
 
@@ -128,7 +150,7 @@
 
 <h3>Hyperbolic Secant Distribution</h3>
 
-<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup> for arbitrary-precision sampling.</p>
+<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup> for arbitrary-precision sampling.</p>
 
 <ol>
 <li>Generate an exponential PSRN, call it <em>ret</em>.</li>
@@ -157,8 +179,8 @@
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small></li>
-<li><small><sup id=Note2>(2)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
-<li><small><sup id=Note3>(3)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
+<li><small><sup id=Note2>(2)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
+<li><small><sup id=Note3>(3)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
 </ul>
 
 <p><a id=License></a></p>

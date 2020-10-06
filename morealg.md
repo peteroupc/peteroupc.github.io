@@ -2,13 +2,13 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-This page contains additional algorithms for arbitrary-precision random sampling (sampling that does not rely on floating-point arithmetic).  They may depend on algorithms given in the following pages:
+This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:
 
 * [**Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
 
-<a id=Bernoulli_Factories_and_Irrational_Number_Simulation></a>
-## Bernoulli Factories and Irrational Number Simulation
+<a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
+## Bernoulli Factories and Irrational Probability Simulation
 &nbsp;
 
 <a id=Certain_Numbers_Based_on_the_Golden_Ratio></a>
@@ -79,18 +79,34 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
 
+<a id=Uniform_Distribution_Inside_a_Circle></a>
+### Uniform Distribution Inside a Circle
+
+The following algorithm is an arbitrary-precision sampler for generating a point uniformly at random inside a circle centered at (0, 0) and with radius 1.  It adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(2)**](#Note2)</sup>).
+
+1. Generate two empty PSRNs, call them _x_ and _y_, with a positive sign, an integer part of 0, and an empty fractional part.
+2. Set _cx_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _xd_ to 0, _yd_ to 0, and _d_ to 1.
+3. Multiply _xd_ by _base_ and add a digit chosen uniformly at random to _xd_.  Then multiply _yd_ by _base_ and add a digit chosen uniformly at random to _yd_.
+4. If (_xd_ + 1) \* (_xd_ + 1) +  (_yd_ + 1) \* (_yd_ + 1) < _cx_<sup>2</sup>, then _xd_ and _yd_ lie inside the circle and are accepted.  If they are accepted this way, then at this point, _xd_ and _yd_ will each store the _d_ digits of a coordinate in the circle, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers; alternatively, _xd_ and _yd_ store the cosine and sine, respectively, of a randomly chosen angle.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate or cosine is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
+    1. Transfer the digits of _xd_ and _yd_ to _x_'s and _y_'s fractional parts, respectively.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, set _x_'s fractional part to \[3, 4, 2\].)
+    2. Fill _x_ and _y_ each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    3. With probability 1/2, set _x_'s sign to negative.  Then with probability 1/2, set _y_'s sign to negative.
+    4. Return _x_ and _y_, in that order.
+5. If _xd_\*_xd_ + _yd_\*_yd_ > _cx_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
+6. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _cx_ by _base_, then 1 to _d_, then go to step 3.
+
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
 
 An arbitrary-precision sampler for the sum of _n_ exponential random numbers (also known as the Erlang(_n_) or gamma(_n_) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of _n_.
 
-1. Generate _n_ uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney's improvement to that algorithm (Karney 2014)<sup>[**(2)**](#Note2)</sup>).  This algorithm won't work for exponential PSRNs (e-rands), described in my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
+1. Generate _n_ uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney's improvement to that algorithm (Karney 2014)<sup>[**(3)**](#Note3)</sup>).  This algorithm won't work for exponential PSRNs (e-rands), described in my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
 2. Generate the sum of the random numbers generated in step 1 by applying the [**algorithm to add two PSRNs**](https://peteroupc.github.io/uniformsum.html#Addition_and_Subtraction_of_Two_PSRNs) given in another document.
 
 <a id=Hyperbolic_Secant_Distribution></a>
 ### Hyperbolic Secant Distribution
 
-The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(3)**](#Note3)</sup> for arbitrary-precision sampling.
+The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(2)**](#Note2)</sup> for arbitrary-precision sampling.
 
 1. Generate an exponential PSRN, call it _ret_.
 2. Set _ip_ to 1 plus _ret_'s integer part.
@@ -112,8 +128,8 @@ One example of a mixture is two beta distributions, with separate parameters.  O
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
-- <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note3>(3)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note2>(2)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note3>(3)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>
 ## License
