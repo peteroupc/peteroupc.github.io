@@ -2224,6 +2224,8 @@ CLASSES
      |
      |  greaterThanScalar(self, a)
      |
+     |  intersect(self, y)
+     |
      |  isAccurateTo(self, v)
      |
      |  lessEqualScalar(self, a)

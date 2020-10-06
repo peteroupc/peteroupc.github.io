@@ -649,6 +649,11 @@ class FInterval:
     def lessEqualScalar(self, a):
         return self.sup <= a
 
+    def intersect(self, y):
+        if x.sup < y.inf or x.inf > y.sup:
+            return None
+        return FInterval(max(x.inf, y.inf), min(x.sup, y.sup))
+
     def containedIn(self, y):
         return y.inf <= self.inf and self.sup <= y.sup
 

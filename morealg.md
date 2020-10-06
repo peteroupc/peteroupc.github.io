@@ -82,10 +82,20 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
 
-An arbitrary-precision sampler for the sum of _n_ exponential random numbers (also known as the Erlang(_n_) or gamma(_n_) distribution is doable via partially-sampled uniform random numbers, though it is obviously inefficient for a large value of _n_.
+An arbitrary-precision sampler for the sum of _n_ exponential random numbers (also known as the Erlang(_n_) or gamma(_n_) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of _n_.
 
 1. Generate _n_ uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney's improvement to that algorithm (Karney 2014)<sup>[**(2)**](#Note2)</sup>).  This algorithm won't work for exponential PSRNs (e-rands), described in my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html), because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
 2. Generate the sum of the random numbers generated in step 1 by applying the [**algorithm to add two PSRNs**](https://peteroupc.github.io/uniformsum.html#Addition_and_Subtraction_of_Two_PSRNs) given in another document.
+
+<a id=Hyperbolic_Secant_Distribution></a>
+### Hyperbolic Secant Distribution
+
+The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(3)**](#Note3)</sup> for arbitrary-precision sampling.
+
+1. Generate an exponential PSRN, call it _ret_.
+2. Set _ip_ to 1 plus _ret_'s integer part.
+3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return either _ret_ or &minus;_ret_ with equal probability.
+4. Call **SampleGeometricBag** on _ret_'s fractional part (ignore _ret_'s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.
 
 <a id=Mixtures></a>
 ### Mixtures
@@ -102,7 +112,8 @@ One example of a mixture is two beta distributions, with separate parameters.  O
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
-- <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[Sampling exactly from the normal distribution](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note2>(2)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note3>(3)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <a id=License></a>
 ## License
