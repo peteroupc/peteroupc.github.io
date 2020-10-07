@@ -246,40 +246,11 @@ def psrn_less_than_rational_01(psrn1, rat):
         pt *= 2
         index += 1
 
-def _readpsrn(asign, aint, afrac, digits=2):
-    af = 0.0
-    for i in range(len(afrac)):
-        if afrac[i] == None:
-            afrac[i] = random.randint(0, digits - 1)
-        af += afrac[i] * digits ** (-i - 1)
-    ret = af + aint
-    if asign < 0:
-        ret = -ret
-    return ret
-
-def _readpsrnend(asign, aint, afrac, digits=2):
-    af = 0.0
-    for i in range(len(afrac)):
-        if afrac[i] == None:
-            afrac[i] = random.randint(0, digits - 1)
-        af += afrac[i] * digits ** (-i - 1)
-    # Add endpoint
-    af += 1 * digits ** (-(len(afrac) - 1) - 1)
-    ret = af + aint
-    if asign < 0:
-        ret = -ret
-    return ret
-
-def _readpsrn2(psrn, digits=2):
-    return _readpsrn(psrn[0], psrn[1], psrn[2], digits)
-
-def _readpsrnend2(psrn, digits=2):
-    return _readpsrnend(psrn[0], psrn[1], psrn[2], digits)
-
 def _add_neg_power_of_base(psrn, pwr, digits=2, treat_as_abs=False):
     """ Adds digits^(-pwr) to a PSRN. """
     if pwr <= 0:
-        raise ValueError
+        psrn[1] += 1 << (-pwr)
+        return psrn
     i = pwr - 1
     incr = -1 if psrn[0] < 0 and not treat_as_abs else 1
     while i >= 0:
@@ -317,6 +288,11 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     while len(psrn1[2]) > len(psrn2[2]):
         psrn2[2].append(random.randint(0, digits - 1))
     digitcount = len(psrn1[2])
+    if digitcount == 0:
+        # Make sure fractional part has at least one digit, to simplify matters
+        psrn1[2].append(random.randint(0, digits - 1))
+        psrn2[2].append(random.randint(0, digits - 1))
+        digitcount += 1
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform multiplication
@@ -330,18 +306,12 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
     large = (frac1 + 1) * (frac2 + 1)
-    # print((small/(digits**(digitcount*2))))
-    # print((mid1/(digits**(digitcount*2))))
-    # print((mid2/(digits**(digitcount*2))))
-    # print((large/(digits**(digitcount*2))))
     midmin = min(mid1, mid2)
     midmax = max(mid1, mid2)
     cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
     cpsrn[0] = psrn1[0] * psrn2[0]
     while True:
         rv = random.randint(0, large - small - 1)
-        success = False
-        extradigits = []
         if rv < midmin - small:
             # Left side of product density; rising triangular
             pw = rv
@@ -375,7 +345,6 @@ def multiply_psrns(psrn1, psrn2, digits=2):
             newdigits = 0
             b = large - midmax
             # print(["bounds",(b-1-0,(b-1-0)+1),(b-1-1,(b-1-1)+1),(b-1-2,(b-1-2)+1)])
-            px = []
             y = random.randint(0, b - 1)
             while True:
                 lowerbound = b - 1 - pw
@@ -397,7 +366,6 @@ def multiply_psrns(psrn1, psrn2, digits=2):
                     # Rejected
                     break
                 d = random.randint(0, digits - 1)
-                px.append(d)
                 y = y * digits + random.randint(0, digits - 1)
                 pw = pw * digits + d
                 b *= digits
@@ -434,106 +402,92 @@ def add_psrns(psrn1, psrn2, digits=2):
     while len(psrn1[2]) > len(psrn2[2]):
         psrn2[2].append(random.randint(0, digits - 1))
     digitcount = len(psrn1[2])
-    cpsrn = _add_psrns_internal(
-        psrn1[0], psrn1[1], psrn1[2], psrn2[0], psrn2[1], psrn2[2], digits
-    )
-    # If negative, adjust to the correct region
-    targetd = 1 if cpsrn[0] < 0 else 0
-    if targetd == 1:
-        _add_neg_power_of_base(cpsrn, digitcount, digits)
-    if digits == 2 and cpsrn[0] >= 0:
-        g = 0
-        d = random.randint(0, 1)
-        while random.randint(0, 1) == 1:
-            g += 1
-        while len(cpsrn[2]) <= g + digitcount:
-            cpsrn[2].append(None)
-        cpsrn[2][g + digitcount] = d
-        if d == 0:
-            _add_neg_power_of_base(cpsrn, digitcount, digits)
-    else:
-        sampleresult = 0
-        d = random.randint(0, 1)
-        while True:
-            bag = []
-            sampleresult = 1
-            i = 0
+    if len(psrn2[2]) != digitcount:
+        raise ValueError
+    # Perform addition
+    if digitcount == 0:
+        # Make sure fractional part has at least one digit, to simplify matters
+        psrn1[2].append(random.randint(0, digits - 1))
+        psrn2[2].append(random.randint(0, digits - 1))
+        digitcount += 1
+    frac1 = psrn1[1]
+    frac2 = psrn2[1]
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn1[2][i]
+    for i in range(digitcount):
+        frac2 = frac2 * digits + psrn2[2][i]
+    small = frac1 * psrn1[0] + frac2 * psrn2[0]
+    mid1 = frac1 * psrn1[0] + (frac2 + 1) * psrn2[0]
+    mid2 = (frac1 + 1) * psrn1[0] + frac2 * psrn2[0]
+    large = (frac1 + 1) * psrn1[0] + (frac2 + 1) * psrn2[0]
+    minv = min(small, mid1, mid2, large)
+    maxv = max(small, mid1, mid2, large)
+    cpsrn = [1, 0, [0 for i in range(digitcount)]]
+    while True:
+        rv = random.randint(0, 1)
+        success = False
+        extradigits = []
+        if rv == 0:
+            # Left side of sum density; rising triangular
+            pw = rv
+            newdigits = 0
+            b = 1
+            y = random.randint(0, b - 1)
             while True:
-                while len(bag) <= i:
-                    bag.append(None)
-                if bag[i] == None:
-                    bag[i] = random.randint(0, digits - 1)
-                a1 = bag[i]
-                b1 = random.randint(0, digits - 1)
-                if a1 < b1:
-                    sampleresult = 0
-                if a1 > b1:
-                    sampleresult = 1
-                if a1 != b1:
+                lowerbound = pw
+                upperbound = pw + 1
+                if y < lowerbound:
+                    # Success
+                    sret = minv * (digits ** newdigits) + pw
+                    cpsrn[0] = -1 if sret < 0 else 1
+                    sret = abs(sret)
+                    for i in range(digitcount + newdigits):
+                        idx = (digitcount + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = abs(sret) % digits
+                        sret //= digits
+                    cpsrn[1] = abs(sret)
+                    return cpsrn
+                elif y > upperbound:
+                    # Rejected
                     break
-                i += 1
-            if d == sampleresult:
-                for v in bag:
-                    cpsrn[2].append(v)
-                if d == targetd:
-                    _add_neg_power_of_base(cpsrn, digitcount, digits)
-                break
-    return cpsrn
-
-def _add_psrns_internal(asign, aint, afrac, bsign, bint, bfrac, digits=2):
-    # For this to work, fractional parts must have the same
-    # length and all their digits must be sampled
-    if len(afrac) != len(bfrac):
-        raise ValueError
-    if aint < 0 or bint < 0 or digits < 2:
-        raise ValueError
-    if asign == bsign:
-        # Addition
-        cfrac = [0 for i in range(len(afrac))]
-        carry = 0
-        i = len(afrac) - 1
-        while i >= 0:
-            b = afrac[i] + bfrac[i] + carry
-            cfrac[i] = b % digits if b >= digits else b
-            carry = 1 if b >= digits else 0
-            i -= 1
-        ci = aint + bint + carry
-        return [asign, ci, cfrac]
-    else:
-        # Subtraction
-        aIsLess = False
-        if aint != bint:
-            aIsLess = aint < bint
-        else:
-            for i in range(len(afrac)):
-                if afrac[i] != bfrac[i]:
-                    aIsLess = afrac[i] < bfrac[i]
+                pw = pw * digits + random.randint(0, digits - 1)
+                y = y * digits + random.randint(0, digits - 1)
+                b *= digits
+                newdigits += 1
+        elif rv == 1:
+            # Right side of sum density; falling triangular
+            pw = 0
+            newdigits = 0
+            b = 1
+            px = []
+            y = random.randint(0, b - 1)
+            while True:
+                lowerbound = b - 1 - pw
+                upperbound = (b - 1 - pw) + 1
+                if y < lowerbound:
+                    # Success
+                    # TODO: When PSRN to be returned is negative, success is reached
+                    # at the wrong occasions; fix this
+                    sret = (minv + 1) * (digits ** newdigits) + pw
+                    cpsrn[0] = -1 if sret < 0 else 1
+                    sret = abs(sret)
+                    for i in range(digitcount + newdigits):
+                        idx = (digitcount + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = abs(sret)
+                    return cpsrn
+                elif y > upperbound:
+                    # Rejected
                     break
-        if aIsLess:
-            tmp = aint
-            aint = bint
-            bint = tmp
-            tmp = afrac
-            afrac = bfrac
-            bfrac = tmp
-            tmp = asign
-            asign = bsign
-            bsign = tmp
-        cfrac = [0 for i in range(len(afrac))]
-        carry = 0
-        i = len(afrac) - 1
-        while i >= 0:
-            b = afrac[i] - bfrac[i] - carry
-            if b < 0:
-                cfrac[i] = b + digits
-                carry = 1
-            else:
-                cfrac[i] = b
-                carry = 0
-            i -= 1
-        ci = abs(aint - bint - carry)
-        csign = asign
-        return [csign, ci, cfrac]
+                pw = pw * digits + random.randint(0, digits - 1)
+                y = y * digits + random.randint(0, digits - 1)
+                b *= digits
+                newdigits += 1
 
 def rayleigh(bern, s=1):
     k = 0

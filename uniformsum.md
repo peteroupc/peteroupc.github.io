@@ -367,7 +367,7 @@ The following shows how to add or subtract two uniform PSRNs (**a** and **b**) t
     2. Set the digit at position (_g_ + _digitcount_) of **c**'s fractional part to _d_ (positions start at 0 in the PSRN, and digits between the positions (_digitcount_ &minus; 1) and (_g_ + _digitcount_) will be unsampled).
     3. If _d_ is 0, sum the constant 2<sup>&minus;_digitcount_</sup> into **c**.
 6. Otherwise:
-    1. Create a positive-sign zero-integer-part uniform PSRN, call it _ret.
+    1. Create a positive-sign zero-integer-part uniform PSRN, call it _ret_.
     2. Remove all digits from _ret_.
     3. Call the **SampleGeometricBag** algorithm on _ret_.  If the result of the call (which can be 0 or 1) is not equal to _d_, go to the previous substep.
     4. Append the digits (both sampled and unsampled) of _ret_'s fractional part into **c**'s fractional part.
