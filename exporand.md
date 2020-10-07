@@ -137,15 +137,15 @@ Algorithms for sampling e-rands are given in the section "Algorithms for the Bet
 <a id=Other_Distributions></a>
 ### Other Distributions
 
-Partially-sampled numbers of other distributions can be implemented via rejection from the uniform distribution. Examples include the following:
+PSRNs of other distributions can be implemented via rejection from the uniform distribution. Examples include the following:
 
 - The beta and continuous Bernoulli distributions, as discussed later in this document.
 - The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)<sup>[**(10)**](#Note10)</sup>.
 - Sampling uniform distributions in \[0, _n_\) (not just \[0, 1\]), is described later in "[**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)".)
 
-For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(11)**](#Note11)</sup> proved that unsampled trailing bits of the partially-sampled number converge to the uniform distribution (see also (Kakutani 1948)<sup>[**(12)**](#Note12)</sup>).
+For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(11)**](#Note11)</sup> proved that unsampled trailing bits of the PSRN converge to the uniform distribution (see also (Kakutani 1948)<sup>[**(12)**](#Note12)</sup>).
 
-Partially-sampled numbers could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
+PSRNs could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
 <a id=Properties></a>
 ### Properties
@@ -238,7 +238,7 @@ The following is a simpler way to implement **URandLessThanReal** when **a** is 
 
 Arithmetic between two PSRNs is not always trivial.
 
-- The naïve approach of adding, multiplying, or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(13)**](#Note13)</sup>) may result in a partially-sampled number _C_ that is not close to the ideal distribution once additional digits of _C_ are sampled uniformly at random (see properties 4 and 5 above).
+- The naïve approach of adding, multiplying, or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(13)**](#Note13)</sup>) may result in a PSRN _C_ that is not close to the ideal distribution once additional digits of _C_ are sampled uniformly at random (see properties 4 and 5 above).
 
     For example, say we have two uniform PSRNs: _A_ = 0.12345... and _B_ = 0.38901....  They represent random numbers in the intervals _AI_ = \[0.12345, 0.12346\] and _BI_ = \[0.38901, 0.38902\], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result _C_ lies in _CI_ = \[0.12345 + 0.38901, 0.12346 + 0.38902\] = \[0.51246, 0.51248\].  However, the resulting random number is _not_ uniformly distributed in \[0.51246, 0.51248\], so that simply choosing a uniform random number in the interval won't work.  This can be demonstrated by generating many pairs of uniform random numbers in the intervals _AI_ and _BI_, summing the numbers in each pair, and building a histogram using the sums (which will all lie in the interval _CI_).  In this case, the histogram will show a triangular distribution that peaks at 0.51247.
 
@@ -256,7 +256,7 @@ Partially-sampled-number arithmetic may also be possible by relating the relativ
 - There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup>[**(14)**](#Note14)</sup>, (Nezhad et al., 2013)<sup>[**(15)**](#Note15)</sup>.  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution's cumulative distribution function (CDF), and the calculations can incur rounding errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.
 - For some distributions (including the uniform and exponential distributions), the digit probabilities don't depend on previous digits, only on the position of the digit.  In this case, however, there appear to be limits on how practical this approach is; see the [**appendix**](#Setting_Digits_by_Digit_Probabilities) for details.
 
-Finally, arithmetic with partially-sampled numbers may be possible if the result of the arithmetic is distributed with a known probability density function (PDF) (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(16)**](#Note16)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on [**arbitrary-precision samplers for the sum of uniform random numbers**](https://peteroupc.github.io/uniformsum.html).  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN, then _X_<sup>3</sup> is distributed as `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
+Finally, arithmetic with PSRNs may be possible if the result of the arithmetic is distributed with a known probability density function (PDF) (e.g., one found via Rohatgi's formula (Rohatgi 1976)<sup>[**(16)**](#Note16)</sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in my article on [**arbitrary-precision samplers for the sum of uniform random numbers**](https://peteroupc.github.io/uniformsum.html).  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN, then _X_<sup>3</sup> is distributed as `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
 
 <a id=Sampling_Uniform_and_Exponential_PSRNs></a>
 ## Sampling Uniform and Exponential PSRNs
@@ -368,7 +368,7 @@ The algorithm is as follows:
 2. Set `index` to 1.
 3. If `index <= k` and `index + n >= k`:
     1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the base, or radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
-    2. Starting at `index`, append the digit 0 to the first **v**\[0\] partially-sampled numbers, a 1 digit to the next **v**\[1\] PSRNs, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] PSRNs (for the binary case, this means appending a 0 bit to the first `LC` PSRNs and a 1 bit to the next `n - LC` PSRNs).
+    2. Starting at `index`, append the digit 0 to the first **v**\[0\] PSRNs, a 1 digit to the next **v**\[1\] PSRNs, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] PSRNs (for the binary case, this means appending a 0 bit to the first `LC` PSRNs and a 1 bit to the next `n - LC` PSRNs).
     3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, ..., _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
 4. Take the `k`th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn't use this alternative.)
 

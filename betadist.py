@@ -429,7 +429,7 @@ def add_psrns(psrn1, psrn2, digits=2):
         extradigits = []
         if rv == 0:
             # Left side of sum density; rising triangular
-            pw = rv
+            pw = 0
             newdigits = 0
             b = 1
             y = random.randint(0, b - 1)
@@ -438,7 +438,10 @@ def add_psrns(psrn1, psrn2, digits=2):
                 upperbound = pw + 1
                 if y < lowerbound:
                     # Success
-                    sret = minv * (digits ** newdigits) + pw
+                    if minv >= 0:
+                        sret = minv * (digits ** newdigits) + pw
+                    else:
+                        sret = (maxv - 1) * (digits ** newdigits) + pw
                     cpsrn[0] = -1 if sret < 0 else 1
                     sret = abs(sret)
                     for i in range(digitcount + newdigits):
@@ -468,9 +471,10 @@ def add_psrns(psrn1, psrn2, digits=2):
                 upperbound = (b - 1 - pw) + 1
                 if y < lowerbound:
                     # Success
-                    # TODO: When PSRN to be returned is negative, success is reached
-                    # at the wrong occasions; fix this
-                    sret = (minv + 1) * (digits ** newdigits) + pw
+                    if minv >= 0:
+                        sret = (minv + 1) * (digits ** newdigits) + pw
+                    else:
+                        sret = (maxv - 1) * (digits ** newdigits) - pw
                     cpsrn[0] = -1 if sret < 0 else 1
                     sret = abs(sret)
                     for i in range(digitcount + newdigits):
