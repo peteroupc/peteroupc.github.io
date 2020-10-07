@@ -264,6 +264,105 @@ def psrn_less_than_rational_01(psrn1, rat):
         pt *= 2
         index += 1
 
+def multiply_psrns(psrn1, psrn2, digits=2):
+    """ Multiplies two partially-sampled random numbers.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the first PSRN.  Fractional part is a list of digits
+            after the point, starting with the first.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the second PSRN.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
+        raise ValueError
+    for i in range(len(psrn1[2])):
+        psrn1[2][i] = (
+            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
+        )
+    for i in range(len(psrn2[2])):
+        psrn2[2][i] = (
+            random.randint(0, digits - 1) if psrn2[2][i] == None else psrn2[2][i]
+        )
+    while len(psrn1[2]) < len(psrn2[2]):
+        psrn1[2].append(random.randint(0, digits - 1))
+    while len(psrn1[2]) > len(psrn2[2]):
+        psrn2[2].append(random.randint(0, digits - 1))
+    digitcount = len(psrn1[2])
+    # Perform multiplication
+    frac1 = psrn1[1]
+    frac2 = psrn2[1]
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn1[2][i]
+    for i in range(digitcount):
+        frac2 = frac2 * digits + psrn2[2][i]
+    small = frac1 * frac2
+    mid1 = frac1 * (frac2 + 1)
+    mid2 = (frac1 + 1) * frac2
+    large = (frac1 + 1) * (frac2 + 1)
+    midmin = min(mid1, mid2)
+    midmax = max(mid1, mid2)
+    cpsrn = [-1, 0, [0 for i in range(digitcount * 2)]]
+    sret = small
+    for i in range(digitcount * 2):
+        cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
+        sret //= digits
+    cpsrn[1] = sret
+    # print([small/(digits**(digitcount*2)),\
+    #      mid1/(digits**(digitcount*2)),mid2/(digits**(digitcount*2)),\
+    #      large/(digits**(digitcount*2)),cpsrn])
+    rv = random.randint(0, large - small - 1)
+    # print([rv,mid1-small,mid2-small,large-small])
+    d = -1
+    cpsrn[0] = psrn1[0] * psrn2[0]
+    # TODO: Support negative PSRNs properly
+    if rv < mid1 - small and cpsrn[0] > 0:
+        d = 0  # Left side of product density
+    elif rv >= mid2 - small and cpsrn[0] > 0:
+        d = 1  # Right side of product density
+    else:
+        # Middle, or uniform, part of product density
+        return cpsrn
+    # If negative, adjust to the correct region
+    targetd = 1 if cpsrn[0] < 0 else 0
+    if targetd == 1:
+        _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
+    if digits == 2 and cpsrn[0] >= 0:
+        g = 0
+        while random.randint(0, 1) == 1:
+            g += 1
+        while len(cpsrn[2]) <= g + digitcount * 2:
+            cpsrn[2].append(None)
+        cpsrn[2][g + digitcount * 2] = d
+        if d == 0:
+            _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
+    else:
+        # TODO: Fix for negative PSRNs
+        sampleresult = 0
+        while True:
+            bag = []
+            sampleresult = 1
+            i = 0
+            while True:
+                while len(bag) <= i:
+                    bag.append(None)
+                if bag[i] == None:
+                    bag[i] = random.randint(0, digits - 1)
+                a1 = bag[i]
+                b1 = random.randint(0, digits - 1)
+                if a1 < b1:
+                    sampleresult = 0
+                if a1 > b1:
+                    sampleresult = 1
+                if a1 != b1:
+                    break
+                i += 1
+            if d == sampleresult:
+                for v in bag:
+                    cpsrn[2].append(v)
+                if d == targetd:
+                    _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
+                break
+    return cpsrn
+
 def add_psrns(psrn1, psrn2, digits=2):
     """ Adds two partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -278,7 +377,7 @@ def add_psrns(psrn1, psrn2, digits=2):
         psrn1[2][i] = (
             random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
         )
-    for i in range(len(psrn2)):
+    for i in range(len(psrn2[2])):
         psrn2[2][i] = (
             random.randint(0, digits - 1) if psrn2[2][i] == None else psrn2[2][i]
         )
@@ -293,7 +392,7 @@ def add_psrns(psrn1, psrn2, digits=2):
     # If negative, adjust to the correct region
     targetd = 1 if cpsrn[0] < 0 else 0
     if targetd == 1:
-        _add_neg_power_of_base(cpsrn, digitcount)
+        _add_neg_power_of_base(cpsrn, digitcount, digits)
     if digits == 2 and cpsrn[0] >= 0:
         g = 0
         d = random.randint(0, 1)
@@ -303,7 +402,7 @@ def add_psrns(psrn1, psrn2, digits=2):
             cpsrn[2].append(None)
         cpsrn[2][g + digitcount] = d
         if d == 0:
-            _add_neg_power_of_base(cpsrn, digitcount)
+            _add_neg_power_of_base(cpsrn, digitcount, digits)
     else:
         sampleresult = 0
         d = random.randint(0, 1)
@@ -329,7 +428,7 @@ def add_psrns(psrn1, psrn2, digits=2):
                 for v in bag:
                     cpsrn[2].append(v)
                 if d == targetd:
-                    _add_neg_power_of_base(cpsrn, digitcount)
+                    _add_neg_power_of_base(cpsrn, digitcount, digits)
                 break
     return cpsrn
 
