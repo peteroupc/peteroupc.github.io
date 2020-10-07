@@ -99,24 +99,6 @@ def sampleIntPlusBag(bern, bag, k):
             bag[r] = bern.randbit()
         return bag[r]
 
-def _add_neg_power_of_base(psrn, pwr, digits=2):
-    """ Adds digits^(-pwr) to a PSRN. """
-    if pwr <= 0:
-        raise ValueError
-    i = pwr - 1
-    incr = -1 if psrn[0] < 0 else 1
-    while i >= 0:
-        psrn[2][i] += incr
-        if psrn[2][i] < 0:
-            psrn[2][i] += digits
-        elif psrn[2][i] > digits:
-            psrn[2][i] -= digits
-        else:
-            return psrn
-        i -= 1
-    psrn[1] += incr
-    return psrn
-
 def forsythe_prob2(rg, bern, x):
     # Returns true with probability x*exp(1-x), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
@@ -264,6 +246,54 @@ def psrn_less_than_rational_01(psrn1, rat):
         pt *= 2
         index += 1
 
+def _readpsrn(asign, aint, afrac, digits=2):
+    af = 0.0
+    for i in range(len(afrac)):
+        if afrac[i] == None:
+            afrac[i] = random.randint(0, digits - 1)
+        af += afrac[i] * digits ** (-i - 1)
+    ret = af + aint
+    if asign < 0:
+        ret = -ret
+    return ret
+
+def _readpsrnend(asign, aint, afrac, digits=2):
+    af = 0.0
+    for i in range(len(afrac)):
+        if afrac[i] == None:
+            afrac[i] = random.randint(0, digits - 1)
+        af += afrac[i] * digits ** (-i - 1)
+    # Add endpoint
+    af += 1 * digits ** (-(len(afrac) - 1) - 1)
+    ret = af + aint
+    if asign < 0:
+        ret = -ret
+    return ret
+
+def _readpsrn2(psrn, digits=2):
+    return _readpsrn(psrn[0], psrn[1], psrn[2], digits)
+
+def _readpsrnend2(psrn, digits=2):
+    return _readpsrnend(psrn[0], psrn[1], psrn[2], digits)
+
+def _add_neg_power_of_base(psrn, pwr, digits=2, treat_as_abs=False):
+    """ Adds digits^(-pwr) to a PSRN. """
+    if pwr <= 0:
+        raise ValueError
+    i = pwr - 1
+    incr = -1 if psrn[0] < 0 and not treat_as_abs else 1
+    while i >= 0:
+        psrn[2][i] += incr
+        if psrn[2][i] < 0:
+            psrn[2][i] += digits
+        elif psrn[2][i] >= digits:
+            psrn[2][i] -= digits
+        else:
+            return psrn
+        i -= 1
+    psrn[1] += incr
+    return psrn
+
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -287,6 +317,8 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     while len(psrn1[2]) > len(psrn2[2]):
         psrn2[2].append(random.randint(0, digits - 1))
     digitcount = len(psrn1[2])
+    if len(psrn2[2]) != digitcount:
+        raise ValueError
     # Perform multiplication
     frac1 = psrn1[1]
     frac2 = psrn2[1]
@@ -298,70 +330,86 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
     large = (frac1 + 1) * (frac2 + 1)
+    # print((small/(digits**(digitcount*2))))
+    # print((mid1/(digits**(digitcount*2))))
+    # print((mid2/(digits**(digitcount*2))))
+    # print((large/(digits**(digitcount*2))))
     midmin = min(mid1, mid2)
     midmax = max(mid1, mid2)
-    cpsrn = [-1, 0, [0 for i in range(digitcount * 2)]]
-    sret = small
-    for i in range(digitcount * 2):
-        cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
-        sret //= digits
-    cpsrn[1] = sret
-    # print([small/(digits**(digitcount*2)),\
-    #      mid1/(digits**(digitcount*2)),mid2/(digits**(digitcount*2)),\
-    #      large/(digits**(digitcount*2)),cpsrn])
-    rv = random.randint(0, large - small - 1)
-    # print([rv,mid1-small,mid2-small,large-small])
-    d = -1
+    cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
     cpsrn[0] = psrn1[0] * psrn2[0]
-    # TODO: Support negative PSRNs properly
-    if rv < mid1 - small and cpsrn[0] > 0:
-        d = 0  # Left side of product density
-    elif rv >= mid2 - small and cpsrn[0] > 0:
-        d = 1  # Right side of product density
-    else:
-        # Middle, or uniform, part of product density
-        return cpsrn
-    # If negative, adjust to the correct region
-    targetd = 1 if cpsrn[0] < 0 else 0
-    if targetd == 1:
-        _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
-    if digits == 2 and cpsrn[0] >= 0:
-        g = 0
-        while random.randint(0, 1) == 1:
-            g += 1
-        while len(cpsrn[2]) <= g + digitcount * 2:
-            cpsrn[2].append(None)
-        cpsrn[2][g + digitcount * 2] = d
-        if d == 0:
-            _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
-    else:
-        # TODO: Fix for negative PSRNs
-        sampleresult = 0
-        while True:
-            bag = []
-            sampleresult = 1
-            i = 0
+    while True:
+        rv = random.randint(0, large - small - 1)
+        success = False
+        extradigits = []
+        if rv < midmin - small:
+            # Left side of product density; rising triangular
+            pw = rv
+            newdigits = 0
+            b = midmin - small
+            y = random.randint(0, b - 1)
             while True:
-                while len(bag) <= i:
-                    bag.append(None)
-                if bag[i] == None:
-                    bag[i] = random.randint(0, digits - 1)
-                a1 = bag[i]
-                b1 = random.randint(0, digits - 1)
-                if a1 < b1:
-                    sampleresult = 0
-                if a1 > b1:
-                    sampleresult = 1
-                if a1 != b1:
+                lowerbound = pw
+                upperbound = pw + 1
+                if y < lowerbound:
+                    # Success
+                    sret = small * (digits ** newdigits) + pw
+                    for i in range(digitcount * 2 + newdigits):
+                        idx = (digitcount * 2 + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = sret
+                    return cpsrn
+                elif y > upperbound:
+                    # Rejected
                     break
-                i += 1
-            if d == sampleresult:
-                for v in bag:
-                    cpsrn[2].append(v)
-                if d == targetd:
-                    _add_neg_power_of_base(cpsrn, digitcount * 2, digits)
-                break
-    return cpsrn
+                pw = pw * digits + random.randint(0, digits - 1)
+                y = y * digits + random.randint(0, digits - 1)
+                b *= digits
+                newdigits += 1
+        elif rv >= midmax - small:
+            # Right side of product density; falling triangular
+            pw = rv - (midmax - small)
+            newdigits = 0
+            b = large - midmax
+            # print(["bounds",(b-1-0,(b-1-0)+1),(b-1-1,(b-1-1)+1),(b-1-2,(b-1-2)+1)])
+            px = []
+            y = random.randint(0, b - 1)
+            while True:
+                lowerbound = b - 1 - pw
+                upperbound = (b - 1 - pw) + 1
+                # if rv==midmax-small:
+                #   print([newdigits, y,"pw",pw,"b",b,lowerbound,upperbound])
+                if y < lowerbound:
+                    # Success
+                    sret = midmax * (digits ** newdigits) + pw
+                    for i in range(digitcount * 2 + newdigits):
+                        idx = (digitcount * 2 + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = sret
+                    return cpsrn
+                elif y > upperbound:
+                    # Rejected
+                    break
+                d = random.randint(0, digits - 1)
+                px.append(d)
+                y = y * digits + random.randint(0, digits - 1)
+                pw = pw * digits + d
+                b *= digits
+                newdigits += 1
+        else:
+            # Middle, or uniform, part of product density
+            sret = small + rv
+            for i in range(digitcount * 2):
+                cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
+                sret //= digits
+            cpsrn[1] = sret
+            return cpsrn
 
 def add_psrns(psrn1, psrn2, digits=2):
     """ Adds two partially-sampled random numbers.
