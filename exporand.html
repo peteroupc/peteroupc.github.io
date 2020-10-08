@@ -154,15 +154,15 @@
 
 <h2>About Partially-Sampled Random Numbers</h2>
 
-<p>In this document, a <em>partially-sampled random number</em> (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see &quot;Properties&quot; later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.</p>
+<p>In this document, a <em>partially-sampled random number</em> (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random number that <em>exactly</em> follows a continuous distribution, <em>with arbitrary precision</em>, and <em>without floating-point arithmetic</em> (see &quot;Properties&quot; later in this section).</p>
 
-<p>PSRNs specified here store:</p>
+<p>PSRNs specified here consist of the following three things:</p>
 
 <ul>
 <li><p>A <em>fractional part</em> with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were <em>sampled</em> or <em>unsampled</em>; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the <code>None</code> keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part&#39;s digits form a so-called <em>digit expansion</em> (e.g., <em>binary expansion</em> in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.</p>
 
 <p>For example, if the fractional part stores the base-10 digits [1, 3, 5], in that order, then it represents a random number in the interval [0.135, 0.136], reflecting the fact that the digits between 0.135 and 0.136 are unknown.</p></li>
-<li>An optional <em>integer part</em> (more specifically, the integer part [floor] of the number&#39;s absolute value).</li>
+<li>An optional <em>integer part</em> (more specifically, the integer part of the number&#39;s absolute value, that is, <code>floor(abs(x))</code>).</li>
 <li>An optional <em>sign</em> (positive or negative).</li>
 </ul>
 

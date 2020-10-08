@@ -104,14 +104,14 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01On
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
 
-In this document, a _partially-sampled random number_ (PSRN) is a data structure that allows a random number that exactly follows a continuous distribution to be sampled digit by digit, with arbitrary precision, and without floating-point arithmetic (see "Properties" later in this section).  Informally, they represent incomplete real numbers whose contents are sampled only when necessary, but in a way that follows the distribution being sampled.
+In this document, a _partially-sampled random number_ (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random number that _exactly_ follows a continuous distribution, _with arbitrary precision_, and _without floating-point arithmetic_ (see "Properties" later in this section).
 
-PSRNs specified here store:
+PSRNs specified here consist of the following three things:
 
 - A _fractional part_ with an arbitrary number of digits.  This can be implemented as an array of digits or as a packed integer containing all the digits.  Some algorithms care whether those digits were _sampled_ or _unsampled_; in that case, if a digit is unsampled, its unsampled status can be noted in a way that distinguishes it from sampled digits (e.g., by using the `None` keyword in Python, or the number &minus;1, or by storing a separate bit array indicating which bits are sampled and unsampled).  The base in which all the digits are stored (such as base 10 for decimal or base 2 for binary) is arbitrary.  The fractional part's digits form a so-called _digit expansion_ (e.g., _binary expansion_ in the case of binary or base-2 digits).  Digits beyond those stored in the fractional part are unsampled.
 
     For example, if the fractional part stores the base-10 digits \[1, 3, 5\], in that order, then it represents a random number in the interval \[0.135, 0.136\], reflecting the fact that the digits between 0.135 and 0.136 are unknown.
-- An optional _integer part_ (more specifically, the integer part [floor] of the number's absolute value).
+- An optional _integer part_ (more specifically, the integer part of the number's absolute value, that is, `floor(abs(x))`).
 - An optional _sign_ (positive or negative).
 
 If an implementation cares only about PSRNs in the interval [0, 1], it can store only a fractional part; in this case, the unstored integer part and sign are assumed to be 0 and positive, respectively.
