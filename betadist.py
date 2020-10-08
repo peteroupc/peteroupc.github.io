@@ -246,25 +246,6 @@ def psrn_less_than_rational_01(psrn1, rat):
         pt *= 2
         index += 1
 
-def _add_neg_power_of_base(psrn, pwr, digits=2, treat_as_abs=False):
-    """ Adds digits^(-pwr) to a PSRN. """
-    if pwr <= 0:
-        psrn[1] += 1 << (-pwr)
-        return psrn
-    i = pwr - 1
-    incr = -1 if psrn[0] < 0 and not treat_as_abs else 1
-    while i >= 0:
-        psrn[2][i] += incr
-        if psrn[2][i] < 0:
-            psrn[2][i] += digits
-        elif psrn[2][i] >= digits:
-            psrn[2][i] -= digits
-        else:
-            return psrn
-        i -= 1
-    psrn[1] += incr
-    return psrn
-
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -344,13 +325,10 @@ def multiply_psrns(psrn1, psrn2, digits=2):
             pw = rv - (midmax - small)
             newdigits = 0
             b = large - midmax
-            # print(["bounds",(b-1-0,(b-1-0)+1),(b-1-1,(b-1-1)+1),(b-1-2,(b-1-2)+1)])
             y = random.randint(0, b - 1)
             while True:
                 lowerbound = b - 1 - pw
                 upperbound = (b - 1 - pw) + 1
-                # if rv==midmax-small:
-                #   print([newdigits, y,"pw",pw,"b",b,lowerbound,upperbound])
                 if y < lowerbound:
                     # Success
                     sret = midmax * (digits ** newdigits) + pw
@@ -422,76 +400,45 @@ def add_psrns(psrn1, psrn2, digits=2):
     large = (frac1 + 1) * psrn1[0] + (frac2 + 1) * psrn2[0]
     minv = min(small, mid1, mid2, large)
     maxv = max(small, mid1, mid2, large)
-    cpsrn = [1, 0, [0 for i in range(digitcount)]]
     while True:
         rv = random.randint(0, 1)
-        success = False
-        extradigits = []
-        if rv == 0:
-            # Left side of sum density; rising triangular
-            pw = 0
-            newdigits = 0
-            b = 1
-            y = random.randint(0, b - 1)
-            while True:
-                lowerbound = pw
-                upperbound = pw + 1
-                if y < lowerbound:
-                    # Success
-                    if minv >= 0:
-                        sret = minv * (digits ** newdigits) + pw
-                    else:
-                        sret = (maxv - 1) * (digits ** newdigits) + pw
-                    cpsrn[0] = -1 if sret < 0 else 1
-                    sret = abs(sret)
-                    for i in range(digitcount + newdigits):
-                        idx = (digitcount + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = abs(sret) % digits
-                        sret //= digits
-                    cpsrn[1] = abs(sret)
-                    return cpsrn
-                elif y > upperbound:
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
-        elif rv == 1:
-            # Right side of sum density; falling triangular
-            pw = 0
-            newdigits = 0
-            b = 1
-            px = []
-            y = random.randint(0, b - 1)
-            while True:
+        pw = random.randint(0, digits - 1)
+        newdigits = 1
+        b = digits
+        y = random.randint(0, digits - 1)
+        while True:
+            if rv == 1:
                 lowerbound = b - 1 - pw
-                upperbound = (b - 1 - pw) + 1
-                if y < lowerbound:
-                    # Success
+            else:
+                lowerbound = pw
+            if y < lowerbound:
+                # Success
+                if rv == 1:
                     if minv >= 0:
                         sret = (minv + 1) * (digits ** newdigits) + pw
                     else:
                         sret = (maxv - 1) * (digits ** newdigits) - pw
-                    cpsrn[0] = -1 if sret < 0 else 1
-                    sret = abs(sret)
-                    for i in range(digitcount + newdigits):
-                        idx = (digitcount + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = abs(sret)
-                    return cpsrn
-                elif y > upperbound:
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
+                else:
+                    if minv >= 0:
+                        sret = minv * (digits ** newdigits) + pw
+                    else:
+                        sret = (maxv - 1) * (digits ** newdigits) + pw
+                cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
+                cpsrn[0] = -1 if sret < 0 else 1
+                sret = abs(sret)
+                for i in range(digitcount + newdigits):
+                    idx = (digitcount + newdigits) - 1 - i
+                    cpsrn[2][idx] = abs(sret) % digits
+                    sret //= digits
+                cpsrn[1] = abs(sret)
+                return cpsrn
+            elif y > lowerbound + 1:
+                # Rejected
+                break
+            pw = pw * digits + random.randint(0, digits - 1)
+            y = y * digits + random.randint(0, digits - 1)
+            b *= digits
+            newdigits += 1
 
 def rayleigh(bern, s=1):
     k = 0

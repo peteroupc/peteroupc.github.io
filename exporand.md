@@ -1015,7 +1015,7 @@ There are some open questions on PSRNs:
 
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1?
 2. Are there constructions for PSRNs other than for cases given earlier in this document?
-3. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic**](#Arithmetic)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as multiplication, division, etc.?
+3. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic**](#Arithmetic)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
