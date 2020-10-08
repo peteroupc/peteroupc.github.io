@@ -128,12 +128,12 @@ The most trivial example of a PSRN is that of the uniform distribution.
 - Flajolet et al. (2010)<sup>[**(7)**](#Note7)</sup> use the term _geometric bag_ to refer to a uniform PSRN in the interval [0, 1] that stores binary (base-2) digits, some of which may be unsampled.  In this case, the PSRN can consist of just a fractional part, which can be implemented as described earlier.
 - (Karney 2014)<sup>[**(1)**](#Note1)</sup> uses the term _u-rand_ to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part's digits is arbitrary, but Karney's concept only contemplates sampling digits from left to right without any gaps.
 
-Each additional digit of a uniform PSRN's fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup>[**(9)**](#Note9)</sup> in the binary case.
+Each additional digit of a uniform PSRN's fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup>[**(9)**](#Note9)</sup> in the binary case.  A PSRN with this property is called a **uniform PSRN** in this document, even if was generated using a non-uniform random sampling algorithm (such as Karney's algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniformly-distributed random number in a given interval.  For example, if the PSRN is 3.356..., then it represents a random number that is uniformly distributed in the interval [3.356, 3.357].)
 
 <a id=Exponential_Partially_Sampled_Random_Numbers></a>
 ### Exponential Partially-Sampled Random Numbers
 
-In this document, a exponential PSRN (or _e-rand_, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.
+In this document, an **exponential PSRN** (or **_e-rand_**, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random number in a given interval.)
 
 Algorithms for sampling e-rands are given in the section "Algorithms for the Beta and Exponential Distributions".
 
@@ -300,6 +300,7 @@ To implement these probabilities using just random bits, the sampler uses two al
 <a id=Arithmetic_with_PSRNs></a>
 ## Arithmetic with PSRNs
 &nbsp;
+
 <a id=In_General></a>
 ### In General
 
@@ -1267,7 +1268,7 @@ There are some open questions on PSRNs:
 
 1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1?
 2. Are there constructions for PSRNs other than for cases given earlier in this document?
-3. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic**](#Arithmetic)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
+3. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
