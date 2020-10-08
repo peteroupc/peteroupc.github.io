@@ -1531,7 +1531,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Equivalence of SampleGeometricBag Algorithms</h3>
 
-<p>For the <strong>SampleGeometricBag</strong>, there are two versions: one for binary (base 2) and one for other bases.  Here is why these two versions are equivalent in the binary case.  Step 2 of the first algorithm samples a temporary random number <em>N</em>.  This can be implemented by generating unbiased random bits until a zero is generated this way.  There are three cases relevant here.</p>
+<p>For the <strong>SampleGeometricBag</strong>, there are two versions: one for binary (base 2) and one for other bases.  Here is why these two versions are equivalent in the binary case.  Step 2 of the first algorithm samples a temporary random number <em>N</em>.  This can be implemented by generating unbiased random bits (that is, each bit is either 0 or 1, chosen with equal probability) until a zero is generated this way.  There are three cases relevant here.</p>
 
 <ul>
 <li>The generated bit is one, which will occur at a 50% chance. This means the bit position is skipped and the algorithm moves on to the next position.  In algorithm 3, this corresponds to moving to step 3 because <strong>a</strong>&#39;s fractional part is equal to <strong>b</strong>&#39;s, which likewise occurs at a 50% chance compared to the fractional parts being unequal (since <strong>a</strong> is fully built up in the course of the algorithm).</li>

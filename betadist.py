@@ -247,7 +247,7 @@ def psrn_less_than_rational_01(psrn1, rat):
         index += 1
 
 def multiply_psrns(psrn1, psrn2, digits=2):
-    """ Multiplies two partially-sampled random numbers.
+    """ Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
             after the point, starting with the first.
@@ -300,9 +300,7 @@ def multiply_psrns(psrn1, psrn2, digits=2):
             b = midmin - small
             y = random.randint(0, b - 1)
             while True:
-                lowerbound = pw
-                upperbound = pw + 1
-                if y < lowerbound:
+                if y < pw:
                     # Success
                     sret = small * (digits ** newdigits) + pw
                     for i in range(digitcount * 2 + newdigits):
@@ -313,7 +311,7 @@ def multiply_psrns(psrn1, psrn2, digits=2):
                         sret //= digits
                     cpsrn[1] = sret
                     return cpsrn
-                elif y > upperbound:
+                elif y > pw + 1:  # Greater than upper bound
                     # Rejected
                     break
                 pw = pw * digits + random.randint(0, digits - 1)
@@ -328,7 +326,6 @@ def multiply_psrns(psrn1, psrn2, digits=2):
             y = random.randint(0, b - 1)
             while True:
                 lowerbound = b - 1 - pw
-                upperbound = (b - 1 - pw) + 1
                 if y < lowerbound:
                     # Success
                     sret = midmax * (digits ** newdigits) + pw
@@ -340,12 +337,11 @@ def multiply_psrns(psrn1, psrn2, digits=2):
                         sret //= digits
                     cpsrn[1] = sret
                     return cpsrn
-                elif y > upperbound:
+                elif y > lowerbound + 1:  # Greater than upper bound
                     # Rejected
                     break
-                d = random.randint(0, digits - 1)
+                pw = pw * digits + random.randint(0, digits - 1)
                 y = y * digits + random.randint(0, digits - 1)
-                pw = pw * digits + d
                 b *= digits
                 newdigits += 1
         else:
@@ -358,7 +354,7 @@ def multiply_psrns(psrn1, psrn2, digits=2):
             return cpsrn
 
 def add_psrns(psrn1, psrn2, digits=2):
-    """ Adds two partially-sampled random numbers.
+    """ Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
             after the point, starting with the first.
