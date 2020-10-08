@@ -221,7 +221,7 @@ As more and more independent random numbers, generated the same way, are added t
         end
     END METHOD
 
-Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup>[**(13)**](#Note13)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is min(1, 2/`alpha` - 1).  The result of `GeometricStable` is a symmetric Linnik distribution if `tau = 0`, or a Mittag&ndash;Leffler distribution if `tau = 1` and `alpha < 1`.
+Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup>[**(13)**](#Note13)</sup>.  Here, `alpha` is in (0, 2], `lamda` is greater than 0, and `tau`'s absolute value is not more than min(1, 2/`alpha` - 1).  The result of `GeometricStable` is a symmetric Linnik distribution if `tau = 0`, or a Mittag&ndash;Leffler distribution if `tau = 1` and `alpha < 1`.
 
     METHOD GeometricStable(alpha, lamda, tau)
        rho = alpha*(1-tau)/2
@@ -396,7 +396,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - <small><sup id=Note10>(10)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
 - <small><sup id=Note11>(11)</sup> A. Stuart, "Gamma-distributed products of independent random variables", _Biometrika_ 49, 1962.</small>
 - <small><sup id=Note12>(12)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-- <small><sup id=Note13>(13)</sup> Tomasz J. Kozubowski, "Computer simulation of geometric stable distributions", _Journal of Computational and Applied Mathematics_ 116(2), 2000.</small>
+- <small><sup id=Note13>(13)</sup> Tomasz J. Kozubowski, "[**Computer simulation of geometric stable distributions**](https://www.sciencedirect.com/science/article/pii/S0377042799003180)", _Journal of Computational and Applied Mathematics_ 116(2), pp. 221-229, 2000. [https://doi.org/10.1016/S0377-0427(99](https://doi.org/10.1016/S0377-0427(99))00318-0</small>
 - <small><sup id=Note14>(14)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
 - <small><sup id=Note15>(15)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 - <small><sup id=Note16>(16)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
