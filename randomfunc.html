@@ -1394,7 +1394,7 @@ END METHOD
 
 <p>In this document, <code>Expo(lamda)</code> is an exponentially-distributed random number with the rate <code>lamda</code>.</p>
 
-<p>In the pseudocode below, <code>ExpoRatio</code> generates an exponential random number (in the form of a ratio) given the rate <code>rx</code>/<code>ry</code> (or scale <code>ry</code>/<code>rx</code>) and the base <code>base</code>.  <code>ExpoNumerator</code> generates the numerator of an exponential random number with rate 1 given that number&#39;s denominator.  The algorithm is due to von Neumann (1951)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  Exponential random numbers can also be partially sampled; for more information see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Exponential Random Numbers</strong></a>&quot;.</p>
+<p>The pseudocode below shows two algorithms. The first, <code>ExpoRatio</code>, generates an exponential random number (in the form of a ratio) given the rate <code>rx</code>/<code>ry</code> (or scale <code>ry</code>/<code>rx</code>) and the base <code>base</code>.  <code>ExpoNumerator</code> generates the numerator of an exponential random number with rate 1 given that number&#39;s denominator.  The algorithm is due to von Neumann (1951)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  The second algorithm, <code>ExpoExact</code>, samples an exponential random number given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also (Morina et al. 2019)<sup><a href="#Note87"><strong>(87)</strong></a></sup>; &lt;<Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.&gt;&gt;.</p>
 
 <pre>METHOD ExpoRatio(base, rx, ry)
     // Generates a numerator and denominator of
@@ -1421,7 +1421,46 @@ METHOD ExpoNumerator(denom)
    end
    return count
 END METHOD
+
+METHOD ZeroOrOneExpMinus(x, y)
+  // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
+  if y &lt;= 0 or x&lt;0: return error
+  if x==0: return 1 // exp(0) = 1
+  if x &gt; y
+    xf = floor(x/y)
+    x = mod(x, y)
+    if x&gt;0 and ZeroOrOneExpMinus(x, y) == 0: return 0
+    for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
+    return 1
+  end
+  r = 1
+  oy = y
+  while true
+    if ZeroOrOne(x, y) == 0: return r
+    r=1-r; y = y + oy
+  end
+END METHOD
+
+METHOD ExpoExact(rx, ry, precision)
+   ret=0
+   for i in 1..precision
+    // This loop adds to ret with probability 1/(exp(2^-prec)+1).
+    // References: Alg. 6 of Morina et al. 2019; Canonne et al. 2020.
+    denom=pow(2,i)*ry
+    while true
+       if RNDINT(1)==0: break
+       if ZeroOrOneExpMinus(rx, denom) == 1:
+         ret=ret+MakeRatio(1,pow(2,i))
+    end
+   end
+   while ZeroOrOneExpMinus(rx,ry)==1: ret=ret+1
+   return ret
+END METHOD
 </pre>
+
+<blockquote>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random number, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup><a href="#Note88"><strong>(88)</strong></a></sup>.</p>
+</blockquote>
 
 <p><a id=Poisson_Distribution></a></p>
 
@@ -2202,7 +2241,7 @@ above for returning more than one random number in one call.</p>
 
 <p>A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values <code>mini</code> and <code>maxi</code>.  Example: <code>mini + (maxi - mini) * num</code>.</p>
 
-<p>For further examples and distributions, see (Devroye 1996)<sup><a href="#Note67"><strong>(67)</strong></a></sup> and (Crooks 2019)<sup><a href="#Note87"><strong>(87)</strong></a></sup>.</p>
+<p>For further examples and distributions, see (Devroye 1996)<sup><a href="#Note67"><strong>(67)</strong></a></sup> and (Crooks 2019)<sup><a href="#Note89"><strong>(89)</strong></a></sup>.</p>
 
 <p>Most commonly used:
 <small></p>
@@ -2597,7 +2636,9 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note84>(84)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></li>
 <li><small><sup id=Note85>(85)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning randomization features provided by SQL dialects.</small></li>
 <li><small><sup id=Note86>(86)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></li>
-<li><small><sup id=Note87>(87)</sup> Crooks, G.E., <a href="https://threeplusone.com/pubs/FieldGuide.pdf"><strong><em>Field Guide to Continuous Probability Distributions</em></strong></a>, 2019.</small></li>
+<li><small><sup id=Note87>(87)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019</small></li>
+<li><small><sup id=Note88>(88)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+<li><small><sup id=Note89>(89)</sup> Crooks, G.E., <a href="https://threeplusone.com/pubs/FieldGuide.pdf"><strong><em>Field Guide to Continuous Probability Distributions</em></strong></a>, 2019.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

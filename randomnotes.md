@@ -14,7 +14,6 @@
         - [**Stable Distribution**](#Stable_Distribution)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
         - [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas)
-        - [**Exponential Distribution: Another Error-Bounded Algorithm**](#Exponential_Distribution_Another_Error_Bounded_Algorithm)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Implementation of `erf`**](#Implementation_of_erf)
@@ -41,11 +40,8 @@ There are a number of methods for sampling the normal distribution. An applicati
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
 2. In the _Box&ndash;Müller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
 3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
-4. The following are approximations to the normal distribution:
-    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers (see Note 13), subtracted by 6 * `sigma`. See `NormalCLT` below, which also includes an optional step to "warp" the random number for better accuracy (Kabal 2000/2019)<sup>[**(2)**](#Note2)</sup> See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(3)**](#Note3)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
-    - [**Inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(4)**](#Note4)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
 
-For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(5)**](#Note5)</sup>, and (Malik and Hemani 2016)<sup>[**(6)**](#Note6)</sup>.
+For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)</sup>, and (Malik and Hemani 2016)<sup>[**(3)**](#Note3)</sup>.
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
@@ -72,24 +68,13 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(5)**](#Note5)
       end
     END METHOD
 
-    METHOD NormalCLT(mu, sigma)
-      sum = 0
-      for i in 0...12: sum=sum+RNDRANGEMaxExc(0, sigma)
-      sum = sum - 6*sigma
-      // Optional: "Warp" the sum for better accuracy
-      ssq = sum * sum
-      sum = ((((0.0000001141*ssq - 0.0000005102) *
-                ssq + 0.00007474) *
-                ssq + 0.0039439) *
-                ssq + 0.98746) * sum
-      return sum + mu
-     end
-    END METHOD
-
 > **Notes:**
 >
 > 1. The _standard normal distribution_ is implemented as `Normal(0, 1)`.
-> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, an improved version in (Du et al. 2020)<sup>[**(7)**](#Note7)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(8)**](#Note8)</sup> that are used above all in _lattice-based cryptography_.
+> 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, an improved version in (Du et al. 2020)<sup>[**(4)**](#Note4)</sup>, as well as so-called "constant-time" methods such as (Micciancio and Walter 2017)<sup>[**(5)**](#Note5)</sup> that are used above all in _lattice-based cryptography_.
+> 3. The following are some approximations to the normal distribution that papers have suggested:
+>    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`. (Kabal 2000/2019)<sup>[**(6)**](#Note6)</sup> "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution" on Wikipedia**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution).  D. Thomas (2014)<sup>[**(7)**](#Note7)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` uniform random numbers as follows: `RNDU01() - RNDU01() + RNDU01() - ...`.
+>    - Approximate [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(8)**](#Note8)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
@@ -396,65 +381,17 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **product copula**, where each number is a separately generated `RNDU01()` (indicating no dependence between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(15)**](#Note15)</sup>.
 
-<a id=Exponential_Distribution_Another_Error_Bounded_Algorithm></a>
-#### Exponential Distribution: Another Error-Bounded Algorithm
-
-The following method samples from an exponential distribution with a &lambda; parameter greater than 0, expressed as `lnum`/`lden` (where the sampling occurs within an error tolerance of 2<sup>`-precision`</sup>).  For more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)".
-
-    METHOD ZeroOrOneExpMinus(x, y)
-      // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
-      if y <= 0 or x<0: return error
-      if x==0: return 1 // exp(0) = 1
-      if x > y
-        xf = floor(x/y)
-        x = mod(x, y)
-        if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
-        for i in 0...xf
-          if ZeroOrOneExpMinus(1,1) == 0: return 0
-        end
-        return 1
-      end
-      r = 1
-      oy = y
-      while true
-        if ZeroOrOne(x, y) == 0: return r
-        r=1-r
-        y = y + oy
-      end
-    END METHOD
-
-    METHOD LogisticExp(lnum, lden, prec)
-        // Generates 1 with probability 1/(exp(2^-prec)+1).
-        // References: Alg. 6 of Morina et al. 2019; Carinne et al. 2020.
-        denom=pow(2,prec)*lden
-        while true
-           if RNDINT(1)==0: return 0
-           if ZeroOrOneExpMinus(lnum, denom) == 1: return 1
-        end
-    END METHOD
-
-    METHOD ExpoExact(lnum, lden, precision)
-       ret=0
-       for i in 1..precision
-        if LogisticExp(lnum, lden, i)==1: ret=ret+pow(2,-i)
-       end
-       while ZeroOrOneExpMinus(lnum,lden)==1: ret=ret+1
-       return ret
-    END METHOD
-
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
-
 <a id=Notes></a>
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note2>(2)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
-- <small><sup id=Note3>(3)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
-- <small><sup id=Note4>(4)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
-- <small><sup id=Note5>(5)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
-- <small><sup id=Note6>(6)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
-- <small><sup id=Note7>(7)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
-- <small><sup id=Note8>(8)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note2>(2)</sup> Thomas, D., et al., "Gaussian Random Number Generators", _ACM Computing Surveys_ 39(4), 2007.</small>
+- <small><sup id=Note3>(3)</sup> Malik, J.S., Hemani, A., "Gaussian random number generation: A survey on hardware architectures", _ACM Computing Surveys_ 49(3), 2016.</small>
+- <small><sup id=Note4>(4)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
+- <small><sup id=Note5>(5)</sup> Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note6>(6)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
+- <small><sup id=Note7>(7)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
+- <small><sup id=Note8>(8)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
 - <small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 - <small><sup id=Note10>(10)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
 - <small><sup id=Note11>(11)</sup> A. Stuart, "Gamma-distributed products of independent random variables", _Biometrika_ 49, 1962.</small>
@@ -604,7 +541,7 @@ There are many ways to describe closeness between two distributions.  One sugges
 > **Examples:**
 >
 > 1. Generating an exponential random number via `-ln(RNDU01())` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Müller transformation.
-> 2. Generating an exponential random number in the manner described in [**another section of this page**](#Exponential_Distribution_Another_Error_Bounded_Algorithm) is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).  See also (Oberhoff 2018)<sup>[**(36)**](#Note36)</sup>.
+> 2. Generating an exponential random number using the `ExpoExact` method from the section "[**Exponential Distribution**](https://peteroupc.github.io/randomfunc.md#Exponential_Distribution)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).  See also (Oberhoff 2018)<sup>[**(36)**](#Note36)</sup>.
 > 3. Examples of _approximate algorithms_ include generating a Gaussian random number via a sum of `RNDU01()`, or most cases of generating a random integer via modulo reduction (see "[**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)").
 
 <a id=License></a>

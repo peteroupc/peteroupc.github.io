@@ -600,3 +600,12 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
         if bp1() == 1:
             # Accepted
             return bag
+
+if __name__ == "__main__":
+    import scipy.stats as st
+
+    bern = bernoulli.Bernoulli()
+    sample = [rayleigh(bern) for i in range(10000)]
+    ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
+    print("Kolmogorov-Smirnov results for rayleigh:")
+    print(ks)

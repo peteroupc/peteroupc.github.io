@@ -104,7 +104,7 @@ An exponential random number is commonly generated as follows: `-ln(1 - RNDU01On
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
 
-In this document, a _partially-sampled random number_ (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random number that _exactly_ follows a continuous distribution, _with arbitrary precision_, and _without floating-point arithmetic_ (see "Properties" later in this section).
+In this document, a _partially-sampled random number_ (PSRN) is a data structure that stores a real number of unlimited precision, but whose contents are sampled only when necessary. PSRNs open the door to algorithms that sample a random number that "exactly" follows a continuous distribution, _with arbitrary precision_, and _without floating-point arithmetic_ (see "Properties" later in this section).
 
 PSRNs specified here consist of the following three things:
 

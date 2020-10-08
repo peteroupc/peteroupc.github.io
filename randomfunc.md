@@ -1126,7 +1126,7 @@ The _exponential distribution_ uses a parameter known as &lambda;, the rate, or 
 
 In this document, `Expo(lamda)` is an exponentially-distributed random number with the rate `lamda`.
 
-In the pseudocode below, `ExpoRatio` generates an exponential random number (in the form of a ratio) given the rate `rx`/`ry` (or scale `ry`/`rx`) and the base `base`.  `ExpoNumerator` generates the numerator of an exponential random number with rate 1 given that number's denominator.  The algorithm is due to von Neumann (1951)<sup>[**(30)**](#Note30)</sup>.  Exponential random numbers can also be partially sampled; for more information see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)".
+The pseudocode below shows two algorithms. The first, `ExpoRatio`, generates an exponential random number (in the form of a ratio) given the rate `rx`/`ry` (or scale `ry`/`rx`) and the base `base`.  `ExpoNumerator` generates the numerator of an exponential random number with rate 1 given that number's denominator.  The algorithm is due to von Neumann (1951)<sup>[**(30)**](#Note30)</sup>.  The second algorithm, `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also (Morina et al. 2019)<sup>[**(87)**](#Note87)</sup>; <<Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.>>.
 
     METHOD ExpoRatio(base, rx, ry)
         // Generates a numerator and denominator of
@@ -1153,6 +1153,43 @@ In the pseudocode below, `ExpoRatio` generates an exponential random number (in 
        end
        return count
     END METHOD
+
+    METHOD ZeroOrOneExpMinus(x, y)
+      // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
+      if y <= 0 or x<0: return error
+      if x==0: return 1 // exp(0) = 1
+      if x > y
+        xf = floor(x/y)
+        x = mod(x, y)
+        if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
+        for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
+        return 1
+      end
+      r = 1
+      oy = y
+      while true
+        if ZeroOrOne(x, y) == 0: return r
+        r=1-r; y = y + oy
+      end
+    END METHOD
+
+    METHOD ExpoExact(rx, ry, precision)
+       ret=0
+       for i in 1..precision
+        // This loop adds to ret with probability 1/(exp(2^-prec)+1).
+        // References: Alg. 6 of Morina et al. 2019; Canonne et al. 2020.
+        denom=pow(2,i)*ry
+        while true
+           if RNDINT(1)==0: break
+           if ZeroOrOneExpMinus(rx, denom) == 1:
+             ret=ret+MakeRatio(1,pow(2,i))
+        end
+       end
+       while ZeroOrOneExpMinus(rx,ry)==1: ret=ret+1
+       return ret
+    END METHOD
+
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(88)**](#Note88)</sup>.
 
 <a id=Poisson_Distribution></a>
 ### Poisson Distribution
@@ -1814,7 +1851,7 @@ A &dagger; symbol next to a distribution means the random number can be shifted 
 
 A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
 
-For further examples and distributions, see (Devroye 1996)<sup>[**(67)**](#Note67)</sup> and (Crooks 2019)<sup>[**(87)**](#Note87)</sup>.
+For further examples and distributions, see (Devroye 1996)<sup>[**(67)**](#Note67)</sup> and (Crooks 2019)<sup>[**(89)**](#Note89)</sup>.
 
 Most commonly used:
 <small>
@@ -2162,7 +2199,9 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note84>(84)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note85>(85)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 - <small><sup id=Note86>(86)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
-- <small><sup id=Note87>(87)</sup> Crooks, G.E., [**_Field Guide to Continuous Probability Distributions_**](https://threeplusone.com/pubs/FieldGuide.pdf), 2019.</small>
+- <small><sup id=Note87>(87)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019</small>
+- <small><sup id=Note88>(88)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note89>(89)</sup> Crooks, G.E., [**_Field Guide to Continuous Probability Distributions_**](https://threeplusone.com/pubs/FieldGuide.pdf), 2019.</small>
 
 <a id=Appendix></a>
 ## Appendix
