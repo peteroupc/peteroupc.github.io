@@ -79,7 +79,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
 
-The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(9)**](#Note9)</sup> (which is an approximate but simple algorithm) and (Liu et al. 2015)<sup>[**(10)**](#Note10)</sup>.  Usually, the number expresses either&mdash;
+The following method generates a random number that follows a _gamma distribution_ and is based on Marsaglia and Tsang's method from 2000<sup>[**(9)**](#Note9)</sup> and (Liu et al. 2015)<sup>[**(10)**](#Note10)</sup>.  Usually, the number expresses either&mdash;
 
 - the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of `meanLifetime`, or
 - a random amount of time (in days, hours, or other fixed units) that passes until as many events as `meanLifetime` happen.
@@ -392,7 +392,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - <small><sup id=Note6>(6)</sup> Kabal, P., "Generating Gaussian Pseudo-Random Variates", McGill University, 2000/2019.</small>
 - <small><sup id=Note7>(7)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In _2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines_ (pp. 149-156).</small>
 - <small><sup id=Note8>(8)</sup> Luu, T., "Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation", Dissertation, University College London, 2016.</small>
-- <small><sup id=Note9>(9)</sup> "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
+- <small><sup id=Note9>(9)</sup> Marsaglia, G., Tsang, W.W., "A simple method for generating gamma variables", _ACM Transactions on Mathematical Software_ 26(3), 2000.</small>
 - <small><sup id=Note10>(10)</sup> Liu, C., Martin, R., Syring, N., "[**Simulating from a gamma distribution with small shape parameter**](https://arxiv.org/abs/1302.1884v3)", arXiv:1302.1884v3  [stat.CO], 2015.</small>
 - <small><sup id=Note11>(11)</sup> A. Stuart, "Gamma-distributed products of independent random variables", _Biometrika_ 49, 1962.</small>
 - <small><sup id=Note12>(12)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>

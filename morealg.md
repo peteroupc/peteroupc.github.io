@@ -42,6 +42,15 @@ An application of the continued fraction algorithm is the following algorithm th
 2. With probability _kp_/(1 + _kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the algorithm returns 1, return 0.  Otherwise, go to step 2.
 
+<a id=Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1></a>
+### Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).
+
+1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.
+2. Set _k_ to 1 and _u_ to _ret_.
+3. Generate a uniform(0, 1) random number _v_.
+4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
+5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
+
 <a id=Arbitrary_Precision_Samplers></a>
 ## Arbitrary-Precision Samplers
 
