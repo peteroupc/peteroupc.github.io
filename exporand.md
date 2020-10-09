@@ -378,6 +378,22 @@ The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
 11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
+The following algorithm shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
+
+1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
+2. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.
+3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a** is non-negative and **b** is less than 0 or if **a** is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac).
+4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Set _bfp_ to 0. Then, do the following _digitcount_ many times: Set _digit_ to floor(_fraction_ \* _base_), then set _fraction_ to (_fraction_\*_base_)&minus;_digit_, then set _bfp_ to _bfp_\*_base_+_digit_.
+5. If _fraction_ is 0, then it was detected to be a _base_-adic rational number, which enables an "exact" multiplication.  In this case, do the following:
+    1. Set _s_ to _afp_\*_bfp_.
+    2. Transfer the (_digitcount_\*2) least significant digits of _s_ to _ret_'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_digitcount_\*2</sup>).  (For example, if _base_ is 10, (_digitcount_\*2) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.
+6. If _fraction_ is not 0, then it was detected to be "inexact" and a different approach is needed.  Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
+7. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_lower_\*_ddc_)).
+8. Set _rvlower_ to _rv_/_ddc_ (as a rational number), then set _rvupper_ to (_rv_+1)/_ddc_ (as a rational number).
+9. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_, then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part,  Then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_.
+10. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 6.
+11. Multiply _rv_ and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then go to step 8.
+
 <a id=Building_Blocks></a>
 ## Building Blocks
 
@@ -998,6 +1014,77 @@ def add_psrns(psrn1, psrn2, digits=2):
             y = y * digits + random.randint(0, digits - 1)
             b *= digits
             newdigits += 1
+
+def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
+    """ Multiplies a partially-sampled random number by a fraction.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the first PSRN.  Fractional part is a list of digits
+            after the point, starting with the first.
+        fraction: Fraction to multiply by.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    if psrn1[0] == None or psrn1[1] == None:
+        raise ValueError
+    for i in range(len(psrn1[2])):
+        psrn1[2][i] = (
+            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
+        )
+    digitcount = len(psrn1[2])
+    if digitcount == 0:
+        # Make sure fractional part has at least one digit, to simplify matters
+        psrn1[2].append(random.randint(0, digits - 1))
+        digitcount += 1
+    # Perform multiplication
+    frac1 = psrn1[1]
+    fracsign = -1 if fraction < 0 else 1
+    absfrac = abs(fraction)
+    frac2 = int(absfrac)
+    fraction=abs(absfrac) - frac2
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn1[2][i]
+    for i in range(digitcount):
+        digit = int(fraction * digits)
+        fraction = (fraction * digits) - digit
+        frac2 = frac2 * digits + digit
+    #print(["Multiplying",frac1/(digits**digitcount),frac2/(digits**digitcount)])
+    #print(["small",small/(digits**(digitcount*2))])
+    if fraction == 0:
+       # Result is "exact", notably when fraction
+       # is a 'digits'-adic rational
+       cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
+       cpsrn[0] = psrn1[0] * fracsign
+       sret = frac1 * frac2
+       for i in range(digitcount * 2):
+           cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
+           sret //= digits
+       cpsrn[1] = sret
+       return cpsrn
+    # Result is "inexact", and "small" expresses a lower bound
+    while True:
+      dcount=digitcount
+      ddc=digits**dcount
+      small1 = Fraction(frac1, ddc) * absfrac
+      large1 = Fraction(frac1 + 1, ddc) * absfrac
+      dc=int(small1*ddc)
+      dc2=int(large1*ddc)+1
+      rv=random.randint(dc, dc2 - 1)
+      while True:
+       rvsmall=Fraction(rv,ddc)
+       rvlarge=Fraction(rv+1,ddc)
+       if rvsmall>=small1 and rvlarge<large1:
+          cpsrn = [1, 0, [0 for i in range(dcount)]]
+          cpsrn[0] = psrn1[0] * fracsign
+          sret = rv
+          for i in range(dcount):
+           cpsrn[2][dcount - 1 - i] = sret % digits
+           sret //= digits
+          cpsrn[1] = sret
+          return cpsrn
+       elif rvsmall>large1 or rvlarge<small1:
+          break
+       else:
+          rv=rv*digits+random.randint(0,digits-1)
+          dcount+=1
+          ddc*=digits
 ```
 
 <a id=Exponential_Sampler_Extension></a>
