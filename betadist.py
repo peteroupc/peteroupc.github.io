@@ -362,6 +362,7 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
         digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
     if psrn1[0] == None or psrn1[1] == None:
         raise ValueError
+    fraction = Fraction(fraction)
     for i in range(len(psrn1[2])):
         psrn1[2][i] = (
             random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
@@ -376,7 +377,7 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     fracsign = -1 if fraction < 0 else 1
     absfrac = abs(fraction)
     frac2 = int(absfrac)
-    fraction = abs(absfrac) - frac2
+    fraction = absfrac - frac2
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
