@@ -521,18 +521,12 @@
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>To simplify matters: If <strong>a</strong> has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.</li>
 <li>Create a uniform PSRN, call it <em>ret</em>.  Set <em>ret</em>&#39;s sign to be &minus;1 if <strong>a</strong> is non-negative and <strong>b</strong> is less than 0 or if <strong>a</strong> is negative and <strong>b</strong> is 0 or greater, or 1 otherwise, then set <em>ret</em>&#39;s integer part to 0.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(_absfrac).</li>
-<li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Set <em>bfp</em> to 0. Then, do the following <em>digitcount</em> many times: Set <em>digit</em> to floor(<em>fraction</em> * <em>base</em>), then set <em>fraction</em> to (<em>fraction</em>*<em>base</em>)&minus;<em>digit</em>, then set <em>bfp</em> to <em>bfp</em>*<em>base</em>+<em>digit</em>.</li>
-<li>If <em>fraction</em> is 0 and if <strong>a</strong> and <strong>b</strong> are both negative or both non-negative, then it was detected to be a <em>base</em>-adic rational number, which enables an &quot;exact&quot; multiplication.  In this case, do the following:
-
-<ol>
-<li>Set <em>s</em> to <em>afp</em>*<em>bfp</em>.</li>
-<li>Transfer the (<em>digitcount</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)  Then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>digitcount</em>*2</sup>).  (For example, if <em>base</em> is 10, (<em>digitcount</em>*2) is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</li>
-</ol></li>
+<li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)</li>
 <li>If <em>fraction</em> is not 0, then it was detected to be &quot;inexact&quot; and a different approach is needed.  Set <em>dcount</em> to <em>digitcount</em>, then set <em>ddc</em> to <em>base</em><sup><em>dcount</em></sup>, then set <em>lower</em> to (<em>afp</em>/<em>ddc</em>)*<em>absfrac</em> (using rational arithmetic), then set <em>upper</em> to (<em>afp</em>/<em>ddc</em>)*<em>absfrac</em> (again using rational arithmetic).</li>
 <li>Set <em>rv</em> to a uniform random integer in the interval [floor(<em>lower</em>*<em>ddc</em>), floor(<em>lower</em>*<em>ddc</em>)).</li>
 <li>Set <em>rvlower</em> to <em>rv</em>/<em>ddc</em> (as a rational number), then set <em>rvupper</em> to (<em>rv</em>+1)/<em>ddc</em> (as a rational number).</li>
-<li>If <em>rvlower</em> is greater than or equal to <em>lower</em> and <em>rvupper</em> is less than <em>upper</em>, then the algorithm is almost done, so do the following: Transfer the <em>dcount</em> least significant digits of <em>rv</em> to <em>ret</em>&#39;s fractional part,  Then set <em>ret</em>&#39;s integer part to floor(<em>rv</em>/<em>base</em><sup><em>dcount</em></sup>), then return <em>ret</em>.</li>
-<li>If <em>rvlower</em> is greater than <em>upper</em> or if <em>rvupper</em> is less than <em>lower</em>, go to step 6.</li>
+<li>If <em>rvlower</em> is greater than or equal to <em>lower</em> and <em>rvupper</em> is less than <em>upper</em>, then the algorithm is almost done, so do the following: Transfer the <em>dcount</em> least significant digits of <em>rv</em> to <em>ret</em>&#39;s fractional part (note that <em>ret</em>&#39;s fractional part stores digits from most to least significant),  then set <em>ret</em>&#39;s integer part to floor(<em>rv</em>/<em>base</em><sup><em>dcount</em></sup>), then return <em>ret</em>. (For example, if <em>base</em> is 10, (<em>dcount</em>) is 4, and <em>rv</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)</li>
+<li>If <em>rvlower</em> is greater than <em>upper</em> or if <em>rvupper</em> is less than <em>lower</em>, go to step 5.</li>
 <li>Multiply <em>rv</em> and <em>ddc</em> each by <em>base</em>, then add 1 to <em>dcount</em>, then add a digit chosen uniformly at random to <em>rv</em>, then go to step 8.</li>
 </ol>
 
@@ -1125,7 +1119,7 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
         digits: Digit base of PSRNs&#39; digits.  Default is 2, or binary. &quot;&quot;&quot;
     if psrn1[0] == None or psrn1[1] == None:
         raise ValueError
-    fraction=Fraction(fraction)
+    fraction = Fraction(fraction)
     for i in range(len(psrn1[2])):
         psrn1[2][i] = (
             random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
@@ -1139,52 +1133,36 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     frac1 = psrn1[1]
     fracsign = -1 if fraction &lt; 0 else 1
     absfrac = abs(fraction)
-    frac2 = int(absfrac)
-    fraction=absfrac - frac2
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
-    for i in range(digitcount):
-        digit = int(fraction * digits)
-        fraction = (fraction * digits) - digit
-        frac2 = frac2 * digits + digit
-    if fraction == 0:
-       # Result is &quot;exact&quot;, notably when fraction
-       # is a &#39;digits&#39;-adic rational
-       cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
-       cpsrn[0] = psrn1[0] * fracsign
-       sret = frac1 * frac2
-       for i in range(digitcount * 2):
-           cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
-           sret //= digits
-       cpsrn[1] = sret
-       return cpsrn
     # Result is &quot;inexact&quot;, and &quot;small&quot; expresses a lower bound
     while True:
-      dcount=digitcount
-      ddc=digits**dcount
-      small1 = Fraction(frac1, ddc) * absfrac
-      large1 = Fraction(frac1 + 1, ddc) * absfrac
-      dc=int(small1*ddc)
-      dc2=int(large1*ddc)+1
-      rv=random.randint(dc, dc2 - 1)
-      while True:
-       rvsmall=Fraction(rv,ddc)
-       rvlarge=Fraction(rv+1,ddc)
-       if rvsmall&gt;=small1 and rvlarge&lt;large1:
-          cpsrn = [1, 0, [0 for i in range(dcount)]]
-          cpsrn[0] = psrn1[0] * fracsign
-          sret = rv
-          for i in range(dcount):
-           cpsrn[2][dcount - 1 - i] = sret % digits
-           sret //= digits
-          cpsrn[1] = sret
-          return cpsrn
-       elif rvsmall&gt;large1 or rvlarge&lt;small1:
-          break
-       else:
-          rv=rv*digits+random.randint(0,digits-1)
-          dcount+=1
-          ddc*=digits
+        dcount = digitcount
+        ddc = digits ** dcount
+        small1 = Fraction(frac1, ddc) * absfrac
+        large1 = Fraction(frac1 + 1, ddc) * absfrac
+        #print([&quot;small1&quot;,float(small1),&quot;large1&quot;,float(large1)])
+        dc = int(small1 * ddc)
+        dc2 = int(large1 * ddc) + 1
+        rv = random.randint(dc, dc2 - 1)
+        while True:
+            rvsmall = Fraction(rv, ddc)
+            rvlarge = Fraction(rv + 1, ddc)
+            if rvsmall &gt;= small1 and rvlarge &lt; large1:
+                cpsrn = [1, 0, [0 for i in range(dcount)]]
+                cpsrn[0] = psrn1[0] * fracsign
+                sret = rv
+                for i in range(dcount):
+                    cpsrn[2][dcount - 1 - i] = sret % digits
+                    sret //= digits
+                cpsrn[1] = sret
+                return cpsrn
+            elif rvsmall &gt; large1 or rvlarge &lt; small1:
+                break
+            else:
+                rv = rv * digits + random.randint(0, digits - 1)
+                dcount += 1
+                ddc *= digits
 
 def add_psrns(psrn1, psrn2, digits=2):
     &quot;&quot;&quot; Adds two uniform partially-sampled random numbers.

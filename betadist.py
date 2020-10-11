@@ -376,32 +376,15 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     frac1 = psrn1[1]
     fracsign = -1 if fraction < 0 else 1
     absfrac = abs(fraction)
-    frac2 = int(absfrac)
-    fraction = absfrac - frac2
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
-    for i in range(digitcount):
-        digit = int(fraction * digits)
-        fraction = (fraction * digits) - digit
-        frac2 = frac2 * digits + digit
-    if fraction == 0 and ((psrn1[0] < 0) == (fracsign < 0)):
-        # Result is "exact", notably when fraction
-        # is a 'digits'-adic rational
-        cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
-        cpsrn[0] = psrn1[0] * fracsign
-        sret = frac1 * frac2
-        for i in range(digitcount * 2):
-            cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
-            sret //= digits
-        cpsrn[1] = sret
-        return cpsrn
     # Result is "inexact", and "small" expresses a lower bound
     while True:
         dcount = digitcount
         ddc = digits ** dcount
         small1 = Fraction(frac1, ddc) * absfrac
         large1 = Fraction(frac1 + 1, ddc) * absfrac
-        print(["small1", float(small1), "large1", float(large1)])
+        # print(["small1",float(small1),"large1",float(large1)])
         dc = int(small1 * ddc)
         dc2 = int(large1 * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
@@ -673,6 +656,8 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
             return bag
 
 if __name__ == "__main__":
+    # The following code tests some of the methods in this module.
+
     import scipy.stats as st
 
     bern = bernoulli.Bernoulli()
@@ -788,7 +773,6 @@ if __name__ == "__main__":
         if m < mn or m > mx:
             print(["mult", p, q, mn, mx, "m", m])
             raise ValueError
-        # return
         if i < 10:
             sample1 = [random.uniform(p, p2) * q for _ in range(2000)]
             sample2 = [
@@ -806,17 +790,14 @@ if __name__ == "__main__":
                     "    multiply_psrn_by_fraction_test(%d,%d,%s, Fraction(%d,%d))"
                     % (ps, pi, pfc, frac.numerator, frac.denominator)
                 )
-                # print(ks)
-                print("    # %d-%d" % (min(sample1), min(sample2)))
-                print("    # %d-%d" % (min(sample1), min(sample2)))
+                print(ks)
+                print("    # p=%s p2=%s q=%s" % (p, p2, q))
+                print("    # %s-%s" % (min(sample1), max(sample1)))
+                print("    # %s-%s" % (min(sample2), max(sample2)))
 
-    # Specific cases
     multiply_psrn_by_fraction_test(-1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2))
     multiply_psrn_by_fraction_test(-1, 0, [0, 1, 0, 1, 1, 0, 0, 0], Fraction(-1, 4))
     multiply_psrn_by_fraction_test(1, 0, [0, 1, 1, 0, 1, 1], Fraction(7, 4))
-    exit()
-
-    # Specific cases, where "exact" shortcut doesn't work currently
     multiply_psrn_by_fraction_test(-1, 2, [1, 1, 0, 1, 0, 0, 1, 1], Fraction(7, 8))
     multiply_psrn_by_fraction_test(1, 1, [0], Fraction(-4, 1))
     multiply_psrn_by_fraction_test(1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1))
@@ -852,7 +833,7 @@ if __name__ == "__main__":
             print(["p1", psrn1])
             print(["p2", psrn2])
             raise ValueError
-        if i < 10:
+        if i < 1000:
             sample1 = [
                 random.uniform(p, p2) + random.uniform(q, q2) for _ in range(2000)
             ]
@@ -868,5 +849,5 @@ if __name__ == "__main__":
                 print(
                     "    add_psrns_test(%d,%d,%s,%d,%d,%s)" % (ps, pi, pfc, qs, qi, qfc)
                 )
-                # print(st.describe(sample1))
-                # print(st.describe(sample2))
+                print("    # %s-%s" % (min(sample1), max(sample1)))
+                print("    # %s-%s" % (min(sample2), max(sample2)))
