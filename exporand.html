@@ -522,7 +522,7 @@
 <li>To simplify matters: If <strong>a</strong> has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.</li>
 <li>Create a uniform PSRN, call it <em>ret</em>.  Set <em>ret</em>&#39;s sign to be &minus;1 if <strong>a</strong> is non-negative and <strong>b</strong> is less than 0 or if <strong>a</strong> is negative and <strong>b</strong> is 0 or greater, or 1 otherwise, then set <em>ret</em>&#39;s integer part to 0.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(_absfrac).</li>
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Set <em>bfp</em> to 0. Then, do the following <em>digitcount</em> many times: Set <em>digit</em> to floor(<em>fraction</em> * <em>base</em>), then set <em>fraction</em> to (<em>fraction</em>*<em>base</em>)&minus;<em>digit</em>, then set <em>bfp</em> to <em>bfp</em>*<em>base</em>+<em>digit</em>.</li>
-<li>If <em>fraction</em> is 0, then it was detected to be a <em>base</em>-adic rational number, which enables an &quot;exact&quot; multiplication.  In this case, do the following:
+<li>If <em>fraction</em> is 0 and if <strong>a</strong> and <strong>b</strong> are both negative or both non-negative, then it was detected to be a <em>base</em>-adic rational number, which enables an &quot;exact&quot; multiplication.  In this case, do the following:
 
 <ol>
 <li>Set <em>s</em> to <em>afp</em>*<em>bfp</em>.</li>
