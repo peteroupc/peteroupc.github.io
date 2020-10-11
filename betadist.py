@@ -677,5 +677,191 @@ if __name__ == "__main__":
     bern = bernoulli.Bernoulli()
     sample = [rayleigh(bern) for i in range(10000)]
     ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
-    print("Kolmogorov-Smirnov results for rayleigh:")
-    print(ks)
+    if ks.pvalue < 1e-6:
+        print("Kolmogorov-Smirnov results for rayleigh:")
+        print(ks)
+
+    def _readpsrn(asign, aint, afrac, digits=2, minprec=None):
+        af = 0.0
+        prec = len(afrac)
+        if minprec != None:
+            prec = max(minprec, prec)
+        for i in range(prec):
+            if i >= len(afrac):
+                afrac.append(None)
+            if afrac[i] == None:
+                afrac[i] = random.randint(0, digits - 1)
+            af += afrac[i] * digits ** (-i - 1)
+        ret = af + aint
+        if ret < 0:
+            raise ValueError
+        if asign < 0:
+            ret = -ret
+        return ret
+
+    def _readpsrnend(asign, aint, afrac, digits=2, minprec=None):
+        af = 0.0
+        prec = len(afrac)
+        if minprec != None:
+            prec = max(minprec, prec)
+        for i in range(prec):
+            if i >= len(afrac):
+                afrac.append(None)
+            if afrac[i] == None:
+                afrac[i] = random.randint(0, digits - 1)
+            af += afrac[i] * digits ** (-i - 1)
+        # Add endpoint
+        af += 1 * digits ** (-(prec - 1) - 1)
+        ret = af + aint
+        if ret < 0:
+            raise ValueError
+        if asign < 0:
+            ret = -ret
+        return ret
+
+    def _readpsrn2(psrn, digits=2, minprec=None):
+        return _readpsrn(psrn[0], psrn[1], psrn[2], digits, minprec)
+
+    def _readpsrnend2(psrn, digits=2, minprec=None):
+        return _readpsrnend(psrn[0], psrn[1], psrn[2], digits, minprec)
+
+    def random_psrn():
+        asign = -1 if random.random() < 0.5 else 1
+        aint = random.randint(0, 8)
+        asize = random.randint(0, 8)
+        afrac = [random.randint(0, 1) for i in range(asize)]
+        return asign, aint, afrac
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        qs, qi, qf = random_psrn()
+        pfc = [x for x in pf]
+        qfc = [x for x in qf]
+        p = _readpsrn(ps, pi, pf)
+        p2 = _readpsrnend(ps, pi, pf)
+        q = _readpsrn(qs, qi, qf)
+        q2 = _readpsrnend(qs, qi, qf)
+        mult = multiply_psrns([ps, pi, pf], [qs, qi, qf])
+        ms, mi, mf = mult
+        m = _readpsrn2(mult, minprec=32)
+        mn = min(p * q, p2 * q, p * q2, p2 * q2)
+        mx = max(p * q, p2 * q, p * q2, p2 * q2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            print(["mult", p, q, mn, mx, m])
+            raise ValueError
+        if i < 10:
+            sample1 = [
+                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
+            ]
+            sample2 = [
+                _readpsrn2(
+                    multiply_psrns(
+                        [ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]
+                    ),
+                    minprec=32,
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if ks.pvalue < 1e-6:
+                print(["mult", ks])
+                print([sample1[0:10]])
+                print([sample2[0:10]])
+
+    def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0):
+        pfc = [x for x in pf]
+        pfcs = str(pfc)
+        p = _readpsrn(ps, pi, pf)
+        p2 = _readpsrnend(ps, pi, pf)
+        mult = multiply_psrn_by_fraction([ps, pi, pf], frac)
+        q = float(frac)
+        q2 = float(frac)
+        ms, mi, mf = mult
+        m = _readpsrn2(mult, minprec=32)
+        mn = min(p * q, p2 * q, p * q2, p2 * q2)
+        mx = max(p * q, p2 * q, p * q2, p2 * q2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            print(["mult", p, q, mn, mx, "m", m])
+            raise ValueError
+        if i < 10:
+            sample1 = [random.uniform(p, p2) * q for _ in range(2000)]
+            sample2 = [
+                _readpsrn2(
+                    multiply_psrn_by_fraction([ps, pi, [x for x in pfc]], frac),
+                    minprec=32,
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if str(pfc) != pfcs:
+                raise ValueError
+            if ks.pvalue < 1e-6:
+                print(
+                    "    multiply_psrn_by_fraction_test(%d,%d,%s, Fraction(%d,%d))"
+                    % (ps, pi, pfc, frac.numerator, frac.denominator)
+                )
+                # print(ks)
+                # print(st.describe(sample1))
+                # print(st.describe(sample2))
+
+    # Specific cases
+    multiply_psrn_by_fraction_test(-1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2))
+    multiply_psrn_by_fraction_test(1, 1, [0], Fraction(-4, 1))
+    multiply_psrn_by_fraction_test(-1, 0, [0, 1, 0, 1, 1, 0, 0, 0], Fraction(-1, 4))
+    multiply_psrn_by_fraction_test(-1, 2, [1, 1, 0, 1, 0, 0, 1, 1], Fraction(7, 8))
+    multiply_psrn_by_fraction_test(1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1))
+    multiply_psrn_by_fraction_test(1, 0, [0, 1, 1, 0, 1, 1], Fraction(7, 4))
+    multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7))
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        frac = Fraction(random.randint(1, 9), random.randint(1, 9))
+        if random.random() < 0.5:
+            frac = -frac
+        multiply_psrn_by_fraction_test(ps, pi, pf, frac, i)
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        qs, qi, qf = random_psrn()
+        pfc = [x for x in pf]
+        qfc = [x for x in qf]
+        psrn1 = [ps, pi, pf]
+        psrn2 = [qs, qi, qf]
+        p = _readpsrn2(psrn1)
+        p2 = _readpsrnend2(psrn1)
+        q = _readpsrn2(psrn2)
+        q2 = _readpsrnend2(psrn2)
+        mult = add_psrns(psrn1, psrn2)
+        ms, mi, mf = mult
+        m = _readpsrn2([ms, mi, mf], minprec=32)
+        mn = min(p + q, p2 + q, p + q2, p2 + q2)
+        mx = max(p + q, p2 + q, p + q2, p2 + q2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            print(["add", "p", p, p2, "q", q, q2, "m", mn, m, mx])
+            print(["p1", psrn1])
+            print(["p2", psrn2])
+            raise ValueError
+        if i < 10:
+            sample1 = [
+                random.uniform(p, p2) + random.uniform(q, q2) for _ in range(2000)
+            ]
+            sample2 = [
+                _readpsrn2(
+                    add_psrns([ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]),
+                    minprec=32,
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if ks.pvalue < 1e-6:
+                print(
+                    "    add_psrns_test(%d,%d,%s,%d,%d,%s)" % (ps, pi, pfc, qs, qi, qfc)
+                )
+                # print(st.describe(sample1))
+                # print(st.describe(sample2))

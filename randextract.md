@@ -35,7 +35,7 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 
 An algorithm found in (Morina et al. 2019)<sup>[**(5)**](#Note5)</sup> extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
-1. Throw a die twice (whose bias is unknown), call the results _X_ and _Y_, respectively.
+1. Throw a (loaded) die, call the result _X_.  Throw the die again, call the result _Y_.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
 
 > **Note:** In fact, the algorithm above appears to be a special case of a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(6)**](#Note6)</sup>.  The algorithm works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.<sup>[**(7)**](#Note7)</sup>.  Here are some of the many examples where this algorithm works: (1) Set _X_ and _Y_ to two independent Gaussian random numbers with a mean of 0 but a different standard deviation. Or... (2) Set _X_ and _Y_ to two independent uniform(0, 1) random numbers.  Or... (3) Set _X_ and _Y_ to two independent uniform(0, 1) random numbers, then set _Y_ to (_X_+_Y_)/2.
