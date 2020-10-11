@@ -384,7 +384,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
         ddc = digits ** dcount
         small1 = Fraction(frac1, ddc) * absfrac
         large1 = Fraction(frac1 + 1, ddc) * absfrac
-        # print(["small1",float(small1),"large1",float(large1)])
         dc = int(small1 * ddc)
         dc2 = int(large1 * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
@@ -433,11 +432,11 @@ def add_psrns(psrn1, psrn2, digits=2):
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform addition
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        psrn2[2].append(random.randint(0, digits - 1))
-        digitcount += 1
+    # if digitcount == 0:
+    #    # Make sure fractional part has at least one digit, to simplify matters
+    #    psrn1[2].append(random.randint(0, digits - 1))
+    #    psrn2[2].append(random.randint(0, digits - 1))
+    #    digitcount += 1
     frac1 = psrn1[1]
     frac2 = psrn2[1]
     for i in range(digitcount):
@@ -792,8 +791,8 @@ if __name__ == "__main__":
                 )
                 print(ks)
                 print("    # p=%s p2=%s q=%s" % (p, p2, q))
-                print("    # %s-%s" % (min(sample1), max(sample1)))
-                print("    # %s-%s" % (min(sample2), max(sample2)))
+                print("    # %s - %s" % (min(sample1), max(sample1)))
+                print("    # %s - %s" % (min(sample2), max(sample2)))
 
     multiply_psrn_by_fraction_test(-1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2))
     multiply_psrn_by_fraction_test(-1, 0, [0, 1, 0, 1, 1, 0, 0, 0], Fraction(-1, 4))
@@ -810,9 +809,7 @@ if __name__ == "__main__":
             frac = -frac
         multiply_psrn_by_fraction_test(ps, pi, pf, frac, i)
 
-    for i in range(1000):
-        ps, pi, pf = random_psrn()
-        qs, qi, qf = random_psrn()
+    def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
         psrn1 = [ps, pi, pf]
@@ -849,5 +846,22 @@ if __name__ == "__main__":
                 print(
                     "    add_psrns_test(%d,%d,%s,%d,%d,%s)" % (ps, pi, pfc, qs, qi, qfc)
                 )
-                print("    # %s-%s" % (min(sample1), max(sample1)))
-                print("    # %s-%s" % (min(sample2), max(sample2)))
+                print("    # %s - %s" % (min(sample1), max(sample1)))
+                print("    # %s - %s" % (min(sample2), max(sample2)))
+
+    # Specific tests with output ranges that straddle zero
+    add_psrns_test(-1, 8, [1, 0, 0], 1, 8, [1, 0, 0])
+    add_psrns_test(-1, 6, [1], 1, 6, [])
+    add_psrns_test(-1, 7, [], 1, 7, [0])
+    add_psrns_test(-1, 5, [1, 1], 1, 5, [])
+    add_psrns_test(1, 5, [0], -1, 5, [])
+    add_psrns_test(1, 2, [1, 0], -1, 2, [1])
+    add_psrns_test(-1, 4, [], 1, 4, [])
+    add_psrns_test(1, 4, [1, 0], -1, 4, [])
+    add_psrns_test(-1, 7, [], 1, 7, [1])
+    add_psrns_test(1, 1, [0], -1, 1, [0, 0, 1])
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        qs, qi, qf = random_psrn()
+        add_psrns_test(ps, pi, pf, qs, qi, qf, i)
