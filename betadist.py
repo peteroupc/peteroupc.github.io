@@ -449,29 +449,115 @@ def add_psrns(psrn1, psrn2, digits=2):
     large = (frac1 + 1) * psrn1[0] + (frac2 + 1) * psrn2[0]
     minv = min(small, mid1, mid2, large)
     maxv = max(small, mid1, mid2, large)
-    while True:
-        rv = random.randint(0, 1)
-        pw = random.randint(0, digits - 1)
-        newdigits = 1
-        b = digits
-        y = random.randint(0, digits - 1)
+    # Difference is expected to be a power of two
+    if abs(maxv - minv) % 2 != 0:
+        raise ValueError
+    if minv < 0 and maxv > 0:
+        # Range straddles zero, so the distribution is not triangular,
+        # but trapezoidal
+        vs = [small, mid1, mid2, large]
+        vs.sort()
+        midmin = vs[1]
+        midmax = vs[2]
+        # print(["minv", float(minv / digits**digitcount), minv,
+        #       "small", float(small / digits**digitcount),
+        #       "mid1", float(mid1 / digits**digitcount),
+        #       "mid2", float(mid2 / digits**digitcount),
+        #       "large", float(large / digits**digitcount),
+        #       "mdiff", maxv - minv])
         while True:
-            if rv == 1:
+            rv = random.randint(0, maxv - minv - 1)
+            if rv < 0:
+                raise ValueError
+            if rv < midmin - minv:
+                # Left side of product density; rising triangular
+                pw = rv
+                newdigits = 0
+                b = midmin - minv
+                y = random.randint(0, b - 1)
+                while True:
+                    if y < pw:
+                        # Success
+                        sret = minv * (digits ** newdigits) + pw
+                        cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
+                        cpsrn[0] = -1 if sret < 0 else 0
+                        sret = abs(sret)
+                        for i in range(digitcount + newdigits):
+                            idx = (digitcount + newdigits) - 1 - i
+                            while idx >= len(cpsrn[2]):
+                                cpsrn[2].append(None)
+                            cpsrn[2][idx] = sret % digits
+                            sret //= digits
+                        cpsrn[1] = sret
+                        return cpsrn
+                    elif y > pw + 1:  # Greater than upper bound
+                        # Rejected
+                        break
+                    pw = pw * digits + random.randint(0, digits - 1)
+                    y = y * digits + random.randint(0, digits - 1)
+                    b *= digits
+                    newdigits += 1
+            elif rv >= midmax - small:
+                # Right side of product density; falling triangular
+                pw = rv - (midmax - minv)
+                newdigits = 0
+                b = maxv - midmax
+                y = random.randint(0, b - 1)
+                while True:
+                    lowerbound = b - 1 - pw
+                    if y < lowerbound:
+                        # Success
+                        sret = midmax * (digits ** newdigits) + pw
+                        cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
+                        cpsrn[0] = -1 if sret < 0 else 0
+                        sret = abs(sret)
+                        for i in range(digitcount + newdigits):
+                            idx = (digitcount + newdigits) - 1 - i
+                            while idx >= len(cpsrn[2]):
+                                cpsrn[2].append(None)
+                            cpsrn[2][idx] = sret % digits
+                            sret //= digits
+                        cpsrn[1] = sret
+                        return cpsrn
+                    elif y > lowerbound + 1:  # Greater than upper bound
+                        # Rejected
+                        break
+                    pw = pw * digits + random.randint(0, digits - 1)
+                    y = y * digits + random.randint(0, digits - 1)
+                    b *= digits
+                    newdigits += 1
+            else:
+                # Middle, or uniform, part of product density
+                sret = minv + rv
+                cpsrn = [1, 0, [0 for i in range(digitcount)]]
+                cpsrn[0] = -1 if sret < 0 else 0
+                sret = abs(sret)
+                for i in range(digitcount):
+                    cpsrn[2][digitcount - 1 - i] = sret % digits
+                    sret //= digits
+                cpsrn[1] = sret
+                return cpsrn
+
+    while True:
+        newdigits = 0
+        b = maxv - minv
+        pwhalf = b // 2
+        pw = random.randint(0, b - 1)
+        y = random.randint(0, pwhalf - 1)
+        while True:
+            if pw >= pwhalf:
                 lowerbound = b - 1 - pw
             else:
                 lowerbound = pw
+            # print([newdigits, "pw", pw, (minv * (digits ** newdigits) + pw)/digits**(digitcount+newdigits),
+            #         "b", b, pwhalf, "y", y, "lowerbound", lowerbound])
+            if y >= pwhalf:
+                raise ValueError
             if y < lowerbound:
                 # Success
-                if rv == 1:
-                    if minv >= 0:
-                        sret = (minv + 1) * (digits ** newdigits) + pw
-                    else:
-                        sret = (maxv - 1) * (digits ** newdigits) - pw
-                else:
-                    if minv >= 0:
-                        sret = minv * (digits ** newdigits) + pw
-                    else:
-                        sret = (maxv - 1) * (digits ** newdigits) + pw
+                sret = minv * (digits ** newdigits) + pw
+                # if sret<0: sret+=1
+                # print(sret/digits**(digitcount+newdigits))
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
                 cpsrn[0] = -1 if sret < 0 else 1
                 sret = abs(sret)
@@ -487,6 +573,7 @@ def add_psrns(psrn1, psrn2, digits=2):
             pw = pw * digits + random.randint(0, digits - 1)
             y = y * digits + random.randint(0, digits - 1)
             b *= digits
+            pwhalf *= digits
             newdigits += 1
 
 def rayleigh(bern, s=1):
@@ -658,6 +745,7 @@ if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
     import scipy.stats as st
+    import math
 
     bern = bernoulli.Bernoulli()
     sample = [rayleigh(bern) for i in range(10000)]
@@ -716,6 +804,57 @@ if __name__ == "__main__":
         asize = random.randint(0, 8)
         afrac = [random.randint(0, 1) for i in range(asize)]
         return asign, aint, afrac
+
+    def dobucket(v, bounds=None):
+        a = min(v)
+        b = max(v)
+        if bounds != None:
+            a, b = bounds
+        size = int(max(30, math.ceil(b - a)))
+        ls = [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
+        buckets = [0 for i in range(size)]
+        for x in v:
+            for i in range(len(buckets)):
+                if x >= ls[i] and x < ls[i + 1]:
+                    buckets[i] += 1
+                    break
+        showbuckets(ls, buckets)
+        return buckets
+
+    def showbuckets(ls, buckets):
+        mx = max(0.00000001, max(buckets))
+        sumbuckets = max(0.00000001, sum(buckets))
+        if mx == 0:
+            return
+        labels = [
+            ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+            if int(buckets[i]) == buckets[i]
+            else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+            for i in range(len(buckets))
+        ]
+        maxlen = max([len(x) for x in labels])
+        i = 0
+        while i < (len(buckets)):
+            print(
+                labels[i]
+                + " " * (1 + (maxlen - len(labels[i])))
+                + ("*" * int(buckets[i] * 40 / mx))
+            )
+            if (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                print(" ... ")
+                while (
+                    buckets[i] == 0
+                    and i + 2 < len(buckets)
+                    and buckets[i + 1] == 0
+                    and buckets[i + 2] == 0
+                ):
+                    i += 1
+            i += 1
 
     for i in range(1000):
         ps, pi, pf = random_psrn()
@@ -794,21 +933,6 @@ if __name__ == "__main__":
                 print("    # %s - %s" % (min(sample1), max(sample1)))
                 print("    # %s - %s" % (min(sample2), max(sample2)))
 
-    multiply_psrn_by_fraction_test(-1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2))
-    multiply_psrn_by_fraction_test(-1, 0, [0, 1, 0, 1, 1, 0, 0, 0], Fraction(-1, 4))
-    multiply_psrn_by_fraction_test(1, 0, [0, 1, 1, 0, 1, 1], Fraction(7, 4))
-    multiply_psrn_by_fraction_test(-1, 2, [1, 1, 0, 1, 0, 0, 1, 1], Fraction(7, 8))
-    multiply_psrn_by_fraction_test(1, 1, [0], Fraction(-4, 1))
-    multiply_psrn_by_fraction_test(1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1))
-    multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7))
-
-    for i in range(1000):
-        ps, pi, pf = random_psrn()
-        frac = Fraction(random.randint(1, 9), random.randint(1, 9))
-        if random.random() < 0.5:
-            frac = -frac
-        multiply_psrn_by_fraction_test(ps, pi, pf, frac, i)
-
     def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
@@ -832,22 +956,25 @@ if __name__ == "__main__":
             raise ValueError
         if i < 1000:
             sample1 = [
-                random.uniform(p, p2) + random.uniform(q, q2) for _ in range(2000)
+                random.uniform(p, p2) + random.uniform(q, q2) for _ in range(10000)
             ]
             sample2 = [
                 _readpsrn2(
                     add_psrns([ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]),
                     minprec=32,
                 )
-                for _ in range(2000)
+                for _ in range(10000)
             ]
             ks = st.ks_2samp(sample1, sample2)
             if ks.pvalue < 1e-6:
                 print(
                     "    add_psrns_test(%d,%d,%s,%d,%d,%s)" % (ps, pi, pfc, qs, qi, qfc)
                 )
-                print("    # %s - %s" % (min(sample1), max(sample1)))
-                print("    # %s - %s" % (min(sample2), max(sample2)))
+                print("    # %s - %s" % (mn, mx))
+                print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
+                print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
+                dobucket(sample1)
+                dobucket(sample2)
 
     # Specific tests with output ranges that straddle zero
     add_psrns_test(-1, 8, [1, 0, 0], 1, 8, [1, 0, 0])
@@ -860,8 +987,23 @@ if __name__ == "__main__":
     add_psrns_test(1, 4, [1, 0], -1, 4, [])
     add_psrns_test(-1, 7, [], 1, 7, [1])
     add_psrns_test(1, 1, [0], -1, 1, [0, 0, 1])
-
+    exit()
     for i in range(1000):
         ps, pi, pf = random_psrn()
         qs, qi, qf = random_psrn()
         add_psrns_test(ps, pi, pf, qs, qi, qf, i)
+
+    multiply_psrn_by_fraction_test(-1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2))
+    multiply_psrn_by_fraction_test(-1, 0, [0, 1, 0, 1, 1, 0, 0, 0], Fraction(-1, 4))
+    multiply_psrn_by_fraction_test(1, 0, [0, 1, 1, 0, 1, 1], Fraction(7, 4))
+    multiply_psrn_by_fraction_test(-1, 2, [1, 1, 0, 1, 0, 0, 1, 1], Fraction(7, 8))
+    multiply_psrn_by_fraction_test(1, 1, [0], Fraction(-4, 1))
+    multiply_psrn_by_fraction_test(1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1))
+    multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7))
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        frac = Fraction(random.randint(1, 9), random.randint(1, 9))
+        if random.random() < 0.5:
+            frac = -frac
+        multiply_psrn_by_fraction_test(ps, pi, pf, frac, i)
