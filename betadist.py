@@ -406,6 +406,7 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
                 dcount += 1
                 ddc *= digits
 
+# TODO: Performance improvements
 def add_psrns(psrn1, psrn2, digits=2):
     """ Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -432,11 +433,6 @@ def add_psrns(psrn1, psrn2, digits=2):
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform addition
-    # if digitcount == 0:
-    #    # Make sure fractional part has at least one digit, to simplify matters
-    #    psrn1[2].append(random.randint(0, digits - 1))
-    #    psrn2[2].append(random.randint(0, digits - 1))
-    #    digitcount += 1
     frac1 = psrn1[1]
     frac2 = psrn2[1]
     for i in range(digitcount):
@@ -452,129 +448,79 @@ def add_psrns(psrn1, psrn2, digits=2):
     # Difference is expected to be a power of two
     if abs(maxv - minv) % 2 != 0:
         raise ValueError
-    if minv < 0 and maxv > 0:
+    if psrn1[0] or psrn2[0]:
         # Range straddles zero, so the distribution is not triangular,
         # but trapezoidal
         vs = [small, mid1, mid2, large]
         vs.sort()
         midmin = vs[1]
         midmax = vs[2]
-        # print(["minv", float(minv / digits**digitcount), minv,
-        #       "small", float(small / digits**digitcount),
-        #       "mid1", float(mid1 / digits**digitcount),
-        #       "mid2", float(mid2 / digits**digitcount),
-        #       "large", float(large / digits**digitcount),
-        #       "mdiff", maxv - minv])
+        # count=0
         while True:
+            # count+=1
+            # if count>50: raise ValueError
             rv = random.randint(0, maxv - minv - 1)
             if rv < 0:
                 raise ValueError
+            side = 0
+            start = minv
             if rv < midmin - minv:
                 # Left side of product density; rising triangular
-                pw = rv
-                newdigits = 0
-                b = midmin - minv
-                y = random.randint(0, b - 1)
-                while True:
-                    if y < pw:
-                        # Success
-                        sret = minv * (digits ** newdigits) + pw
-                        cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
-                        cpsrn[0] = -1 if sret < 0 else 0
-                        sret = abs(sret)
-                        for i in range(digitcount + newdigits):
-                            idx = (digitcount + newdigits) - 1 - i
-                            while idx >= len(cpsrn[2]):
-                                cpsrn[2].append(None)
-                            cpsrn[2][idx] = sret % digits
-                            sret //= digits
-                        cpsrn[1] = sret
-                        return cpsrn
-                    elif y > pw + 1:  # Greater than upper bound
-                        # Rejected
-                        break
-                    pw = pw * digits + random.randint(0, digits - 1)
-                    y = y * digits + random.randint(0, digits - 1)
-                    b *= digits
-                    newdigits += 1
-            elif rv >= midmax - small:
+                side = 0
+                start = minv
+            elif rv >= midmax - minv:
                 # Right side of product density; falling triangular
-                pw = rv - (midmax - minv)
-                newdigits = 0
-                b = maxv - midmax
-                y = random.randint(0, b - 1)
-                while True:
-                    lowerbound = b - 1 - pw
-                    if y < lowerbound:
-                        # Success
-                        sret = midmax * (digits ** newdigits) + pw
-                        cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
-                        cpsrn[0] = -1 if sret < 0 else 0
-                        sret = abs(sret)
-                        for i in range(digitcount + newdigits):
-                            idx = (digitcount + newdigits) - 1 - i
-                            while idx >= len(cpsrn[2]):
-                                cpsrn[2].append(None)
-                            cpsrn[2][idx] = sret % digits
-                            sret //= digits
-                        cpsrn[1] = sret
-                        return cpsrn
-                    elif y > lowerbound + 1:  # Greater than upper bound
-                        # Rejected
-                        break
-                    pw = pw * digits + random.randint(0, digits - 1)
-                    y = y * digits + random.randint(0, digits - 1)
-                    b *= digits
-                    newdigits += 1
+                side = 1
+                start = midmax
             else:
                 # Middle, or uniform, part of product density
                 sret = minv + rv
                 cpsrn = [1, 0, [0 for i in range(digitcount)]]
-                cpsrn[0] = -1 if sret < 0 else 0
+                if sret < 0:
+                    sret += 1
+                    cpsrn[0] = -1
                 sret = abs(sret)
                 for i in range(digitcount):
                     cpsrn[2][digitcount - 1 - i] = sret % digits
                     sret //= digits
                 cpsrn[1] = sret
                 return cpsrn
-
-    while True:
-        newdigits = 0
-        b = maxv - minv
-        pwhalf = b // 2
-        pw = random.randint(0, b - 1)
-        y = random.randint(0, pwhalf - 1)
-        while True:
-            if pw >= pwhalf:
-                lowerbound = b - 1 - pw
+            if side == 0:  # Left side
+                pw = rv
+                b = midmin - minv
             else:
-                lowerbound = pw
-            # print([newdigits, "pw", pw, (minv * (digits ** newdigits) + pw)/digits**(digitcount+newdigits),
-            #         "b", b, pwhalf, "y", y, "lowerbound", lowerbound])
-            if y >= pwhalf:
-                raise ValueError
-            if y < lowerbound:
-                # Success
-                sret = minv * (digits ** newdigits) + pw
-                # if sret<0: sret+=1
-                # print(sret/digits**(digitcount+newdigits))
-                cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
-                cpsrn[0] = -1 if sret < 0 else 1
-                sret = abs(sret)
-                for i in range(digitcount + newdigits):
-                    idx = (digitcount + newdigits) - 1 - i
-                    cpsrn[2][idx] = abs(sret) % digits
-                    sret //= digits
-                cpsrn[1] = abs(sret)
-                return cpsrn
-            elif y > lowerbound + 1:
-                # Rejected
-                break
-            pw = pw * digits + random.randint(0, digits - 1)
-            y = y * digits + random.randint(0, digits - 1)
-            b *= digits
-            pwhalf *= digits
-            newdigits += 1
+                pw = rv - (midmax - minv)
+                b = maxv - midmax
+            newdigits = 0
+            y = random.randint(0, b - 1)
+            while True:
+                lowerbound = pw if side == 0 else b - 1 - pw
+                # if newdigits>50:raise ValueError
+                # print([count,newdigits,side,rv,pw,b,lowerbound,y])
+                if y < lowerbound:
+                    # Success
+                    sret = start * (digits ** newdigits) + pw
+                    cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
+                    # print([start,sret,pw])
+                    if sret < 0:
+                        sret += 1
+                        cpsrn[0] = -1
+                    sret = abs(sret)
+                    for i in range(digitcount + newdigits):
+                        idx = (digitcount + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = sret
+                    return cpsrn
+                elif y > lowerbound + 1:  # Greater than upper bound
+                    # Rejected
+                    break
+                pw = pw * digits + random.randint(0, digits - 1)
+                y = y * digits + random.randint(0, digits - 1)
+                b *= digits
+                newdigits += 1
 
 def rayleigh(bern, s=1):
     k = 0
@@ -757,6 +703,8 @@ if __name__ == "__main__":
     def _readpsrn(asign, aint, afrac, digits=2, minprec=None):
         af = 0.0
         prec = len(afrac)
+        if asign != -1 and asign != 1:
+            raise ValueError
         if minprec != None:
             prec = max(minprec, prec)
         for i in range(prec):
@@ -775,6 +723,8 @@ if __name__ == "__main__":
     def _readpsrnend(asign, aint, afrac, digits=2, minprec=None):
         af = 0.0
         prec = len(afrac)
+        if asign != -1 and asign != 1:
+            raise ValueError
         if minprec != None:
             prec = max(minprec, prec)
         for i in range(prec):
@@ -856,44 +806,6 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
-    for i in range(1000):
-        ps, pi, pf = random_psrn()
-        qs, qi, qf = random_psrn()
-        pfc = [x for x in pf]
-        qfc = [x for x in qf]
-        p = _readpsrn(ps, pi, pf)
-        p2 = _readpsrnend(ps, pi, pf)
-        q = _readpsrn(qs, qi, qf)
-        q2 = _readpsrnend(qs, qi, qf)
-        mult = multiply_psrns([ps, pi, pf], [qs, qi, qf])
-        ms, mi, mf = mult
-        m = _readpsrn2(mult, minprec=32)
-        mn = min(p * q, p2 * q, p * q2, p2 * q2)
-        mx = max(p * q, p2 * q, p * q2, p2 * q2)
-        if mn > mx:
-            raise ValueError
-        if m < mn or m > mx:
-            print(["mult", p, q, mn, mx, m])
-            raise ValueError
-        if i < 10:
-            sample1 = [
-                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
-            ]
-            sample2 = [
-                _readpsrn2(
-                    multiply_psrns(
-                        [ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]
-                    ),
-                    minprec=32,
-                )
-                for _ in range(2000)
-            ]
-            ks = st.ks_2samp(sample1, sample2)
-            if ks.pvalue < 1e-6:
-                print(["mult", ks])
-                print([sample1[0:10]])
-                print([sample2[0:10]])
-
     def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0):
         pfc = [x for x in pf]
         pfcs = str(pfc)
@@ -956,14 +868,14 @@ if __name__ == "__main__":
             raise ValueError
         if i < 1000:
             sample1 = [
-                random.uniform(p, p2) + random.uniform(q, q2) for _ in range(10000)
+                random.uniform(p, p2) + random.uniform(q, q2) for _ in range(2000)
             ]
             sample2 = [
                 _readpsrn2(
                     add_psrns([ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]),
                     minprec=32,
                 )
-                for _ in range(10000)
+                for _ in range(2000)
             ]
             ks = st.ks_2samp(sample1, sample2)
             if ks.pvalue < 1e-6:
@@ -976,6 +888,7 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
+    add_psrns_test(1, 1, [0], -1, 1, [0, 0, 1])
     # Specific tests with output ranges that straddle zero
     add_psrns_test(-1, 8, [1, 0, 0], 1, 8, [1, 0, 0])
     add_psrns_test(-1, 6, [1], 1, 6, [])
@@ -986,8 +899,6 @@ if __name__ == "__main__":
     add_psrns_test(-1, 4, [], 1, 4, [])
     add_psrns_test(1, 4, [1, 0], -1, 4, [])
     add_psrns_test(-1, 7, [], 1, 7, [1])
-    add_psrns_test(1, 1, [0], -1, 1, [0, 0, 1])
-    exit()
     for i in range(1000):
         ps, pi, pf = random_psrn()
         qs, qi, qf = random_psrn()
@@ -1000,6 +911,44 @@ if __name__ == "__main__":
     multiply_psrn_by_fraction_test(1, 1, [0], Fraction(-4, 1))
     multiply_psrn_by_fraction_test(1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1))
     multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7))
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        qs, qi, qf = random_psrn()
+        pfc = [x for x in pf]
+        qfc = [x for x in qf]
+        p = _readpsrn(ps, pi, pf)
+        p2 = _readpsrnend(ps, pi, pf)
+        q = _readpsrn(qs, qi, qf)
+        q2 = _readpsrnend(qs, qi, qf)
+        mult = multiply_psrns([ps, pi, pf], [qs, qi, qf])
+        ms, mi, mf = mult
+        m = _readpsrn2(mult, minprec=32)
+        mn = min(p * q, p2 * q, p * q2, p2 * q2)
+        mx = max(p * q, p2 * q, p * q2, p2 * q2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            print(["mult", p, q, mn, mx, m])
+            raise ValueError
+        if i < 10:
+            sample1 = [
+                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
+            ]
+            sample2 = [
+                _readpsrn2(
+                    multiply_psrns(
+                        [ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]
+                    ),
+                    minprec=32,
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if ks.pvalue < 1e-6:
+                print(["mult", ks])
+                print([sample1[0:10]])
+                print([sample2[0:10]])
 
     for i in range(1000):
         ps, pi, pf = random_psrn()
