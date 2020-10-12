@@ -406,7 +406,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
                 dcount += 1
                 ddc *= digits
 
-# TODO: Performance improvements
 def add_psrns(psrn1, psrn2, digits=2):
     """ Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -445,82 +444,73 @@ def add_psrns(psrn1, psrn2, digits=2):
     large = (frac1 + 1) * psrn1[0] + (frac2 + 1) * psrn2[0]
     minv = min(small, mid1, mid2, large)
     maxv = max(small, mid1, mid2, large)
-    # Difference is expected to be a power of two
+    # Difference is expected to be a multiple of two
     if abs(maxv - minv) % 2 != 0:
         raise ValueError
-    if psrn1[0] or psrn2[0]:
-        # Range straddles zero, so the distribution is not triangular,
-        # but trapezoidal
-        vs = [small, mid1, mid2, large]
-        vs.sort()
-        midmin = vs[1]
-        midmax = vs[2]
-        # count=0
-        while True:
-            # count+=1
-            # if count>50: raise ValueError
-            rv = random.randint(0, maxv - minv - 1)
-            if rv < 0:
-                raise ValueError
+    vs = [small, mid1, mid2, large]
+    vs.sort()
+    midmin = vs[1]
+    midmax = vs[2]
+    while True:
+        rv = random.randint(0, maxv - minv - 1)
+        if rv < 0:
+            raise ValueError
+        side = 0
+        start = minv
+        if rv < midmin - minv:
+            # Left side of sum density; rising triangular
             side = 0
             start = minv
-            if rv < midmin - minv:
-                # Left side of product density; rising triangular
-                side = 0
-                start = minv
-            elif rv >= midmax - minv:
-                # Right side of product density; falling triangular
-                side = 1
-                start = midmax
-            else:
-                # Middle, or uniform, part of product density
-                sret = minv + rv
-                cpsrn = [1, 0, [0 for i in range(digitcount)]]
+        elif rv >= midmax - minv:
+            # Right side of sum density; falling triangular
+            side = 1
+            start = midmax
+        else:
+            # Middle, or uniform, part of sum density
+            sret = minv + rv
+            cpsrn = [1, 0, [0 for i in range(digitcount)]]
+            if sret < 0:
+                sret += 1
+                cpsrn[0] = -1
+            sret = abs(sret)
+            for i in range(digitcount):
+                cpsrn[2][digitcount - 1 - i] = sret % digits
+                sret //= digits
+            cpsrn[1] = sret
+            return cpsrn
+        if side == 0:  # Left side
+            pw = rv
+            b = midmin - minv
+        else:
+            pw = rv - (midmax - minv)
+            b = maxv - midmax
+        newdigits = 0
+        y = random.randint(0, b - 1)
+        while True:
+            lowerbound = pw if side == 0 else b - 1 - pw
+            if y < lowerbound:
+                # Success
+                sret = start * (digits ** newdigits) + pw
+                cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
                 if sret < 0:
                     sret += 1
                     cpsrn[0] = -1
                 sret = abs(sret)
-                for i in range(digitcount):
-                    cpsrn[2][digitcount - 1 - i] = sret % digits
+                for i in range(digitcount + newdigits):
+                    idx = (digitcount + newdigits) - 1 - i
+                    while idx >= len(cpsrn[2]):
+                        cpsrn[2].append(None)
+                    cpsrn[2][idx] = sret % digits
                     sret //= digits
                 cpsrn[1] = sret
                 return cpsrn
-            if side == 0:  # Left side
-                pw = rv
-                b = midmin - minv
-            else:
-                pw = rv - (midmax - minv)
-                b = maxv - midmax
-            newdigits = 0
-            y = random.randint(0, b - 1)
-            while True:
-                lowerbound = pw if side == 0 else b - 1 - pw
-                # if newdigits>50:raise ValueError
-                # print([count,newdigits,side,rv,pw,b,lowerbound,y])
-                if y < lowerbound:
-                    # Success
-                    sret = start * (digits ** newdigits) + pw
-                    cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
-                    # print([start,sret,pw])
-                    if sret < 0:
-                        sret += 1
-                        cpsrn[0] = -1
-                    sret = abs(sret)
-                    for i in range(digitcount + newdigits):
-                        idx = (digitcount + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif y > lowerbound + 1:  # Greater than upper bound
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
+            elif y > lowerbound + 1:  # Greater than upper bound
+                # Rejected
+                break
+            pw = pw * digits + random.randint(0, digits - 1)
+            y = y * digits + random.randint(0, digits - 1)
+            b *= digits
+            newdigits += 1
 
 def rayleigh(bern, s=1):
     k = 0

@@ -330,26 +330,27 @@ The following algorithm shows how to add or subtract two uniform PSRNs (**a** an
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-3. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.  Do the same for **b**.
-4. Let _asign_ be &minus;1 if **a** is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b** is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
+4. Let _asign_ be &minus;1 if **a** is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b** is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
 5. Calculate the following four numbers:
     - _afp_\*_asign_ + _bfp_\*_bsign_.
     - _afp_\*_asign_ + (_bfp_+1)\*_bsign_.
     - (_afp_+1)\*_asign_ + _bfp_\*_bsign_.
     - (_afp_+1)\*_asign_ + (_bfp_+1)\*_bsign_.
 6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  These are lower and upper bounds to the result of applying interval addition to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval, and this is what the rest of this algorithm will solve, since in fact, the distribution of numbers in the interval resembles the distribution of the sum of two uniform random numbers.
-7. Set _dir_ to an unbiased random bit (that is, either 0 or 1, chosen with equal probability), then set _x_ and _y_ each to a digit chosen uniformly at random, then set _newdigits_ to 0, then set _b_ to _base_, where _base_ is the base of digits stored by **a** and **b** (such as 2 for binary or 10 for decimal).
-8. If _dir_ is 1, set _lower_ to (_b_ &minus; 1 &minus; _x_).  Otherwise, set _lower_ to _x_.
-9. If _y_ is less than _lower_, the algorithm is almost finished, so do the following:
-    1. If _minv_ is less than 0 and _dir_ is 1, set _s_ to (_maxv_ &minus; 1)\*_base_<sup>_newdigits_</sup> &minus; _x_.
-    2. Otherwise, if _minv_ is less than 0 and _dir_ is 0, set _s_ to (_maxv_ &minus; 1)\*_base_<sup>_newdigits_</sup> + _x_.
-    3. Otherwise, if _dir_ is 1, set _s_ to (_minv_ + 1)\*_base_<sup>_newdigits_</sup> + _x_.
-    4. Otherwise, set _s_ to (_minv_)\*_base_<sup>_newdigits_</sup> + _x_.
-    5. Create a new uniform PSRN, _ret_.  Set _ret_'s sign to negative if _s_ is less than 0, or non-negative otherwise.  Set _s_ to abs(_s_).
-    6. Transfer the (_n_ + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_ + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_ + _newdigits_) is 3, and _s_ is 34297, then _ret_'s fractional part is set to \[2, 9, 7\], and _ret_'s integer part is set to 34.)
-    7. Return _ret_.
-10. If _y_ is greater than _lower_ + 1, go to step 7.
-11. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 8.
+7. Once the four numbers are sorted from lowest to highest, let _midmin_ be the second number in the sorted order, and let _midmax_ be the third number in that order.
+8. Set _x_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).  If _x_ < _midmin_&minus;_minv_, set _dir_ to 0 (the left side of the sum density).  Otherwise, if _x_ > _midmax_&minus;_minv_, set _dir_ to 1 (the right side of the sum density).  Otherwise, do the following:
+     1. Set _s_ to _minv_ + _x_.
+     2. Create a new uniform PSRN, _ret_.  If _s_ is less than 0, set _s_ to abs(1 + _s_) and set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
+     3. Transfer the _digitcount_ least significant digits of _s_ to _ret_'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_digitcount_</sup>), then return _ret_.  (For example, if _base_ is 10, _digitcount_ is 3, and _s_ is 34297, then _ret_'s fractional part is set to \[2, 9, 7\], and _ret_'s integer part is set to 34.)
+9. If _dir_ is 0 (the left side), set _pw_ to _x_ and _b_ to _midmin_&minus;_minv_.  Otherwise (the right side), set _pw_ to _x_&minus;(_midmax_&minus;_minv_) and _b_ to _maxv_&minus;_midmax_.
+10. Set _newdigits_ to 0, then set _y_ to a uniform random integer in the interval [0, _b_).
+11. If _dir_ is 0, set _lower_ to _pw_.  Otherwise, set _lower_ to _b_&minus;1&minus;_pw_.
+12. If _y_ is less than _lower_, do the following:
+     1. Set _s_ to _minv_ if _dir_ is 0, or _midmax_ otherwise, then set _s_ to _s_\*(_base_<sup>_newdigits_</sup>) + _pw_.
+     2. Create a new uniform PSRN, _ret_.  If _s_ is less than 0, set _s_ to abs(1 + _s_) and set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
+     3. Transfer the _digitcount_ + _newdigits_ least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_digitcount_ + _newdigits_</sup>), then return _ret_.
+13. If _y_ is greater than _lower_ + 1, go to step 8. (This is a rejection event.)
+11. Multiply _pw_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _pw_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 11.
 
 <a id=Multiplication></a>
 ### Multiplication
@@ -357,9 +358,9 @@ The following algorithm shows how to add or subtract two uniform PSRNs (**a** an
 The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled. _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
-2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
+2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.
 3. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.  Do the same for **b**.
-4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
+4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
 6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
 7. Create a new uniform PSRN, _ret_.  If **a** is negative and **b** is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to non-negative.
@@ -425,7 +426,9 @@ For more on why these two algorithms are equivalent, see the appendix.
 **FillGeometricBag** takes a uniform PSRN and generates a number whose fractional part has `p` digits as follows:
 
 1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(11)**](#Note11)</sup>.)
-2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.  (If it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled \[that is, set to a digit\], then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice.)
+2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.
+
+After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice. (For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.)
 
 <a id=kthsmallest></a>
 ### kthsmallest
@@ -822,6 +825,7 @@ def exprand(lam):
 In the following Python code, `multiply_psrns` and `add_psrns` are methods to generate the result of multiplying or adding two uniform PSRNs, respectively.
 
 ```
+
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -960,7 +964,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
         ddc = digits ** dcount
         small1 = Fraction(frac1, ddc) * absfrac
         large1 = Fraction(frac1 + 1, ddc) * absfrac
-        #print(["small1",float(small1),"large1",float(large1)])
         dc = int(small1 * ddc)
         dc2 = int(large1 * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
@@ -1009,11 +1012,6 @@ def add_psrns(psrn1, psrn2, digits=2):
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform addition
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        psrn2[2].append(random.randint(0, digits - 1))
-        digitcount += 1
     frac1 = psrn1[1]
     frac2 = psrn2[1]
     for i in range(digitcount):
@@ -1026,39 +1024,67 @@ def add_psrns(psrn1, psrn2, digits=2):
     large = (frac1 + 1) * psrn1[0] + (frac2 + 1) * psrn2[0]
     minv = min(small, mid1, mid2, large)
     maxv = max(small, mid1, mid2, large)
+    # Difference is expected to be a multiple of two
+    if abs(maxv - minv) % 2 != 0:
+        raise ValueError
+    vs = [small, mid1, mid2, large]
+    vs.sort()
+    midmin = vs[1]
+    midmax = vs[2]
     while True:
-        rv = random.randint(0, 1)
-        pw = random.randint(0, digits - 1)
-        newdigits = 1
-        b = digits
-        y = random.randint(0, digits - 1)
+        rv = random.randint(0, maxv - minv - 1)
+        if rv < 0:
+            raise ValueError
+        side = 0
+        start = minv
+        if rv < midmin - minv:
+            # Left side of sum density; rising triangular
+            side = 0
+            start = minv
+        elif rv >= midmax - minv:
+            # Right side of sum density; falling triangular
+            side = 1
+            start = midmax
+        else:
+            # Middle, or uniform, part of sum density
+            sret = minv + rv
+            cpsrn = [1, 0, [0 for i in range(digitcount)]]
+            if sret < 0:
+                sret += 1
+                cpsrn[0] = -1
+            sret = abs(sret)
+            for i in range(digitcount):
+                cpsrn[2][digitcount - 1 - i] = sret % digits
+                sret //= digits
+            cpsrn[1] = sret
+            return cpsrn
+        if side == 0:  # Left side
+            pw = rv
+            b = midmin - minv
+        else:
+            pw = rv - (midmax - minv)
+            b = maxv - midmax
+        newdigits = 0
+        y = random.randint(0, b - 1)
         while True:
-            if rv == 1:
-                lowerbound = b - 1 - pw
-            else:
-                lowerbound = pw
+            lowerbound = pw if side == 0 else b - 1 - pw
             if y < lowerbound:
                 # Success
-                if rv == 1:
-                    if minv >= 0:
-                        sret = (minv + 1) * (digits ** newdigits) + pw
-                    else:
-                        sret = (maxv - 1) * (digits ** newdigits) - pw
-                else:
-                    if minv >= 0:
-                        sret = minv * (digits ** newdigits) + pw
-                    else:
-                        sret = (maxv - 1) * (digits ** newdigits) + pw
+                sret = start * (digits ** newdigits) + pw
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
-                cpsrn[0] = -1 if sret < 0 else 1
+                if sret < 0:
+                    sret += 1
+                    cpsrn[0] = -1
                 sret = abs(sret)
                 for i in range(digitcount + newdigits):
                     idx = (digitcount + newdigits) - 1 - i
-                    cpsrn[2][idx] = abs(sret) % digits
+                    while idx >= len(cpsrn[2]):
+                        cpsrn[2].append(None)
+                    cpsrn[2][idx] = sret % digits
                     sret //= digits
-                cpsrn[1] = abs(sret)
+                cpsrn[1] = sret
                 return cpsrn
-            elif y > lowerbound + 1:
+            elif y > lowerbound + 1:  # Greater than upper bound
                 # Rejected
                 break
             pw = pw * digits + random.randint(0, digits - 1)
