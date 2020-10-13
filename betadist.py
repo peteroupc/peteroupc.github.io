@@ -512,6 +512,102 @@ def add_psrns(psrn1, psrn2, digits=2):
             b *= digits
             newdigits += 1
 
+def add_psrn_and_fraction(psrn, fraction, digits=2):
+    if psrn[0] == None or psrn[1] == None:
+        raise ValueError
+    fraction = Fraction(fraction)
+    fracsign = -1 if fraction < 0 else 1
+    absfrac = abs(fraction)
+    origfrac = fraction
+    isinteger = absfrac.numerator == absfrac.denominator
+    # Special cases
+    # positive+pos. integer or negative+neg. integer
+    if ((fracsign < 0) == (psrn[0] < 0)) and isinteger and len(psrn[2]) == 0:
+        return [fracsign, psrn[1] + int(absfrac), []]
+    # PSRN has no fractional part, fraction is integer
+    if isinteger and psrn[0] == 0 and len(psrn[2]) == 0:
+        return [fracsign, int(absfrac), []]
+    if fraction == 0:  # Special case of 0
+        return [psrn[0], psrn[1], [x for x in psrn[2]]]
+    # End special cases
+    for i in range(len(psrn[2])):
+        psrn[2][i] = (
+            random.randint(0, digits - 1) if psrn[2][i] == None else psrn[2][i]
+        )
+    digitcount = len(psrn[2])
+    # Perform addition
+    frac1 = psrn[1]
+    frac2 = int(absfrac)
+    fraction = absfrac - frac2
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn[2][i]
+    for i in range(digitcount):
+        digit = int(fraction * digits)
+        fraction = (fraction * digits) - digit
+        frac2 = frac2 * digits + digit
+    ddc=digits**digitcount
+    small = Fraction(frac1 * psrn[0], ddc) + origfrac
+    large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
+    minv = min(small, large)
+    maxv = max(small, large)
+    diff = maxv - minv
+    count=0
+    while True:
+       count+=1
+       if count>50: return None
+       newdigits=0
+       b=1
+       mind=int(minv*ddc)
+       maxd=int(maxv*ddc)
+       rvstart = mind - 1 if minv < 0 else mind
+       rvend = maxd if maxv < 0 else maxd
+       rv=rvstart + random.randint(0, rvend-rvstart-1)
+       while True:
+         rvstartbound = mind if minv < 0 else mind-1
+         rvendbound = maxd+1 if maxv < 0 else maxd-1
+         if newdigits>50: return None
+         if False:
+            print([newdigits,
+                 "rvstart",rvstart*digits**newdigits,rvstartbound,float(rvstartbound/digits**(digitcount+newdigits)),
+                 "rv",rv,float(rv/digits**(digitcount+newdigits)),
+                 "rvend",rvendbound,float(rvendbound/digits**(digitcount+newdigits)),
+                  rvend,"rvnorm",rv-rvstart*digits**newdigits])
+         if rv > rvstartbound and rv < rvendbound:
+                sret = rv
+                cpsrn = [1, 0, [0 for i in range(digitcount+newdigits)]]
+                if sret < 0:
+                    sret += 1
+                    cpsrn[0] = -1
+                sret = abs(sret)
+                for i in range(digitcount + newdigits):
+                    idx = (digitcount + newdigits) - 1 - i
+                    cpsrn[2][idx] = sret % digits
+                    sret //= digits
+                cpsrn[1] = sret
+                return cpsrn
+         elif rv <= rvstartbound:
+          rvd = Fraction(rv, ddc)
+          if rvd>=minv:
+             newdigits+=1
+             ddc*=digits
+             rv=rv*digits+random.randint(0,digits-1)
+             mind*=digits
+             maxd*=digits
+          else:
+             # Rejected
+             break
+         else:
+          rvd = Fraction(rv, ddc)
+          if rvd>=maxv:
+             # Rejected
+             break
+          else:
+             newdigits+=1
+             ddc*=digits
+             rv=rv*digits+random.randint(0,digits-1)
+             mind*=digits
+             maxd*=digits
+
 def rayleigh(bern, s=1):
     k = 0
     # Choose a piece according to Rayleigh distribution function
@@ -796,6 +892,59 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
+    def _rp(a):
+        if a==None: return 0
+        return _readpsrn2(a, minprec=32)
+
+    def add_psrn_and_fraction_test(ps, pi, pf, frac, i=0):
+        pfc = [x for x in pf]
+        pfcs = str(pfc)
+        p = _readpsrn(ps, pi, pf)
+        p2 = _readpsrnend(ps, pi, pf)
+        mult = add_psrn_and_fraction([ps, pi, pf], frac)
+        if mult==None:
+                print(
+                    "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d))"
+                    % (ps, pi, pfc, frac.numerator, frac.denominator)
+                )
+                return
+        q = float(frac)
+        q2 = float(frac)
+        ms, mi, mf = mult
+        m = _readpsrn2(mult, minprec=32)
+        mn = min(p + q, p2 + q, p + q2, p2 + q2)
+        mx = max(p + q, p2 + q, p + q2, p2 + q2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            #print("    # %d" % (i)) # str(["add", p, q, mn, mx, "m", m]))
+            print(
+                    "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d))"
+                    % (ps, pi, pfc, frac.numerator, frac.denominator)
+            )
+            return
+        if i < 0:
+            sample1 = [random.uniform(p, p2) + q for _ in range(2000)]
+            sample2 = [
+                _rp(
+                    add_psrn_and_fraction([ps, pi, [x for x in pfc]], frac)
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if str(pfc) != pfcs:
+                raise ValueError
+            if ks.pvalue < 1e-6:
+                print(
+                    "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d))"
+                    % (ps, pi, pfc, frac.numerator, frac.denominator)
+                )
+                print("    # %s - %s" % (mn, mx))
+                print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
+                print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
+                #dobucket(sample1)
+                #dobucket(sample2)
+
     def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0):
         pfc = [x for x in pf]
         pfcs = str(pfc)
@@ -877,6 +1026,264 @@ if __name__ == "__main__":
                 print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
                 dobucket(sample1)
                 dobucket(sample2)
+
+   add_psrn_and_fraction_test(1,6,[], Fraction(7,3))
+    add_psrn_and_fraction_test(-1,5,[0, 1, 0, 1, 0, 0, 0, 0], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,0,[0, 1, 0, 1], Fraction(-9,5))
+    add_psrn_and_fraction_test(1,1,[0, 0, 1, 0, 1, 1], Fraction(-3,7))
+    add_psrn_and_fraction_test(-1,8,[], Fraction(7,4))
+    add_psrn_and_fraction_test(1,4,[], Fraction(1,2))
+    add_psrn_and_fraction_test(1,1,[], Fraction(-9,2))
+    add_psrn_and_fraction_test(1,0,[1, 1, 1, 1, 0, 0, 0, 1], Fraction(-6,7))
+    add_psrn_and_fraction_test(-1,2,[0, 0, 0, 0, 1, 0], Fraction(1,3))
+    add_psrn_and_fraction_test(1,5,[0, 0, 0, 0, 1, 1], Fraction(1,3))
+    add_psrn_and_fraction_test(-1,4,[], Fraction(-9,8))
+    add_psrn_and_fraction_test(-1,0,[0, 1, 0, 0, 1, 0], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,5,[1], Fraction(2,3))
+    add_psrn_and_fraction_test(-1,5,[], Fraction(-5,4))
+    add_psrn_and_fraction_test(-1,0,[1, 1, 1, 0, 1, 0], Fraction(2,7))
+    add_psrn_and_fraction_test(1,1,[0, 1, 0, 1, 0], Fraction(-5,9))
+    add_psrn_and_fraction_test(-1,5,[0, 1, 0, 1, 1, 1], Fraction(-7,5))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(8,5))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(-5,4))
+    add_psrn_and_fraction_test(1,1,[0, 1], Fraction(-9,7))
+    add_psrn_and_fraction_test(-1,5,[1, 0, 1, 1, 0, 1], Fraction(-2,3))
+    add_psrn_and_fraction_test(1,5,[1, 0, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,4,[0, 0, 0, 1, 1, 1], Fraction(2,3))
+    add_psrn_and_fraction_test(1,4,[0], Fraction(-1,5))
+    add_psrn_and_fraction_test(1,0,[0, 1, 1, 0, 1, 0, 0], Fraction(4,3))
+    add_psrn_and_fraction_test(-1,1,[1], Fraction(2,3))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(1,3))
+    add_psrn_and_fraction_test(1,0,[0], Fraction(-1,3))
+    add_psrn_and_fraction_test(1,0,[1], Fraction(2,7))
+    add_psrn_and_fraction_test(-1,2,[0, 1, 0], Fraction(7,3))
+    add_psrn_and_fraction_test(-1,7,[], Fraction(1,8))
+    add_psrn_and_fraction_test(1,6,[1, 0, 1], Fraction(5,9))
+    add_psrn_and_fraction_test(1,3,[1, 1], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,4,[1], Fraction(-2,7))
+    add_psrn_and_fraction_test(1,3,[0, 1, 1, 1, 1, 1, 0], Fraction(-2,9))
+    add_psrn_and_fraction_test(-1,2,[0, 0, 0, 0, 1, 0, 1, 1], Fraction(8,5))
+    add_psrn_and_fraction_test(1,1,[0, 1], Fraction(-9,8))
+    add_psrn_and_fraction_test(1,7,[1, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(1,3,[1, 1, 1, 1, 1, 0, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(1,3,[1, 0, 0, 1, 1], Fraction(-8,3))
+    add_psrn_and_fraction_test(1,1,[0, 1, 1, 0, 1, 0], Fraction(1,9))
+    add_psrn_and_fraction_test(-1,5,[0, 0, 0, 1], Fraction(7,3))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(-2,5))
+    add_psrn_and_fraction_test(1,5,[0, 0, 0, 0, 1, 0, 0, 0], Fraction(4,5))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(3,8))
+    add_psrn_and_fraction_test(1,0,[], Fraction(-3,4))
+    add_psrn_and_fraction_test(-1,0,[1, 0, 0, 0, 1, 1, 0], Fraction(2,5))
+    add_psrn_and_fraction_test(-1,5,[0, 1, 1, 0, 1], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,2,[0, 0, 1, 1], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,0,[1, 1, 1, 1, 0, 0, 0, 1], Fraction(1,5))
+    add_psrn_and_fraction_test(1,8,[1, 1, 1, 0, 0, 0, 1, 1], Fraction(-7,6))
+    add_psrn_and_fraction_test(1,7,[0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(-7,2))
+    add_psrn_and_fraction_test(1,0,[1, 1, 0, 0], Fraction(2,7))
+    add_psrn_and_fraction_test(1,7,[1, 1], Fraction(9,5))
+    add_psrn_and_fraction_test(1,7,[0, 0, 0, 1, 0, 1], Fraction(-7,6))
+    add_psrn_and_fraction_test(-1,8,[0, 1, 1, 1, 1, 0, 1], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,7,[0, 0], Fraction(-2,9))
+    add_psrn_and_fraction_test(-1,4,[0, 0, 0, 1, 0, 0, 0, 1], Fraction(1,3))
+    add_psrn_and_fraction_test(1,0,[0, 0, 1, 1, 0, 1, 1], Fraction(-2,9))
+    add_psrn_and_fraction_test(1,6,[0, 1, 1, 0, 0, 0, 1], Fraction(8,5))
+    add_psrn_and_fraction_test(-1,2,[1, 0, 0, 0, 1], Fraction(2,9))
+    add_psrn_and_fraction_test(-1,1,[0, 1, 1, 0, 1, 1, 0], Fraction(-9,5))
+    add_psrn_and_fraction_test(-1,8,[1, 1, 1, 0, 1, 0], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,8,[], Fraction(8,7))
+    add_psrn_and_fraction_test(1,2,[0, 1, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,2,[1, 0, 0, 0, 0, 0, 1], Fraction(2,3))
+    add_psrn_and_fraction_test(-1,7,[0, 0, 0, 1], Fraction(-6,7))
+    add_psrn_and_fraction_test(1,4,[0, 0, 0, 0, 1, 0, 1, 1], Fraction(2,3))
+    add_psrn_and_fraction_test(-1,8,[1, 0, 0, 0], Fraction(-7,3))
+    add_psrn_and_fraction_test(-1,1,[], Fraction(1,3))
+    add_psrn_and_fraction_test(-1,8,[], Fraction(-4,3))
+    add_psrn_and_fraction_test(-1,0,[0, 0, 1, 1, 0, 0, 0, 1], Fraction(-8,9))
+    add_psrn_and_fraction_test(1,0,[1, 0, 0, 0, 1, 0, 1], Fraction(5,7))
+    add_psrn_and_fraction_test(1,3,[], Fraction(3,4))
+    add_psrn_and_fraction_test(-1,6,[1, 0, 1, 1, 0, 0, 1], Fraction(-3,7))
+    add_psrn_and_fraction_test(-1,0,[], Fraction(1,9))
+    add_psrn_and_fraction_test(1,0,[0, 1, 1, 0, 0], Fraction(-7,5))
+    add_psrn_and_fraction_test(-1,0,[0, 0, 1, 1], Fraction(-3,5))
+    add_psrn_and_fraction_test(1,5,[0, 0, 0, 1, 1, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,8,[1], Fraction(5,8))
+    add_psrn_and_fraction_test(-1,1,[], Fraction(1,5))
+    add_psrn_and_fraction_test(1,0,[0], Fraction(-1,9))
+    add_psrn_and_fraction_test(1,5,[0, 0, 1, 1, 1, 0, 1, 0], Fraction(-4,3))
+    add_psrn_and_fraction_test(-1,5,[0, 0, 1, 0, 0], Fraction(-4,3))
+    add_psrn_and_fraction_test(1,8,[0], Fraction(7,4))
+    add_psrn_and_fraction_test(1,5,[0, 1, 0, 0, 1], Fraction(-4,7))
+    add_psrn_and_fraction_test(-1,8,[1, 1, 0, 0], Fraction(4,7))
+    add_psrn_and_fraction_test(1,2,[1, 0], Fraction(-9,8))
+    add_psrn_and_fraction_test(-1,8,[0], Fraction(8,5))
+    add_psrn_and_fraction_test(1,4,[], Fraction(-6,7))
+    add_psrn_and_fraction_test(-1,2,[1, 0, 0, 1], Fraction(2,5))
+    add_psrn_and_fraction_test(1,8,[1], Fraction(1,4))
+    add_psrn_and_fraction_test(1,0,[1, 1, 1, 1, 0], Fraction(-1,6))
+    add_psrn_and_fraction_test(-1,8,[1, 0], Fraction(-2,9))
+    add_psrn_and_fraction_test(1,8,[], Fraction(4,3))
+    add_psrn_and_fraction_test(1,0,[0, 1, 0], Fraction(-4,7))
+    add_psrn_and_fraction_test(1,0,[0, 1, 0], Fraction(-3,5))
+    add_psrn_and_fraction_test(1,3,[0, 0, 1, 1], Fraction(-5,6))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(-4,3))
+    add_psrn_and_fraction_test(1,8,[1, 1], Fraction(-8,7))
+    add_psrn_and_fraction_test(-1,3,[0, 1, 0, 1, 0, 0, 1], Fraction(-1,5))
+    add_psrn_and_fraction_test(1,3,[0, 1, 0, 0, 0, 0, 0, 1], Fraction(-7,9))
+    add_psrn_and_fraction_test(1,3,[0, 1, 0, 1, 0, 1, 1, 1], Fraction(-7,9))
+    add_psrn_and_fraction_test(-1,7,[0], Fraction(3,4))
+    add_psrn_and_fraction_test(-1,7,[1, 0, 1, 0, 0, 0, 1], Fraction(5,6))
+    add_psrn_and_fraction_test(-1,7,[0], Fraction(4,5))
+    add_psrn_and_fraction_test(1,4,[1, 0, 1, 1, 0, 1], Fraction(1,3))
+    add_psrn_and_fraction_test(1,8,[1], Fraction(-1,5))
+    add_psrn_and_fraction_test(-1,7,[0], Fraction(-2,3))
+    add_psrn_and_fraction_test(1,7,[0, 1, 0, 1, 1], Fraction(7,9))
+    add_psrn_and_fraction_test(-1,7,[1, 0, 1, 0, 0, 0, 0], Fraction(7,6))
+    add_psrn_and_fraction_test(1,2,[], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(-7,4))
+    add_psrn_and_fraction_test(-1,5,[1], Fraction(-3,4))
+    add_psrn_and_fraction_test(1,5,[], Fraction(7,4))
+    add_psrn_and_fraction_test(1,7,[0, 1, 1, 0, 1], Fraction(8,7))
+    add_psrn_and_fraction_test(1,2,[0, 0, 0, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,5,[1, 0, 1, 1, 1, 0, 0], Fraction(4,3))
+    add_psrn_and_fraction_test(-1,6,[0, 0, 1, 0], Fraction(1,3))
+    add_psrn_and_fraction_test(1,0,[0, 1, 1], Fraction(-7,6))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(-8,9))
+    add_psrn_and_fraction_test(1,2,[0, 0], Fraction(2,3))
+    add_psrn_and_fraction_test(1,6,[0, 1, 0, 0], Fraction(4,3))
+    add_psrn_and_fraction_test(-1,5,[0, 0, 1, 0], Fraction(6,7))
+    add_psrn_and_fraction_test(1,3,[], Fraction(1,2))
+    add_psrn_and_fraction_test(1,5,[0, 1, 1], Fraction(1,5))
+    add_psrn_and_fraction_test(-1,7,[1, 1, 0], Fraction(-4,3))
+    add_psrn_and_fraction_test(1,8,[1, 0, 0, 1, 0, 1, 1, 1], Fraction(-5,3))
+    add_psrn_and_fraction_test(-1,2,[0, 1, 0, 1, 1, 0, 0, 0], Fraction(-5,3))
+    add_psrn_and_fraction_test(1,2,[0, 0, 1, 1], Fraction(7,9))
+    add_psrn_and_fraction_test(1,4,[1], Fraction(-8,5))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(3,4))
+    add_psrn_and_fraction_test(-1,5,[0, 1, 1, 1, 1, 1, 1], Fraction(-4,3))
+    add_psrn_and_fraction_test(1,4,[0, 0, 0], Fraction(-1,7))
+    add_psrn_and_fraction_test(1,1,[1, 1, 0], Fraction(1,9))
+    add_psrn_and_fraction_test(1,3,[1, 0], Fraction(-9,8))
+    add_psrn_and_fraction_test(-1,0,[1, 1, 0, 1, 0, 0], Fraction(-6,5))
+    add_psrn_and_fraction_test(-1,0,[1, 0, 0, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(1,0,[0, 1, 1], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,6,[], Fraction(4,3))
+    add_psrn_and_fraction_test(1,6,[], Fraction(-9,2))
+    add_psrn_and_fraction_test(1,3,[1, 0, 1], Fraction(8,5))
+    add_psrn_and_fraction_test(-1,3,[1, 0, 0, 0, 0, 0], Fraction(-2,7))
+    add_psrn_and_fraction_test(-1,4,[1], Fraction(-7,6))
+    add_psrn_and_fraction_test(-1,1,[0, 0, 1], Fraction(2,5))
+    add_psrn_and_fraction_test(1,4,[], Fraction(-7,3))
+    add_psrn_and_fraction_test(-1,4,[0, 1, 1, 1], Fraction(4,7))
+    add_psrn_and_fraction_test(-1,2,[1, 0, 0, 1], Fraction(2,7))
+    add_psrn_and_fraction_test(1,6,[0, 0, 0, 1, 1, 0, 0], Fraction(4,3))
+    add_psrn_and_fraction_test(1,1,[0, 0, 1], Fraction(7,3))
+    add_psrn_and_fraction_test(1,5,[1, 0, 1, 1, 0, 0], Fraction(8,7))
+    add_psrn_and_fraction_test(-1,7,[1, 1, 1], Fraction(-1,3))
+    add_psrn_and_fraction_test(1,7,[1, 1, 0, 0, 0, 1, 1, 0], Fraction(-5,9))
+    add_psrn_and_fraction_test(-1,1,[1, 1, 0, 0], Fraction(-3,7))
+    add_psrn_and_fraction_test(-1,0,[0], Fraction(-4,5))
+    add_psrn_and_fraction_test(-1,5,[0, 0, 1, 0, 1, 0, 1], Fraction(-7,5))
+    add_psrn_and_fraction_test(-1,7,[0, 0, 1], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,5,[1, 0, 1, 1, 0, 0], Fraction(5,3))
+    add_psrn_and_fraction_test(-1,5,[1], Fraction(-5,4))
+    add_psrn_and_fraction_test(-1,8,[0, 0, 0, 0, 0, 0, 1, 1], Fraction(-3,5))
+    add_psrn_and_fraction_test(-1,3,[0, 0, 1], Fraction(5,7))
+    add_psrn_and_fraction_test(1,3,[1, 1, 0, 0, 1, 1, 1, 1], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,4,[], Fraction(-1,3))
+    add_psrn_and_fraction_test(1,1,[0, 1, 0, 1, 1, 1, 0], Fraction(2,3))
+    add_psrn_and_fraction_test(1,7,[], Fraction(-7,3))
+    add_psrn_and_fraction_test(1,1,[1, 0, 0, 1], Fraction(-4,9))
+    add_psrn_and_fraction_test(-1,0,[0, 0], Fraction(1,8))
+    add_psrn_and_fraction_test(-1,2,[0, 0], Fraction(-8,9))
+    add_psrn_and_fraction_test(-1,2,[0, 0, 1, 1], Fraction(5,6))
+    add_psrn_and_fraction_test(1,0,[1, 0], Fraction(4,9))
+    add_psrn_and_fraction_test(-1,7,[0, 1, 0, 0, 1, 0, 1], Fraction(8,7))
+    add_psrn_and_fraction_test(-1,2,[0, 1, 1], Fraction(3,7))
+    add_psrn_and_fraction_test(-1,4,[0, 1, 1, 0, 1, 1, 0], Fraction(4,7))
+    add_psrn_and_fraction_test(-1,8,[1], Fraction(-9,5))
+    add_psrn_and_fraction_test(-1,4,[1, 1], Fraction(-1,5))
+    add_psrn_and_fraction_test(1,7,[1, 0], Fraction(6,7))
+    add_psrn_and_fraction_test(1,8,[0, 0, 0, 1, 0, 0, 1, 1], Fraction(8,5))
+    add_psrn_and_fraction_test(-1,2,[1], Fraction(-4,3))
+    add_psrn_and_fraction_test(-1,6,[0, 0, 1, 0, 1, 1, 0], Fraction(8,3))
+    add_psrn_and_fraction_test(-1,3,[0, 1, 1, 0, 0, 1, 1], Fraction(-8,7))
+    add_psrn_and_fraction_test(-1,4,[], Fraction(2,7))
+    add_psrn_and_fraction_test(1,0,[0, 0, 1, 1, 0], Fraction(2,5))
+    add_psrn_and_fraction_test(1,4,[], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,1,[1], Fraction(8,3))
+    add_psrn_and_fraction_test(1,7,[0, 0, 0, 1, 0, 0, 0], Fraction(2,9))
+    add_psrn_and_fraction_test(-1,4,[1], Fraction(-7,3))
+    add_psrn_and_fraction_test(1,3,[1], Fraction(5,8))
+    add_psrn_and_fraction_test(1,6,[], Fraction(1,7))
+    add_psrn_and_fraction_test(-1,0,[0, 0, 1, 1], Fraction(1,5))
+    add_psrn_and_fraction_test(1,7,[1, 1, 0], Fraction(-7,5))
+    add_psrn_and_fraction_test(-1,8,[0, 0, 1, 1, 0, 0, 0], Fraction(4,3))
+    add_psrn_and_fraction_test(1,8,[], Fraction(-2,9))
+    add_psrn_and_fraction_test(1,8,[0, 1], Fraction(-5,9))
+    add_psrn_and_fraction_test(1,2,[], Fraction(-8,9))
+    add_psrn_and_fraction_test(1,5,[0, 0, 1, 0, 1, 1], Fraction(-2,7))
+    add_psrn_and_fraction_test(-1,3,[0, 1, 1, 1], Fraction(6,5))
+    add_psrn_and_fraction_test(-1,1,[1, 1, 1, 0, 1, 0, 0, 0], Fraction(2,5))
+    add_psrn_and_fraction_test(1,4,[1, 0, 1, 0, 0, 0], Fraction(-7,6))
+    add_psrn_and_fraction_test(-1,1,[0, 0, 0, 1, 1, 0, 0], Fraction(-3,5))
+    add_psrn_and_fraction_test(-1,8,[0], Fraction(5,9))
+    add_psrn_and_fraction_test(-1,0,[1, 0, 1], Fraction(-5,6))
+    add_psrn_and_fraction_test(-1,0,[0, 0, 0, 1, 1], Fraction(4,3))
+    add_psrn_and_fraction_test(1,5,[1, 0, 1, 1], Fraction(2,3))
+    add_psrn_and_fraction_test(1,6,[1, 0, 0, 0, 1, 1], Fraction(-8,5))
+    add_psrn_and_fraction_test(1,7,[1, 0, 1], Fraction(-5,6))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(-3,4))
+    add_psrn_and_fraction_test(1,5,[0, 1, 0], Fraction(4,7))
+    add_psrn_and_fraction_test(1,3,[1, 0, 0, 0, 0, 0, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,7,[1, 0, 0, 1, 1, 0, 0, 1], Fraction(-3,7))
+    add_psrn_and_fraction_test(1,0,[0, 1, 1], Fraction(1,9))
+    add_psrn_and_fraction_test(1,1,[0, 1, 0, 1, 1, 0, 1], Fraction(8,3))
+    add_psrn_and_fraction_test(-1,4,[1, 0, 0, 1, 1, 1, 0], Fraction(5,6))
+    add_psrn_and_fraction_test(-1,1,[0, 0, 1, 0, 0, 1], Fraction(1,3))
+    add_psrn_and_fraction_test(-1,8,[1, 0, 0, 0], Fraction(6,7))
+    add_psrn_and_fraction_test(1,6,[1, 0, 1, 1, 1], Fraction(-1,9))
+    add_psrn_and_fraction_test(-1,8,[0, 0, 0, 1], Fraction(1,3))
+    add_psrn_and_fraction_test(-1,1,[0, 0, 0, 0, 0, 0, 0, 0], Fraction(8,3))
+    add_psrn_and_fraction_test(1,5,[0, 1, 0], Fraction(-4,9))
+    add_psrn_and_fraction_test(-1,0,[0], Fraction(-2,3))
+    add_psrn_and_fraction_test(-1,1,[], Fraction(2,5))
+    add_psrn_and_fraction_test(-1,7,[1, 1, 1], Fraction(2,9))
+    add_psrn_and_fraction_test(-1,4,[0, 0, 1, 0, 1, 0, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,1,[], Fraction(1,4))
+    add_psrn_and_fraction_test(1,1,[0, 1, 0], Fraction(-4,9))
+    add_psrn_and_fraction_test(-1,2,[0], Fraction(1,3))
+    add_psrn_and_fraction_test(1,7,[0, 0, 1, 0, 1, 1, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,8,[0], Fraction(-5,4))
+    add_psrn_and_fraction_test(1,1,[], Fraction(2,9))
+    add_psrn_and_fraction_test(1,3,[1, 1, 0, 0, 1, 1, 1, 0], Fraction(8,5))
+    add_psrn_and_fraction_test(1,4,[0], Fraction(1,8))
+    add_psrn_and_fraction_test(1,4,[0, 1], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,2,[1, 0, 1, 0, 1, 1, 1, 1], Fraction(4,5))
+    add_psrn_and_fraction_test(-1,0,[], Fraction(-2,3))
+    add_psrn_and_fraction_test(1,7,[0, 1, 1, 0], Fraction(-4,3))
+    add_psrn_and_fraction_test(1,2,[1, 0, 1, 0], Fraction(-4,9))
+    add_psrn_and_fraction_test(1,1,[], Fraction(-1,2))
+    add_psrn_and_fraction_test(-1,3,[], Fraction(7,5))
+    add_psrn_and_fraction_test(-1,4,[1, 1], Fraction(3,8))
+    add_psrn_and_fraction_test(1,1,[1, 0, 0, 0, 1, 0, 0], Fraction(9,7))
+    add_psrn_and_fraction_test(-1,2,[], Fraction(3,5))
+    add_psrn_and_fraction_test(-1,6,[0, 1], Fraction(8,7))
+    add_psrn_and_fraction_test(1,2,[1, 0, 0, 0, 1, 0], Fraction(5,9))
+    add_psrn_and_fraction_test(1,8,[1], Fraction(-7,6))
+    add_psrn_and_fraction_test(1,5,[0], Fraction(7,5))
+    add_psrn_and_fraction_test(1,2,[0, 0, 1, 1, 0, 0], Fraction(-1,3))
+    add_psrn_and_fraction_test(-1,8,[1, 1, 0, 1, 0, 0], Fraction(1,7))
+    add_psrn_and_fraction_test(1,5,[1, 1, 0, 1, 1, 0, 0, 1], Fraction(2,3))
+    add_psrn_and_fraction_test(-1,0,[1, 0, 0, 0], Fraction(-3,7))
+    exit()
+
+    for i in range(1000):
+        ps, pi, pf = random_psrn()
+        frac = Fraction(random.randint(1, 9), random.randint(1, 9))
+        if random.random() < 0.5:
+            frac = -frac
+        add_psrn_and_fraction_test(ps, pi, pf, frac, i)
 
     add_psrns_test(1, 1, [0], -1, 1, [0, 0, 1])
     # Specific tests with output ranges that straddle zero
