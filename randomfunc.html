@@ -153,7 +153,6 @@
 
 <ul>
 <li><a href="#Random_Walks_Additional_Examples"><strong>Random Walks: Additional Examples</strong></a></li>
-<li><a href="#Mixtures_Additional_Examples"><strong>Mixtures: Additional Examples</strong></a></li>
 <li><a href="#Transformations_Additional_Examples"><strong>Transformations: Additional Examples</strong></a></li>
 </ul></li>
 <li><a href="#Random_Numbers_from_a_Distribution_of_Data_Points"><strong>Random Numbers from a Distribution of Data Points</strong></a></li>
@@ -1183,12 +1182,14 @@ else: number = RNDINTRANGE(1,6) +
    RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 </pre></li>
 <li><p>Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note25"><strong>(25)</strong></a></sup></p></li>
-<li>Take a set of nonoverlapping integer ranges.  To choose an independent uniform random integer from those ranges:
+<li><p>Take a set of nonoverlapping integer ranges (for example, [0, 5], [7, 8], [20, 25]).  To choose an independent uniform random integer from those ranges:</p>
 
 <ul>
 <li>Create a list (<code>weights</code>) of weights for each range.  Each range is given a weight of <code>(mx - mn) + 1</code>, where <code>mn</code> is that range&#39;s minimum and <code>mx</code> is its maximum.</li>
 <li>Choose an index using <code>WeightedChoice(weights)</code>, then generate <code>RNDINTRANGE(mn, mx)</code>, where <code>mn</code> is the corresponding range&#39;s minimum and <code>mx</code> is its maximum.</li>
-</ul></li>
+</ul>
+
+<p>This method can be adapted for rational numbers with a common denominator by treating the integers involved as the numerators for such numbers.  For example, [0/100, 5/100], [7/100, 8/100], [20/100, 25/100], where the numerators are the same as in the previous example.</p></li>
 <li>In the pseudocode <code>index = WeightedChoice([80, 20]); list = [[0, 5], [5, 10]]; number = RNDINTEXCRANGE(list[index][0], list[index][1])</code>, a random integer in [0, 5) is chosen at an 80% chance, and a random integer in [5, 10) at a 20% chance.</li>
 <li>A <strong>hyperexponential distribution</strong> is a mixture of <a href="#Exponential_Distribution"><strong>exponential distributions</strong></a>, each one with a separate weight and separate rate parameter.  The following is an example involving three different exponential distributions: <code>index = WeightedChoice([6, 3, 1]); rates = [[3, 10], [5, 10], [1, 100]]; number = ExpoRatio(100000, rates[i][0], rates[i][1])</code>.</li>
 </ol>
@@ -1897,12 +1898,6 @@ number in the sequence.</li>
 </ul></li>
 </ul>
 
-<p><a id=Mixtures_Additional_Examples></a></p>
-
-<h4>Mixtures: Additional Examples</h4>
-
-<p>Example 3 in &quot;<a href="#Mixtures_of_Distributions"><strong>Mixtures of Distributions</strong></a>&quot; can be adapted to nonoverlapping real number ranges by assigning weights <code>mx - mn</code> instead of <code>(mx - mn) + 1</code> and using <code>RNDRANGEMaxExc</code> instead of <code>RNDINTRANGE</code>.</p>
-
 <p><a id=Transformations_Additional_Examples></a></p>
 
 <h4>Transformations: Additional Examples</h4>
@@ -1911,8 +1906,7 @@ number in the sequence.</li>
 <li><strong>Bates distribution</strong>: Find the mean of <em>n</em> uniform random numbers in a given range (such as by <code>RNDRANGE(minimum, maximum)</code>) (strategy 8, mean; see the <a href="#Mean_and_Variance_Calculation"><strong>appendix</strong></a>).</li>
 <li>A random point (<code>x</code>, <code>y</code>) can be transformed (strategy 9, geometric transformation) to derive a point with <strong>correlated random</strong> coordinates (old <code>x</code>, new <code>x</code>) as follows (see (Saucier 2000)<sup><a href="#Note50"><strong>(50)</strong></a></sup>, sec. 3.8): <code>[x, y*sqrt(1 - rho * rho) + rho * x]</code>, where <code>x</code> and <code>y</code> are independent random numbers generated the same way, and <code>rho</code> is a <em>correlation coefficient</em> in the interval [-1, 1] (if <code>rho</code> is 0, <code>x</code> and <code>y</code> are uncorrelated).</li>
 <li>It is reasonable to talk about sampling the sum or mean of N random numbers, where N has a fractional part.  In this case, <code>ceil(N)</code> random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.</li>
-<li>A <strong>hypoexponential distribution</strong> models the sum
-of <em>n</em> random numbers that follow an exponential distribution and each have a separate rate parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
+<li>A <strong>hypoexponential distribution</strong> models the sum of <em>n</em> random numbers that follow an exponential distribution and each have a separate rate parameter (see &quot;<a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot;).</li>
 </ol>
 
 <p><a id=Random_Numbers_from_a_Distribution_of_Data_Points></a></p>
@@ -2061,7 +2055,7 @@ END METHOD
 <li>Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., <code>ICDF(RNDU01ZeroOneExc())</code>) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</li>
 </ul>
 
-<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within <code>BASE</code><sup><code>-prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
+<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within 1/<code>BASE</code><sup><code>prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
 
 <pre>METHOD Inversion(precision)
    u=0
