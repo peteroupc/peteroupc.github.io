@@ -559,11 +559,33 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
         mind = int(minv * ddc)
         maxd = int(maxv * ddc)
         rvstart = mind - 1 if minv < 0 else mind
-        rvend = maxd if maxv < 0 else maxd
+        rvend = maxd if maxv < 0 else maxd + 1
+        if Fraction(rvstart) / ddc > minv:
+            raise ValueError(
+                str(["rvstart", float(Fraction(rvstart) / ddc), float(minv)])
+            )
+        if Fraction(rvend) / ddc < maxv:
+            raise ValueError(str(["rvend", float(Fraction(rvend) / ddc), float(maxv)]))
         rv = rvstart + random.randint(0, rvend - rvstart - 1)
+        if rv >= rvend:
+            raise ValueError
         while True:
             rvstartbound = mind if minv < 0 else mind - 1
-            rvendbound = maxd + 1 if maxv < 0 else maxd - 1
+            rvendbound = maxd - 1 if maxv < 0 else maxd
+            if Fraction(rvstartbound) / ddc < minv:
+                raise ValueError(
+                    str(
+                        [
+                            "rvstartbound",
+                            float(Fraction(rvstartbound) / ddc),
+                            float(minv),
+                        ]
+                    )
+                )
+            if Fraction(rvendbound) / ddc > maxv:
+                raise ValueError(
+                    str(["rvendbound", float(Fraction(rvendbound) / ddc), float(maxv)])
+                )
             if newdigits > 50:
                 return None
             if False:
@@ -937,7 +959,7 @@ if __name__ == "__main__":
                 % (ps, pi, pfc, frac.numerator, frac.denominator, digits)
             )
             return
-        if i < 0:
+        if i < 10:
             sample1 = [random.uniform(p, p2) + q for _ in range(2000)]
             sample2 = [
                 _rp(
@@ -1103,18 +1125,19 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
-    add_psrn_and_fraction_test(1, 6, [], Fraction(7, 3))
     add_psrn_and_fraction_test(-1, 5, [0, 1, 0, 1, 0, 0, 0, 0], Fraction(-2, 3))
-    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 1], Fraction(-9, 5))
-    add_psrn_and_fraction_test(1, 1, [0, 0, 1, 0, 1, 1], Fraction(-3, 7))
     add_psrn_and_fraction_test(-1, 8, [], Fraction(7, 4))
-    add_psrn_and_fraction_test(1, 4, [], Fraction(1, 2))
-    add_psrn_and_fraction_test(1, 1, [], Fraction(-9, 2))
     add_psrn_and_fraction_test(1, 0, [1, 1, 1, 1, 0, 0, 0, 1], Fraction(-6, 7))
     add_psrn_and_fraction_test(-1, 2, [0, 0, 0, 0, 1, 0], Fraction(1, 3))
+    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 0, 1, 0], Fraction(4, 9))
+
+    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 1], Fraction(-9, 5))
+    add_psrn_and_fraction_test(1, 1, [0, 0, 1, 0, 1, 1], Fraction(-3, 7))
+    add_psrn_and_fraction_test(1, 4, [], Fraction(1, 2))
+    add_psrn_and_fraction_test(1, 1, [], Fraction(-9, 2))
+    add_psrn_and_fraction_test(1, 6, [], Fraction(7, 3))
     add_psrn_and_fraction_test(1, 5, [0, 0, 0, 0, 1, 1], Fraction(1, 3))
     add_psrn_and_fraction_test(-1, 4, [], Fraction(-9, 8))
-    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 0, 1, 0], Fraction(4, 9))
     exit()
 
     for digits in [2, 3, 10, 5, 16]:
