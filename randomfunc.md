@@ -720,7 +720,7 @@ The following method generates a random `n`-vertex graph that follows the model 
         return graph
     END METHOD
 
-Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _n_ random edges without replacement), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a _mesh graph_ is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh's rectangles.  A random _maze_ is a random spanning tree (Costantini 2020)<sup>[**(18)**](#Note18)</sup> of a mesh graph.  Penschuck et al. (2020)<sup>[**(19)**](#Note19)</sup> give a survey of random graph generation techniques.
+Other kinds of graphs are possible, including _Erdős&ndash;Rényi graphs_ (choose _m_ random edges without replacement, given an _n_&times;_n_ adjacency matrix), Chung&ndash;Lu graphs, preferential attachment graphs, and more.  For example, a _mesh graph_ is a graph in the form of a rectangular mesh, where vertices are the corners and edges are the sides of the mesh's rectangles.  A random _maze_ is a random spanning tree (Costantini 2020)<sup>[**(18)**](#Note18)</sup> of a mesh graph.  Penschuck et al. (2020)<sup>[**(19)**](#Note19)</sup> give a survey of random graph generation techniques.
 
 <a id=A_Note_on_Sorting_Random_Numbers></a>
 ### A Note on Sorting Random Numbers
