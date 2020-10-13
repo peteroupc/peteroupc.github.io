@@ -4,6 +4,7 @@ import randomgen
 import geobag
 from fractions import Fraction
 
+
 def _bern_power(bern, bag, num, den, bagfactory):
     if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
         # If the geometric bag is known to hold a very small number, use
@@ -17,8 +18,10 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
+
 def _urand_to_geobag(bag):
     return [(bag[0] >> (bag[1] - 1 - i)) & 1 for i in range(bag[1])]
+
 
 def _geobag_to_urand(bag):
     bagc = 0
@@ -29,6 +32,7 @@ def _geobag_to_urand(bag):
         bagv = (bagv << 1) | bag[i]
         bagc += 1
     return [bagv, bagc]
+
 
 def exp_minus_x2y(self, f, y, pwr=2):
     """ B(x) -> B(x*x*y) """
@@ -55,6 +59,7 @@ def exp_minus_x2y(self, f, y, pwr=2):
         fac *= n
         y *= uy
 
+
 def exp_minus_xy(self, f, y):
     """ B(x) -> B(x*y) """
     u = Fraction(1)
@@ -79,6 +84,7 @@ def exp_minus_xy(self, f, y):
         fac *= n
         y *= uy
 
+
 def sampleIntPlusBag(bern, bag, k):
     """ Return 1 with probability (x+k)/2^bitlength(k). """
     bitLength = k.bit_length()
@@ -98,6 +104,7 @@ def sampleIntPlusBag(bern, bag, k):
         if bag[r] == None:
             bag[r] = bern.randbit()
         return bag[r]
+
 
 def forsythe_prob2(rg, bern, x):
     # Returns true with probability x*exp(1-x), where x is in [0, 1].
@@ -123,6 +130,7 @@ def forsythe_prob2(rg, bern, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational_01(ret, x) else 0
 
+
 def forsythe_prob3(rg, bern, x):
     # Returns true with probability erf(x)/erf(1), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
@@ -144,6 +152,7 @@ def forsythe_prob3(rg, bern, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational_01(ret, x) else 0
 
+
 def forsythe_prob(rg, bern, m, n):
     # Returns true with probability gamma(m,n)/gamma(m,1),
     # where gamma(.) is the lower incomplete gamma function.
@@ -164,14 +173,17 @@ def forsythe_prob(rg, bern, m, n):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational_01(ret, n) else 0
 
+
 def psrn_complement(x):
     for i in range(len(x[2])):
         if x[2][i] != None:
             x[2][i] = 1 - x[2][i]
     return x
 
+
 def psrn_new_01():
     return [1, 0, []]
+
 
 def psrn_less(psrn1, psrn2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
@@ -207,6 +219,7 @@ def psrn_less(psrn1, psrn2):
         if aa > bb:
             return False
         index += 1
+
 
 def psrn_less_than_rational_01(psrn1, rat):
     rat = Fraction(rat)
@@ -245,6 +258,7 @@ def psrn_less_than_rational_01(psrn1, rat):
             return 0
         pt *= 2
         index += 1
+
 
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
@@ -352,6 +366,7 @@ def multiply_psrns(psrn1, psrn2, digits=2):
                 sret //= digits
             cpsrn[1] = sret
             return cpsrn
+
 
 def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     """ Multiplies a partially-sampled random number by a fraction.
@@ -561,7 +576,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
        maxd=int(maxv*ddc)
        rvstart = mind - 1 if minv < 0 else mind
        rvend = maxd if maxv < 0 else maxd
-       rv=rvstart + random.randint(0, rvend-rvstart-1)
+       rv=rvstart + random.randint(0, rvend-rvstart-1) 
        while True:
          rvstartbound = mind if minv < 0 else mind-1
          rvendbound = maxd+1 if maxv < 0 else maxd-1
@@ -608,6 +623,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
              mind*=digits
              maxd*=digits
 
+
 def rayleigh(bern, s=1):
     k = 0
     # Choose a piece according to Rayleigh distribution function
@@ -637,10 +653,12 @@ def rayleigh(bern, s=1):
             # Accepted
             return bern.fill_geometric_bag(bag) + k
 
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return bern.fill_geometric_bag(
         _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision
     )
+
 
 def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
     if power < 1:
@@ -680,6 +698,7 @@ def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
             bag = [x if x == None else 1 - x for x in bag] if complement else bag
             return bag
 
+
 def powerOfUniform(b, px, py, precision=53):
     """ Generates a power of a uniform random number.
          - px, py - Numerator and denominator of desired exponent for the uniform
@@ -690,6 +709,7 @@ def powerOfUniform(b, px, py, precision=53):
     # of a uniform random number, provided px/py
     # is in (0, 1].
     return betadist(b, py, px, 1, 1, precision)
+
 
 def truncated_gamma(rg, bern, ax, ay, precision=53):
     # Văduva's gamma generator truncated to [0, 1],
@@ -708,8 +728,10 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
             w = u
             k += 1
 
+
 def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
     return b.fill_geometric_bag(betadist_geobag(b, ax, ay, bx, by), precision)
+
 
 def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     """ Generates a beta-distributed random number with arbitrary
@@ -773,6 +795,7 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
             # Accepted
             return bag
 
+
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
@@ -834,11 +857,11 @@ if __name__ == "__main__":
     def _readpsrnend2(psrn, digits=2, minprec=None):
         return _readpsrnend(psrn[0], psrn[1], psrn[2], digits, minprec)
 
-    def random_psrn():
+    def random_psrn(digits=2):
         asign = -1 if random.random() < 0.5 else 1
         aint = random.randint(0, 8)
         asize = random.randint(0, 8)
-        afrac = [random.randint(0, 1) for i in range(asize)]
+        afrac = [random.randint(0, digits-1) for i in range(asize)]
         return asign, aint, afrac
 
     def dobucket(v, bounds=None):
@@ -892,16 +915,16 @@ if __name__ == "__main__":
                     i += 1
             i += 1
 
-    def _rp(a):
+    def _rp(a, digits=2):
         if a==None: return 0
-        return _readpsrn2(a, minprec=32)
+        return _readpsrn2(a, minprec=32,digits=digits)
 
-    def add_psrn_and_fraction_test(ps, pi, pf, frac, i=0):
+    def add_psrn_and_fraction_test(ps, pi, pf, frac, i=0, digits=2):
         pfc = [x for x in pf]
         pfcs = str(pfc)
-        p = _readpsrn(ps, pi, pf)
-        p2 = _readpsrnend(ps, pi, pf)
-        mult = add_psrn_and_fraction([ps, pi, pf], frac)
+        p = _readpsrn(ps, pi, pf,digits=digits)
+        p2 = _readpsrnend(ps, pi, pf,digits=digits)
+        mult = add_psrn_and_fraction([ps, pi, pf], frac,digits=digits)
         if mult==None:
                 print(
                     "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d))"
@@ -911,7 +934,7 @@ if __name__ == "__main__":
         q = float(frac)
         q2 = float(frac)
         ms, mi, mf = mult
-        m = _readpsrn2(mult, minprec=32)
+        m = _readpsrn2(mult, minprec=32,digits=digits)
         mn = min(p + q, p2 + q, p + q2, p2 + q2)
         mx = max(p + q, p2 + q, p + q2, p2 + q2)
         if mn > mx:
@@ -927,7 +950,7 @@ if __name__ == "__main__":
             sample1 = [random.uniform(p, p2) + q for _ in range(2000)]
             sample2 = [
                 _rp(
-                    add_psrn_and_fraction([ps, pi, [x for x in pfc]], frac)
+                    add_psrn_and_fraction([ps, pi, [x for x in pfc]], frac,digits=digits),digits=digits
                 )
                 for _ in range(2000)
             ]
@@ -945,16 +968,16 @@ if __name__ == "__main__":
                 #dobucket(sample1)
                 #dobucket(sample2)
 
-    def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0):
+    def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0,digits=2):
         pfc = [x for x in pf]
         pfcs = str(pfc)
-        p = _readpsrn(ps, pi, pf)
-        p2 = _readpsrnend(ps, pi, pf)
-        mult = multiply_psrn_by_fraction([ps, pi, pf], frac)
+        p = _readpsrn(ps, pi, pf,digits=digits)
+        p2 = _readpsrnend(ps, pi, pf,digits=digits)
+        mult = multiply_psrn_by_fraction([ps, pi, pf], frac,digits=digits)
         q = float(frac)
         q2 = float(frac)
         ms, mi, mf = mult
-        m = _readpsrn2(mult, minprec=32)
+        m = _readpsrn2(mult, minprec=32,digits=digits)
         mn = min(p * q, p2 * q, p * q2, p2 * q2)
         mx = max(p * q, p2 * q, p * q2, p2 * q2)
         if mn > mx:
@@ -966,8 +989,8 @@ if __name__ == "__main__":
             sample1 = [random.uniform(p, p2) * q for _ in range(2000)]
             sample2 = [
                 _readpsrn2(
-                    multiply_psrn_by_fraction([ps, pi, [x for x in pfc]], frac),
-                    minprec=32,
+                    multiply_psrn_by_fraction([ps, pi, [x for x in pfc]], frac,digits=digits),
+                    minprec=32,digits=digits,
                 )
                 for _ in range(2000)
             ]
@@ -984,18 +1007,18 @@ if __name__ == "__main__":
                 print("    # %s - %s" % (min(sample1), max(sample1)))
                 print("    # %s - %s" % (min(sample2), max(sample2)))
 
-    def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0):
+    def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0,digits=2):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
         psrn1 = [ps, pi, pf]
         psrn2 = [qs, qi, qf]
-        p = _readpsrn2(psrn1)
-        p2 = _readpsrnend2(psrn1)
-        q = _readpsrn2(psrn2)
-        q2 = _readpsrnend2(psrn2)
-        mult = add_psrns(psrn1, psrn2)
+        p = _readpsrn2(psrn1,digits=digits)
+        p2 = _readpsrnend2(psrn1,digits=digits)
+        q = _readpsrn2(psrn2,digits=digits)
+        q2 = _readpsrnend2(psrn2,digits=digits)
+        mult = add_psrns(psrn1, psrn2,digits=digits)
         ms, mi, mf = mult
-        m = _readpsrn2([ms, mi, mf], minprec=32)
+        m = _readpsrn2([ms, mi, mf], minprec=32,digits=digits)
         mn = min(p + q, p2 + q, p + q2, p2 + q2)
         mx = max(p + q, p2 + q, p + q2, p2 + q2)
         if mn > mx:
@@ -1011,8 +1034,8 @@ if __name__ == "__main__":
             ]
             sample2 = [
                 _readpsrn2(
-                    add_psrns([ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]]),
-                    minprec=32,
+                    add_psrns([ps, pi, [x for x in pfc]], [qs, qi, [x for x in qfc]],digits=digits),
+                    minprec=32,digits=digits,
                 )
                 for _ in range(2000)
             ]
@@ -1027,7 +1050,7 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
-   add_psrn_and_fraction_test(1,6,[], Fraction(7,3))
+    add_psrn_and_fraction_test(1,6,[], Fraction(7,3))
     add_psrn_and_fraction_test(-1,5,[0, 1, 0, 1, 0, 0, 0, 0], Fraction(-2,3))
     add_psrn_and_fraction_test(-1,0,[0, 1, 0, 1], Fraction(-9,5))
     add_psrn_and_fraction_test(1,1,[0, 0, 1, 0, 1, 1], Fraction(-3,7))
@@ -1353,3 +1376,5 @@ if __name__ == "__main__":
         if random.random() < 0.5:
             frac = -frac
         multiply_psrn_by_fraction_test(ps, pi, pf, frac, i)
+
+

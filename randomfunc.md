@@ -949,9 +949,11 @@ A _mixture_ consists of two or more probability distributions with separate prob
 >            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
 >
 > 2. Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(25)**](#Note25)</sup>
-> 3. Take a set of nonoverlapping integer ranges.  To choose an independent uniform random integer from those ranges:
+> 3. Take a set of nonoverlapping integer ranges (for example, [0, 5], [7, 8], [20, 25]).  To choose an independent uniform random integer from those ranges:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
 >     - Choose an index using `WeightedChoice(weights)`, then generate `RNDINTRANGE(mn, mx)`, where `mn` is the corresponding range's minimum and `mx` is its maximum.
+> 
+>     This method can be adapted for rational numbers with a common denominator by treating the integers involved as the numerators for such numbers.  For example, [0/100, 5/100], [7/100, 8/100], [20/100, 25/100], where the numerators are the same as in the previous example.
 > 4. In the pseudocode `index = WeightedChoice([80, 20]); list = [[0, 5], [5, 10]]; number = RNDINTEXCRANGE(list[index][0], list[index][1])`, a random integer in [0, 5) is chosen at an 80% chance, and a random integer in [5, 10) at a 20% chance.
 > 5. A **hyperexponential distribution** is a mixture of [**exponential distributions**](#Exponential_Distribution), each one with a separate weight and separate rate parameter.  The following is an example involving three different exponential distributions: `index = WeightedChoice([6, 3, 1]); rates = [[3, 10], [5, 10], [1, 100]]; number = ExpoRatio(100000, rates[i][0], rates[i][1])`.
 
@@ -1563,19 +1565,13 @@ The points of a low-discrepancy sequence can be "scrambled" with the help of a p
     - A _Wiener process_ (also known as _Brownian motion_) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the drift (or average value per time unit), `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999)<sup>[**(48)**](#Note48)</sup> modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
     - In a _Poisson point process_, the time between each event is its own exponential random number with its own rate parameter (e.g., `Expo(rate)`) (see "[**Exponential Distribution**](#Exponential_Distribution)"), and sorting N random `RNDRANGE(x, y)` expresses N arrival times in the interval `[x, y]`. The process is _homogeneous_ if all the rates are the same, and _inhomogeneous_ if the rate is a function of the "timestamp" before each event jump (the _hazard rate function_); to generate arrival times here, potential arrival times are generated at the maximum possible rate (`maxrate`) and each one is accepted if `RNDRANGE(0, maxrate) < thisrate`, where `thisrate` is the rate for the given arrival time (Lewis and Shedler 1979)<sup>[**(49)**](#Note49)</sup>.
 
-<a id=Mixtures_Additional_Examples></a>
-#### Mixtures: Additional Examples
-
-Example 3 in "[**Mixtures of Distributions**](#Mixtures_of_Distributions)" can be adapted to nonoverlapping real number ranges by assigning weights `mx - mn` instead of `(mx - mn) + 1` and using `RNDRANGEMaxExc` instead of `RNDINTRANGE`.
-
 <a id=Transformations_Additional_Examples></a>
 #### Transformations: Additional Examples
 
 1. **Bates distribution**: Find the mean of _n_ uniform random numbers in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean; see the [**appendix**](#Mean_and_Variance_Calculation)).
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(50)**](#Note50)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
 3. It is reasonable to talk about sampling the sum or mean of N random numbers, where N has a fractional part.  In this case, `ceil(N)` random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.
-4. A **hypoexponential distribution** models the sum
- of _n_ random numbers that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
+4. A **hypoexponential distribution** models the sum of _n_ random numbers that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
 
 <a id=Random_Numbers_from_a_Distribution_of_Data_Points></a>
 ### Random Numbers from a Distribution of Data Points
@@ -1696,7 +1692,7 @@ If the distribution **has a known quantile function**, generate a uniform random
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
 - Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., `ICDF(RNDU01ZeroOneExc())`) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup>[**(43)**](#Note43)</sup>.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within `BASE`<sup>`-prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
+The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0

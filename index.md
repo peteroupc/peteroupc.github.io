@@ -45,7 +45,7 @@ Open-source articles on programming subjects.
 * [Examples of High-Quality PRNGs](./hqprng.pdf)
 * [Notes on Calculating Jump Parameters for Some PRNGs](./jump.pdf)
 * [A Note on Hash Functions](./hash.pdf)
-* [A Note on Randomness Extraction](./randextract.html)
+* [A Note on Randomness Extraction](./randextract.pdf)
 * [A Note on the Bays&ndash;Durham Shuffle](./bdshuffle.pdf)
 * [File Name Support in Applications](./filenames.pdf)
 * [Color Topics for Programmers](./colorgen.pdf)
