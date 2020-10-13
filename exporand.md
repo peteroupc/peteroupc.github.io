@@ -313,11 +313,7 @@ Arithmetic between two PSRNs is not always trivial.
     This example can also apply to other arithmetic operations besides addition: do the interval operation (multiplication, division, etc.) on the intervals _AI_ and _BI_, and build a histogram of random results (products, quotients, etc.) that lie in the resulting interval to find out what distribution forms this way.
 
     Another reason most operations are nontrivial is that the result of the operation may be an irrational number (as in `log`, `sin`, etc.), or can even have a non-terminating digit expansion (as in most cases of division).  For these operations, although interval arithmetic can tightly bound the possible result to a finite number of digits, the resulting interval can include numbers with a probability density of zero.
-- On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include:
-    - Adding 1/2 to a uniform PSRN provided _b_ (the base, or radix, of the PSRN's digits) is even, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
-    - Negation, likewise mentioned in Karney.
-    - Adding a constant with a terminating base-_b_ expansion to a uniform PSRN (but first making sure to sample digits as needed so that the PSRN's fractional part is at least as long as that constant's fractional part; otherwise, a bias can be introduced).
-    - Operations affecting the PSRN's integer part only.
+- On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, and operations affecting the PSRN's integer part only.
 - Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.
     - There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup>[**(14)**](#Note14)</sup>, (Nezhad et al., 2013)<sup>[**(15)**](#Note15)</sup>.  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution's cumulative distribution function (CDF), and the calculations can incur rounding errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.
     - For some distributions (including the uniform and exponential distributions), the digit probabilities don't depend on previous digits, only on the position of the digit.  In this case, however, there appear to be limits on how practical this approach is; see the [**appendix**](#Setting_Digits_by_Digit_Probabilities) for details.
@@ -326,31 +322,52 @@ Arithmetic between two PSRNs is not always trivial.
 <a id=Addition_and_Subtraction></a>
 ### Addition and Subtraction
 
-The following algorithm shows how to add or subtract two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
+The following algorithm shows how to add two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-4. Let _asign_ be &minus;1 if **a** is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b** is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
-5. Calculate the following four numbers:
+3. Let _asign_ be &minus;1 if **a** is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b** is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
+4. Calculate the following four numbers:
     - _afp_\*_asign_ + _bfp_\*_bsign_.
     - _afp_\*_asign_ + (_bfp_+1)\*_bsign_.
     - (_afp_+1)\*_asign_ + _bfp_\*_bsign_.
     - (_afp_+1)\*_asign_ + (_bfp_+1)\*_bsign_.
-6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  These are lower and upper bounds to the result of applying interval addition to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval, and this is what the rest of this algorithm will solve, since in fact, the distribution of numbers in the interval resembles the distribution of the sum of two uniform random numbers.
-7. Once the four numbers are sorted from lowest to highest, let _midmin_ be the second number in the sorted order, and let _midmax_ be the third number in that order.
-8. Set _x_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).  If _x_ < _midmin_&minus;_minv_, set _dir_ to 0 (the left side of the sum density).  Otherwise, if _x_ > _midmax_&minus;_minv_, set _dir_ to 1 (the right side of the sum density).  Otherwise, do the following:
+5. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  These are lower and upper bounds to the result of applying interval addition to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval, and this is what the rest of this algorithm will solve, since in fact, the distribution of numbers in the interval resembles the distribution of the sum of two uniform random numbers.
+6. Once the four numbers are sorted from lowest to highest, let _midmin_ be the second number in the sorted order, and let _midmax_ be the third number in that order.
+7. Set _x_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).  If _x_ < _midmin_&minus;_minv_, set _dir_ to 0 (the left side of the sum density).  Otherwise, if _x_ > _midmax_&minus;_minv_, set _dir_ to 1 (the right side of the sum density).  Otherwise, do the following:
      1. Set _s_ to _minv_ + _x_.
      2. Create a new uniform PSRN, _ret_.  If _s_ is less than 0, set _s_ to abs(1 + _s_) and set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
      3. Transfer the _digitcount_ least significant digits of _s_ to _ret_'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_digitcount_</sup>), then return _ret_.  (For example, if _base_ is 10, _digitcount_ is 3, and _s_ is 34297, then _ret_'s fractional part is set to \[2, 9, 7\], and _ret_'s integer part is set to 34.)
-9. If _dir_ is 0 (the left side), set _pw_ to _x_ and _b_ to _midmin_&minus;_minv_.  Otherwise (the right side), set _pw_ to _x_&minus;(_midmax_&minus;_minv_) and _b_ to _maxv_&minus;_midmax_.
-10. Set _newdigits_ to 0, then set _y_ to a uniform random integer in the interval [0, _b_).
-11. If _dir_ is 0, set _lower_ to _pw_.  Otherwise, set _lower_ to _b_&minus;1&minus;_pw_.
-12. If _y_ is less than _lower_, do the following:
+8. If _dir_ is 0 (the left side), set _pw_ to _x_ and _b_ to _midmin_&minus;_minv_.  Otherwise (the right side), set _pw_ to _x_&minus;(_midmax_&minus;_minv_) and _b_ to _maxv_&minus;_midmax_.
+9. Set _newdigits_ to 0, then set _y_ to a uniform random integer in the interval [0, _b_).
+10. If _dir_ is 0, set _lower_ to _pw_.  Otherwise, set _lower_ to _b_&minus;1&minus;_pw_.
+11. If _y_ is less than _lower_, do the following:
      1. Set _s_ to _minv_ if _dir_ is 0, or _midmax_ otherwise, then set _s_ to _s_\*(_base_<sup>_newdigits_</sup>) + _pw_.
      2. Create a new uniform PSRN, _ret_.  If _s_ is less than 0, set _s_ to abs(1 + _s_) and set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
      3. Transfer the _digitcount_ + _newdigits_ least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_digitcount_ + _newdigits_</sup>), then return _ret_.
-13. If _y_ is greater than _lower_ + 1, go to step 8. (This is a rejection event.)
-11. Multiply _pw_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _pw_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 11.
+12. If _y_ is greater than _lower_ + 1, go to step 7. (This is a rejection event.)
+13. Multiply _pw_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _pw_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 10.
+
+The following algorithm shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. Likewise, the rational number may be negative or non-negative.  _Python code implementing this algorithm is given later in this document._
+
+1. Let _ai_ be **a**'s integer part.  Special cases:
+    - If **a** is non-negative and has no sampled digits in its fractional part, and if **b** is an integer 0 or greater, return a uniform PSRN with a non-negative sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
+    - If **a** is negative and has no sampled digits in its fractional part, and if **b** is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to _ai_ + abs(**b**), and an empty fractional part.
+    - If **a** is non-negative, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an integer part equal to _ai_ + abs(**b**), and an empty fractional part.  The PSRN's sign is negative if **b** is less than 0, and non-negative otherwise.
+    - If **b** is 0, return a copy of **a**.
+2. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
+3. Let _asign_ be &minus;1 if **a** is negative or 1 otherwise.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
+4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _asign_ be &minus;1 if
+5. Set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to ((_afp_\*_asign_)/_ddc_)+**b** (using rational arithmetic), then set _upper_ to (((_afp_+1)\*_asign_)/_ddc_)+**b** (again using rational arithmetic).  Set _minv_ to min(_lower_, _upper_), and set _maxv_ to min(_lower_, _upper_).
+6. Set _newdigits_ to 0, then set _b_ to 1, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _mind_ to floor(abs(_minv_\*_ddc_)), then set _maxd_ to floor(abs(_maxv_\*_ddc_)). (Outer bounds): Then set _rvstart_ to _mind_&minus;1 if _minv_ is less than 0, or _mind_ otherwise, then set _rvend_ to _maxd_ if _maxv_is less than 0, or _maxd_+1 otherwise.
+7. Set _rv_ to a uniform random integer in the interval [0, _rvend_&minus;_rvstart_), then set _rvs_ to _rv_ + _rvstart_.
+8. (Inner bounds.) Set _innerstart_ to _mind_ if _minv_ is less than 0, or _mind_+1 otherwise, then set _innerend_ to _maxd_&minus;1 if _maxv_is less than 0, or _maxd_ otherwise.
+9. If _rvs_ is greater than _innerstart_ and less than _innerend_, then the algorithm is almost done, so do the following:
+    1. Create an empty uniform PSRN, call it _ret_.  If _rvs_ is less than 0, set _rvs_ to abs(1 + _rvs_) and set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
+    2. Transfer the _digitcount_ + _newdigits_ least significant digits of _rvs_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_rvs_/_base_<sup>_digitcount_ + _newdigits_</sup>), then return _ret_.
+10. If _rvs_ is equal to or less than _innerstart_ and (_rvs_+1)/_ddc_ (calculated using rational arithmetic) is less than or equal to _minv_, go to step 6.  (This is a rejection event.)
+11. If _rvs_/_ddc_ (calculated using rational arithmetic) is greater than or equal to _maxv_, go to step 6.  (This is a rejection event.)
+12. Add 1 to _newdigits_, then multiply _ddc_, _rvstart_, _rv_, and _rvend_ each by _base_, then set _mind_ to floor(abs(_minv_\*_ddc_)), then set _maxd_ to floor(abs(_maxv_\*_ddc_)), then add a digit chosen uniformly at random to _rv_, then set _rvs_ to _rv_+_rvstart_, then go to step 8.
 
 <a id=Multiplication></a>
 ### Multiplication
@@ -383,9 +400,9 @@ The following algorithm shows how to multiply a uniform PSRN (**a**) by a ration
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 2. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.
-3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a** is non-negative and **b** is less than 0 or if **a** is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac).
+3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a** is non-negative and **b** is less than 0 or if **a** is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
 4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
-5. If _fraction_ is not 0, then it was detected to be "inexact" and a different approach is needed.  Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
+5. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
 6. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_lower_\*_ddc_)).
 7. Set _rvlower_ to _rv_/_ddc_ (as a rational number), then set _rvupper_ to (_rv_+1)/_ddc_ (as a rational number).
 8. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_, then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part (note that _ret_'s fractional part stores digits from most to least significant),  then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_. (For example, if _base_ is 10, (_dcount_) is 4, and _rv_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)
@@ -1091,6 +1108,102 @@ def add_psrns(psrn1, psrn2, digits=2):
             y = y * digits + random.randint(0, digits - 1)
             b *= digits
             newdigits += 1
+
+def add_psrn_and_fraction(psrn, fraction, digits=2):
+    if psrn[0] == None or psrn[1] == None:
+        raise ValueError
+    fraction = Fraction(fraction)
+    fracsign = -1 if fraction < 0 else 1
+    absfrac = abs(fraction)
+    origfrac = fraction
+    isinteger = absfrac.numerator == absfrac.denominator
+    # Special cases
+    # positive+pos. integer or negative+neg. integer
+    if ((fracsign < 0) == (psrn[0] < 0)) and isinteger and len(psrn[2]) == 0:
+        return [fracsign, psrn[1] + int(absfrac), []]
+    # PSRN has no fractional part, fraction is integer
+    if isinteger and psrn[0] == 1 and psrn[1]==0 and len(psrn[2]) == 0:
+        return [fracsign, int(absfrac), []]
+    if fraction == 0:  # Special case of 0
+        return [psrn[0], psrn[1], [x for x in psrn[2]]]
+    # End special cases
+    for i in range(len(psrn[2])):
+        psrn[2][i] = random.randint(0, digits - 1) if psrn[2][i] == None else psrn[2][i]
+    digitcount = len(psrn[2])
+    # Perform addition
+    frac1 = psrn[1]
+    frac2 = int(absfrac)
+    fraction = absfrac - frac2
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn[2][i]
+    for i in range(digitcount):
+        digit = int(fraction * digits)
+        fraction = (fraction * digits) - digit
+        frac2 = frac2 * digits + digit
+    ddc = digits ** digitcount
+    small = Fraction(frac1 * psrn[0], ddc) + origfrac
+    large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
+    minv = min(small, large)
+    maxv = max(small, large)
+    while True:
+        newdigits = 0
+        b = 1
+        ddc = digits ** digitcount
+        mind = int(minv * ddc)
+        maxd = int(maxv * ddc)
+        rvstart = mind - 1 if minv < 0 else mind
+        rvend = maxd if maxv < 0 else maxd + 1
+        rv = random.randint(0, rvend - rvstart - 1)
+        rvs = rv + rvstart
+        if rvs >= rvend:
+            raise ValueError
+        while True:
+            rvstartbound = mind if minv < 0 else mind + 1
+            rvendbound = maxd - 1 if maxv < 0 else maxd
+            if newdigits > 50:
+                return None
+            if rvs > rvstartbound and rvs < rvendbound:
+                sret = rvs
+                cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
+                if sret < 0:
+                    sret += 1
+                    cpsrn[0] = -1
+                sret = abs(sret)
+                for i in range(digitcount + newdigits):
+                    idx = (digitcount + newdigits) - 1 - i
+                    cpsrn[2][idx] = sret % digits
+                    sret //= digits
+                cpsrn[1] = sret
+                return cpsrn
+            elif rvs <= rvstartbound:
+                rvd = Fraction(rvs + 1, ddc)
+                if rvd <= minv:
+                    # Rejected
+                    break
+                else:
+                    # print(["rvd",rv+rvstart,float(rvd),float(minv)])
+                    newdigits += 1
+                    ddc *= digits
+                    rvstart *= digits
+                    rvend *= digits
+                    mind = int(minv * ddc)
+                    maxd = int(maxv * ddc)
+                    rv = rv * digits + random.randint(0, digits - 1)
+                    rvs = rv + rvstart
+            else:
+                rvd = Fraction(rvs, ddc)
+                if rvd >= maxv:
+                    # Rejected
+                    break
+                else:
+                    newdigits += 1
+                    ddc *= digits
+                    rvstart *= digits
+                    rvend *= digits
+                    mind = int(minv * ddc)
+                    maxd = int(maxv * ddc)
+                    rv = rv * digits + random.randint(0, digits - 1)
+                    rvs = rv + rvstart
 ```
 
 <a id=Exponential_Sampler_Extension></a>
@@ -1359,9 +1472,8 @@ If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the
 
 There are some open questions on PSRNs:
 
-1. Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1?
-2. Are there constructions for PSRNs other than for cases given earlier in this document?
-3. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
+1. Are there constructions for PSRNs other than for cases given earlier in this document?
+2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments

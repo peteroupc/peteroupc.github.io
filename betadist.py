@@ -525,7 +525,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     if ((fracsign < 0) == (psrn[0] < 0)) and isinteger and len(psrn[2]) == 0:
         return [fracsign, psrn[1] + int(absfrac), []]
     # PSRN has no fractional part, fraction is integer
-    if isinteger and psrn[0] == 0 and len(psrn[2]) == 0:
+    if isinteger and psrn[0] == 1 and psrn[1] == 0 and len(psrn[2]) == 0:
         return [fracsign, int(absfrac), []]
     if fraction == 0:  # Special case of 0
         return [psrn[0], psrn[1], [x for x in psrn[2]]]
@@ -548,67 +548,25 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
-    diff = maxv - minv
-    count = 0
     while True:
-        count += 1
-        if count > 50:
-            return None
         newdigits = 0
         b = 1
+        ddc = digits ** digitcount
         mind = int(minv * ddc)
         maxd = int(maxv * ddc)
         rvstart = mind - 1 if minv < 0 else mind
         rvend = maxd if maxv < 0 else maxd + 1
-        if Fraction(rvstart) / ddc > minv:
-            raise ValueError(
-                str(["rvstart", float(Fraction(rvstart) / ddc), float(minv)])
-            )
-        if Fraction(rvend) / ddc < maxv:
-            raise ValueError(str(["rvend", float(Fraction(rvend) / ddc), float(maxv)]))
-        rv = rvstart + random.randint(0, rvend - rvstart - 1)
-        if rv >= rvend:
+        rv = random.randint(0, rvend - rvstart - 1)
+        rvs = rv + rvstart
+        if rvs >= rvend:
             raise ValueError
         while True:
-            rvstartbound = mind if minv < 0 else mind - 1
+            rvstartbound = mind if minv < 0 else mind + 1
             rvendbound = maxd - 1 if maxv < 0 else maxd
-            if Fraction(rvstartbound) / ddc < minv:
-                raise ValueError(
-                    str(
-                        [
-                            "rvstartbound",
-                            float(Fraction(rvstartbound) / ddc),
-                            float(minv),
-                        ]
-                    )
-                )
-            if Fraction(rvendbound) / ddc > maxv:
-                raise ValueError(
-                    str(["rvendbound", float(Fraction(rvendbound) / ddc), float(maxv)])
-                )
             if newdigits > 50:
                 return None
-            if False:
-                print(
-                    [
-                        newdigits,
-                        "rvstart",
-                        rvstart * digits ** newdigits,
-                        rvstartbound,
-                        float(rvstartbound / digits ** (digitcount + newdigits)),
-                        "rv",
-                        rv,
-                        float(rv / digits ** (digitcount + newdigits)),
-                        "rvend",
-                        rvendbound,
-                        float(rvendbound / digits ** (digitcount + newdigits)),
-                        rvend,
-                        "rvnorm",
-                        rv - rvstart * digits ** newdigits,
-                    ]
-                )
-            if rv > rvstartbound and rv < rvendbound:
-                sret = rv
+            if rvs > rvstartbound and rvs < rvendbound:
+                sret = rvs
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
                 if sret < 0:
                     sret += 1
@@ -620,28 +578,35 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
                     sret //= digits
                 cpsrn[1] = sret
                 return cpsrn
-            elif rv <= rvstartbound:
-                rvd = Fraction(rv, ddc)
-                if rvd >= minv:
-                    newdigits += 1
-                    ddc *= digits
-                    rv = rv * digits + random.randint(0, digits - 1)
-                    mind *= digits
-                    maxd *= digits
-                else:
+            elif rvs <= rvstartbound:
+                rvd = Fraction(rvs + 1, ddc)
+                if rvd <= minv:
                     # Rejected
                     break
+                else:
+                    # print(["rvd",rv+rvstart,float(rvd),float(minv)])
+                    newdigits += 1
+                    ddc *= digits
+                    rvstart *= digits
+                    rvend *= digits
+                    mind = int(minv * ddc)
+                    maxd = int(maxv * ddc)
+                    rv = rv * digits + random.randint(0, digits - 1)
+                    rvs = rv + rvstart
             else:
-                rvd = Fraction(rv, ddc)
+                rvd = Fraction(rvs, ddc)
                 if rvd >= maxv:
                     # Rejected
                     break
                 else:
                     newdigits += 1
                     ddc *= digits
+                    rvstart *= digits
+                    rvend *= digits
+                    mind = int(minv * ddc)
+                    maxd = int(maxv * ddc)
                     rv = rv * digits + random.randint(0, digits - 1)
-                    mind *= digits
-                    maxd *= digits
+                    rvs = rv + rvstart
 
 def rayleigh(bern, s=1):
     k = 0
@@ -1125,21 +1090,6 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
-    add_psrn_and_fraction_test(-1, 5, [0, 1, 0, 1, 0, 0, 0, 0], Fraction(-2, 3))
-    add_psrn_and_fraction_test(-1, 8, [], Fraction(7, 4))
-    add_psrn_and_fraction_test(1, 0, [1, 1, 1, 1, 0, 0, 0, 1], Fraction(-6, 7))
-    add_psrn_and_fraction_test(-1, 2, [0, 0, 0, 0, 1, 0], Fraction(1, 3))
-    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 0, 1, 0], Fraction(4, 9))
-
-    add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 1], Fraction(-9, 5))
-    add_psrn_and_fraction_test(1, 1, [0, 0, 1, 0, 1, 1], Fraction(-3, 7))
-    add_psrn_and_fraction_test(1, 4, [], Fraction(1, 2))
-    add_psrn_and_fraction_test(1, 1, [], Fraction(-9, 2))
-    add_psrn_and_fraction_test(1, 6, [], Fraction(7, 3))
-    add_psrn_and_fraction_test(1, 5, [0, 0, 0, 0, 1, 1], Fraction(1, 3))
-    add_psrn_and_fraction_test(-1, 4, [], Fraction(-9, 8))
-    exit()
-
     for digits in [2, 3, 10, 5, 16]:
         for i in range(0):
             ps, pi, pf = random_psrn(digits=digits)
@@ -1188,9 +1138,23 @@ if __name__ == "__main__":
         )
         multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7), digits=digits)
 
-    for i in range(1000):
-        ps, pi, pf = random_psrn(digits=digits)
-        frac = Fraction(random.randint(1, 9), random.randint(1, 9))
-        if random.random() < 0.5:
-            frac = -frac
-        multiply_psrn_by_fraction_test(ps, pi, pf, frac, i, digits=digits)
+        for i in range(1000):
+            ps, pi, pf = random_psrn(digits=digits)
+            frac = Fraction(random.randint(1, 9), random.randint(1, 9))
+            if random.random() < 0.5:
+                frac = -frac
+            multiply_psrn_by_fraction_test(ps, pi, pf, frac, i, digits=digits)
+
+        add_psrn_and_fraction_test(-1, 5, [0, 1, 0, 1, 0, 0, 0, 0], Fraction(-2, 3))
+        add_psrn_and_fraction_test(-1, 8, [], Fraction(7, 4))
+        add_psrn_and_fraction_test(1, 0, [1, 1, 1, 1, 0, 0, 0, 1], Fraction(-6, 7))
+        add_psrn_and_fraction_test(-1, 2, [0, 0, 0, 0, 1, 0], Fraction(1, 3))
+        add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 0, 1, 0], Fraction(4, 9))
+
+        add_psrn_and_fraction_test(-1, 0, [0, 1, 0, 1], Fraction(-9, 5))
+        add_psrn_and_fraction_test(1, 1, [0, 0, 1, 0, 1, 1], Fraction(-3, 7))
+        add_psrn_and_fraction_test(1, 4, [], Fraction(1, 2))
+        add_psrn_and_fraction_test(1, 1, [], Fraction(-9, 2))
+        add_psrn_and_fraction_test(1, 6, [], Fraction(7, 3))
+        add_psrn_and_fraction_test(1, 5, [0, 0, 0, 0, 1, 1], Fraction(1, 3))
+        add_psrn_and_fraction_test(-1, 4, [], Fraction(-9, 8))
