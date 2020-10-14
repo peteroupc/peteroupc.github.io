@@ -183,7 +183,7 @@
 <li>(Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
 </ul>
 
-<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniformly-distributed random number in a given interval.  For example, if the PSRN is 3.356..., then it represents a random number that is uniformly distributed in the interval [3.356, 3.357].)</p>
+<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.<sup><a href="#Note26"><strong>(26)</strong></a></sup>  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniformly-distributed random number in a given interval.  For example, if the PSRN is 3.356..., then it represents a random number that is uniformly distributed in the interval [3.356, 3.357].)</p>
 
 <p><a id=Exponential_Partially_Sampled_Random_Numbers></a></p>
 
@@ -1891,7 +1891,6 @@ def contbernoullidist(b, lamda, precision=53):
 <p>There are some open questions on PSRNs:</p>
 
 <ol>
-<li>Are there constructions for partially-sampled normal random numbers with a standard deviation other than 1?</li>
 <li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
 <li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_with_PSRNs"><strong>Arithmetic with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?</li>
 </ol>
@@ -1950,6 +1949,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note23>(23)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
 <li><small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></li>
 <li><small><sup id=Note25>(25)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.</small></li>
+<li><small><sup id=Note26>(26)</sup> As noted by von Neumann (1951), a uniform random number bounded by 0 and 1 can be produced by &quot;juxtapos[ing] enough random binary digits&quot;.  In this sense, the random number is <code>RNDINTEXC(2)/2 + RNDINTEXC(2)/4 + RNDINTEXC(2)/8 + ...</code> (where the <code>2</code> in <code>RNDINTEXC(2)</code> is the digit base 2), perhaps &quot;forc[ing] the last [random bit] to be 1&quot; &quot;[t]o avoid any bias&quot;.  It is not hard to see that this approach applies can be applied to generate any digit expansion of any base, not just 2.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
