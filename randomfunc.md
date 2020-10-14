@@ -1374,7 +1374,7 @@ This section defines the following methods that generate independent uniform ran
 * `RNDRANGEMinExc`: Interval (a, b].
 * `RNDRANGEMinMaxExc`: Interval (a, b).
 
-The sections that follow show how these methods can be implemented for fixed-point, rational, and floating-point numbers.
+The sections that follow show how these methods can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
 
 <a id=For_Fixed_Point_Number_Formats></a>
 #### For Fixed-Point Number Formats
@@ -2001,7 +2001,8 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
          return ret
        end
        if size(points)==3
-         rs=sqrt(RNDU01()); r2=RNDU01()
+         rs=max(RNDU01(), RNDU01()) // Equivalent to sqrt(RNDU01())
+         r2=RNDU01()
          ret=[0,0,0]
          VecAddProd(ret,points[0],1.0-rs)
          VecAddProd(ret,points[1],(1.0-r2)*rs)
@@ -2050,9 +2051,7 @@ To generate a random N-dimensional point on or inside an N-dimensional ball, cen
 - generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(84)**](#Note84)</sup>, or
 - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`.
 
-To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), either&mdash;
-- generate a random point for a ball of radius B until `Norm(pt)` is A or greater, where `pt` is that point (see the [**appendix**](#Appendix)), or
-- generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(85)**](#Note85)</sup>.
+To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`<sup>[**(85)**](#Note85)</sup>.
 
 To generate a random point on or inside a cone with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))`<sup>[**(86)**](#Note86)</sup>.
 
