@@ -292,11 +292,11 @@ The following algorithm simulates this PDF.
 3. With probability 1/2, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
-6. Call the **sub-algorithm** below with _d_ = _intval_ and _c_ = _i_.  If the call returns 0, go to step 4.  (Here we simulate _intval_/(_i_+&lambda;) rather than 1/(_i_+&lambda;) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm's correctness.)
+6. Call the **sub-algorithm** below with _d_ = _intval_ and _c_ = _i_.  If the call returns 0, go to step 4.  (Here we simulate _intval_/(_i_+_&lambda;_) rather than 1/(_i_+_&lambda;_) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm's correctness.)
 7. Call the **sub-algorithm** below with _d_ = 1 and _c_ = _i_.  If the call returns 0, go to step 4.
 8. The PSRN _ret_ was accepted, so fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _i_ + _ret_.
 
-The algorithm above uses a sub-algorithm that simulates the probability _d_ / (_c_ + &lambda;), where &lambda; is the probability built up by the uniform PSRN, as follows:
+The algorithm above uses a sub-algorithm that simulates the probability _d_ / (_c_ + _&lambda;_), where _&lambda;_ is the probability built up by the uniform PSRN, as follows:
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Call **SampleGeometricBag** on _ret_ (the uniform PSRN).  If the call returns 1, return 0.  Otherwise, go to step 1.

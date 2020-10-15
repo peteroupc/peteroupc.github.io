@@ -2,8 +2,6 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-_Note: Formerly "Partially Sampled Exponential Random Numbers", due to a merger with "An Exact Beta Generator"._
-
 <a id=Introduction></a>
 ## Introduction
 

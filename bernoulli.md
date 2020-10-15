@@ -1316,9 +1316,7 @@ def coeffext(f, x, power):
     for i in range(10):
       try:
         poly=Poly(series(f, x=x, n=power+px).removeO())
-        if power == 0:
-          return poly.coeff_monomial(1)
-        return poly.as_expr().coeff(x**power)
+        return poly.as_expr().coeff(x, power)
       except:
         px+=2
     # Failed, assume 0

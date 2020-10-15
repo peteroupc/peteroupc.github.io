@@ -2050,7 +2050,7 @@ END METHOD
 <li>Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., <code>ICDF(RNDU01ZeroOneExc())</code>) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.</li>
 </ul>
 
-<p>The following method generates a random number from a distribution via inversion, with an accuracy of <code>BASE</code><sup><code>-precision</code></sup> ((Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within 1/<code>BASE</code><sup><code>prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
+<p>The following method generates a random number from a distribution via inversion, with an accuracy of 1/<code>BASE</code><sup><code>precision</code></sup> ((Devroye and Gravel 2015)<sup><a href="#Note59"><strong>(59)</strong></a></sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  In the method, <code>ICDF(u, ubits, prec)</code> calculates a number that is within 1/<code>BASE</code><sup><code>prec</code></sup> of the true quantile of <code>u</code>/<code>BASE</code><sup><code>ubits</code></sup>, and <code>BASE</code> is the digit base (e.g. 2 for binary or 10 for decimal).</p>
 
 <pre>METHOD Inversion(precision)
    u=0
@@ -2405,8 +2405,9 @@ METHOD RandomPointInSimplex(points):
      return ret
    end
    if size(points)==3
-     rs=max(RNDU01(), RNDU01()) // Equivalent to sqrt(RNDU01())
-     r2=RNDU01()
+      // Equivalent to sqrt(RNDRANGE(0,1))
+     rs=max(RNDRANGE(0,1), RNDRANGE(0,1))
+     r2=RNDRANGE(0,1)
      ret=[0,0,0]
      VecAddProd(ret,points[0],1.0-rs)
      VecAddProd(ret,points[1],(1.0-r2)*rs)

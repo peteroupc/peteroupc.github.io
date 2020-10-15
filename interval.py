@@ -781,13 +781,13 @@ class FInterval:
 
     def _sqrtbounds(x, n):
         x = Fraction(x)
-        upper = x / (x + 1)
-        for i in range(1, n):
+        upper = x + 1
+        for i in range(0, n):
             upper = (upper + x / upper) / 2
         lower = x / upper
         if lower > upper:
             raise ValueError
-        return FInterval(lower, upper)
+        return FInterval(max(lower, upper), max(lower, upper))
 
     def _atanbounds(x, n):
         x = Fraction(x)

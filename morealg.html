@@ -89,7 +89,7 @@
 <li>With probability exp(&minus;(<em>k</em> * 2 + 1)/<em>y</em>), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.  (The probability check should be done with the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with <em>x</em>/<em>y</em> = (<em>k</em> * 2 + 1)/<em>y</em>.)</li>
 <li>(Now we sample the piece located at [<em>k</em>, <em>k</em> + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of <strong>SampleGeometricBag</strong> on that uniform PSRN.</li>
 <li>Set <em>ky</em> to <em>k</em> * <em>k</em> / <em>y</em>.</li>
-<li>(At this point, we simulate exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(&lambda;<sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the same algorithm using the same input coin, <em>x</em> = <em>k</em> * 2 / <em>y</em>, and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
+<li>(At this point, we simulate exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the same algorithm using the same input coin, <em>x</em> = <em>k</em> * 2 / <em>y</em>, and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
 <li>If the uniform PSRN, call it <em>ret</em>, was accepted by step 5, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>k</em> + <em>ret</em>.</li>
 </ol>
 
@@ -185,6 +185,32 @@
 </ul>
 
 <p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
+
+<p><a id=Building_an_Arbitrary_Precision_Algorithm></a></p>
+
+<h3>Building an Arbitrary-Precision Algorithm</h3>
+
+<p>In many cases, if a continuous distribution&mdash;</p>
+
+<ul>
+<li>has a known probability density function (PDF) and cumulative distribution function (CDF),</li>
+<li>takes on only values 0 or greater, and</li>
+<li>has a monotonically decreasing PDF with an infinite tail to the right,</li>
+</ul>
+
+<p>it may be possible to describe an arbitrary-precision algorithm for that distribution.  Such a description has the following skeleton.</p>
+
+<ol>
+<li>With probability <em>A</em>, set <em>intval</em> to 0 and <em>size</em> to 1, and go to step 4. (<em>A</em> is calculated as (<em>CDF</em>(1) &minus; <em>CDF</em>(0)) / <em>CDF</em>(0), where <em>CDF</em> is the distribution&#39;s CDF.  This should be found analytically using a computer algebra system such as SymPy.  Depending on its form, a Bernoulli factory to simulate the probability <em>A</em> may exist; if one exists, it should be used.)</li>
+<li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>With probability 1 &minus; <em>B</em>(<em>size</em>, <em>intval</em>), add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.  (This step chooses an interval beyond 1, and grows this interval by geometric steps, so that an appropriate interval is chosen with the correct probability.  The probability <em>B</em>(<em>size</em>, <em>intval</em>) is the probability that the interval is chosen given that the previous intervals weren&#39;t chosen, and is calculated as (<em>CDF</em>(<em>size</em> + <em>intval</em>) &minus; <em>CDF</em>(<em>intval</em>)) / <em>CDF</em>(<em>intval</em>).  This should be found analytically using a computer algebra system such as SymPy.  Depending on its form, a Bernoulli factory to simulate the probability <em>B</em> may exist; if one exists, it should be used.)</li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that simulates the probability <em>C</em>(<em>i</em> + <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4. (The probability <em>C</em>(<em>i</em> + <em>&lambda;</em>) is calculated as <em>PDF</em>(<em>i</em> + <em>&lambda;</em>) / <em>M</em>, where <em>PDF</em> is the distribution&#39;s PDF, and <em>M</em> is max(1, <em>PDF</em>(<em>i</em>)), and should be found analytically using a computer algebra system such as SymPy.  In this formula, <em>M</em> serves to ensure that <em>C</em> can&#39;t go higher than 1. If feasible, <em>M</em> can be <em>PDF</em>(<em>intval</em>) or <em>PDF</em>(<em>i</em>) instead, which can help improve acceptance rates of this step in certain cases; either choice preserves the algorithm&#39;s correctness because the PDF has to be monotonically decreasing.  The analytical form of <em>C</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability.)</li>
+<li>The PSRN <em>ret</em> was accepted, so fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>i</em> + <em>ret</em>.</li>
+</ol>
+
+<p>An example of an algorithm that uses this skeleton is the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random numbers</strong></a>.</p>
 
 <p><a id=Notes></a></p>
 

@@ -381,12 +381,12 @@ def sum_of_uniform_base2(bern, precision=53):
 <li>With probability 1/2, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)</li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
 <li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
-<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = <em>intval</em> and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.  (Here we simulate <em>intval</em>/(<em>i</em>+&lambda;) rather than 1/(<em>i</em>+&lambda;) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm&#39;s correctness.)</li>
+<li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = <em>intval</em> and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.  (Here we simulate <em>intval</em>/(<em>i</em>+<em>&lambda;</em>) rather than 1/(<em>i</em>+<em>&lambda;</em>) in order to increase acceptance rates in this step.  This is possible without affecting the algorithm&#39;s correctness.)</li>
 <li>Call the <strong>sub-algorithm</strong> below with <em>d</em> = 1 and <em>c</em> = <em>i</em>.  If the call returns 0, go to step 4.</li>
 <li>The PSRN <em>ret</em> was accepted, so fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>i</em> + <em>ret</em>.</li>
 </ol>
 
-<p>The algorithm above uses a sub-algorithm that simulates the probability <em>d</em> / (<em>c</em> + &lambda;), where &lambda; is the probability built up by the uniform PSRN, as follows:</p>
+<p>The algorithm above uses a sub-algorithm that simulates the probability <em>d</em> / (<em>c</em> + <em>&lambda;</em>), where <em>&lambda;</em> is the probability built up by the uniform PSRN, as follows:</p>
 
 <ol>
 <li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>

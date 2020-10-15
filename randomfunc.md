@@ -1687,7 +1687,7 @@ If the distribution **has a known quantile function**, generate a uniform random
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
 - Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., `ICDF(RNDU01ZeroOneExc())`) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup>[**(43)**](#Note43)</sup>.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of `BASE`<sup>`-precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
+The following method generates a random number from a distribution via inversion, with an accuracy of 1/`BASE`<sup>`precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0
@@ -2001,8 +2001,9 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
          return ret
        end
        if size(points)==3
-         rs=max(RNDU01(), RNDU01()) // Equivalent to sqrt(RNDU01())
-         r2=RNDU01()
+          // Equivalent to sqrt(RNDRANGE(0,1))
+         rs=max(RNDRANGE(0,1), RNDRANGE(0,1))
+         r2=RNDRANGE(0,1)
          ret=[0,0,0]
          VecAddProd(ret,points[0],1.0-rs)
          VecAddProd(ret,points[1],(1.0-r2)*rs)
