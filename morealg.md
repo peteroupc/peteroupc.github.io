@@ -64,7 +64,7 @@ The following is an arbitrary-precision sampler for the Rayleigh distribution wi
 3. (Now we sample the piece located at [_k_, _k_ + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
 4. Set _ky_ to _k_ * _k_ / _y_.
 5. (At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_)) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the same algorithm using the same input coin, _x_ = _k_ * 2 / _y_, and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN's fractional part and go to step 4.
-7. If the uniform PSRN, call it _ret_, was accepted by step 5, fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _k_ + _ret_.
+7. If the uniform PSRN, call it _ret_, was accepted by step 5, set _ret_'s integer part to _k_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
 
 The sub-algorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
 
@@ -139,7 +139,7 @@ One example of a mixture is two beta distributions, with separate parameters.  O
 
 In many cases, if a continuous distribution&mdash;
 
-- has a probability density function (PDF) with a known symbolic form,
+- has a probability density function (PDF), or a function proportional to the PDF, with a known symbolic form,
 - has a cumulative distribution function (CDF) with a known symbolic form,
 - takes on only values 0 or greater, and
 - has a PDF that has an infinite tail to the right, is bounded from above (that is, _PDF(0)_ is other than infinity), and decreases monotonically,
@@ -148,19 +148,19 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
 
 1. With probability _A_, set _intval_ to 0, _size_ to 1, and go to step 4.
     - _A_ is calculated as (_CDF_(1) &minus; _CDF_(0)) / (1&minus;_CDF_(0)), where _CDF_ is the distribution's CDF.  This should be found analytically using a computer algebra system such as SymPy.
-    - The symbolic form of _A_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability, and if a Bernoulli factory exists, it should be used.
+    - The symbolic form of _A_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 2. Set _intval_ to 1 and set _size_ to 1.
 3. With probability _B_(_size_, _intval_), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
     - This step chooses an interval beyond 1, and grows this interval by geometric steps, so that an appropriate interval is chosen with the correct probability.
     - The probability _B_(_size_, _intval_) is the probability that the interval is chosen given that the previous intervals weren't chosen, and is calculated as (_CDF_(_size_ + _intval_) &minus; _CDF_(_intval_)) / (1&minus;_CDF_(_intval_)).  This should be found analytically using a computer algebra system such as SymPy.
-    - The symbolic form of _B_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability, and if a Bernoulli factory exists, it should be used.)
+    - The symbolic form of _B_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
 6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Run a Bernoulli factory algorithm that simulates the probability _C_(_i_, _&lambda;_), using the input coin (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
     - The probability _C_(_i_, _&lambda;_) is calculated as _PDF_(_i_ + _&lambda;_) / _M_, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.
-    - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as high as feasible as 1 (to improve acceptance rates), but no higher than 1.  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be monotonically decreasing and a new interval isn't chosen when _&lambda;_ is rejected.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).
-    - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability, and if a Bernoulli factory exists, it should be used.
-7. The PSRN _ret_ was accepted, so fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _i_ + _ret_.
+    - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be monotonically decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
+    - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
+7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 An example of an algorithm that uses this skeleton is the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), as well as the algorithm for the Rayleigh distribution given above.
 
@@ -170,7 +170,9 @@ Example of _A_, _B_, _C_: The random number 1/_U_<sup>1/_x_</sup>, where _U_ is 
 
 - _A_ = 0, since the random number can't lie in the interval [0, 1).
 - _B_ = 1&minus;2<sup>_x_</sup>/4<sup>_x_</sup>.
-- _C_ = 1/(_i_ + _&lambda;_)<sup>_x_+1</sup> if _i_ is 1, or _x_/(_i_ + _&lambda;_)<sup>_x_+1</sup> (the PDF's value at _i_ + _&lambda;_) elsewhere.  (The case _i_ = 1 is special because the PDF's value can be greater than 1 in the interval \[1, 2\], and can thus be greater than the highest possible probability, which is 1.  As a result, the PDF is scaled down in this case.)
+- _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.
+
+> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(4)**](#Note4)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
 
 <a id=Notes></a>
 ## Notes
@@ -178,6 +180,7 @@ Example of _A_, _B_, _C_: The random number 1/_U_<sup>1/_x_</sup>, where _U_ is 
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
 - <small><sup id=Note2>(2)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note3>(3)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note4>(4)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <a id=License></a>
 ## License
