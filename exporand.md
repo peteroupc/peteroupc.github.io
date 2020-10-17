@@ -43,6 +43,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**In General**](#In_General)
     - [**Addition and Subtraction**](#Addition_and_Subtraction)
     - [**Multiplication**](#Multiplication)
+    - [**Using the Arithmetic Algorithms**](#Using_the_Arithmetic_Algorithms)
 - [**Building Blocks**](#Building_Blocks)
     - [**SampleGeometricBag**](#SampleGeometricBag)
     - [**FillGeometricBag**](#FillGeometricBag)
@@ -69,7 +70,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**SymPy Formula for the algorithm for exp(&minus;_x_/_y_)**](#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y)
-    - [**Additional Examples of Arbitrary-Precision Samplers**](#Additional_Examples_of_Arbitrary_Precision_Samplers)
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
     - [**Oberhoff's "Exact Rejection Sampling" Method**](#Oberhoff_s_Exact_Rejection_Sampling_Method)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
@@ -407,6 +407,15 @@ The following algorithm shows how to multiply a uniform PSRN (**a**) by a ration
 9. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 5.
 10. Multiply _rv_ and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then go to step 8.
 
+<a id=Using_the_Arithmetic_Algorithms></a>
+### Using the Arithmetic Algorithms
+
+The algorithms given above for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, _location_ and _scale_, that are both rational numbers.
+
+1. Generate a uniform PSRN, then transform it into a random number of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney's algorithm for the standard normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).  This procedure won't work for exponential PSRNs (e-rands).
+2. Run the algorithm to multiply the uniform PSRN by the rational parameter _scale_ to get a new uniform PSRN.
+3. Run the algorithm to add the new uniform PSRN and the rational parameter _location_ to get a third uniform PSRN.  Return this third PSRN.
+
 <a id=Building_Blocks></a>
 ## Building Blocks
 
@@ -472,7 +481,7 @@ It makes use of a number of algorithms as follows:
 - It uses an algorithm for [**sampling unbounded monotone PDFs**](https://peteroupc.github.io/unbounded.html), which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup>[**(18)**](#Note18)</sup>.  This is needed because when _px_/_py_ is greater than 1, _U_<sup>_px_/_py_</sup> is distributed as `(py/px) / pow(U, 1-py/px)`, which has an unbounded peak at 0.
 - It uses a number of Bernoulli factory algorithms, including **SampleGeometricBag** and some algorithms described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".
 
-However, this algorithm supports only base 2.
+However, this algorithm currently only supports generating a PSRN with base-2 (binary) digits in its fractional part.
 
 The power-of-uniform algorithm is as follows:
 
@@ -1545,48 +1554,6 @@ def expminusformula():
 
 plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 ```
-
-<a id=Additional_Examples_of_Arbitrary_Precision_Samplers></a>
-### Additional Examples of Arbitrary-Precision Samplers
-
-As an additional example of how PSRNs can be useful, here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(18)**](#Note18)</sup></sup>.  The following algorithm generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
-
-1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
-2. Set _m_ to 1.
-3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
-4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns 1, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
-5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
-6. If _m_ is even, go to step 1.
-
-And here is Python code that implements this algorithm.  Note again that it uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from _randomgen.py_ and _bernoulli.py_.
-
-```
-def example_4_2_1(rg, bern, precision=53):
-    while True:
-       ret=rg.kthsmallest_urand(2,2)
-       k=1
-       while True:
-          u=rg.kthsmallest_urand(2,2)
-          kden=4*k*k+2*k # erratum incorporated
-          if randomgen.urandless(rg,u, ret) and \
-             rg.zero_or_one(4, kden)==1 and \
-             bern.zero_or_one_pi_div_4()==1 and \
-             bern.zero_or_one_pi_div_4()==1:
-             k+=1
-          elif (k&1)==1:
-             return randomgen.urandfill(rg,ret,precision)/(1<<precision)
-          else: break
-```
-
-Another example is the following new algorithm that generates a random number that follows the logistic distribution.
-
-1. Set _k_ to 0.
-2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
-3. (The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it _f_.
-4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
-5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
-6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to negative with probability 1/2 and non-negative otherwise, then return _f_.
-7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Equivalence_of_SampleGeometricBag_Algorithms></a>
 ### Equivalence of SampleGeometricBag Algorithms

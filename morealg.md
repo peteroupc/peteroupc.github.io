@@ -7,6 +7,26 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 * [**Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
 
+<a id=Contents></a>
+## Contents
+
+- [**Contents**](#Contents)
+- [**Bernoulli Factories and Irrational Probability Simulation**](#Bernoulli_Factories_and_Irrational_Probability_Simulation)
+    - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
+    - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1)
+- [**Arbitrary-Precision Samplers**](#Arbitrary_Precision_Samplers)
+    - [**Rayleigh Distribution**](#Rayleigh_Distribution)
+    - [**Uniform Distribution Inside a Circle**](#Uniform_Distribution_Inside_a_Circle)
+    - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
+    - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
+    - [**Mixtures**](#Mixtures)
+    - [**Reciprocal of Power of Uniform**](#Reciprocal_of_Power_of_Uniform)
+    - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
+    - [**Arc-cosine Distribution**](#Arc_cosine_Distribution)
+    - [**Logistic Distribution**](#Logistic_Distribution)
+- [**Notes**](#Notes)
+- [**License**](#License)
+
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
 ## Bernoulli Factories and Irrational Probability Simulation
 &nbsp;
@@ -185,6 +205,51 @@ Examples of algorithms that use this skeleton are the algorithm for the [**ratio
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
 > **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(2)**](#Note2)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+
+<a id=Arc_cosine_Distribution></a>
+### Arc-cosine Distribution
+
+Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(2)**](#Note2)</sup></sup>.  The following algorithm is an arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+
+1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
+2. Set _m_ to 1.
+3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
+4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns 1, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
+5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
+6. If _m_ is even, go to step 1.
+
+And here is Python code that implements this algorithm.  Note that it uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from _randomgen.py_ and _bernoulli.py_.
+
+```
+def example_4_2_1(rg, bern, precision=53):
+    while True:
+       ret=rg.kthsmallest_urand(2,2)
+       k=1
+       while True:
+          u=rg.kthsmallest_urand(2,2)
+          kden=4*k*k+2*k # erratum incorporated
+          if randomgen.urandless(rg,u, ret) and \
+             rg.zero_or_one(4, kden)==1 and \
+             bern.zero_or_one_pi_div_4()==1 and \
+             bern.zero_or_one_pi_div_4()==1:
+             k+=1
+          elif (k&1)==1:
+             return randomgen.urandfill(rg,ret,precision)/(1<<precision)
+          else: break
+```
+
+<a id=Logistic_Distribution></a>
+### Logistic Distribution
+
+The following new algorithm is arbitrary-precision sampler that generates a random number that follows the logistic distribution.
+
+1. Set _k_ to 0.
+2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
+3. (The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it _f_.
+4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
+5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
+6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to negative with probability 1/2 and non-negative otherwise, then return _f_.
+7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Notes></a>
 ## Notes
