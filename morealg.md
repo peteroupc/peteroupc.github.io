@@ -134,6 +134,24 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 
 One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details).
 
+<a id=Reciprocal_of_Power_of_Uniform></a>
+### Reciprocal of Power of Uniform
+
+The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random number in [0, 1] and _x_ is an integer greater than 0.
+
+1. Set _intval_ to 1 and set _size_ to 1.
+2. With probability 1 &minus; 2<sup>_x_</sup>/4<sup>_x_</sup>, go to step 3.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
+3. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
+4. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
+5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for (_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 3.
+6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+
+This algorithm uses the skeleton described later in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
+
+- _A_ = 0, since the random number can't lie in the interval [0, 1).
+- _B_ = 1&minus;2<sup>_x_</sup>/4<sup>_x_</sup>.
+- _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.  Thus, the ideal form for _C_ is _intval_<sup>_x_+1</sup>/(_i_+_&lambda;_)<sup>_x_+1</sup>.
+
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
 ### Building an Arbitrary-Precision Sampler
 
@@ -162,17 +180,11 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
     - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
-An example of an algorithm that uses this skeleton is the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), as well as the algorithm for the Rayleigh distribution given above.
+Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, also given above.
 
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
-Example of _A_, _B_, _C_: The random number 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random number in [0, 1] and _x_ > 0.
-
-- _A_ = 0, since the random number can't lie in the interval [0, 1).
-- _B_ = 1&minus;2<sup>_x_</sup>/4<sup>_x_</sup>.
-- _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.
-
-> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(4)**](#Note4)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(2)**](#Note2)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
 
 <a id=Notes></a>
 ## Notes
@@ -180,7 +192,6 @@ Example of _A_, _B_, _C_: The random number 1/_U_<sup>1/_x_</sup>, where _U_ is 
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
 - <small><sup id=Note2>(2)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note3>(3)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note4>(4)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 
 <a id=License></a>
 ## License

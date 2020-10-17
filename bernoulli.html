@@ -63,6 +63,7 @@
 <li><a href="#1__c____lambda"><strong>1 / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
+<li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
 <li><a href="#d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
@@ -251,7 +252,7 @@
 
 <p>where <em>d</em>[<em>i</em>] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients.</p>
 
-<p>The following is the general algorithm for this kind of series, called the <strong>general martingale algorithm</strong>.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.</p>
+<p>The following is the general algorithm for this kind of series, called the <strong>general martingale algorithm</strong>.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.</p>
 
 <ol>
 <li>Let <em>d[0]</em>, <em>d[1]</em>, etc. be the first, second, etc. coefficients of the alternating series.  Set <em>u</em> to <em>d[0]</em>, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
@@ -516,6 +517,24 @@
 <ol>
 <li>With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability <em>d</em>/<em>c</em> and 0 otherwise.</li>
 <li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p><a id=d__k___c____lambda____k__or__d___c____lambda____k></a></p>
+
+<h4><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></h4>
+
+<p>In this algorithm, <em>c</em> must be 1 or greater, <em>d</em> must be in the interval [0, <em>c</em>], and <em>k</em> must be an integer 0 or greater.</p>
+
+<ol>
+<li>Set <em>i</em> to 0.</li>
+<li>If <em>k</em> is 0, return 1.</li>
+<li>With probability <em>c</em> / (1 + <em>c</em>), do the following:
+
+<ol>
+<li>With probability <em>d</em>/<em>c</em>, add 1 to <em>i</em> and then either return 1 if <em>i</em> is now <em>k</em> or greater, or abort these substeps and go to step 2 otherwise.</li>
+<li>Return 0.</li>
+</ol></li>
+<li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
 <p><a id=d____mu____c____lambda></a></p>

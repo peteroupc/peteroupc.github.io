@@ -47,6 +47,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1 / (_c_ + _&lambda;_)**](#1__c____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
+        - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -199,7 +200,7 @@ One of these constructs is an alternating series of the form&mdash;
 
 where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients.
 
-The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with probability given above, and 0 otherwise.
+The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
 
 1. Let _d[0]_, _d[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _d[0]_, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random number _ret_.
@@ -401,6 +402,18 @@ In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0,
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
+
+<a id=d__k___c____lambda____k__or__d___c____lambda____k></a>
+#### _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>
+
+In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c_\], and _k_ must be an integer 0 or greater.
+
+1. Set _i_ to 0.
+2. If _k_ is 0, return 1.
+3. With probability _c_ / (1 + _c_), do the following:
+    1. With probability _d_/_c_, add 1 to _i_ and then either return 1 if _i_ is now _k_ or greater, or abort these substeps and go to step 2 otherwise.
+    2. Return 0.
+4. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
 <a id=d____mu____c____lambda></a>
 #### (_d_ + _&mu;_) / (_c_ + _&lambda;_)

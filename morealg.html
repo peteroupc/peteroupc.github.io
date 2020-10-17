@@ -186,6 +186,29 @@
 
 <p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
 
+<p><a id=Reciprocal_of_Power_of_Uniform></a></p>
+
+<h3>Reciprocal of Power of Uniform</h3>
+
+<p>The following algorithm generates a PSRN of the form 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random number in [0, 1] and <em>x</em> is an integer greater than 0.</p>
+
+<ol>
+<li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
+<li>With probability 1 &minus; 2<sup><em>x</em></sup>/4<sup><em>x</em></sup>, go to step 3.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
+<li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
+<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for (<em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em>, <em>c</em> = <em>i</em>, and <em>k</em> = <em>x</em> + 1 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 3.</li>
+<li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
+</ol>
+
+<p>This algorithm uses the skeleton described later in &quot;Building an Arbitrary-Precision Sampler&quot;.  Here, the probabilities <em>A</em>, <em>B</em>,  and <em>C</em> are as follows:</p>
+
+<ul>
+<li><em>A</em> = 0, since the random number can&#39;t lie in the interval [0, 1).</li>
+<li><em>B</em> = 1&minus;2<sup><em>x</em></sup>/4<sup><em>x</em></sup>.</li>
+<li><em>C</em> = (<em>x</em>/(<em>i</em> + <em>&lambda;</em>)<sup><em>x</em>+1</sup>) / <em>M</em>.  Ideally, <em>M</em> is either <em>x</em> if <em>intval</em> is 1, or <em>x</em>/<em>intval</em><sup><em>x</em>+1</sup> otherwise.  Thus, the ideal form for <em>C</em> is <em>intval</em><sup><em>x</em>+1</sup>/(<em>i</em>+<em>&lambda;</em>)<sup><em>x</em>+1</sup>.</li>
+</ul>
+
 <p><a id=Building_an_Arbitrary_Precision_Sampler></a></p>
 
 <h3>Building an Arbitrary-Precision Sampler</h3>
@@ -228,20 +251,12 @@
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
 </ol>
 
-<p>An example of an algorithm that uses this skeleton is the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random numbers</strong></a>, as well as the algorithm for the Rayleigh distribution given above.</p>
+<p>Examples of algorithms that use this skeleton are the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random numbers</strong></a>, the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, also given above.</p>
 
 <p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
 
-<p>Example of <em>A</em>, <em>B</em>, <em>C</em>: The random number 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random number in [0, 1] and <em>x</em> &gt; 0.</p>
-
-<ul>
-<li><em>A</em> = 0, since the random number can&#39;t lie in the interval [0, 1).</li>
-<li><em>B</em> = 1&minus;2<sup><em>x</em></sup>/4<sup><em>x</em></sup>.</li>
-<li><em>C</em> = (<em>x</em>/(<em>i</em> + <em>&lambda;</em>)<sup><em>x</em>+1</sup>) / <em>M</em>.  Ideally, <em>M</em> is either <em>x</em> if <em>intval</em> is 1, or <em>x</em>/<em>intval</em><sup><em>x</em>+1</sup> otherwise.</li>
-</ul>
-
 <blockquote>
-<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup><a href="#Note4"><strong>(4)</strong></a></sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
+<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup><a href="#Note2"><strong>(2)</strong></a></sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
 
 <p><a id=Notes></a></p>
@@ -252,7 +267,6 @@
 <li><small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small></li>
 <li><small><sup id=Note2>(2)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 <li><small><sup id=Note3>(3)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
-<li><small><sup id=Note4>(4)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 </ul>
 
 <p><a id=License></a></p>
