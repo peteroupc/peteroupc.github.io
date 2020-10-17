@@ -192,7 +192,7 @@
 
 <ul>
 <li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
-<li>If the shape in question is convex and the point (0, 0) is inside that shape, <strong>InShape</strong> can return <em>YES</em> if all the shape&#39;s corners are in the shape; <em>NO</em> if none of them are; and <em>MAYBE</em> if some but not all are.  In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>). (This implementation is incorrect if the point (0, 0) is outside the shape, since then <strong>InShape</strong> could return <em>NO</em> even though a box partly covers the shape.)</li>
+<li>If the shape in question is convex and the point (0, 0, ..., 0) is inside that shape, <strong>InShape</strong> can return <em>YES</em> if all the shape&#39;s corners are in the shape; <em>NO</em> if none of them are; and <em>MAYBE</em> if some but not all are, or if the function is unsure.  In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>). (This implementation is incorrect if the point (0, 0, ..., 0) is outside the shape, since then <strong>InShape</strong> could return <em>NO</em> even though a box partly covers the shape.)</li>
 <li><strong>InShape</strong> implementations often involve a shape&#39;s <em>signed distance field</em>.</li>
 </ul></li>
 <li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
@@ -203,7 +203,7 @@
 <li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
 </ol></li>
 <li>If the result of <strong>InShape</strong> is <em>NO</em>, then the current box lies outside the shape and is rejected.  In this case, go to step 2.</li>
-<li>If the result of <strong>InShape</strong> is <em>MAYBE</em>, it is not known whether the current box lies inside the shape, so multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+<li>If the result of <strong>InShape</strong> is <em>MAYBE</em>, it is not known whether the current box lies fully inside the shape, so multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
 </ol>
 
 <blockquote>

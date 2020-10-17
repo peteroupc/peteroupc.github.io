@@ -2458,16 +2458,18 @@ END METHOD
 
 <h4>Random Points Inside a Ball, Shell, or Cone</h4>
 
-<p>To generate a random N-dimensional point on or inside an N-dimensional ball, centered at the origin, of radius R, either&mdash;</p>
+<p>To generate a random point on or inside&mdash;</p>
+
+<ul>
+<li>an <strong>N-dimensional ball</strong>, centered at the origin, of radius R, either&mdash;
 
 <ul>
 <li>generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using <code>RandomPointInHypersphere</code>), then discard the last two coordinates (Voelker et al., 2017)<sup><a href="#Note84"><strong>(84)</strong></a></sup>, or</li>
 <li>follow the pseudocode in <code>RandomPointInHypersphere</code>, except replace <code>Norm(ret)</code> with <code>sqrt(S + Expo(1))</code>, where <code>S</code> is the sum of squares of the numbers in <code>ret</code>.</li>
+</ul></li>
+<li>an <strong>N-dimensional spherical shell</strong> (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note85"><strong>(85)</strong></a></sup>.</li>
+<li>a <strong>cone</strong> with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))</code><sup><a href="#Note86"><strong>(86)</strong></a></sup>.</li>
 </ul>
-
-<p>To generate a random point on or inside an N-dimensional spherical shell (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to <code>pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)</code><sup><a href="#Note85"><strong>(85)</strong></a></sup>.</p>
-
-<p>To generate a random point on or inside a cone with height <code>H</code> and radius <code>R</code> at its base, running along the Z axis, generate a random Z coordinate by <code>Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))</code>, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to <code>max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))</code><sup><a href="#Note86"><strong>(86)</strong></a></sup>.</p>
 
 <blockquote>
 <p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
