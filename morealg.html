@@ -29,6 +29,7 @@
 <ul>
 <li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
 <li><a href="#Uniform_Distribution_Inside_a_Circle"><strong>Uniform Distribution Inside a Circle</strong></a></li>
+<li><a href="#General_Algorithm_for_Uniform_Distribution_Inside_Two_Dimensional_Shapes"><strong>General Algorithm for Uniform Distribution Inside Two-Dimensional Shapes</strong></a></li>
 <li><a href="#Sum_of_Exponential_Random_Numbers"><strong>Sum of Exponential Random Numbers</strong></a></li>
 <li><a href="#Hyperbolic_Secant_Distribution"><strong>Hyperbolic Secant Distribution</strong></a></li>
 <li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
@@ -174,8 +175,32 @@
 <li>Return <em>x</em> and <em>y</em>, in that order.</li>
 </ol></li>
 <li>If <em>lb</em> &gt; <em>c</em><sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.</li>
-<li>At this point, it is not known whether <em>xd</em> and <em>yd</em> lie inside the circle, so multiply <em>c</em> by <em>base</em>, then 1 to <em>d</em>, then go to step 3.</li>
+<li>At this point, it is not known whether <em>xd</em> and <em>yd</em> lie inside the circle, so multiply <em>c</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
 </ol>
+
+<p><a id=General_Algorithm_for_Uniform_Distribution_Inside_Two_Dimensional_Shapes></a></p>
+
+<h3>General Algorithm for Uniform Distribution Inside Two-Dimensional Shapes</h3>
+
+<p>The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the square [0, 1]&times;[0, 1] in two-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.</p>
+
+<ol>
+<li>Generate two empty PSRNs, call them <em>x</em> and <em>y</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
+<li>Set <em>c</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>xd</em> to 0, <em>yd</em> to 0, and <em>d</em> to 1.</li>
+<li>Multiply <em>xd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>xd</em>.  Then multiply <em>yd</em> by <em>base</em> and add a digit chosen uniformly at random to <em>yd</em>.</li>
+<li>This step uses a function known as <strong>BoxInShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  In the case of convex shapes, <strong>BoxInShape</strong> returns <em>YES</em> if all the shape&#39;s corners are in the shape; <em>NO</em> if none of them are; and <em>MAYBE</em> if some but not all are.  In the case at hand, the shape&#39;s corners are (<em>xd</em>/<em>S</em>, <em>yd</em>/<em>S</em>), ((<em>xd</em>+1)/<em>S</em>, <em>yd</em>/<em>S</em>), (<em>xd</em>,(<em>yd</em>+1)/<em>S</em>), and ((<em>xd</em>+1)/<em>S</em>, (<em>yd</em>+1)/<em>S</em>), where <em>S</em> is the scale, which is currently <em>c</em><sup>2</sup> units.  In this step, run <strong>BoxInShape</strong> using the current box, which in this case is ((<em>xd</em>/<em>S</em>, <em>yd</em>/<em>S</em>), ((<em>xd</em>+1)/<em>S</em>, (<em>yd</em>+1)/<em>S</em>)).  (<em>Implementation note:</em> <strong>BoxInShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can instead pass <em>S</em> as a separate parameter to <strong>BoxInShape</strong>.)</li>
+<li>If the result of <strong>BoxInShape</strong> is <em>YES</em>, then the box was accepted.  If the box is this way, then at this point, <em>xd</em> and <em>yd</em> will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
+
+<ol>
+<li>Transfer the digits of <em>xd</em> and <em>yd</em> to <em>x</em>&#39;s and <em>y</em>&#39;s fractional parts, respectively.  The variable <em>d</em> tells how many digits to transfer this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, set <em>x</em>&#39;s fractional part to [3, 4, 2].)</li>
+<li>Fill <em>x</em> and <em>y</em> each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
+<li>Return <em>x</em> and <em>y</em>, in that order.</li>
+</ol></li>
+<li>If the result of <strong>BoxInShape</strong> is <em>NO</em>, then the box lies outside the shape and is rejected.  In this case, go to step 2.</li>
+<li>If the result of <strong>BoxInShape</strong> is <em>MAYBE</em>, it is not known whether <em>xd</em> and <em>yd</em> lie inside the shape, so multiply <em>c</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+</ol>
+
+<p>See (Li and El Gamal 2016)<sup><a href="#Note4"><strong>(4)</strong></a></sup> and (Oberhoff 2018)<sup><a href="#Note5"><strong>(5)</strong></a></sup> for related work on encoding random points uniformly distributed in a shape.</p>
 
 <p><a id=Sum_of_Exponential_Random_Numbers></a></p>
 
@@ -346,6 +371,8 @@
 <li><small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small></li>
 <li><small><sup id=Note2>(2)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 <li><small><sup id=Note3>(3)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+<li><small><sup id=Note4>(4)</sup> C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1">A Universal Coding Scheme for Remote Generation of Continuous Random Variables</a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016</small></li>
+<li><small><sup id=Note5>(5)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
 </ul>
 
 <p><a id=License></a></p>

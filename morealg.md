@@ -17,6 +17,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Arbitrary-Precision Samplers**](#Arbitrary_Precision_Samplers)
     - [**Rayleigh Distribution**](#Rayleigh_Distribution)
     - [**Uniform Distribution Inside a Circle**](#Uniform_Distribution_Inside_a_Circle)
+    - [**General Algorithm for Uniform Distribution Inside Two-Dimensional Shapes**](#General_Algorithm_for_Uniform_Distribution_Inside_Two_Dimensional_Shapes)
     - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
     - [**Mixtures**](#Mixtures)
@@ -123,7 +124,25 @@ The following algorithm is an arbitrary-precision sampler for generating a point
     3. With probability 1/2, set _x_'s sign to negative.  Then with probability 1/2, set _y_'s sign to negative.
     4. Return _x_ and _y_, in that order.
 6. If _lb_ > _c_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
-7. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _c_ by _base_, then 1 to _d_, then go to step 3.
+7. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _c_ by _base_, then add 1 to _d_, then go to step 3.
+
+<a id=General_Algorithm_for_Uniform_Distribution_Inside_Two_Dimensional_Shapes></a>
+### General Algorithm for Uniform Distribution Inside Two-Dimensional Shapes
+
+The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the square [0, 1]&times;[0, 1] in two-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.
+
+1. Generate two empty PSRNs, call them _x_ and _y_, with a positive sign, an integer part of 0, and an empty fractional part.
+2. Set _c_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _xd_ to 0, _yd_ to 0, and _d_ to 1.
+3. Multiply _xd_ by _base_ and add a digit chosen uniformly at random to _xd_.  Then multiply _yd_ by _base_ and add a digit chosen uniformly at random to _yd_.
+4. This step uses a function known as **BoxInShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In the case of convex shapes, **BoxInShape** returns _YES_ if all the shape's corners are in the shape; _NO_ if none of them are; and _MAYBE_ if some but not all are.  In the case at hand, the shape's corners are (_xd_/_S_, _yd_/_S_), ((_xd_+1)/_S_, _yd_/_S_), (_xd_,(_yd_+1)/_S_), and ((_xd_+1)/_S_, (_yd_+1)/_S_), where _S_ is the scale, which is currently _c_<sup>2</sup> units.  In this step, run **BoxInShape** using the current box, which in this case is ((_xd_/_S_, _yd_/_S_), ((_xd_+1)/_S_, (_yd_+1)/_S_)).  (_Implementation note:_ **BoxInShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **BoxInShape**.)
+5. If the result of **BoxInShape** is _YES_, then the box was accepted.  If the box is this way, then at this point, _xd_ and _yd_ will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
+    1. Transfer the digits of _xd_ and _yd_ to _x_'s and _y_'s fractional parts, respectively.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, set _x_'s fractional part to \[3, 4, 2\].)
+    2. Fill _x_ and _y_ each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    3. Return _x_ and _y_, in that order.
+6. If the result of **BoxInShape** is _NO_, then the box lies outside the shape and is rejected.  In this case, go to step 2.
+7. If the result of **BoxInShape** is _MAYBE_, it is not known whether _xd_ and _yd_ lie inside the shape, so multiply _c_ by _base_, then add 1 to _d_, then go to step 3.
+
+See (Li and El Gamal 2016)<sup>[**(4)**](#Note4)</sup> and (Oberhoff 2018)<sup>[**(5)**](#Note5)</sup> for related work on encoding random points uniformly distributed in a shape.
 
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
@@ -257,6 +276,8 @@ The following new algorithm is arbitrary-precision sampler that generates a rand
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
 - <small><sup id=Note2>(2)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note3>(3)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note4>(4)</sup> C.T. Li, A. El Gamal, "[A Universal Coding Scheme for Remote Generation of Continuous Random Variables](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016</small>
+- <small><sup id=Note5>(5)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
 <a id=License></a>
 ## License
