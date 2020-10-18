@@ -857,7 +857,7 @@
 
 <h4>Certain Rational Functions</h4>
 
-<p>According to (Mossel and Peres 2005)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, a function can be simulated by a finite-state machine (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, (Icard 2019)<sup><a href="#Note20"><strong>(20)</strong></a></sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input <em>&lambda;</em> in some subset of (0, 1) and outputs a number in the interval (0, 1).</p>
+<p>According to (Mossel and Peres 2005)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, a function can be simulated by a finite-state machine (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, (Icard 2019)<sup><a href="#Note20"><strong>(20)</strong></a></sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input <em>&lambda;</em> in some subset of (0, 1) and outputs a number in the interval (0, 1).</p>
 
 <p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
@@ -919,7 +919,7 @@
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;.   The functions belong to a class called <em>algebraic functions</em> (functions that can be a solution of a polynomial system).</p>
 
-<p>According to (Mossel and Peres 2005)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, a function can be simulated by a pushdown automaton only if that function is algebraic and can be rewritten as a power series with rational coefficients.</p>
+<p>According to (Mossel and Peres 2005)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, a function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.</p>
 
 <p>The following algorithm simulates the following algebraic function:</p>
 

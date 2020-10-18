@@ -50,6 +50,7 @@
 <li><a href="#Other_Distributions"><strong>Other Distributions</strong></a></li>
 <li><a href="#Properties"><strong>Properties</strong></a></li>
 <li><a href="#Comparisons"><strong>Comparisons</strong></a></li>
+<li><a href="#Limitations"><strong>Limitations</strong></a></li>
 </ul></li>
 <li><a href="#Sampling_Uniform_and_Exponential_PSRNs"><strong>Sampling Uniform and Exponential PSRNs</strong></a>
 
@@ -320,6 +321,23 @@
 <li>If <em>num</em> is 0, return 0.</li>
 <li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
 </ol>
+
+<p><a id=Limitations></a></p>
+
+<h3>Limitations</h3>
+
+<p>Because a PSRN stores a random number in a certain interval, PSRNs are not well suited for representing numbers in zero-volume sets.  Such sets include:</p>
+
+<ul>
+<li>Sets of integers or rational numbers.</li>
+<li>Sets of individual points.</li>
+<li>Curves on two- or higher-dimensional space.</li>
+<li>Surfaces on three- or higher-dimensional space.</li>
+</ul>
+
+<p>In the case of curves and surfaces, a PSRN can&#39;t directly store the coordinates, in space, of a point on that curve or surface (because the exact value of those coordinates may be an irrational number that no computer can store, and no interval can bound those exact coordinates &quot;tightly&quot; enough), but the PSRN <em>can</em> store upper and lower bounds that indirectly give that point&#39;s position on that curve or surface.</p>
+
+<p>For example, to represent a point on the edge of a circle, a PSRN can store a random number in the interval [0, 2*<em>&pi;</em>), via the <strong>URandLessThanReal</strong> method for 2*<em>&pi;</em> (for example, it can store an integer part of 2 and a fractional part of [1, 3, 5] and thus represent a number in the interval [2.135, 2.136]), and the number stored this way indicates the distance on the circular curve relative to its starting position.  A program that cares about the point&#39;s X and Y coordinates can then generate enough digits of the PSRN to compute an approximation of cos(<em>P</em>) and sin(<em>P</em>), respectively, to the desired accuracy, where <em>P</em> is the number stored by the PSRN.  (However, the direct use of mathematical functions such as <code>cos</code> and <code>sin</code> is outside the scope of this document.)</p>
 
 <p><a id=Sampling_Uniform_and_Exponential_PSRNs></a></p>
 
