@@ -17,6 +17,8 @@ This page is focused on sampling methods that _exactly_ sample from the distribu
 
 [**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available, together with [**documentation for the code**](https://peteroupc.github.io/randomgendoc.html).
 
+The randomization methods presented on this page assume we have an endless source of independent and uniformly distributed random numbers.  For more information, see "[**Sources of Random Numbers**](#Sources_of_Random_Numbers)" in the appendix.
+
 **In general, the following are outside the scope of this document:**
 
 - This document does not cover how to choose an underlying RNG (or PRNG) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
@@ -26,24 +28,6 @@ This page is focused on sampling methods that _exactly_ sample from the distribu
 - This document does not show how to generate random security parameters such as encryption keys.
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
 - Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.
-
-<a id=Sources_of_Random_Numbers></a>
-### Sources of Random Numbers
-
-All the randomization methods presented on this page assume that we have an endless source of numbers with the property that&mdash;
-
-- each number is _equally likely to occur_, and
-- each number is _chosen independently of any other choice_.
-
-That is, the methods assume we have a **source of (uniform) random numbers** (also known as a _uniform discrete memoryless source_). (Thus, none of these methods _generate_ random numbers themselves, strictly speaking, but assume we have a source of them already.)
-
-However, this is an ideal assumption which is hard if not impossible to achieve in practice.
-
-Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other kind of RNG) even if they don't in theory.
-
-Note that the source of random numbers can be generated (or simulated) by a wide range of devices and programs, including PRNGs, so-called &quot;true&quot; random number generators, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  They can serve as a source of random numbers regardless of their predictability or statistical quality, and whether or not they use a deterministic algorithm. However, some random number generators are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.
-
-The randomization methods in this document will be deterministic (that is, produce the same values given the same state and input) whenever they are powered by a PRNG (as will generally be the case in practice), as PRNGs are deterministic.  However, if a "true" random number generator powers these methods, they will not necessarily be deterministic.
 
 <a id=About_This_Document></a>
 ### About This Document
@@ -56,7 +40,6 @@ The randomization methods in this document will be deterministic (that is, produ
 ## Contents
 
 - [**Introduction**](#Introduction)
-    - [**Sources of Random Numbers**](#Sources_of_Random_Numbers)
     - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
 - [**Notation**](#Notation)
@@ -122,15 +105,15 @@ The randomization methods in this document will be deterministic (that is, produ
     - [**Specific Distributions**](#Specific_Distributions)
     - [**Index of Non-Uniform Distributions**](#Index_of_Non_Uniform_Distributions)
     - [**Geometric Sampling**](#Geometric_Sampling)
-        - [**Random Points Inside a Box**](#Random_Points_Inside_a_Box)
         - [**Random Points Inside a Simplex**](#Random_Points_Inside_a_Simplex)
         - [**Random Points on the Surface of a Hypersphere**](#Random_Points_on_the_Surface_of_a_Hypersphere)
-        - [**Random Points Inside a Ball, Shell, or Cone**](#Random_Points_Inside_a_Ball_Shell_or_Cone)
+        - [**Random Points Inside a Box, Ball, Shell, or Cone**](#Random_Points_Inside_a_Box_Ball_Shell_or_Cone)
         - [**Random Latitude and Longitude**](#Random_Latitude_and_Longitude)
 - [**Acknowledgments**](#Acknowledgments)
 - [**Other Documents**](#Other_Documents)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
+    - [**Sources of Random Numbers**](#Sources_of_Random_Numbers)
     - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
     - [**Norm Calculation**](#Norm_Calculation)
     - [**Implementation Considerations**](#Implementation_Considerations)
@@ -1977,13 +1960,6 @@ Miscellaneous:
 
 This section contains ways to choose independent uniform random points in or on geometric shapes.
 
-<a id=Random_Points_Inside_a_Box></a>
-#### Random Points Inside a Box
-
-To generate a random point inside an N-dimensional box, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
-- to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
-- to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGE(0, 1), RNDRANGE(0, 1)]`.
-
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
 
@@ -2045,11 +2021,14 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 >
 > **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
-<a id=Random_Points_Inside_a_Ball_Shell_or_Cone></a>
-#### Random Points Inside a Ball, Shell, or Cone
+<a id=Random_Points_Inside_a_Box_Ball_Shell_or_Cone></a>
+#### Random Points Inside a Box, Ball, Shell, or Cone
 
 To generate a random point on or inside&mdash;
 
+- an **N-dimensional box**, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
+    - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
+    - to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGE(0, 1), RNDRANGE(0, 1)]`.
 - an **N-dimensional ball**, centered at the origin, of radius R, either&mdash;
     - generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017)<sup>[**(84)**](#Note84)</sup>, or
     - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`.
@@ -2198,6 +2177,24 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 ## Appendix
 
 &nbsp;
+
+<a id=Sources_of_Random_Numbers></a>
+### Sources of Random Numbers
+
+All the randomization methods presented on this page assume that we have an endless source of numbers with the property that&mdash;
+
+- each number is _equally likely to occur_, and
+- each number is _chosen independently of any other choice_.
+
+That is, the methods assume we have a **source of (uniform) random numbers**. (Thus, none of these methods _generate_ random numbers themselves, strictly speaking, but assume we have a source of them already.)
+
+However, this is an ideal assumption which is hard if not impossible to achieve in practice.
+
+Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other kind of RNG) even if they don't in theory.
+
+Note that the source of random numbers can be generated (or simulated) by a wide range of devices and programs, including PRNGs, so-called &quot;true&quot; random number generators, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  They can serve as a source of random numbers regardless of their predictability or statistical quality, and whether or not they use a deterministic algorithm. However, some random number generators are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.
+
+The randomization methods in this document will be deterministic (that is, produce the same values given the same state and input) whenever they are powered by a PRNG (as will generally be the case in practice), as PRNGs are deterministic.  However, if a "true" random number generator powers these methods, they will not necessarily be deterministic.
 
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation

@@ -148,7 +148,11 @@ The previous algorithm is one example of a general way to describe an arbitrary-
 > **Notes:**
 >
 > - See (Li and El Gamal 2016)<sup>[**(3)**](#Note3)</sup> and (Oberhoff 2018)<sup>[**(4)**](#Note4)</sup> for related work on encoding random points uniformly distributed in a shape.
-> - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.
+> - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
+>
+> **Examples:**
+>
+> - The following example generates a point inside a quarter diamond: Let _N_ be 2, and let **InShape** return _YES_ if ((_c1_ + 1) + (_c2_ + 1)) < _S_; _NO_ if (_c1_ + _c2_) > _S_; and _MAYBE_ otherwise.
 
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers

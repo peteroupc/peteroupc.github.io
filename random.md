@@ -482,8 +482,9 @@ A cryptographic RNG is not required to reseed itself.
 >
 > - Randomness extractors or cryptographic [**hash functions**](#Hash_Functions) that take very hard-to-predict signals from two or more [**nondeterministic sources**](#Nondeterministic_Sources_and_Seed_Generation) as input.
 > - A "fast-key-erasure" random number generator described by D.J. Bernstein in his blog (Bernstein 2017)<sup>[**(40)**](#Note40)</sup>.
-> - The Hash_DRBG and HMAC_DRBG generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.
+> - The `Hash_DRBG` and `HMAC_DRBG` generators specified in NIST SP 800-90A.  The SP 800-90 series goes into further detail on how RNGs appropriate for information security can be constructed, and inspired much of this section.
 > - An RNG made up of two or more independently initialized cryptographic RNGs of different designs.<sup>[**(41)**](#Note41)</sup>
+> - RFC 8937 describes an RNG that hashes another cryptographic RNG's output with a secret value derived from a long-term key.
 
 <a id=High_Quality_RNGs_Requirements></a>
 ### High-Quality RNGs: Requirements
@@ -570,7 +571,7 @@ See also N. Reed, "Quick And Easy GPU Random Numbers In D3D11", Nathan Reed's co
     - In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a _collision risk_) or that a seed not allowed by the PRNG is produced (a "rejection risk"), but this risk decreases the more seeds the PRNG admits (see "[**Birthday problem**](https://en.wikipedia.org/wiki/Birthday_problem)").
     - M. O'Neill (in "Developing a seed_seq Alternative", Apr. 30, 2015) developed hash functions (`seed_seq_fe`) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, `seed_seq_fe128` hashes 128-bit seeds to 128-bit or longer unique values.
     - An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.
-    - See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.</small>
+    - See also Matsumoto, M., et al., "Common defects in initialization of pseudorandom number generators", _ACM Transactions on Modeling and Computer Simulation_ 17(4), Sep. 2007.</small>
 - <small><sup id=Note21>(21)</sup> Using the similar `/dev/random` is not recommended, since in some implementations it can block for seconds at a time, especially if not enough randomness is available.  See also [**"Myths about /dev/urandom"**](https://www.2uo.de/myths-about-urandom).</small>
 - <small><sup id=Note22>(22)</sup> Wetzels, J., "33C3: Analyzing Embedded Operating System Random Number Generators", samvartaka.github.io, Jan. 3, 2017.</small>
 - <small><sup id=Note23>(23)</sup> B. Peng, "Two Fast Methods of Generating True Random Numbers on the Arduino", GitHub Gist, December 2017.</small>

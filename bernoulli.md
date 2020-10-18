@@ -175,7 +175,7 @@ Mendo (2019)<sup>[**(6)**](#Note6)</sup> gave a Bernoulli factory algorithm for 
 
 &nbsp;&nbsp;&nbsp;&nbsp;1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...),
 
-where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners" &mdash; and takes on a value that approaches 0 or 1 as the series approaches 0 or 1, respectively). The algorithm follows:
+where _c_\[_i_\] >= 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners" &mdash; and takes on a value that approaches 0 or 1 as _&lambda;_ approaches 0 or 1, respectively). The algorithm follows:
 
 1. Let _v_ be 1 and let _result_ be 1.
 2. Set _dsum_ to 0 and _i_ to 0.
@@ -354,7 +354,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 
 1. Generate a uniform(0, 1) random number _u_.
 2. With probability 1/2, flip the input coin and return the result.
-3. [**Sample from the number _u_.**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample from the number _u_**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
 
 <a id=1_minus_ln_1___lambda></a>
 #### 1 &minus; ln(1+_&lambda;_)
@@ -403,6 +403,18 @@ In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0,
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
+
+<a id=d____mu____c____lambda></a>
+#### (_d_ + _&mu;_) / (_c_ + _&lambda;_)
+
+Combines the algorithms in the previous two sections.  This algorithm currently works only if _d_ and _c_ are integers and 0 <= _d_ < _c_.
+
+1. With probability _c_ / (1 + _c_), do the following:
+    1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
+    2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the _&mu;_ input coin and return the result.  If neither is the case, go to the previous substep.
+2. Flip the _&lambda;_ input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
+
+
 <a id=d__k___c____lambda____k__or__d___c____lambda____k></a>
 #### _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>
 
@@ -414,16 +426,6 @@ In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c
     1. With probability _d_/_c_, add 1 to _i_ and then either return 1 if _i_ is now _k_ or greater, or abort these substeps and go to step 2 otherwise.
     2. Return 0.
 4. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
-
-<a id=d____mu____c____lambda></a>
-#### (_d_ + _&mu;_) / (_c_ + _&lambda;_)
-
-Combines the algorithms in the previous two sections.  This algorithm currently works only if _d_ and _c_ are integers and 0 <= _d_ < _c_.
-
-1. With probability _c_ / (1 + _c_), do the following:
-    1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
-    2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the _&mu;_ input coin and return the result.  If neither is the case, go to the previous substep.
-2. Flip the _&lambda;_ input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda_____mu></a>
 #### _&lambda;_ + _&mu;_
@@ -657,7 +659,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 <a id=Certain_Rational_Functions></a>
 #### Certain Rational Functions
 
-According to (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup>, a function can be simulated by a finite-state machine (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(19)**](#Note19)</sup>, (Icard 2019)<sup>[**(20)**](#Note20)</sup>) if and only if the function can be written as a rational function with rational coefficients, that takes in an input _&lambda;_ in some subset of (0, 1) and outputs a number in the interval (0, 1).
+According to (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup>, a function can be simulated by a finite-state machine (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(19)**](#Note19)</sup>, (Icard 2019)<sup>[**(20)**](#Note20)</sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input _&lambda;_ in some subset of (0, 1) and outputs a number in the interval (0, 1).
 
 The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup>[**(21)**](#Note21)</sup>.  It assumes the rational function is of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -700,9 +702,11 @@ A _Bernstein polynomial_ is a polynomial of the form &Sigma;<sub>_i_ = 0, ..., _
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain algebraic functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".   The functions belong to a class called _algebraic functions_ (functions that can be a solution of a polynomial system).
 
-The following algorithm simulates the following algebraic function<sup>[**(27)**](#Note27)</sup>:
+According to (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup>, a function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.
+
+The following algorithm simulates the following algebraic function:
 
 - &Sigma;<sub>_k_ = 0, 1, 2, ...</sub> (_&lambda;_<sup>_k_</sup> * (1 &minus; _&lambda;_) * W(_k_) / _&beta;_<sup>_k_</sup>), or alternatively,
 - (1 &minus; _&lambda;_) * OGF(_&lambda;_/_&beta;_),
@@ -1164,7 +1168,6 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note25>(25)</sup> Qian, W. and Riedel, M.D., 2008, June. The synthesis of robust polynomial arithmetic with stochastic logic. In 2008 45th ACM/IEEE Design Automation Conference (pp. 648-653). IEEE.</small>
 - <small><sup id=Note26>(26)</sup> Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011,
 [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)</small>
-- <small><sup id=Note27>(27)</sup> An algebraic function is a function that can be a root of a polynomial system.</small>
 - <small><sup id=Note28>(28)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just "&Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (_&lambda;_/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
 - <small><sup id=Note29>(29)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
 - <small><sup id=Note30>(30)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>

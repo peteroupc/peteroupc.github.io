@@ -211,7 +211,13 @@
 
 <ul>
 <li>See (Li and El Gamal 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup> and (Oberhoff 2018)<sup><a href="#Note4"><strong>(4)</strong></a></sup> for related work on encoding random points uniformly distributed in a shape.</li>
-<li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.</li>
+<li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+
+<ul>
+<li>The following example generates a point inside a quarter diamond: Let <em>N</em> be 2, and let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em> + 1) + (<em>c2</em> + 1)) &lt; <em>S</em>; <em>NO</em> if (<em>c1</em> + <em>c2</em>) &gt; <em>S</em>; and <em>MAYBE</em> otherwise.</li>
 </ul>
 </blockquote>
 
