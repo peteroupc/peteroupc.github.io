@@ -26,6 +26,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
     - [**Arc-cosine Distribution**](#Arc_cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
+- [**Requests**](#Requests)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -130,7 +131,7 @@ The following algorithm is an arbitrary-precision sampler for generating a point
 <a id=General_Algorithm_for_Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
 ### General Algorithm for Uniform Distribution Inside N-Dimensional Shapes
 
-The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the square [0, 1]&times;[0, 1] in _N_-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.
+The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.
 
 1. Generate _N_ empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_, then set _d_ to 1.
@@ -150,6 +151,7 @@ The previous algorithm is one example of a general way to describe an arbitrary-
 >
 > - See (Li and El Gamal 2016)<sup>[**(3)**](#Note3)</sup> and (Oberhoff 2018)<sup>[**(4)**](#Note4)</sup> for related work on encoding random points uniformly distributed in a shape.
 > - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
+> - (Devroye 1986, chapter 8, section 3)<sup>[**(2)**](#Note2)</sup> describes grid-based methods to optimize random point generation.  In this case, the result of **InShape** could be precalculated for all boxes whose coordinates begin with a _k_-digit prefix; each such box is labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes.  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on, each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
 >
 > **Examples:**
 >
@@ -299,6 +301,14 @@ The following new algorithm generates a random number that follows the logistic 
 5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
 6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to negative with probability 1/2 and non-negative otherwise, then return _f_.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
+
+<a id=Requests></a>
+## Requests
+
+We would like to see new implementations of the following:
+
+- Algorithms that implement **InShape** for specific curves and surfaces.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
+- Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
 
 <a id=Notes></a>
 ## Notes

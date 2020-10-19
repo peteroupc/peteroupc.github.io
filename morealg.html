@@ -39,6 +39,7 @@
 <li><a href="#Arc_cosine_Distribution"><strong>Arc-cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
 </ul></li>
+<li><a href="#Requests"><strong>Requests</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -183,7 +184,7 @@
 
 <h3>General Algorithm for Uniform Distribution Inside N-Dimensional Shapes</h3>
 
-<p>The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the square [0, 1]&times;[0, 1] in <em>N</em>-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.</p>
+<p>The previous algorithm is one example of a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space (which in the case of the previous algorithm was a quarter-circle).  Such a description has the following skeleton.</p>
 
 <ol>
 <li>Generate <em>N</em> empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
@@ -194,7 +195,7 @@
 <ul>
 <li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
 <li>If the shape in question is convex and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return <em>YES</em> if all the shape&#39;s corners are in the shape; <em>NO</em> if none of them are; and <em>MAYBE</em> if some but not all are, or if the function is unsure.  In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>). (This implementation is incorrect if the point (0, 0, ..., 0) is outside the shape, since then <strong>InShape</strong> could return <em>NO</em> even though a box partly covers the shape.)</li>
-<li><strong>InShape</strong> implementations often involve a shape&#39;s <em>signed distance field</em>.</li>
+<li><strong>InShape</strong> implementations often involve a shape&#39;s <em>signed distance field</em>, its <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), or its <em>implicit surface</em> equation (for closed surfaces).</li>
 </ul></li>
 <li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>xd</em> is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
 
@@ -213,6 +214,7 @@
 <ul>
 <li>See (Li and El Gamal 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup> and (Oberhoff 2018)<sup><a href="#Note4"><strong>(4)</strong></a></sup> for related work on encoding random points uniformly distributed in a shape.</li>
 <li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.</li>
+<li>(Devroye 1986, chapter 8, section 3)<sup><a href="#Note2"><strong>(2)</strong></a></sup> describes grid-based methods to optimize random point generation.  In this case, the result of <strong>InShape</strong> could be precalculated for all boxes whose coordinates begin with a <em>k</em>-digit prefix; each such box is labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, and <em>N</em> is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes.  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on, each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
 </ul>
 
 <p><strong>Examples:</strong></p>
@@ -406,6 +408,17 @@
 <li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to negative with probability 1/2 and non-negative otherwise, then return <em>f</em>.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
 </ol>
+
+<p><a id=Requests></a></p>
+
+<h2>Requests</h2>
+
+<p>We would like to see new implementations of the following:</p>
+
+<ul>
+<li>Algorithms that implement <strong>InShape</strong> for specific curves and surfaces.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
+<li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
+</ul>
 
 <p><a id=Notes></a></p>
 
