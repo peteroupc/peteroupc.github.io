@@ -21,8 +21,9 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
     - [**Mixtures**](#Mixtures)
-    - [**Reciprocal of Power of Uniform**](#Reciprocal_of_Power_of_Uniform)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
+    - [**Reciprocal of Power of Uniform**](#Reciprocal_of_Power_of_Uniform)
+    - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
     - [**Arc-cosine Distribution**](#Arc_cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
 - [**Notes**](#Notes)
@@ -183,24 +184,6 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 
 One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details).
 
-<a id=Reciprocal_of_Power_of_Uniform></a>
-### Reciprocal of Power of Uniform
-
-The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random number in [0, 1] and _x_ is an integer greater than 0.
-
-1. Set _intval_ to 1 and set _size_ to 1.
-2. With probability 1 &minus; 2<sup>_x_</sup>/4<sup>_x_</sup>, go to step 3.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
-3. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
-4. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
-5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for (_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 3.
-6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
-
-This algorithm uses the skeleton described later in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
-
-- _A_ = 0, since the random number can't lie in the interval [0, 1).
-- _B_ = 1&minus;2<sup>_x_</sup>/4<sup>_x_</sup>.
-- _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.  Thus, the ideal form for _C_ is _intval_<sup>_x_+1</sup>/(_i_+_&lambda;_)<sup>_x_+1</sup>.
-
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
 ### Building an Arbitrary-Precision Sampler
 
@@ -213,7 +196,7 @@ In many cases, if a continuous distribution&mdash;
 
 it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.
 
-1. With probability _A_, set _intval_ to 0, _size_ to 1, and go to step 4.
+1. With probability _A_, set _intval_ to 0, then set _size_ to 1, then go to step 4.
     - _A_ is calculated as (_CDF_(1) &minus; _CDF_(0)) / (1&minus;_CDF_(0)), where _CDF_ is the distribution's CDF.  This should be found analytically using a computer algebra system such as SymPy.
     - The symbolic form of _A_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 2. Set _intval_ to 1 and set _size_ to 1.
@@ -229,11 +212,48 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
     - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
-Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, also given above.
+Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, given later.
 
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
 > **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(2)**](#Note2)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+
+<a id=Reciprocal_of_Power_of_Uniform></a>
+### Reciprocal of Power of Uniform
+
+The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, where _U_ is a uniform random number in [0, 1] and _x_ is an integer greater than 0.
+
+1. Set _intval_ to 1 and set _size_ to 1.
+2. With probability 1 &minus; 2<sup>_x_</sup>/4<sup>_x_</sup>, go to step 3.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
+3. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
+4. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
+5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 3.
+6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+
+This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
+
+- _A_ = 0, since the random number can't lie in the interval [0, 1).
+- _B_ = 1&minus;2<sup>_x_</sup>/4<sup>_x_</sup>.
+- _C_ = (_x_/(_i_ + _&lambda;_)<sup>_x_+1</sup>) / _M_.  Ideally, _M_ is either _x_ if _intval_ is 1, or _x_/_intval_<sup>_x_+1</sup> otherwise.  Thus, the ideal form for _C_ is _intval_<sup>_x_+1</sup>/(_i_+_&lambda;_)<sup>_x_+1</sup>.
+
+<a id=Distribution_of__U__1_minus__U></a>
+### Distribution of _U_/(1&minus;_U_)
+
+The following algorithm generates a PSRN of the form _U_/(1&minus;_U_), where _U_ is a uniform random number in [0, 1].
+
+1. With probability 1/2, set _intval_ to 0, then set _size_ to 1, then go to step 4.
+2. Set _intval_ to 1 and set _size_ to 1.
+3. With probability _size_/(_size_ + _intval_ + 1), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
+4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
+5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
+6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_ + 1, _c_ = _i_ + 1, and _k_ = 2 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
+7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+
+This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
+
+- _A_ = 1/2.
+- _B_ = _size_/(_size_ + _intval_ + 1).
+- _C_ = (1/(_i_+_&lambda;_+1)<sup>2</sup>) / _M_.  Ideally, _M_ is 1/(_intval_+1)<sup>2</sup>.  Thus, the ideal form for _C_ is (_intval_+1)<sup>2</sup>/(_i_+_&lambda;_+1)<sup>2</sup>.
 
 <a id=Arc_cosine_Distribution></a>
 ### Arc-cosine Distribution
