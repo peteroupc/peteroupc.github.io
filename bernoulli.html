@@ -1344,7 +1344,7 @@
 
 <ol>
 <li>Generate a uniform(0, 1) random number, call it <em>ret</em>.</li>
-<li>Set <em>u</em> to <em>ret</em>, and set <em>k</em> to 1.</li>
+<li>Set <em>u</em> to point to the same value as <em>ret</em>, and set <em>k</em> to 1.</li>
 <li>(In this and the next step, we create <em>v</em>, which is the maximum of two uniform [0, 1] random numbers.) Generate two uniform random numbers, call them <em>a</em> and <em>b</em>.</li>
 <li>If <em>a</em> is less than <em>b</em>, set <em>v</em> to <em>b</em>. Otherwise, set <em>v</em> to <em>a</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>, set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
@@ -1362,7 +1362,7 @@
 
 <ol>
 <li>Generate an <strong>exponential</strong> random number <em>ex</em>, then set <em>k</em> to 1.</li>
-<li>Set <em>u</em> to <em>ex</em>.</li>
+<li>Set <em>u</em> to point to the same value as <em>ex</em>.</li>
 <li>Generate a <strong>uniform(0,1)</strong> random number <em>v</em>.</li>
 <li>Set <em>stop</em> to 1 if <em>u</em> is less than <em>v</em>, and 0 otherwise.</li>
 <li>If <em>stop</em> is 1 and <em>k</em> <strong>is even</strong>, return a number that is 0 if <em>ex</em> is <strong>less than 1</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>
@@ -1377,7 +1377,7 @@
 
 <ol>
 <li>Generate an <strong>exponential</strong> random number <em>ex</em>, then set <em>k</em> to 1.</li>
-<li>Set <em>u</em> to <em>ex</em>.</li>
+<li>Set <em>u</em> to point to the same value as <em>ex</em>.</li>
 <li>Generate a <strong>uniform(0,1)</strong> random number <em>v</em>.</li>
 <li>Set <em>stop</em> to 1 if <em>u</em> is less than <em>v</em>, and 0 otherwise.</li>
 <li>If <em>stop</em> is 1 and <em>k</em> <strong>is odd</strong>, return a number that is 0 if <em>ex</em> is <strong>less than 1/2</strong>, and 1 otherwise.  Otherwise, if <em>stop</em> is 1, go to step 1.</li>

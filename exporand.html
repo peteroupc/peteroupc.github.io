@@ -145,7 +145,7 @@
 
 <h2>About the Exponential Distribution</h2>
 
-<p>The <em>exponential distribution</em> takes a parameter &lambda;.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and &lambda; is the expected average number of events per unit of time.  Usually, &lambda; is equal to 1.</p>
+<p>The <em>exponential distribution</em> takes a parameter <em>&lambda;</em>.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and <em>&lambda;</em> is the expected average number of events per unit of time.  Usually, <em>&lambda;</em> is equal to 1.</p>
 
 <p>An exponential random number is commonly generated as follows: <code>-ln(1 - RNDU01OneExc()) / lamda</code>.  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)  This page presents an alternative way to sample exponential random numbers.</p>
 
@@ -385,6 +385,7 @@
 <ol>
 <li>If <strong>b</strong> is 0 or less, return an error.</li>
 <li>Create an empty uniform PSRN <strong>a</strong>.</li>
+<li>Special case: If <strong>b</strong> is 1, set <strong>a</strong>&#39;s sign to negative, set <strong>a</strong>&#39;s integer part to 0, and return <strong>a</strong>.</li>
 <li>Calculate floor(<strong>b</strong>), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>.)</li>
 <li>If <em>bi</em> is equal to <strong>b</strong>, set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>) (e.g., <code>RNDINTEXC(0, bi)</code>), then return <strong>a</strong>.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)</li>
 <li>Set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>] (e.g., <code>RNDINT(0, bi)</code>), then if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
@@ -398,25 +399,25 @@
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
 <li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  If <em>ad</em> is less than <em>d</em>, return <strong>a</strong>.</li>
-<li><em>If <strong>b</strong> is not known to be rational:</em> If <em>ad</em> is greater than <em>d</em>, or if all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then go to step 5.</li>
-<li><em>If <strong>b</strong> is known rational:</em> If <em>ad</em> is greater than <em>d</em>, or if <em>bf</em> is 0, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>, then go to step 5.</li>
-<li>Add 1 to <em>i</em> and go to step 8.</li>
+<li><em>If <strong>b</strong> is not known to be rational:</em> If <em>ad</em> is greater than <em>d</em>, or if all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then go to step 6.</li>
+<li><em>If <strong>b</strong> is known rational:</em> If <em>ad</em> is greater than <em>d</em>, or if <em>bf</em> is 0, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then set <em>bf</em> to <strong>b</strong> minus <em>bi</em>, then go to step 6.</li>
+<li>Add 1 to <em>i</em> and go to step 9.</li>
 </ol>
 
 <p><a id=Sampling_E_rands></a></p>
 
 <h3>Sampling E-rands</h3>
 
-<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter &lambda; of the exponential distribution):</p>
+<p><strong>Sampling an e-rand</strong> (a exponential PSRN) makes use of two observations (based on the parameter <em>&lambda;</em> of the exponential distribution):</p>
 
 <ul>
-<li>While a coin flip with probability of heads of exp(-&lambda;) is heads, the exponential random number is increased by 1.</li>
-<li>If a coin flip with probability of heads of 1/(1+exp(&lambda;/2<sup><em>k</em></sup>)) is heads, the exponential random number is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
+<li>While a coin flip with probability of heads of exp(-<em>&lambda;</em>) is heads, the exponential random number is increased by 1.</li>
+<li>If a coin flip with probability of heads of 1/(1+exp(<em>&lambda;</em>/2<sup><em>k</em></sup>)) is heads, the exponential random number is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
 </ul>
 
-<p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for &lambda; = 1.</p>
+<p>(Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> already made these observations in their Appendix, but only for <em>&lambda;</em> = 1.</p>
 
-<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued &lambda; parameters:</p>
+<p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued <em>&lambda;</em> parameters:</p>
 
 <ol>
 <li>One to simulate a probability of the form <code>exp(-x/y)</code> (here, the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
@@ -681,7 +682,7 @@
 <li>Call the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with parameters <code>a = 1, b = 2, x = py, y = px</code>.  If the call returns 1 and <em>i</em> is less than <em>n</em>, add 1 to <em>i</em> and repeat this step.  If the call returns 1 and <em>i</em> is <em>n</em> or greater, return 1 if the <em>complement</em> flag is 1 or 0 otherwise (or return a uniform PSRN with a positive sign, an integer part of 0, and a fractional part filled with exactly <em>n</em> ones or zeros, respectively).</li>
 <li>As a result, we will now sample a number in the interval [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>).  We now have to generate a uniform random number <em>X</em> in this interval, then accept it with probability (<em>py</em> / (<em>px</em> * 2<sup><em>i</em></sup>)) / <em>X</em><sup>1 &minus; <em>py</em> / <em>px</em></sup>; the 2<sup><em>i</em></sup> in this formula is to help avoid very low probabilities for sampling purposes.  The following steps will achieve this without having to use floating-point arithmetic.</li>
 <li>Create a positive-sign zero-integer-part uniform PSRN, then create a <em>geobag</em> input coin that returns the result of <strong>SampleGeometricBag</strong> on that PSRN.</li>
-<li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
+<li>Create a <em>powerbag</em> input coin that does the following: &quot;Call the  <strong>algorithm for <em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong>, described in &#39;<a href="https://peteroupc.github.io/bernoulli.html#lambda__x___y"><strong>Bernoulli Factory Algorithms</strong></a>&#39;, using the <em>geobag</em> input coin and with <em>x</em>/<em>y</em> = 1 &minus; <em>py</em> / <em>px</em>, and return the result.&quot;</li>
 <li>Append <em>i</em> &minus; 1 zero-digits followed by a single one-digit to the PSRN&#39;s fractional part.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.</li>
 <li>Call the <strong>algorithm for ϵ / λ</strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html#x03F5_lambda"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>powerbag</em> input coin (which represents <em>b</em>) and with ϵ = <em>py</em>/(<em>px</em> * 2<sup><em>i</em></sup>) (which represents <em>a</em>), thus returning 1 with probability <em>a</em>/<em>b</em>.  If the call returns 1, the PSRN was accepted, so do the following:
 
@@ -719,11 +720,11 @@
 <li>Set <em>aintpart</em> to floor(<em>a</em>) &minus; 1, set <em>bintpart</em> to floor(<em>b</em>) &minus; 1, set <em>arest</em> to <em>a</em> &minus; <em>aintpart</em>, and set <em>brest</em> to <em>b</em> &minus; <em>bintpart</em>.</li>
 <li>Run this algorithm recursively, but with <em>a</em> = <em>aintpart</em> and <em>b</em> = <em>bintpart</em>. Set <em>bag</em> to the PSRN created by the run.</li>
 <li>Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given PSRN.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given PSRN.</li>
-<li>Call the <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>arest</em>/1, then call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = <em>brest</em>/1. If both calls return 1, return <em>bag</em>. Otherwise, go to substep 2.</li>
+<li>Call the <strong>algorithm for <em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>arest</em>/1, then call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = <em>brest</em>/1. If both calls return 1, return <em>bag</em>. Otherwise, go to substep 2.</li>
 </ol></li>
 <li>Create an positive-sign zero-integer-part uniform PSRN.  Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given PSRN.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given PSRN.</li>
 <li>Remove all digits from the PSRN&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0, 1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <em>U</em><sup>a&minus;1</sup>*(1&minus;<em>U</em>)<sup>b&minus;1</sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>algorithm for &lambda;<sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>a</em> &minus; 1)/1 (thus returning with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 4.</li>
+<li>Call the <strong>algorithm for <em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>a</em> &minus; 1)/1 (thus returning with probability <em>U</em><sup>a&minus;1</sup>).  If the result is 0, go to step 4.</li>
 <li>Call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = (<em>b</em> &minus; 1)/1 (thus returning 1 with probability (1&minus;<em>U</em>)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that this step and the previous step don&#39;t depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
@@ -743,17 +744,17 @@
 
 <h3>Exponential Distribution</h3>
 
-<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup><em>x</em></sup>), the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the &lambda; parameter&#39;s numerator and denominator, respectively.  (Because exponential random numbers are always non-negative, the e-rand&#39;s sign is implicitly positive).</p>
+<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup><em>x</em></sup>), the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the <em>&lambda;</em> parameter&#39;s numerator and denominator, respectively.  (Because exponential random numbers are always non-negative, the e-rand&#39;s sign is implicitly positive).</p>
 
-<p>To sample bit <em>k</em> after the binary point of an exponential random number with rate &lambda; (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>k</em>.</p>
+<p>To sample bit <em>k</em> after the binary point of an exponential random number with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>k</em>.</p>
 
-<p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong>, or 0 otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different &lambda; parameters.)</p>
+<p>The <strong>ExpRandLess</strong> algorithm is a special case of the general <strong>RandLess</strong> algorithm given earlier.  It compares two e-rands <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong>, or 0 otherwise. (Note that <strong>a</strong> and <strong>b</strong> are allowed to have different <em>&lambda;</em> parameters.)</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em> = &lambda;&#39;s numerator and <em>y</em> = &lambda;&#39;s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, call the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em> = <em>&lambda;</em>&#39;s numerator and <em>y</em> = <em>&lambda;</em>&#39;s denominator, until the call returns 0, then set the integer part to the number of times 1 was returned this way.  Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s integer part is greater than <strong>b</strong>&#39;s.</li>
 <li>Set <em>i</em> to 0.</li>
-<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s fractional part has <em>i</em> or fewer bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>i</em> + 1, and append the result to that fractional part&#39;s binary expansion.  (For example, if the implementation stores the binary expansion as a packed integer and a size, the implementation can shift the packed integer by 1, add the result of the algorithm to that integer, then add 1 to the size.) Do the same for <strong>b</strong>.</li>
 <li>Return 1 if <strong>a</strong>&#39;s fractional part is less than <strong>b</strong>&#39;s, or 0 if <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
@@ -763,8 +764,33 @@
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample it as given in step 1 of <strong>ExpRandLess</strong>.</li>
 <li>If <strong>a</strong>&#39;s fractional part has greater than <code>p</code> bits, round <strong>a</strong> to a number whose fractional part has <code>p</code> bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond <code>p</code> bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.</li>
-<li>While <strong>a</strong>&#39;s fractional part has fewer than <code>p</code> bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = &lambda;&#39;s numerator, <em>y</em> = &lambda;&#39;s denominator, and <em>prec</em> = <em>i</em>, where <em>i</em> is 1 plus the number of bits in <strong>a</strong>&#39;s fractional part, and append the result to that fractional part&#39;s binary expansion.</li>
+<li>While <strong>a</strong>&#39;s fractional part has fewer than <code>p</code> bits, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>i</em>, where <em>i</em> is 1 plus the number of bits in <strong>a</strong>&#39;s fractional part, and append the result to that fractional part&#39;s binary expansion.</li>
 <li>Return the number represented by <strong>a</strong>.</li>
+</ol>
+
+<p>Here is a third algorithm that generates a <em>uniform PSRN</em>, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate <em>&lambda;</em> is given as a rational number greater than 0.  The method is based on von Neumann&#39;s algorithm (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
+
+<ol>
+<li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
+<li>Set <em>u</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
+<li>Set <em>val</em> to point to the same value as <em>u</em>, and set <em>accept</em> to 1.</li>
+<li>Set <em>v</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
+<li>Run the <strong>URandLess</strong> algorithm on <em>u</em> and <em>v</em>, in that order.  If the call returns 0, set <em>u</em> to <em>v</em>, then set <em>accept</em> to 1 minus <em>accept</em>, then go to step 4.</li>
+<li>If <em>accept</em> is 1, add <em>highpart</em> to <em>val</em> via the second algorithm given earlier in &quot;Addition and Subtraction&quot;, then return <em>val</em>.</li>
+<li>Add <em>recip</em> to <em>highpart</em> and go to step 2.</li>
+</ol>
+
+<p>The following alternative version of the previous algorithm includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
+
+<ol>
+<li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
+<li>Set <em>u</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
+<li>Run the <strong>URandLessThanReal</strong> algorithm on <em>u</em> with the parameter <em>recip</em>/2.  If the call returns 0, add <em>recip</em>/2 to <em>highpart</em> and go to step 2.  (This is Karney&#39;s &quot;early rejection step&quot;, where the parameter is 1/2 when <em>&lambda;</em> is 1.  However, Fan et al. (2019)<sup><a href="#Note19"><strong>(19)</strong></a></sup> point out that the parameter 1/2 in Karney&#39;s &quot;early rejection step&quot; is not optimal.)</li>
+<li>Set <em>val</em> to point to the same value as <em>u</em>, and set <em>accept</em> to 1.</li>
+<li>Set <em>v</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
+<li>Run the <strong>URandLess</strong> algorithm on <em>u</em> and <em>v</em>, in that order.  If the call returns 0, set <em>u</em> to <em>v</em>, then set <em>accept</em> to 1 minus <em>accept</em>, then go to step 5.</li>
+<li>If <em>accept</em> is 1, add <em>highpart</em> to <em>val</em> via the second algorithm given earlier in &quot;Addition and Subtraction&quot;, then return <em>val</em>.</li>
+<li>Add <strong><em>recip</em>/2</strong> to <em>highpart</em> and go to step 2.</li>
 </ol>
 
 <p><a id=Sampler_Code></a></p>
@@ -1432,12 +1458,12 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
 
 <h3>Exponential Sampler: Extension</h3>
 
-<p>The code above supports rational-valued &lambda; parameters.  It can be extended to support any real-valued &lambda; parameter greater than 0, as long as &lambda; can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p>The code above supports rational-valued <em>&lambda;</em> parameters.  It can be extended to support any real-valued <em>&lambda;</em> parameter greater than 0, as long as <em>&lambda;</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
 
 <p>More specifically:</p>
 
 <ol>
-<li>Decompose &lambda; into <em>n</em> &gt; 0 positive components that sum to &lambda;.  For example, if &lambda; = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if &lambda; = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
+<li>Decompose <em>&lambda;</em> into <em>n</em> &gt; 0 positive components that sum to <em>&lambda;</em>.  For example, if <em>&lambda;</em> = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if <em>&lambda;</em> = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
 <li>For each component <em>LC</em>[<em>i</em>] found this way, let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
 </ol>
 
@@ -1445,8 +1471,8 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
 
 <ul>
 <li><p><code>exprandnew</code> is modified so that instead of taking <code>lamdanum</code> and <code>lamdaden</code>, it takes a list of the components described above.  Each component is stored as <em>LI</em>[<em>i</em>] and an algorithm that simulates <em>LF</em>[<em>i</em>].</p></li>
-<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with the <strong>algorithm for exp(&minus; <em>z</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is the real-valued &lambda; parameter.</p></li>
-<li><p><code>logisticexp(a, b, index+1)</code> is replaced with the <strong>algorithm for 1 / 1 + exp(<em>z</em> / 2<sup><em>index</em> + 1</sup>)) (LogisticExp)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is the real-valued &lambda; parameter.</p></li>
+<li><p><code>zero_or_one_exp_minus(a, b)</code> is replaced with the <strong>algorithm for exp(&minus; <em>z</em>)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is the real-valued <em>&lambda;</em> parameter.</p></li>
+<li><p><code>logisticexp(a, b, index+1)</code> is replaced with the <strong>algorithm for 1 / 1 + exp(<em>z</em> / 2<sup><em>index</em> + 1</sup>)) (LogisticExp)</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, where <em>z</em> is the real-valued <em>&lambda;</em> parameter.</p></li>
 </ul>
 
 <p><a id=Correctness_Testing></a></p>
@@ -1467,13 +1493,13 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
 
 <h3>ExpRandFill</h3>
 
-<p>To test the correctness of the <code>exprandfill</code> method (which implements the <strong>ExpRandFill</strong> algorithm), the Kolmogorov&ndash;Smirnov test was applied with various values of &lambda; and the default precision of 53, using SciPy&#39;s <code>kstest</code> method.  The code for the test is very simple: <code>kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))</code>, where <code>ksample</code> is a sample of random numbers generated using the <code>exprand</code> method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.</p>
+<p>To test the correctness of the <code>exprandfill</code> method (which implements the <strong>ExpRandFill</strong> algorithm), the Kolmogorov&ndash;Smirnov test was applied with various values of <em>&lambda;</em> and the default precision of 53, using SciPy&#39;s <code>kstest</code> method.  The code for the test is very simple: <code>kst = scipy.stats.kstest(ksample, lambda x: scipy.stats.expon.cdf(x, scale=1/lamda))</code>, where <code>ksample</code> is a sample of random numbers generated using the <code>exprand</code> method above.  Note that SciPy uses a two-sided Kolmogorov&ndash;Smirnov test by default.</p>
 
 <p>The table below shows the results of the correctness testing. For each parameter, five samples with 50,000 numbers per sample were taken, and results show the lowest and highest Kolmogorov&ndash;Smirnov statistics and p-values achieved for the five samples.  Note that a p-value extremely close to 0 or 1 strongly indicates that the samples do not come from the corresponding exponential distribution.</p>
 
 <table><thead>
 <tr>
-<th>&lambda;</th>
+<th><em>&lambda;</em></th>
 <th>Statistic</th>
 <th><em>p</em>-value</th>
 </tr>
@@ -1539,14 +1565,14 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
 
 <h3>ExpRandLess</h3>
 
-<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same &lambda; this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively, and the results contained in <code>exppyscores</code> and <code>exprandscores</code> were generated independently of each other.</p>
+<p>To test the correctness of <code>exprandless</code>, a two-independent-sample T-test was applied to scores involving e-rands and scores involving the Python <code>random.expovariate</code> method.  Specifically, the score is calculated as the number of times one exponential number compares as less than another; for the same <em>&lambda;</em> this event should ideally be as likely as the event that it compares as greater.  The Python code that follows the table calculates this score for e-rands and <code>expovariate</code>.   Even here, the code for the test is very simple: <code>kst = scipy.stats.ttest_ind(exppyscores, exprandscores)</code>, where <code>exppyscores</code> and <code>exprandscores</code> are each lists of 20 results from <code>exppyscore</code> or <code>exprandscore</code>, respectively, and the results contained in <code>exppyscores</code> and <code>exprandscores</code> were generated independently of each other.</p>
 
 <p>The table below shows the results of the correctness testing. For each pair of parameters, results show the lowest and highest T-test statistics and p-values achieved for the 20 results.  Note that a p-value extremely close to 0 or 1 strongly indicates that exponential random numbers are not compared as less or greater with the expected probability.</p>
 
 <table><thead>
 <tr>
-<th>Left &lambda;</th>
-<th>Right &lambda;</th>
+<th>Left <em>&lambda;</em></th>
+<th>Right <em>&lambda;</em></th>
 <th>Statistic</th>
 <th><em>p</em>-value</th>
 </tr>
@@ -1720,7 +1746,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ol>
 <li>Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
-<li><p>As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the PSRN. <em>f</em> is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s PDF is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(&lambda;), in a given set in [0, 1]&mdash;</p>
+<li><p>As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the PSRN. <em>f</em> is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s PDF is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(<em>&lambda;</em>), in a given set in [0, 1]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere,</li>
@@ -1728,7 +1754,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,</li>
 </ul>
 
-<p>and they give the example of 2 * &lambda; as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
+<p>and they give the example of 2 * <em>&lambda;</em> as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
@@ -1750,7 +1776,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h3>An Example: The Continuous Bernoulli Distribution</h3>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note20"><strong>(20)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note21"><strong>(21)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
 
 <p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
 
@@ -1765,8 +1791,8 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>Create a positive-sign zero-integer-part uniform PSRN.</li>
 <li>Create a <strong>complementary lambda Bernoulli factory</strong> that returns 1 minus the result of the input coin.</li>
 <li>Remove all digits from the uniform PSRN&#39;s fractional part.  This will result in an &quot;empty&quot; uniform(0,1) random number, <em>U</em>, for the following steps, which will accept <em>U</em> with probability <code>lamda</code><sup><em>U</em></sup>*(1&minus;<code>lamda</code>)<sup>1&minus;<em>U</em></sup>) (the proportional probability for the beta distribution), as <em>U</em> is built up.</li>
-<li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin as the &lambda;-coin, and <strong>SampleGeometricBag</strong> as the &mu;-coin (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
-<li>Call the <strong>algorithm for &lambda;<sup>&mu;</sup></strong> using the <strong>complementary lambda Bernoulli factory</strong> as the &lambda;-coin and <strong>SampleGeometricBagComplement</strong> algorithm as the &mu;-coin (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
+<li>Call the <strong>algorithm for <em>&lambda;</em><sup>&mu;</sup></strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin as the <em>&lambda;</em>-coin, and <strong>SampleGeometricBag</strong> as the &mu;-coin (which will return 1 with probability <code>lamda</code><sup><em>U</em></sup>).  If the result is 0, go to step 3.</li>
+<li>Call the <strong>algorithm for <em>&lambda;</em><sup>&mu;</sup></strong> using the <strong>complementary lambda Bernoulli factory</strong> as the <em>&lambda;</em>-coin and <strong>SampleGeometricBagComplement</strong> algorithm as the &mu;-coin (which will return 1 with probability (1-<code>lamda</code>)<sup>1&minus;<em>U</em></sup>).  If the result is 0, go to step 3. (Note that steps 4 and 5 don&#39;t depend on each other and can be done in either order without affecting correctness.)</li>
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 
@@ -1829,10 +1855,10 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random number&#39;s fractional part (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
-<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/&lambda;), so the minimum bit complexity for this distribution is log2(exp(1)/&lambda;) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when &lambda; = 1, decreases when &lambda; goes up, and increases when &lambda; goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
+<p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
 
 <p>Although existing work shows lower bounds on the number of random bits an algorithm will need on average, most algorithms will generally not achieve these lower bounds in practice.</p>
 
@@ -1849,7 +1875,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -1867,7 +1893,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p><strong>FillGeometricBag</strong>&#39;s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than <code>p</code>. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>. (This complexity could be increased by 1 bit if <strong>FillGeometricBag</strong> is implemented with a rounding mechanism other than simple truncation.)</p>
 
-<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a random number <em>G</em>, where <em>G</em> is &gamma; or the number of successes before the first failure, whichever is less, and where a success has probility exp(&minus;1).</p>
+<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a random number <em>G</em>, where <em>G</em> is &gamma; or the number of successes before the first failure, whichever is less, and where a success has probility exp(&minus;1).</p>
 
 <ul>
 <li>Optimal lower bound: Has a complicated formula for general &gamma;, but approaches <code>log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))</code> = 2.579730853... bits with increasing &gamma;.</li>
@@ -1894,7 +1920,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The actual implementation&#39;s average bit complexity is generally&mdash;
 
 <ul>
-<li>the expected number of calls to <code>zero_or_one</code>, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>, times</li>
+<li>the expected number of calls to <code>zero_or_one</code>, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, times</li>
 <li>the bit complexity for each such call (which is generally 2, but is lower in the case of &gamma; = 1, which involves <code>zero_or_one(1, 1)</code> that uses no random bits).</li>
 </ul></li>
 </ul>
@@ -1909,11 +1935,11 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>assigning each item a <em>weight</em> (an integer 0 or greater) as it&#39;s encountered, call it <em>w</em>,</li>
-<li>giving each item an exponential random number with &lambda; = <em>w</em>, call it a key, and</li>
+<li>giving each item an exponential random number with <em>&lambda;</em> = <em>w</em>, call it a key, and</li>
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015)<sup><a href="#Note24"><strong>(24)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)<sup><a href="#Note25"><strong>(25)</strong></a></sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom <code>-ln(1-RNDU01())/w</code> in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Open_Questions></a></p>
 
@@ -1973,14 +1999,15 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note16>(16)</sup> A. Habibizad Navin, Fesharaki, M.N., Teshnelab, M. and Mirnia, M., 2007. &quot;Data oriented modeling of uniform random variable: Applied approach&quot;. <em>World Academy Science Engineering Technology</em>, 21, pp.382-385.</small></li>
 <li><small><sup id=Note17>(17)</sup> Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. &quot;Designing a Universal Data-Oriented Random Number Generator&quot;, <em>International Journal of Modern Education and Computer Science</em> 2013(2), pp. 19-24.</small></li>
 <li><small><sup id=Note18>(18)</sup> Rohatgi, V.K., 1976. An Introduction to Probability Theory Mathematical Statistics.</small></li>
-<li><small><sup id=Note19>(19)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></li>
-<li><small><sup id=Note20>(20)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></li>
-<li><small><sup id=Note21>(21)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
-<li><small><sup id=Note22>(22)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
-<li><small><sup id=Note23>(23)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
-<li><small><sup id=Note24>(24)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
-<li><small><sup id=Note25>(25)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></li>
-<li><small><sup id=Note26>(26)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.</small></li>
+<li><small><sup id=Note19>(19)</sup> Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” <em>2019 IEEE 5th International Conference on Computer and Communications (ICCC)</em> (2019): 1307-1311.</small></li>
+<li><small><sup id=Note20>(20)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small></li>
+<li><small><sup id=Note21>(21)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></li>
+<li><small><sup id=Note22>(22)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
+<li><small><sup id=Note23>(23)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
+<li><small><sup id=Note24>(24)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010v2"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010v2 [cs.DS], 2020.</small></li>
+<li><small><sup id=Note25>(25)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
+<li><small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1511.02273"><strong>The expected bit complexity of the von Neumann rejection algorithm</strong></a>&quot;, arXiv:1511.02273 [cs.IT], 2016.</small></li>
+<li><small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2023,7 +2050,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, see also (Devroye and Gravel 2016)<sup><a href="#Note25"><strong>(25)</strong></a></sup>. (Note that if the probability function&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, see also (Devroye and Gravel 2016)<sup><a href="#Note26"><strong>(26)</strong></a></sup>. (Note that if the probability function&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
 <li>Set <em>pdfmax</em> to an upper bound of the probability function on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
@@ -2050,7 +2077,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
 
-<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note26"><strong>(26)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion, where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note27"><strong>(27)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the random number&#39;s bits become less and less biased as they move farther and farther from the binary point.</p>
 
 <p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>PDF</em>, except if the sequence has the form&mdash;</p>
 
@@ -2058,7 +2085,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>),</li>
 </ul>
 
-<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(&lambda;) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = &lambda;).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
+<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(<em>&lambda;</em>) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = <em>&lambda;</em>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
 
 <p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this probability function (which is proportional to the PDF) will often show whether the function is discontinuous:</p>
 

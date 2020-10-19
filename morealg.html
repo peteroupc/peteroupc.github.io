@@ -100,7 +100,7 @@
 
 <ol>
 <li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.</li>
-<li>Set <em>k</em> to 1 and <em>u</em> to <em>ret</em>.</li>
+<li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
 <li>Generate a uniform(0, 1) random number <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
 <li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>n</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform PSRN, this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
@@ -243,9 +243,9 @@
 <p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup> for arbitrary-precision sampling.</p>
 
 <ol>
-<li>Generate an exponential PSRN, call it <em>ret</em>.</li>
+<li>Generate a uniform PSRN, call it <em>ret</em>, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.</li>
 <li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
-<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return either <em>ret</em> or &minus;<em>ret</em> with equal probability.</li>
+<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to non-negative or negative with equal probability, then return <em>ret</em>.</li>
 <li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
 </ol>
 

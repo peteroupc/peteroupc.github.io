@@ -1021,7 +1021,7 @@ This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus
 In the following algorithm, _x_ is a real number in the interval [0, 1].
 
 1. Generate a uniform(0, 1) random number, call it _ret_.
-2. Set _u_ to _ret_, and set _k_ to 1.
+2. Set _u_ to point to the same value as _ret_, and set _k_ to 1.
 3. (In this and the next step, we create _v_, which is the maximum of two uniform [0, 1] random numbers.) Generate two uniform random numbers, call them _a_ and _b_.
 4. If _a_ is less than _b_, set _v_ to _b_. Otherwise, set _v_ to _a_.
 5. If _v_ is less than _u_, set _u_ to _v_, then add 1 to _k_, then go to step 3.
@@ -1036,7 +1036,7 @@ In fact, this algorithm takes advantage of a theorem related to the Forsythe met
 This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
 
 1. Generate an **exponential** random number _ex_, then set _k_ to 1.
-2. Set _u_ to _ex_.
+2. Set _u_ to point to the same value as _ex_.
 3. Generate a **uniform(0,1)** random number _v_.
 4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is even**, return a number that is 0 if _ex_ is **less than 1**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.
@@ -1048,7 +1048,7 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
 
 1. Generate an **exponential** random number _ex_, then set _k_ to 1.
-2. Set _u_ to _ex_.
+2. Set _u_ to point to the same value as _ex_.
 3. Generate a **uniform(0,1)** random number _v_.
 4. Set _stop_ to 1 if _u_ is less than _v_, and 0 otherwise.
 5. If _stop_ is 1 and _k_ **is odd**, return a number that is 0 if _ex_ is **less than 1/2**, and 1 otherwise.  Otherwise, if _stop_ is 1, go to step 1.

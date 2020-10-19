@@ -69,7 +69,7 @@ An application of the continued fraction algorithm is the following algorithm th
 ### Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).
 
 1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.
-2. Set _k_ to 1 and _u_ to _ret_.
+2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
 3. Generate a uniform(0, 1) random number _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
@@ -171,9 +171,9 @@ An arbitrary-precision sampler for the sum of _n_ exponential random numbers (al
 
 The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(2)**](#Note2)</sup> for arbitrary-precision sampling.
 
-1. Generate an exponential PSRN, call it _ret_.
+1. Generate a uniform PSRN, call it _ret_, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.
 2. Set _ip_ to 1 plus _ret_'s integer part.
-3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return either _ret_ or &minus;_ret_ with equal probability.
+3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _ret_'s sign to non-negative or negative with equal probability, then return _ret_.
 4. Call **SampleGeometricBag** on _ret_'s fractional part (ignore _ret_'s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.
 
 <a id=Mixtures></a>
