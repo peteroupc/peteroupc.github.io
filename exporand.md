@@ -487,7 +487,7 @@ The algorithm is as follows:
     1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the base, or radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
     2. Starting at `index`, append the digit 0 to the first **v**\[0\] PSRNs, a 1 digit to the next **v**\[1\] PSRNs, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] PSRNs (for the binary case, this means appending a 0 bit to the first `LC` PSRNs and a 1 bit to the next `n - LC` PSRNs).
     3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &Sigma;<sub>_j_=0, ..., _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
-4. Take the `k`th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn't use this alternative.)
+4. Take the `k`th PSRN (starting at 1), then optionally fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above), then return that number.  (Note that the beta sampler  described later chooses to fill the PSRN this way via this algorithm.)
 
 <a id=Power_of_Uniform_Sub_Algorithm></a>
 ### Power-of-Uniform Sub-Algorithm
@@ -511,7 +511,7 @@ The power-of-uniform algorithm is as follows:
 6. Append _i_ &minus; 1 zero-digits followed by a single one-digit to the PSRN's fractional part.  This will allow us to sample a uniform random number limited to the interval mentioned earlier.
 7. Call the **algorithm for ϵ / λ**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html#x03F5_lambda)", using the _powerbag_ input coin (which represents _b_) and with ϵ = _py_/(_px_ * 2<sup>_i_</sup>) (which represents _a_), thus returning 1 with probability _a_/_b_.  If the call returns 1, the PSRN was accepted, so do the following:
     1. If the _complement_ flag is 1, make each zero-digit in the PSRN's fractional part a one-digit and vice versa.
-    2. Either return the PSRN as is or fill the unsampled digits of the PSRN's fractional part with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
+    2. Optionally, fill the PSRN with uniform random digits as necessary to give its fractional part _n_ digits (similarly to **FillGeometricBag** above), where _n_ is a precision parameter.  Then, return the PSRN.
 8. If the call to the algorithm for ϵ / λ returns 0, remove all but the first _i_ digits from the PSRN's fractional part, then go to step 7.
 
 <a id=Algorithms_for_the_Beta_and_Exponential_Distributions></a>
@@ -540,7 +540,7 @@ All the building blocks are now in place to describe a _new_ algorithm to sample
 6. Call the same algorithm using the _geobagcomp_ input coin and _x_/_y_ = (_b_ &minus; 1)/1 (thus returning 1 with probability (1&minus;_U_)<sup>b&minus;1</sup>).  If the result is 0, go to step 4. (Note that this step and the previous step don't depend on each other and can be done in either order without affecting correctness, and this is taken advantage of in the Python code below.)
 7. _U_ was accepted, so return the result of **FillGeometricBag**.
 
-Once a PSRN is accepted by the steps above, either return the PSRN as is or fill the unsampled digits of the PSRN's fractional part with uniform random digits as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag**), then return the resulting number.
+Once a PSRN is accepted by the steps above, optionally fill the unsampled digits of the PSRN's fractional part with uniform random digits as necessary to give the number a _p_-digit fractional part (similarly to **FillGeometricBag**), then return the resulting number.
 
 > **Notes:**
 >
@@ -1339,21 +1339,19 @@ The beta sampler in this document shows one case of a general approach to simula
     - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
    and they give the example of 2 \* &lambda; as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" for ways to simulate constant probabilities.
-3. If the PSRN is accepted, either return the PSRN as is or fill the unsampled digits of the PSRN's fractional part with uniform random digits as necessary to give the number an _n_-digit fractional part (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the resulting number.
+3. If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part _n_ digits (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the PSRN.
 
 However, the speed of this algorithm depends crucially on the mode (highest point) of _f_ in \[0, 1\].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
 
 The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
 
-This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _b_<sup>_i_</sup>\] (where _b_ is the base, or radix, and _i_ and _m_ are integers), rather than \[0, 1\], as follows:
+This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _y_\] (where _m_ and _y_ are rational numbers and _y_ is greater than 0), rather than \[0, 1\], as follows:
 
-1. Apply the algorithm above, except a modified probability function _f&prime;_(_x_) = _f_(_x_ * _b_<sup>_i_</sup> + _m_) is used rather than _f_, where _x_ is the number in \[0, 1\] that is built up by the PSRN.
-2. Multiply the resulting random number or PSRN by _b_<sup>_i_</sup>, then add _m_ (this step is relatively trivial given that the PSRN's fractional part stores base-b digits).
-3. If the random number (rather than the PSRN that holds it) will be returned, and the number's fractional part now has fewer than _n_ digits due to step 2, re-fill the number as necessary to give the fractional part _n_ digits.
+1. Apply the algorithm above, except that a modified probability function _f&prime;_(_x_) = _f_(_x_ * _y_ + _m_) is used rather than _f_, where _x_ is the number in \[0, 1\] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.
+2. Multiply the resulting random PSRN by _y_ via the second algorithm in "[**Multiplication**](#Multiplication)".  (Note that if _y_ has the form _b_<sup>_i_</sup>, this step is relatively trivial.)
+3. Add _m_ to the resulting random PSRN via the second algorithm in "[**Addition and Subtraction**](#Addition_and_Subtraction)".
 
 Note that here, the probability function _f&prime;_ must meet the requirements of Keane and O'Brien.  (For example, take the probability function `sqrt((x - 4) / 2)`, which isn't a Bernoulli factory function.  If we now seek to sample from the interval \[4, 4+2<sup>1</sup>\] = \[4, 6\], the _f_ used in step 2 is now `sqrt(x)`, which _is_ a Bernoulli factory function so that we can apply this algorithm.)
-
-On the other hand, modifying this algorithm to produce random numbers in any other interval is non-trivial, since it often requires relating digit probabilities to some kind of formula (see "About Partially-Sampled Random Numbers", above).
 
 <a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
 ### An Example: The Continuous Bernoulli Distribution

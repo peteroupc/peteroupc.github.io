@@ -656,7 +656,7 @@
 <li>Starting at <code>index</code>, append the digit 0 to the first <strong>v</strong>[0] PSRNs, a 1 digit to the next <strong>v</strong>[1] PSRNs, and so on to appending a <em>b</em> &minus; 1 digit to the last <strong>v</strong>[<em>b</em> &minus; 1] PSRNs (for the binary case, this means appending a 0 bit to the first <code>LC</code> PSRNs and a 1 bit to the next <code>n - LC</code> PSRNs).</li>
 <li>For each integer <em>i</em> in [0, <em>b</em>): If <strong>v</strong>[<em>i</em>] &gt; 1, repeat step 3 and these substeps with <code>index</code> = <code>index</code> + &Sigma;<sub><em>j</em>=0, ..., <em>i</em>&minus;1</sub> <strong>v</strong>[<em>j</em>] and <code>n</code> = <strong>v</strong>[<em>i</em>]. (For the binary case, this means: If <code>LC &gt; 1</code>, repeat step 3 and these substeps with the same <code>index</code> and <code>n = LC</code>; then, if <code>n - LC &gt; 1</code>, repeat step 3 and these substeps with <code>index = index + LC</code>, and <code>n = n - LC</code>).</li>
 </ol></li>
-<li>Take the <code>k</code>th PSRN (starting at 1) and fill it with uniform random digits as necessary to give its fractional part <code>bitcount</code> many digits (similarly to <strong>FillGeometricBag</strong> above). Return that number.  (An implementation may instead just return the PSRN without filling it this way first, but the beta sampler described later doesn&#39;t use this alternative.)</li>
+<li>Take the <code>k</code>th PSRN (starting at 1), then optionally fill it with uniform random digits as necessary to give its fractional part <code>bitcount</code> many digits (similarly to <strong>FillGeometricBag</strong> above), then return that number.  (Note that the beta sampler  described later chooses to fill the PSRN this way via this algorithm.)</li>
 </ol>
 
 <p><a id=Power_of_Uniform_Sub_Algorithm></a></p>
@@ -687,7 +687,7 @@
 
 <ol>
 <li>If the <em>complement</em> flag is 1, make each zero-digit in the PSRN&#39;s fractional part a one-digit and vice versa.</li>
-<li>Either return the PSRN as is or fill the unsampled digits of the PSRN&#39;s fractional part with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
+<li>Optionally, fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter.  Then, return the PSRN.</li>
 </ol></li>
 <li>If the call to the algorithm for ϵ / λ returns 0, remove all but the first <em>i</em> digits from the PSRN&#39;s fractional part, then go to step 7.</li>
 </ol>
@@ -728,7 +728,7 @@
 <li><em>U</em> was accepted, so return the result of <strong>FillGeometricBag</strong>.</li>
 </ol>
 
-<p>Once a PSRN is accepted by the steps above, either return the PSRN as is or fill the unsampled digits of the PSRN&#39;s fractional part with uniform random digits as necessary to give the number a <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong>), then return the resulting number.</p>
+<p>Once a PSRN is accepted by the steps above, optionally fill the unsampled digits of the PSRN&#39;s fractional part with uniform random digits as necessary to give the number a <em>p</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong>), then return the resulting number.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1729,24 +1729,22 @@ def exprandscore(ln,ld,ln2,ld2):
 </ul>
 
 <p>and they give the example of 2 * &lambda; as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
-<li>If the PSRN is accepted, either return the PSRN as is or fill the unsampled digits of the PSRN&#39;s fractional part with uniform random digits as necessary to give the number an <em>n</em>-digit fractional part (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the resulting number.</li>
+<li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
 <p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
 
 <p>The beta distribution&#39;s probability function at (1) fits the requirements of Keane and O&#39;Brien (for <code>alpha</code> and <code>beta</code> both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.</p>
 
-<p>This algorithm can be modified to produce random numbers in the interval [<em>m</em>, <em>m</em> + <em>b</em><sup><em>i</em></sup>] (where <em>b</em> is the base, or radix, and <em>i</em> and <em>m</em> are integers), rather than [0, 1], as follows:</p>
+<p>This algorithm can be modified to produce random numbers in the interval [<em>m</em>, <em>m</em> + <em>y</em>] (where <em>m</em> and <em>y</em> are rational numbers and <em>y</em> is greater than 0), rather than [0, 1], as follows:</p>
 
 <ol>
-<li>Apply the algorithm above, except a modified probability function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>b</em><sup><em>i</em></sup> + <em>m</em>) is used rather than <em>f</em>, where <em>x</em> is the number in [0, 1] that is built up by the PSRN.</li>
-<li>Multiply the resulting random number or PSRN by <em>b</em><sup><em>i</em></sup>, then add <em>m</em> (this step is relatively trivial given that the PSRN&#39;s fractional part stores base-b digits).</li>
-<li>If the random number (rather than the PSRN that holds it) will be returned, and the number&#39;s fractional part now has fewer than <em>n</em> digits due to step 2, re-fill the number as necessary to give the fractional part <em>n</em> digits.</li>
+<li>Apply the algorithm above, except that a modified probability function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>y</em> + <em>m</em>) is used rather than <em>f</em>, where <em>x</em> is the number in [0, 1] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.</li>
+<li>Multiply the resulting random PSRN by <em>y</em> via the second algorithm in &quot;<a href="#Multiplication"><strong>Multiplication</strong></a>&quot;.  (Note that if <em>y</em> has the form <em>b</em><sup><em>i</em></sup>, this step is relatively trivial.)</li>
+<li>Add <em>m</em> to the resulting random PSRN via the second algorithm in &quot;<a href="#Addition_and_Subtraction"><strong>Addition and Subtraction</strong></a>&quot;.</li>
 </ol>
 
 <p>Note that here, the probability function <em>f&prime;</em> must meet the requirements of Keane and O&#39;Brien.  (For example, take the probability function <code>sqrt((x - 4) / 2)</code>, which isn&#39;t a Bernoulli factory function.  If we now seek to sample from the interval [4, 4+2<sup>1</sup>] = [4, 6], the <em>f</em> used in step 2 is now <code>sqrt(x)</code>, which <em>is</em> a Bernoulli factory function so that we can apply this algorithm.)</p>
-
-<p>On the other hand, modifying this algorithm to produce random numbers in any other interval is non-trivial, since it often requires relating digit probabilities to some kind of formula (see &quot;About Partially-Sampled Random Numbers&quot;, above).</p>
 
 <p><a id=An_Example_The_Continuous_Bernoulli_Distribution></a></p>
 

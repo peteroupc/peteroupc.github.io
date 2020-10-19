@@ -86,7 +86,7 @@ The following is an arbitrary-precision sampler for the Rayleigh distribution wi
 3. (Now we sample the piece located at [_k_, _k_ + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
 4. Set _ky_ to _k_ * _k_ / _y_.
 5. (At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_)) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the same algorithm using the same input coin, _x_ = _k_ * 2 / _y_, and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN's fractional part and go to step 4.
-7. If the uniform PSRN, call it _ret_, was accepted by step 5, set _ret_'s integer part to _k_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
+7. If the uniform PSRN, call it _ret_, was accepted by step 5, set _ret_'s integer part to _k_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
 
 The sub-algorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
 
@@ -121,10 +121,10 @@ The following algorithm is an arbitrary-precision sampler for generating a point
 4. Set _lb_ to _xd_\*_xd_ + _yd_\*_yd_, and set _ub_ to (_xd_ + 1) \* (_xd_ + 1) +  (_yd_ + 1) \* (_yd_ + 1).  (Here, _lb_ and _ub_ are lower and upper bounds, respectively, of the squared distance from the point (_xd_, _yd_) to the origin, scaled to _S_ units.  These bounds can prove useful not just for implementing the uniform distribution inside a circle, but also the uniform distribution inside a shell or a set of concentric shells.)
 5. If _ub_ < _S_<sup>2</sup>, then _xd_ and _yd_ lie inside the circle and are accepted.  If they are accepted this way, then at this point, _xd_ and _yd_ will each store the _d_ digits of a coordinate in the circle, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. Transfer the digits of _xd_ and _yd_ to _x_'s and _y_'s fractional parts, respectively.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, set _x_'s fractional part to \[3, 4, 2\].)
-    2. Fill _x_ and _y_ each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    2. Optionally, fill _x_ and _y_ each with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
     3. With probability 1/2, set _x_'s sign to negative.  Then with probability 1/2, set _y_'s sign to negative.
     4. Return _x_ and _y_, in that order.
-6. If _lb_ > _c_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
+6. If _lb_ > _S_<sup>2</sup>, then the point lies outside the circle and is rejected.  In this case, go to step 2.
 7. At this point, it is not known whether _xd_ and _yd_ lie inside the circle, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 <a id=General_Algorithm_for_Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
@@ -135,13 +135,13 @@ The previous algorithm is one example of a general way to describe an arbitrary-
 1. Generate _N_ empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_, then set _d_ to 1.
 3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_).  _Implementation notes:_
+4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  _Implementation notes:_
     - **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
-    - If the shape in question is convex and the point (0, 0, ..., 0) is inside that shape, **InShape** can return _YES_ if all the shape's corners are in the shape; _NO_ if none of them are; and _MAYBE_ if some but not all are, or if the function is unsure.  In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_). (This implementation is incorrect if the point (0, 0, ..., 0) is outside the shape, since then **InShape** could return _NO_ even though a box partly covers the shape.)
-    - **InShape** implementations often involve a shape's _signed distance field_.
+    - If the shape in question is convex and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return _YES_ if all the shape's corners are in the shape; _NO_ if none of them are; and _MAYBE_ if some but not all are, or if the function is unsure.  In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_). (This implementation is incorrect if the point (0, 0, ..., 0) is outside the shape, since then **InShape** could return _NO_ even though a box partly covers the shape.)
+    - **InShape** implementations often involve a shape's _signed distance field_, its _implicit curve_ or _algebraic curve_ equation (for closed curves), or its _implicit surface_ equation (for closed surfaces).
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _xd_ is 342, then the X-coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
-    2. For each PSRN (_p1_, ..., _pN_), fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
     3. Return the PSRNs _p1_, ..., _pN_, in that order.
 6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
 7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
@@ -170,7 +170,7 @@ The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1
 
 1. Generate an exponential PSRN, call it _ret_.
 2. Set _ip_ to 1 plus _ret_'s integer part.
-3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return either _ret_ or &minus;_ret_ with equal probability.
+3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return either _ret_ or &minus;_ret_ with equal probability.
 4. Call **SampleGeometricBag** on _ret_'s fractional part (ignore _ret_'s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.
 
 <a id=Mixtures></a>
@@ -210,7 +210,7 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
     - The probability _C_(_i_, _&lambda;_) is calculated as _PDF_(_i_ + _&lambda;_) / _M_, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.
     - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be monotonically decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
     - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
-7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, given later.
 
@@ -228,7 +228,7 @@ The following algorithm generates a PSRN of the form 1/_U_<sup>1/_x_</sup>, wher
 3. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 4. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
 5. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_, _c_ = _i_, and _k_ = _x_ + 1 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 3.
-6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+6. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
 
@@ -247,7 +247,7 @@ The following algorithm generates a PSRN of the form _U_/(1&minus;_U_), where _U
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
 5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
 6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Call the **algorithm for _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", using the input coin, where _d_ = _intval_ + 1, _c_ = _i_ + 1, and _k_ = 2 (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
-7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
 This algorithm uses the skeleton described earlier in "Building an Arbitrary-Precision Sampler".  Here, the probabilities _A_, _B_,  and _C_ are as follows:
 
@@ -258,13 +258,13 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_cosine_Distribution></a>
 ### Arc-cosine Distribution
 
-Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(2)**](#Note2)</sup></sup>.  The following algorithm is an arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  What is notable about this algorithm is that it's an arbitrary-precision algorithm that avoids floating-point arithmetic.  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(2)**](#Note2)</sup></sup>.  The following algorithm is an arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
 3. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _u_ be the result.
 4. With probability 4/(4\*_m_\*_m_ + 2\*_m_), call the **URandLess** algorithm with parameters _u_ and _ret_ in that order, and if that call returns 1, call the **algorithm for &pi; / 4**, described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", twice, and if both of these calls return 1, add 1 to _m_ and go to step 3.  (Here, we incorporate an erratum in the algorithm on page 129 of the book.)
-5. If _m_ is odd, fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
+5. If _m_ is odd, optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
 6. If _m_ is even, go to step 1.
 
 And here is Python code that implements this algorithm.  Note that it uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from _randomgen.py_ and _bernoulli.py_.
@@ -290,14 +290,14 @@ def example_4_2_1(rg, bern, precision=53):
 <a id=Logistic_Distribution></a>
 ### Logistic Distribution
 
-The following new algorithm is arbitrary-precision sampler that generates a random number that follows the logistic distribution.
+The following new algorithm generates a random number that follows the logistic distribution.
 
 1. Set _k_ to 0.
 2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
 3. (The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it _f_.
 4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
 5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
-6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to negative with probability 1/2 and non-negative otherwise, then return _f_.
+6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to negative with probability 1/2 and non-negative otherwise, then return _f_.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Notes></a>
