@@ -16,8 +16,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1)
 - [**Arbitrary-Precision Samplers**](#Arbitrary_Precision_Samplers)
     - [**Rayleigh Distribution**](#Rayleigh_Distribution)
-    - [**Uniform Distribution Inside a Circle**](#Uniform_Distribution_Inside_a_Circle)
-    - [**General Algorithm for Uniform Distribution Inside N-Dimensional Shapes**](#General_Algorithm_for_Uniform_Distribution_Inside_N_Dimensional_Shapes)
+    - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
     - [**Mixtures**](#Mixtures)
@@ -26,6 +25,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
     - [**Arc-cosine Distribution**](#Arc_cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
+- [**Requests**](#Requests)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -110,7 +110,7 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
 
-<a id=General_Algorithm_for_Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
+<a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
 ### Uniform Distribution Inside N-Dimensional Shapes
 
 The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space, provided the shape's boundary has zero volume.  Such a description has the following skeleton.
@@ -132,15 +132,15 @@ The following is a general way to describe an arbitrary-precision sampler for ge
 
 > **Notes:**
 >
-> - See (Li and El Gamal 2016)<sup>[**(3)**](#Note3)</sup> and (Oberhoff 2018)<sup>[**(4)**](#Note4)</sup> for related work on encoding random points uniformly distributed in a shape.
+> - See (Li and El Gamal 2016)<sup>[**(2)**](#Note2)</sup> and (Oberhoff 2018)<sup>[**(3)**](#Note3)</sup> for related work on encoding random points uniformly distributed in a shape.
 > - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
 > - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
-> - (Devroye 1986, chapter 8, section 3)<sup>[**(2)**](#Note2)</sup> describes grid-based methods to optimize random point generation.  In this case, the result of **InShape** could be precalculated for all boxes whose coordinates begin with a _k_-digit prefix; each such box is labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes.  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on, each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
+> - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the result of **InShape** could be precalculated for all boxes whose coordinates begin with a _k_-digit prefix; each such box is labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes.  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on, each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
 >
 > **Examples:**
 >
 > - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full circle, step 5.3 in the algorithm is done for all _N_ dimensions.
-> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_<sup>2</sup>; _NO_ if (_c1_ + ... + _cN_) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(2)**](#Note2)</sup>).
+> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_<sup>2</sup>; _NO_ if (_c1_ + ... + _cN_) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
 
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
@@ -153,7 +153,7 @@ An arbitrary-precision sampler for the sum of _n_ exponential random numbers (al
 <a id=Hyperbolic_Secant_Distribution></a>
 ### Hyperbolic Secant Distribution
 
-The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(2)**](#Note2)</sup> for arbitrary-precision sampling.
+The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup>[**(4)**](#Note4)</sup> for arbitrary-precision sampling.
 
 1. Generate a uniform PSRN, call it _ret_, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.
 2. Set _ip_ to 1 plus _ret_'s integer part.
@@ -203,7 +203,7 @@ Examples of algorithms that use this skeleton are the algorithm for the [**ratio
 
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
-> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(2)**](#Note2)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(4)**](#Note4)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
 
 <a id=Reciprocal_of_Power_of_Uniform></a>
 ### Reciprocal of Power of Uniform
@@ -245,7 +245,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_cosine_Distribution></a>
 ### Arc-cosine Distribution
 
-Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(2)**](#Note2)</sup></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(4)**](#Note4)</sup></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
@@ -287,6 +287,7 @@ The following new algorithm generates a random number that follows the logistic 
 6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to positive or negative with equal probability, then return _f_.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
+<a id=Requests></a>
 ## Requests
 
 We would like to see new implementations of the following:
@@ -298,9 +299,9 @@ We would like to see new implementations of the following:
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., "Closed Form Continued Fraction Expansions of Special Quadratic Irrationals", ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small>
-- <small><sup id=Note2>(2)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-- <small><sup id=Note3>(3)</sup> C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016</small>
-- <small><sup id=Note4>(4)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+- <small><sup id=Note2>(2)</sup> C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016</small>
+- <small><sup id=Note3>(3)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+- <small><sup id=Note4>(4)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note5>(5)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>

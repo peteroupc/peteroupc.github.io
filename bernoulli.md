@@ -9,16 +9,12 @@ This page catalogs algorithms to turn coins biased one way into coins biased ano
 
 This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is likewise related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 
-This page is focused on sampling methods that _exactly_ simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers).
+This page is focused on sampling methods that _exactly_ simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers, that is, random numbers that are independent and identically distributed).
 
 <a id=About_This_Document></a>
 ### About This Document
 
-**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  You are welcome to suggest additional Bernoulli factory algorithms, especially&mdash;**
-
-- **specific** [**continued fraction expansions**](#Continued_Fractions),
-- **series expansions for the** [**power series**](#Certain_Power_Series) **algorithms below, and**
-- **algorithms that simulate probability mass functions or probability density functions, with or without a normalizing constant.**
+**This is an open-source document; for an updated version, see the** [**source code**](https://github.com/peteroupc/peteroupc.github.io/raw/master/bernoulli.md) **or its** [**rendering on GitHub**](https://github.com/peteroupc/peteroupc.github.io/blob/master/bernoulli.md)**.  You can send comments on this document on the** [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues)**.  See** "[**Requests and Open Questions**](#Requests_and_Open_Questions)" **for a list of things I seek to answer about this document.**
 
 <a id=Contents></a>
 ## Contents
@@ -1122,7 +1118,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 ## Requests and Open Questions
 
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant _&gamma;_, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
-- Is there a simple algorithm that can calculate choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>32</sup> (where choose(_n_, _k_) is a binomial coefficient), without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(42)**](#Note42)</sup>, which ultimately relies on floating-point arithmetic.
+- Is there a simple algorithm that can calculate choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>32</sup> (where choose(_n_, _k_) is a binomial coefficient), without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in <<Bringmann et al. 2014|K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14), 2014.>>, which ultimately relies on floating-point arithmetic.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 - I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
@@ -1182,7 +1178,6 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note39>(39)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
 - <small><sup id=Note40>(40)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note41>(41)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note42>(42)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14), 2014.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1213,7 +1208,7 @@ A Bernoulli factory or another algorithm that produces heads with a given probab
 
 will simulate the probability _f_(_&lambda;_) in theory.  In practice, however, this method is prone to numerous errors, including estimation error in step 1, and rounding and approximation errors in steps 2 and 3.  For this reason and also because "exact sampling" is the focus of this page, this document does not cover algorithms that directly estimate _&lambda;_ (such as in step 1). As (Mossel and Peres 2005)<sup>[**(18)**](#Note18)</sup> says: "The difficulty here is that [_&lambda;_] is unknown.  It is easy to estimate [_&lambda;_], and therefore [_f_(_&lambda;_)].  However, to get a coin with an exact bias [_f_(_&lambda;_)] is harder", and that is what Bernoulli factory algorithms are designed to do.
 
-As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(7)**](#Note7)</sup>, however, if _f_(_&lambda;_) can't serve as a factory function, no unbiased estimator of that function (which produces estimates in \[0, 1\] almost surely) is possible, since sampling it isn't possible.  For example, function A can't serve as a factory function, so no simulator for that function (or an unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
+As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(7)**](#Note7)</sup>, however, if _f_(_&lambda;_) can't serve as a factory function, it's not possible to build an unbiased estimator of that function which produces estimates in \[0, 1\] with probability 1, since simulating that function isn't possible.  For example, function A can't serve as a factory function, so no simulator for that function (or an unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 
 - Function A: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2).
 - Function B: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2).
