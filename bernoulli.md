@@ -1122,6 +1122,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 ## Requests and Open Questions
 
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant _&gamma;_, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+- Is there a simple algorithm that can calculate choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>32</sup> (where choose(_n_, _k_) is a binomial coefficient), without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(42)**](#Note42)</sup>, which ultimately relies on floating-point arithmetic.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 - I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
@@ -1181,6 +1182,7 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note39>(39)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
 - <small><sup id=Note40>(40)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note41>(41)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note42>(42)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14), 2014.</small>
 
 <a id=Appendix></a>
 ## Appendix
