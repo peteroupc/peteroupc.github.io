@@ -173,12 +173,12 @@ Two PSRNs, each of a different distribution but storing digits of the same base 
 The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples additional bits from them as necessary) and returns 1 if **a** turns out to be less than **b** almost surely, or 0 otherwise (see also (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).
 
 1. If **a**'s integer part wasn't sampled yet, sample **a**'s integer part according to the kind of PSRN **a** is.  Do the same for **b**.
-2. If **a**'s sign is different from **b**'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
+2. If **a**'s sign is different from **b**'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than **b**'s, or 0 if greater.  If **a**'s sign is negative, return 0 if **a**'s integer part is less than **b**'s, or 1 if greater.
 3. Set _i_ to 0.
 4. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for **b**.
 5. Let _da_ be the digit at position _i_ of **a**'s fractional part, and let _db_ be **b**'s corresponding digit.
-5. If **a** is non-negative, return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
-6. If **a** is negative, return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
+5. If **a**'s sign is positive, return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
+6. If **a**'s sign is negative, return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
 7. Add 1 to _i_ and go to step 4.
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
@@ -187,21 +187,21 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 
 1. If **a**'s integer part or sign is unsampled, return an error.
 2. Set _bs_ to &minus;1 if **b** is less than 0, or 1 otherwise. Calculate floor(abs(**b**)), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to abs(**b**) minus _bi_.)
-3. If **a**'s sign is different from _bs_'s sign, return 1 if **a** is negative and 0 if non-negative.  If **a** is non-negative, return 1 if **a**'s integer part is less than _bi_, or 0 if greater.  If **a** is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater.
+3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater.  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater.
 4. Set _i_ to 0.
 5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
 6. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
 7. Let _ad_ be the digit at position _i_ of **a**'s fractional part.
 8. Return 1 if&mdash;
-    - _ad_ is less than _d_ and **a** is non-negative,
-    - _ad_ is greater than _d_ and **a** is negative, or
-    - _ad_ is equal to _d_, **a** is negative, and&mdash;
+    - _ad_ is less than _d_ and **a**'s sign is positive,
+    - _ad_ is greater than _d_ and **a**'s sign is negative, or
+    - _ad_ is equal to _d_, **a**'s sign is negative, and&mdash;
         - _**b** is not known to be rational_ and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is less than **b** almost surely), or
         - _**b** is known to be rational_ and _bf_ is 0 (indicating **a** is less than **b** almost surely).
 9. Return 0 if&mdash;
-    - _ad_ is less than _d_ and **a** is negative,
-    - _ad_ is greater than _d_ and **a** is non-negative, or
-    - _ad_ is equal to _d_, **a** is non-negative, and&mdash;
+    - _ad_ is less than _d_ and **a**'s sign is negative,
+    - _ad_ is greater than _d_ and **a**'s sign is positive, or
+    - _ad_ is equal to _d_, **a**'s sign is positive, and&mdash;
         - _**b** is not known to be rational_ and all the digits after the digit at position _i_ of **b**'s fractional part are zeros (indicating **a** is greater than **b** almost surely), or
         - _**b** is known to be rational_ and _bf_ is 0 (indicating **a** is greater than **b** almost surely).
 10. Add 1 to _i_ and go to step 5.
@@ -215,9 +215,9 @@ An alternative version of steps 6 through 9 in the algorithm above are as follow
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
-The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is known to be a rational number.
+The following is a simpler way to implement **URandLessThanReal** when **a**'s sign is positive and its integer part is 0, and when **b** is known to be a rational number.
 
-1. If **a**'s integer part or sign is unsampled, or if **a** is negative or its integer part is other than 0, return an error.  If **b** is 0 or less, return 0.  If **b** is 1 or greater, return 1. (The case of 1 is a degenerate case since **a** could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
+1. If **a**'s integer part or sign is unsampled, or if **a**'s sign is negative or its integer part is other than 0, return an error.  If **b** is 0 or less, return 0.  If **b** is 1 or greater, return 1. (The case of 1 is a degenerate case since **a** could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
 2. Set _pt_ to 1/_base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
 3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
 4. Set _d2_ to floor(**b** / _pt_).  (For example, in base 2, set _d2_ to 0 if **b** is less than _pt_, or 1 otherwise.)
@@ -226,9 +226,9 @@ The following is a simpler way to implement **URandLessThanReal** when **a** is 
 7. If **b** is 0, return 0 (indicating that **a** is greater than the original fraction almost surely).
 8. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
 
-The following is a simpler way to implement **URandLessThanReal** when **a** is non-negative and its integer part is 0, and when **b** is a fraction known by its numerator and denominator, _num_/_den_.
+The following is a simpler way to implement **URandLessThanReal** when **a**'s sign is positive and its integer part is 0, and when **b** is a fraction known by its numerator and denominator, _num_/_den_.
 
-1. If **a**'s integer part or sign is unsampled, or if _den_ is 0, return an error.  If _num_ and _den_ are both less than 0, set them to their absolute values.  If **a** is negative or its integer part is other than 0, return an error. If _num_ is 0, or if _num_ < 0 or _den_ < 0, return 0.  If _num_ >= _den_, return 1.
+1. If **a**'s integer part or sign is unsampled, or if _den_ is 0, return an error.  If _num_ and _den_ are both less than 0, set them to their absolute values.  If **a**'s sign is negative or its integer part is other than 0, return an error. If _num_ is 0, or if _num_ < 0 or _den_ < 0, return 0.  If _num_ >= _den_, return 1.
 2. Set _pt_ to _base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
 3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
 4. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.
@@ -339,11 +339,11 @@ Arithmetic between two PSRNs is not always trivial.
 <a id=Addition_and_Subtraction></a>
 ### Addition and Subtraction
 
-The following algorithm shows how to add two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
+The following algorithm shows how to add two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-3. Let _asign_ be &minus;1 if **a** is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b** is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
+3. Let _asign_ be &minus;1 if **a**'s sign is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b**'s sign is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
 4. Calculate the following four numbers:
     - _afp_\*_asign_ + _bfp_\*_bsign_.
     - _afp_\*_asign_ + (_bfp_+1)\*_bsign_.
@@ -365,15 +365,15 @@ The following algorithm shows how to add two uniform PSRNs (**a** and **b**) tha
 12. If _y_ is greater than _lower_ + 1, go to step 7. (This is a rejection event.)
 13. Multiply _pw_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _pw_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 10.
 
-The following algorithm shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. Likewise, the rational number may be negative or non-negative.  _Python code implementing this algorithm is given later in this document._
+The following algorithm shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. Similarly, the rational number may be positive, negative, or zero.  _Python code implementing this algorithm is given later in this document._
 
 1. Let _ai_ be **a**'s integer part.  Special cases:
-    - If **a** is non-negative and has no sampled digits in its fractional part, and if **b** is an integer 0 or greater, return a uniform PSRN with a non-negative sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
-    - If **a** is negative and has no sampled digits in its fractional part, and if **b** is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to _ai_ + abs(**b**), and an empty fractional part.
-    - If **a** is non-negative, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an integer part equal to abs(**b**), and an empty fractional part.  The PSRN's sign is negative if **b** is less than 0, and non-negative otherwise.
+    - If **a**'s sign is positive and has no sampled digits in its fractional part, and if **b** is an integer 0 or greater, return a uniform PSRN with a positive sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
+    - If **a**'s sign is negative and has no sampled digits in its fractional part, and if **b** is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to _ai_ + abs(**b**), and an empty fractional part.
+    - If **a**'s sign is positive, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an integer part equal to abs(**b**), and an empty fractional part.  The PSRN's sign is negative if **b** is less than 0, and positive otherwise.
     - If **b** is 0, return a copy of **a**.
 2. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-3. Let _asign_ be &minus;1 if **a** is negative or 1 otherwise.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
+3. Let _asign_ be &minus;1 if **a**'s sign is negative or 1 otherwise.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
 4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _asign_ be &minus;1 if
 5. Set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to ((_afp_\*_asign_)/_ddc_)+**b** (using rational arithmetic), then set _upper_ to (((_afp_+1)\*_asign_)/_ddc_)+**b** (again using rational arithmetic).  Set _minv_ to min(_lower_, _upper_), and set _maxv_ to min(_lower_, _upper_).
 6. Set _newdigits_ to 0, then set _b_ to 1, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _mind_ to floor(abs(_minv_\*_ddc_)), then set _maxd_ to floor(abs(_maxv_\*_ddc_)). (Outer bounds): Then set _rvstart_ to _mind_&minus;1 if _minv_ is less than 0, or _mind_ otherwise, then set _rvend_ to _maxd_ if _maxv_ is less than 0, or _maxd_+1 otherwise.
@@ -389,7 +389,7 @@ The following algorithm shows how to add a uniform PSRN (**a**) and a rational n
 <a id=Multiplication></a>
 ### Multiplication
 
-The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled. _Python code implementing this algorithm is given later in this document._
+The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled. _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.
@@ -397,7 +397,7 @@ The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**
 4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
 6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
-7. Create a new uniform PSRN, _ret_.  If **a** is negative and **b** is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to non-negative.
+7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
 9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
     1. Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).
@@ -413,11 +413,11 @@ The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
 11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
-The following algorithm shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
+The following algorithm shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 2. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.
-3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a** is non-negative and **b** is less than 0 or if **a** is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
+3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a**'s sign is positive and **b** is less than 0 or if **a**'s sign is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
 4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
 5. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
 6. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_lower_\*_ddc_)).
@@ -551,7 +551,7 @@ Once a PSRN is accepted by the steps above, optionally fill the unsampled digits
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution
 
-We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the _&lambda;_ parameter's numerator and denominator, respectively.  (Because exponential random numbers are always non-negative, the e-rand's sign is implicitly positive).
+We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup>_x_</sup>), the second is _x_, the third is the integer part (initially &minus;1 to indicate the integer part wasn't sampled yet), and the fourth and fifth are the _&lambda;_ parameter's numerator and denominator, respectively.  (Because exponential random numbers are always 0 or greater, the e-rand's sign is implicitly positive).
 
 To sample bit _k_ after the binary point of an exponential random number with rate _&lambda;_ (where _k_ = 1 means the first digit after the point, _k_ = 2 means the second, etc.), call the **LogisticExp** algorithm with _x_ = _&lambda;_'s numerator, _y_ = _&lambda;_'s denominator, and _prec_ = _k_.
 

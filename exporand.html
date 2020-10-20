@@ -241,12 +241,12 @@
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part according to the kind of PSRN <strong>a</strong> is.  Do the same for <strong>b</strong>.</li>
-<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
 <li>Let <em>da</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part, and let <em>db</em> be <strong>b</strong>&#39;s corresponding digit.</li>
-<li>If <strong>a</strong> is non-negative, return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
-<li>If <strong>a</strong> is negative, return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
+<li>If <strong>a</strong>&#39;s sign is positive, return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+<li>If <strong>a</strong>&#39;s sign is negative, return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
 <li>Add 1 to <em>i</em> and go to step 4.</li>
 </ol>
 
@@ -257,7 +257,7 @@
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
 <li>Set <em>bs</em> to &minus;1 if <strong>b</strong> is less than 0, or 1 otherwise. Calculate floor(abs(<strong>b</strong>)), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to abs(<strong>b</strong>) minus <em>bi</em>.)</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong> is negative and 0 if non-negative.  If <strong>a</strong> is non-negative, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong> is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
@@ -265,9 +265,9 @@
 <li>Return 1 if&mdash;
 
 <ul>
-<li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is non-negative,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is negative, or</li>
-<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong> is negative, and&mdash;
+<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is positive,</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is negative, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is negative, and&mdash;
 
 <ul>
 <li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
@@ -277,9 +277,9 @@
 <li>Return 0 if&mdash;
 
 <ul>
-<li><em>ad</em> is less than <em>d</em> and <strong>a</strong> is negative,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong> is non-negative, or</li>
-<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong> is non-negative, and&mdash;
+<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is negative,</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is positive, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is positive, and&mdash;
 
 <ul>
 <li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely), or</li>
@@ -300,10 +300,10 @@
 
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
 
-<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is known to be a rational number.</p>
+<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong>&#39;s sign is positive and its integer part is 0, and when <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>a</strong> is negative or its integer part is other than 0, return an error.  If <strong>b</strong> is 0 or less, return 0.  If <strong>b</strong> is 1 or greater, return 1. (The case of 1 is a degenerate case since <strong>a</strong> could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>a</strong>&#39;s sign is negative or its integer part is other than 0, return an error.  If <strong>b</strong> is 0 or less, return 0.  If <strong>b</strong> is 1 or greater, return 1. (The case of 1 is a degenerate case since <strong>a</strong> could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
 <li>Set <em>pt</em> to 1/<em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
 <li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
 <li>Set <em>d2</em> to floor(<strong>b</strong> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <strong>b</strong> is less than <em>pt</em>, or 1 otherwise.)</li>
@@ -313,10 +313,10 @@
 <li>Divide <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
 </ol>
 
-<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong> is non-negative and its integer part is 0, and when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
+<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong>&#39;s sign is positive and its integer part is 0, and when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <strong>a</strong> is negative or its integer part is other than 0, return an error. If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <strong>a</strong>&#39;s sign is negative or its integer part is other than 0, return an error. If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
 <li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
 <li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
 <li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
@@ -458,12 +458,12 @@
 
 <h3>Addition and Subtraction</h3>
 
-<p>The following algorithm shows how to add two uniform PSRNs (<strong>a</strong> and <strong>b</strong>) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled.  <em>Python code implementing this algorithm is given later in this document.</em></p>
+<p>The following algorithm shows how to add two uniform PSRNs (<strong>a</strong> and <strong>b</strong>) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled.  <em>Python code implementing this algorithm is given later in this document.</em></p>
 
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for <strong>b</strong>.</li>
 <li>If <strong>a</strong> has fewer digits in its fractional part than <strong>b</strong> (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if <strong>a</strong> and <strong>b</strong> store binary, or base-2, digits) so that both PSRNs&#39; fractional parts have the same number of digits.  Now, let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
-<li>Let <em>asign</em> be &minus;1 if <strong>a</strong> is negative, or 1 otherwise.  Let <em>bsign</em> be &minus;1 if <strong>b</strong> is negative, or 1 otherwise.  Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>, and let <em>bfp</em> be the digits of <strong>b</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>base</em> be the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal.</li>
+<li>Let <em>asign</em> be &minus;1 if <strong>a</strong>&#39;s sign is negative, or 1 otherwise.  Let <em>bsign</em> be &minus;1 if <strong>b</strong>&#39;s sign is negative, or 1 otherwise.  Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>, and let <em>bfp</em> be the digits of <strong>b</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>base</em> be the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal.</li>
 <li>Calculate the following four numbers:
 
 <ul>
@@ -495,19 +495,19 @@
 <li>Multiply <em>pw</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>pw</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to step 10.</li>
 </ol>
 
-<p>The following algorithm shows how to add a uniform PSRN (<strong>a</strong>) and a rational number <strong>b</strong>.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. Likewise, the rational number may be negative or non-negative.  <em>Python code implementing this algorithm is given later in this document.</em></p>
+<p>The following algorithm shows how to add a uniform PSRN (<strong>a</strong>) and a rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. Similarly, the rational number may be positive, negative, or zero.  <em>Python code implementing this algorithm is given later in this document.</em></p>
 
 <ol>
 <li>Let <em>ai</em> be <strong>a</strong>&#39;s integer part.  Special cases:
 
 <ul>
-<li>If <strong>a</strong> is non-negative and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer 0 or greater, return a uniform PSRN with a non-negative sign, an integer part equal to <em>ai</em> + <strong>b</strong>, and an empty fractional part.</li>
-<li>If <strong>a</strong> is negative and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to <em>ai</em> + abs(<strong>b</strong>), and an empty fractional part.</li>
-<li>If <strong>a</strong> is non-negative, has an integer part of 0, and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer, return a uniform PSRN with an integer part equal to abs(<strong>b</strong>), and an empty fractional part.  The PSRN&#39;s sign is negative if <strong>b</strong> is less than 0, and non-negative otherwise.</li>
+<li>If <strong>a</strong>&#39;s sign is positive and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer 0 or greater, return a uniform PSRN with a positive sign, an integer part equal to <em>ai</em> + <strong>b</strong>, and an empty fractional part.</li>
+<li>If <strong>a</strong>&#39;s sign is negative and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to <em>ai</em> + abs(<strong>b</strong>), and an empty fractional part.</li>
+<li>If <strong>a</strong>&#39;s sign is positive, has an integer part of 0, and has no sampled digits in its fractional part, and if <strong>b</strong> is an integer, return a uniform PSRN with an integer part equal to abs(<strong>b</strong>), and an empty fractional part.  The PSRN&#39;s sign is negative if <strong>b</strong> is less than 0, and positive otherwise.</li>
 <li>If <strong>b</strong> is 0, return a copy of <strong>a</strong>.</li>
 </ul></li>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
-<li>Let <em>asign</em> be &minus;1 if <strong>a</strong> is negative or 1 otherwise.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(<em>absfrac</em>).</li>
+<li>Let <em>asign</em> be &minus;1 if <strong>a</strong>&#39;s sign is negative or 1 otherwise.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(<em>absfrac</em>).</li>
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>asign</em> be &minus;1 if</li>
 <li>Set <em>ddc</em> to <em>base</em><sup><em>dcount</em></sup>, then set <em>lower</em> to ((<em>afp</em>*<em>asign</em>)/<em>ddc</em>)+<strong>b</strong> (using rational arithmetic), then set <em>upper</em> to (((<em>afp</em>+1)*<em>asign</em>)/<em>ddc</em>)+<strong>b</strong> (again using rational arithmetic).  Set <em>minv</em> to min(<em>lower</em>, <em>upper</em>), and set <em>maxv</em> to min(<em>lower</em>, <em>upper</em>).</li>
 <li>Set <em>newdigits</em> to 0, then set <em>b</em> to 1, then set <em>ddc</em> to <em>base</em><sup><em>dcount</em></sup>, then set <em>mind</em> to floor(abs(<em>minv</em>*<em>ddc</em>)), then set <em>maxd</em> to floor(abs(<em>maxv</em>*<em>ddc</em>)). (Outer bounds): Then set <em>rvstart</em> to <em>mind</em>&minus;1 if <em>minv</em> is less than 0, or <em>mind</em> otherwise, then set <em>rvend</em> to <em>maxd</em> if <em>maxv</em> is less than 0, or <em>maxd</em>+1 otherwise.</li>
@@ -528,7 +528,7 @@
 
 <h3>Multiplication</h3>
 
-<p>The following algorithm shows how to multiply two uniform PSRNs (<strong>a</strong> and <strong>b</strong>) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may be negative or non-negative, and it is assumed that their integer parts and signs were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
+<p>The following algorithm shows how to multiply two uniform PSRNs (<strong>a</strong> and <strong>b</strong>) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for <strong>b</strong>.</li>
@@ -537,7 +537,7 @@
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>, and let <em>bfp</em> be the digits of <strong>b</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>Calculate <em>n1</em> = <em>afp</em>*<em>bfp</em>, <em>n2</em> = <em>afp</em>*(<em>bfp</em>+1), <em>n3</em> = (<em>afp</em>+1)*<em>bfp</em>, and <em>n4</em> = (<em>afp</em>+1)*(<em>bfp</em>+1).</li>
 <li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).  The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. (For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</li>
-<li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong> is negative and <strong>b</strong> is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to non-negative.</li>
+<li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong>&#39;s sign is negative and <strong>b</strong>&#39;s sign is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to positive.</li>
 <li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>minv</em>).</li>
 <li>If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the trapezoid.  In this case, do the following:
 
@@ -563,12 +563,12 @@
 <li>If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
 </ol>
 
-<p>The following algorithm shows how to multiply a uniform PSRN (<strong>a</strong>) by a rational number <strong>b</strong>.  The input PSRN may be negative or non-negative, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
+<p>The following algorithm shows how to multiply a uniform PSRN (<strong>a</strong>) by a rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>To simplify matters: If <strong>a</strong> has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.</li>
-<li>Create a uniform PSRN, call it <em>ret</em>.  Set <em>ret</em>&#39;s sign to be &minus;1 if <strong>a</strong> is non-negative and <strong>b</strong> is less than 0 or if <strong>a</strong> is negative and <strong>b</strong> is 0 or greater, or 1 otherwise, then set <em>ret</em>&#39;s integer part to 0.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(<em>absfrac</em>).</li>
+<li>Create a uniform PSRN, call it <em>ret</em>.  Set <em>ret</em>&#39;s sign to be &minus;1 if <strong>a</strong>&#39;s sign is positive and <strong>b</strong> is less than 0 or if <strong>a</strong>&#39;s sign is negative and <strong>b</strong> is 0 or greater, or 1 otherwise, then set <em>ret</em>&#39;s integer part to 0.  Let <em>base</em> be the base of digits stored in <strong>a</strong>&#39;s fractional part (such as 2 for binary or 10 for decimal).  Set <em>absfrac</em> to abs(<strong>b</strong>), then set <em>fraction</em> to <em>absfrac</em> &minus; floor(<em>absfrac</em>).</li>
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)</li>
 <li>Set <em>dcount</em> to <em>digitcount</em>, then set <em>ddc</em> to <em>base</em><sup><em>dcount</em></sup>, then set <em>lower</em> to (<em>afp</em>/<em>ddc</em>)*<em>absfrac</em> (using rational arithmetic), then set <em>upper</em> to (<em>afp</em>/<em>ddc</em>)*<em>absfrac</em> (again using rational arithmetic).</li>
 <li>Set <em>rv</em> to a uniform random integer in the interval [floor(<em>lower</em>*<em>ddc</em>), floor(<em>lower</em>*<em>ddc</em>)).</li>
@@ -744,7 +744,7 @@
 
 <h3>Exponential Distribution</h3>
 
-<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup><em>x</em></sup>), the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the <em>&lambda;</em> parameter&#39;s numerator and denominator, respectively.  (Because exponential random numbers are always non-negative, the e-rand&#39;s sign is implicitly positive).</p>
+<p>We also have the necessary building blocks to describe how to sample e-rands.  As implemented in the Python code, an e-rand consists of five numbers: the first is a multiple of 1/(2<sup><em>x</em></sup>), the second is <em>x</em>, the third is the integer part (initially &minus;1 to indicate the integer part wasn&#39;t sampled yet), and the fourth and fifth are the <em>&lambda;</em> parameter&#39;s numerator and denominator, respectively.  (Because exponential random numbers are always 0 or greater, the e-rand&#39;s sign is implicitly positive).</p>
 
 <p>To sample bit <em>k</em> after the binary point of an exponential random number with rate <em>&lambda;</em> (where <em>k</em> = 1 means the first digit after the point, <em>k</em> = 2 means the second, etc.), call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>k</em>.</p>
 

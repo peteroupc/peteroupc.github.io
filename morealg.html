@@ -160,7 +160,7 @@
 
 <h3>Uniform Distribution Inside N-Dimensional Shapes</h3>
 
-<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space.  Such a description has the following skeleton.</p>
+<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space, provided the shape&#39;s boundary has zero volume.  Such a description has the following skeleton.</p>
 
 <ol>
 <li>Generate <em>N</em> empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
@@ -223,7 +223,7 @@
 <ol>
 <li>Generate a uniform PSRN, call it <em>ret</em>, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.</li>
 <li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
-<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to non-negative or negative with equal probability, then return <em>ret</em>.</li>
+<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to positive or negative with equal probability, then return <em>ret</em>.</li>
 <li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
 </ol>
 
@@ -299,7 +299,7 @@
 
 <ol>
 <li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
-<li>With probability 1 &minus; 2<sup><em>x</em></sup>/4<sup><em>x</em></sup>, go to step 3.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
+<li>With probability (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>, go to step 3.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
 <li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
 <li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for <em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em>, <em>c</em> = <em>i</em>, and <em>k</em> = <em>x</em> + 1 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 3.</li>
@@ -310,7 +310,7 @@
 
 <ul>
 <li><em>A</em> = 0, since the random number can&#39;t lie in the interval [0, 1).</li>
-<li><em>B</em> = 1&minus;2<sup><em>x</em></sup>/4<sup><em>x</em></sup>.</li>
+<li><em>B</em> = (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>.</li>
 <li><em>C</em> = (<em>x</em>/(<em>i</em> + <em>&lambda;</em>)<sup><em>x</em>+1</sup>) / <em>M</em>.  Ideally, <em>M</em> is either <em>x</em> if <em>intval</em> is 1, or <em>x</em>/<em>intval</em><sup><em>x</em>+1</sup> otherwise.  Thus, the ideal form for <em>C</em> is <em>intval</em><sup><em>x</em>+1</sup>/(<em>i</em>+<em>&lambda;</em>)<sup><em>x</em>+1</sup>.</li>
 </ul>
 
@@ -342,7 +342,7 @@
 
 <h3>Arc-cosine Distribution</h3>
 
-<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note4"><strong>(4)</strong></a></sup></sup>.  The following algorithm is an arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note4"><strong>(4)</strong></a></sup></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -384,7 +384,7 @@
 <li>(The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it <em>f</em>.</li>
 <li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) With probability 1/2, go to step 3.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
-<li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to negative with probability 1/2 and non-negative otherwise, then return <em>f</em>.</li>
+<li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
 </ol>
 

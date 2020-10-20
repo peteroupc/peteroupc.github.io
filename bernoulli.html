@@ -178,7 +178,7 @@
 <li>The instruction to &quot;generate a uniform(0, 1) random number&quot; can be implemented&mdash;
 
 <ul>
-<li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or</li>
+<li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or</li>
 <li>by generating <code>RNDRANGEMaxExc(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
 </ul></li>
 <li>The instruction to &quot;generate an exponential random number&quot; can be implemented&mdash;
@@ -1676,7 +1676,7 @@ for i in range(iters):
 
 <h3>The von Neumann Schema</h3>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> describes what it calls the <em>von Neumann schema</em> (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it&#39;s not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random non-negative integer <em>n</em> with probability equal to&mdash;</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> describes what it calls the <em>von Neumann schema</em> (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it&#39;s not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random integer <em>n</em>, greater than 0, with probability equal to&mdash;</p>
 
 <ul>
 <li>(<em>&lambda;</em><sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / EGF(<em>&lambda;</em>),</li>

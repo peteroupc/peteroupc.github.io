@@ -143,7 +143,7 @@ In the following algorithms:
 
 - _&lambda;_ is the unknown probability of heads of the input coin.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
-    - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a sign of 1 or positive, an integer part of 0, and an empty fractional part (most accurate), or
+    - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
@@ -1291,7 +1291,7 @@ _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the
 <a id=The_von_Neumann_Schema></a>
 ### The von Neumann Schema
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> describes what it calls the _von Neumann schema_ (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it's not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random non-negative integer _n_ with probability equal to&mdash;
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> describes what it calls the _von Neumann schema_ (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it's not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random integer _n_, greater than 0, with probability equal to&mdash;
 
 - (_&lambda;_<sup>_n_</sup> * V(_n_) / _n_!) / EGF(_&lambda;_),
 
