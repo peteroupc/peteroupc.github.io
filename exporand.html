@@ -1,7 +1,7 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions"><meta name="og:type" content="article"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions</h1>
+<h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
@@ -539,6 +539,12 @@
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for <strong>b</strong>.</li>
 <li>If <strong>a</strong> has fewer digits in its fractional part than <strong>b</strong> (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if <strong>a</strong> and <strong>b</strong> store binary, or base-2, digits) so that both PSRNs&#39; fractional parts have the same number of digits.</li>
+<li>If neither <strong>a</strong> nor <strong>b</strong> has a non-zero digit in its fractional part, then do the following. (This step is crucial for correctness when both PSRNs&#39; intervals cover the number 0, since the distribution of their product is different from the usual case.)
+
+<ol>
+<li>Append a digit chosen uniformly at random to <strong>a</strong>&#39;s fractional part.  Do the same for <strong>b</strong>.</li>
+<li>If both digits chosen in the previous substep were zeros, go to the previous substep.</li>
+</ol></li>
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>, and let <em>bfp</em> be the digits of <strong>b</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>Calculate <em>n1</em> = <em>afp</em>*<em>bfp</em>, <em>n2</em> = <em>afp</em>*(<em>bfp</em>+1), <em>n3</em> = (<em>afp</em>+1)*<em>bfp</em>, and <em>n4</em> = (<em>afp</em>+1)*(<em>bfp</em>+1).</li>
 <li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).  The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. (For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</li>
@@ -554,7 +560,7 @@
 <li>Set <em>s</em> to <em>minv</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em> (where <em>base</em> is the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal).</li>
 <li>Transfer the (<em>n</em>*2 + <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, where <em>n</em> is the number of digits in <strong>a</strong>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)  Then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>).  (For example, if <em>base</em> is 10, (<em>n</em>*2 + <em>newdigits</em>) is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</li>
 </ol></li>
-<li>If <em>y</em> is greater than <em>x</em> + 1, abort these substeps and go to step 7. (This is a rejection event.)</li>
+<li>If <em>y</em> is greater than <em>x</em> + 1, abort these substeps and go to step 8. (This is a rejection event.)</li>
 <li>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</li>
 </ol></li>
 <li>If <em>z</em> is greater than or equal to <em>midmax</em>&minus;<em>minv</em>, we will sample from the right side of the trapezoid.  In this case, do the following:
@@ -562,7 +568,7 @@
 <ol>
 <li>Set <em>x</em> to <em>z</em>&minus;(<em>midmax</em>&minus;<em>minv</em>), then set <em>newdigits</em> to 0, then set <em>b</em> to <em>maxv</em>&minus;<em>midmax</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</li>
 <li>If <em>y</em> is less than <em>b</em>&minus;1&minus;<em>x</em>, the algorithm succeeds, so do the following: Set <em>s</em> to <em>midmax</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em>, then transfer the (<em>n</em>*2+ <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>), then return <em>ret</em>.</li>
-<li>If <em>y</em> is greater than (<em>b</em>&minus;1&minus;<em>x</em>) + 1, abort these substeps and go to step 7. (This is a rejection event.)</li>
+<li>If <em>y</em> is greater than (<em>b</em>&minus;1&minus;<em>x</em>) + 1, abort these substeps and go to step 8. (This is a rejection event.)</li>
 <li>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</li>
 </ol></li>
 <li>If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
@@ -600,11 +606,11 @@
 
 <h3>Multiplying a PSRN by a Vector</h3>
 
-<p>Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let <em>vector</em> be the vector of rational numbers, and let <em>vector</em>[<em>i</em>] be the rational number at position <em>i</em> of the vector (positions start at 0).</p>
+<p>Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a uniform PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let <em>vector</em> be the vector of rational numbers, and let <em>vector</em>[<em>i</em>] be the rational number at position <em>i</em> of the vector (positions start at 0).</p>
 
 <ol>
-<li>Set <em>i</em> to 0, set <strong>a</strong> to the input PSRN, and set <em>output</em> to an empty list.</li>
-<li>Set <em>ret</em> to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number <em>vector</em>[1].</li>
+<li>Set <em>i</em> to 0, set <strong>a</strong> to the input PSRN, set <em>num</em> to <em>vector</em>[<em>i</em>], and set <em>output</em> to an empty list.</li>
+<li>Set <em>ret</em> to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number <em>num</em>.</li>
 <li>Add a pointer to <em>ret</em> to the list <em>output</em>.  If <em>vector</em>[<em>i</em>] was the last number in the vector, stop this algorithm.</li>
 <li>Set <strong>a</strong> to point to <em>ret</em>, then add 1 to <em>i</em>, then set <em>num</em> to <em>vector</em>[<em>i</em>]/<em>vector</em>[<em>i</em>&minus;1].</li>
 </ol>
@@ -1141,6 +1147,14 @@ def exprand(lam):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
+    if frac1 == 0 and frac2 == 0:
+        while True:
+            d1=random.randint(0, digits - 1)
+            d2=random.randint(0, digits - 1)
+            frac1=frac1*digits+d1
+            frac2=frac2*digits+d2
+            digitcount+=1
+            if d1!=0 or d2!=0: break
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
@@ -1404,7 +1418,6 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
-    loop=0
     while True:
         newdigits = 0
         b = 1

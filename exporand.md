@@ -1,4 +1,4 @@
-# Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions
+# Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
@@ -396,24 +396,27 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.
-3. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
-4. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
-5. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
-6. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
-7. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
-8. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
+3. If neither **a** nor **b** has a non-zero digit in its fractional part, then do the following. (This step is crucial for correctness when both PSRNs' intervals cover the number 0, since the distribution of their product is different from the usual case.)
+     1. Append a digit chosen uniformly at random to **a**'s fractional part.  Do the same for **b**.
+     2. If both digits chosen in the previous substep were zeros, go to the previous substep.
+4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
+5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
+6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
+7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
+8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
+9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
     1. Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).
     2. If _y_ is less than _x_, the algorithm succeeds, so do the following:
         1. Set _s_ to _minv_\*_base_<sup>_newdigits_</sup> + _x_ (where _base_ is the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal).
         2. Transfer the (_n_\*2 + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_\*2 + _newdigits_) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.
-    3. If _y_ is greater than _x_ + 1, abort these substeps and go to step 7. (This is a rejection event.)
+    3. If _y_ is greater than _x_ + 1, abort these substeps and go to step 8. (This is a rejection event.)
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
-9. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the trapezoid.  In this case, do the following:
+10. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the trapezoid.  In this case, do the following:
     1. Set _x_ to _z_&minus;(_midmax_&minus;_minv_), then set _newdigits_ to 0, then set _b_ to _maxv_&minus;_midmax_, then set _y_ to a uniform random integer in the interval [0, _b_).
     2. If _y_ is less than _b_&minus;1&minus;_x_, the algorithm succeeds, so do the following: Set _s_ to _midmax_\*_base_<sup>_newdigits_</sup> + _x_, then transfer the (_n_\*2+ _newdigits_) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>), then return _ret_.
-    3. If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 7. (This is a rejection event.)
+    3. If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 8. (This is a rejection event.)
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
-10. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
+11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
 The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
@@ -441,10 +444,10 @@ Note that incorrect results may occur if the _same PSRN_ is used more than once 
 <a id=Multiplying_a_PSRN_by_a_Vector></a>
 ### Multiplying a PSRN by a Vector
 
-Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let _vector_ be the vector of rational numbers, and let _vector_\[_i_\] be the rational number at position _i_ of the vector (positions start at 0).
+Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a uniform PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let _vector_ be the vector of rational numbers, and let _vector_\[_i_\] be the rational number at position _i_ of the vector (positions start at 0).
 
-1. Set _i_ to 0, set **a** to the input PSRN, and set _output_ to an empty list.
-2. Set _ret_ to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number _vector_\[1\].
+1. Set _i_ to 0, set **a** to the input PSRN, set _num_ to _vector_\[_i_\], and set _output_ to an empty list.
+2. Set _ret_ to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number _num_.
 3. Add a pointer to _ret_ to the list _output_.  If _vector_\[_i_\] was the last number in the vector, stop this algorithm.
 4. Set **a** to point to _ret_, then add 1 to _i_, then set _num_ to _vector_\[_i_\]/_vector_\[_i_&minus;1\].
 
@@ -934,6 +937,14 @@ def multiply_psrns(psrn1, psrn2, digits=2):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
+    if frac1 == 0 and frac2 == 0:
+        while True:
+            d1=random.randint(0, digits - 1)
+            d2=random.randint(0, digits - 1)
+            frac1=frac1*digits+d1
+            frac2=frac2*digits+d2
+            digitcount+=1
+            if d1!=0 or d2!=0: break
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
@@ -1197,7 +1208,6 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
-    loop=0
     while True:
         newdigits = 0
         b = 1

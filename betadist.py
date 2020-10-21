@@ -203,9 +203,9 @@ def psrn_less(psrn1, psrn2):
         aa = psrn1[2][index]
         bb = psrn2[2][index]
         if aa < bb:
-            return True
+            return 1
         if aa > bb:
-            return False
+            return 0
         index += 1
 
 def psrn_less_than_rational_01(psrn1, rat):
@@ -278,6 +278,15 @@ def multiply_psrns(psrn1, psrn2, digits=2):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
+    if frac1 == 0 and frac2 == 0:
+        while True:
+            d1 = random.randint(0, digits - 1)
+            d2 = random.randint(0, digits - 1)
+            frac1 = frac1 * digits + d1
+            frac2 = frac2 * digits + d2
+            digitcount += 1
+            if d1 != 0 or d2 != 0:
+                break
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
@@ -553,7 +562,6 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
-    loop = 0
     while True:
         newdigits = 0
         b = 1
@@ -1068,6 +1076,12 @@ if __name__ == "__main__":
         q = _readpsrn2(psrn2, digits=digits)
         q2 = _readpsrnend2(psrn2, digits=digits)
         mult = multiply_psrns(psrn1, psrn2, digits=digits)
+        if mult == None:
+            print(
+                "    multiply_psrns(%d,%d,%s,%d,%d,%s,digits=%d)"
+                % (ps, pi, pfc, qs, qi, qfc, digits)
+            )
+            return
         ms, mi, mf = mult
         m = _readpsrn2([ms, mi, mf], minprec=32, digits=digits)
         mn = min(p * q, p2 * q, p * q2, p2 * q2)
@@ -1079,18 +1093,17 @@ if __name__ == "__main__":
             print(["p1", psrn1])
             print(["p2", psrn2])
             raise ValueError
-        if i < 50:
+        if i < 100:
             sample1 = [
                 random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
             ]
             sample2 = [
-                _readpsrn2(
+                _rp(
                     multiply_psrns(
                         [ps, pi, [x for x in pfc]],
                         [qs, qi, [x for x in qfc]],
                         digits=digits,
                     ),
-                    minprec=32,
                     digits=digits,
                 )
                 for _ in range(2000)
@@ -1126,14 +1139,12 @@ if __name__ == "__main__":
         sample2.append(m2)
 
     ks = st.ks_2samp(sample1, sample2)
-    print(ks)
     if ks.pvalue < 1e-6:
         print(ks)
         print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
         print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
         dobucket(sample1)
         dobucket(sample2)
-    exit()
 
     add_psrn_and_fraction_test(1, 0, [], Fraction(-1, 1), digits=2)
     add_psrn_and_fraction_test(1, 0, [], Fraction(-1, 1), digits=10)
@@ -1187,6 +1198,14 @@ if __name__ == "__main__":
             1, 6, [1, 1, 1, 0, 0], Fraction(-1, 1), digits=digits
         )
         multiply_psrn_by_fraction_test(1, 1, [], Fraction(-2, 7), digits=digits)
+
+        multiply_psrns_test(-1, 0, [], -1, 0, [], digits=digits)
+        multiply_psrns_test(-1, 0, [0], -1, 0, [], digits=digits)
+        multiply_psrns_test(-1, 0, [], -1, 0, [0], digits=digits)
+        multiply_psrns_test(-1, 0, [0], -1, 0, [0], digits=digits)
+        multiply_psrns_test(-1, 0, [0, 0], -1, 0, [0], digits=digits)
+        multiply_psrns_test(-1, 0, [0], -1, 0, [0, 0], digits=digits)
+        multiply_psrns_test(-1, 0, [0, 0], -1, 0, [0, 0], digits=digits)
 
         for i in range(1000):
             ps, pi, pf = random_psrn(digits=digits)
