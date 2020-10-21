@@ -355,6 +355,59 @@ class LogConcaveSampler:
             elif logchi <= pr:
                 return ret
 
+class UnimodalSampler:
+    """
+    Generates a random number that follows a unimodal distribution
+    for which three things are known: the probability density function (or
+    a function proportional to it), the cumulative density function (CDF),
+    and the exact location of the PDF's mode (highest point).
+    This uses the inversion-rejection method by Devroye (see
+    chapter 7 of Devroye, 1986, "Non-Uniform Random Variate Generation").
+
+    In the constructor, the mode is optional, and is assumed to be 0 if the
+    mode is not given.
+    """
+
+    def __init__(self, pdf, cdf, mode=0):
+         self.mode=mode
+         self.pdf=pdf
+         self.cdf=cdf
+         self.modepdf=pdf(self.mode)
+         self.modecdf=cdf(self.mode)
+         self.modecdfleft=cdf(self.mode-1)
+         self.modecdfright=cdf(self.mode+1)
+
+    def sample(self, n):
+        return [self.sampleOne() for i in range(n)]
+
+    def _sampleBody(self, st, en):
+               x=0.5
+               u=random.random()
+               while True:
+                   if u>=self.cdf(st+(en-st)*x):
+                       break
+                   x/=2
+               while True:
+                   y=x*(random.random()+1)
+                   pdfy=self.pdf(st+(en-st)*y)
+                   pdfx=self.pdf(st+(en-st)*x)
+                   if w<=pdfy/pdfx:
+                       return st+(en-st)*y
+
+    def sampleOne(self):
+        if random.random() < self.modecdf:
+           # Left side of the mode
+           if random.random() < self.modecdfleft / self.modecdf:
+               # Tail of left side
+           else:
+               return _sampleBody(self.modecdf,self.modecdfleft)
+        else:
+           # Right side of the mode
+           if random.random() < (1-self.modecdfright) / (1-self.modecdf):
+               # Tail of left side
+           else:
+               return _sampleBody(self.modecdf,self.modecdfright)
+
 class LogConcaveSampler2:
     """
     Generates a random number that follows a distribution

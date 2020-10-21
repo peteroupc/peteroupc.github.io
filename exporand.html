@@ -574,7 +574,7 @@
 <li>If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
 </ol>
 
-<p>The following algorithm (<strong>UniformMultiplyRational</strong>) shows how to multiply a uniform PSRN (<strong>a</strong>) by a rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
+<p>The following algorithm (<strong>UniformMultiplyRational</strong>) shows how to multiply a uniform PSRN (<strong>a</strong>) by a nonzero rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
@@ -596,8 +596,8 @@
 
 <ol>
 <li>Generate a uniform PSRN, then transform it into a random number of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney&#39;s algorithm for the standard normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>)).  This procedure won&#39;t work for exponential PSRNs (e-rands).</li>
-<li>Run the <strong>UniformAddRational</strong> algorithm to multiply the uniform PSRN by the rational parameter <em>scale</em> to get a new uniform PSRN.</li>
-<li>Run the <strong>UniformMultiplyRational</strong> algorithm to add the new uniform PSRN and the rational parameter <em>location</em> to get a third uniform PSRN.  Return this third PSRN.</li>
+<li>Run the <strong>UniformMultiplyRational</strong> algorithm to multiply the uniform PSRN by the rational parameter <em>scale</em> to get a new uniform PSRN.</li>
+<li>Run the <strong>UniformAddRational</strong> algorithm to add the new uniform PSRN and the rational parameter <em>location</em> to get a third uniform PSRN.  Return this third PSRN.</li>
 </ol>
 
 <p>Note that incorrect results may occur if the <em>same PSRN</em> is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the <strong>UniformAddRational</strong> or <strong>UniformMultiplyRational</strong> algorithm when it&#39;s called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.</p>
