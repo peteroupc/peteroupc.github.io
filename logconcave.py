@@ -358,8 +358,8 @@ class LogConcaveSampler:
 class UnimodalSampler:
     """
     Generates a random number that follows a unimodal distribution
-    for which three things are known: the probability density function (or
-    a function proportional to it), the cumulative density function (CDF),
+    for which three things are known: the probability density function (PDF) (or
+    a function proportional to it), the cumulative distribution function (CDF),
     and the exact location of the PDF's mode (highest point).
     This uses the inversion-rejection method by Devroye (see
     chapter 7 of Devroye, 1986, "Non-Uniform Random Variate Generation").
@@ -369,44 +369,66 @@ class UnimodalSampler:
     """
 
     def __init__(self, pdf, cdf, mode=0):
-         self.mode=mode
-         self.pdf=pdf
-         self.cdf=cdf
-         self.modepdf=pdf(self.mode)
-         self.modecdf=cdf(self.mode)
-         self.modecdfleft=cdf(self.mode-1)
-         self.modecdfright=cdf(self.mode+1)
+        self.mode = mode
+        self.pdf = pdf
+        self.cdf = cdf
+        self.modepdf = pdf(self.mode)
+        self.modecdf = cdf(self.mode)
+        self.modecdfleft = cdf(self.mode - 1)
+        self.modecdfright = cdf(self.mode + 1)
 
     def sample(self, n):
         return [self.sampleOne() for i in range(n)]
 
-    def _sampleBody(self, st, en):
-               x=0.5
-               u=random.random()
-               while True:
-                   if u>=self.cdf(st+(en-st)*x):
-                       break
-                   x/=2
-               while True:
-                   y=x*(random.random()+1)
-                   pdfy=self.pdf(st+(en-st)*y)
-                   pdfx=self.pdf(st+(en-st)*x)
-                   if w<=pdfy/pdfx:
-                       return st+(en-st)*y
+    def _sampleBody(self, st, en, cdfstart, cdfend):
+        x = 0.5
+        u = random.random()
+        while True:
+            c = (self.cdf(st + (en - st) * x) - cdfstart) / (cdfend - cdfstart)
+            if u >= c:
+                break
+            x /= 2
+        pdfx = self.pdf(st + (en - st) * x)
+        while True:
+            y = x * (random.random() + 1)
+            pdfy = self.pdf(st + (en - st) * y)
+            if random.random() <= pdfy / pdfx:
+                return st + (en - st) * y
+
+    def _sampleTail(self, st, direc, cdfstart, cdfend):
+        x = 0
+        x2 = 1
+        u = random.random()
+        while True:
+            c = (self.cdf(st + x2 * direc) - cdfstart) / (cdfend - cdfstart)
+            if u < c:
+                break
+            x = x2
+            x2 *= 2
+        pdfx = self.pdf(st + x * direc)
+        while True:
+            y = x + random.random() * (x2 - x)
+            pdfy = self.pdf(st + y * direc)
+            if random.random() <= pdfy / pdfx:
+                return st + y * direc
 
     def sampleOne(self):
         if random.random() < self.modecdf:
-           # Left side of the mode
-           if random.random() < self.modecdfleft / self.modecdf:
-               # Tail of left side
-           else:
-               return _sampleBody(self.modecdf,self.modecdfleft)
+            # Left side of the mode
+            if random.random() < self.modecdfleft / self.modecdf:
+                return self._sampleTail(self.mode - 1, -1, self.modecdfleft, 0)
+            else:
+                return self._sampleBody(
+                    self.mode, self.mode - 1, self.modecdf, self.modecdfleft
+                )
         else:
-           # Right side of the mode
-           if random.random() < (1-self.modecdfright) / (1-self.modecdf):
-               # Tail of left side
-           else:
-               return _sampleBody(self.modecdf,self.modecdfright)
+            # Right side of the mode
+            if random.random() < (1 - self.modecdfright) / (1 - self.modecdf):
+                return self._sampleTail(self.mode + 1, 1, self.modecdfright, 1)
+            else:
+                return self._sampleBody(
+                    self.mode, self.mode + 1, self.modecdf, self.modecdfright
+                )
 
 class LogConcaveSampler2:
     """
@@ -772,8 +794,15 @@ if __name__ == "__main__":
             return 0
         return 5 ** x * math.exp(-5) / xg
 
+    def normalpdf(x):
+        return math.exp(-(x) ** 2 / 2)
+
+    def normalcdf(x):
+        return (1 + math.erf(x / math.sqrt(2))) / 2
+
+    mrs = UnimodalSampler(normalpdf, normalcdf)
+
     ls = linspace(-4, 4, 30)
-    # ls = linspace(0,20, 20)
     buckets = [0 for x in ls]
     t = time.time()
     ksample = mrs.sample(50000)
