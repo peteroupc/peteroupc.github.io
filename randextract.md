@@ -33,12 +33,12 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 1. Flip a coin twice (whose bias is unknown).
 2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
-An algorithm found in (Morina et al. 2019)<sup>[**(5)**](#Note5)</sup> extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
+An algorithm found in (Morina et al. 2019)<sup>[**(5)**](#Note5)</sup> (called **Algorithm M** in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
 1. Throw a (loaded) die, call the result _X_.  Throw the die again, call the result _Y_.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.
 
-This algorithm in fact is surprisingly broad in scope; for more, see the [**appendix**](#Appendix).
+Algorithm M in fact is surprisingly broad in scope; for more, see the [**appendix**](#Appendix).
 
 Pae (2005)<sup>[**(6)**](#Note6)</sup> and (Pae and Loui 2006)<sup>[**(7)**](#Note7)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(8)**](#Note8)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(9)**](#Note9)</sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:
 
@@ -73,7 +73,7 @@ Some additional notes:
 - <small><sup id=Note2>(2)</sup> Coretti, S., Dodis, Y., et al., "Seedless Fruit is the Sweetest: Random Number Generation, Revisited", 2019.</small>
 - <small><sup id=Note3>(3)</sup> Frauchiger, D., Renner, R., Troyer, M., "True randomness from realistic quantum devices", 2013.</small>
 - <small><sup id=Note4>(4)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note5>(5)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note5>(5)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229)", arXiv:1912.09229 [math.PR], 2019.</small>
 - <small><sup id=Note6>(6)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note7>(7)</sup> Pae, S., Loui, M.C., "Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution", _IEEE Transactions on Information Theory_ 52(11), November 2006.</small>
 - <small><sup id=Note8>(8)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.</small>
@@ -96,24 +96,24 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 &nbsp;
 
 <a id=On_the_Algorithm_of_Morina_et_al></a>
-### On the Algorithm of Morina et al.
+### On Algorithm M
 
-The algorithm of Morina et al. works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
+Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
 
 More formally, P(X &lt; Y) must be equal to P(X &gt; Y).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
 
-**Proposition 1.** _Let X and Y be random variables.  Then the algorithm outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
+**Proposition 1.** _Let X and Y be random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
 _Proof._ For any _X_ and _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
 
-For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_X_>_Y_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_= _Y_)) to each probability, we get&mdash;
+For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_X_>_Y_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
 
-- P(_X_>_Y_) + P(_X_= _Y_)/2 = 1/2, and
-- P(_Y_>_X_) + P(_X_= _Y_)/2 = 1/2,
+- P(_X_>_Y_) + P(_X_=_Y_)/2 = 1/2, and
+- P(_Y_>_X_) + P(_X_=_Y_)/2 = 1/2,
 
 and thus, _X_ and _Y_ must be statistically indifferent by definition (see below).
 
-For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means that &alpha; = P(_X_>_Y_) + P(_X_= _Y_)/2 and &beta; = P(_Y_>_X_) + P(_X_= _Y_)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(_X_= _Y_) in &alpha; and &beta; are also equal, this must mean that P(_X_>_Y_) = P(_Y_>_X_).  It thus follows that for _X_ and _Y_, the algorithm will return 0 or 1 with equal probability.  ◻
+For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means that &alpha; = P(_X_>_Y_) + P(_X_=_Y_)/2 and &beta; = P(_Y_>_X_) + P(_X_=_Y_)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(_X_=_Y_) in &alpha; and &beta; are also equal, this must mean that P(_X_>_Y_) = P(_Y_>_X_).  It thus follows that for _X_ and _Y_, the algorithm will return 0 or 1 with equal probability.  ◻
 
 **Proposition 2.** _Let X and Y be real-valued random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent._
 
@@ -122,7 +122,7 @@ _Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if
 If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, we see that we can replace&mdash;
 
 - the left hand side of Equation 3.5 with 0 &minus; 0, since it's a difference of expectations of the same distribution function and random variable, and
-- the right side with (1/2) 0, since the difference of  _P_(_X_ = _Y_) and  _P_(_X_ = _X&prime;_) is taken and _P_(_X_ = _Y_) is equivalent to _P_(_X_ = _X&prime;_), which is equivalent because _X_, _X&prime;_ and _Y_ are identically distributed by the hypotheses of this proposition and Theorem 3.12.
+- the right hand side with (1/2) \* 0, since the difference of  _P_(_X_ =_Y_) and  _P_(_X_ = _X&prime;_) is taken and _P_(_X_ =_Y_) is equivalent to _P_(_X_ = _X&prime;_), which is equivalent because _X_, _X&prime;_ and _Y_ are identically distributed by the hypotheses of this proposition and Theorem 3.12.
 
 As a result, Equation 3.5 becomes 0 >= 0, which is true and thus establishes that _X_ is statistically preferred to _Y_ (by Theorem 3.12).  It thus trivially follows that _Y_ is likewise statistically preferred to _X_ once we replace the roles of both variables, since both variables are identically distributed.  As a result, _X_ and _Y_ are found to be statistically indifferent and the proposition is proved.  ◻
 

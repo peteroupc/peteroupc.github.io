@@ -46,14 +46,14 @@
 <li>If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>An algorithm found in (Morina et al. 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup> extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;.</p>
+<p>An algorithm found in (Morina et al. 2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup> (called <strong>Algorithm M</strong> in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key &quot;is to find two non overlapping events of the same probability&quot; via &quot;symmetric events {X_1 &lt; X_2}  and  {X_2 &lt; X_1} that have the same probability&quot;.</p>
 
 <ol>
 <li>Throw a (loaded) die, call the result <em>X</em>.  Throw the die again, call the result <em>Y</em>.</li>
 <li>If <em>X</em> is less than <em>Y</em>, return 0.  If <em>X</em> is greater than <em>Y</em>, return 1.  If neither is the case, go to step 1.</li>
 </ol>
 
-<p>This algorithm in fact is surprisingly broad in scope; for more, see the <a href="#Appendix"><strong>appendix</strong></a>.</p>
+<p>Algorithm M in fact is surprisingly broad in scope; for more, see the <a href="#Appendix"><strong>appendix</strong></a>.</p>
 
 <p>Pae (2005)<sup><a href="#Note6"><strong>(6)</strong></a></sup> and (Pae and Loui 2006)<sup><a href="#Note7"><strong>(7)</strong></a></sup> characterize <em>extracting functions</em>.  Informally, an <em>extracting function</em> is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input&#39;s bias.<sup><a href="#Note8"><strong>(8)</strong></a></sup>  Among others, von Neumann&#39;s extractor and the one by Peres (1992)<sup><a href="#Note9"><strong>(9)</strong></a></sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:</p>
 
@@ -99,7 +99,7 @@
 <li><small><sup id=Note2>(2)</sup> Coretti, S., Dodis, Y., et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.</small></li>
 <li><small><sup id=Note3>(3)</sup> Frauchiger, D., Renner, R., Troyer, M., &quot;True randomness from realistic quantum devices&quot;, 2013.</small></li>
 <li><small><sup id=Note4>(4)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note5>(5)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></li>
+<li><small><sup id=Note5>(5)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229 [math.PR], 2019.</small></li>
 <li><small><sup id=Note6>(6)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
 <li><small><sup id=Note7>(7)</sup> Pae, S., Loui, M.C., &quot;Randomizing functions: Simulation of discrete probability distribution using a source of unknown distribution&quot;, <em>IEEE Transactions on Information Theory</em> 52(11), November 2006.</small></li>
 <li><small><sup id=Note8>(8)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can&#39;t be extracting, either.</small></li>
@@ -124,28 +124,28 @@
 
 <p>&nbsp;</p>
 
-<p><a id=On_the_Algorithm_of_Morina_et_al></a></p>
+<p><a id=On_Algorithm_M></a></p>
 
-<h3>On the Algorithm of Morina et al.</h3>
+<h3>On Algorithm M</h3>
 
-<p>The algorithm of Morina et al. works regardless of what numbers <em>X</em> and <em>Y</em> can take on and with what probability, and even if the &quot;dice&quot; are loaded differently, as long as the chance that the first &quot;die&quot; shows a number less than the second &quot;die&quot; is the same as the chance that the first &quot;die&quot; shows a greater number, and as long as each <em>pair</em> of throws is independent of any other.</p>
+<p>Algorithm M works regardless of what numbers <em>X</em> and <em>Y</em> can take on and with what probability, and even if the &quot;dice&quot; for <em>X</em> and <em>Y</em> are loaded differently, as long as the chance that the first &quot;die&quot; shows a number less than the second &quot;die&quot; is the same as the chance that the first &quot;die&quot; shows a greater number, and as long as each <em>pair</em> of throws is independent of any other.</p>
 
 <p>More formally, P(X &lt; Y) must be equal to P(X &gt; Y).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (De Schuymer et al. 2003)<sup><a href="#Note14"><strong>(14)</strong></a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random &quot;vector&quot; [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions:</p>
 
-<p><strong>Proposition 1.</strong> <em>Let X and Y be random variables.  Then the algorithm outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
+<p><strong>Proposition 1.</strong> <em>Let X and Y be random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
 
 <p><em>Proof.</em> For any <em>X</em> and <em>Y</em> there are only three mutually exclusive possibilities, <em>X</em>&gt;<em>Y</em>, <em>Y</em>&gt;<em>X</em>, and <em>X</em>=<em>Y</em>.   For the algorithm to return 0, <em>X</em> must be less than <em>Y</em>, and for it to return 1, <em>X</em> must be greater than <em>Y</em>.</p>
 
-<p>For the &quot;only if&quot; part: For the algorithm to return 0 or 1 with equal probability, it must be that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  But this necessarily means that P(<em>X</em>&gt;<em>Y</em>) and P(<em>X</em>&gt;<em>Y</em>) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(<em>X</em>= <em>Y</em>)) to each probability, we get&mdash;</p>
+<p>For the &quot;only if&quot; part: For the algorithm to return 0 or 1 with equal probability, it must be that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  But this necessarily means that P(<em>X</em>&gt;<em>Y</em>) and P(<em>X</em>&gt;<em>Y</em>) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(<em>X</em>=<em>Y</em>)) to each probability, we get&mdash;</p>
 
 <ul>
-<li>P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>= <em>Y</em>)/2 = 1/2, and</li>
-<li>P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>= <em>Y</em>)/2 = 1/2,</li>
+<li>P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 = 1/2, and</li>
+<li>P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>=<em>Y</em>)/2 = 1/2,</li>
 </ul>
 
 <p>and thus, <em>X</em> and <em>Y</em> must be statistically indifferent by definition (see below).</p>
 
-<p>For the &quot;if&quot; part:  If <em>X</em> and <em>Y</em> are statistically indifferent, this means that &alpha; = P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>= <em>Y</em>)/2 and &beta; = P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>= <em>Y</em>)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(<em>X</em>= <em>Y</em>) in &alpha; and &beta; are also equal, this must mean that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  It thus follows that for <em>X</em> and <em>Y</em>, the algorithm will return 0 or 1 with equal probability.  ◻</p>
+<p>For the &quot;if&quot; part:  If <em>X</em> and <em>Y</em> are statistically indifferent, this means that &alpha; = P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 and &beta; = P(<em>Y</em>&gt;<em>X</em>) + P(<em>X</em>=<em>Y</em>)/2 are equal and &alpha; = &beta; = 1/2.  Since both &alpha; and &beta; are equal and P(<em>X</em>=<em>Y</em>) in &alpha; and &beta; are also equal, this must mean that P(<em>X</em>&gt;<em>Y</em>) = P(<em>Y</em>&gt;<em>X</em>).  It thus follows that for <em>X</em> and <em>Y</em>, the algorithm will return 0 or 1 with equal probability.  ◻</p>
 
 <p><strong>Proposition 2.</strong> <em>Let X and Y be real-valued random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent.</em></p>
 
@@ -155,7 +155,7 @@
 
 <ul>
 <li>the left hand side of Equation 3.5 with 0 &minus; 0, since it&#39;s a difference of expectations of the same distribution function and random variable, and</li>
-<li>the right side with (1/2) 0, since the difference of  <em>P</em>(<em>X</em> = <em>Y</em>) and  <em>P</em>(<em>X</em> = <em>X&prime;</em>) is taken and <em>P</em>(<em>X</em> = <em>Y</em>) is equivalent to <em>P</em>(<em>X</em> = <em>X&prime;</em>), which is equivalent because <em>X</em>, <em>X&prime;</em> and <em>Y</em> are identically distributed by the hypotheses of this proposition and Theorem 3.12.</li>
+<li>the right hand side with (1/2) * 0, since the difference of  <em>P</em>(<em>X</em> =<em>Y</em>) and  <em>P</em>(<em>X</em> = <em>X&prime;</em>) is taken and <em>P</em>(<em>X</em> =<em>Y</em>) is equivalent to <em>P</em>(<em>X</em> = <em>X&prime;</em>), which is equivalent because <em>X</em>, <em>X&prime;</em> and <em>Y</em> are identically distributed by the hypotheses of this proposition and Theorem 3.12.</li>
 </ul>
 
 <p>As a result, Equation 3.5 becomes 0 &gt;= 0, which is true and thus establishes that <em>X</em> is statistically preferred to <em>Y</em> (by Theorem 3.12).  It thus trivially follows that <em>Y</em> is likewise statistically preferred to <em>X</em> once we replace the roles of both variables, since both variables are identically distributed.  As a result, <em>X</em> and <em>Y</em> are found to be statistically indifferent and the proposition is proved.  ◻</p>
