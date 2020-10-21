@@ -269,11 +269,6 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     while len(psrn1[2]) > len(psrn2[2]):
         psrn2[2].append(random.randint(0, digits - 1))
     digitcount = len(psrn1[2])
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        psrn2[2].append(random.randint(0, digits - 1))
-        digitcount += 1
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform multiplication
@@ -368,10 +363,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
             random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
         )
     digitcount = len(psrn1[2])
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        digitcount += 1
     # Perform multiplication
     frac1 = psrn1[1]
     fracsign = -1 if fraction < 0 else 1
@@ -519,13 +510,27 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     fracsign = -1 if fraction < 0 else 1
     absfrac = abs(fraction)
     origfrac = fraction
-    isinteger = absfrac.numerator == absfrac.denominator
+    isinteger = absfrac.denominator == 1
     # Special cases
     # positive+pos. integer or negative+neg. integer
     if ((fracsign < 0) == (psrn[0] < 0)) and isinteger and len(psrn[2]) == 0:
         return [fracsign, psrn[1] + int(absfrac), []]
     # PSRN has no fractional part, fraction is integer
-    if isinteger and psrn[0] == 1 and psrn[1] == 0 and len(psrn[2]) == 0:
+    if (
+        isinteger
+        and psrn[0] == 1
+        and psrn[1] == 0
+        and len(psrn[2]) == 0
+        and fracsign < 0
+    ):
+        return [fracsign, int(absfrac) - 1, []]
+    if (
+        isinteger
+        and psrn[0] == 1
+        and psrn[1] == 0
+        and len(psrn[2]) == 0
+        and fracsign > 0
+    ):
         return [fracsign, int(absfrac), []]
     if fraction == 0:  # Special case of 0
         return [psrn[0], psrn[1], [x for x in psrn[2]]]
@@ -548,6 +553,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
+    loop = 0
     while True:
         newdigits = 0
         b = 1
@@ -563,8 +569,6 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
         while True:
             rvstartbound = mind if minv < 0 else mind + 1
             rvendbound = maxd - 1 if maxv < 0 else maxd
-            if newdigits > 50:
-                return None
             if rvs > rvstartbound and rvs < rvendbound:
                 sret = rvs
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
@@ -918,7 +922,7 @@ if __name__ == "__main__":
         mult = add_psrn_and_fraction([ps, pi, pf], frac, digits=digits)
         if mult == None:
             print(
-                "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d))"
+                "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d)) # No mult"
                 % (ps, pi, pfc, frac.numerator, frac.denominator)
             )
             return
@@ -931,9 +935,9 @@ if __name__ == "__main__":
         if mn > mx:
             raise ValueError
         if m < mn or m > mx:
-            # print("    # %d" % (i)) # str(["add", p, q, mn, mx, "m", m]))
+            print("    # %s" % str(["add", p, q, mn, mx, "m", m]))
             print(
-                "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d),digits=%d)"
+                "    add_psrn_and_fraction_test(%d,%d,%s, Fraction(%d,%d),digits=%d) # Out of range"
                 % (ps, pi, pfc, frac.numerator, frac.denominator, digits)
             )
             return
@@ -959,8 +963,8 @@ if __name__ == "__main__":
                 print("    # %s - %s" % (mn, mx))
                 print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
                 print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
-                # dobucket(sample1)
-                # dobucket(sample2)
+                dobucket(sample1)
+                dobucket(sample2)
 
     def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0, digits=2):
         pfc = [x for x in pf]
@@ -1102,6 +1106,39 @@ if __name__ == "__main__":
                 print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
                 dobucket(sample1)
                 dobucket(sample2)
+
+    def _cloneread(p, digits=2):
+        p = [p[0], p[1], [x for x in p[2]]]
+        return _readpsrn2(p, minprec=32, digits=digits)
+
+    sample1 = []
+    sample2 = []
+    for i in range(3000):
+        digits = 2
+        ps = [1, 0, []]
+        ps2 = multiply_psrn_by_fraction(ps, 82.4)
+        ps2 = multiply_psrn_by_fraction(ps2, (73.2 / 82.4))
+        ps2 = multiply_psrn_by_fraction(ps2, 28.7 / 73.2)
+        m1 = _readpsrn2(ps2, minprec=32, digits=digits)
+        mx = random.random()
+        m2 = mx * 28.7
+        sample1.append(m1)
+        sample2.append(m2)
+
+    ks = st.ks_2samp(sample1, sample2)
+    print(ks)
+    if ks.pvalue < 1e-6:
+        print(ks)
+        print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
+        print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
+        dobucket(sample1)
+        dobucket(sample2)
+    exit()
+
+    add_psrn_and_fraction_test(1, 0, [], Fraction(-1, 1), digits=2)
+    add_psrn_and_fraction_test(1, 0, [], Fraction(-1, 1), digits=10)
+    add_psrn_and_fraction_test(1, 0, [], Fraction(-2, 1), digits=2)
+    add_psrn_and_fraction_test(1, 0, [], Fraction(-2, 1), digits=10)
 
     for digits in [2, 3, 10, 5, 16]:
         for i in range(1000):

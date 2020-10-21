@@ -45,6 +45,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Addition and Subtraction**](#Addition_and_Subtraction)
     - [**Multiplication**](#Multiplication)
     - [**Using the Arithmetic Algorithms**](#Using_the_Arithmetic_Algorithms)
+    - [**Multiplying a PSRN by a Vector**](#Multiplying_a_PSRN_by_a_Vector)
 - [**Building Blocks**](#Building_Blocks)
     - [**SampleGeometricBag**](#SampleGeometricBag)
     - [**FillGeometricBag**](#FillGeometricBag)
@@ -162,7 +163,9 @@ An algorithm that samples from a continuous distribution using PSRNs has the fol
 
 > **Notes:**
 >
-> 1. It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)".  Another issue occurs when the original sampler uses the same random number for different purposes in the algorithm (an example is "_W_\*_Y_, (1&minus;_W_)\*_Y_", where _W_ and _Y_ are independent random numbers (Devroye 1986, p. 394)<sup>[**(14)**](#Note14)</sup>).  In this case, if one PSRN spawns additional PSRNs (so that they become _dependent_ on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it's hard to characterize when the additional PSRNs become inaccurate this way and when not.)
+> 1. It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  The following are some reasons for this.
+>     - One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)".
+>     - Another issue occurs when the original sampler uses the same random number for different purposes in the algorithm (an example is "_W_\*_Y_, (1&minus;_W_)\*_Y_", where _W_ and _Y_ are independent random numbers (Devroye 1986, p. 394)<sup>[**(14)**](#Note14)</sup>).  In this case, if one PSRN spawns additional PSRNs (so that they become _dependent_ on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it's hard to characterize when the additional PSRNs become inaccurate this way and when not.)
 > 2. The _exact rejection sampling_ algorithm described by Oberhoff (2018)<sup>[**(12)**](#Note12)</sup> produces samples that act like PSRNs; however, the algorithm doesn't have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm's progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).  For completeness, Oberhoff's method appears in the appendix.
 
 <a id=Comparisons></a>
@@ -339,7 +342,7 @@ Arithmetic between two PSRNs is not always trivial.
 <a id=Addition_and_Subtraction></a>
 ### Addition and Subtraction
 
-The following algorithm shows how to add two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
+The following algorithm (**UniformAdd**) shows how to add two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled.  _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
@@ -365,12 +368,12 @@ The following algorithm shows how to add two uniform PSRNs (**a** and **b**) tha
 12. If _y_ is greater than _lower_ + 1, go to step 7. (This is a rejection event.)
 13. Multiply _pw_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _pw_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to step 10.
 
-The following algorithm shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. Similarly, the rational number may be positive, negative, or zero.  _Python code implementing this algorithm is given later in this document._
+The following algorithm (**UniformAddRational**) shows how to add a uniform PSRN (**a**) and a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. Similarly, the rational number may be positive, negative, or zero.  _Python code implementing this algorithm is given later in this document._
 
 1. Let _ai_ be **a**'s integer part.  Special cases:
     - If **a**'s sign is positive and has no sampled digits in its fractional part, and if **b** is an integer 0 or greater, return a uniform PSRN with a positive sign, an integer part equal to _ai_ + **b**, and an empty fractional part.
     - If **a**'s sign is negative and has no sampled digits in its fractional part, and if **b** is an integer less than 0, return a uniform PSRN with a negative sign, an integer part equal to _ai_ + abs(**b**), and an empty fractional part.
-    - If **a**'s sign is positive, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an integer part equal to abs(**b**), and an empty fractional part.  The PSRN's sign is negative if **b** is less than 0, and positive otherwise.
+    - If **a**'s sign is positive, has an integer part of 0, and has no sampled digits in its fractional part, and if **b** is an integer, return a uniform PSRN with an empty fractional part.  If **b** is less than 0, the PSRN's sign is negative and its integer part is abs(**b**)&minus;1.  If **b** is 0 or greater, the PSRN's sign is positive and its integer part is abs(**b**).
     - If **b** is 0, return a copy of **a**.
 2. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 3. Let _asign_ be &minus;1 if **a**'s sign is negative or 1 otherwise.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
@@ -389,42 +392,40 @@ The following algorithm shows how to add a uniform PSRN (**a**) and a rational n
 <a id=Multiplication></a>
 ### Multiplication
 
-The following algorithm shows how to multiply two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled. _Python code implementing this algorithm is given later in this document._
+The following algorithm (**UniformMultiply**) shows how to multiply two uniform PSRNs (**a** and **b**) that store digits of the same base (radix) in their fractional parts, and get a uniform PSRN as a result.  The input PSRNs may have a positive or negative sign, and it is assumed that their integer parts and signs were sampled. _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.
-3. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.  Do the same for **b**.
-4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
-5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
-6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
-7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
-8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
-9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
+3. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
+4. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
+5. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
+6. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
+7. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
+8. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
     1. Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).
     2. If _y_ is less than _x_, the algorithm succeeds, so do the following:
         1. Set _s_ to _minv_\*_base_<sup>_newdigits_</sup> + _x_ (where _base_ is the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal).
         2. Transfer the (_n_\*2 + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_\*2 + _newdigits_) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.
-    3. If _y_ is greater than _x_ + 1, abort these substeps and go to step 8. (This is a rejection event.)
+    3. If _y_ is greater than _x_ + 1, abort these substeps and go to step 7. (This is a rejection event.)
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
-10. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the trapezoid.  In this case, do the following:
+9. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the trapezoid.  In this case, do the following:
     1. Set _x_ to _z_&minus;(_midmax_&minus;_minv_), then set _newdigits_ to 0, then set _b_ to _maxv_&minus;_midmax_, then set _y_ to a uniform random integer in the interval [0, _b_).
     2. If _y_ is less than _b_&minus;1&minus;_x_, the algorithm succeeds, so do the following: Set _s_ to _midmax_\*_base_<sup>_newdigits_</sup> + _x_, then transfer the (_n_\*2+ _newdigits_) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>), then return _ret_.
-    3. If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 8. (This is a rejection event.)
+    3. If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 7. (This is a rejection event.)
     4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
-11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
+10. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
-The following algorithm shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
+The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-2. To simplify matters: If **a** has no digits in its fractional part, append a digit chosen uniformly at random to that fractional part.
-3. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a**'s sign is positive and **b** is less than 0 or if **a**'s sign is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
-4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
-5. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
-6. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_lower_\*_ddc_)).
-7. Set _rvlower_ to _rv_/_ddc_ (as a rational number), then set _rvupper_ to (_rv_+1)/_ddc_ (as a rational number).
-8. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_, then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part (note that _ret_'s fractional part stores digits from most to least significant),  then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_. (For example, if _base_ is 10, (_dcount_) is 4, and _rv_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)
-9. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 5.
-10. Multiply _rv_ and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then go to step 8.
+2. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a**'s sign is positive and **b** is less than 0 or if **a**'s sign is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
+3. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
+4. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to (_afp_/_ddc_)\*_absfrac_ (again using rational arithmetic).
+5. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_upper_\*_ddc_)).
+6. Set _rvlower_ to _rv_/_ddc_ (as a rational number), then set _rvupper_ to (_rv_+1)/_ddc_ (as a rational number).
+7. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_, then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part (note that _ret_'s fractional part stores digits from most to least significant),  then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_. (For example, if _base_ is 10, (_dcount_) is 4, and _rv_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)
+8. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 4.
+9. Multiply _rv_ and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then go to step 7.
 
 <a id=Using_the_Arithmetic_Algorithms></a>
 ### Using the Arithmetic Algorithms
@@ -432,8 +433,20 @@ The following algorithm shows how to multiply a uniform PSRN (**a**) by a ration
 The algorithms given above for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, _location_ and _scale_, that are both rational numbers.
 
 1. Generate a uniform PSRN, then transform it into a random number of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney's algorithm for the standard normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup>)).  This procedure won't work for exponential PSRNs (e-rands).
-2. Run the algorithm to multiply the uniform PSRN by the rational parameter _scale_ to get a new uniform PSRN.
-3. Run the algorithm to add the new uniform PSRN and the rational parameter _location_ to get a third uniform PSRN.  Return this third PSRN.
+2. Run the **UniformAddRational** algorithm to multiply the uniform PSRN by the rational parameter _scale_ to get a new uniform PSRN.
+3. Run the **UniformMultiplyRational** algorithm to add the new uniform PSRN and the rational parameter _location_ to get a third uniform PSRN.  Return this third PSRN.
+
+Note that incorrect results may occur if the _same PSRN_ is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the **UniformAddRational** or **UniformMultiplyRational** algorithm when it's called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.
+
+<a id=Multiplying_a_PSRN_by_a_Vector></a>
+### Multiplying a PSRN by a Vector
+
+Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let _vector_ be the vector of rational numbers, and let _vector_\[_i_\] be the rational number at position _i_ of the vector (positions start at 0).
+
+1. Set _i_ to 0, set **a** to the input PSRN, and set _output_ to an empty list.
+2. Set _ret_ to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number _vector_\[1\].
+3. Add a pointer to _ret_ to the list _output_.  If _vector_\[_i_\] was the last number in the vector, stop this algorithm.
+4. Set **a** to point to _ret_, then add 1 to _i_, then set _num_ to _vector_\[_i_\]/_vector_\[_i_&minus;1\].
 
 <a id=Building_Blocks></a>
 ## Building Blocks
@@ -889,7 +902,6 @@ def exprand(lam):
 In the following Python code, `multiply_psrns` and `add_psrns` are methods to generate the result of multiplying or adding two uniform PSRNs, respectively.
 
 ```
-
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -913,11 +925,6 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     while len(psrn1[2]) > len(psrn2[2]):
         psrn2[2].append(random.randint(0, digits - 1))
     digitcount = len(psrn1[2])
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        psrn2[2].append(random.randint(0, digits - 1))
-        digitcount += 1
     if len(psrn2[2]) != digitcount:
         raise ValueError
     # Perform multiplication
@@ -1012,10 +1019,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
             random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
         )
     digitcount = len(psrn1[2])
-    if digitcount == 0:
-        # Make sure fractional part has at least one digit, to simplify matters
-        psrn1[2].append(random.randint(0, digits - 1))
-        digitcount += 1
     # Perform multiplication
     frac1 = psrn1[1]
     fracsign = -1 if fraction < 0 else 1
@@ -1163,13 +1166,15 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     fracsign = -1 if fraction < 0 else 1
     absfrac = abs(fraction)
     origfrac = fraction
-    isinteger = absfrac.numerator == absfrac.denominator
+    isinteger = (absfrac.denominator == 1)
     # Special cases
     # positive+pos. integer or negative+neg. integer
     if ((fracsign < 0) == (psrn[0] < 0)) and isinteger and len(psrn[2]) == 0:
         return [fracsign, psrn[1] + int(absfrac), []]
     # PSRN has no fractional part, fraction is integer
-    if isinteger and psrn[0] == 1 and psrn[1]==0 and len(psrn[2]) == 0:
+    if isinteger and psrn[0] == 1 and psrn[1] == 0 and len(psrn[2]) == 0 and fracsign<0:
+        return [fracsign, int(absfrac)-1, []]
+    if isinteger and psrn[0] == 1 and psrn[1] == 0 and len(psrn[2]) == 0 and fracsign>0:
         return [fracsign, int(absfrac), []]
     if fraction == 0:  # Special case of 0
         return [psrn[0], psrn[1], [x for x in psrn[2]]]
@@ -1192,6 +1197,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
     large = Fraction((frac1 + 1) * psrn[0], ddc) + origfrac
     minv = min(small, large)
     maxv = max(small, large)
+    loop=0
     while True:
         newdigits = 0
         b = 1
@@ -1207,8 +1213,6 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
         while True:
             rvstartbound = mind if minv < 0 else mind + 1
             rvendbound = maxd - 1 if maxv < 0 else maxd
-            if newdigits > 50:
-                return None
             if rvs > rvstartbound and rvs < rvendbound:
                 sret = rvs
                 cpsrn = [1, 0, [0 for i in range(digitcount + newdigits)]]
@@ -1365,7 +1369,7 @@ The beta sampler in this document shows one case of a general approach to simula
 
 However, the speed of this algorithm depends crucially on the mode (highest point) of _f_ in \[0, 1\].  As that mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If that mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
 
-The beta distribution's probability function at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
+The beta distribution's PDF at (1) fits the requirements of Keane and O'Brien (for `alpha` and `beta` both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.
 
 This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _y_\] (where _m_ and _y_ are rational numbers and _y_ is greater than 0), rather than \[0, 1\], as follows:
 
