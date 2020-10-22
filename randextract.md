@@ -95,7 +95,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 &nbsp;
 
-<a id=On_the_Algorithm_of_Morina_et_al></a>
+<a id=On_Algorithm_M></a>
 ### On Algorithm M
 
 Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
