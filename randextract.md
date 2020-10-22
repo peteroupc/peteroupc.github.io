@@ -102,7 +102,7 @@ Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with wh
 
 More formally, P(X &lt; Y) must be equal to P(X &gt; Y).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
 
-**Proposition 1.** _Let X and Y be random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
+**Proposition 1.** _Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
 _Proof._ For any _X_ and _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
 
