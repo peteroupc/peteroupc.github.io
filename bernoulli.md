@@ -140,6 +140,7 @@ The next section will show algorithms for a number of factory functions, allowin
 In the following algorithms:
 
 - _&lambda;_ is the unknown probability of heads of the input coin.
+-  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(43)**](#Note43)</sup>.  Note that for all _m_>0, choose(_m_, 1) is 1, and that for all _m_>=0, choose(_m_+1, _m_) is 1.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).
@@ -260,7 +261,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 4. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))**, with _k_ = _k_ and _x_ = 1.  If the algorithm returns 0, return 0.
 5. If _m_ is 0, return 1.
 6. Set _i_ to 1, then while _i_ < _k_:
-     1. Set _z_ to choose(_k_, _i_) * _m_<sup>_k_ &minus; _i_</sup>. (Here, choose(_k_, _i_) is a binomial coefficient.)
+     1. Set _z_ to choose(_k_, _i_) * _m_<sup>_k_ &minus; _i_</sup>.
      2. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))** _z_ times, with _k_ = _i_ and _x_ = 1.  If any of these calls returns 0, return 0.
      3. Add 1 to _i_.
 7. Return 1.
@@ -664,7 +665,7 @@ The following algorithm is suggested from the Mossel and Peres paper and from (T
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is an integer or rational number in the interval [0, choose(_n_, _i_)], where the upper bound is the total number of _n_-bit words with _i_ ones.
 
-Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is the binomial coefficient.
+Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones, and _e_\[_i_\] is akin to that number plus the number of "failing" _n_-bit words with _i_ ones.
 
 The algorithm follows.
 
@@ -1120,7 +1121,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 ## Requests and Open Questions
 
 - Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant _&gamma;_, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
-- Is there a simple algorithm that can calculate _z_ = choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>32</sup> (where choose(_n_, _k_) is a binomial coefficient), without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(34)**](#Note34)</sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(_z_), ln(choose(_n_, _k_)), or ln(_n_!) that converges from above and below to the true value.  Then an exponential random number could be compared with ln(_z_), which is the same as comparing _z_ itself with a uniform random number.
+- Is there a simple algorithm that can calculate _z_ = choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>32</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(34)**](#Note34)</sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(_z_), ln(choose(_n_, _k_)), or ln(_n_!) that converges from above and below to the true value.  Then an exponential random number could be compared with ln(_z_), which is the same as comparing _z_ itself with a uniform random number.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 - I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
@@ -1181,6 +1182,7 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note40>(40)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
 - <small><sup id=Note41>(41)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note42>(42)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note43>(43)</sup> Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [https://doi.org/10.1145/820127.820168.</small>](https://doi.org/10.1145/820127.820168.</small>)
 
 <a id=Appendix></a>
 ## Appendix

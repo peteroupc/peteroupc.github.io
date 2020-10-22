@@ -171,6 +171,7 @@
 
 <ul>
 <li><em>&lambda;</em> is the unknown probability of heads of the input coin.</li>
+<li> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 1) is 1, and that for all <em>m</em>&gt;=0, choose(<em>m</em>+1, <em>m</em>) is 1.</li>
 <li>The instruction to &quot;generate a uniform(0, 1) random number&quot; can be implemented&mdash;
 
 <ul>
@@ -325,7 +326,7 @@
 <li>Set <em>i</em> to 1, then while <em>i</em> &lt; <em>k</em>:
 
 <ol>
-<li>Set <em>z</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>. (Here, choose(<em>k</em>, <em>i</em>) is a binomial coefficient.)</li>
+<li>Set <em>z</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>.</li>
 <li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong> <em>z</em> times, with <em>k</em> = <em>i</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
 <li>Add 1 to <em>i</em>.</li>
 </ol></li>
@@ -864,7 +865,7 @@
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is an integer or rational number in the interval [0, choose(<em>n</em>, <em>i</em>)], where the upper bound is the total number of <em>n</em>-bit words with <em>i</em> ones.</li>
 </ul>
 
-<p>Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.  choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is the binomial coefficient.</p>
+<p>Here, <em>d</em>[<em>i</em>] is akin to the number of &quot;passing&quot; <em>n</em>-bit words with <em>i</em> ones, and <em>e</em>[<em>i</em>] is akin to that number plus the number of &quot;failing&quot; <em>n</em>-bit words with <em>i</em> ones.</p>
 
 <p>The algorithm follows.</p>
 
@@ -1473,7 +1474,7 @@
 
 <ul>
 <li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant <em>&gamma;</em>, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
-<li>Is there a simple algorithm that can calculate <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup>, for <em>n</em> up to, say, 2<sup>32</sup> (where choose(<em>n</em>, <em>k</em>) is a binomial coefficient), without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small <em>n</em>, but complicated for larger <em>n</em>; see also an appendix in (Bringmann et al. 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(<em>z</em>), ln(choose(<em>n</em>, <em>k</em>)), or ln(<em>n</em>!) that converges from above and below to the true value.  Then an exponential random number could be compared with ln(<em>z</em>), which is the same as comparing <em>z</em> itself with a uniform random number.</li>
+<li>Is there a simple algorithm that can calculate <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup>, for <em>n</em> up to, say, 2<sup>32</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small <em>n</em>, but complicated for larger <em>n</em>; see also an appendix in (Bringmann et al. 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(<em>z</em>), ln(choose(<em>n</em>, <em>k</em>)), or ln(<em>n</em>!) that converges from above and below to the true value.  Then an exponential random number could be compared with ln(<em>z</em>), which is the same as comparing <em>z</em> itself with a uniform random number.</li>
 <li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
 <li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
 
@@ -1541,6 +1542,7 @@
 <li><small><sup id=Note40>(40)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is <em>&lambda;</em>.</small></li>
 <li><small><sup id=Note41>(41)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note42>(42)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note43>(43)</sup> Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168">https://doi.org/10.1145/820127.820168</a>.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

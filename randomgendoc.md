@@ -2355,6 +2355,19 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+FUNCTIONS
+    binco(n, k)
+        # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
+        # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
+        # 65–67. DOI: [https://doi.org/10.1145/820127.820168](https://doi.org/10.1145/820127.820168)
+
+    logbinco(n, k, v=6)
+        # Log binomial coefficient, based on regular
+        # binomial coefficient formula from Manolopoulos
+
+    logprob(n, k, v=6)
+        # Calculates ln(choose(n, k)/2**n)
+
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
 

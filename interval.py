@@ -460,8 +460,8 @@ class FInterval:
         return FInterval(min(a.inf, b.inf), max(a.inf, b.inf))
 
     def __add__(self, v):
-        y = FInterval(y)
-        return [self.inf + y.inf, self.sup + y.sup]
+        y = FInterval(v)
+        return FInterval(self.inf + y.inf, self.sup + y.sup)
 
     def __abs__(self):
         return self.abs()
@@ -838,3 +838,25 @@ class FInterval:
 
     def __repr__(self):
         return "[%s, %s]" % (float(self.inf), float(self.sup))
+
+# Yannis Manolopoulos. 2002. "Binomial coefficient computation:
+# recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
+# 65–67. DOI: https://doi.org/10.1145/820127.820168
+def binco(n, k):
+    v = Fraction(1)
+    for i in range(n - k + 1, n + 1):
+        v *= Fraction(i, n - i + 1)
+    return v
+
+# Log binomial coefficient, based on regular
+# binomial coefficient formula from Manolopoulos
+def logbinco(n, k, v=6):
+    r = Fraction(0)
+    for i in range(n - k + 1, n + 1):
+        r += FInterval(Fraction(i, n - i + 1)).log(v)
+    return r
+
+# Calculates ln(choose(n, k)/2**n)
+def logprob(n, k, v=6):
+    divisor = FInterval(2).log(v) * n  # ln(2)*n = ln(2**n)
+    return logbinco(n, k, v) - divisor

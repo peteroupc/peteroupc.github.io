@@ -31,7 +31,9 @@
 
 <p>The sum of <em>n</em> uniform(0, 1) random numbers has the following probability density function (PDF) (see <a href="https://mathworld.wolfram.com/UniformSumDistribution.html"><strong>MathWorld</strong></a>):</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<em>f</em>(<em>x</em>) = (&Sigma;<sub><em>k</em> = 0, ..., <em>n</em></sub> (&minus;1)<sup><em>k</em></sup> * choose(<em>n</em>, <em>k</em>) * (<em>x</em> &minus; <em>k</em>)<sup><em>n</em> &minus; 1</sup> * sign(<em>x</em> &minus; <em>k</em>)) / (2*(n&minus;1)!).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;<em>f</em>(<em>x</em>) = (&Sigma;<sub><em>k</em> = 0, ..., <em>n</em></sub> (&minus;1)<sup><em>k</em></sup> * choose(<em>n</em>, <em>k</em>) * (<em>x</em> &minus; <em>k</em>)<sup><em>n</em> &minus; 1</sup> * sign(<em>x</em> &minus; <em>k</em>)) / (2*(n&minus;1)!),</p>
+
+<p>where choose(<em>n</em>, <em>k</em>) is a binomial coefficient.<sup><a href="#Note5"><strong>(5)</strong></a></sup></p>
 
 <p>For <em>n</em> uniform numbers, the distribution can take on values in the interval [0, <em>n</em>].  Note also that the PDF expresses a polynomial of degree <em>n</em> &minus; 1.</p>
 
@@ -452,6 +454,7 @@ def ratio_of_uniform(bern):
 <li><small><sup id=Note2>(2)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
 <li><small><sup id=Note3>(3)</sup> S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</small></li>
 <li><small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</small></li>
+<li><small><sup id=Note5>(5)</sup> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168">https://doi.org/10.1145/820127.820168</a>).  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 1) is 1, and that for all <em>m</em>&gt;=0, choose(<em>m</em>+1, <em>m</em>) is 1.</small></li>
 </ul>
 
 <p><a id=License></a></p>
