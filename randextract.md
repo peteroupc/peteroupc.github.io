@@ -85,11 +85,6 @@ Some additional notes:
 - <small><sup id=Note14>(14)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
 - <small><sup id=Note15>(15)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
 
-<a id=License></a>
-## License
-
-Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
-
 <a id=Appendix></a>
 ## Appendix
 
@@ -100,7 +95,7 @@ Any copyright to this page is released to the Public Domain.  In case this is no
 
 Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
 
-More formally, P(X &lt; Y) must be equal to P(X &gt; Y).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
+More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
 
 **Proposition 1.** _Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
@@ -133,3 +128,8 @@ Here are some of the many examples where this algorithm works:
 - Set _X_ and _Y_ to two independent uniform(0, 1) random numbers, then set _Y_ to (_X_+_Y_)/2.
 
 See also a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(15)**](#Note15)</sup>.
+
+<a id=License></a>
+## License
+
+Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).

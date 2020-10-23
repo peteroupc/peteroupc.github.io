@@ -121,7 +121,7 @@ def forsythe_prob2(rg, bern, x):
             k += 1
             u = v
         if k % 2 == 1:
-            return 1 if psrn_less_than_rational_01(ret, x) else 0
+            return 1 if psrn_less_than_rational(ret, x) else 0
 
 def forsythe_prob3(rg, bern, x):
     # Returns true with probability erf(x)/erf(1), where x is in [0, 1].
@@ -142,7 +142,7 @@ def forsythe_prob3(rg, bern, x):
             k += 1
             u = v
         if k % 2 == 1:
-            return 1 if psrn_less_than_rational_01(ret, x) else 0
+            return 1 if psrn_less_than_rational(ret, x) else 0
 
 def forsythe_prob(rg, bern, m, n):
     # Returns true with probability gamma(m,n)/gamma(m,1),
@@ -162,7 +162,7 @@ def forsythe_prob(rg, bern, m, n):
             k += 1
             u = v
         if k % 2 == 1:
-            return 1 if psrn_less_than_rational_01(ret, n) else 0
+            return 1 if psrn_less_than_rational(ret, n) else 0
 
 def psrn_complement(x):
     for i in range(len(x[2])):
@@ -189,15 +189,19 @@ def psrn_less(psrn1, psrn2):
         if psrn1[1] > psrn2[1]:
             return 1
     index = 0
+    psrn1len = len(psrn1[2])
+    psrn2len = len(psrn2[2])
     while True:
         # Fill with next bit in a's uniform number
-        while len(psrn1[2]) <= index:
-            psrn1[2].append(None)
+        while psrn1len <= index:
+            psrn1[2].append(random.randint(0, 1))
+            psrn1len += 1
         if psrn1[2][index] == None:
             psrn1[2][index] = random.randint(0, 1)
         # Fill with next bit in b's uniform number
-        while len(psrn2[2]) <= index:
-            psrn2[2].append(None)
+        while psrn2len <= index:
+            psrn2[2].append(random.randint(0, 1))
+            psrn2len += 1
         if psrn2[2][index] == None:
             psrn2[2][index] = random.randint(0, 1)
         aa = psrn1[2][index]
@@ -208,41 +212,68 @@ def psrn_less(psrn1, psrn2):
             return 0
         index += 1
 
-def psrn_less_than_rational_01(psrn1, rat):
-    rat = Fraction(rat)
+def _sgn(x):
+    if x > 0:
+        return 1
+    if x < 0:
+        return -1
+    return 0
+
+def psrn_less_than_rational(psrn, rat):
+    if psrn[0] < -1 or psrn[0] > 1 or psrn[1] == None:
+        raise ValueError
+    rat = rat if isinstance(rat, Fraction) else Fraction(rat)
     num = rat.numerator
     den = rat.denominator
-    if den == 0:
-        raise ValueError
     if num < 0 and den < 0:
         num = abs(num)
         den = abs(den)
+    bs = -1 if num < 0 or den < 0 else 1
+    num = abs(num)
+    den = abs(den)
+    bi = int(num // den)
+    if _sgn(psrn[0]) != bs:
+        return 1 if psrn[0] < 0 else 0
+    if psrn[0] > 0:
+        if psrn[1] < bi:
+            return 1
+        if psrn[1] > bi:
+            return 0
+    if psrn[0] < 0:
+        if psrn[1] > bi:
+            return 1
+        if psrn[1] < bi:
+            return 0
+    if den == 0:
+        raise ValueError
     if num == 0:
-        return 0
+        return 0 if psrn[0] > 0 else 1
     if num < 0 or den < 0:
         return 0
     if num >= den:
         return 1
     pt = 2
     index = 0
+    psrnlen = len(psrn[2])
     while True:
         # Fill with next bit in a's uniform number
-        while len(psrn1[2]) <= index:
-            psrn1[2].append(None)
-        if psrn1[2][index] == None:
-            psrn1[2][index] = random.randint(0, 1)
-        d1 = psrn1[2][index]
+        while psrnlen <= index:
+            psrn[2].append(random.randint(0, 1))
+            psrnlen += 1
+        if psrn[2][index] == None:
+            psrn[2][index] = random.randint(0, 1)
+        d1 = psrn[2][index]
         c = 1 if num * pt >= den else 0
         d2 = int(num * pt / den)
         if d1 < d2:
-            return 1
+            return 1 if psrn[0] > 0 else 0
         if d1 > d2:
-            return 0
+            return 0 if psrn[0] > 0 else 1
         if c == 1:
             num = num * pt - den
             den *= pt
         if num == 0:
-            return 0
+            return 0 if psrn[0] > 0 else 1
         pt *= 2
         index += 1
 

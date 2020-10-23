@@ -263,7 +263,7 @@
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
 <li>Set <em>bs</em> to &minus;1 if <strong>b</strong> is less than 0, or 1 otherwise. Calculate floor(abs(<strong>b</strong>)), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to abs(<strong>b</strong>) minus <em>bi</em>.)</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater.  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 <li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
@@ -306,31 +306,20 @@
 
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
 
-<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong>&#39;s sign is positive and its integer part is 0, and when <strong>b</strong> is known to be a rational number.</p>
+<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
 
 <ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <strong>a</strong>&#39;s sign is negative or its integer part is other than 0, return an error.  If <strong>b</strong> is 0 or less, return 0.  If <strong>b</strong> is 1 or greater, return 1. (The case of 1 is a degenerate case since <strong>a</strong> could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)</li>
-<li>Set <em>pt</em> to 1/<em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
-<li>Set <em>d2</em> to floor(<strong>b</strong> / <em>pt</em>).  (For example, in base 2, set <em>d2</em> to 0 if <strong>b</strong> is less than <em>pt</em>, or 1 otherwise.)</li>
-<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
-<li>If <strong>b</strong> &gt;= <em>pt</em>, subtract <em>pt</em> from <strong>b</strong>.</li>
-<li>If <strong>b</strong> is 0, return 0 (indicating that <strong>a</strong> is greater than the original fraction almost surely).</li>
-<li>Divide <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
-</ol>
-
-<p>The following is a simpler way to implement <strong>URandLessThanReal</strong> when <strong>a</strong>&#39;s sign is positive and its integer part is 0, and when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
-
-<ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  If <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  If <strong>a</strong>&#39;s sign is negative or its integer part is other than 0, return an error. If <em>num</em> is 0, or if <em>num</em> &lt; 0 or <em>den</em> &lt; 0, return 0.  If <em>num</em> &gt;= <em>den</em>, return 1.</li>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  Then, if <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em> is 0, return 0.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em>&#39;s sign is different from <em>den</em>&#39;s sign, return 0.</li>
+<li>Set <em>bs</em> to &minus;1 if <em>num</em> or <em>den</em>, but not both, is less than 0, or 1 otherwise, then set <em>num</em> to abs(<em>num</em>), then set <em>den</em> to abs(<em>den</em>), then set <em>bi</em> to floor(<em>num</em>/<em>den</em>).</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)</li>
 <li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
 <li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
 <li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
 <li>Set <em>d2</em> to floor(<em>num</em> * <em>pt</em> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
-<li>If <em>d1</em> is less than <em>d2</em>, return 1.  If <em>d1</em> is greater than <em>d2</em>, return 0.</li>
+<li>If <em>d1</em> is less than <em>d2</em>, return either 1 if <strong>a</strong>&#39;s sign is positive, or 0 otherwise.  If <em>d1</em> is greater than <em>d2</em>, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
 <li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>pt</em> &minus; <em>den</em>, then multiply <em>den</em> by <em>pt</em>.</li>
-<li>If <em>num</em> is 0, return 0.</li>
-<li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 3.</li>
+<li>If <em>num</em> is 0, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
+<li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 5.</li>
 </ol>
 
 <p><a id=Limitations></a></p>
@@ -660,7 +649,7 @@
 <li>Let <code>sign</code> be -1 if the PSRN is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + &Sigma;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>), where <em>b</em> is the base, or radix.</li>
 </ol>
 
-<p>After step 2, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice. (For example, if <code>p</code> is 4, <em>b</em> is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this a PSRN with an &quot;infinite&quot; but unsampled digit expansion, there is no tie-breaking such as &quot;ties to even&quot; applied here.)</p>
+<p>After step 2, if it somehow happens that digits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has <code>p</code> digits, with a rounding mode of choice. (For example, if <code>p</code> is 4, <em>b</em> is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this is a PSRN with an &quot;infinite&quot; but unsampled digit expansion, there is no tie-breaking such as &quot;ties to even&quot; applied here.)</p>
 
 <p><a id=kthsmallest></a></p>
 

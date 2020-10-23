@@ -851,7 +851,7 @@ def binco(n, k):
 # Log binomial coefficient, based on regular
 # binomial coefficient formula from Manolopoulos
 def logbinco(n, k, v=6):
-    r = Fraction(0)
+    r = FInterval(0)
     for i in range(n - k + 1, n + 1):
         r += FInterval(Fraction(i, n - i + 1)).log(v)
     return r

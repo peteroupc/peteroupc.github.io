@@ -802,7 +802,7 @@ class PascalTriangle:
 
     def _buildAliasTable(self, prob, n, fullPrecision=False):
         # prob is (n/2)th entry (starting at 0) of
-        # the Pascal triangle row for n.  The entry
+        # the Pascal triangle row for n.  The entry 'prob'
         # is full precision regardless of the setting
         # for 'fullPrecision'.
         half = n >> 1
@@ -848,7 +848,7 @@ class PascalTriangle:
 
     def _buildAliasTable2(self, prob, n):
         # prob is (n/2)th entry (starting at 0) of
-        # the Pascal triangle row for n.  The entry
+        # the Pascal triangle row for n.  The entry 'prob'
         # is full precision.
         half = n >> 1
         s = max(16, self._bitcount(n))

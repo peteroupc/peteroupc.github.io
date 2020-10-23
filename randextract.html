@@ -112,12 +112,6 @@
 <li><small><sup id=Note15>(15)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
 </ul>
 
-<p><a id=License></a></p>
-
-<h2>License</h2>
-
-<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
-
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
@@ -130,9 +124,9 @@
 
 <p>Algorithm M works regardless of what numbers <em>X</em> and <em>Y</em> can take on and with what probability, and even if the &quot;dice&quot; for <em>X</em> and <em>Y</em> are loaded differently, as long as the chance that the first &quot;die&quot; shows a number less than the second &quot;die&quot; is the same as the chance that the first &quot;die&quot; shows a greater number, and as long as each <em>pair</em> of throws is independent of any other.</p>
 
-<p>More formally, P(X &lt; Y) must be equal to P(X &gt; Y).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (De Schuymer et al. 2003)<sup><a href="#Note14"><strong>(14)</strong></a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random &quot;vector&quot; [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions:</p>
+<p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, (De Schuymer et al. 2003)<sup><a href="#Note14"><strong>(14)</strong></a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random &quot;vector&quot; [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions:</p>
 
-<p><strong>Proposition 1.</strong> <em>Let X and Y be random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
+<p><strong>Proposition 1.</strong> <em>Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
 
 <p><em>Proof.</em> For any <em>X</em> and <em>Y</em> there are only three mutually exclusive possibilities, <em>X</em>&gt;<em>Y</em>, <em>Y</em>&gt;<em>X</em>, and <em>X</em>=<em>Y</em>.   For the algorithm to return 0, <em>X</em> must be less than <em>Y</em>, and for it to return 1, <em>X</em> must be greater than <em>Y</em>.</p>
 
@@ -169,6 +163,12 @@
 </ul>
 
 <p>See also a procedure given as a remark near the end of a paper by Camion (1974)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
 </div><nav id="navigation"><ul>
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>

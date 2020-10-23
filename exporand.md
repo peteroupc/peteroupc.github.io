@@ -190,7 +190,7 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 
 1. If **a**'s integer part or sign is unsampled, return an error.
 2. Set _bs_ to &minus;1 if **b** is less than 0, or 1 otherwise. Calculate floor(abs(**b**)), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to abs(**b**) minus _bi_.)
-3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater.  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater.
+3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater. (Continue if both are equal.)  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater. (Continue if both are equal.)
 4. Set _i_ to 0.
 5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
 6. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
@@ -218,28 +218,19 @@ An alternative version of steps 6 through 9 in the algorithm above are as follow
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
-The following is a simpler way to implement **URandLessThanReal** when **a**'s sign is positive and its integer part is 0, and when **b** is known to be a rational number.
+The following is a simpler way to implement **URandLessThanReal** when **b** is a fraction known by its numerator and denominator, _num_/_den_.
 
-1. If **a**'s integer part or sign is unsampled, or if **a**'s sign is negative or its integer part is other than 0, return an error.  If **b** is 0 or less, return 0.  If **b** is 1 or greater, return 1. (The case of 1 is a degenerate case since **a** could, at least in theory, represent an infinite sequence of ones, making it equal to 1.)
-2. Set _pt_ to 1/_base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
-3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
-4. Set _d2_ to floor(**b** / _pt_).  (For example, in base 2, set _d2_ to 0 if **b** is less than _pt_, or 1 otherwise.)
-5. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
-6. If **b** >= _pt_, subtract _pt_ from **b**.
-7. If **b** is 0, return 0 (indicating that **a** is greater than the original fraction almost surely).
-8. Divide _pt_ by _base_, add 1 to _i_, and go to step 3.
-
-The following is a simpler way to implement **URandLessThanReal** when **a**'s sign is positive and its integer part is 0, and when **b** is a fraction known by its numerator and denominator, _num_/_den_.
-
-1. If **a**'s integer part or sign is unsampled, or if _den_ is 0, return an error.  If _num_ and _den_ are both less than 0, set them to their absolute values.  If **a**'s sign is negative or its integer part is other than 0, return an error. If _num_ is 0, or if _num_ < 0 or _den_ < 0, return 0.  If _num_ >= _den_, return 1.
-2. Set _pt_ to _base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
-3. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
-4. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.
-5. Set _d2_ to floor(_num_ * _pt_ / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
-6. If _d1_ is less than _d2_, return 1.  If _d1_ is greater than _d2_, return 0.
-7. If _c_ is 1, set _num_ to _num_ * _pt_ &minus; _den_, then multiply _den_ by _pt_.
-8. If _num_ is 0, return 0.
-9. Multiply _pt_ by _base_, add 1 to _i_, and go to step 3.
+1. If **a**'s integer part or sign is unsampled, or if _den_ is 0, return an error.  Then, if _num_ and _den_ are both less than 0, set them to their absolute values.  Then if **a**'s sign is positive, its integer part is 0, and _num_ is 0, return 0.  Then if **a**'s sign is positive, its integer part is 0, and _num_'s sign is different from _den_'s sign, return 0.
+2. Set _bs_ to &minus;1 if _num_ or _den_, but not both, is less than 0, or 1 otherwise, then set _num_ to abs(_num_), then set _den_ to abs(_den_), then set _bi_ to floor(_num_/_den_).
+3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater. (Continue if both are equal.)  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater. (Continue if both are equal.)
+4. Set _pt_ to _base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
+5. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
+6. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.
+7. Set _d2_ to floor(_num_ * _pt_ / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
+8. If _d1_ is less than _d2_, return either 1 if **a**'s sign is positive, or 0 otherwise.  If _d1_ is greater than _d2_, return either 0 if **a**'s sign is positive, or 1 otherwise.
+9. If _c_ is 1, set _num_ to _num_ * _pt_ &minus; _den_, then multiply _den_ by _pt_.
+10. If _num_ is 0, return either 0 if **a**'s sign is positive, or 1 otherwise.
+11. Multiply _pt_ by _base_, add 1 to _i_, and go to step 5.
 
 <a id=Limitations></a>
 ### Limitations
@@ -487,7 +478,7 @@ For more on why these two algorithms are equivalent, see the appendix.
 1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(12)**](#Note12)</sup>.)
 2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.
 
-After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice. (For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.)
+After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice. (For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this is a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.)
 
 <a id=kthsmallest></a>
 ### kthsmallest
