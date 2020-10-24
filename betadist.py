@@ -232,6 +232,7 @@ def psrn_less_than_rational(psrn, rat):
     num = abs(num)
     den = abs(den)
     bi = int(num // den)
+    num = num - den * bi
     if _sgn(psrn[0]) != bs:
         return 1 if psrn[0] < 0 else 0
     if psrn[0] > 0:
@@ -247,11 +248,8 @@ def psrn_less_than_rational(psrn, rat):
     if den == 0:
         raise ValueError
     if num == 0:
+        # Is an integer
         return 0 if psrn[0] > 0 else 1
-    if num < 0 or den < 0:
-        return 0
-    if num >= den:
-        return 1
     pt = 2
     index = 0
     psrnlen = len(psrn[2])

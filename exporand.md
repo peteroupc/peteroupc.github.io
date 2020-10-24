@@ -218,11 +218,11 @@ An alternative version of steps 6 through 9 in the algorithm above are as follow
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 
-The following is a simpler way to implement **URandLessThanReal** when **b** is a fraction known by its numerator and denominator, _num_/_den_.
+The following shows how to implement **URandLessThanReal** when **b** is a fraction known by its numerator and denominator, _num_/_den_.
 
 1. If **a**'s integer part or sign is unsampled, or if _den_ is 0, return an error.  Then, if _num_ and _den_ are both less than 0, set them to their absolute values.  Then if **a**'s sign is positive, its integer part is 0, and _num_ is 0, return 0.  Then if **a**'s sign is positive, its integer part is 0, and _num_'s sign is different from _den_'s sign, return 0.
-2. Set _bs_ to &minus;1 if _num_ or _den_, but not both, is less than 0, or 1 otherwise, then set _num_ to abs(_num_), then set _den_ to abs(_den_), then set _bi_ to floor(_num_/_den_).
-3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater. (Continue if both are equal.)  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater. (Continue if both are equal.)
+2. Set _bs_ to &minus;1 if _num_ or _den_, but not both, is less than 0, or 1 otherwise, then set _den_ to abs(_den_), then set _bi_ to floor(abs(_num_)/_den_), then set _num_ to rem(abs(_num_), _den_).
+3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater. (Continue if both are equal.)  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater. (Continue if both are equal.)  If _num_ is 0 (indicating the fraction is an integer), return 0 if **a**'s sign is positive and 1 otherwise.
 4. Set _pt_ to _base_, and set _i_ to 0. (_base_ is the base, or radix, of **a**'s digits, such as 2 for binary or 10 for decimal.)
 5. Set _d1_ to the digit at the _i_<sup>th</sup> position (starting from 0) of **a**'s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set _d1_ to that digit.
 6. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.

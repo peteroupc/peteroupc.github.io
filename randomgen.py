@@ -2338,11 +2338,9 @@ Returns 'list'. """
                 y = z
             if accept:
                 count += y1
+                return count
             else:
                 count += denom
-            if accept:
-                break
-        return count
 
     def pareto(self, minimum, alpha):
         return self.rndu01zerooneexc() ** (-1.0 / alpha) * minimum
