@@ -519,7 +519,7 @@ class FInterval:
 
     def pi(n):
         ab = FInterval._atanbounds(1, n)
-        return FInterval(16 * ab.inf - 4 * ab.sup, 16 * ab.sup - 4 * ab.inf)
+        return ab * 4
 
     def atan(self, n):
         return FInterval(
@@ -708,11 +708,13 @@ class FInterval:
                 raise ValueError
             return FInterval(lower, upper)
         # now, x>2
+        # NOTE: Replacing 2 with 1.5, which leads to much
+        # faster convergence
         m = 0
-        while x > 2:
+        while x > Fraction(1.5):
             m += 1
-            x /= 2
-        l2 = FInterval._logbounds(2, n)
+            x /= Fraction(1.5)
+        l2 = FInterval._logbounds(Fraction(1.5), n)
         ly = FInterval._logbounds(x, n)
         lower = m * l2.inf + ly.inf
         upper = m * l2.sup + ly.sup
@@ -842,21 +844,61 @@ class FInterval:
 # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
 # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
 # 65–67. DOI: https://doi.org/10.1145/820127.820168
+# NOTE: A logarithmic version of this formula is trivial to derive
+# from this one, but it's rather slow compared to log gamma:
+# instead of the product, take the sum of logarithms.
 def binco(n, k):
     v = Fraction(1)
     for i in range(n - k + 1, n + 1):
         v *= Fraction(i, n - i + 1)
-    return v
+    return int(v)
 
-# Log binomial coefficient, based on regular
-# binomial coefficient formula from Manolopoulos
-def logbinco(n, k, v=6):
-    r = FInterval(0)
-    for i in range(n - k + 1, n + 1):
-        r += FInterval(Fraction(i, n - i + 1)).log(v)
-    return r
+# Calculates Bernoulli numbers
+def bernoullinum(n):
+    if n == 0:
+        return 1
+    if n == 1:
+        return Fraction(-1, 2)
+    if n % 2 == 1:
+        return 0
+    v = 1
+    v += Fraction(-(n + 1), 2)
+    i = 2
+    while i < n:
+        v += binco(n + 1, i) * bernoullinum(i)
+        i += 2
+    return -v / (n + 1)
 
-# Calculates ln(choose(n, k)/2**n)
-def logprob(n, k, v=6):
-    divisor = FInterval(2).log(v) * n  # ln(2)*n = ln(2**n)
+def loggamma(k, v=4):
+    # Log gamma primarily intended for computing factorials (of integers).
+    # v is an accuracy parameter.
+    # Described in E. W. Ng, "A Comparison of Computational Methods
+    # and Algorithms for the Complex Gamma Function", JPL Technical
+    # Memorandum 33-686, 1974.
+    origk = k
+    k = FInterval(k)
+    # Stirling's approximation
+    ret = (
+        (k - FInterval(1 / 2)) * z.log(v + 4)
+        + (FInterval.pi(v + 4) * 2).log(v + 4) / 2
+        - k
+    )
+    for j in range(1, v + 1):
+        ret += bernoullinum(2 * j) / (2 * j * (2 * j - 1) * k ** (2 * j - 1))
+    # Spira's error bounds for log gamma
+    error = abs(bernoullinum(2 * v) / (2 * v - 1)) * Fraction(abs(origk)) ** (1 - 2 * v)
+    inf = ret.inf - error
+    sup = ret.sup + error
+    return FInterval(inf, sup)
+
+def logbinco(n, k, v=4):
+    # Log binomial coefficient.
+    # v is an accuracy parameter.
+    return loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
+
+def logbinprob(n, k, v=4):
+    # Log of binomial probability, that is, the log of the probability
+    # that exactly k zeros occur among n unbiased random bits.
+    # v is an accuracy parameter.
+    divisor = FInterval(2).log(v + 4) * n  # ln(2)*n = ln(2**n)
     return logbinco(n, k, v) - divisor

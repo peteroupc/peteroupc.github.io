@@ -2356,17 +2356,22 @@ CLASSES
      |      list of weak references to the object (if defined)
 
 FUNCTIONS
+    bernoullinum(n)
+        # Calculates Bernoulli numbers
+
     binco(n, k)
         # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
         # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
         # 65–67. DOI: [https://doi.org/10.1145/820127.820168](https://doi.org/10.1145/820127.820168)
+        # NOTE: A logarithmic version of this formula is trivial to derive
+        # from this one, but it's rather slow compared to log gamma:
+        # instead of the product, take the sum of logarithms.
 
-    logbinco(n, k, v=6)
-        # Log binomial coefficient, based on regular
-        # binomial coefficient formula from Manolopoulos
+    logbinco(n, k, v=4)
 
-    logprob(n, k, v=6)
-        # Calculates ln(choose(n, k)/2**n)
+    logbinprob(n, k, v=4)
+
+    loggamma(k, v=4)
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py

@@ -120,6 +120,7 @@ The following are not considered high-quality PRNGs:
 | Middle square | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Many cellular-automaton PRNGs (especially if they are neither reversible nor maximal-length<sup>[**(12)**](#Note12)</sup>) | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(13)**](#Note13)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
+| ISAAC ("ISAAC and RC4" by B. Jenkins) | Proven minimum cycle length is only 2<sup>40</sup> or more |
 
 <a id=Notes></a>
 ## Notes
