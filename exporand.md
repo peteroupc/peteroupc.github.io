@@ -475,8 +475,8 @@ For more on why these two algorithms are equivalent, see the appendix.
 
 **FillGeometricBag** takes a uniform PSRN and generates a number whose fractional part has `p` digits as follows:
 
-1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(12)**](#Note12)</sup>.)
-2. Let `sign` be -1 if the PSRN is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.
+1. For each position in \[0, `p`), if the item at that position in the uniform PSRN's fractional part is unsampled, set the item there to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part's capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(12)**](#Note12)</sup>.)
+2. Let `sign` be -1 if the PSRN's sign is negative, or 1 otherwise; let `ipart` be the PSRN's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * _b_<sup>&minus;_i_&minus;1</sup>), where _b_ is the base, or radix.
 
 After step 2, if it somehow happens that digits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit), then the implementation could choose instead to fill all unsampled digits between the first and the last set digit and return the full number, optionally rounding it to a number whose fractional part has `p` digits, with a rounding mode of choice. (For example, if `p` is 4, _b_ is 10, and the PSRN is 0.3437500... or 0.3438500..., it could use a round-to-nearest mode to round the PSRN to the number 0.3438 or 0.3439, respectively; because this is a PSRN with an "infinite" but unsampled digit expansion, there is no tie-breaking such as "ties to even" applied here.)
 
@@ -571,12 +571,12 @@ The **ExpRandLess** algorithm is a special case of the general **RandLess** algo
 5. Return 1 if **a**'s fractional part is less than **b**'s, or 0 if **a**'s fractional part is greater than **b**'s.
 6. Add 1 to _i_ and go to step 4.
 
-The **ExpRandFill** algorithm takes an e-rand **a** and generates a number whose fractional part has `p` bits as follows:
+The **ExpRandFill** algorithm takes an e-rand and generates a number whose fractional part has `p` digits as follows:
 
-1. If **a**'s integer part wasn't sampled yet, sample it as given in step 1 of **ExpRandLess**.
-2. If **a**'s fractional part has greater than `p` bits, round **a** to a number whose fractional part has `p` bits, and return that number.  The rounding can be done, for example, by discarding all bits beyond `p` bits after the place to be rounded, or by rounding to the nearest 2<sup>-p</sup>, ties-to-up, as done in the sample Python code.
-3. While **a**'s fractional part has fewer than `p` bits, call the **LogisticExp** algorithm with _x_ = _&lambda;_'s numerator, _y_ = _&lambda;_'s denominator, and _prec_ = _i_, where _i_ is 1 plus the number of bits in **a**'s fractional part, and append the result to that fractional part's binary expansion.
-4. Return the number represented by **a**.
+1. For each position _i_ in \[0, `p`), if the item at that position in the e-rand's fractional part is unsampled, call the **LogisticExp** algorithm with _x_ = _&lambda;_'s numerator, _y_ = _&lambda;_'s denominator, and _prec_ = _i_ + 1, and set the item at position _i_ to the result (which will be either 0 or 1), increasing the fractional part's capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)<sup>[**(12)**](#Note12)</sup>.)
+2. Let `sign` be -1 if the e-rand's sign is negative, or 1 otherwise; let `ipart` be the e-rand's integer part; and let `bag` be the PSRN's fractional part.  Take the first `p` digits of `bag` and return `sign` * (`ipart` + &Sigma;<sub>_i_=0, ..., `p`&minus;1</sub> bag[_i_] * 2<sup>&minus;_i_&minus;1</sup>).
+
+See the discussion in **FillGeometricBag** for advice on how to handle the case when if it somehow happens that bits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.
 
 Here is a third algorithm that generates a _uniform PSRN_, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate _&lambda;_ is given as a rational number greater than 0.  The method is based on von Neumann's algorithm (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>.
 
@@ -585,7 +585,7 @@ Here is a third algorithm that generates a _uniform PSRN_, rather than an e-rand
 3. Set _val_ to point to the same value as _u_, and set _accept_ to 1.
 4. Set _v_ to the result of **RandUniformFromReal** with the parameter _recip_.
 5. Run the **URandLess** algorithm on _u_ and _v_, in that order.  If the call returns 0, set _u_ to _v_, then set _accept_ to 1 minus _accept_, then go to step 4.
-6. If _accept_ is 1, add _highpart_ to _val_ via the second algorithm given earlier in "Addition and Subtraction", then return _val_.
+6. If _accept_ is 1, add _highpart_ to _val_ via the **UniformAddRational** algorithm given earlier, then return _val_.
 7. Add _recip_ to _highpart_ and go to step 2.
 
 The following alternative version of the previous algorithm includes Karney's improvement to the von Neumann algorithm (Karney 2014)<sup>[**(1)**](#Note1)</sup>, namely a so-called "early rejection step". The algorithm here allows an arbitrary rate parameter (_&lambda;_), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where _&lambda;_ is 1.
@@ -596,7 +596,7 @@ The following alternative version of the previous algorithm includes Karney's im
 4. Set _val_ to point to the same value as _u_, and set _accept_ to 1.
 5. Set _v_ to the result of **RandUniformFromReal** with the parameter _recip_.
 6. Run the **URandLess** algorithm on _u_ and _v_, in that order.  If the call returns 0, set _u_ to _v_, then set _accept_ to 1 minus _accept_, then go to step 5.
-7. If _accept_ is 1, add _highpart_ to _val_ via the second algorithm given earlier in "Addition and Subtraction", then return _val_.
+7. If _accept_ is 1, add _highpart_ to _val_ via the **UniformAddRational** algorithm given earlier, then return _val_.
 8. Add **_recip_/2** to _highpart_ and go to step 2.
 
 <a id=Sampler_Code></a>
