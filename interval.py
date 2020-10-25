@@ -725,14 +725,23 @@ class FInterval:
                     rb = vb * vd
                     va = ra
                     vb = rb
+                # Truncate lower bound to avoid "runaway" growth of
+                # numerator and denominator
+                if i % 4 == 0 or i == 2 * n:
+                    va, vb, vtrunc = FInterval._truncateNumDen(va, vb, n, vtrunc)
+            # print([va, vb, vtrunc])
             # Calculate upper bound
             vc = xmn
             vd = xmd * i
             ua = va * vd + vb * vc
             ub = vb * vd
-            ret = Fraction(va, vb)
-            upper = Fraction(ua, ub)
-            return FInterval(ret, upper)
+            # Add truncation error to upper bound
+            if vtrunc > 0:
+                tua = ua * 2 ** max(n * 4, 128) + ub * vtrunc
+                tub = ub * 2 ** max(n * 4, 128)
+                ua = tua
+                ub = tub
+            return FInterval._toTruncated(va, vb, ua, ub)
         if num < den:
             lb = FInterval._logbounds(den, num, n)
             # NOTE: Correcting an error in arXiv version
@@ -757,9 +766,49 @@ class FInterval:
         ly = FInterval._logbounds(xn, xd, n)
         lower = m * l2.inf + ly.inf
         upper = m * l2.sup + ly.sup
-        # if lower > upper:
-        #    raise ValueError
         return FInterval(lower, upper)
+
+    def _truncateNumDen(infnum, infden, v, vtrunc):
+        bittol = max(v * 4, 128)
+        if infnum.bit_length() > bittol:
+            ninf = infnum << bittol if infnum > 0 else infnum * 2 ** bittol
+            ninf = (
+                -int(abs(ninf) // abs(infden)) - 1
+                if infnum < 0
+                else int(abs(ninf) // abs(infden))
+            )
+            # print([float(Fraction(infnum,infden)),float(Fraction(ninf,2**bittol))])
+            return (ninf, 1 << bittol, vtrunc + 1)
+        else:
+            return (infnum, infden, vtrunc)
+
+    def _toTruncated(infnum, infden, supnum, supden):
+        bittol = 128
+        if infnum < (1 << bittol) and supnum < (1 << bittol):
+            # print([infnum,supnum])
+            ret = Fraction(infnum, infden)
+            upper = Fraction(supnum, supden)
+            return FInterval(ret, upper)
+        elif ((supnum * infden - supden * infnum) * (1 << bittol)) < (infden * supden):
+            ret = Fraction(infnum, infden)
+            upper = Fraction(supnum, supden)
+            # print(float(upper-ret))
+            return FInterval(ret, upper)
+        else:
+            ninf = infnum * 2 ** bittol
+            ninf = (
+                -int(abs(ninf) // abs(infden)) - 1
+                if infnum < 0
+                else int(abs(ninf) // abs(infden))
+            )
+            nsup = supnum * 2 ** bittol
+            nsup = (
+                -int(abs(nsup) // abs(supden)) - 1
+                if supnum < 0
+                else int(abs(nsup) // abs(supden))
+            )
+            # print([ninf,nsup])
+            return FInterval(Fraction(ninf, 2 ** bittol), Fraction(nsup, 2 ** bittol))
 
     def _expbounds(x, n):
         x = x if isinstance(x, Fraction) else Fraction(x)
@@ -953,37 +1002,93 @@ def bernoullinum(n):
     _extrabernnumbers[n] = ret
     return ret
 
+def _polynomialProduct(a, b):
+    # Finds the product of two polynomials.  Each polynomial
+    # is a list of the following form:
+    # [d, f, g, ...] which corresponds to d + f*x**1 + g*x**2 + ...
+    deg = (len(a) - 1) + (len(b) - 1)
+    ret = [0 for i in range(deg + 1)]
+    for i in range(len(a)):
+        for j in range(len(b)):
+            ret[i + j] += a[i] * b[j]
+    return ret
+
+def _polynomialProductA(a, b0, b1):
+    ret = [0 for i in range(len(a) + 1)]
+    for i in range(len(a)):
+        ret[i] += a[i] * b0  # b0 is 0th-order coefficient
+        ret[i + 1] += a[i] * b1  # b1 is 1st-order coefficient
+    return ret
+
+def _polynomialIntegral(p, x=1):
+    # Finds the integral of a polynomial at the point x.
+    if x == 1:
+        n = 0
+        d = 1
+        for i in range(len(p)):
+            n = n * (i + 1) + d * p[i]
+            d *= i + 1
+        return Fraction(n, d)
+    else:
+        return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
+
 _logpi2cache = {}
 
 def loggamma(k, v=4):
     global _logpi2cache
     # Log gamma primarily intended for computing factorials (of integers).
     # v is an accuracy parameter.
-    # Described in E. W. Ng, "A Comparison of Computational Methods
-    # and Algorithms for the Complex Gamma Function", JPL Technical
-    # Memorandum 33-686, 1974.
-    # ------
-    # Return 0 for k<=1.  We don't care about numbers less than 1,
-    # and Stirling's approximation appears to diverge for k=1.
-    if k <= 1:
+    # -------
+    # Return 0 for k<=2.  We don't care about numbers less than 2,
+    # other than 1.
+    if k <= 2:
         return FInterval(0)
-    origk = k
+    origk = k if isinstance(k, Fraction) else Fraction(k)
     k = FInterval(k)
     if not (v in _logpi2cache):
         _logpi2cache[v] = (FInterval.pi(v + 4) * 2).log(v + 4).truncate()
-    # Stirling's approximation
+    # Binet's approximation
     ret = (k - FInterval(1 / 2)) * k.log(v + 4) + _logpi2cache[v] / 2 - k
-    kt = origk
-    ksq = origk * origk
+    p = [0, -1, 2]
+    denom = Fraction(1)
     extra = Fraction(0)
     for j in range(1, v + 1):
-        extra += bernoullinum(2 * j) / (2 * j * (2 * j - 1) * kt)
-        kt *= ksq
-    ret += extra
-    # Spira's error bounds for log gamma
-    error = abs(bernoullinum(2 * v) / (2 * v - 1)) * Fraction(abs(origk)) ** (1 - 2 * v)
-    inf = ret.inf - error
-    sup = ret.sup + error
+        c = _polynomialIntegral(p)
+        p = _polynomialProductA(p, j, 1)
+        denom *= origk + j
+        extra += c / (j * denom)
+    ret += extra / 2
+    # Error bounds
+    # bc is rounded up from 5*sqrt(pi)*exp(1/6)/24
+    # TODO: This bound was taken from Devroye 1986;
+    # are there tighter bounds for the Binet series?
+    bc = Fraction(43624, 100000)
+    kp1 = origk + 1
+    error = (
+        bc * (Fraction(kp1) / origk) * (kp1 / (kp1 + v)) ** min(int(origk), max(v, 50))
+    )
+    # NOTE: Error term not added to inf because the Binet series
+    # is monotonically increasing
+    inf = ret.inf
+    sup = ret.sup + error / 2
+    if False:
+        lg = math.lgamma(float(origk))
+        lt = float(ret.sup + error / 2) >= lg
+        if not lt:
+            print(
+                [
+                    origk,
+                    v,
+                    "ret",
+                    lg >= float(ret.inf) and lg <= float(ret.sup + error / 2),
+                    lg,
+                    "real",
+                    int(ret.inf * 10 ** 20),
+                    float(ret.sup + upper),
+                    float(ret.sup + error / 2),
+                    float(ret.sup + error),
+                ]
+            )
     return FInterval(inf, sup)
 
 def logbinco(n, k, v=4):
