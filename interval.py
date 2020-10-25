@@ -429,8 +429,10 @@ class FInterval:
             return self
         inf = v
         sup = v if sup == None else sup
-        self.sup = Fraction(sup)
-        self.inf = Fraction(inf)
+        # Avoid unnecessary conversion to Fraction (and reduction
+        # to lowest terms) if an input is already a Fraction
+        self.sup = sup if isinstance(sup, Fraction) else Fraction(sup)
+        self.inf = inf if isinstance(inf, Fraction) else Fraction(inf)
         if self.inf > self.sup:
             raise ValueError
         return self
@@ -594,14 +596,16 @@ class FInterval:
         return self.sup - self.inf
 
     def _greaterThanZero(frac):
-        return (frac.numerator>0 and frac.denominator>0) or \
-           (frac.numerator<0 and frac.denominator<0)
+        return (frac.numerator > 0 and frac.denominator > 0) or (
+            frac.numerator < 0 and frac.denominator < 0
+        )
 
     def log(self, n):
         if not FInterval._greaterThanZero(self.inf):
             raise ValueError
         return FInterval(
-            FInterval._logbounds(self.inf, n).inf, FInterval._logbounds(self.sup, n).sup
+            FInterval._logbounds(self.inf.numerator, self.inf.denominator, n).inf,
+            FInterval._logbounds(self.sup.numerator, self.sup.denominator, n).sup,
         )
 
     def abs(self):
@@ -687,55 +691,78 @@ class FInterval:
         """ For convenience only. """
         return self.pow(v, 5)
 
-    _logboundscache={}
+    _logboundscache = {}
+    _fraction15 = Fraction(1.5)
 
-    def _logbounds(x, n):
-        x = Fraction(x)
-        if x == 0:
+    def _logbounds(num, den, n):
+        if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
             raise ValueError
-        if x == 1:
+        if num == den:
             return FInterval(0)
-        if x > 1 and x <= Fraction(1.5):
-            ret = Fraction(0)
+        if num > den and num * 2 <= den * 3:  # ... and (num/den)<=1.5
+            xmn = num - den
+            xmd = den
+            xva = xmn
+            xvb = xmd
+            # Numerator and denominator of lower bound
+            va = 0
+            vb = 1
             for i in range(1, 2 * n + 1):
-                if i%2==0:
-                    ret-=(x-1)**i/i
+                vc = xmn
+                vd = xmd * i
+                xmn *= xva
+                xmd *= xvb
+                if i % 2 == 0:
+                    # Subtract from lower bound
+                    ra = va * vd - vb * vc
+                    rb = vb * vd
+                    va = ra
+                    vb = rb
                 else:
-                    ret+=(x-1)**i/i
-            m = 2 * n + 1
-            upper = ret + (-1) ** (m + 1) * (x - 1) ** m / m
-            #if ret > upper:
-            #    raise ValueError
+                    # Add to lower bound
+                    ra = va * vd + vb * vc
+                    rb = vb * vd
+                    va = ra
+                    vb = rb
+            # Calculate upper bound
+            vc = xmn
+            vd = xmd * i
+            ua = va * vd + vb * vc
+            ub = vb * vd
+            # print([va,vb,ua,ub])
+            ret = Fraction(va, vb)
+            upper = Fraction(ua, ub)
             return FInterval(ret, upper)
-        if x < 1:
-            lb = FInterval._logbounds(1 / x, n)
+        if num < den:
+            lb = FInterval._logbounds(den, num, n)
             # NOTE: Correcting an error in arXiv version
             # of the paper
             lower = -lb.sup
             upper = -lb.inf
-            #if lower > upper:
-            #    raise ValueError
             return FInterval(lower, upper)
         # now, x>2
         # NOTE: Replacing 2 with 1.5, which leads to much
         # faster convergence
         m = 0
-        frac15=Fraction(1.5)
-        while x > frac15:
+        xn = num
+        xd = den
+        while xn * 2 > xd * 3:  # (xn/xd)>1.5
             m += 1
-            x /= frac15
+            xn *= 2  # Denominator of 1.5
+            xd *= 3  # Numerator of 1.5
         if not (n in FInterval._logboundscache):
-           FInterval._logboundscache[n]=FInterval._logbounds(frac15, n)
-        l2=FInterval._logboundscache[n]
-        ly = FInterval._logbounds(x, n)
+            # Find logbounds for 1.5 and given accuracy level
+            FInterval._logboundscache[n] = FInterval._logbounds(3, 2, n)
+        l2 = FInterval._logboundscache[n]
+        ly = FInterval._logbounds(xn, xd, n)
         lower = m * l2.inf + ly.inf
         upper = m * l2.sup + ly.sup
-        #if lower > upper:
+        # if lower > upper:
         #    raise ValueError
         return FInterval(lower, upper)
 
     def _expbounds(x, n):
-        x = Fraction(x)
+        x = x if isinstance(x, Fraction) else Fraction(x)
         if x == 0:
             return FInterval(1)
         if x >= -1 and x < 0:
@@ -766,7 +793,7 @@ class FInterval:
             return FInterval(lower, upper)
 
     def _sinbounds(x, n):
-        x = Fraction(x)
+        x = x if isinstance(x, Fraction) else Fraction(x)
         m = 2 * n if x < 0 else 2 * n + 1
         ret = Fraction(0)
         fac = 1
@@ -780,7 +807,7 @@ class FInterval:
         return FInterval(ret, upbound)
 
     def _cosbounds(x, n):
-        x = Fraction(x)
+        x = x if isinstance(x, Fraction) else Fraction(x)
         m = 2 * n if x < 0 else 2 * n + 1
         ret = Fraction(0)
         fac = 2
@@ -794,7 +821,7 @@ class FInterval:
         return FInterval(1 + upbound, 1 + ret)
 
     def _sqrtbounds(x, n):
-        x = Fraction(x)
+        x = x if isinstance(x, Fraction) else Fraction(x)
         upper = x + 1
         for i in range(0, n):
             upper = (upper + x / upper) / 2
@@ -804,7 +831,7 @@ class FInterval:
         return FInterval(max(lower, upper), max(lower, upper))
 
     def _atanbounds(x, n):
-        x = Fraction(x)
+        x = x if isinstance(x, Fraction) else Fraction(x)
         if x == 0:
             return FInterval(0, 0)
         if x == 1:
@@ -852,18 +879,20 @@ class FInterval:
             the work that needs to be done (especially in reductions to lowest
             terms) when generating new Fractions as a result of these operations.
             In Python in particular, working with Fractions is very slow. """
-        if self.sup.numerator.bit_length()<64 and \
-            self.sup.denominator.bit_length()<64 and \
-           self.inf.numerator.bit_length()<64 and \
-           self.inf.denominator.bit_length()<64:
-           return self
-        if self.sup-self.inf<Fraction(1, 2**64):
-            return self           
-        ninf=self.inf*2**64
-        ninf=int(ninf)-1 if ninf<0 else int(ninf)
-        nsup=self.sup*2**64
-        nsup=int(nsup) if nsup<0 else int(nsup)+1
-        ret=FInterval(Fraction(ninf,2**64),Fraction(nsup,2**64))
+        if (
+            self.sup.numerator.bit_length() < 64
+            and self.sup.denominator.bit_length() < 64
+            and self.inf.numerator.bit_length() < 64
+            and self.inf.denominator.bit_length() < 64
+        ):
+            return self
+        if self.sup - self.inf < Fraction(1, 2 ** 64):
+            return self
+        ninf = self.inf * 2 ** 64
+        ninf = int(ninf) - 1 if ninf < 0 else int(ninf)
+        nsup = self.sup * 2 ** 64
+        nsup = int(nsup) if nsup < 0 else int(nsup) + 1
+        ret = FInterval(Fraction(ninf, 2 ** 64), Fraction(nsup, 2 ** 64))
         return ret
 
     def exp(self, n):
@@ -881,19 +910,34 @@ class FInterval:
 # from this one, but it's rather slow compared to log gamma:
 # instead of the product, take the sum of logarithms.
 def binco(n, k):
-    v = Fraction(1)
+    vnum = 1
+    vden = 1
     for i in range(n - k + 1, n + 1):
-        v *= Fraction(i, n - i + 1)
-    return int(v)
+        vnum *= i
+        vden *= n - i + 1
+    return vnum // vden
 
 # Calculates Bernoulli numbers
+_BERNNUMBERS = [
+    Fraction(1),
+    Fraction(-1, 2),
+    Fraction(1, 6),
+    0,
+    Fraction(-1, 30),
+    0,
+    Fraction(1, 42),
+    0,
+    Fraction(-1, 30),
+    0,
+    Fraction(5, 66),
+    0,
+]
+
 def bernoullinum(n):
-    if n == 0:
-        return 1
-    if n == 1:
-        return Fraction(-1, 2)
     if n % 2 == 1:
         return 0
+    if n < len(_BERNNUMBERS):
+        return _BERNNUMBERS[n]
     v = 1
     v += Fraction(-(n + 1), 2)
     i = 2
@@ -902,7 +946,7 @@ def bernoullinum(n):
         i += 2
     return -v / (n + 1)
 
-_logpi2cache={}
+_logpi2cache = {}
 
 def loggamma(k, v=4):
     global _logpi2cache
@@ -911,23 +955,24 @@ def loggamma(k, v=4):
     # Described in E. W. Ng, "A Comparison of Computational Methods
     # and Algorithms for the Complex Gamma Function", JPL Technical
     # Memorandum 33-686, 1974.
-    if k<=1: return FInterval(0)
+    # ------
+    # Return 0 for k<=1.  We don't care about numbers less than 1,
+    # and Stirling's approximation appears to diverge for k=1.
+    if k <= 1:
+        return FInterval(0)
     origk = k
     k = FInterval(k)
     if not (v in _logpi2cache):
-        _logpi2cache[v]=(FInterval.pi(v + 4) * 2).log(v + 4).truncate()
+        _logpi2cache[v] = (FInterval.pi(v + 4) * 2).log(v + 4).truncate()
     # Stirling's approximation
-    ret = (
-        (k - FInterval(1 / 2)) * k.log(v + 4)
-        + _logpi2cache[v] / 2 - k
-    )
+    ret = (k - FInterval(1 / 2)) * k.log(v + 4) + _logpi2cache[v] / 2 - k
     kt = origk
-    ksq = origk*origk
+    ksq = origk * origk
     extra = Fraction(0)
     for j in range(1, v + 1):
         extra += bernoullinum(2 * j) / (2 * j * (2 * j - 1) * kt)
-        kt*=ksq
-    ret+=extra
+        kt *= ksq
+    ret += extra
     # Spira's error bounds for log gamma
     error = abs(bernoullinum(2 * v) / (2 * v - 1)) * Fraction(abs(origk)) ** (1 - 2 * v)
     inf = ret.inf - error
@@ -937,7 +982,7 @@ def loggamma(k, v=4):
 def logbinco(n, k, v=4):
     # Log binomial coefficient.
     # v is an accuracy parameter.
-    r=(loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v))
+    r = loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
     return r.truncate()
 
 def logbinprob(n, k, v=4):

@@ -2365,7 +2365,6 @@ CLASSES
 
 FUNCTIONS
     bernoullinum(n)
-        # Calculates Bernoulli numbers
 
     binco(n, k)
         # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
