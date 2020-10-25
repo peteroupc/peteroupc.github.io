@@ -167,12 +167,11 @@ def forsythe_prob(rg, bern, m, n):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational(ret, n) else 0
 
-def psrn_fill(psrn, precision=53):
+def psrn_fill(psrn, digits=2, precision=53):
     af = 0
     afrac = psrn[2]
     asign = psrn[0]
     aint = psrn[1]
-    digits = 2
     if asign != -1 and asign != 1:
         raise ValueError
     for i in range(precision + 1):
@@ -181,11 +180,19 @@ def psrn_fill(psrn, precision=53):
         if afrac[i] == None:
             afrac[i] = random.randint(0, digits - 1)
         af = af * digits + afrac[i]
-    if af % 2 == 1:
+    if af % digits >= digits - digits // 2:
         # round up
-        return asign * ((af + 1) + (aint << precision)) / (1 << precision)
+        return (
+            asign
+            * (((af // digits) + 1) + (aint * digits ** precision))
+            / (digits ** precision)
+        )
     else:
-        return asign * ((af) + (aint << precision)) / (1 << precision)
+        return (
+            asign
+            * ((af // digits) + (aint * digits ** precision))
+            / (digits ** precision)
+        )
 
 def psrn_complement(x):
     # NOTE: Assumes digits is 2
@@ -716,6 +723,17 @@ class BinomialSampler:
         self.curbit += 1
         return r
 
+    def _roughSqrt(x):
+        """ Returns a number m such that m is in the
+        interval [sqrt(x), sqrt(x)+3].  This rough approximation
+        suffices for the binomial sampler. """
+        u = (x >> (x.bit_length() // 2)) + 2
+        while True:
+            v = (u + x // u) // 2
+            if v == u:
+                return v + 1
+            u = v
+
     def sample(self, n):
         """ Draws a binomial(n, 1/2) random variate.
        Uses the rejection sampling approach from Bringmann et al.
@@ -741,8 +759,7 @@ class BinomialSampler:
             if n2 == 0:
                 return ret
         if not n2 in self.binomialinfo:
-            # TODO: Avoid floating-point here
-            bm = int(math.sqrt(n2)) + 1
+            bm = BinomialSampler._roughSqrt(n2)
             bi = [bm, {}]
             self.binomialinfo[n2] = bi
         halfn = n2 // 2
@@ -887,7 +904,7 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
             u = psrn_new_01()
             if psrn_less(w, u):
                 if (k & 1) == 1:
-                    return psrn_fill(ret, precision)
+                    return psrn_fill(ret, precision=precision)
                 break
             w = u
             k += 1

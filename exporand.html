@@ -65,7 +65,6 @@
 <li><a href="#Addition_and_Subtraction"><strong>Addition and Subtraction</strong></a></li>
 <li><a href="#Multiplication"><strong>Multiplication</strong></a></li>
 <li><a href="#Using_the_Arithmetic_Algorithms"><strong>Using the Arithmetic Algorithms</strong></a></li>
-<li><a href="#Multiplying_a_PSRN_by_a_Vector"><strong>Multiplying a PSRN by a Vector</strong></a></li>
 </ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a>
 
@@ -591,18 +590,18 @@
 
 <p>Note that incorrect results may occur if the <em>same PSRN</em> is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the <strong>UniformAddRational</strong> or <strong>UniformMultiplyRational</strong> algorithm when it&#39;s called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.</p>
 
-<p><a id=Multiplying_a_PSRN_by_a_Vector></a></p>
+<p>It might be believed that the issue just described could be solved by the algorithm below:</p>
 
-<h3>Multiplying a PSRN by a Vector</h3>
-
-<p>Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a uniform PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let <em>vector</em> be the vector of rational numbers, and let <em>vector</em>[<em>i</em>] be the rational number at position <em>i</em> of the vector (positions start at 0).</p>
+<p><em>Let  vec be the vector of rational numbers, and let vec[i] be the rational number at position i of the vector (positions start at 0).</em></p>
 
 <ol>
-<li>Set <em>i</em> to 0, set <strong>a</strong> to the input PSRN, set <em>num</em> to <em>vector</em>[<em>i</em>], and set <em>output</em> to an empty list.</li>
-<li>Set <em>ret</em> to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number <em>num</em>.</li>
-<li>Add a pointer to <em>ret</em> to the list <em>output</em>.  If <em>vector</em>[<em>i</em>] was the last number in the vector, stop this algorithm.</li>
-<li>Set <strong>a</strong> to point to <em>ret</em>, then add 1 to <em>i</em>, then set <em>num</em> to <em>vector</em>[<em>i</em>]/<em>vector</em>[<em>i</em>&minus;1].</li>
+<li><em>Set i to 0, set <strong>a</strong> to the input PSRN, set num to vec[i], and set &#39;output&#39; to an empty list.</em></li>
+<li><em>Set ret to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number num.</em></li>
+<li><em>Add a pointer to ret to the list &#39;output&#39;.  If vec[i] was the last number in the vector, stop this algorithm.</em></li>
+<li><em>Set <strong>a</strong> to point to ret, then add 1 to i, then set num to vec[i]/vec[i&minus;1].</em></li>
 </ol>
+
+<p>However, even this algorithm doesn&#39;t ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let <strong>a</strong> be the PSRN 0.... (or the interval [0.0, 1.0]), then let <strong>b</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>a</strong>, 1/2), then let <strong>c</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>b</strong>, 1/3).  One possible result for <strong>b</strong> is 0.41... and for <strong>c</strong> is 0.138.... Now we fill <strong>a</strong>, <strong>b</strong>, and <strong>c</strong> with uniform random bits.  Thus, as one possible result, <strong>a</strong> is now 0.13328133..., <strong>b</strong> is now 0.41792367..., and <strong>c</strong> is now 0.13860371....  Here, however, <strong>c</strong> divided by <strong>b</strong> is not exactly 1/3, although it&#39;s quite close, and <strong>b</strong> divided by <strong>a</strong> is far from 1/2 (especially since <strong>a</strong> was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.</p>
 
 <p><a id=Building_Blocks></a></p>
 

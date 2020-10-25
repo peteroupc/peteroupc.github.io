@@ -724,7 +724,7 @@ class FInterval:
                     rb = vb * vd
                     va = ra
                     vb = rb
-                # Truncate lower bound to avoid "runaway" growth of
+                # Truncate lower bound to mitigate "runaway" growth of
                 # numerator and denominator
                 if i % 4 == 0 or i == 2 * n:
                     va, vb, vtrunc = FInterval._truncateNumDen(va, vb, n, vtrunc)
@@ -1036,8 +1036,8 @@ def _polynomialIntegral(p, x=1):
 
 def _powerBound(x, y, pwr):
     # Calculates an upper bound for (x/y)**pwr,
-    # assuming 0 < x/y < 1.  Designed to avoid runaway
-    # explosion in the fraction's numerator and denominator.
+    # assuming 0 < x/y < 1.  Designed to mitigate "runaway"
+    # growth in the fraction's numerator and denominator.
     n = 1
     d = 1
     p = pwr
@@ -1046,7 +1046,7 @@ def _powerBound(x, y, pwr):
         if p % 2 == 1:
             n *= x
             d *= y
-            if n > 2 ** 128 or d > 2 ** 128:
+            if n > 2 ** 128 or (n > 1 and d > 2 ** 128):
                 n = n << 64
                 if n % d == 0:
                     n = n // d
@@ -1056,7 +1056,7 @@ def _powerBound(x, y, pwr):
         p //= 2
         x *= x
         y *= y
-        if x > 2 ** 128 or y > 2 ** 128:
+        if x > 2 ** 128 or (x > 1 and y > 2 ** 128):
             x = x << 64
             if x % y == 0:
                 x = x // y
@@ -1095,7 +1095,7 @@ def loggamma(k, v=4):
     ret += extra / 2
     # Error bounds.
     # bc is rounded up from 5*sqrt(pi)*exp(1/6)/24
-    bc = Fraction(43624, 100000)
+    bc = Fraction(5453, 12500)
     kp1 = origk + 1
     error = bc * (Fraction(kp1) / origk)
     kpf = kp1 / (kp1 + v)

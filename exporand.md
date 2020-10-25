@@ -45,7 +45,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Addition and Subtraction**](#Addition_and_Subtraction)
     - [**Multiplication**](#Multiplication)
     - [**Using the Arithmetic Algorithms**](#Using_the_Arithmetic_Algorithms)
-    - [**Multiplying a PSRN by a Vector**](#Multiplying_a_PSRN_by_a_Vector)
 - [**Building Blocks**](#Building_Blocks)
     - [**SampleGeometricBag**](#SampleGeometricBag)
     - [**FillGeometricBag**](#FillGeometricBag)
@@ -432,15 +431,16 @@ The algorithms given above for addition and multiplication are useful for scalin
 
 Note that incorrect results may occur if the _same PSRN_ is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the **UniformAddRational** or **UniformMultiplyRational** algorithm when it's called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.
 
-<a id=Multiplying_a_PSRN_by_a_Vector></a>
-### Multiplying a PSRN by a Vector
+It might be believed that the issue just described could be solved by the algorithm below:
 
-Because of the issue described in the previous paragraph, the following algorithm is a proper way to multiply a uniform PSRN by a vector of rational numbers.  It works only if none of the numbers is 0 and all of them are different (in some cases, it may help to sort the numbers in the vector in order to detect same-valued numbers in it).  Let _vector_ be the vector of rational numbers, and let _vector_\[_i_\] be the rational number at position _i_ of the vector (positions start at 0).
+_Let  vec be the vector of rational numbers, and let vec\[i\] be the rational number at position i of the vector (positions start at 0)._
 
-1. Set _i_ to 0, set **a** to the input PSRN, set _num_ to _vector_\[_i_\], and set _output_ to an empty list.
-2. Set _ret_ to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number _num_.
-3. Add a pointer to _ret_ to the list _output_.  If _vector_\[_i_\] was the last number in the vector, stop this algorithm.
-4. Set **a** to point to _ret_, then add 1 to _i_, then set _num_ to _vector_\[_i_\]/_vector_\[_i_&minus;1\].
+1. _Set i to 0, set **a** to the input PSRN, set num to vec\[i\], and set 'output' to an empty list._
+2. _Set ret to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number num._
+3. _Add a pointer to ret to the list 'output'.  If vec\[i\] was the last number in the vector, stop this algorithm._
+4. _Set **a** to point to ret, then add 1 to i, then set num to vec\[i\]/vec\[i&minus;1\]._
+
+However, even this algorithm doesn't ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let **a** be the PSRN 0.... (or the interval \[0.0, 1.0\]), then let **b** be the result of **UniformMultiplyRational**(**a**, 1/2), then let **c** be the result of **UniformMultiplyRational**(**b**, 1/3).  One possible result for **b** is 0.41... and for **c** is 0.138.... Now we fill **a**, **b**, and **c** with uniform random bits.  Thus, as one possible result, **a** is now 0.13328133..., **b** is now 0.41792367..., and **c** is now 0.13860371....  Here, however, **c** divided by **b** is not exactly 1/3, although it's quite close, and **b** divided by **a** is far from 1/2 (especially since **a** was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.
 
 <a id=Building_Blocks></a>
 ## Building Blocks
