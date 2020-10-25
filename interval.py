@@ -692,7 +692,6 @@ class FInterval:
         return self.pow(v, 5)
 
     _logboundscache = {}
-    _fraction15 = Fraction(1.5)
 
     def _logbounds(num, den, n):
         if num == 0 or den == 0 or (num < 0 and den > 0) or (den < 0 and num > 0):
@@ -735,10 +734,11 @@ class FInterval:
             vd = xmd * i
             ua = va * vd + vb * vc
             ub = vb * vd
-            # Add truncation error to upper bound
+            # Add truncation error (vtrunc/2**bittol) to upper bound
             if vtrunc > 0:
-                tua = ua * 2 ** max(n * 4, 128) + ub * vtrunc
-                tub = ub * 2 ** max(n * 4, 128)
+                bittol = max(n * 4, 128)
+                tua = ua * 2 ** bittol + ub * vtrunc
+                tub = ub * 2 ** bittol
                 ua = tua
                 ub = tub
             return FInterval._toTruncated(va, vb, ua, ub)
@@ -777,7 +777,9 @@ class FInterval:
                 if infnum < 0
                 else int(abs(ninf) // abs(infden))
             )
-            # print([float(Fraction(infnum,infden)),float(Fraction(ninf,2**bittol))])
+            # vtrunc stores an upper bound on the truncation
+            # error, which in this case
+            # is no more than 2**bittol per call.
             return (ninf, 1 << bittol, vtrunc + 1)
         else:
             return (infnum, infden, vtrunc)
@@ -966,7 +968,6 @@ def binco(n, k):
         vden *= n - i + 1
     return vnum // vden
 
-# Calculates Bernoulli numbers
 _BERNNUMBERS = [
     Fraction(1),
     Fraction(-1, 2),
@@ -984,6 +985,7 @@ _BERNNUMBERS = [
 _extrabernnumbers = {}
 
 def bernoullinum(n):
+    # Calculates Bernoulli numbers
     global _extrabernnumbers
     if n % 2 == 1:
         return 0
@@ -1032,6 +1034,37 @@ def _polynomialIntegral(p, x=1):
     else:
         return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
 
+def _powerBound(x, y, pwr):
+    # Calculates an upper bound for (x/y)**pwr,
+    # assuming 0 < x/y < 1.  Designed to avoid runaway
+    # explosion in the fraction's numerator and denominator.
+    n = 1
+    d = 1
+    p = pwr
+    while p > 0:
+        # print([p,float(n/d),float(x/y),n.bit_length(),x.bit_length()])
+        if p % 2 == 1:
+            n *= x
+            d *= y
+            if n > 2 ** 128 or d > 2 ** 128:
+                n = n << 64
+                if n % d == 0:
+                    n = n // d
+                else:
+                    n = (n // d) + 1
+                d = 2 ** 64
+        p //= 2
+        x *= x
+        y *= y
+        if x > 2 ** 128 or y > 2 ** 128:
+            x = x << 64
+            if x % y == 0:
+                x = x // y
+            else:
+                x = (x // y) + 1
+            y = 2 ** 64
+    return Fraction(n, d)
+
 _logpi2cache = {}
 
 def loggamma(k, v=4):
@@ -1039,7 +1072,7 @@ def loggamma(k, v=4):
     # Log gamma primarily intended for computing factorials (of integers).
     # v is an accuracy parameter.
     # -------
-    # Return 0 for k<=2.  We don't care about numbers less than 2,
+    # Return 0 (ln(1)) for k<=2.  We don't care about numbers less than 2,
     # other than 1.
     if k <= 2:
         return FInterval(0)
@@ -1047,7 +1080,9 @@ def loggamma(k, v=4):
     k = FInterval(k)
     if not (v in _logpi2cache):
         _logpi2cache[v] = (FInterval.pi(v + 4) * 2).log(v + 4).truncate()
-    # Binet's approximation
+    # Binet's approximation, which is a converging series unlike
+    # Sterling's approximation (see, e.g., chapter 10 of Devroye 1986).
+    # And converging series are important for our purposes.
     ret = (k - FInterval(1 / 2)) * k.log(v + 4) + _logpi2cache[v] / 2 - k
     p = [0, -1, 2]
     denom = Fraction(1)
@@ -1058,37 +1093,17 @@ def loggamma(k, v=4):
         denom *= origk + j
         extra += c / (j * denom)
     ret += extra / 2
-    # Error bounds
+    # Error bounds.
     # bc is rounded up from 5*sqrt(pi)*exp(1/6)/24
-    # TODO: This bound was taken from Devroye 1986;
-    # are there tighter bounds for the Binet series?
     bc = Fraction(43624, 100000)
     kp1 = origk + 1
-    error = (
-        bc * (Fraction(kp1) / origk) * (kp1 / (kp1 + v)) ** min(int(origk), max(v, 50))
-    )
+    error = bc * (Fraction(kp1) / origk)
+    kpf = kp1 / (kp1 + v)
+    error *= _powerBound(kpf.numerator, kpf.denominator, int(origk))
     # NOTE: Error term not added to inf because the Binet series
     # is monotonically increasing
     inf = ret.inf
     sup = ret.sup + error / 2
-    if False:
-        lg = math.lgamma(float(origk))
-        lt = float(ret.sup + error / 2) >= lg
-        if not lt:
-            print(
-                [
-                    origk,
-                    v,
-                    "ret",
-                    lg >= float(ret.inf) and lg <= float(ret.sup + error / 2),
-                    lg,
-                    "real",
-                    int(ret.inf * 10 ** 20),
-                    float(ret.sup + upper),
-                    float(ret.sup + error / 2),
-                    float(ret.sup + error),
-                ]
-            )
     return FInterval(inf, sup)
 
 def logbinco(n, k, v=4):
