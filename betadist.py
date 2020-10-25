@@ -2,6 +2,9 @@ import random
 import bernoulli
 import randomgen
 import geobag
+import math
+import interval
+from interval import FInterval
 from fractions import Fraction
 
 def _bern_power(bern, bag, num, den, bagfactory):
@@ -164,7 +167,28 @@ def forsythe_prob(rg, bern, m, n):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational(ret, n) else 0
 
+def psrn_fill(psrn, precision=53):
+    af = 0
+    afrac = psrn[2]
+    asign = psrn[0]
+    aint = psrn[1]
+    digits = 2
+    if asign != -1 and asign != 1:
+        raise ValueError
+    for i in range(precision + 1):
+        if i >= len(afrac):
+            afrac.append(random.randint(0, digits - 1))
+        if afrac[i] == None:
+            afrac[i] = random.randint(0, digits - 1)
+        af = af * digits + afrac[i]
+    if af % 2 == 1:
+        # round up
+        return asign * ((af + 1) + (aint << precision)) / (1 << precision)
+    else:
+        return asign * ((af) + (aint << precision)) / (1 << precision)
+
 def psrn_complement(x):
+    # NOTE: Assumes digits is 2
     for i in range(len(x[2])):
         if x[2][i] != None:
             x[2][i] = 1 - x[2][i]
@@ -649,6 +673,125 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
                     rv = rv * digits + random.randint(0, digits - 1)
                     rvs = rv + rvstart
 
+def psrnexpo():
+    count = 0
+    while True:
+        y1 = psrn_new_01()
+        y = y1
+        accept = True
+        while True:
+            z = psrn_new_01()
+            if psrn_less(y, z) == 0:
+                accept = not accept
+                y = z
+                continue
+            break
+        if accept:
+            return [1, count, y1[2]]
+        count += 1
+
+class BinomialSampler:
+    def __init__(self):
+        self.logcache = {}
+        self.binomialinfo = {}
+        self.bits = 0
+        self.curbit = -1
+
+    def _logint(self, n, v):
+        if not n in self.logcache:
+            self.logcache[n] = [None, 0]
+        c = self.logcache[n]
+        if c[1] >= v and c[0] != None:
+            return c[0]
+        c[0] = FInterval(n).log(v)
+        c[1] = v
+        return c[0]
+
+    def _randbit(self):
+        if self.curbit == -1 or self.curbit >= 64:
+            self.bits = random.randint(0, (1 << 64) - 1)
+            self.curbit = 0
+        r = self.bits & 1
+        self.bits >>= 1
+        self.curbit += 1
+        return r
+
+    def sample(self, n):
+        """ Draws a binomial(n, 1/2) random variate.
+       Uses the rejection sampling approach from Bringmann et al.
+       2014, but uses log binomial coefficients and in general, upper
+       and lower bounds of logarithmic probabilities (to support very
+       large values of n) together with the alternating series method
+       and rational interval arithmetic (rather than floating-point arithmetic).
+
+       Reference:
+       K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of
+       a Physical Growth Model.” In: _Proc. 41st International
+       Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
+    """
+        if n == 0:
+            return 0
+        if n % 2 == 1:
+            return self.randbit() + self.sample(n - 1)
+        n2 = n
+        ret = 0
+        if n2 % 2 == 1:
+            ret += random.randint(0, 1)
+            n2 -= 1
+            if n2 == 0:
+                return ret
+        if not n2 in self.binomialinfo:
+            # TODO: Avoid floating-point here
+            bm = int(math.sqrt(n2)) + 1
+            bi = [bm, {}]
+            self.binomialinfo[n2] = bi
+        halfn = n2 // 2
+        m = self.binomialinfo[n2][0]
+        bincos = self.binomialinfo[n2][1]
+        while True:
+            pos = self._randbit() == 0
+            k = 0
+            while self._randbit() == 0:
+                k += 1
+            r = k * m + random.randint(0, m - 1)
+            rv = halfn + r if pos else halfn - r - 1
+            if rv >= 0 and rv <= n2:
+                psrn = psrnexpo()
+                psrn[0] = -1  # Turn the PSRN negative
+                success = 0
+                if not (rv in bincos):
+                    bincos[rv] = [None, 4]
+                if bincos[rv][0] == None:
+                    # Calculate log of acceptance probability on demand
+                    v = 4
+                    bincos[rv][0] = (
+                        interval.logbinco(n2, rv, v)
+                        + self._logint(m, v)
+                        + self._logint(2, v) * (k - (n2 + 2))
+                    ).truncate()
+                    # print([rv,v,bincos[rv][0]])
+                    bincos[rv][1] = v
+                while True:
+                    if psrn_less_than_rational(psrn, bincos[rv][0].inf) == 1:
+                        # Less than log of acceptance probability
+                        success = 1
+                        break
+                    if psrn_less_than_rational(psrn, bincos[rv][0].sup) == 0:
+                        # Greater than log of acceptance probability
+                        success = 0
+                        break
+                    # Calculate more precise bounds for the log of acceptance probability
+                    bincos[rv][1] += 2
+                    v = bincos[rv][1]
+                    bc = (
+                        interval.logbinco(n2, rv, v)
+                        + self._logint(m, v)
+                        + self._logint(2, v) * (k - (n2 + 2))
+                    ).truncate()
+                    bincos[rv][0] = bc
+                if success:
+                    return rv
+
 def rayleigh(bern, s=1):
     k = 0
     # Choose a piece according to Rayleigh distribution function
@@ -737,14 +880,14 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
     # when ax/ay is in (0, 1].  Described in Devroye 1986, p. 180.
     while True:
         ret = _power_of_uniform_greaterthan1_geobag(bern, Fraction(ay, ax))
-        ret = _geobag_to_urand(ret)
+        ret = [1, 0, ret]
         w = ret
         k = 1
         while True:
-            u = randomgen.urandnew()
-            if randomgen.urandless(rg, w, u):
+            u = psrn_new_01()
+            if psrn_less(w, u):
                 if (k & 1) == 1:
-                    return randomgen.urandfill(rg, ret, precision) / (1 << precision)
+                    return psrn_fill(ret, precision)
                 break
             w = u
             k += 1
