@@ -707,6 +707,7 @@ class FInterval:
             # Numerator and denominator of lower bound
             va = 0
             vb = 1
+            vtrunc = 0
             for i in range(1, 2 * n + 1):
                 vc = xmn
                 vd = xmd * i
@@ -729,7 +730,6 @@ class FInterval:
             vd = xmd * i
             ua = va * vd + vb * vc
             ub = vb * vd
-            # print([va,vb,ua,ub])
             ret = Fraction(va, vb)
             upper = Fraction(ua, ub)
             return FInterval(ret, upper)
@@ -932,19 +932,26 @@ _BERNNUMBERS = [
     Fraction(5, 66),
     0,
 ]
+_extrabernnumbers = {}
 
 def bernoullinum(n):
+    global _extrabernnumbers
     if n % 2 == 1:
         return 0
     if n < len(_BERNNUMBERS):
         return _BERNNUMBERS[n]
+    if n in _extrabernnumbers:
+        return _extrabernnumbers[n]
+    # print(n)
     v = 1
     v += Fraction(-(n + 1), 2)
     i = 2
     while i < n:
         v += binco(n + 1, i) * bernoullinum(i)
         i += 2
-    return -v / (n + 1)
+    ret = -v / (n + 1)
+    _extrabernnumbers[n] = ret
+    return ret
 
 _logpi2cache = {}
 
@@ -982,7 +989,10 @@ def loggamma(k, v=4):
 def logbinco(n, k, v=4):
     # Log binomial coefficient.
     # v is an accuracy parameter.
-    r = loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
+    if k + 1 == (n - k) + 1:
+        r = loggamma(n + 1, v) - loggamma(k + 1, v) * 2
+    else:
+        r = loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
     return r.truncate()
 
 def logbinprob(n, k, v=4):
