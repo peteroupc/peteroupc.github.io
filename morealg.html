@@ -170,18 +170,15 @@
 
 <ul>
 <li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
-<li>If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return&mdash;
+<li><p>If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return&mdash;</p>
 
 <ul>
 <li><em>YES</em> if all the shape&#39;s corners are in the shape;</li>
 <li><em>NO</em> if none of the shape&#39;s corners are in the shape and if the shape&#39;s boundary does not intersect with the box&#39;s boundary; and</li>
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
-</ul></li>
 </ul>
 
-<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p>
-
-<ul>
+<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p></li>
 <li><strong>InShape</strong> implementations often involve a shape&#39;s <em>signed distance field</em>, its <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), or its <em>implicit surface</em> equation (for closed surfaces).</li>
 </ul></li>
 <li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:

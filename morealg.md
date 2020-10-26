@@ -121,11 +121,11 @@ The following is a general way to describe an arbitrary-precision sampler for ge
 4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  _Implementation notes:_
     - **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
     - If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
-        - _YES_ if all the shape's corners are in the shape;
-        - _NO_ if none of the shape's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
+        - _YES_ if all the box's corners are in the shape;
+        - _NO_ if none of the box's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
         - _MAYBE_ in any other case, or if the function is unsure.
 
-    In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
+        In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
     - **InShape** implementations often involve a shape's _signed distance field_, its _implicit curve_ or _algebraic curve_ equation (for closed curves), or its _implicit surface_ equation (for closed surfaces).
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
