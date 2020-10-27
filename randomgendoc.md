@@ -548,6 +548,18 @@ CLASSES
      |
      |  binomial_int(self, trials, px, py)
      |
+     |  boundedGeometric(self, px, py, n)
+     |      Generates a bounded geometric random number, defined
+     |      here as the number of failures before the first success (but no more than n),
+     |      where the probability of success in
+     |      each trial is px/py.
+     |
+     |      Reference:
+     |      Bringmann, K. and Friedrich, T., 2013, July. Exact and efficient generation
+     |      of geometric random variates and random graphs, in
+     |      _International Colloquium on Automata, Languages, and
+     |      Programming_ (pp. 267-278).
+     |
      |  cauchy(self)
      |
      |  choice(self, list)

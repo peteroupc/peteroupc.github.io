@@ -2111,6 +2111,171 @@ Returns 'list'. """
             if self.zero_or_one(a.numerator, a.denominator) == 1:
                 return w
 
+    # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
+    # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
+    # 65–67. DOI: https://doi.org/10.1145/820127.820168
+    def _binco(n, k):
+        vnum = 1
+        vden = 1
+        for i in range(n - k + 1, n + 1):
+            vnum *= i
+            vden *= n - i + 1
+        return vnum // vden
+
+    def _sampleOnePToN(self, p, n):
+        # Returns 1 with probability (1-p)^n, where
+        # n*p <= 1.
+        pi = 0
+        r = 0
+        i = 1
+        for j in range(n + 1):
+            pi += RandomGen._binco(n, j) * (-p) ** j
+            if j >= 2:
+                r = (r << 1) + self.randbit()
+                ak = r
+                bk = int(pi * 2 ** i)
+                if ak <= bk - 2:
+                    return 1
+                if ak >= bk + 1:
+                    return 0
+                i += 1
+        while True:
+            r = (r << 1) + self.randbit()
+            ak = r
+            bk = int(pi * 2 ** i)
+            if ak <= bk - 2:
+                return 1
+            if ak >= bk + 1:
+                return 0
+            i += 1
+
+    def _sampleOnePToM(self, p, k, returnBitCount=False):
+        # With probability (1-p)^m, returns m, where
+        # m is uniform in [0, 2^k) and (2^k)*p <= 1.
+        # Otherwise, returns -1.
+        r = 0
+        i = 1
+        m = 0
+        mbit = k - 1
+        pi = 0
+        while i <= k:
+            m |= self.randbit() << mbit
+            mbit -= 1
+            pi = 0
+            if i == k:
+                # All of m was sampled, so calculate whole
+                # probability
+                for j in range(m + 1):
+                    pi += RandomGen._binco(m, j) * (-p) ** j
+                    if j + 1 == i + 2:
+                        # Approximation of binomial equivalent (using real m)
+                        # with i+2 summands (j+1 summands given that j
+                        # starts at 0)
+                        r = (r << 1) + self.randbit()
+                        ak = r
+                        bk = int(pi * 2 ** i)
+                        if ak <= bk - 2:
+                            if returnBitCount:
+                                return m, mbit
+                            while mbit >= 0:
+                                m |= self.randbit() << mbit
+                                mbit -= 1
+                            return m
+                        if ak >= bk + 1:
+                            if returnBitCount:
+                                return -1, 0
+                            return -1
+                        i += 1
+                break
+            else:
+                # If i < k, sum i+2 summands of the binomial equivalent
+                # of the probability, using high bits of m
+                for j in range(min(m + 1, i + 2 + 1)):
+                    pi += RandomGen._binco(m, j) * (-p) ** j
+                r = (r << 1) + self.randbit()
+                ak = r
+                bk = int(pi * 2 ** i)
+                if ak <= bk - 2:
+                    if returnBitCount:
+                        return m, mbit
+                    while mbit >= 0:
+                        m |= self.randbit() << mbit
+                        mbit -= 1
+                    return m
+                if ak >= bk + 1:
+                    if returnBitCount:
+                        return -1, 0
+                    return -1
+                i += 1
+        while True:
+            r = (r << 1) + self.randbit()
+            ak = r
+            bk = int(pi * 2 ** i)
+            if ak <= bk - 2:
+                if returnBitCount:
+                    return m, mbit
+                while mbit >= 0:
+                    m |= self.randbit() << mbit
+                    mbit -= 1
+                return m
+            if ak >= bk + 1:
+                if returnBitCount:
+                    return -1, 0
+                return -1
+            i += 1
+
+    def boundedGeometric(self, px, py, n):
+        """ Generates a bounded geometric random number, defined
+           here as the number of failures before the first success (but no more than n),
+           where the probability of success in
+           each trial is px/py.
+
+           Reference:
+           Bringmann, K. and Friedrich, T., 2013, July. Exact and efficient generation
+           of geometric random variates and random graphs, in
+           _International Colloquium on Automata, Languages, and
+           Programming_ (pp. 267-278).
+           """
+        if py == 0:
+            raise ValueError
+        if px >= py:
+            return 0
+        # Use the trivial algorithm if success
+        # probability is high enough
+        p = Fraction(px, py)
+        if p > Fraction(1, 10):
+            return min(n, self.negativebinomialint(1, px, py))
+        # Calculate k for px/py
+        k = 0
+        pt = p
+        m2 = 1 << n.bit_length()
+        while pt * 2 <= 1:
+            k += 1
+            pt *= 2
+        # Start bounded geometric sampler
+        d = 0
+        while self._sampleOnePToN(p, 1 << k) == 1:
+            d += 1
+            if (d << k) >= m2:
+                return n
+        while True:
+            m, mbit = self._sampleOnePToM(p, k, True)
+            # print(["sampling",m,mbit])
+            if m >= 0:
+                while mbit >= 0:
+                    b = self.randbit()
+                    m |= b << mbit
+                    mbit -= 1
+                    if b == 1:
+                        break
+                if (d << k) + m >= m2:
+                    return n
+                while mbit >= 0:
+                    b = self.randbit()
+                    m |= b << mbit
+                    mbit -= 1
+                return min(n, (d << k) + m)
+
     def negativebinomialint(self, successes, px, py):
         """ Generates a negative binomial random number, defined
            here as the number of failures before 'successes' many
@@ -2128,8 +2293,8 @@ Returns 'list'. """
                 r += self.negativebinomialint(1, px, py)
             return r
         # Geometric distribution for successes=1
-        px = py - px
-        if px * 10 < py:
+        p = Fraction(px, py)
+        if p > Fraction(1, 10):
             # Use the trivial algorithm if success
             # probability is high enough
             count = 0
@@ -2138,27 +2303,26 @@ Returns 'list'. """
                     return count
                 count += 1
             return count
-        # Based on the algorithm given in Bringmann, K.
+        # Implements the algorithm given in Bringmann, K.
         # and Friedrich, T., 2013, July. Exact and efficient generation
         # of geometric random variates and random graphs, in
         # _International Colloquium on Automata, Languages, and
         # Programming_ (pp. 267-278).
+        # Calculate k for px/py
+        k = 0
+        p = Fraction(px, py)
+        pt = p
+        while pt * 2 <= 1:
+            k += 1
+            pt *= 2
+        # Start geometric sampler
         d = 0
-        k = 4
-        while self.zero_or_one_power(px, py, 1 << k) == 1:
+        while self._sampleOnePToN(p, 1 << k) == 1:
             d += 1
-        m = 0
-        accepted = False
-        while not accepted:
-            m = 0
-            accepted = True
-            for i in range(k):
-                mb = self.rndint(1) << (k - 1 - i)
-                m |= mb
-                if self.zero_or_one_power(px, py, mb) == 0:
-                    accepted = False
-                    break
-        return (d << k) + m
+        while True:
+            m = self._sampleOnePToM(p, k)
+            if m >= 0:
+                return (d << k) + m
 
     def negativebinomial(self, successes, p):
         if successes < 0:
@@ -2172,14 +2336,18 @@ Returns 'list'. """
         if True or int(successes) != successes or successes > 1000:
             return self.poisson(self.gamma(successes) * (1 - p) / p)
         else:
-            count = 0
-            while True:
-                if self.bernoulli(p) == 1:
-                    successes -= 1
-                    if successes <= 0:
-                        return count
-                else:
-                    count += 1
+            if p > 0.3:
+                count = 0
+                while True:
+                    if self.bernoulli(p) == 1:
+                        successes -= 1
+                        if successes <= 0:
+                            return count
+                    else:
+                        count += 1
+            else:
+                pf = Fraction(p)
+                return negativebinomialint(successes, pf.numerator, pf.denominator)
 
     def dirichlet(alphas):
         gammas = [self.gamma(x, 1) for x in alphas]

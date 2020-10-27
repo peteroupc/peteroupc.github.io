@@ -210,10 +210,10 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 
 An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup>[**(15)**](#Note15)</sup>):
 
-- (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= &beta;<sup>&minus;_i_ &minus; 1</sup>.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point.  For example, if **b** is &pi;, &beta; is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
-- (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point.
-- (8.) Return 1 if _ak_ <= _bk_ &minus; 2.
-- (9.) Return 0 if _ak_ >= _bk_ + 1.
+- (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= &beta;<sup>&minus;_i_ &minus; 1</sup>, and such that _bp_ has the same sign as **b**.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).  For example, if **b** is &pi; or &minus;&pi;, &beta; is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
+- (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).
+- (8.) If _ak_ <= _bk_ &minus; 2, return either 1 if **a**'s sign is positive or 0 otherwise.
+- (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.
 
 **URandLessThanReal** is a version of **RandLessThanReal** in which **a** is a uniform PSRN.  The algorithm for **URandLessThanReal** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random.
 

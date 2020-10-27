@@ -297,10 +297,10 @@
 <p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>):</p>
 
 <ul>
-<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.  For example, if <strong>b</strong> is &pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
-<li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point.</li>
-<li>(8.) Return 1 if <em>ak</em> &lt;= <em>bk</em> &minus; 2.</li>
-<li>(9.) Return 0 if <em>ak</em> &gt;= <em>bk</em> + 1.</li>
+<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
+<li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).</li>
+<li>(8.) If <em>ak</em> &lt;= <em>bk</em> &minus; 2, return either 1 if <strong>a</strong>&#39;s sign is positive or 0 otherwise.</li>
+<li>(9.) If <em>ak</em> &gt;= <em>bk</em> + 1, return either 1 if <strong>a</strong>&#39;s sign is negative or 0 otherwise.</li>
 </ul>
 
 <p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
