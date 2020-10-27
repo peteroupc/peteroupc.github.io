@@ -198,7 +198,7 @@
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p></li>
-<li>If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the box crosses the shape at most once, then <strong>InShape</strong> can return&mdash;
+<li>If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the enclosing hypercube crosses the shape at most once, then <strong>InShape</strong> can return&mdash;
 
 <ul>
 <li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
@@ -220,8 +220,8 @@
 <p><strong>Examples:</strong></p>
 
 <ul>
-<li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>; and <em>MAYBE</em> otherwise.  For a full circle, step 5.3 in the algorithm is done for all <em>N</em> dimensions.</li>
-<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em><sup>2</sup>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em><sup>2</sup>; and <em>MAYBE</em> otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all <em>N</em> dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).</li>
+<li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>; and <em>MAYBE</em> otherwise.  For a full diamond, step 5.3 in the algorithm is done for all <em>N</em> dimensions.</li>
+<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>; and <em>MAYBE</em> otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all <em>N</em> dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).</li>
 </ul>
 </blockquote>
 

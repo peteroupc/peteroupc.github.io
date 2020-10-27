@@ -140,7 +140,7 @@ The following is a general way to describe an arbitrary-precision sampler for ge
 >         - _MAYBE_ in any other case, or if the function is unsure.
 >
 >         In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
->     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the box crosses the shape at most once, then **InShape** can return&mdash;
+>     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the enclosing hypercube crosses the shape at most once, then **InShape** can return&mdash;
 >         - _YES_ if all the box's corners are in the shape;
 >         - _NO_ if none of the box's corners are in the shape; and
 >         - _MAYBE_ in any other case, or if the function is unsure.
@@ -153,8 +153,8 @@ The following is a general way to describe an arbitrary-precision sampler for ge
 >
 > **Examples:**
 >
-> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full circle, step 5.3 in the algorithm is done for all _N_ dimensions.
-> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_<sup>2</sup>; _NO_ if (_c1_ + ... + _cN_) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
+> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full diamond, step 5.3 in the algorithm is done for all _N_ dimensions.
+> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < _S_<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
 
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
