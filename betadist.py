@@ -839,7 +839,7 @@ def rayleigh(bern, s=1):
             return bern.fill_geometric_bag(bag) + k
 
 def genshape(inshape):
-    """ Generates a random point inside a shape, in the form of a uniform PSRN.
+    """ Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
          inshape is a function that takes three parameters (x, y, s) and
          returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
          -1 if not; and 0 if partially. """
@@ -871,6 +871,73 @@ def genshape(inshape):
             else:
                 s *= base
                 d += 1
+
+class ShapeSampler:
+    def __init__(self, inshape):
+        """ Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
+       inshape is a function that takes three parameters (x, y, s) and
+       returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
+       -1 if not; and 0 if partially.
+       """
+        self.yeses = []
+        self.maybes = []
+        self.base = 2
+        self.k = 4
+        self.inshape = inshape
+        s = self.base ** self.k
+        for x in range(s):
+            for y in range(s):
+                v = inshape(x, y, s)
+                if v == 1:
+                    self.yeses.append([x, y])
+                if v == 0:
+                    self.maybes.append([x, y])
+
+    def sample(self):
+        """ Generates a random point inside the shape, in the form of a uniform PSRN. """
+        psrnx = psrn_new_01()
+        psrny = psrn_new_01()
+        done = False
+        d = 1
+        while not done:
+            s = self.base
+            cx = 0
+            cy = 0
+            box = random.randint(0, len(self.yeses) + len(self.maybes) - 1)
+            d = self.k
+            if box < len(self.yeses):
+                cx = self.yeses[box][0]
+                cy = self.yeses[box][1]
+                s = self.base ** self.k
+                break
+            else:
+                box -= len(self.yeses)
+                cx = self.maybes[box][0]
+                cy = self.maybes[box][1]
+                s = self.base ** (self.k + 1)
+                d += 1
+            while True:
+                cx = cx * self.base + random.randint(0, self.base - 1)
+                cy = cy * self.base + random.randint(0, self.base - 1)
+                el = self.inshape(cx, cy, s)
+                if el > 0:
+                    done = True
+                    break
+                elif el < 0:
+                    break
+                else:
+                    s *= self.base
+                    d += 1
+        psrnx[2] = [0 for i in range(d)]
+        psrny[2] = [0 for i in range(d)]
+        for i in range(d):
+            psrnx[2][d - 1 - i] = cx % self.base
+            cx //= self.base
+            psrny[2][d - 1 - i] = cy % self.base
+            cy //= self.base
+        psrnx[0] = -1 if random.randint(0, 1) == 0 else 1
+        psrny[0] = -1 if random.randint(0, 1) == 0 else 1
+        return [psrnx, psrny]
 
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return bern.fill_geometric_bag(

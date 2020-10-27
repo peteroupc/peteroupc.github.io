@@ -1670,7 +1670,7 @@ If the distribution **has a known quantile function**, generate a uniform random
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
 - Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., `ICDF(RNDU01ZeroOneExc())`) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup>[**(43)**](#Note43)</sup>.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of 1/`BASE`<sup>`precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` calculates a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
+The following method generates a random number from a distribution via inversion, with an accuracy of 1/`BASE`<sup>`precision`</sup> ((Devroye and Gravel 2015)<sup>[**(59)**](#Note59)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(60)**](#Note60)</sup>).  In the method, `ICDF(u, ubits, prec)` returns a two-item list containing upper and lower bounds, respectively, of a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0
@@ -1685,12 +1685,11 @@ The following method generates a random number from a distribution via inversion
           // u = mod(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
           u=u*pow(BASE,incr)+RNDINTEXC(pow(BASE,incr))
           ubits=ubits+incr
-          lower=ICDF(u,ubits,precision)
-          upper=ICDF(u+1,ubits,precision)
-          // Quantile can never go down
+          // Get upper and lower bound
+          bounds=ICDF(u,ubits,precision)
           if lower>upper: return error
-          diff=upper-lower
-          if diff<=threshold: return upper+diff/2
+          diff=bounds[1]-bounds[0]
+          if diff<=threshold: return bounds[1]+diff/2
        end
     end
 
@@ -2066,7 +2065,7 @@ The following are some additional articles I have written on the topic of random
 * [**More Random Number Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
 * [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
 * [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
-* [**Partially-Sampled Random Numbers for Accurate Sampling of the Beta, Exponential, and Other Continuous Distributions**](https://peteroupc.github.io/exporand.html)
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
 * [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)
 * [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.html)
