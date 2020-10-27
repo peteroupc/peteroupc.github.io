@@ -838,6 +838,40 @@ def rayleigh(bern, s=1):
             # Accepted
             return bern.fill_geometric_bag(bag) + k
 
+def genshape(inshape):
+    """ Generates a random point inside a shape, in the form of a uniform PSRN.
+         inshape is a function that takes three parameters (x, y, s) and
+         returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
+         -1 if not; and 0 if partially. """
+    psrnx = psrn_new_01()
+    psrny = psrn_new_01()
+    base = 2
+    while True:
+        s = base
+        cx = 0
+        cy = 0
+        d = 1
+        while True:
+            cx = cx * base + random.randint(0, base - 1)
+            cy = cy * base + random.randint(0, base - 1)
+            el = inshape(cx, cy, s)
+            if el > 0:
+                psrnx[2] = [0 for i in range(d)]
+                psrny[2] = [0 for i in range(d)]
+                for i in range(d):
+                    psrnx[2][d - 1 - i] = cx % base
+                    cx //= base
+                    psrny[2][d - 1 - i] = cy % base
+                    cy //= base
+                psrnx[0] = -1 if random.randint(0, 1) == 0 else 1
+                psrny[0] = -1 if random.randint(0, 1) == 0 else 1
+                return [psrnx, psrny]
+            elif el < 0:
+                break
+            else:
+                s *= base
+                d += 1
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return bern.fill_geometric_bag(
         _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision

@@ -2164,7 +2164,6 @@ DESCRIPTION
 CLASSES
     builtins.object
         FInterval
-        Interval
 
     class FInterval(builtins.object)
      |  An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
@@ -2279,6 +2278,47 @@ CLASSES
      |  __weakref__
      |      list of weak references to the object (if defined)
 
+FUNCTIONS
+    bernoullinum(n)
+
+    binco(n, k)
+        # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
+        # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
+        # 65–67. DOI: [https://doi.org/10.1145/820127.820168](https://doi.org/10.1145/820127.820168)
+        # NOTE: A logarithmic version of this formula is trivial to derive
+        # from this one, but it's rather slow compared to log gamma:
+        # instead of the product, take the sum of logarithms.
+
+    logbinco(n, k, v=4)
+
+    logbinprob(n, k, v=4)
+
+    loggamma(k, v=4)
+
+FILE
+    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
+
+```
+
+```
+Help on module moore:
+
+NAME
+    moore
+
+DESCRIPTION
+    #  Implements the Moore Rejection Sampler.
+    #
+    #  Written by Peter O. Any copyright to this file is released to the Public Domain.
+    #  In case this is not possible, this file is also licensed under Creative Commons Zero
+    #  (https://creativecommons.org/publicdomain/zero/1.0/).
+    #
+
+CLASSES
+    builtins.object
+        Interval
+        MooreSampler
+
     class Interval(builtins.object)
      |  An interval of two Decimal values.
      |
@@ -2362,46 +2402,6 @@ CLASSES
      |
      |  __weakref__
      |      list of weak references to the object (if defined)
-
-FUNCTIONS
-    bernoullinum(n)
-
-    binco(n, k)
-        # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
-        # recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
-        # 65–67. DOI: [https://doi.org/10.1145/820127.820168](https://doi.org/10.1145/820127.820168)
-        # NOTE: A logarithmic version of this formula is trivial to derive
-        # from this one, but it's rather slow compared to log gamma:
-        # instead of the product, take the sum of logarithms.
-
-    logbinco(n, k, v=4)
-
-    logbinprob(n, k, v=4)
-
-    loggamma(k, v=4)
-
-FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
-
-```
-
-```
-Help on module moore:
-
-NAME
-    moore
-
-DESCRIPTION
-    #  Implements the Moore Rejection Sampler.
-    #
-    #  Written by Peter O. Any copyright to this file is released to the Public Domain.
-    #  In case this is not possible, this file is also licensed under Creative Commons Zero
-    #  (https://creativecommons.org/publicdomain/zero/1.0/).
-    #
-
-CLASSES
-    builtins.object
-        MooreSampler
 
     class MooreSampler(builtins.object)
      |  Moore rejection sampler, for generating independent samples
