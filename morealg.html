@@ -24,15 +24,19 @@
 <li><a href="#Certain_Numbers_Based_on_the_Golden_Ratio"><strong>Certain Numbers Based on the Golden Ratio</strong></a></li>
 <li><a href="#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1"><strong>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>n</em>)/&gamma;(<em>m</em>, 1)).</strong></a></li>
 </ul></li>
-<li><a href="#Arbitrary_Precision_Samplers"><strong>Arbitrary-Precision Samplers</strong></a>
+<li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
+
+<ul>
+<li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
+<li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
+<li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
+</ul></li>
+<li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
 
 <ul>
 <li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
-<li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
 <li><a href="#Sum_of_Exponential_Random_Numbers"><strong>Sum of Exponential Random Numbers</strong></a></li>
 <li><a href="#Hyperbolic_Secant_Distribution"><strong>Hyperbolic Secant Distribution</strong></a></li>
-<li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
-<li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
 <li><a href="#Reciprocal_of_Power_of_Uniform"><strong>Reciprocal of Power of Uniform</strong></a></li>
 <li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
 <li><a href="#Arc_cosine_Distribution"><strong>Arc-cosine Distribution</strong></a></li>
@@ -105,62 +109,25 @@
 <li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>n</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform PSRN, this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
 </ol>
 
-<p><a id=Arbitrary_Precision_Samplers></a></p>
+<p><a id=General_Arbitrary_Precision_Samplers></a></p>
 
-<h2>Arbitrary-Precision Samplers</h2>
+<h2>General Arbitrary-Precision Samplers</h2>
 
-<p><a id=Rayleigh_Distribution></a></p>
-
-<h3>Rayleigh Distribution</h3>
-
-<p>The following is an arbitrary-precision sampler for the Rayleigh distribution with parameter <em>s</em>, which is a rational number greater than 0.</p>
-
-<ol>
-<li>Set <em>k</em> to 0, and set <em>y</em> to 2 * <em>s</em> * <em>s</em>.</li>
-<li>With probability exp(&minus;(<em>k</em> * 2 + 1)/<em>y</em>), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.  (The probability check should be done with the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with <em>x</em>/<em>y</em> = (<em>k</em> * 2 + 1)/<em>y</em>.)</li>
-<li>(Now we sample the piece located at [<em>k</em>, <em>k</em> + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of <strong>SampleGeometricBag</strong> on that uniform PSRN.</li>
-<li>Set <em>ky</em> to <em>k</em> * <em>k</em> / <em>y</em>.</li>
-<li>(At this point, we simulate exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the same algorithm using the same input coin, <em>x</em> = <em>k</em> * 2 / <em>y</em>, and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
-<li>If the uniform PSRN, call it <em>ret</em>, was accepted by step 5, set <em>ret</em>&#39;s integer part to <em>k</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
-</ol>
-
-<p>The sub-algorithm below simulates a probability equal to (<em>U</em>+<em>k</em>)/<em>base</em><sup><em>z</em></sup>, where <em>U</em> is the number built by the uniform PSRN, <em>base</em> is the base (radix) of digits stored by that PSRN, <em>k</em> is an integer 0 or greater, and <em>z</em> is the number of significant digits in <em>k</em> (for this purpose, <em>z</em> is 0 if <em>k</em> is 0).</p>
-
-<p>For base 2:</p>
-
-<ol>
-<li> Set <em>N</em> to 0.</li>
-<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
-<li> If <em>N</em> is less than <em>z</em>, return rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>N</em></sup>, 2).  (Alternatively, shift <em>k</em> to the right, by <em>z</em> &minus; 1 &minus; <em>N</em> bits, then return <em>k</em> <em>AND</em> 1, where &quot;<em>AND</em>&quot; is a bitwise AND-operation.)</li>
-<li> Subtract <em>z</em> from <em>N</em>.  Then, if the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the capacity of the uniform PSRN&#39;s fractional part as necessary.</li>
-<li> Return the item at position <em>N</em>.</li>
-</ol>
-
-<p>For bases other than 2, such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
-
-<ol>
-<li>Set <em>i</em> to 0.</li>
-<li>If <em>i</em> is less than <em>z</em>:
-
-<ol>
-<li>Set <em>da</em> to rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>i</em></sup>, <em>base</em>), and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
-<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
-</ol></li>
-<li>If <em>i</em> is <em>z</em> or greater:
-
-<ol>
-<li>If the digit at position (<em>i</em> &minus; <em>z</em>) in the uniform PSRN&#39;s fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.).</li>
-<li>Set <em>da</em> to the item at that position, and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
-<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
-</ol></li>
-<li>Add 1 to <em>i</em> and go to step 3.</li>
-</ol>
+<p>&nbsp;</p>
 
 <p><a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a></p>
 
 <h3>Uniform Distribution Inside N-Dimensional Shapes</h3>
 
-<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space, provided the shape&#39;s boundary has zero volume.  Such a description has the following skeleton.</p>
+<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that&mdash;</p>
+
+<ul>
+<li>the shape&#39;s volume must be nonzero,</li>
+<li>the shape must have a zero-volume boundary, and</li>
+<li>the shape must assign zero probability to any zero-volume subset of it (such as a set of individual points).</li>
+</ul>
+
+<p>The sampler&#39;s description has the following skeleton.</p>
 
 <ol>
 <li>Generate <em>N</em> empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
@@ -205,11 +172,11 @@
 <li><em>NO</em> if none of the box&#39;s corners are in the shape; and</li>
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
 </ul></li>
-<li>If <strong>InShape</strong> expresses a shape in the form of a <em>signed distance field</em>, it can return&mdash;
+<li>If <strong>InShape</strong> expresses a shape in the form of a <a href="https://en.wikipedia.org/wiki/Signed_distance_function"><strong><em>signed distance function</em></strong></a> (<em>signed distance field</em>), namely a function that describes the closest distance from any point in space to the shape&#39;s boundary, it can return&mdash;
 
 <ul>
-<li><em>YES</em> if the signed distance at each of the box&#39;s corners (after dividing their coordinates by <em>S</em>) is less than &minus;&sigma; (where &sigma; is an upper bound for sqrt(<em>N</em>)/(<em>S</em>*2), such as 1/<em>S</em>);</li>
-<li><em>NO</em> if the signed distance at each of the box&#39;s corners is greater than &sigma;; and</li>
+<li><em>YES</em> if the signed distance at each of the box&#39;s corners (after dividing their coordinates by <em>S</em>) is less than &minus;<em>&sigma;</em> (where <em>&sigma;</em> is an upper bound for sqrt(<em>N</em>)/(<em>S</em>*2), such as 1/<em>S</em>);</li>
+<li><em>NO</em> if the signed distance at each of the box&#39;s corners is greater than <em>&sigma;</em>; and</li>
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
 </ul></li>
 <li><strong>InShape</strong> implementations can also involve a shape&#39;s <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), or its <em>implicit surface</em> equation (for closed surfaces).</li>
@@ -231,44 +198,6 @@
 <li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>; and <em>MAYBE</em> otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all <em>N</em> dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).</li>
 </ul>
 </blockquote>
-
-<p><a id=Sum_of_Exponential_Random_Numbers></a></p>
-
-<h3>Sum of Exponential Random Numbers</h3>
-
-<p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of <em>n</em>.</p>
-
-<ol>
-<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
-<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>algorithm to add two PSRNs</strong></a> given in another document.</li>
-</ol>
-
-<p><a id=Hyperbolic_Secant_Distribution></a></p>
-
-<h3>Hyperbolic Secant Distribution</h3>
-
-<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup> for arbitrary-precision sampling.</p>
-
-<ol>
-<li>Generate a uniform PSRN, call it <em>ret</em>, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.</li>
-<li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
-<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to positive or negative with equal probability, then return <em>ret</em>.</li>
-<li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
-</ol>
-
-<p><a id=Mixtures></a></p>
-
-<h3>Mixtures</h3>
-
-<p>A <em>mixture</em> involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:</p>
-
-<ul>
-<li>There is a finite number of distributions to choose from.</li>
-<li>The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> exists.</li>
-<li>For each distribution, an arbitrary-precision sampler exists.</li>
-</ul>
-
-<p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
 
 <p><a id=Building_an_Arbitrary_Precision_Sampler></a></p>
 
@@ -319,6 +248,97 @@
 <blockquote>
 <p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup><a href="#Note4"><strong>(4)</strong></a></sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
+
+<p><a id=Mixtures></a></p>
+
+<h3>Mixtures</h3>
+
+<p>A <em>mixture</em> involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:</p>
+
+<ul>
+<li>There is a finite number of distributions to choose from.</li>
+<li>The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli factory algorithm</strong></a> exists.</li>
+<li>For each distribution, an arbitrary-precision sampler exists.</li>
+</ul>
+
+<p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
+
+<p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
+
+<h2>Specific Arbitrary-Precision Samplers</h2>
+
+<p>&nbsp;</p>
+
+<p><a id=Rayleigh_Distribution></a></p>
+
+<h3>Rayleigh Distribution</h3>
+
+<p>The following is an arbitrary-precision sampler for the Rayleigh distribution with parameter <em>s</em>, which is a rational number greater than 0.</p>
+
+<ol>
+<li>Set <em>k</em> to 0, and set <em>y</em> to 2 * <em>s</em> * <em>s</em>.</li>
+<li>With probability exp(&minus;(<em>k</em> * 2 + 1)/<em>y</em>), go to step 3.  Otherwise, add 1 to <em>k</em> and repeat this step.  (The probability check should be done with the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, with <em>x</em>/<em>y</em> = (<em>k</em> * 2 + 1)/<em>y</em>.)</li>
+<li>(Now we sample the piece located at [<em>k</em>, <em>k</em> + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of <strong>SampleGeometricBag</strong> on that uniform PSRN.</li>
+<li>Set <em>ky</em> to <em>k</em> * <em>k</em> / <em>y</em>.</li>
+<li>(At this point, we simulate exp(&minus;<em>U</em><sup>2</sup>/<em>y</em>), exp(&minus;<em>k</em><sup>2</sup>/<em>y</em>) , exp(&minus;<em>U</em>*<em>k</em>*2/<em>y</em>), as well as a scaled-down version of <em>U</em> + <em>k</em>, where <em>U</em> is the number built up by the uniform PSRN.) Call the <strong>exp(&minus;<em>x</em>/<em>y</em>) algorithm</strong> with <em>x</em>/<em>y</em> = <em>ky</em>, then call the <strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>)) algorithm</strong> using the input coin from step 2, <em>x</em> = 1/<em>y</em>, and <em>k</em> = 2, then call the same algorithm using the same input coin, <em>x</em> = <em>k</em> * 2 / <em>y</em>, and <em>k</em> = 1, then call the <strong>sub-algorithm</strong> given later with the uniform PSRN and <em>k</em> = <em>k</em>.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN&#39;s fractional part and go to step 4.</li>
+<li>If the uniform PSRN, call it <em>ret</em>, was accepted by step 5, set <em>ret</em>&#39;s integer part to <em>k</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), and return <em>ret</em>.</li>
+</ol>
+
+<p>The sub-algorithm below simulates a probability equal to (<em>U</em>+<em>k</em>)/<em>base</em><sup><em>z</em></sup>, where <em>U</em> is the number built by the uniform PSRN, <em>base</em> is the base (radix) of digits stored by that PSRN, <em>k</em> is an integer 0 or greater, and <em>z</em> is the number of significant digits in <em>k</em> (for this purpose, <em>z</em> is 0 if <em>k</em> is 0).</p>
+
+<p>For base 2:</p>
+
+<ol>
+<li> Set <em>N</em> to 0.</li>
+<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
+<li> If <em>N</em> is less than <em>z</em>, return rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>N</em></sup>, 2).  (Alternatively, shift <em>k</em> to the right, by <em>z</em> &minus; 1 &minus; <em>N</em> bits, then return <em>k</em> <em>AND</em> 1, where &quot;<em>AND</em>&quot; is a bitwise AND-operation.)</li>
+<li> Subtract <em>z</em> from <em>N</em>.  Then, if the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the capacity of the uniform PSRN&#39;s fractional part as necessary.</li>
+<li> Return the item at position <em>N</em>.</li>
+</ol>
+
+<p>For bases other than 2, such as 10 for decimal, this can be implemented as follows (based on <strong>URandLess</strong>):</p>
+
+<ol>
+<li>Set <em>i</em> to 0.</li>
+<li>If <em>i</em> is less than <em>z</em>:
+
+<ol>
+<li>Set <em>da</em> to rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>i</em></sup>, <em>base</em>), and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>If <em>i</em> is <em>z</em> or greater:
+
+<ol>
+<li>If the digit at position (<em>i</em> &minus; <em>z</em>) in the uniform PSRN&#39;s fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.).</li>
+<li>Set <em>da</em> to the item at that position, and set <em>db</em> to a digit chosen uniformly at random (that is, an integer in the interval [0, <em>base</em>)).</li>
+<li>Return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+</ol></li>
+<li>Add 1 to <em>i</em> and go to step 3.</li>
+</ol>
+
+<p><a id=Sum_of_Exponential_Random_Numbers></a></p>
+
+<h3>Sum of Exponential Random Numbers</h3>
+
+<p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of <em>n</em>.</p>
+
+<ol>
+<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>algorithm to add two PSRNs</strong></a> given in another document.</li>
+</ol>
+
+<p><a id=Hyperbolic_Secant_Distribution></a></p>
+
+<h3>Hyperbolic Secant Distribution</h3>
+
+<p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup> for arbitrary-precision sampling.</p>
+
+<ol>
+<li>Generate a uniform PSRN, call it <em>ret</em>, and turn it into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution.</li>
+<li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
+<li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to positive or negative with equal probability, then return <em>ret</em>.</li>
+<li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
+</ol>
 
 <p><a id=Reciprocal_of_Power_of_Uniform></a></p>
 
@@ -424,7 +444,7 @@
 <p>We would like to see new implementations of the following:</p>
 
 <ul>
-<li>Algorithms that implement <strong>InShape</strong> for specific curves and surfaces.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
+<li>Algorithms that implement <strong>InShape</strong> for specific curves, specific surfaces, and specific signed distance functions.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
 <li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
 </ul>
 

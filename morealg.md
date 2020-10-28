@@ -14,13 +14,14 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Bernoulli Factories and Irrational Probability Simulation**](#Bernoulli_Factories_and_Irrational_Probability_Simulation)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1)
-- [**Arbitrary-Precision Samplers**](#Arbitrary_Precision_Samplers)
-    - [**Rayleigh Distribution**](#Rayleigh_Distribution)
+- [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
+    - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
+    - [**Mixtures**](#Mixtures)
+- [**Specific Arbitrary-Precision Samplers**](#Specific_Arbitrary_Precision_Samplers)
+    - [**Rayleigh Distribution**](#Rayleigh_Distribution)
     - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
-    - [**Mixtures**](#Mixtures)
-    - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
     - [**Reciprocal of Power of Uniform**](#Reciprocal_of_Power_of_Uniform)
     - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
     - [**Arc-cosine Distribution**](#Arc_cosine_Distribution)
@@ -73,8 +74,116 @@ An application of the continued fraction algorithm is the following algorithm th
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
 
-<a id=Arbitrary_Precision_Samplers></a>
-## Arbitrary-Precision Samplers
+<a id=General_Arbitrary_Precision_Samplers></a>
+## General Arbitrary-Precision Samplers
+
+&nbsp;
+
+<a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
+### Uniform Distribution Inside N-Dimensional Shapes
+
+The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that&mdash;
+
+- the shape's volume must be nonzero,
+- the shape must have a zero-volume boundary, and
+- the shape must assign zero probability to any zero-volume subset of it (such as a set of individual points).
+
+The sampler's description has the following skeleton.
+
+1. Generate _N_ empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
+2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.
+3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
+4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
+5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
+    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
+    2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    3. For each PSRN, optionally do the following: With probability 1/2, set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
+    4. Return the PSRNs _p1_, ..., _pN_, in that order.
+6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
+7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+
+> **Notes:**
+>
+> - See (Li and El Gamal 2016)<sup>[**(2)**](#Note2)</sup> and (Oberhoff 2018)<sup>[**(3)**](#Note3)</sup> for related work on encoding random points uniformly distributed in a shape.
+> - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
+> - Implementation notes for step 4:
+>
+>     1. **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
+>     2. If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
+>         - _YES_ if all the box's corners are in the shape;
+>         - _NO_ if none of the box's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
+>         - _MAYBE_ in any other case, or if the function is unsure.
+>
+>         In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
+>     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the enclosing hypercube crosses the shape at most once, then **InShape** can return&mdash;
+>         - _YES_ if all the box's corners are in the shape;
+>         - _NO_ if none of the box's corners are in the shape; and
+>         - _MAYBE_ in any other case, or if the function is unsure.
+>     4. If **InShape** expresses a shape in the form of a [**_signed distance function_**](https://en.wikipedia.org/wiki/Signed_distance_function) \(_signed distance field_\), namely a function that describes the closest distance from any point in space to the shape's boundary, it can return&mdash;
+>         - _YES_ if the signed distance at each of the box's corners (after dividing their coordinates by _S_) is less than &minus;_&sigma;_ (where _&sigma;_ is an upper bound for sqrt(_N_)/(_S_\*2), such as 1/_S_);
+>         - _NO_ if the signed distance at each of the box's corners is greater than _&sigma;_; and
+>         - _MAYBE_ in any other case, or if the function is unsure.
+>     5. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), or its _implicit surface_ equation (for closed surfaces).
+> - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
+> - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
+> - The algorithm can be extended to geometric shapes enclosed in the hyperrectangle [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_], where _d1_, ..., _dN_ are integers greater than 0, as follows:
+>     1. Add the following sentence at the end of step 2: "For each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the coordinate's corresponding size."
+>     2. Add the following sentence at the end of the first substep of step 5: "Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate."
+>
+> **Examples:**
+>
+> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full diamond, step 5.3 in the algorithm is done for all _N_ dimensions.
+> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < _S_<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
+
+<a id=Building_an_Arbitrary_Precision_Sampler></a>
+### Building an Arbitrary-Precision Sampler
+
+In many cases, if a continuous distribution&mdash;
+
+- has a probability density function (PDF), or a function proportional to the PDF, with a known symbolic form,
+- has a cumulative distribution function (CDF) with a known symbolic form,
+- takes on only values 0 or greater, and
+- has a PDF that has an infinite tail to the right, is bounded from above (that is, _PDF(0)_ is other than infinity), and decreases monotonically,
+
+it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.
+
+1. With probability _A_, set _intval_ to 0, then set _size_ to 1, then go to step 4.
+    - _A_ is calculated as (_CDF_(1) &minus; _CDF_(0)) / (1&minus;_CDF_(0)), where _CDF_ is the distribution's CDF.  This should be found analytically using a computer algebra system such as SymPy.
+    - The symbolic form of _A_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
+2. Set _intval_ to 1 and set _size_ to 1.
+3. With probability _B_(_size_, _intval_), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
+    - This step chooses an interval beyond 1, and grows this interval by geometric steps, so that an appropriate interval is chosen with the correct probability.
+    - The probability _B_(_size_, _intval_) is the probability that the interval is chosen given that the previous intervals weren't chosen, and is calculated as (_CDF_(_size_ + _intval_) &minus; _CDF_(_intval_)) / (1&minus;_CDF_(_intval_)).  This should be found analytically using a computer algebra system such as SymPy.
+    - The symbolic form of _B_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
+4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
+5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
+6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Run a Bernoulli factory algorithm that simulates the probability _C_(_i_, _&lambda;_), using the input coin (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
+    - The probability _C_(_i_, _&lambda;_) is calculated as _PDF_(_i_ + _&lambda;_) / _M_, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.
+    - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be monotonically decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
+    - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
+7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
+
+Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, given later.
+
+Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
+
+> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(4)**](#Note4)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
+
+<a id=Mixtures></a>
+### Mixtures
+
+A _mixture_ involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:
+
+- There is a finite number of distributions to choose from.
+- The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) exists.
+- For each distribution, an arbitrary-precision sampler exists.
+
+One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details).
+
+<a id=Specific_Arbitrary_Precision_Samplers></a>
+## Specific Arbitrary-Precision Samplers
+
+&nbsp;
 
 <a id=Rayleigh_Distribution></a>
 ### Rayleigh Distribution
@@ -110,56 +219,6 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
 
-<a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
-### Uniform Distribution Inside N-Dimensional Shapes
-
-The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space, provided the shape's boundary has zero volume.  Such a description has the following skeleton.
-
-1. Generate _N_ empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
-2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.
-3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
-5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
-    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
-    2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
-    3. For each PSRN, optionally do the following: With probability 1/2, set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
-    4. Return the PSRNs _p1_, ..., _pN_, in that order.
-6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
-7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
-
-> **Notes:**
->
-> - See (Li and El Gamal 2016)<sup>[**(2)**](#Note2)</sup> and (Oberhoff 2018)<sup>[**(3)**](#Note3)</sup> for related work on encoding random points uniformly distributed in a shape.
-> - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
-> - Implementation notes for step 4:
->
->     1. **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
->     2. If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
->         - _YES_ if all the box's corners are in the shape;
->         - _NO_ if none of the box's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->
->         In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
->     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the enclosing hypercube crosses the shape at most once, then **InShape** can return&mdash;
->         - _YES_ if all the box's corners are in the shape;
->         - _NO_ if none of the box's corners are in the shape; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->     4. If **InShape** expresses a shape in the form of a _signed distance field_, it can return&mdash;
->         - _YES_ if the signed distance at each of the box's corners (after dividing their coordinates by _S_) is less than &minus;&sigma; (where &sigma; is an upper bound for sqrt(_N_)/(_S_\*2), such as 1/_S_);
->         - _NO_ if the signed distance at each of the box's corners is greater than &sigma;; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->     5. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), or its _implicit surface_ equation (for closed surfaces).
-> - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
-> - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
-> - The algorithm can be extended to geometric shapes enclosed in the hyperrectangle [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_], where _d1_, ..., _dN_ are integers greater than 0, as follows:
->     1. Add the following sentence at the end of step 2: "For each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the coordinate's corresponding size."
->     2. Add the following sentence at the end of the first substep of step 5: "Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate."
->
-> **Examples:**
->
-> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full diamond, step 5.3 in the algorithm is done for all _N_ dimensions.
-> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < _S_<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
-
 <a id=Sum_of_Exponential_Random_Numbers></a>
 ### Sum of Exponential Random Numbers
 
@@ -177,51 +236,6 @@ The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1
 2. Set _ip_ to 1 plus _ret_'s integer part.
 3. (The rest of the algorithm accepts _ret_ with probability 1/(1+_ret_).) With probability _ip_/(1+_ip_), generate a number that is 1 with probability 1/_ip_ and 0 otherwise.  If that number is 1, _ret_ was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _ret_'s sign to positive or negative with equal probability, then return _ret_.
 4. Call **SampleGeometricBag** on _ret_'s fractional part (ignore _ret_'s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.
-
-<a id=Mixtures></a>
-### Mixtures
-
-A _mixture_ involves sampling one of several distributions, where each distribution has a separate probability of being sampled.  In general, an arbitrary-precision sampler is possible if all of the following conditions are met:
-
-- There is a finite number of distributions to choose from.
-- The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) exists.
-- For each distribution, an arbitrary-precision sampler exists.
-
-One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) for details).
-
-<a id=Building_an_Arbitrary_Precision_Sampler></a>
-### Building an Arbitrary-Precision Sampler
-
-In many cases, if a continuous distribution&mdash;
-
-- has a probability density function (PDF), or a function proportional to the PDF, with a known symbolic form,
-- has a cumulative distribution function (CDF) with a known symbolic form,
-- takes on only values 0 or greater, and
-- has a PDF that has an infinite tail to the right, is bounded from above (that is, _PDF(0)_ is other than infinity), and decreases monotonically,
-
-it may be possible to describe an arbitrary-precision sampler for that distribution.  Such a description has the following skeleton.
-
-1. With probability _A_, set _intval_ to 0, then set _size_ to 1, then go to step 4.
-    - _A_ is calculated as (_CDF_(1) &minus; _CDF_(0)) / (1&minus;_CDF_(0)), where _CDF_ is the distribution's CDF.  This should be found analytically using a computer algebra system such as SymPy.
-    - The symbolic form of _A_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
-2. Set _intval_ to 1 and set _size_ to 1.
-3. With probability _B_(_size_, _intval_), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
-    - This step chooses an interval beyond 1, and grows this interval by geometric steps, so that an appropriate interval is chosen with the correct probability.
-    - The probability _B_(_size_, _intval_) is the probability that the interval is chosen given that the previous intervals weren't chosen, and is calculated as (_CDF_(_size_ + _intval_) &minus; _CDF_(_intval_)) / (1&minus;_CDF_(_intval_)).  This should be found analytically using a computer algebra system such as SymPy.
-    - The symbolic form of _B_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
-4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
-5. Create a positive-sign zero-integer-part uniform PSRN, _ret_.
-6. Create an input coin that calls **SampleGeometricBag** on the PSRN _ret_.  Run a Bernoulli factory algorithm that simulates the probability _C_(_i_, _&lambda;_), using the input coin (here, _&lambda;_ is the probability built up in _ret_ via **SampleGeometricBag**, and lies in the interval \[0, 1\]).  If the call returns 0, go to step 4.
-    - The probability _C_(_i_, _&lambda;_) is calculated as _PDF_(_i_ + _&lambda;_) / _M_, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and should be found analytically using a computer algebra system such as SymPy.
-    - In this formula, _M_ is any convenient number in the interval \[_PDF_(_intval_),  max(1, _PDF_(_intval_))\], and should be as low as feasible. _M_ serves to ensure that _C_ is as close as feasible to 1 (to improve acceptance rates), but no higher than 1.  The choice of _M_ can vary for each interval (each value of _intval_, which can only be 0, 1, or a power of 2).  Any such choice for _M_ preserves the algorithm's correctness because the PDF has to be monotonically decreasing and a new interval isn't chosen when _&lambda;_ is rejected.
-    - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
-7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
-
-Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, given later.
-
-Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
-
-> **Note:** The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup>[**(4)**](#Note4)</sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled _A_ and _B_.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.
 
 <a id=Reciprocal_of_Power_of_Uniform></a>
 ### Reciprocal of Power of Uniform
@@ -310,7 +324,7 @@ The following new algorithm generates a random number that follows the logistic 
 
 We would like to see new implementations of the following:
 
-- Algorithms that implement **InShape** for specific curves and surfaces.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
+- Algorithms that implement **InShape** for specific curves, specific surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
 - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
 
 <a id=Notes></a>
