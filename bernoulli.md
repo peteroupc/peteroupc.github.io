@@ -1073,16 +1073,16 @@ This algorithm simulates this probability by computing lower and upper bounds of
 <a id=Euler_s_Constant___gamma></a>
 #### Euler's Constant _&gamma;_
 
-The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(35)**](#Note35)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(35)**](#Note35)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.
 
-1. Set _&x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
+1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
-3. If _lamunq_+_&x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+3. If _lamunq_+_&#x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
-5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&x03F5;_ to the error that results if the series is truncated to this term.) If _n_ is 0, add 1/2 to _lamunq_ and set _&x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_>=1 such that _n_ &lt; 2<sup>_b_</sup>).
-7. Add 1 to _n_, then set _prev_ to _&x03F5;_, then go to step 3.
-8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to the error that results if the series is truncated to this term.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_>=1 such that _n_ &lt; 2<sup>_b_</sup>).
+7. Add 1 to _n_, then set _prev_ to _&#x03F5;_, then go to step 3.
+8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 <a id=General_Algorithms></a>
@@ -1138,21 +1138,21 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(35)**](#Note35)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a convergent series&mdash;
+The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(35)**](#Note35)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all positive rational numbers, and
 - for which a sequence _err_\[0\], _err_\[1\], ..., is available that is monotonically nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
 
-&nbsp;
+The algorithm follows.
 
-1. Set _&x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
+1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
-3. If _lamunq_+_&x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+3. If _lamunq_+_&#x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
-5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-6. Add _a_\[_n_\] to _lamunq_ and set _&x03F5;_ to _err_\[_n_\].
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+6. Add _a_\[_n_\] to _lamunq_ and set _&#x03F5;_ to _err_\[_n_\].
 7. Add 1 to _n_, then go to step 3.
-8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 <a id=Requests_and_Open_Questions></a>

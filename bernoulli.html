@@ -1405,17 +1405,17 @@
 
 <h4>Euler&#39;s Constant <em>&gamma;</em></h4>
 
-<p>The following algorithm to simulate Euler&#39;s constant <em>&gamma;</em> is due to Mendo (2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup>  This solves an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
+<p>The following algorithm to simulate Euler&#39;s constant <em>&gamma;</em> is due to Mendo (2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup>  This solves an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
 
 <ol>
-<li>Set <em>&x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
+<li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
 <li>Add 1 to <em>k</em>, then add <em>s</em>/(2<sup><em>k</em></sup>) to <em>lam</em>.</li>
-<li>If <em>lamunq</em>+<em>&x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
+<li>If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
 <li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
-<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
-<li>(This step adds a term of the series for <em>&gamma;</em> to <em>lamunq</em>, and sets <em>&x03F5;</em> to the error that results if the series is truncated to this term.) If <em>n</em> is 0, add 1/2 to <em>lamunq</em> and set <em>&x03F5;</em> to 1/2.  Otherwise, add <em>B</em>(<em>n</em>)/(2*<em>n</em>*(2*<em>n</em>+1)*(2*<em>n</em>+2)) to <em>lamunq</em> and set <em>&x03F5;</em> to min(<em>prev</em>, (2+<em>B</em>(<em>n</em>)+(1/<em>n</em>))/(16*<em>n</em>*<em>n</em>)), where <em>B</em>(<em>n</em>) is the minimum number of bits needed to store <em>n</em> (or the smallest <em>b</em>&gt;=1 such that <em>n</em> &lt; 2<sup><em>b</em></sup>).</li>
-<li>Add 1 to <em>n</em>, then set <em>prev</em> to <em>&x03F5;</em>, then go to step 3.</li>
-<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&#x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
+<li>(This step adds a term of the series for <em>&gamma;</em> to <em>lamunq</em>, and sets <em>&#x03F5;</em> to the error that results if the series is truncated to this term.) If <em>n</em> is 0, add 1/2 to <em>lamunq</em> and set <em>&#x03F5;</em> to 1/2.  Otherwise, add <em>B</em>(<em>n</em>)/(2*<em>n</em>*(2*<em>n</em>+1)*(2*<em>n</em>+2)) to <em>lamunq</em> and set <em>&#x03F5;</em> to min(<em>prev</em>, (2+<em>B</em>(<em>n</em>)+(1/<em>n</em>))/(16*<em>n</em>*<em>n</em>)), where <em>B</em>(<em>n</em>) is the minimum number of bits needed to store <em>n</em> (or the smallest <em>b</em>&gt;=1 such that <em>n</em> &lt; 2<sup><em>b</em></sup>).</li>
+<li>Add 1 to <em>n</em>, then set <em>prev</em> to <em>&#x03F5;</em>, then go to step 3.</li>
+<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
@@ -1493,24 +1493,24 @@
 
 <h4>Certain Converging Series</h4>
 
-<p>The algorithm for Euler&#39;s constant is one example of a general algorithm given by Mendo (2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup> for simulating any probability in (0, 1), as long as it can be rewritten as a convergent series&mdash;</p>
+<p>The algorithm for Euler&#39;s constant is one example of a general algorithm given by Mendo (2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;</p>
 
 <ul>
 <li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all positive rational numbers, and</li>
 <li>for which a sequence <em>err</em>[0], <em>err</em>[1], ..., is available that is monotonically nonincreasing and converges to 0, where <em>err</em>[<em>n</em>] is an upper bound on the error from truncating the series <em>a</em> after summing the first <em>n</em>+1 terms.</li>
 </ul>
 
-<p>&nbsp;</p>
+<p>The algorithm follows.</p>
 
 <ol>
-<li>Set <em>&x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, and <em>k</em> to 0 each.</li>
+<li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, and <em>k</em> to 0 each.</li>
 <li>Add 1 to <em>k</em>, then add <em>s</em>/(2<sup><em>k</em></sup>) to <em>lam</em>.</li>
-<li>If <em>lamunq</em>+<em>&x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
+<li>If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
 <li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
-<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
-<li>Add <em>a</em>[<em>n</em>] to <em>lamunq</em> and set <em>&x03F5;</em> to <em>err</em>[<em>n</em>].</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&#x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
+<li>Add <em>a</em>[<em>n</em>] to <em>lamunq</em> and set <em>&#x03F5;</em> to <em>err</em>[<em>n</em>].</li>
 <li>Add 1 to <em>n</em>, then go to step 3.</li>
-<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
+<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
