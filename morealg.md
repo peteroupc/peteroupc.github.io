@@ -163,7 +163,7 @@ it may be possible to describe an arbitrary-precision sampler for that distribut
     - The symbolic form of _C_ will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.
 7. The PSRN _ret_ was accepted, so set _ret_'s integer part to _i_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _ret_.
 
-Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), the algorithm for the Rayleigh distribution given above, and the algorithm for the reciprocal of power of uniform, given later.
+Examples of algorithms that use this skeleton are the algorithm for the [**ratio of two uniform random numbers**](https://peteroupc.github.io/uniformsum.html), as well as the algorithms for the Rayleigh distribution and for the reciprocal of power of uniform, both given later.
 
 Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities _A_, _B_, and _C_, especially when these probabilities have a non-trivial symbolic form.
 
