@@ -95,12 +95,14 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))**](#2_1_exp_2_or_1_exp_0_1_exp_1)
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
+        - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
         - [**Integrals**](#Integrals)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
+- [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Randomized vs. Non-Randomized Algorithms**](#Randomized_vs_Non_Randomized_Algorithms)
@@ -1067,6 +1069,21 @@ This algorithm simulates this probability by computing lower and upper bounds of
 7. If _ret_ is greater than _ru_, return 0.  If _ret_ is less than _rl_, return 1.  (If _ret_ is implemented as a uniform PSRN, these comparisons should be done via **URandLessThanReal**.)
 8. Add 1 to _d_ and go to step 5.
 
+<a id=Euler_s_Constant___gamma></a>
+#### Euler's Constant _&gamma;_
+
+The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(44)**](#Note44)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+
+1. Set _&epsilon;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
+2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
+3. If _lamunq_+_&epsilon;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&epsilon;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&epsilon;_ to the error that results if the series is truncated to this term.) If _n_ is 0, add 1/2 to _lamunq_ and set _&epsilon;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)*(2\*_n_+2)) to _lamunq_ and set _&epsilon;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_>=1 such that _n_ &lt; 2<sup>_b_</sup>).
+7. Add 1 to _n_, then set _prev_ to _&epsilon;_, then go to step 3.
+8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&epsilon;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+
 <a id=General_Algorithms></a>
 ### General Algorithms
 
@@ -1120,7 +1137,6 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-- Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler's constant _&gamma;_, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 - Is there a simple algorithm that can calculate _z_ = choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>30</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(35)**](#Note35)</sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(_z_), ln(choose(_n_, _k_)), or ln(_n_!) that converge from above and below to the true value.  Then an exponential random number could be compared with ln(_z_), which is the same as comparing _z_ itself with a uniform random number.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 - I request expressions of mathematical functions that can be expressed in any of the following ways:
@@ -1135,6 +1151,11 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 ## Correctness and Performance Charts
 
 Charts showing the correctness and performance of some of these algorithms are found in a [**separate page**](https://peteroupc.github.io/bernoullicorrect.html).
+
+<a id=Acknowledgments></a>
+## Acknowledgments
+
+I acknowledge Luis Mendo, who responded to one of my open questions.
 
 <a id=Notes></a>
 ## Notes
@@ -1183,6 +1204,7 @@ Charts showing the correctness and performance of some of these algorithms are f
 - <small><sup id=Note41>(41)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
 - <small><sup id=Note42>(42)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note43>(43)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note44>(44)</sup> Mendo, L., "Simulating a coin with irrational bias using rational arithmetic", to appear.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1201,7 +1223,7 @@ In fact, there is a lower bound on the average number of coin flips needed to tu
 
 For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
 
-For certain values of _&lambda;_, Kozen (2014)<sup>[**(39)**](#Note39)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: the expected number of coin flips to simulate a known constant _&tau;_ is bounded from below by exactly 2, except when _&tau;_ is a multiple of 1/2<sup>_n_</sup>.
+For certain values of _&lambda;_, Kozen (2014)<sup>[**(39)**](#Note39)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities

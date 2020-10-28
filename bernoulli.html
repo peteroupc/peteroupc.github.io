@@ -112,6 +112,7 @@
 <li><a href="#2_1_exp_2_or_1_exp_0_1_exp_1"><strong>2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))</strong></a></li>
 <li><a href="#1_exp_1_1_exp_2"><strong>(1 + exp(1)) / (1 + exp(2))</strong></a></li>
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
+<li><a href="#Euler_s_Constant___gamma"><strong>Euler&#39;s Constant <em>&gamma;</em></strong></a></li>
 </ul></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
 
@@ -123,6 +124,7 @@
 </ul></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a></li>
+<li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
@@ -1398,6 +1400,24 @@
 <li>Add 1 to <em>d</em> and go to step 5.</li>
 </ol>
 
+<p><a id=Euler_s_Constant___gamma></a></p>
+
+<h4>Euler&#39;s Constant <em>&gamma;</em></h4>
+
+<p>The following algorithm to simulate Euler&#39;s constant <em>&gamma;</em> is due to Mendo (2020)<sup><a href="#Note44"><strong>(44)</strong></a></sup>  This solves an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
+
+<ol>
+<li>Set <em>&epsilon;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
+<li>Add 1 to <em>k</em>, then add <em>s</em>/(2<sup><em>k</em></sup>) to <em>lam</em>.</li>
+<li>If <em>lamunq</em>+<em>&epsilon;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 8.</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&epsilon;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
+<li>(This step adds a term of the series for <em>&gamma;</em> to <em>lamunq</em>, and sets <em>&epsilon;</em> to the error that results if the series is truncated to this term.) If <em>n</em> is 0, add 1/2 to <em>lamunq</em> and set <em>&epsilon;</em> to 1/2.  Otherwise, add <em>B</em>(<em>n</em>)/(2*<em>n</em>*(2*<em>n</em>+1)<em>(2\</em><em>n</em>+2)) to <em>lamunq</em> and set <em>&epsilon;</em> to min(<em>prev</em>, (2+<em>B</em>(<em>n</em>)+(1/<em>n</em>))/(16*<em>n</em>*<em>n</em>)), where <em>B</em>(<em>n</em>) is the minimum number of bits needed to store <em>n</em> (or the smallest <em>b</em>&gt;=1 such that <em>n</em> &lt; 2<sup><em>b</em></sup>).</li>
+<li>Add 1 to <em>n</em>, then set <em>prev</em> to <em>&epsilon;</em>, then go to step 3.</li>
+<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&epsilon;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
+<li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
+</ol>
+
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
@@ -1473,7 +1493,6 @@
 <h2>Requests and Open Questions</h2>
 
 <ul>
-<li>Is there a simple Bernoulli factory algorithm that can simulate the probability equal to Euler&#39;s constant <em>&gamma;</em>, without relying on floating-point arithmetic?  This repeats an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li>Is there a simple algorithm that can calculate <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup>, for <em>n</em> up to, say, 2<sup>30</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small <em>n</em>, but complicated for larger <em>n</em>; see also an appendix in (Bringmann et al. 2014)<sup><a href="#Note35"><strong>(35)</strong></a></sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(<em>z</em>), ln(choose(<em>n</em>, <em>k</em>)), or ln(<em>n</em>!) that converge from above and below to the true value.  Then an exponential random number could be compared with ln(<em>z</em>), which is the same as comparing <em>z</em> itself with a uniform random number.</li>
 <li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
 <li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
@@ -1493,6 +1512,12 @@
 <h2>Correctness and Performance Charts</h2>
 
 <p>Charts showing the correctness and performance of some of these algorithms are found in a <a href="https://peteroupc.github.io/bernoullicorrect.html"><strong>separate page</strong></a>.</p>
+
+<p><a id=Acknowledgments></a></p>
+
+<h2>Acknowledgments</h2>
+
+<p>I acknowledge Luis Mendo, who responded to one of my open questions.</p>
 
 <p><a id=Notes></a></p>
 
@@ -1543,6 +1568,7 @@
 <li><small><sup id=Note41>(41)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is <em>&lambda;</em>.</small></li>
 <li><small><sup id=Note42>(42)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note43>(43)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note44>(44)</sup> Mendo, L., &quot;Simulating a coin with irrational bias using rational arithmetic&quot;, to appear.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1564,7 +1590,7 @@
 
 <p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is <em>&lambda;</em>).  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
 
-<p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note39"><strong>(39)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: the expected number of coin flips to simulate a known constant <em>&tau;</em> is bounded from below by exactly 2, except when <em>&tau;</em> is a multiple of 1/2<sup><em>n</em></sup>.</p>
+<p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note39"><strong>(39)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for any integer <em>n</em>.</p>
 
 <p><a id=Simulating_Probabilities_vs_Estimating_Probabilities></a></p>
 
