@@ -100,6 +100,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
         - [**Integrals**](#Integrals)
+        - [**Certain Converging Series**](#Certain_Converging_Series)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
 - [**Acknowledgments**](#Acknowledgments)
@@ -1072,16 +1073,16 @@ This algorithm simulates this probability by computing lower and upper bounds of
 <a id=Euler_s_Constant___gamma></a>
 #### Euler's Constant _&gamma;_
 
-The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(44)**](#Note44)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(35)**](#Note35)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 
-1. Set _&epsilon;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
+1. Set _&x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
-3. If _lamunq_+_&epsilon;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+3. If _lamunq_+_&x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
-5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&epsilon;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&epsilon;_ to the error that results if the series is truncated to this term.) If _n_ is 0, add 1/2 to _lamunq_ and set _&epsilon;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)*(2\*_n_+2)) to _lamunq_ and set _&epsilon;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_>=1 such that _n_ &lt; 2<sup>_b_</sup>).
-7. Add 1 to _n_, then set _prev_ to _&epsilon;_, then go to step 3.
-8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&epsilon;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&x03F5;_ to the error that results if the series is truncated to this term.) If _n_ is 0, add 1/2 to _lamunq_ and set _&x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_>=1 such that _n_ &lt; 2<sup>_b_</sup>).
+7. Add 1 to _n_, then set _prev_ to _&x03F5;_, then go to step 3.
+8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 <a id=General_Algorithms></a>
@@ -1134,10 +1135,30 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 - Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) and return the result."
 - If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
 
+<a id=Certain_Converging_Series></a>
+#### Certain Converging Series
+
+The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(35)**](#Note35)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a convergent series&mdash;
+
+- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all positive rational numbers, and
+- for which a sequence _err_\[0\], _err_\[1\], ..., is available that is monotonically nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
+
+&nbsp;
+
+1. Set _&x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
+2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
+3. If _lamunq_+_&x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+6. Add _a_\[_n_\] to _lamunq_ and set _&x03F5;_ to _err_\[_n_\].
+7. Add 1 to _n_, then go to step 3.
+8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-- Is there a simple algorithm that can calculate _z_ = choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>30</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(35)**](#Note35)</sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(_z_), ln(choose(_n_, _k_)), or ln(_n_!) that converge from above and below to the true value.  Then an exponential random number could be compared with ln(_z_), which is the same as comparing _z_ itself with a uniform random number.
+- Is there a simple and reasonably efficient algorithm that can calculate _z_ = choose(_n_, _k_)/2<sup>_n_</sup>, for _n_ up to, say, 2<sup>30</sup>, without relying on floating-point arithmetic or precalculations?  This is trivial for relatively small _n_, but complicated for larger _n_; see also an appendix in (Bringmann et al. 2014)<sup>[**(36)**](#Note36)</sup>, which ultimately relies on floating-point arithmetic.  One idea is to use approximations of ln(_z_), ln(choose(_n_, _k_)), or ln(_n_!) that converge from above and below to the true value.  Then an exponential random number could be compared with ln(_z_), which is the same as comparing _z_ itself with a uniform random number.
 - See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
 - I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
@@ -1146,6 +1167,8 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as &pi; or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant &pi; is not desired; however, a series expansion that converges to a fraction of &pi; is.
+
+The following is not yet an "open question", but anyone is still welcome to answer it: It would be nice to have a simple algorithm that simulates a probability of the form exp(&minus;_y_) without relying on floating-point arithmetic or precalculations, where _y_ is a logarithm of a really huge number (or a sum of such logarithms), but whose integer part is not known in advance. (Note that this page currently includes an algorithm for simulating exp(-_z_), but assumes _z_'s integer part is known.)
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1195,16 +1218,16 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 - <small><sup id=Note32>(32)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 - <small><sup id=Note33>(33)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
 - <small><sup id=Note34>(34)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
-- <small><sup id=Note35>(35)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
-- <small><sup id=Note36>(36)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note37>(37)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
-- <small><sup id=Note38>(38)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note39>(39)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
-- <small><sup id=Note40>(40)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-- <small><sup id=Note41>(41)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
-- <small><sup id=Note42>(42)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
-- <small><sup id=Note43>(43)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note44>(44)</sup> Mendo, L., "Simulating a coin with irrational bias using rational arithmetic", to appear.</small>
+- <small><sup id=Note35>(35)</sup> Mendo, L., "Simulating a coin with irrational bias using rational arithmetic", to appear.</small>
+- <small><sup id=Note36>(36)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
+- <small><sup id=Note37>(37)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note38>(38)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
+- <small><sup id=Note39>(39)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note40>(40)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
+- <small><sup id=Note41>(41)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note42>(42)</sup> As used here and in the Flajolet paper, a geometric random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
+- <small><sup id=Note43>(43)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note44>(44)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1214,16 +1237,16 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(36)**](#Note36)</sup>.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(37)**](#Note37)</sup>.
 
-In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (_&lambda;_) into a coin with another bias (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(37)**](#Note37)</sup>, (Peres 1992)<sup>[**(38)**](#Note38)</sup>) and is calculated as&mdash;
+In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (_&lambda;_) into a coin with another bias (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(38)**](#Note38)</sup>, (Peres 1992)<sup>[**(39)**](#Note39)</sup>) and is calculated as&mdash;
 
 &nbsp;&nbsp;&nbsp;&nbsp;((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
 For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
 
-For certain values of _&lambda;_, Kozen (2014)<sup>[**(39)**](#Note39)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
+For certain values of _&lambda;_, Kozen (2014)<sup>[**(40)**](#Note40)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
@@ -1279,7 +1302,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a partially-sampled uniform random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(29)**](#Note29)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2015)<sup>[**(40)**](#Note40)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a partially-sampled uniform random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(29)**](#Note29)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2015)<sup>[**(41)**](#Note41)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
@@ -1326,7 +1349,7 @@ where&mdash;
 - EGF(_&lambda;_) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (_&lambda;_<sup>_k_</sup> * V(_k_) / _k_!) (the _exponential generating function_ or EGF, which completely determines a permutation class), and
 - V(_n_) is the number of _valid_ permutations of size _n_ (and must be in the interval \[0, _n_!\]).
 
-Effectively, a geometric(_&lambda;_) random number _G_<sup>[**(41)**](#Note41)</sup> is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; _&lambda;_) * EGF(_&lambda;_).
+Effectively, a geometric(_&lambda;_) random number _G_<sup>[**(42)**](#Note42)</sup> is accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ geometric random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; _&lambda;_) * EGF(_&lambda;_).
 
 Examples of permutation classes include&mdash;
 
@@ -1336,7 +1359,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(42)**](#Note42)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(43)**](#Note43)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 
@@ -1392,7 +1415,7 @@ The Forsythe method of random sampling (Forsythe 1972)<sup>[**(33)**](#Note33)</
 Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (_&delta;_).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _&delta;_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _&delta;_ is less than _x_ given that&mdash;
 
 - _k_ is odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>), or
-- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(43)**](#Note43)</sup>),
+- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(44)**](#Note44)</sup>),
 
 where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For example, the algorithm to simulate [**erf(_x_)/erf(1)**](#erf__x__erf_1) uses the fact that when&mdash;
 
@@ -1460,7 +1483,7 @@ For example, if the second algorithm treats sorted permutations as valid (making
 
 The following two algorithms also simulate exp(&minus;_&lambda;_), but converge slowly as _&lambda;_ approaches 1.
 
-The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(_&lambda;_) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(_&lambda;_) random number _G_<sup>[**(41)**](#Note41)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted (see "[**The von Neumann Schema**](#The_von_Neumann_Schema)" in the appendix).  The algorithm follows.
+The algorithm in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> calls for generating a Poisson(_&lambda;_) random number and returning 1 if that number is 0, or 0 otherwise.  The Poisson generator in turn involves generating a geometric(_&lambda;_) random number _G_<sup>[**(42)**](#Note42)</sup>, then _G_ uniform random numbers, then returning _G_ only if all _G_ uniform numbers are sorted (see "[**The von Neumann Schema**](#The_von_Neumann_Schema)" in the appendix).  The algorithm follows.
 
 1. Flip the input coin until the flip returns 0.  Then set _G_ to the number of times the flip returns 1 this way.
 2. If _G_ is 0, return 1.
@@ -1486,7 +1509,7 @@ The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no d
 
 The algorithm is an application of the [**convex combination**](#Convex_Combinations) technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:
 
-- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of two geometric(1/4) random numbers<sup>[**(41)**](#Note41)</sup> and one Bernoulli(5/9) random number, all of which are independent, equals _n_.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
+- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of two geometric(1/4) random numbers<sup>[**(42)**](#Note42)</sup> and one Bernoulli(5/9) random number, all of which are independent, equals _n_.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
     - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent geometric(1/4) random numbers equals _n_.
     - Note 2: _p_<sup>_n_</sup> * (1 &minus; _p_)<sup>_m_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent geometric(_p_) random numbers equals _n_ (a _negative binomial distribution_).
     - Note 3: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and a number _z_ with probability function _f_(.) &mdash; equals _z_.
