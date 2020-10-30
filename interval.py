@@ -628,6 +628,20 @@ def bernoullinum(n):
     _extrabernnumbers[n] = ret
     return ret
 
+_STIRLING1 = {}
+
+def stirling1(n, k):
+    # Calculates Stirling numbers of the first kind
+    if n == k:
+        return 1
+    if k <= 0:
+        return 0
+    if (n, k) in _STIRLING1:
+        return _STIRLING1[(n, k)]
+    ret = stirling1(n - 1, k - 1) - (n - 1) * stirling1(n - 1, k)
+    _STIRLING1[(n, k)] = ret
+    return ret
+
 def _polynomialProduct(a, b):
     # Finds the product of two polynomials.  Each polynomial
     # is a list of the following form:
@@ -700,35 +714,35 @@ def loggamma(k, v=4):
     # other than 1.
     if k <= 2:
         return FInterval(0)
-    origk = k if isinstance(k, Fraction) else Fraction(k)
-    k = FInterval(k)
     if not (v in _logpi2cache):
-        _logpi2cache[v] = (FInterval.pi(v + 4) * 2).log(v + 4).truncate()
-    # Binet's approximation, which is a converging series unlike
-    # Sterling's approximation (see, e.g., chapter 10 of Devroye 1986).
-    # And converging series are important for our purposes.
-    ret = (k - FInterval(1 / 2)) * k.log(v + 4) + _logpi2cache[v] / 2 - k
-    p = [0, -1, 2]
-    denom = Fraction(1)
-    extra = Fraction(0)
-    for j in range(1, v + 1):
-        c = _polynomialIntegral(p)
-        p = _polynomialProductA(p, j, 1)
-        denom *= origk + j
-        extra += c / (j * denom)
-    ret += extra / 2
-    # Error bounds.
-    # bc is rounded up from 5*sqrt(pi)*exp(1/6)/24
-    bc = Fraction(5453, 12500)
-    kp1 = origk + 1
-    error = bc * (Fraction(kp1) / origk)
-    kpf = kp1 / (kp1 + v)
-    error *= _powerBound(kpf.numerator, kpf.denominator, int(origk))
-    # NOTE: Error term not added to inf because the Binet series
-    # is monotonically increasing
-    inf = ret.inf
-    sup = ret.sup + error / 2
-    return FInterval(inf, sup)
+        _logpi2cache[v] = (FInterval.pi(v * 2) * 2).log(v * 2).truncate()
+    # Implements the first listed convergent version of Stirling's formula
+    # given in section 3 of R. Schumacher, "Rapidly Convergent Summation Formulas
+    # involving Stirling Series", arXiv:1602.0036v1 [math.NT], 2016.
+    # Usually, Stirling's approximation diverges, which however is inappropriate for
+    # use in exact sampling algorithms, where series expansions must converge
+    # in order for the algorithm to halt almost surely.
+    xn = k - 1
+    logx = FInterval(xn).log(v * 2)
+    ret = xn * logx - xn + (logx + _logpi2cache[v]) / 2
+    rb = Fraction(0)
+    d = 1
+    ediff = Fraction(0)
+    for i in range(1, v + 1):
+        n = 0
+        for l in range(1, i + 1):
+            n += Fraction((-1) ** l * bernoullinum((l + 1)) * (stirling1(i, l))) / (
+                l * (l + 1)
+            )
+        d *= xn + i
+        oldrb = rb
+        if i % 2 == 0:
+            rb += Fraction(n) / d
+        else:
+            rb -= Fraction(n) / d
+        ediff = rb - oldrb  # Error term
+    ret += rb
+    return FInterval(ret.inf, ret.sup + ediff)
 
 def logbinco(n, k, v=4):
     # Log binomial coefficient.
