@@ -638,7 +638,7 @@ def stirling1(n, k):
         return 0
     if (n, k) in _STIRLING1:
         return _STIRLING1[(n, k)]
-    ret = stirling1(n - 1, k - 1) - (n - 1) * stirling1(n - 1, k)
+    ret = stirling1(n - 1, k - 1) - stirling1(n - 1, k) * (n - 1)
     _STIRLING1[(n, k)] = ret
     return ret
 
@@ -727,22 +727,35 @@ def loggamma(k, v=4):
     ret = xn * logx - xn + (logx + _logpi2cache[v]) / 2
     rb = Fraction(0)
     d = 1
+    # print("rsup",float(ret.sup))
+    lastterm = Fraction(0)
+    # mm=xn*math.log(xn)-xn+math.log(math.pi*2)/2+math.log(xn)/2
+    # mg=math.lgamma(k)
     ediff = Fraction(0)
-    for i in range(1, v + 1):
+    for i in range(1, v + 2):
         n = 0
         for l in range(1, i + 1):
             n += Fraction((-1) ** l * bernoullinum((l + 1)) * (stirling1(i, l))) / (
                 l * (l + 1)
             )
         d *= xn + i
-        oldrb = rb
-        if i % 2 == 0:
-            rb += Fraction(n) / d
+        term = Fraction(n) / d
+        if i % 2 == 1:
+            term = -term
+        if i == v + 1:
+            lastterm = term
+            # remainder=(mg-mm)-float(rb)
+            ediff += abs(lastterm)  # Add the first "neglected" term to the error bound
+            # print([i,"mg-mm",mg-mm,"remainder",remainder,
+            #      "termdiff",float(abs(ediff*v)/remainder)])
         else:
-            rb -= Fraction(n) / d
-        ediff = rb - oldrb  # Error term
+            oldrb = rb
+            rb += term
+            ediff = abs(term)  # Ad hoc error bound
+            # print([float(ediff),float(Fraction(n)/d),
+            #      float(ediff/max(1e-20,oldediff))])
     ret += rb
-    return FInterval(ret.inf, ret.sup + ediff)
+    return FInterval(ret.inf, ret.sup + ediff * v)
 
 def logbinco(n, k, v=4):
     # Log binomial coefficient.
