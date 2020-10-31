@@ -37,6 +37,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
         - [**exp(_&lambda;_ * _c_ &minus; _c_)**](#exp___lambda____c__minus__c)
         - [**exp(&minus;_&lambda;_ &minus; _c_)**](#exp_minus___lambda___minus__c)
+    - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
         - [**1 &minus; ln(1+_&lambda;_)**](#1_minus_ln_1___lambda)
@@ -96,6 +97,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
+    - [**ln(2)**](#ln_2)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
@@ -326,17 +328,19 @@ To the best of my knowledge, I am not aware of any article or paper by others th
 1. Run the **algorithm for exp(&minus;_c_/1)** described later in this document.  Return 0 if the algorithm returns 0.
 2. Return the result of the **algorithm for exp(&minus;_&lambda;_)**.
 
+<a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a>
+### 1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))
+
+This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an integer 0 or greater, and is useful when this logarithm is very large.
+
+1. If _k_ &gt; 0, generate unbiased bits until a zero bit or _k_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
+2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
+3. Run the **algorithm for exp(&minus;&mu;)** using the _&mu;_ input coin, and return the result.
+
 <a id=1_1___lambda></a>
 #### 1/(1+_&lambda;_)
 
-One algorithm is the general martingale algorithm, since when _&lambda;_ is in [0, 1], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when _&lambda;_ is very close to 1.
-
-A second algorithm is the so-called "even-parity" construction of (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  However, this algorithm too converges slowly when _&lambda;_ is very close to 1.
-
-1. Flip the input coin.  If it returns 0, return 1.
-2. Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.
-
-A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and is uniformly fast, unlike the previous two algorithms.  It will be called the **two-coin special case** in this document.
+This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(11)**](#Note11)</sup> and is uniformly fast.  It will be called the **two-coin special case** in this document.<sup>[**(45)**](#Note45)</sup>
 
 1. With probability 1/2, return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
@@ -354,9 +358,9 @@ A third algorithm is a special case of the two-coin Bernoulli factory of (Gonça
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Generate a uniform(0, 1) random number _u_.
-2. With probability 1/2, flip the input coin and return the result.
-3. [**Sample from the number _u_**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.
+1. With probability 1/2, flip the input coin and return the result.
+2. Generate a uniform(0, 1) random number _u_, if _u_ wasn't generated yet.
+3. [**Sample from the number _u_**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.
 
 <a id=1_minus_ln_1___lambda></a>
 #### 1 &minus; ln(1+_&lambda;_)
@@ -482,9 +486,9 @@ Works only if _c_ > 0.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Generate a uniform(0, 1) random number _u_.
-2. With probability 1/2, return 1.
-3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.
+1. With probability 1/2, return 1.
+2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
+3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.
 
 <a id=arctan___lambda></a>
 #### arctan(_&lambda;_)
@@ -876,10 +880,10 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
-1. Generate a uniform(0, 1) random number _u_.
-2. With probability 1/2, return 1.
+1. With probability 1/2, return 1.
+2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
-4. Go to step 2.
+4. Go to step 1.
 
 <a id=pi_12></a>
 #### &pi; / 12
@@ -1085,6 +1089,15 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
+<a id=ln_2></a>
+### ln(2)
+
+A special case of the algorithm for ln(1+_&lambda;_) given earlier.
+
+1. With probability 1/2, return 1.
+2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
+3. [**Sample from the number _u_**](#Algorithms).  If the result is 1, return 0.  Otherwise, go to step 2.
+
 <a id=General_Algorithms></a>
 ### General Algorithms
 
@@ -1228,6 +1241,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 - <small><sup id=Note42>(42)</sup> As used here and in the Flajolet paper, a geometric(_&lambda;_) random number is the number of successes before the first failure, where the success probability is _&lambda;_.</small>
 - <small><sup id=Note43>(43)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note44>(44)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note45>(45)</sup> There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the general martingale algorithm, since when _&lambda;_ is in \[0, 1\], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."</small>
 
 <a id=Appendix></a>
 ## Appendix

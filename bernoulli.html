@@ -51,6 +51,10 @@
 <li><a href="#1_minus___lambda___tan___lambda"><strong>(1&minus;<em>&lambda;</em>) * tan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp___lambda____c__minus__c"><strong>exp(<em>&lambda;</em> * <em>c</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___minus__c"><strong>exp(&minus;<em>&lambda;</em> &minus; <em>c</em>)</strong></a></li>
+</ul></li>
+<li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a>
+
+<ul>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#ln_1___lambda"><strong>ln(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus_ln_1___lambda"><strong>1 &minus; ln(1+<em>&lambda;</em>)</strong></a></li>
@@ -114,6 +118,7 @@
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 <li><a href="#Euler_s_Constant___gamma"><strong>Euler&#39;s Constant <em>&gamma;</em></strong></a></li>
 </ul></li>
+<li><a href="#ln_2"><strong>ln(2)</strong></a></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
 
 <ul>
@@ -414,20 +419,23 @@
 <li>Return the result of the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>.</li>
 </ol>
 
+<p><a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a></p>
+
+<h3>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</h3>
+
+<p>This new algorithm uses the base-2 logarithm <em>k</em> + <em>&lambda;</em>, where <em>k</em> is an integer 0 or greater, and is useful when this logarithm is very large.</p>
+
+<ol>
+<li>If <em>k</em> &gt; 0, generate unbiased bits until a zero bit or <em>k</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
+<li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> using the <em>&mu;</em> input coin, and return the result.</li>
+</ol>
+
 <p><a id=1_1___lambda></a></p>
 
 <h4>1/(1+<em>&lambda;</em>)</h4>
 
-<p>One algorithm is the general martingale algorithm, since when <em>&lambda;</em> is in [0, 1], this function is an alternating series of the form <code>1 - x + x^2 - x^3 + ...</code>, whose coefficients are 1, 1, 1, 1, ....  However, this algorithm converges slowly when <em>&lambda;</em> is very close to 1.</p>
-
-<p>A second algorithm is the so-called &quot;even-parity&quot; construction of (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, this algorithm too converges slowly when <em>&lambda;</em> is very close to 1.</p>
-
-<ol>
-<li>Flip the input coin.  If it returns 0, return 1.</li>
-<li>Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.</li>
-</ol>
-
-<p>A third algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note11"><strong>(11)</strong></a></sup> and is uniformly fast, unlike the previous two algorithms.  It will be called the <strong>two-coin special case</strong> in this document.</p>
+<p>This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note11"><strong>(11)</strong></a></sup> and is uniformly fast.  It will be called the <strong>two-coin special case</strong> in this document.<sup><a href="#Note45"><strong>(45)</strong></a></sup></p>
 
 <ol>
 <li>With probability 1/2, return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)</li>
@@ -451,9 +459,9 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, flip the input coin and return the result.</li>
-<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 2.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=1_minus_ln_1___lambda></a></p>
@@ -625,9 +633,9 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, return 1.</li>
-<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 2.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=arctan___lambda></a></p>
@@ -1149,10 +1157,10 @@
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>With probability 1/2, return 1.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), <a href="#Algorithms"><strong>sample from the number <em>u</em></strong></a> twice.  If both of these calls return 1, return 0.</li>
-<li>Go to step 2.</li>
+<li>Go to step 1.</li>
 </ol>
 
 <p><a id=pi_12></a></p>
@@ -1419,6 +1427,18 @@
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
+<p><a id=ln_2></a></p>
+
+<h3>ln(2)</h3>
+
+<p>A special case of the algorithm for ln(1+<em>&lambda;</em>) given earlier.</p>
+
+<ol>
+<li>With probability 1/2, return 1.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
+<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
+</ol>
+
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
@@ -1597,6 +1617,7 @@
 <li><small><sup id=Note42>(42)</sup> As used here and in the Flajolet paper, a geometric(<em>&lambda;</em>) random number is the number of successes before the first failure, where the success probability is <em>&lambda;</em>.</small></li>
 <li><small><sup id=Note43>(43)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note44>(44)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note45>(45)</sup> There are two other algorithms for this function, but they both converge very slowly when <em>&lambda;</em> is very close to 1.  One is the general martingale algorithm, since when <em>&lambda;</em> is in [0, 1], this function is an alternating series of the form <code>1 - x + x^2 - x^3 + ...</code>, whose coefficients are 1, 1, 1, 1, ....  The other is the so-called &quot;even-parity&quot; construction from Flajolet et al. 2010: &quot;(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.&quot;</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
