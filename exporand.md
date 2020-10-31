@@ -1524,6 +1524,7 @@ There are some open questions on PSRNs:
 
 1. Are there constructions for PSRNs other than for cases given earlier in this document?
 2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic with PSRNs**](#Arithmetic_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
+3. How can division of two PSRNs or the reciprocal of a PSRN be implemented?  (On the other hand, with the **UniformMultiplyRational** algorithm, dividing a PSRN by a rational number is trivial by comparison.)
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -1567,7 +1568,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note17>(17)</sup> Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. "Designing a Universal Data-Oriented Random Number Generator", _International Journal of Modern Education and Computer Science_ 2013(2), pp. 19-24.</small>
 - <small><sup id=Note18>(18)</sup> Rohatgi, V.K., 1976. An Introduction to Probability Theory Mathematical Statistics.</small>
 - <small><sup id=Note19>(19)</sup> Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” _2019 IEEE 5th International Conference on Computer and Communications (ICCC)_ (2019): 1307-1311.</small>
-- <small><sup id=Note20>(20)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even be a uniform random number in [0, 1] whose contents are built up digit by digit.</small>
+- <small><sup id=Note20>(20)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even come from a uniform PSRN.</small>
 - <small><sup id=Note21>(21)</sup> More specifically, the _essential supremum_, that is, the function's highest point in \[0, 1\] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous functions don't admit Bernoulli factories, as required by step 2.</small>
 - <small><sup id=Note22>(22)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 - <small><sup id=Note23>(23)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>

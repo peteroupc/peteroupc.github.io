@@ -2166,7 +2166,7 @@ NAME
 
 DESCRIPTION
     #  Implements interval numbers and interval arithmetic, backed
-    #  by Fractions
+    #  by Fractions.
     #
     #  Written by Peter O. Any copyright to this file is released to the Public Domain.
     #  In case this is not possible, this file is also licensed under Creative Commons Zero
