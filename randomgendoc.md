@@ -2111,7 +2111,7 @@ CLASSES
      |
      |        For example, [3, 4, 5] becomes:
      |                 3 * p**4 * (1-p)**5
-     |        As a special case, this list can contain two items and a zero is
+     |        As a special case, the term can contain two items and a zero is
      |        squeezed between the first and second item.
      |        For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
      |                 3 * p**4 * (1-p)**0 = 3 * p **4
@@ -2166,7 +2166,7 @@ NAME
 
 DESCRIPTION
     #  Implements interval numbers and interval arithmetic, backed
-    #  by Decimal values.
+    #  by Fractions
     #
     #  Written by Peter O. Any copyright to this file is released to the Public Domain.
     #  In case this is not possible, this file is also licensed under Creative Commons Zero
@@ -2330,92 +2330,7 @@ DESCRIPTION
 
 CLASSES
     builtins.object
-        Interval
         MooreSampler
-
-    class Interval(builtins.object)
-     |  An interval of two Decimal values.
-     |
-     |  Methods defined here:
-     |
-     |  __add__(self, v)
-     |
-     |  __max__(a, b)
-     |
-     |  __min__(a, b)
-     |
-     |  __mul__(self, v)
-     |
-     |  __neg__(self)
-     |
-     |  __pow__(self, v)
-     |
-     |  __radd__(self, v)
-     |
-     |  __repr__(self)
-     |      Return repr(self).
-     |
-     |  __rmul__(self, v)
-     |
-     |  __rsub__(self, v)
-     |
-     |  __rtruediv__(self, v)
-     |
-     |  __sub__(self, v)
-     |
-     |  __truediv__(self, v)
-     |
-     |  abs(self)
-     |
-     |  ceil(self)
-     |
-     |  clamp(self, a, b)
-     |
-     |  clampleft(self, a)
-     |
-     |  cos(self)
-     |
-     |  exp(self)
-     |
-     |  floor(self)
-     |
-     |  isAccurateTo(self, v)
-     |
-     |  log(self)
-     |
-     |  magnitude(self)
-     |
-     |  mignitude(self)
-     |
-     |  pi(prec=56)
-     |
-     |  pow(self, v)
-     |
-     |  rem(self, v)
-     |
-     |  sin(self)
-     |
-     |  sqrt(self)
-     |
-     |  tan(self)
-     |
-     |  width(self)
-     |      NOTE: Not rigorous!
-     |
-     |  ----------------------------------------------------------------------
-     |  Static methods defined here:
-     |
-     |  __new__(cl, v, sup=None, prec=None)
-     |      Create and return a new object.  See help(type) for accurate signature.
-     |
-     |  ----------------------------------------------------------------------
-     |  Data descriptors defined here:
-     |
-     |  __dict__
-     |      dictionary for instance variables (if defined)
-     |
-     |  __weakref__
-     |      list of weak references to the object (if defined)
 
     class MooreSampler(builtins.object)
      |  Moore rejection sampler, for generating independent samples
@@ -2432,12 +2347,12 @@ CLASSES
      |
      |  - pdf: A function that specifies the PDF.  It takes a single parameter that
      |      differs as follows, depending on the case:
-     |      - One-dimensional case: A single Interval. (An Interval is a mathematical
+     |      - One-dimensional case: A single FInterval. (An FInterval is a mathematical
      |        object that specifies upper and lower bounds of a number.)
-     |      - Multidimensional case: A list of Intervals, one for each dimension.
-     |      - Transdimensional case (numLabels > 1): A list of two items: the Interval
-     |         or Intervals, followed by a label number (an integer in [0, numLabels)).
-     |      This function returns an Interval.  For best results,
+     |      - Multidimensional case: A list of FIntervals, one for each dimension.
+     |      - Transdimensional case (numLabels > 1): A list of two items: the FInterval
+     |         or FIntervals, followed by a label number (an integer in [0, numLabels)).
+     |      This function returns an FInterval.  For best results,
      |      the function should use interval arithmetic throughout.  The area under
      |      the PDF need not equal 1 (this sampler works even if the PDF is only known
      |      up to a normalizing constant).

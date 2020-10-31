@@ -1,6 +1,6 @@
 #
 #  Implements interval numbers and interval arithmetic, backed
-#  by Decimal values.
+#  by Fractions
 #
 #  Written by Peter O. Any copyright to this file is released to the Public Domain.
 #  In case this is not possible, this file is also licensed under Creative Commons Zero
@@ -322,6 +322,17 @@ class FInterval:
             raise ValueError
         if num == den:
             return FInterval(0)
+        if num == den * 2:  # log 2, special case not used in paper
+            num = 0
+            den = 1
+            for i in range(1, n + 1):
+                ad = i << i
+                num = num * ad + den
+                den *= ad
+            logden = (n + 1) << (n + 1)
+            lower = Fraction(num, den)
+            upper = lower + Fraction(1, logden) * 2
+            return FInterval(lower, upper)
         if num > den and num * 2 <= den * 3:  # ... and (num/den)<=1.5
             xmn = num - den
             xmd = den
@@ -576,6 +587,8 @@ class FInterval:
         )
 
     def __repr__(self):
+        # return "[%s, %s]" % (Decimal(self.inf.numerator)/self.inf.denominator,
+        #                           Decimal(self.sup.numerator)/self.sup.denominator)
         return "[%s, %s]" % (float(self.inf), float(self.sup))
 
 # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
@@ -672,37 +685,6 @@ def _polynomialIntegral(p, x=1):
     else:
         return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
 
-def _powerBound(x, y, pwr):
-    # Calculates an upper bound for (x/y)**pwr,
-    # assuming 0 < x/y < 1.  Designed to mitigate "runaway"
-    # growth in the fraction's numerator and denominator.
-    n = 1
-    d = 1
-    p = pwr
-    while p > 0:
-        # print([p,float(n/d),float(x/y),n.bit_length(),x.bit_length()])
-        if p % 2 == 1:
-            n *= x
-            d *= y
-            if n > 2 ** 128 or (n > 1 and d > 2 ** 128):
-                n = n << 64
-                if n % d == 0:
-                    n = n // d
-                else:
-                    n = (n // d) + 1
-                d = 2 ** 64
-        p //= 2
-        x *= x
-        y *= y
-        if x > 2 ** 128 or (x > 1 and y > 2 ** 128):
-            x = x << 64
-            if x % y == 0:
-                x = x // y
-            else:
-                x = (x // y) + 1
-            y = 2 ** 64
-    return Fraction(n, d)
-
 _logpi2cache = {}
 
 def loggamma(k, v=4):
@@ -722,6 +704,11 @@ def loggamma(k, v=4):
     # Usually, Stirling's approximation diverges, which however is inappropriate for
     # use in exact sampling algorithms, where series expansions must converge
     # in order for the algorithm to halt almost surely.
+    # Unfortunately, since the formula from the paper is monotonically increasing and
+    # that paper didn't specify the exact rate of convergence or
+    # an upper bound on the error incurred when truncating the series (a bound required
+    # for our purposes of exact sampling), I employed
+    # an ad hoc bound in this method.
     xn = k - 1
     logx = FInterval(xn).log(v * 2)
     ret = xn * logx - xn + (logx + _logpi2cache[v]) / 2
@@ -772,3 +759,7 @@ def logbinprob(n, k, v=4):
     # v is an accuracy parameter.
     divisor = FInterval(2).log(v + 4) * n  # ln(2)*n = ln(2**n)
     return logbinco(n, k, v) - divisor
+
+if __name__ == "__main__":
+    for i in range(800000, 800020):
+        print([i, math.lgamma(i), loggamma(i, 20)])

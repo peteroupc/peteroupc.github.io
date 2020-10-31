@@ -1130,11 +1130,15 @@ class Bernoulli:
         return self.linear(f, c, eps=Fraction(1) - m)
 
 def _multinom(n, x):
-    num = math.factorial(n)
+    # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
+    num = 1
+    for i in range(x[0], n + 1):
+        num *= i
     den = 1
-    for v in x:
-        den *= math.factorial(v)
-    return num / den
+    for i in range(1, len(x)):
+        for j in range(1, x[i] + 1):
+            den *= j
+    return Fraction(num) / den
 
 def _neighbordist(ni, nj, b):
     ret = [av - bv for av, bv in zip(ni, nj)]
@@ -1273,7 +1277,7 @@ class DiceEnterprise:
 
         For example, [3, 4, 5] becomes:
                  3 * p**4 * (1-p)**5
-        As a special case, this list can contain two items and a zero is
+        As a special case, the term can contain two items and a zero is
         squeezed between the first and second item.
         For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
                  3 * p**4 * (1-p)**0 = 3 * p **4
@@ -1443,7 +1447,6 @@ class DiceEnterprise:
         if n_count % 2 != 0:
             raise ValueError
         s = self._sum_neighbors(n)
-        # print(["192's neighbors",n[192]])
         w = [[0 for _ in nb] for nb in n]
         while n_count > 0:
             b, i = self._find_max_b_i(s)
@@ -1549,7 +1552,6 @@ class DiceEnterprise:
         if self._dirty:
             self._dirty = False
             self._compile_ladder()
-            # self._autoaugment()
         if len(self.ladder[0][1]) == 2:
             s = self._monotoniccftp(coin)
         else:
