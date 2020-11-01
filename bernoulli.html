@@ -52,6 +52,7 @@
 <li><a href="#exp___lambda____c__minus__c"><strong>exp(<em>&lambda;</em> * <em>c</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___minus__c"><strong>exp(&minus;<em>&lambda;</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a></li>
+<li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)<sup>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#ln_1___lambda"><strong>ln(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus_ln_1___lambda"><strong>1 &minus; ln(1+<em>&lambda;</em>)</strong></a></li>
@@ -115,6 +116,7 @@
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 <li><a href="#Euler_s_Constant___gamma"><strong>Euler&#39;s Constant <em>&gamma;</em></strong></a></li>
 <li><a href="#ln_2"><strong>ln(2)</strong></a></li>
+<li><a href="#ln_1__y___z"><strong>ln(1+<em>y</em>/<em>z</em>)</strong></a></li>
 </ul></li>
 <li><a href="#General_Algorithms"><strong>General Algorithms</strong></a>
 
@@ -426,6 +428,18 @@
 <li>If <em>k</em> &gt; 0, generate unbiased bits until a zero bit or <em>k</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
 <li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> using the <em>&mu;</em> input coin, and return the result.</li>
+</ol>
+
+<p><a id=1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a></p>
+
+<h4>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)<sup>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</h4>
+
+<p>An extension of the previous algorithm.  Here, <em>m</em> is an integer greater than 0.</p>
+
+<ol>
+<li>If <em>k</em> &gt; 0, generate unbiased bits until a zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a block of all zeros was generated this way, return 0.</li>
+<li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> <em>m</em> times, using the <em>&mu;</em> input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.</li>
 </ol>
 
 <p><a id=1_1___lambda></a></p>
@@ -1436,6 +1450,19 @@
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
+<p><a id=ln_1__y___z></a></p>
+
+<h4>ln(1+<em>y</em>/<em>z</em>)</h4>
+
+<p>See also the algorithm given earlier for ln(1+<em>&lambda;</em>).  In this algorithm, <em>y</em>/<em>z</em> is a rational number 0 or greater and less than 1.</p>
+
+<ol>
+<li>If <em>y</em>/<em>z</em> is 0, return 0.</li>
+<li>With probability 1/2, return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.</li>
+</ol>
+
 <p><a id=General_Algorithms></a></p>
 
 <h3>General Algorithms</h3>
@@ -1554,7 +1581,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Example</strong>: Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require storage that grows with <em>n</em> and time that grows with <em>n</em>&minus;<em>k</em>.  On the other hand, any constant can be simulated using two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
+<p><strong>Example</strong>: Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require storage that grows with <em>n</em> and time that grows at least as fast as <em>n</em>&minus;<em>k</em>.  On the other hand, any constant can be simulated using two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Requests_and_Open_Questions></a></p>

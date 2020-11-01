@@ -38,6 +38,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**exp(_&lambda;_ * _c_ &minus; _c_)**](#exp___lambda____c__minus__c)
         - [**exp(&minus;_&lambda;_ &minus; _c_)**](#exp_minus___lambda___minus__c)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
+        - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)<sup>\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
         - [**1 &minus; ln(1+_&lambda;_)**](#1_minus_ln_1___lambda)
@@ -98,6 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
         - [**ln(2)**](#ln_2)
+        - [**ln(1+_y_/_z_)**](#ln_1__y___z)
     - [**General Algorithms**](#General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
         - [**Simulating the Probability Generating Function**](#Simulating_the_Probability_Generating_Function)
@@ -336,6 +338,15 @@ This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an i
 1. If _k_ &gt; 0, generate unbiased bits until a zero bit or _k_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
 2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
 3. Run the **algorithm for exp(&minus;&mu;)** using the _&mu;_ input coin, and return the result.
+
+<a id=1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
+#### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)<sup>\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
+
+An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
+
+1. If _k_ &gt; 0, generate unbiased bits until a zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a block of all zeros was generated this way, return 0.
+2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
+3. Run the **algorithm for exp(&minus;&mu;)** _m_ times, using the _&mu;_ input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.
 
 <a id=1_1___lambda></a>
 #### 1/(1+_&lambda;_)
@@ -1098,6 +1109,16 @@ A special case of the algorithm for ln(1+_&lambda;_) given earlier.
 2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
 3. [**Sample from the number _u_**](#Algorithms).  If the result is 1, return 0.  Otherwise, go to step 2.
 
+<a id=ln_1__y___z></a>
+#### ln(1+_y_/_z_)
+
+See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number 0 or greater and less than 1.
+
+1. If _y_/_z_ is 0, return 0.
+2. With probability 1/2, return a number that is 1 with probability _y_/_z_ and 0 otherwise.
+3. Generate a uniform(0, 1) random number _u_, if _u_ wasn't generated yet.
+4. [**Sample from the number _u_**](#Algorithms), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.
+
 <a id=General_Algorithms></a>
 ### General Algorithms
 
@@ -1186,7 +1207,7 @@ The case when _a_ is a _natural logarithm_ rather than a base-2 logarithm is tri
 4. If _E_ is less than abs(_inf_+_intinf_), return 0.  If _E_ is less than abs(_sup_+_intinf_), go to the next step.  If neither is the case, return 1.
 5. Set _n_ to 1, then go to step 5.
 
-> **Example**: Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require storage that grows with _n_ and time that grows with _n_&minus;_k_.  On the other hand, any constant can be simulated using two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(37)**](#Note37)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(38)**](#Note38)</sup>.
+> **Example**: Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require storage that grows with _n_ and time that grows at least as fast as _n_&minus;_k_.  On the other hand, any constant can be simulated using two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(37)**](#Note37)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(38)**](#Note38)</sup>.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
