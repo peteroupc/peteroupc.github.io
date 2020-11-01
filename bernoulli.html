@@ -277,7 +277,7 @@
 
 <h4>exp(&minus;<em>&lambda;</em>)</h4>
 
-<p>This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is <em>uniformly fast</em>, meaning the average running time is bounded from above for all choices of <em>&lambda;</em> and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.) This algorithm is adapted from the general martingale algorithm (in &quot;Certain Power Series&quot;, above), and makes use of the fact that exp(&minus;<em>&lambda;</em>) can be rewritten as 1 &minus; <em>&lambda;</em> + <em>&lambda;</em><sup>2</sup>/2 &minus; <em>&lambda;</em><sup>3</sup>/6 + <em>&lambda;</em><sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....</p>
+<p>This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is <em>uniformly fast</em>, meaning the average running time is bounded from above by the same constant for all choices of <em>&lambda;</em> and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.) This algorithm is adapted from the general martingale algorithm (in &quot;Certain Power Series&quot;, above), and makes use of the fact that exp(&minus;<em>&lambda;</em>) can be rewritten as 1 &minus; <em>&lambda;</em> + <em>&lambda;</em><sup>2</sup>/2 &minus; <em>&lambda;</em><sup>3</sup>/6 + <em>&lambda;</em><sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....</p>
 
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
@@ -1558,30 +1558,30 @@
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
-<p>If the series <em>a</em>, given above, is instead the <em>base-2 logarithm</em> of a probability in (0, 1), the following algorithm I developed simulates that probability.  For this algorithm, because logarithms for such probabilities are negative, all the <em>a</em>[<em>i</em>] must be 0 or less and all the <em>err</em>[<em>i</em>] must be 0 or less and form a monotonically nondecreasing sequence.</p>
+<p>If the series <em>a</em>, given above, is instead the <em>base-2 logarithm</em> of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity&#39;s sake, even though logarithms for such probabilities are negative, all the <em>a</em>[<em>i</em>] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
 <li>Set <em>intinf</em> to floor(max(0, abs(<em>a</em>[0]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)</li>
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
 <li>Generate an exponential random number <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random number <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Set <em>inf</em> to <em>a</em>[<em>n</em>], then set <em>sup</em> to <em>inf</em>+<em>err</em>[<em>n</em>].</li>
-<li>If <em>E</em> is less than abs(<em>inf</em>+<em>intinf</em>), return 0.  If <em>E</em> is less than abs(<em>sup</em>+<em>intinf</em>), go to the next step.  If neither is the case, return 1.</li>
+<li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
+<li>If <em>E</em> is less than <em>inf</em>+<em>intinf</em>, return 0.  If <em>E</em> is less than <em>sup</em>+<em>intinf</em>, go to the next step.  If neither is the case, return 1.</li>
 <li>Set <em>n</em> to 1, then go to step 5.</li>
 </ol>
 
-<p>The case when <em>a</em> is a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or less and all the <em>err</em>[<em>i</em>] must be 0 or less and form a monotonically nondecreasing sequence.</p>
+<p>The case when <em>a</em> is a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
 <li>Generate an exponential random number <em>E</em> (with rate 1).</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Set <em>inf</em> to <em>a</em>[<em>n</em>], then set <em>sup</em> to <em>inf</em>+<em>err</em>[<em>n</em>].</li>
-<li>If <em>E</em> is less than abs(<em>inf</em>+<em>intinf</em>), return 0.  If <em>E</em> is less than abs(<em>sup</em>+<em>intinf</em>), go to the next step.  If neither is the case, return 1.</li>
+<li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
+<li>If <em>E</em> is less than <em>inf</em>+<em>intinf</em>, return 0.  If <em>E</em> is less than <em>sup</em>+<em>intinf</em>, go to the next step.  If neither is the case, return 1.</li>
 <li>Set <em>n</em> to 1, then go to step 5.</li>
 </ol>
 
 <blockquote>
-<p><strong>Example</strong>: Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require storage that grows with <em>n</em> and time that grows at least as fast as <em>n</em>&minus;<em>k</em>.  On the other hand, any constant can be simulated using two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
+<p><strong>Example</strong>: Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=Requests_and_Open_Questions></a></p>
