@@ -578,7 +578,7 @@ The **ExpRandFill** algorithm takes an e-rand and generates a number whose fract
 
 See the discussion in **FillGeometricBag** for advice on how to handle the case when if it somehow happens that bits beyond `p` in the PSRN's fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.
 
-Here is a third algorithm that generates a _uniform PSRN_, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate _&lambda;_ is given as a rational number greater than 0.  The method is based on von Neumann's algorithm (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>.
+Here is a third algorithm (called **ExpRand**) that generates a _uniform PSRN_, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate _&lambda;_ is given as a rational number greater than 0.  The method is based on von Neumann's algorithm (von Neumann 1951)<sup>[**(9)**](#Note9)</sup>.
 
 1. Set _recip_ to 1/_&lambda;_, and set _highpart_ to 0.
 2. Set _u_ to the result of **RandUniformFromReal** with the parameter _recip_.
@@ -588,7 +588,7 @@ Here is a third algorithm that generates a _uniform PSRN_, rather than an e-rand
 6. If _accept_ is 1, add _highpart_ to _val_ via the **UniformAddRational** algorithm given earlier, then return _val_.
 7. Add _recip_ to _highpart_ and go to step 2.
 
-The following alternative version of the previous algorithm includes Karney's improvement to the von Neumann algorithm (Karney 2014)<sup>[**(1)**](#Note1)</sup>, namely a so-called "early rejection step". The algorithm here allows an arbitrary rate parameter (_&lambda;_), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where _&lambda;_ is 1.
+The following alternative version of the previous algorithm (called **ExpRand2**) includes Karney's improvement to the von Neumann algorithm (Karney 2014)<sup>[**(1)**](#Note1)</sup>, namely a so-called "early rejection step". The algorithm here allows an arbitrary rate parameter (_&lambda;_), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where _&lambda;_ is 1.
 
 1. Set _recip_ to 1/_&lambda;_, and set _highpart_ to 0.
 2. Set _u_ to the result of **RandUniformFromReal** with the parameter _recip_.

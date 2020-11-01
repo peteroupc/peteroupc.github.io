@@ -223,8 +223,8 @@ def sampleIntPlusBag(bern, bag, k):
             bag[r] = bern.randbit()
         return bag[r]
 
-def forsythe_prob2(rg, bern, x):
-    # Returns true with probability x*exp(1-x), where x is in [0, 1].
+def forsythe_prob2(x):
+    # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
     # Non-Uniform Random Variate Generation.
     while True:
@@ -247,12 +247,12 @@ def forsythe_prob2(rg, bern, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational(ret, x) else 0
 
-def forsythe_prob3(rg, bern, x):
-    # Returns true with probability erf(x)/erf(1), where x is in [0, 1].
+def forsythe_prob3(x):
+    # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
     # Non-Uniform Random Variate Generation.
     while True:
-        # Maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(1-x)
+        # Uniform(0,1) random number
         ret = psrn_new_01()
         k = 1
         u = ret
@@ -268,8 +268,8 @@ def forsythe_prob3(rg, bern, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_rational(ret, x) else 0
 
-def forsythe_prob(rg, bern, m, n):
-    # Returns true with probability gamma(m,n)/gamma(m,1),
+def forsythe_prob(m, n):
+    # Returns 1 with probability gamma(m,n)/gamma(m,1),
     # where gamma(.) is the lower incomplete gamma function.
     # Implemented with the help of Theorem IV.2.1(iii) given in
     # Non-Uniform Random Variate Generation.
@@ -559,7 +559,6 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     absfrac = abs(fraction)
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
-    # Result is "inexact", and "small" expresses a lower bound
     while True:
         dcount = digitcount
         ddc = digits ** dcount

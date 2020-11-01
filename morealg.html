@@ -41,9 +41,11 @@
 <li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
 <li><a href="#Arc_Cosine_Distribution"><strong>Arc-Cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
-<li><a href="#Exponential_Distribution_with_Parameter_ln_2"><strong>Exponential Distribution with Parameter ln(2)</strong></a></li>
-<li><a href="#Exponential_Distribution_with_Parameter_ln__x"><strong>Exponential Distribution with Parameter ln(<em>x</em>)</strong></a></li>
-<li><a href="#Bounded_Exponential_Distribution_with_Parameter_ln_2"><strong>Bounded Exponential Distribution with Parameter ln(2)</strong></a></li>
+<li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a>
+
+<ul>
+<li><a href="#Rate_ln_2"><strong>Rate ln(2)</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#Requests"><strong>Requests</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -264,7 +266,14 @@
 <li>For each distribution, an arbitrary-precision sampler exists.</li>
 </ul>
 
-<p>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a> for details).</p>
+<blockquote>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</li>
+<li>A random number that follows the Lindley distribution (Lindley 1958)<sup><a href="#Note6"><strong>(6)</strong></a></sup> with parameter <em>&theta;</em> (a rational number greater than 0) can be generated as follows: With probability <em>&theta;</em>/(1+<em>&theta;</em>), generate an exponential random number with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs) and return that number. Otherwise, generate two exponential random numbers with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+</ol>
+</blockquote>
 
 <p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
 
@@ -326,8 +335,8 @@
 <p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of <em>n</em>.</p>
 
 <ol>
-<li>Generate <em>n</em> uniform PSRNs, and turn each of them into an exponential random number with a rate of 1, using an algorithm that employs rejection from the uniform distribution (such as the von Neumann algorithm or Karney&#39;s improvement to that algorithm (Karney 2014)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  This algorithm won&#39;t work for exponential PSRNs (e-rands), described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
-<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>algorithm to add two PSRNs</strong></a> given in another document.</li>
+<li>Generate <em>n</em> exponential random numbers with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
 </ol>
 
 <p><a id=Hyperbolic_Secant_Distribution></a></p>
@@ -440,45 +449,35 @@
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
 </ol>
 
-<p><a id=Exponential_Distribution_with_Parameter_ln_2></a></p>
+<p><a id=Exponential_Distribution_with_Rate_ln__x></a></p>
 
-<h3>Exponential Distribution with Parameter ln(2)</h3>
+<h3>Exponential Distribution with Rate ln(<em>x</em>)</h3>
 
-<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with parameter ln(2).  This is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random number.  Here, <em>x</em> is a rational number that&#39;s greater than 1.  In the algorithm, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</p>
+
+<ol>
+<li>(Samples the integer part of the random number.) Generate a geometric(1&minus;1/<em>x</em>) random number, that is, the number of failed trials before the first success, where each trial has success rate 1&minus;1/<em>x</em>.  Set <em>k</em> to that geometric random number.  (If <em>x</em> is a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.)</li>
+<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
+<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)    If <em>x</em> is not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with ) <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If <em>x</em> is not a power of 2, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
+</ol>
+
+<blockquote>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Set <em>k</em> to a bounded geometric(1&minus;1/<em>x</em>) random number (Bringmann and Friedrich 2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, or more simply, either <em>m</em> or a geometric(1&minus;1/<em>x</em>) random number, whichever is less. (If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number is generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
+</blockquote>
+
+<p><a id=Rate_ln_2></a></p>
+
+<h4>Rate ln(2)</h4>
+
+<p>The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
 
 <ol>
 <li>(Samples the integer part of the random number.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
 <li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
 <li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
-<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
-</ol>
-
-<p><a id=Exponential_Distribution_with_Parameter_ln__x></a></p>
-
-<h3>Exponential Distribution with Parameter ln(<em>x</em>)</h3>
-
-<p>An extension of the previous algorithm.  Here, <em>x</em> is a rational number that&#39;s greater than 1.  In the algorithm, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</p>
-
-<ol>
-<li>(Samples the integer part of the random number.) Generate a geometric(1&minus;1/<em>x</em>) random number, that is, the number of failed trials before the first success, where each trial has success rate 1&minus;1/<em>x</em>.  Set <em>k</em> to that geometric random number.  (If <em>x</em> is a power of 2, this step can be implemented by generating blocks of <em>m</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.)</li>
-<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
-<li>Create a &mu; input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)    If <em>x</em> is not a power of 2, also create a &nu; input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with ) <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
-<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the &mu; input coin.  If <em>x</em> is not a power of 2, run the same algorithm once, using the &nu; input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
-<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
-</ol>
-
-<p><a id=Bounded_Exponential_Distribution_with_Parameter_ln_2></a></p>
-
-<h3>Bounded Exponential Distribution with Parameter ln(2)</h3>
-
-<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with parameter ln(2), bounded by an integer <em>m</em>.</p>
-
-<ol>
-<li>(Samples the integer part of the random number.) Generate unbiased random bits until a zero bit or <em>m</em> bits were generated this way.  Set <em>k</em> to the number of ones generated this way.  If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).</li>
-<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>. (Or, generate a uniform (0, &mu;) random number, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+&mu;.)</li>
-<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong>.  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
-<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>, using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
 <li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
 </ol>
 
@@ -502,8 +501,9 @@
 <li><small><sup id=Note2>(2)</sup> C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016</small></li>
 <li><small><sup id=Note3>(3)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
 <li><small><sup id=Note4>(4)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
-<li><small><sup id=Note5>(5)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
-<li><small><sup id=Note6>(6)</sup> Ahrens, J.H., and Dieter, U., &quot;Computer methods from sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</small></li>
+<li><small><sup id=Note5>(5)</sup> Ahrens, J.H., and Dieter, U., &quot;Computer methods from sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</small></li>
+<li><small><sup id=Note6>(6)</sup> Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</small></li>
+<li><small><sup id=Note7>(7)</sup> Bringmann, K. and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</small></li>
 </ul>
 
 <p><a id=License></a></p>

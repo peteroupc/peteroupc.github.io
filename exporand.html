@@ -781,7 +781,7 @@
 
 <p>See the discussion in <strong>FillGeometricBag</strong> for advice on how to handle the case when if it somehow happens that bits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.</p>
 
-<p>Here is a third algorithm that generates a <em>uniform PSRN</em>, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate <em>&lambda;</em> is given as a rational number greater than 0.  The method is based on von Neumann&#39;s algorithm (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
+<p>Here is a third algorithm (called <strong>ExpRand</strong>) that generates a <em>uniform PSRN</em>, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate <em>&lambda;</em> is given as a rational number greater than 0.  The method is based on von Neumann&#39;s algorithm (von Neumann 1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
 
 <ol>
 <li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
@@ -793,7 +793,7 @@
 <li>Add <em>recip</em> to <em>highpart</em> and go to step 2.</li>
 </ol>
 
-<p>The following alternative version of the previous algorithm includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
+<p>The following alternative version of the previous algorithm (called <strong>ExpRand2</strong>) includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
 
 <ol>
 <li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
