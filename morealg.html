@@ -41,6 +41,8 @@
 <li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
 <li><a href="#Arc_cosine_Distribution"><strong>Arc-cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
+<li><a href="#Exponential_Distribution_with_Parameter_ln_2"><strong>Exponential Distribution with Parameter ln(2)</strong></a></li>
+<li><a href="#Bounded_Exponential_Distribution_with_Parameter_ln_2"><strong>Bounded Exponential Distribution with Parameter ln(2)</strong></a></li>
 </ul></li>
 <li><a href="#Requests"><strong>Requests</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -425,7 +427,7 @@
 
 <h3>Logistic Distribution</h3>
 
-<p>The following new algorithm generates a random number that follows the logistic distribution.</p>
+<p>The following new algorithm generates a partially-sampled random number that follows the logistic distribution.</p>
 
 <ol>
 <li>Set <em>k</em> to 0.</li>
@@ -435,6 +437,34 @@
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
 <li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
+</ol>
+
+<p><a id=Exponential_Distribution_with_Parameter_ln_2></a></p>
+
+<h3>Exponential Distribution with Parameter ln(2)</h3>
+
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with parameter ln(2).</p>
+
+<ol>
+<li>(Samples the integer part of the random number.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
+<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>, using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
+</ol>
+
+<p><a id=Bounded_Exponential_Distribution_with_Parameter_ln_2></a></p>
+
+<h3>Bounded Exponential Distribution with Parameter ln(2)</h3>
+
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with parameter ln(2), bounded by an integer <em>m</em>.</p>
+
+<ol>
+<li>(Samples the integer part of the random number.) Generate unbiased random bits until a zero bit or <em>m</em> bits were generated this way.  Set <em>k</em> to the number of ones generated this way.  If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).</li>
+<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>. (Or, generate a uniform (0, &mu;) random number, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+&mu;.)</li>
+<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>, using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
 </ol>
 
 <p><a id=Requests></a></p>

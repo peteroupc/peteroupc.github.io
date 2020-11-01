@@ -686,6 +686,7 @@ def _polynomialIntegral(p, x=1):
         return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
 
 _logpi2cache = {}
+_FRACTION_ZERO = Fraction(0)
 
 def loggamma(k, v=4):
     global _logpi2cache
@@ -712,21 +713,29 @@ def loggamma(k, v=4):
     xn = k - 1
     logx = FInterval(xn).log(v * 2)
     ret = xn * logx - xn + (logx + _logpi2cache[v]) / 2
-    rb = Fraction(0)
+    rb = _FRACTION_ZERO
     d = 1
     # print("rsup",float(ret.sup))
-    lastterm = Fraction(0)
-    # mm=xn*math.log(xn)-xn+math.log(math.pi*2)/2+math.log(xn)/2
-    # mg=math.lgamma(k)
-    ediff = Fraction(0)
+    lastterm = _FRACTION_ZERO
+    ediff = _FRACTION_ZERO
     for i in range(1, v + 2):
-        n = 0
+        nn = 0
+        nd = 1
         for l in range(1, i + 1):
-            n += Fraction((-1) ** l * bernoullinum((l + 1)) * (stirling1(i, l))) / (
-                l * (l + 1)
-            )
+            bn = bernoullinum(l + 1)
+            sn = stirling1(i, l)
+            an = bn.numerator * sn.numerator
+            ad = bn.denominator * sn.denominator * (l * (l + 1))
+            if l % 2 == 1:
+                # Subtract (an/ad)
+                nn = nn * ad - nd * an
+                nd *= ad
+            else:
+                # Add (an/ad)
+                nn = nn * ad + nd * an
+                nd *= ad
         d *= xn + i
-        term = Fraction(n) / d
+        term = Fraction(nn, nd * d)
         if i % 2 == 1:
             term = -term
         if i == v + 1:
