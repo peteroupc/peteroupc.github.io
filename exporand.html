@@ -49,7 +49,6 @@
 <li><a href="#Exponential_Partially_Sampled_Random_Numbers"><strong>Exponential Partially-Sampled Random Numbers</strong></a></li>
 <li><a href="#Other_Distributions"><strong>Other Distributions</strong></a></li>
 <li><a href="#Properties"><strong>Properties</strong></a></li>
-<li><a href="#Comparisons"><strong>Comparisons</strong></a></li>
 <li><a href="#Limitations"><strong>Limitations</strong></a></li>
 </ul></li>
 <li><a href="#Sampling_Uniform_and_Exponential_PSRNs"><strong>Sampling Uniform and Exponential PSRNs</strong></a>
@@ -58,13 +57,14 @@
 <li><a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a></li>
 <li><a href="#Sampling_E_rands"><strong>Sampling E-rands</strong></a></li>
 </ul></li>
-<li><a href="#Arithmetic_with_PSRNs"><strong>Arithmetic with PSRNs</strong></a>
+<li><a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>
 
 <ul>
 <li><a href="#In_General"><strong>In General</strong></a></li>
 <li><a href="#Addition_and_Subtraction"><strong>Addition and Subtraction</strong></a></li>
 <li><a href="#Multiplication"><strong>Multiplication</strong></a></li>
 <li><a href="#Using_the_Arithmetic_Algorithms"><strong>Using the Arithmetic Algorithms</strong></a></li>
+<li><a href="#Comparisons"><strong>Comparisons</strong></a></li>
 </ul></li>
 <li><a href="#Building_Blocks"><strong>Building Blocks</strong></a>
 
@@ -216,7 +216,7 @@
 
 <ol>
 <li>The algorithm relies only on a source of independent and unbiased random bits for randomness.</li>
-<li>The algorithm does not rely on floating-point arithmetic or calculations of irrational or transcendental numbers (other than digit extractions), including when the algorithm samples each digit of a PSRN.</li>
+<li>The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational or transcendental numbers. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations use arbitrary precision.)</li>
 <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
 <li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup> suggests Wasserstein distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
@@ -229,97 +229,12 @@
 <li>It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  The following are some reasons for this.
 
 <ul>
-<li>One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see &quot;<a href="#Arithmetic_with_PSRNs"><strong>Arithmetic with PSRNs</strong></a>&quot;.</li>
+<li>One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;.</li>
 <li>Another issue occurs when the original sampler uses the same random number for different purposes in the algorithm (an example is &quot;<em>W</em>*<em>Y</em>, (1&minus;<em>W</em>)*<em>Y</em>&quot;, where <em>W</em> and <em>Y</em> are independent random numbers (Devroye 1986, p. 394)<sup><a href="#Note14"><strong>(14)</strong></a></sup>).  In this case, if one PSRN spawns additional PSRNs (so that they become <em>dependent</em> on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it&#39;s hard to characterize when the additional PSRNs become inaccurate this way and when not.)</li>
 </ul></li>
 <li>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)<sup><a href="#Note12"><strong>(12)</strong></a></sup> produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</li>
 </ol>
 </blockquote>
-
-<p><a id=Comparisons></a></p>
-
-<h3>Comparisons</h3>
-
-<p>Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.</p>
-
-<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise (see also (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>)).</p>
-
-<ol>
-<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part according to the kind of PSRN <strong>a</strong> is.  Do the same for <strong>b</strong>.</li>
-<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
-<li>Set <em>i</em> to 0.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
-<li>Let <em>da</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part, and let <em>db</em> be <strong>b</strong>&#39;s corresponding digit.</li>
-<li>If <strong>a</strong>&#39;s sign is positive, return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
-<li>If <strong>a</strong>&#39;s sign is negative, return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
-<li>Add 1 to <em>i</em> and go to step 4.</li>
-</ol>
-
-<p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</p>
-
-<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
-
-<ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
-<li>Set <em>bs</em> to &minus;1 if <strong>b</strong> is less than 0, or 1 otherwise. Calculate floor(abs(<strong>b</strong>)), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to abs(<strong>b</strong>) minus <em>bi</em>.)</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)</li>
-<li>Set <em>i</em> to 0.</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
-<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
-<li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.</li>
-<li>Return 1 if&mdash;
-
-<ul>
-<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is positive,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is negative, or</li>
-<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is negative, and&mdash;
-
-<ul>
-<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
-<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is less than <strong>b</strong> almost surely).</li>
-</ul></li>
-</ul></li>
-<li>Return 0 if&mdash;
-
-<ul>
-<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is negative,</li>
-<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is positive, or</li>
-<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is positive, and&mdash;
-
-<ul>
-<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely), or</li>
-<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely).</li>
-</ul></li>
-</ul></li>
-<li>Add 1 to <em>i</em> and go to step 5.</li>
-</ol>
-
-<p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>):</p>
-
-<ul>
-<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
-<li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).</li>
-<li>(8.) If <em>ak</em> &lt;= <em>bk</em> &minus; 2, return either 1 if <strong>a</strong>&#39;s sign is positive or 0 otherwise.</li>
-<li>(9.) If <em>ak</em> &gt;= <em>bk</em> + 1, return either 1 if <strong>a</strong>&#39;s sign is negative or 0 otherwise.</li>
-</ul>
-
-<p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
-
-<p>The following shows how to implement <strong>URandLessThanReal</strong> when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
-
-<ol>
-<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  Then, if <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em> is 0, return 0.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em>&#39;s sign is different from <em>den</em>&#39;s sign, return 0.</li>
-<li>Set <em>bs</em> to &minus;1 if <em>num</em> or <em>den</em>, but not both, is less than 0, or 1 otherwise, then set <em>den</em> to abs(<em>den</em>), then set <em>bi</em> to floor(abs(<em>num</em>)/<em>den</em>), then set <em>num</em> to rem(abs(<em>num</em>), <em>den</em>).</li>
-<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)  If <em>num</em> is 0 (indicating the fraction is an integer), return 0 if <strong>a</strong>&#39;s sign is positive and 1 otherwise.</li>
-<li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
-<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
-<li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
-<li>Set <em>d2</em> to floor(<em>num</em> * <em>pt</em> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
-<li>If <em>d1</em> is less than <em>d2</em>, return either 1 if <strong>a</strong>&#39;s sign is positive, or 0 otherwise.  If <em>d1</em> is greater than <em>d2</em>, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
-<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>pt</em> &minus; <em>den</em>, then multiply <em>den</em> by <em>pt</em>.</li>
-<li>If <em>num</em> is 0, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
-<li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 5.</li>
-</ol>
 
 <p><a id=Limitations></a></p>
 
@@ -418,9 +333,9 @@
 <li>One to simulate a probability of the form <code>1/(1+exp(x/(y*pow(2, prec))))</code> (here, the <strong>LogisticExp</strong> algorithm described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).</li>
 </ol>
 
-<p><a id=Arithmetic_with_PSRNs></a></p>
+<p><a id=Arithmetic_and_Comparisons_with_PSRNs></a></p>
 
-<h2>Arithmetic with PSRNs</h2>
+<h2>Arithmetic and Comparisons with PSRNs</h2>
 
 <p>&nbsp;</p>
 
@@ -602,6 +517,91 @@
 </ol>
 
 <p>However, even this algorithm doesn&#39;t ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let <strong>a</strong> be the PSRN 0.... (or the interval [0.0, 1.0]), then let <strong>b</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>a</strong>, 1/2), then let <strong>c</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>b</strong>, 1/3).  One possible result for <strong>b</strong> is 0.41... and for <strong>c</strong> is 0.138.... Now we fill <strong>a</strong>, <strong>b</strong>, and <strong>c</strong> with uniform random bits.  Thus, as one possible result, <strong>a</strong> is now 0.13328133..., <strong>b</strong> is now 0.41792367..., and <strong>c</strong> is now 0.13860371....  Here, however, <strong>c</strong> divided by <strong>b</strong> is not exactly 1/3, although it&#39;s quite close, and <strong>b</strong> divided by <strong>a</strong> is far from 1/2 (especially since <strong>a</strong> was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.</p>
+
+<p><a id=Comparisons></a></p>
+
+<h3>Comparisons</h3>
+
+<p>Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.</p>
+
+<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise (see also (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>)).</p>
+
+<ol>
+<li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part according to the kind of PSRN <strong>a</strong> is.  Do the same for <strong>b</strong>.</li>
+<li>If <strong>a</strong>&#39;s sign is different from <strong>b</strong>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 0 if greater.  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <strong>b</strong>&#39;s, or 1 if greater.</li>
+<li>Set <em>i</em> to 0.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)  Do the same for <strong>b</strong>.</li>
+<li>Let <em>da</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part, and let <em>db</em> be <strong>b</strong>&#39;s corresponding digit.</li>
+<li>If <strong>a</strong>&#39;s sign is positive, return 1 if <em>da</em> is less than <em>db</em>, or 0 if <em>da</em> is greater than <em>db</em>.</li>
+<li>If <strong>a</strong>&#39;s sign is negative, return 0 if <em>da</em> is less than <em>db</em>, or 1 if <em>da</em> is greater than <em>db</em>.</li>
+<li>Add 1 to <em>i</em> and go to step 4.</li>
+</ol>
+
+<p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</p>
+
+<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
+
+<ol>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>
+<li>Set <em>bs</em> to &minus;1 if <strong>b</strong> is less than 0, or 1 otherwise. Calculate floor(abs(<strong>b</strong>)), and set <em>bi</em> to the result. (<em>If <strong>b</strong> is known rational:</em> Then set <em>bf</em> to abs(<strong>b</strong>) minus <em>bi</em>.)</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)</li>
+<li>Set <em>i</em> to 0.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
+<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
+<li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.</li>
+<li>Return 1 if&mdash;
+
+<ul>
+<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is positive,</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is negative, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is negative, and&mdash;
+
+<ul>
+<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is less than <strong>b</strong> almost surely), or</li>
+<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is less than <strong>b</strong> almost surely).</li>
+</ul></li>
+</ul></li>
+<li>Return 0 if&mdash;
+
+<ul>
+<li><em>ad</em> is less than <em>d</em> and <strong>a</strong>&#39;s sign is negative,</li>
+<li><em>ad</em> is greater than <em>d</em> and <strong>a</strong>&#39;s sign is positive, or</li>
+<li><em>ad</em> is equal to <em>d</em>, <strong>a</strong>&#39;s sign is positive, and&mdash;
+
+<ul>
+<li><em><strong>b</strong> is not known to be rational</em> and all the digits after the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part are zeros (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely), or</li>
+<li><em><strong>b</strong> is known to be rational</em> and <em>bf</em> is 0 (indicating <strong>a</strong> is greater than <strong>b</strong> almost surely).</li>
+</ul></li>
+</ul></li>
+<li>Add 1 to <em>i</em> and go to step 5.</li>
+</ol>
+
+<p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>):</p>
+
+<ul>
+<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
+<li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).</li>
+<li>(8.) If <em>ak</em> &lt;= <em>bk</em> &minus; 2, return either 1 if <strong>a</strong>&#39;s sign is positive or 0 otherwise.</li>
+<li>(9.) If <em>ak</em> &gt;= <em>bk</em> + 1, return either 1 if <strong>a</strong>&#39;s sign is negative or 0 otherwise.</li>
+</ul>
+
+<p><strong>URandLessThanReal</strong> is a version of <strong>RandLessThanReal</strong> in which <strong>a</strong> is a uniform PSRN.  The algorithm for <strong>URandLessThanReal</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random.</p>
+
+<p>The following shows how to implement <strong>URandLessThanReal</strong> when <strong>b</strong> is a fraction known by its numerator and denominator, <em>num</em>/<em>den</em>.</p>
+
+<ol>
+<li>If <strong>a</strong>&#39;s integer part or sign is unsampled, or if <em>den</em> is 0, return an error.  Then, if <em>num</em> and <em>den</em> are both less than 0, set them to their absolute values.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em> is 0, return 0.  Then if <strong>a</strong>&#39;s sign is positive, its integer part is 0, and <em>num</em>&#39;s sign is different from <em>den</em>&#39;s sign, return 0.</li>
+<li>Set <em>bs</em> to &minus;1 if <em>num</em> or <em>den</em>, but not both, is less than 0, or 1 otherwise, then set <em>den</em> to abs(<em>den</em>), then set <em>bi</em> to floor(abs(<em>num</em>)/<em>den</em>), then set <em>num</em> to rem(abs(<em>num</em>), <em>den</em>).</li>
+<li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)  If <em>num</em> is 0 (indicating the fraction is an integer), return 0 if <strong>a</strong>&#39;s sign is positive and 1 otherwise.</li>
+<li>Set <em>pt</em> to <em>base</em>, and set <em>i</em> to 0. (<em>base</em> is the base, or radix, of <strong>a</strong>&#39;s digits, such as 2 for binary or 10 for decimal.)</li>
+<li>Set <em>d1</em> to the digit at the <em>i</em><sup>th</sup> position (starting from 0) of <strong>a</strong>&#39;s fractional part.  If the digit at that position is unsampled, put a digit chosen uniformly at random at that position and set <em>d1</em> to that digit.</li>
+<li>Set <em>c</em> to 1 if <em>num</em> * <em>pt</em> &gt;= <em>den</em>, and 0 otherwise.</li>
+<li>Set <em>d2</em> to floor(<em>num</em> * <em>pt</em> / <em>den</em>).  (In base 2, this is equivalent to setting <em>d2</em> to <em>c</em>.)</li>
+<li>If <em>d1</em> is less than <em>d2</em>, return either 1 if <strong>a</strong>&#39;s sign is positive, or 0 otherwise.  If <em>d1</em> is greater than <em>d2</em>, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
+<li>If <em>c</em> is 1, set <em>num</em> to <em>num</em> * <em>pt</em> &minus; <em>den</em>, then multiply <em>den</em> by <em>pt</em>.</li>
+<li>If <em>num</em> is 0, return either 0 if <strong>a</strong>&#39;s sign is positive, or 1 otherwise.</li>
+<li>Multiply <em>pt</em> by <em>base</em>, add 1 to <em>i</em>, and go to step 5.</li>
+</ol>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -1960,7 +1960,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ol>
 <li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
-<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_with_PSRNs"><strong>Arithmetic with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?</li>
+<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?</li>
 <li>How can division of two PSRNs or the reciprocal of a PSRN be implemented?  (On the other hand, with the <strong>UniformMultiplyRational</strong> algorithm, dividing a PSRN by a rational number is trivial by comparison.)</li>
 </ol>
 

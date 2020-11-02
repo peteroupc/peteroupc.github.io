@@ -524,11 +524,11 @@ There are three kinds of randomization algorithms:
     - can generate independent uniform random real numbers of any precision
 
     (Devroye 1986, p. 1-2)<sup>[**(12)**](#Note12)</sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially errors involving floating-point arithmetic or irrational numbers. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup>[**(12)**](#Note12)</sup>. All methods given on this page are exact unless otherwise noted.  Note that `RNDU01` or `RNDRANGE` are exact in theory, but have no required implementation.
-2. An _error-bounded algorithm_ is an exact algorithm with further requirements described below:
+2. An _error-bounded algorithm_ is a sampling algorithm with the following requirements:
 
     - If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution.
     - If the ideal distribution is continuous, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a random number only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.
-    - The algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).
+    - In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).
 
     Many error-bounded algorithms use random bits as their only source of random numbers. An application should use error-bounded algorithms whenever possible.
 3. An _inexact_, _approximate_, or _biased algorithm_ is neither exact nor error-bounded; it uses "a mathematical approximation of sorts" to generate a random number that is close to the desired distribution (Devroye 1986, p. 2)<sup>[**(12)**](#Note12)</sup>.  An application should use this kind of algorithm only if it's willing to trade accuracy for speed.

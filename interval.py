@@ -701,7 +701,7 @@ def loggamma(k, v=4):
         _logpi2cache[v] = (FInterval.pi(v * 2) * 2).log(v * 2).truncate()
     # Implements the first listed convergent version of Stirling's formula
     # given in section 3 of R. Schumacher, "Rapidly Convergent Summation Formulas
-    # involving Stirling Series", arXiv:1602.0036v1 [math.NT], 2016.
+    # involving Stirling Series", arXiv:1602.00336v1 [math.NT], 2016.
     # Usually, Stirling's approximation diverges, which however is inappropriate for
     # use in exact sampling algorithms, where series expansions must converge
     # in order for the algorithm to halt almost surely.
@@ -751,7 +751,9 @@ def loggamma(k, v=4):
             # print([float(ediff),float(Fraction(n)/d),
             #      float(ediff/max(1e-20,oldediff))])
     ret += rb
-    return FInterval(ret.inf, ret.sup + ediff * v)
+    retinf = max(ret.inf, 0)
+    retsup = max(ret.sup + ediff * v, 0)
+    return FInterval(retinf, retsup)
 
 def logbinco(n, k, v=4):
     # Log binomial coefficient.

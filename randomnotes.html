@@ -697,12 +697,12 @@ END METHOD
 </ul>
 
 <p>(Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially errors involving floating-point arithmetic or irrational numbers. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>. All methods given on this page are exact unless otherwise noted.  Note that <code>RNDU01</code> or <code>RNDRANGE</code> are exact in theory, but have no required implementation.</p></li>
-<li><p>An <em>error-bounded algorithm</em> is an exact algorithm with further requirements described below:</p>
+<li><p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
 <ul>
 <li>If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution.</li>
 <li>If the ideal distribution is continuous, the algorithm samples from a distribution that is close to the ideal within a user-specified error tolerance (see below for details).  The algorithm can instead sample a random number only partially, as long as the fully sampled number can be made close to the ideal within any error tolerance desired.</li>
-<li>The algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
+<li>In sampling from a distribution, the algorithm incurs no approximation error not already present in the inputs (except errors needed to round the final result to the user-specified error tolerance).</li>
 </ul>
 
 <p>Many error-bounded algorithms use random bits as their only source of random numbers. An application should use error-bounded algorithms whenever possible.</p></li>
