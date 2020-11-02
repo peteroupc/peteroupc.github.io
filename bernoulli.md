@@ -1271,7 +1271,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 - <small><sup id=Note33>(33)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
 - <small><sup id=Note34>(34)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
 - <small><sup id=Note35>(35)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
-- <small><sup id=Note36>(36)</sup> Mendo, L., "Simulating a coin with irrational bias using rational arithmetic", to appear.</small>
+- <small><sup id=Note36>(36)</sup> Mendo, L., "[Simulating a coin with irrational bias using rational arithmetic](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020.</small>
 - <small><sup id=Note37>(37)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note38>(38)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
 - <small><sup id=Note39>(39)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>

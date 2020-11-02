@@ -247,9 +247,6 @@ To implement these probabilities using just random bits, the sampler uses two al
 ## Arithmetic and Comparisons with PSRNs
 &nbsp;
 
-<a id=In_General></a>
-### In General
-
 Arithmetic between two PSRNs is not always trivial.
 
 - Adding, multiplying, or dividing two PSRNs _A_ and _B_ (see also (Brassard et al., 2019)<sup>[**(15)**](#Note15)</sup>) is not as simple as adding their integer and fractional parts.
@@ -327,7 +324,8 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
      2. If both digits chosen in the previous substep were zeros, go to the previous substep.
 4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
-6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).  The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. (For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.
+6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
+    - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
 7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
 9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
@@ -1569,7 +1567,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note18>(18)</sup> Rohatgi, V.K., 1976. An Introduction to Probability Theory Mathematical Statistics.</small>
 - <small><sup id=Note19>(19)</sup> Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” _2019 IEEE 5th International Conference on Computer and Communications (ICCC)_ (2019): 1307-1311.</small>
 - <small><sup id=Note20>(20)</sup> In fact, thanks to the "geometric bag" technique of Flajolet et al. (2010), that fractional part can even come from a uniform PSRN.</small>
-- <small><sup id=Note21>(21)</sup> More specifically, the _essential supremum_, that is, the function's highest point in \[0, 1\] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous functions don't admit Bernoulli factories, as required by step 2.</small>
+- <small><sup id=Note21>(21)</sup> More specifically, the _essential supremum_, that is, the function's highest point in \[0, 1\] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don't admit Bernoulli factories, as required by step 2.</small>
 - <small><sup id=Note22>(22)</sup> Loaiza-Ganem, G., Cunningham, J.P., "[**The continuous Bernoulli: fixing a pervasive error in variational autoencoders**](https://arxiv.org/abs/1907.06845v5)", arXiv:1907.06845v5  [stat.ML], 2019.</small>
 - <small><sup id=Note23>(23)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 - <small><sup id=Note24>(24)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>

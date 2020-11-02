@@ -427,6 +427,66 @@ def psrn_less_than_rational(psrn, rat):
         pt *= 2
         index += 1
 
+def psrn_reciprocal(psrn1, digits=2):
+    """ Generates the reciprocal of a partially-sampled random number.
+        psrn1: List containing the sign, integer part, and fractional part
+            of the first PSRN.  Fractional part is a list of digits
+            after the point, starting with the first.
+        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    if psrn1[0] == None or psrn1[1] == None:
+        raise ValueError
+    for i in range(len(psrn1[2])):
+        psrn1[2][i] = (
+            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
+        )
+    digitcount = len(psrn1[2])
+    # Perform multiplication
+    frac1 = psrn1[1]
+    for i in range(digitcount):
+        frac1 = frac1 * digits + psrn1[2][i]
+    while True:
+        dcount = digitcount
+        ddc = digits ** dcount
+        small = Fraction(ddc, frac1 + 1)
+        large = Fraction(ddc, frac1)
+        dcount += 3
+        ddc = digits ** (dcount)
+        dc = int(small * ddc)
+        dcs = dc
+        # print(["dc",count,float(Fraction(dc,ddc)),float(small)])
+        dc2 = int(large * ddc) + 1
+        rv = random.randint(dc, dc2 - 1)
+        rvx = random.randint(0, dc - 1)
+        # print([count,float(small), float(large),dcount, dc/ddc, dc2/ddc])
+        while True:
+            rvsmall = Fraction(rv, ddc)
+            rvlarge = Fraction(rv + 1, ddc)
+            if rvsmall >= small and rvlarge < large:
+                rvd = Fraction(dcs, ddc)
+                rvxf = Fraction(rvx, dcs)
+                rvxf2 = Fraction(rvx + 1, dcs)
+                # print(["dcs",rvx,"rvsmall",float(rvsmall),"rvlarge",float(rvlarge),"small",float(small),
+                #   "rvxf",float(rvxf),float(rvxf2),"rvd",float(rvd),
+                #   "sl",float((rvd*rvd)/(rvlarge*rvlarge)),float((rvd*rvd)/(rvsmall*rvsmall))])
+                if rvxf2 < (rvd * rvd) / (rvlarge * rvlarge):
+                    cpsrn = [1, 0, [0 for i in range(dcount)]]
+                    cpsrn[0] = psrn1[0]
+                    sret = rv
+                    for i in range(dcount):
+                        cpsrn[2][dcount - 1 - i] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = sret
+                    return cpsrn
+                elif rvxf > (rvd * rvd) / (rvsmall * rvsmall):
+                    break
+            elif rvsmall > large or rvlarge < small:
+                break
+            rv = rv * digits + random.randint(0, digits - 1)
+            rvx = rvx * digits + random.randint(0, digits - 1)
+            dcount += 1
+            ddc *= digits
+            dcs *= digits
+
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -562,15 +622,15 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     while True:
         dcount = digitcount
         ddc = digits ** dcount
-        small1 = Fraction(frac1, ddc) * absfrac
-        large1 = Fraction(frac1 + 1, ddc) * absfrac
-        dc = int(small1 * ddc)
-        dc2 = int(large1 * ddc) + 1
+        small = Fraction(frac1, ddc) * absfrac
+        large = Fraction(frac1 + 1, ddc) * absfrac
+        dc = int(small * ddc)
+        dc2 = int(large * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
         while True:
             rvsmall = Fraction(rv, ddc)
             rvlarge = Fraction(rv + 1, ddc)
-            if rvsmall >= small1 and rvlarge < large1:
+            if rvsmall >= small and rvlarge < large:
                 cpsrn = [1, 0, [0 for i in range(dcount)]]
                 cpsrn[0] = psrn1[0] * fracsign
                 sret = rv
@@ -579,7 +639,7 @@ def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
                     sret //= digits
                 cpsrn[1] = sret
                 return cpsrn
-            elif rvsmall > large1 or rvlarge < small1:
+            elif rvsmall > large or rvlarge < small:
                 break
             else:
                 rv = rv * digits + random.randint(0, digits - 1)
@@ -1201,13 +1261,6 @@ if __name__ == "__main__":
     import scipy.stats as st
     import math
 
-    bern = bernoulli.Bernoulli()
-    sample = [rayleigh(bern) for i in range(10000)]
-    ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
-    if ks.pvalue < 1e-6:
-        print("Kolmogorov-Smirnov results for rayleigh:")
-        print(ks)
-
     def _readpsrn(asign, aint, afrac, digits=2, minprec=None):
         af = 0.0
         prec = len(afrac)
@@ -1426,6 +1479,50 @@ if __name__ == "__main__":
                 print("    # %s - %s" % (min(sample1), max(sample1)))
                 print("    # %s - %s" % (min(sample2), max(sample2)))
 
+    def psrn_reciprocal_test(ps, pi, pf, i=0, digits=2):
+        pfc = [x for x in pf]
+        pfcs = str(pfc)
+        p = _readpsrn(ps, pi, pf, digits=digits)
+        p2 = _readpsrnend(ps, pi, pf, digits=digits)
+        mult = psrn_reciprocal([ps, pi, pf], digits=digits)
+        ms, mi, mf = mult
+        m = _readpsrn2(mult, minprec=32, digits=digits)
+        mn = min(1 / p, 1 / p2)
+        mx = max(1 / p, 1 / p2)
+        if mn > mx:
+            raise ValueError
+        if m < mn or m > mx:
+            print(["recip", p, mn, mx, "m", m])
+            raise ValueError
+        if i < 10:
+            count = 2000
+            sample1 = [1 / random.uniform(p, p2) for _ in range(count)]
+            sample2 = [
+                _readpsrn2(
+                    psrn_reciprocal([ps, pi, [x for x in pfc]], digits=digits),
+                    minprec=32,
+                    digits=digits,
+                )
+                for _ in range(count)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if str(pfc) != pfcs:
+                raise ValueError
+            if True or ks.pvalue < 1e-6:
+                print(
+                    "    psrn_reciprocal_test(%d,%d,%s, digits=%d)"
+                    % (ps, pi, pfc, digits)
+                )
+                print(ks)
+                print("    # p=%s p2=%s" % (p, p2))
+                print("    # %s - %s" % (min(sample1), max(sample1)))
+                print("    # %s - %s" % (min(sample2), max(sample2)))
+                dobucket(sample1)
+                dobucket(sample2)
+
+    psrn_reciprocal_test(1, 1, [], digits=2)
+    # TODO: Test psrn_reciprocal more thoroughly
+
     def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0, digits=2):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
@@ -1533,6 +1630,13 @@ if __name__ == "__main__":
     def _cloneread(p, digits=2):
         p = [p[0], p[1], [x for x in p[2]]]
         return _readpsrn2(p, minprec=32, digits=digits)
+
+    bern = bernoulli.Bernoulli()
+    sample = [psrn_fill(rayleighpsrn(bern)) for i in range(10000)]
+    ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
+    if ks.pvalue < 1e-6:
+        print("Kolmogorov-Smirnov results for rayleigh:")
+        print(ks)
 
     sample1 = []
     sample2 = []

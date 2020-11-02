@@ -60,7 +60,6 @@
 <li><a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>
 
 <ul>
-<li><a href="#In_General"><strong>In General</strong></a></li>
 <li><a href="#Addition_and_Subtraction"><strong>Addition and Subtraction</strong></a></li>
 <li><a href="#Multiplication"><strong>Multiplication</strong></a></li>
 <li><a href="#Using_the_Arithmetic_Algorithms"><strong>Using the Arithmetic Algorithms</strong></a></li>
@@ -339,10 +338,6 @@
 
 <p>&nbsp;</p>
 
-<p><a id=In_General></a></p>
-
-<h3>In General</h3>
-
 <p>Arithmetic between two PSRNs is not always trivial.</p>
 
 <ul>
@@ -450,7 +445,11 @@
 </ol></li>
 <li>Let <em>afp</em> be the digits of <strong>a</strong>&#39;s <em>fractional part</em>, and let <em>bfp</em> be the digits of <strong>b</strong>&#39;s <em>fractional part</em>.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 12344.)  Let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>Calculate <em>n1</em> = <em>afp</em>*<em>bfp</em>, <em>n2</em> = <em>afp</em>*(<em>bfp</em>+1), <em>n3</em> = (<em>afp</em>+1)*<em>bfp</em>, and <em>n4</em> = (<em>afp</em>+1)*(<em>bfp</em>+1).</li>
-<li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).  The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. (For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].)  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</li>
+<li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).
+
+<ul>
+<li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</small></li>
+</ul></li>
 <li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong>&#39;s sign is negative and <strong>b</strong>&#39;s sign is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to positive.</li>
 <li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>minv</em>).</li>
 <li>If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the trapezoid.  In this case, do the following:
