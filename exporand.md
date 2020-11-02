@@ -40,7 +40,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)
     - [**Sampling E-rands**](#Sampling_E_rands)
 - [**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)
-    - [**In General**](#In_General)
     - [**Addition and Subtraction**](#Addition_and_Subtraction)
     - [**Multiplication**](#Multiplication)
     - [**Using the Arithmetic Algorithms**](#Using_the_Arithmetic_Algorithms)

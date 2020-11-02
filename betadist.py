@@ -444,6 +444,12 @@ def psrn_reciprocal(psrn1, digits=2):
     frac1 = psrn1[1]
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
+    while frac1 == 0:
+        # Avoid degenerate cases
+        d1 = random.randint(0, digits - 1)
+        psrn1.append(d1)
+        frac1 = frac1 * digits + d1
+        digitcount += 1
     while True:
         dcount = digitcount
         ddc = digits ** dcount
@@ -519,15 +525,15 @@ def multiply_psrns(psrn1, psrn2, digits=2):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
-    if frac1 == 0 and frac2 == 0:
-        while True:
-            d1 = random.randint(0, digits - 1)
-            d2 = random.randint(0, digits - 1)
-            frac1 = frac1 * digits + d1
-            frac2 = frac2 * digits + d2
-            digitcount += 1
-            if d1 != 0 or d2 != 0:
-                break
+    while frac1 == 0 and frac2 == 0:
+        # Avoid degenerate cases
+        d1 = random.randint(0, digits - 1)
+        psrn1.append(d1)
+        d2 = random.randint(0, digits - 1)
+        psrn2.append(d2)
+        frac1 = frac1 * digits + d1
+        frac2 = frac2 * digits + d2
+        digitcount += 1
     small = frac1 * frac2
     mid1 = frac1 * (frac2 + 1)
     mid2 = (frac1 + 1) * frac2
@@ -1484,6 +1490,10 @@ if __name__ == "__main__":
         pfcs = str(pfc)
         p = _readpsrn(ps, pi, pf, digits=digits)
         p2 = _readpsrnend(ps, pi, pf, digits=digits)
+        if p == 0:
+            p = 1e-10 if ps > 0 else -1e-10
+        if p2 == 0:
+            p2 = 1e-10 if ps > 0 else -1e-10
         mult = psrn_reciprocal([ps, pi, pf], digits=digits)
         ms, mi, mf = mult
         m = _readpsrn2(mult, minprec=32, digits=digits)
@@ -1508,7 +1518,7 @@ if __name__ == "__main__":
             ks = st.ks_2samp(sample1, sample2)
             if str(pfc) != pfcs:
                 raise ValueError
-            if True or ks.pvalue < 1e-6:
+            if ks.pvalue < 1e-6:
                 print(
                     "    psrn_reciprocal_test(%d,%d,%s, digits=%d)"
                     % (ps, pi, pfc, digits)
@@ -1519,9 +1529,6 @@ if __name__ == "__main__":
                 print("    # %s - %s" % (min(sample2), max(sample2)))
                 dobucket(sample1)
                 dobucket(sample2)
-
-    psrn_reciprocal_test(1, 1, [], digits=2)
-    # TODO: Test psrn_reciprocal more thoroughly
 
     def add_psrns_test(ps, pi, pf, qs, qi, qf, i=0, digits=2):
         pfc = [x for x in pf]
@@ -1694,6 +1701,10 @@ if __name__ == "__main__":
             ps, pi, pf = random_psrn(digits=digits)
             qs, qi, qf = random_psrn(digits=digits)
             multiply_psrns_test(ps, pi, pf, qs, qi, qf, i, digits=digits)
+
+        for i in range(1000):
+            ps, pi, pf = random_psrn(digits=digits)
+            psrn_reciprocal_test(ps, pi, pf, i, digits=digits)
 
         multiply_psrn_by_fraction_test(
             -1, 5, [0, 1, 0, 0, 0, 0, 1], Fraction(-7, 2), digits=digits
