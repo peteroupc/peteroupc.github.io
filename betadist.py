@@ -447,7 +447,7 @@ def psrn_reciprocal(psrn1, digits=2):
     while frac1 == 0:
         # Avoid degenerate cases
         d1 = random.randint(0, digits - 1)
-        psrn1.append(d1)
+        psrn1[2].append(d1)
         frac1 = frac1 * digits + d1
         digitcount += 1
     while True:
@@ -455,11 +455,31 @@ def psrn_reciprocal(psrn1, digits=2):
         ddc = digits ** dcount
         small = Fraction(ddc, frac1 + 1)
         large = Fraction(ddc, frac1)
-        dcount += 3
-        ddc = digits ** (dcount)
-        dc = int(small * ddc)
-        dcs = dc
-        # print(["dc",count,float(Fraction(dc,ddc)),float(small)])
+        if small > large:
+            raise ValueError
+        if small == 0:
+            raise ValueError
+        while True:
+            dc = int(small * ddc)
+            if dc != 0:
+                break
+            dcount += 1
+            ddc *= digits
+        if dc == 0:
+            print(
+                [
+                    "dc",
+                    dc,
+                    "dc/ddc",
+                    float(Fraction(dc, ddc)),
+                    "small",
+                    float(small),
+                    "dcount",
+                    dcount,
+                    "psrn",
+                    psrn1,
+                ]
+            )
         dc2 = int(large * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
         rvx = random.randint(0, dc - 1)
@@ -468,9 +488,9 @@ def psrn_reciprocal(psrn1, digits=2):
             rvsmall = Fraction(rv, ddc)
             rvlarge = Fraction(rv + 1, ddc)
             if rvsmall >= small and rvlarge < large:
-                rvd = Fraction(dcs, ddc)
-                rvxf = Fraction(rvx, dcs)
-                rvxf2 = Fraction(rvx + 1, dcs)
+                rvd = Fraction(dc, ddc)
+                rvxf = Fraction(rvx, dc)
+                rvxf2 = Fraction(rvx + 1, dc)
                 # print(["dcs",rvx,"rvsmall",float(rvsmall),"rvlarge",float(rvlarge),"small",float(small),
                 #   "rvxf",float(rvxf),float(rvxf2),"rvd",float(rvd),
                 #   "sl",float((rvd*rvd)/(rvlarge*rvlarge)),float((rvd*rvd)/(rvsmall*rvsmall))])
@@ -491,7 +511,7 @@ def psrn_reciprocal(psrn1, digits=2):
             rvx = rvx * digits + random.randint(0, digits - 1)
             dcount += 1
             ddc *= digits
-            dcs *= digits
+            dc *= digits
 
 def multiply_psrns(psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
@@ -528,9 +548,9 @@ def multiply_psrns(psrn1, psrn2, digits=2):
     while frac1 == 0 and frac2 == 0:
         # Avoid degenerate cases
         d1 = random.randint(0, digits - 1)
-        psrn1.append(d1)
+        psrn1[2].append(d1)
         d2 = random.randint(0, digits - 1)
-        psrn2.append(d2)
+        psrn2[2].append(d2)
         frac1 = frac1 * digits + d1
         frac2 = frac2 * digits + d2
         digitcount += 1
@@ -1504,7 +1524,7 @@ if __name__ == "__main__":
         if m < mn or m > mx:
             print(["recip", p, mn, mx, "m", m])
             raise ValueError
-        if i < 10:
+        if i < 100:
             count = 2000
             sample1 = [1 / random.uniform(p, p2) for _ in range(count)]
             sample2 = [
