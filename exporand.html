@@ -726,7 +726,7 @@
 <p>It makes use of a number of algorithms as follows:</p>
 
 <ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/unbounded.html"><strong>sampling unbounded monotone PDFs</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, the distribution of <em>U</em><sup><em>px</em>/<em>py</em></sup> has the PDF <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/randmisc.html"><strong>sampling unbounded monotone PDFs</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  This is needed because when <em>px</em>/<em>py</em> is greater than 1, the distribution of <em>U</em><sup><em>px</em>/<em>py</em></sup> has the PDF <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
 <li>It uses a number of Bernoulli factory algorithms, including <strong>SampleGeometricBag</strong> and some algorithms described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
 </ul>
 

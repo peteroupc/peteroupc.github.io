@@ -20,7 +20,44 @@
 <li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>&minus;(<em>n</em>+2)</sup>, return <em>ret</em>.  Otherwise, go to step 2. (Here, choose(<em>n</em>, <em>k</em>) is a binomial coefficient.<sup><a href="#Note2"><strong>(2)</strong></a></sup>)</li>
 </ol>
 
-<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 6 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets large, notably due to the inherent factorial in the binomial coefficient.  Alternatively, the logarithm loggamma(<em>n</em>+1)&minus;loggamma(<em>k</em>+1)&minus;loggamma((<em>n</em>&minus;<em>k</em>)+1)+ln(<em>m</em>)+ln(2)*<em>k</em>&minus;(<em>n</em>+2) (where loggamma(<em>x</em>) is the logarithm of the gamma function) can be calculated, more specifically a converging series of lower and upper bounds that converge to that logarithm.  This series is much more economical in terms of storage than the full exact probability.  Then, an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number) can be generated, negated, and compared with those bounds to determine whether the step succeeds.</p>
+<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 6 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets large, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random number can be generated, negated, and compared with that logarithm to determine whether the step succeeds.</p>
+
+<p>More specifically, step 6 can be changed as follows:</p>
+
+<ul>
+<li>(6.) Let <em>p</em> be loggamma(<em>n</em>+1)&minus;loggamma(<em>k</em>+1)&minus;loggamma((<em>n</em>&minus;<em>k</em>)+1)+ln(<em>m</em>)+ln(2)*<em>k</em>&minus;(<em>n</em>+2) (where loggamma(<em>x</em>) is the logarithm of the gamma function).</li>
+<li>(6a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set <em>e</em> to 0 minus that number.</li>
+<li>(6b.) If <em>e</em> is greater than <em>p</em>, go to step 2.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  Then, go to step 2 if <em>e</em> is greater than the upper bound, or return <em>ret</em> if <em>e</em> is less than or equal to the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup>)</li>
+</ul>
+
+<p><a id=Sampling_Unbounded_Monotone_Density_Functions></a></p>
+
+<h2>Sampling Unbounded Monotone Density Functions</h2>
+
+<p>This section shows a preprocessing algorithm to generate a random number in [0, 1] from a distribution whose probability density function (PDF)&mdash;</p>
+
+<ul>
+<li>is continuous in the interval [0, 1],</li>
+<li>is monotonically decreasing in [0, 1], and</li>
+<li>has an unbounded peak at 0.</li>
+</ul>
+
+<p>The trick here is to sample the peak in such a way that the result is either forced to be 0 or forced to belong to the bounded part of the PDF.  This algorithm does not require the area under the curve of the PDF in [0, 1] to be 1; in other words, this algorithm works even if the PDF is known up to a normalizing constant.  The algorithm is as follows.</p>
+
+<ol>
+<li>Set <em>i</em> to 1.</li>
+<li>Calculate the cumulative probability of the interval [0, 2<sup>&minus;<em>i</em></sup>] and that of [0, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>], call them <em>p</em> and <em>t</em>, respectively.</li>
+<li>With probability <em>p</em>/<em>t</em>, add 1 to <em>i</em> and go to step 2. (Alternatively, if <em>i</em> is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)</li>
+<li>At this point, the PDF at [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>) is bounded from above, so sample a random number in this interval using any appropriate algorithm, including rejection sampling.  Because the PDF is monotonically decreasing, the peak of the PDF at this interval is located at 2<sup>&minus;<em>i</em></sup>, so that rejection sampling becomes trivial.</li>
+</ol>
+
+<p>It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than [0, 1].</p>
+
+<p>This algorithm is similar to the &quot;inversion-rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) is supported on the interval [0, 1], while the algorithm presented in this article doesn&#39;t make that assumption (e.g., the interval [0, 1] can cover only part of the PDF&#39;s support).</p>
+
+<p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random number, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Even so, the algorithm I have come up with in this note may be of independent interest.</p>
+
+<p>In the case of powers of a uniform [0, 1] random number <em>X</em>, namely <em>X</em><sup><em>n</em></sup>, the ratio <em>p</em>/<em>t</em> in this algorithm has a very simple form, namely (1/2)<sup>1/<em>n</em></sup>, which is possible to simulate using a so-called <em>Bernoulli factory</em> algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of <em>i</em>.  This is found by taking the PDF f(<em>x</em>) = <em>x</em><sup>1/<em>n</em></sup>/(<em>x</em> * <em>n</em>)</sup> and finding the appropriate <em>p</em>/<em>t</em> ratios by integrating <em>f</em> over the two intervals mentioned in step 2 of the algorithm.</p>
 
 <p><a id=Notes></a></p>
 
@@ -29,6 +66,8 @@
 <ul>
 <li><small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
 <li><small><sup id=Note2>(2)</sup> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>.</small></li>
+<li><small><sup id=Note3>(3)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
+<li><small><sup id=Note4>(4)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 </ul>
 
 <p><a id=License></a></p>

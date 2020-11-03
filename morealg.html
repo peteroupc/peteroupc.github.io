@@ -466,7 +466,7 @@
 <li>Transfer <em>c1</em>&#39;s least significant digits to <em>p1</em>&#39;s fractional part, and transfer <em>c2</em>&#39;s least significant digits to <em>p2</em>&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, set <em>p1</em>&#39;s fractional part to [3, 4, 2].)</li>
 <li>Run the <strong>UniformDivision</strong> algorithm (described in the article on PSRNs) on <em>p1</em> and <em>p2</em>, then set the resulting PSRN&#39;s sign to positive or negative with equal probability, then return that PSRN.</li>
 </ol></li>
-<li>If (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>, then go to step 2.</li>
+<li>If (<em>c1</em><sup>2</sup> + <em>c2</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>, then go to step 2.</li>
 <li>Multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
 </ol>
 
@@ -510,7 +510,7 @@
 
 <ul>
 <li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate an exponential random number with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs) and return that number.</li>
-<li>Generate two exponential random numbers with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+<li>Otherwise, generate two exponential random numbers with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
 </ul>
 
 <p>For the Garima distribution (Shanker 2016)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, <em>w</em> = (1+<em>&theta;</em>)/(2+<em>&theta;</em>).</p>

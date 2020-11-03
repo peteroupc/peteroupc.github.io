@@ -336,7 +336,7 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 4. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
     2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
-5. If (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
+5. If (_c1_<sup>2</sup> + _c2_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
 6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 <a id=Exponential_Distribution_with_Rate_ln__x></a>
@@ -369,7 +369,7 @@ The following is a special case of the previous algorithm and is useful for gene
 A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(7)**](#Note7)</sup> with parameter _&theta;_ (a rational number greater than 0) can be generated as follows:
 
 - With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
-- Generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+- Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
 For the Garima distribution (Shanker 2016)<sup>[**(8)**](#Note8)</sup>, _w_ = (1+_&theta;_)/(2+_&theta;_).
 

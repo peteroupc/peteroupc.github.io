@@ -10,27 +10,30 @@ to see this site's source code.
 
 Open-source articles on programming subjects.
 
-* [**Pseudocode Conventions**](./pseudocode.html)
-* [**Random Number Generator Recommendations for Applications**](./random.html)
-* [**Randomization and Sampling Methods**](./randomfunc.html)
-* [**More Random Sampling Methods**](./randomnotes.html)
-* [**Code Generator for Discrete Distributions**](./autodist.html)
-* [**The Most Common Topics Involving Randomization**](./randomcommon.html)
-* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
-* [**How to Sample Unbounded Monotone Density Functions**](./unbounded.html)
-* [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers**](./uniformsum.html)
-* [**Bernoulli Factory Algorithms**](./bernoulli.html)
-* [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)
-* [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
-* [**Examples of High-Quality PRNGs**](./hqprng.html)
-* [**Notes on Calculating Jump Parameters for Some PRNGs**](./jump.html)
-* [**A Note on Hash Functions**](./hash.html)
-* [**A Note on Randomness Extraction**](./randextract.html)
-* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
-* [**File Name Support in Applications**](./filenames.html)
-* [**Color Topics for Programmers**](./colorgen.html)
-* [**Supplemental Color Topics for Programmers**](./suppcolor.html)
-* [**Chi-Squared Test**](./chisqtest.html)
+* Random Number Generators
+    * [**Random Number Generator Recommendations for Applications**](./random.html)
+    * [**A Note on Randomness Extraction**](./randextract.html)
+    * [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
+    * [**Examples of High-Quality PRNGs**](./hqprng.html)
+    * [**Notes on Calculating Jump Parameters for Some PRNGs**](./jump.html)
+    * [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
+* Randomization and Exact Sampling
+    * [**Randomization and Sampling Methods**](./randomfunc.html)
+    * [**More Random Sampling Methods**](./randomnotes.html)
+    * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
+    * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
+    * [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers**](./uniformsum.html)
+    * [**Bernoulli Factory Algorithms**](./bernoulli.html)
+    * [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)
+    * [**Miscellaneous Observations on Randomization**](./randmisc.html)
+    * [**Code Generator for Discrete Distributions**](./autodist.html)
+* Other
+    * [**A Note on Hash Functions**](./hash.html)
+    * [**Pseudocode Conventions**](./pseudocode.html)
+    * [**File Name Support in Applications**](./filenames.html)
+    * [**Color Topics for Programmers**](./colorgen.html)
+    * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
+    * [**Chi-Squared Test**](./chisqtest.html)
 
 <a id=PDF_Versions></a>
 #### PDF Versions
