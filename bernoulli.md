@@ -153,6 +153,7 @@ In the following algorithms:
     - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
+    - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
     - by generating `-ln(1/RNDRANGEMinExc(0, 1))` (less accurate).
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)

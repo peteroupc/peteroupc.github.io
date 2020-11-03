@@ -465,21 +465,6 @@ def psrn_reciprocal(psrn1, digits=2):
                 break
             dcount += 1
             ddc *= digits
-        if dc == 0:
-            print(
-                [
-                    "dc",
-                    dc,
-                    "dc/ddc",
-                    float(Fraction(dc, ddc)),
-                    "small",
-                    float(small),
-                    "dcount",
-                    dcount,
-                    "psrn",
-                    psrn1,
-                ]
-            )
         dc2 = int(large * ddc) + 1
         rv = random.randint(dc, dc2 - 1)
         rvx = random.randint(0, dc - 1)

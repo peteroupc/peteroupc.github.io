@@ -357,7 +357,7 @@ The following algorithm (**UniformReciprocal**) generates 1/**a**, where **a** i
 9. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_:
     1. Set _rvd_ to _lowerdc_/_ddc_, then set _rvlower2_ to _rv2_/_lowerdc_, then set _rvupper2_ to (_rv2_+1)/_lowerdc_.
     2. If _rvupper2_ is less than (_rvd_\*_rvd_)/(_rvupper_\*_rvupper_), then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part (note that _ret_'s fractional part stores digits from most to least significant), then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_. (For example, if _base_ is 10, (_dcount_) is 4, and _rv_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)
-    3. If _rvlower2_ is greater than (_rvd_\*_rvd_)/(_rvlower_\*_rvlower_), then abort these steps and go to step 5. (This is a rejection event.)
+    3. If _rvlower2_ is greater than (_rvd_\*_rvd_)/(_rvlower_\*_rvlower_), then abort these substeps and go to step 5. (This is a rejection event.)
 10. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 5. (This is a rejection event.)
 11. Multiply _rv_, _rv2_, _lowerdc_, and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then add a digit chosen uniformly at random to _rv2_, then go to step 8.
 
@@ -366,7 +366,7 @@ With this algorithm it's now trivial to describe an algorithm for dividing one u
 1. Run the **UniformReciprocal** algorithm on **b** to create a new uniform PSRN **c**.
 2. Run the **UniformMultiply** algorithm on **a** and **b**, in that order, and return the result of that algorithm.
 
-It's likewise trivial to describe an algorithm for multiplying a uniform PSRN **a** by a nonzero rational number **b**, here called **UniformDivideRational**.
+It's likewise trivial to describe an algorithm for multiplying a uniform PSRN **a** by a nonzero rational number **b**, here called **UniformDivideRational**:
 
 1. If **b** is 0, return an error.
 2. Run the **UniformMultiplyRational** algorithm on **a** and 1/**b**, in that order, and return the result of that algorithm.
@@ -1641,7 +1641,6 @@ There are some open questions on PSRNs:
 
 1. Are there constructions for PSRNs other than for cases given earlier in this document?
 2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?
-3. How can division of two PSRNs or the reciprocal of a PSRN be implemented?  (On the other hand, with the **UniformMultiplyRational** algorithm, dividing a PSRN by a rational number is trivial by comparison.)
 
 <a id=Acknowledgments></a>
 ## Acknowledgments

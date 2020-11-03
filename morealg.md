@@ -26,8 +26,10 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
     - [**Arc-Cosine Distribution**](#Arc_Cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
+    - [**Cauchy Distribution**](#Cauchy_Distribution)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
         - [**Rate ln(2)**](#Rate_ln_2)
+    - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
 - [**Requests**](#Requests)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -97,7 +99,7 @@ The sampler's description has the following skeleton.
 3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
 4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
-    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
+    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
     2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
     3. For each PSRN, optionally do the following: With probability 1/2, set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
     4. Return the PSRNs _p1_, ..., _pN_, in that order.
@@ -183,7 +185,6 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 > **Examples:**
 >
 > 1. One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html) for details).
-> 2. A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(5)**](#Note5)</sup> with parameter _&theta;_ (a rational number greater than 0) can be generated as follows: With probability _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number. Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
 <a id=Specific_Arbitrary_Precision_Samplers></a>
 ## Specific Arbitrary-Precision Samplers
@@ -324,6 +325,20 @@ The following new algorithm generates a partially-sampled random number that fol
 6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to positive or negative with equal probability, then return _f_.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
+<a id=Cauchy_Distribution></a>
+### Cauchy Distribution
+
+Uses the skeleton for the uniform distribution inside N-dimensional shapes.
+
+1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
+2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ and _c2_ each to 0.  Then set _d_ to 1.
+3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
+4. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, then do the following:
+    1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
+    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
+5. If (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
+6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+
 <a id=Exponential_Distribution_with_Rate_ln__x></a>
 ### Exponential Distribution with Rate ln(_x_)
 
@@ -335,18 +350,30 @@ The following new algorithm generates a partially-sampled random number that fol
 4. Run the **algorithm for exp(&minus;_&lambda;_)** (described in "Bernoulli Factory Algorithms") _b_ times, using the _&mu;_ input coin.  If _x_ is not a power of 2, run the same algorithm once, using the _&nu;_ input coin.  If all these calls return 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
 
-> **Note**: A _bounded exponential_ random number with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Set _k_ to a bounded geometric(1&minus;1/_x_, _m_) random number (Bringmann and Friedrich 2013)<sup>[**(6)**](#Note6)</sup>, or more simply, either _m_ or a geometric(1&minus;1/_x_) random number, whichever is less. (If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (note that this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,_&mu;_) random number is generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number in the interval (0, 1)).
+> **Note**: A _bounded exponential_ random number with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Set _k_ to a bounded geometric(1&minus;1/_x_, _m_) random number (Bringmann and Friedrich 2013)<sup>[**(5)**](#Note5)</sup>, or more simply, either _m_ or a geometric(1&minus;1/_x_) random number, whichever is less. (If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (note that this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,_&mu;_) random number is generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number in the interval (0, 1)).
 
 <a id=Rate_ln_2></a>
 #### Rate ln(2)
 
-The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup>[**(7)**](#Note7)</sup>, this one doesn't require a table of probability values.
+The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup>[**(6)**](#Note6)</sup>, this one doesn't require a table of probability values.
 
 1. (Samples the integer part of the random number.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 2. (The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it _f_.
 3. Create an input coin that does the following: "**Sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(2)** (described in "Bernoulli Factory Algorithms").  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)
 4. Run the **algorithm for exp(&minus;_&lambda;_)** (described in "Bernoulli Factory Algorithms"), using the input coin from the previous step.  If the call returns 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
+
+<a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a>
+### Lindley Distribution and Lindley-Like Mixtures
+
+A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(7)**](#Note7)</sup> with parameter _&theta;_ (a rational number greater than 0) can be generated as follows:
+
+- With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
+- Generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+
+For the Garima distribution (Shanker 2016)<sup>[**(8)**](#Note8)</sup>, _w_ = (1+_&theta;_)/(2+_&theta;_).
+
+For the i-Garima distribution (Singh and Das 2020)<sup>[**(9)**](#Note9)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
 
 <a id=Requests></a>
 ## Requests
@@ -363,9 +390,11 @@ We would like to see new implementations of the following:
 - <small><sup id=Note2>(2)</sup> C.T. Li, A. El Gamal, "[**A Universal Coding Scheme for Remote Generation of Continuous Random Variables**](https://arxiv.org/abs/1603.05238v1)", arXiv:1603.05238v1  [cs.IT], 2016</small>
 - <small><sup id=Note3>(3)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 - <small><sup id=Note4>(4)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-- <small><sup id=Note5>(5)</sup> Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.</small>
-- <small><sup id=Note6>(6)</sup> Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
-- <small><sup id=Note7>(7)</sup> Ahrens, J.H., and Dieter, U., "Computer methods from sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.</small>
+- <small><sup id=Note5>(5)</sup> Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
+- <small><sup id=Note6>(6)</sup> Ahrens, J.H., and Dieter, U., "Computer methods from sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.</small>
+- <small><sup id=Note7>(7)</sup> Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.</small>
+- <small><sup id=Note8>(8)</sup> Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.</small>
+- <small><sup id=Note9>(9)</sup> Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.</small>
 
 <a id=License></a>
 ## License

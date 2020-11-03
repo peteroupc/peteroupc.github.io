@@ -492,7 +492,7 @@
 <ol>
 <li>Set <em>rvd</em> to <em>lowerdc</em>/<em>ddc</em>, then set <em>rvlower2</em> to <em>rv2</em>/<em>lowerdc</em>, then set <em>rvupper2</em> to (<em>rv2</em>+1)/<em>lowerdc</em>.</li>
 <li>If <em>rvupper2</em> is less than (<em>rvd</em>*<em>rvd</em>)/(<em>rvupper</em>*<em>rvupper</em>), then the algorithm is almost done, so do the following: Transfer the <em>dcount</em> least significant digits of <em>rv</em> to <em>ret</em>&#39;s fractional part (note that <em>ret</em>&#39;s fractional part stores digits from most to least significant), then set <em>ret</em>&#39;s integer part to floor(<em>rv</em>/<em>base</em><sup><em>dcount</em></sup>), then return <em>ret</em>. (For example, if <em>base</em> is 10, (<em>dcount</em>) is 4, and <em>rv</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)</li>
-<li>If <em>rvlower2</em> is greater than (<em>rvd</em>*<em>rvd</em>)/(<em>rvlower</em>*<em>rvlower</em>), then abort these steps and go to step 5. (This is a rejection event.)</li>
+<li>If <em>rvlower2</em> is greater than (<em>rvd</em>*<em>rvd</em>)/(<em>rvlower</em>*<em>rvlower</em>), then abort these substeps and go to step 5. (This is a rejection event.)</li>
 </ol></li>
 <li>If <em>rvlower</em> is greater than <em>upper</em> or if <em>rvupper</em> is less than <em>lower</em>, go to step 5. (This is a rejection event.)</li>
 <li>Multiply <em>rv</em>, <em>rv2</em>, <em>lowerdc</em>, and <em>ddc</em> each by <em>base</em>, then add 1 to <em>dcount</em>, then add a digit chosen uniformly at random to <em>rv</em>, then add a digit chosen uniformly at random to <em>rv2</em>, then go to step 8.</li>
@@ -505,7 +505,7 @@
 <li>Run the <strong>UniformMultiply</strong> algorithm on <strong>a</strong> and <strong>b</strong>, in that order, and return the result of that algorithm.</li>
 </ol>
 
-<p>It&#39;s likewise trivial to describe an algorithm for multiplying a uniform PSRN <strong>a</strong> by a nonzero rational number <strong>b</strong>, here called <strong>UniformDivideRational</strong>.</p>
+<p>It&#39;s likewise trivial to describe an algorithm for multiplying a uniform PSRN <strong>a</strong> by a nonzero rational number <strong>b</strong>, here called <strong>UniformDivideRational</strong>:</p>
 
 <ol>
 <li>If <strong>b</strong> is 0, return an error.</li>
@@ -2087,7 +2087,6 @@ def contbernoullidist(b, lamda, precision=53):
 <ol>
 <li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
 <li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?</li>
-<li>How can division of two PSRNs or the reciprocal of a PSRN be implemented?  (On the other hand, with the <strong>UniformMultiplyRational</strong> algorithm, dividing a PSRN by a rational number is trivial by comparison.)</li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>

@@ -1,8 +1,9 @@
 # Chi-Squared Test Pseudocode
 
+<a id=Introduction></a>
 ## Introduction
 
-This short article sets forth pseudocode for performing a [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test) using
+This short article sets forth pseudocode for performing a [**chi-squared test**](https://en.wikipedia.org/wiki/Chi-squared_test) using
 observed frequencies and probabilities.
 
 In the pseudocode below&mdash;
@@ -18,6 +19,7 @@ The following are the parameters for `ChiSquaredTest` below:
 the second item is the _p-value_ (the probability that a random sample's chi-squared statistic would
 be greater than or equal to that of the given sample).   (Note that if `probabilities` has only one item, the p-value will be meaningless.)
 
+<a id=Pseudocode></a>
 ## Pseudocode
 
     METHOD DoubleFactorial(x)

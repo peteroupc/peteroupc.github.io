@@ -1,0 +1,65 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1>Miscellaneous Observations on Randomization</h1>
+
+<p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
+
+<p><a id=On_a_Binomial_Sampler></a></p>
+
+<h2>On a Binomial Sampler</h2>
+
+<p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution (where <em>n</em> is even), which is equivalent to the one that appeared in (Bringmann et al. 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, and adapted to be more programmer-friendly.</p>
+
+<ol>
+<li>Set <em>m</em> to floor(sqrt(<em>n</em>)) + 1.</li>
+<li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits (zeros or ones) until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+<li>Set <em>s</em> to an integer in [0, <em>m</em>) chosen uniformly at random, then set <em>i</em> to <em>k</em>*<em>m</em> + <em>s</em>.</li>
+<li>Set <em>ret</em> to either <em>n</em>/2+<em>i</em> or <em>n</em>/2&minus;<em>i</em>&minus;1 with equal probability.</li>
+<li>(Second, accept or reject <em>ret</em>.) If <em>ret</em> &lt; 0 or <em>ret</em> &gt; <em>n2</em>, go to step 2.</li>
+<li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup><em>k</em>&minus;(<em>n</em>+2)</sup>, return <em>ret</em>.  Otherwise, go to step 2. (Here, choose(<em>n</em>, <em>k</em>) is a binomial coefficient.<sup><a href="#Note2"><strong>(2)</strong></a></sup>)</li>
+</ol>
+
+<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 6 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets large, notably due to the inherent factorial in the binomial coefficient.  Alternatively, the logarithm loggamma(<em>n</em>+1)&minus;loggamma(<em>k</em>+1)&minus;loggamma((<em>n</em>&minus;<em>k</em>)+1)+ln(<em>m</em>)+ln(2)*<em>k</em>&minus;(<em>n</em>+2) (where loggamma(<em>x</em>) is the logarithm of the gamma function) can be calculated, more specifically a converging series of lower and upper bounds that converge to that logarithm.  This series is much more economical in terms of storage than the full exact probability.  Then, an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number) can be generated, negated, and compared with those bounds to determine whether the step succeeds.</p>
+
+<p><a id=Notes></a></p>
+
+<h2>Notes</h2>
+
+<ul>
+<li><small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
+<li><small><sup id=Note2>(2)</sup> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>.</small></li>
+</ul>
+
+<p><a id=License></a></p>
+
+<h2>License</h2>
+
+<p>Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under <a href="https://creativecommons.org/publicdomain/zero/1.0/"><strong>Creative Commons Zero</strong></a>.</p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>
