@@ -28,7 +28,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Logistic Distribution**](#Logistic_Distribution)
     - [**Cauchy Distribution**](#Cauchy_Distribution)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
-        - [**Rate ln(2)**](#Rate_ln_2)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
 - [**Requests**](#Requests)
 - [**Notes**](#Notes)
@@ -182,9 +181,7 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 - The probability of sampling each distribution is a rational number, or it can be expressed as a function for which a [**Bernoulli factory algorithm**](https://peteroupc.github.io/bernoulli.html) exists.
 - For each distribution, an arbitrary-precision sampler exists.
 
-> **Examples:**
->
-> 1. One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html) for details).
+> **Example:** One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html) for details).
 
 <a id=Specific_Arbitrary_Precision_Samplers></a>
 ## Specific Arbitrary-Precision Samplers
@@ -351,9 +348,6 @@ The following new algorithm generates a partially-sampled random number that fol
 5. If _f_ was not accepted by the previous step, go to step 2.
 
 > **Note**: A _bounded exponential_ random number with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Set _k_ to a bounded geometric(1&minus;1/_x_, _m_) random number (Bringmann and Friedrich 2013)<sup>[**(5)**](#Note5)</sup>, or more simply, either _m_ or a geometric(1&minus;1/_x_) random number, whichever is less. (If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (note that this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,_&mu;_) random number is generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number in the interval (0, 1)).
-
-<a id=Rate_ln_2></a>
-#### Rate ln(2)
 
 The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup>[**(6)**](#Note6)</sup>, this one doesn't require a table of probability values.
 

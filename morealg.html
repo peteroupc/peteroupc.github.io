@@ -42,11 +42,7 @@
 <li><a href="#Arc_Cosine_Distribution"><strong>Arc-Cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
 <li><a href="#Cauchy_Distribution"><strong>Cauchy Distribution</strong></a></li>
-<li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a>
-
-<ul>
-<li><a href="#Rate_ln_2"><strong>Rate ln(2)</strong></a></li>
-</ul></li>
+<li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
 </ul></li>
 <li><a href="#Requests"><strong>Requests</strong></a></li>
@@ -269,11 +265,7 @@
 </ul>
 
 <blockquote>
-<p><strong>Examples:</strong></p>
-
-<ol>
-<li>One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</li>
-</ol>
+<p><strong>Example:</strong> One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</p>
 </blockquote>
 
 <p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
@@ -487,10 +479,6 @@
 <blockquote>
 <p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Set <em>k</em> to a bounded geometric(1&minus;1/<em>x</em>, <em>m</em>) random number (Bringmann and Friedrich 2013)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, or more simply, either <em>m</em> or a geometric(1&minus;1/<em>x</em>) random number, whichever is less. (If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number is generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
 </blockquote>
-
-<p><a id=Rate_ln_2></a></p>
-
-<h4>Rate ln(2)</h4>
 
 <p>The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
 

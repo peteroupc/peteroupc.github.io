@@ -40,11 +40,23 @@ The trick here is to sample the peak in such a way that the result is either for
 
 It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than \[0, 1\].
 
-This algorithm is similar to the "inversion-rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986)<sup>[**(4)**](#Note4)</sup>.  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) is supported on the interval [0, 1], while the algorithm presented in this article doesn't make that assumption (e.g., the interval [0, 1] can cover only part of the PDF's support).
+This algorithm is similar to the "inversion-rejection" algorithm mentioned in section 4.4 of chapter 7 of Devroye's _Non-Uniform Random Variate Generation_ (1986)<sup>[**(3)**](#Note3)</sup>.  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) is supported on the interval [0, 1], while the algorithm presented in this article doesn't make that assumption (e.g., the interval [0, 1] can cover only part of the PDF's support).
 
 By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random number, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
 In the case of powers of a uniform \[0, 1\] random number _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>, which is possible to simulate using a so-called _Bernoulli factory_ algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of _i_.  This is found by taking the PDF f(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
+
+<a id=Certain_Families_of_Distributions></a>
+## Certain Families of Distributions
+
+The "odd X Y" family uses two distributions, X and Y, where X is an arbitrary continuous distribution and Y is a distribution with an easy-to-sample quantile function (also known as inverse cumulative distribution function or inverse CDF).  The following algorithm samples a random number following a distribution from this family:
+
+1. Generate a random number that follows the distribution X, call it _x_.
+2. Calculate the quantile for Y of _x_/(1+_x_), and return that quantile.
+
+Examples of this family include the "odd log-logistic G" family (where "G" or "generated" corresponds to Y) (Gleaton and Lynch 2006)<sup>[**(4)**](#Note4)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and Y is arbitrary) (Korkmaz et al. 2018)<sup>[**(5)**](#Note5)</sup>.  Many special cases of this family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some of these members have the word "generalized" in their name, and in most such cases the quantile in step 2 should be calculated as (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ is a shape parameter greater than 0; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(6)**](#Note6)</sup>.
+
+A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(7)**](#Note7)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables (G is an arbitrary distribution), where _N_ is a (zero-truncated) geometric random number.  A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_.
 
 <a id=Notes></a>
 ## Notes
@@ -52,7 +64,10 @@ In the case of powers of a uniform \[0, 1\] random number _X_, namely _X_<sup>_n
 - <small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
 - <small><sup id=Note2>(2)</sup> choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_.</small>
 - <small><sup id=Note3>(3)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
-- <small><sup id=Note4>(4)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
+- <small><sup id=Note4>(4)</sup> Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions", _Journal of Probability and Statistical Science_ 4(1), 2006.</small>
+- <small><sup id=Note5>(5)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., "The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications", _Pak. J. Stat. Oper. Res._ XIV(3), 2018.</small>
+- <small><sup id=Note6>(6)</sup> Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.</small>
+- <small><sup id=Note7>(7)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
 
 <a id=License></a>
 ## License
