@@ -49,6 +49,8 @@ In the case of powers of a uniform \[0, 1\] random number _X_, namely _X_<sup>_n
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
 
+This section is a note on certain families of univariate (one-variable) distributions of random numbers, with emphasis on sampling random numbers from them.
+
 The "odd X Y" family uses two distributions, X and Y, where X is an arbitrary continuous distribution and Y is a distribution with an easy-to-sample quantile function (also known as inverse cumulative distribution function or inverse CDF).  The following algorithm samples a random number following a distribution from this family:
 
 1. Generate a random number that follows the distribution X, call it _x_.

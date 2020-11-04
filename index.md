@@ -15,7 +15,7 @@ Open-source articles on programming subjects.
     * [**A Note on Randomness Extraction**](./randextract.html)
     * [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
     * [**Examples of High-Quality PRNGs**](./hqprng.html)
-    * [**Notes on Calculating Jump Parameters for Some PRNGs**](./jump.html)
+    * [**Notes on Jumping PRNGs Ahead**](./jump.html)
     * [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
 * Randomization and Exact Sampling
     * [**Randomization and Sampling Methods**](./randomfunc.html)
@@ -48,7 +48,7 @@ Open-source articles on programming subjects.
 * [**Bernoulli Factory Algorithms**](./bernoulli.pdf)
 * [**Testing PRNGs for High-Quality Randomness**](./randomtest.pdf)
 * [**Examples of High-Quality PRNGs**](./hqprng.pdf)
-* [**Notes on Calculating Jump Parameters for Some PRNGs**](./jump.pdf)
+* [**Notes on Jumping PRNGs Ahead**](./jump.pdf)
 * [**A Note on Hash Functions**](./hash.pdf)
 * [**A Note on Randomness Extraction**](./randextract.pdf)
 * [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.pdf)

@@ -256,7 +256,7 @@ The following algorithm (**UniformAdd**) shows how to add two uniform PSRNs (**a
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for **b**.
 2. If **a** has fewer digits in its fractional part than **b** (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if **a** and **b** store binary, or base-2, digits) so that both PSRNs' fractional parts have the same number of digits.  Now, let _digitcount_ be the number of digits in **a**'s fractional part.
-3. Let _asign_ be &minus;1 if **a**'s sign is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b**'s sign is negative, or 1 otherwise.  Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
+3. Let _asign_ be &minus;1 if **a**'s sign is negative, or 1 otherwise.  Let _bsign_ be &minus;1 if **b**'s sign is negative, or 1 otherwise.  Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example, and let _bfp_ be **b**'s integer and fractional parts packed the same way.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _base_ be the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal.
 4. Calculate the following four numbers:
     - _afp_\*_asign_ + _bfp_\*_bsign_.
     - _afp_\*_asign_ + (_bfp_+1)\*_bsign_.
@@ -287,7 +287,7 @@ The following algorithm (**UniformAddRational**) shows how to add a uniform PSRN
     - If **b** is 0, return a copy of **a**.
 2. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 3. Let _asign_ be &minus;1 if **a**'s sign is negative or 1 otherwise.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
-4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _asign_ be &minus;1 if
+4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _asign_ be &minus;1 if
 5. Set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to ((_afp_\*_asign_)/_ddc_)+**b** (using rational arithmetic), then set _upper_ to (((_afp_+1)\*_asign_)/_ddc_)+**b** (again using rational arithmetic).  Set _minv_ to min(_lower_, _upper_), and set _maxv_ to min(_lower_, _upper_).
 6. Set _newdigits_ to 0, then set _b_ to 1, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _mind_ to floor(abs(_minv_\*_ddc_)), then set _maxd_ to floor(abs(_maxv_\*_ddc_)). (Outer bounds): Then set _rvstart_ to _mind_&minus;1 if _minv_ is less than 0, or _mind_ otherwise, then set _rvend_ to _maxd_ if _maxv_ is less than 0, or _maxd_+1 otherwise.
 7. Set _rv_ to a uniform random integer in the interval [0, _rvend_&minus;_rvstart_), then set _rvs_ to _rv_ + _rvstart_.
@@ -309,7 +309,7 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 3. If both **a** and **b** have no non-zero digits in their fractional parts, and if their integer parts are both 0, then do the following. (This step is crucial for correctness when both PSRNs' intervals cover the number 0, since the distribution of their product is different from the usual case.)
      1. Append a digit chosen uniformly at random to **a**'s fractional part.  Do the same for **b**.
      2. If both digits chosen in the previous substep were zeros, go to the previous substep.
-4. Let _afp_ be the digits of **a**'s _fractional part_, and let _bfp_ be the digits of **b**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
+4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example, and let _bfp_ be **b**'s integer and fractional parts packed the same way.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
 6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
     - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
@@ -333,7 +333,7 @@ The following algorithm (**UniformMultiplyRational**) shows how to multiply a un
 
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 2. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to be &minus;1 if **a**'s sign is positive and **b** is less than 0 or if **a**'s sign is negative and **b** is 0 or greater, or 1 otherwise, then set _ret_'s integer part to 0.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).  Set _absfrac_ to abs(**b**), then set _fraction_ to _absfrac_ &minus; floor(_absfrac_).
-3. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
+3. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)
 4. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_afp_/_ddc_)\*_absfrac_ (using rational arithmetic), then set _upper_ to ((_afp_+1)/_ddc_)\*_absfrac_ (again using rational arithmetic).
 5. Set _rv_ to a uniform random integer in the interval [floor(_lower_\*_ddc_), floor(_upper_\*_ddc_)).
 6. Set _rvlower_ to _rv_/_ddc_ (as a rational number), then set _rvupper_ to (_rv_+1)/_ddc_ (as a rational number).
@@ -349,7 +349,7 @@ The following algorithm (**UniformReciprocal**) generates 1/**a**, where **a** i
 1. If **a** has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.   Now, let _digitcount_ be the number of digits in **a**'s fractional part.
 2. Create a uniform PSRN, call it _ret_.  Set _ret_'s sign to **a**'s sign.  Let _base_ be the base of digits stored in **a**'s fractional part (such as 2 for binary or 10 for decimal).
 3. If **a** has no non-zero digit in its fractional part, and has an integer part of 0, then append a digit chosen uniformly at random to **a**'s fractional part. If that digit is 0, repeat this step. (This step is crucial for correctness when both PSRNs' intervals cover the number 0, since the distribution of their product is different from the usual case.)
-4. Let _afp_ be the digits of **a**'s _fractional part_.  (For example, if **a** represents the number 83.12344..., _afp_ is 12344.)
+4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)
 5. Set _dcount_ to _digitcount_, then set _ddc_ to _base_<sup>_dcount_</sup>, then set _lower_ to (_ddc_/(_afp_+1))\*_absfrac_, then set _upper_ to (_afp_/_ddc_)\*_absfrac_.
 6. Set _lowerdc_ to floor(_lower_\*_ddc_).  If _lowerdc_ is 0, add 1 to _dcount_, multiply _ddc_ by _base_, then repeat this step. (This step too is important for correctness.)
 7. Set _rv_ to a uniform random integer in the interval [_lowerdc_, floor(_upper_\*_ddc_)).  Set _rv2_ to a uniform random integer in the interval [0, _lowerdc_).
