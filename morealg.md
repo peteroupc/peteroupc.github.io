@@ -31,6 +31,8 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
 - [**Requests**](#Requests)
 - [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
+    - [**Normal Distribution via Ratio of Uniforms**](#Normal_Distribution_via_Ratio_of_Uniforms)
 - [**License**](#License)
 
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
@@ -130,7 +132,7 @@ The sampler's description has the following skeleton.
 > - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
 > - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
 > - The algorithm can be extended to geometric shapes enclosed in the hyperrectangle [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_], where _d1_, ..., _dN_ are integers greater than 0, as follows:
->     1. Add the following sentence at the end of step 2: "For each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the coordinate's corresponding size."
+>     1. Add the following sentence at the end of step 2: "For each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the corresponding dimension's size."
 >     2. Add the following sentence at the end of the first substep of step 5: "Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate."
 >
 > **Examples:**
@@ -332,7 +334,7 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
 4. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
-    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
+    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
 5. If (_c1_<sup>2</sup> + _c2_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
 6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
@@ -349,7 +351,7 @@ The following new algorithm generates a partially-sampled random number that fol
 
 > **Note**: A _bounded exponential_ random number with rate ln(_x_) and bounded by _m_ has a similar algorithm to this one.  Step 1 is changed to read as follows: "Set _k_ to a bounded geometric(1&minus;1/_x_, _m_) random number (Bringmann and Friedrich 2013)<sup>[**(5)**](#Note5)</sup>, or more simply, either _m_ or a geometric(1&minus;1/_x_) random number, whichever is less. (If _x_ is a power of 2, this can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits or _m_ blocks of bits are generated this way, whichever comes first, then setting _k_ to the number of **all-zero** blocks of bits generated this way.) If _k_ is _m_, return _m_ (note that this _m_ is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN)."  Optionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,_&mu;_) random number is generated instead, such as a uniform PSRN generated via **RandUniformFromReal**, to implement an exponential distribution bounded by _m_+_&mu;_ (where _&mu;_ is a real number in the interval (0, 1)).
 
-The following is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup>[**(6)**](#Note6)</sup>, this one doesn't require a table of probability values.
+The following generator for the **rate ln(2)** is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup>[**(6)**](#Note6)</sup>, this one doesn't require a table of probability values.
 
 1. (Samples the integer part of the random number.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 2. (The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it _f_.
@@ -389,6 +391,29 @@ We would like to see new implementations of the following:
 - <small><sup id=Note7>(7)</sup> Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.</small>
 - <small><sup id=Note8>(8)</sup> Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.</small>
 - <small><sup id=Note9>(9)</sup> Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.</small>
+- <small><sup id=Note10>(10)</sup> Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.</small>
+- <small><sup id=Note11>(11)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
+- <small><sup id=Note12>(12)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+
+<a id=Appendix></a>
+## Appendix
+
+&nbsp;
+
+<a id=Normal_Distribution_via_Ratio_of_Uniforms></a>
+### Normal Distribution via Ratio of Uniforms
+
+This sampler (as well as the Cauchy sampler given earlier) demonstrates the ratio-of-uniforms technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(10)**](#Note10)</sup>.  It involves transforming a probability density function into a compact shape.  This sampler for the normal distribution appears here in the appendix since it involves calculating upper and lower bounds of logarithms which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup>[**(12)**](#Note12)</sup>, which doesn't require calculating logarithms.
+
+1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
+2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ and _c2_ each to 0.  Then set _d_ to 1.
+3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
+4. (**InShape** for the transformed normal distribution.) For each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), calculate upper and lower bounds of (_u_/_v_)<sup>2</sup>\*ln(_v_/_S_), with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), except that the bounds are each 0 if _v_ is 0.
+5. If all four upper bounds in step 4 are less than 0, then do the following:
+    1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
+    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
+6. If all four lower bounds in step 4 are greater than 0, then go to step 2.
+7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 <a id=License></a>
 ## License

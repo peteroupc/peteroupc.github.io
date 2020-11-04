@@ -20,7 +20,7 @@ More specifically, step 6 can be changed as follows:
 
 - (6.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_k_+1)&minus;loggamma((_n_&minus;_k_)+1)+ln(_m_)+ln(2)\*_k_&minus;(_n_+2) (where loggamma(_x_) is the logarithm of the gamma function).
 - (6a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _e_ to 0 minus that number.
-- (6b.) If _e_ is greater than _p_, go to step 2.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  Then, go to step 2 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than or equal to the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.
+- (6b.) If _e_ is greater than _p_, go to step 2.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  Then, go to step 2 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.
 
 <a id=Sampling_Unbounded_Monotone_Density_Functions></a>
 ## Sampling Unbounded Monotone Density Functions
@@ -56,9 +56,9 @@ The "odd X Y" family uses two distributions, X and Y, where X is an arbitrary co
 1. Generate a random number that follows the distribution X, call it _x_.
 2. Calculate the quantile for Y of _x_/(1+_x_), and return that quantile.
 
-Examples of this family include the "odd log-logistic G" family (where "G" or "generated" corresponds to Y) (Gleaton and Lynch 2006)<sup>[**(4)**](#Note4)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and Y is arbitrary) (Korkmaz et al. 2018)<sup>[**(5)**](#Note5)</sup>.  Many special cases of this family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some of these members have the word "generalized" in their name, and in most such cases the quantile in step 2 should be calculated as (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ is a shape parameter greater than 0; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(6)**](#Note6)</sup>.
+Examples of this family include the "odd log-logistic G" family (where "G" or "generated" corresponds to Y) (Gleaton and Lynch 2006)<sup>[**(4)**](#Note4)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and Y is arbitrary) (Korkmaz et al. 2018)<sup>[**(5)**](#Note5)</sup>.  Many special cases of this family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some of these members have names that begin with the word "generalized", and in most such cases the quantile in step 2 should be calculated as (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ is a shape parameter greater than 0; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(6)**](#Note6)</sup>.
 
-A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(7)**](#Note7)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables (G is an arbitrary distribution), where _N_ is a (zero-truncated) geometric random number.  A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_.
+A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(7)**](#Note7)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables (beta-G is the quantile of a beta-distributed random number, where the quantile comes from an arbitrary distribution (Eugene et al. 2002)<sup>[**(8)**](#Note8)</sup>), where _N_ is a (zero-truncated) geometric random number.  A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_.
 
 <a id=Notes></a>
 ## Notes
@@ -70,6 +70,7 @@ A _compound distribution_ is simply the minimum of _N_ random variables distribu
 - <small><sup id=Note5>(5)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., "The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications", _Pak. J. Stat. Oper. Res._ XIV(3), 2018.</small>
 - <small><sup id=Note6>(6)</sup> Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.</small>
 - <small><sup id=Note7>(7)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
+- <small><sup id=Note8>(8)</sup> ugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.</small>
 
 <a id=License></a>
 ## License
