@@ -77,7 +77,7 @@ An application of the continued fraction algorithm is the following algorithm th
 2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
 3. Generate a uniform(0, 1) random number _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
-5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
+5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
@@ -91,7 +91,7 @@ The following is a general way to describe an arbitrary-precision sampler for ge
 
 The sampler's description has the following skeleton.
 
-1. Generate _N_ empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
+1. Generate _N_ empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.
 3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
 4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
@@ -420,7 +420,7 @@ This sampler (as well as the Cauchy sampler given earlier) demonstrates the rati
 >     - (B) fully inside the rectangle [0, 1]&times;\[0, 1\] \(as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and
 > - that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.
 >
-> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a Gaussian random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.
+> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a normally-distributed random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.
 
 <a id=License></a>
 ## License

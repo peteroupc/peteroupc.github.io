@@ -114,7 +114,7 @@
 <li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
 <li>Generate a uniform(0, 1) random number <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
-<li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>n</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform PSRN, this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
+<li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>n</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
 </ol>
 
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
@@ -132,7 +132,7 @@
 <p>The sampler&#39;s description has the following skeleton.</p>
 
 <ol>
-<li>Generate <em>N</em> empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
+<li>Generate <em>N</em> empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
 <li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>N</em> coordinates to 0, call the coordinates <em>c1</em>, <em>c2</em>, ..., <em>cN</em>.  Then set <em>d</em> to 1.</li>
 <li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), multiply that coordinate by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
 <li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).  See below for implementation notes for this step.</li>
@@ -576,7 +576,7 @@
 <li>that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.</li>
 </ul>
 
-<p><strong>Example:</strong> For <a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a> (exp(<em>N</em>) where <em>N</em> is a Gaussian random number), the bounds in step 4 are calculated based on (<em>u</em>/<em>v</em>)<sup>2</sup>&minus;exp(&minus;(ln(<em>v</em>/<em>S</em>))<sup>2</sup>/2)*<em>S</em>/<em>v</em>, since <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.</p>
+<p><strong>Example:</strong> For <a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a> (exp(<em>N</em>) where <em>N</em> is a normally-distributed random number), the bounds in step 4 are calculated based on (<em>u</em>/<em>v</em>)<sup>2</sup>&minus;exp(&minus;(ln(<em>v</em>/<em>S</em>))<sup>2</sup>/2)*<em>S</em>/<em>v</em>, since <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.</p>
 </blockquote>
 
 <p><a id=License></a></p>
