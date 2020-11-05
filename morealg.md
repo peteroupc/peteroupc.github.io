@@ -413,14 +413,14 @@ This sampler (as well as the Cauchy sampler given earlier) demonstrates the rati
 
 > **Note:** This algorithm as given works for any distribution, not just the normal distribution, as long as&mdash;
 >
-> - for all _x_, _PDF_(0) = 0 and _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's probability density function (PDF) or a function proportional to the PDF,
+> - for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's probability density function (PDF) or a function proportional to the PDF,
 > - the upper and lower bounds are calculated based on _z_ = (_u_/_v_)<sup>2</sup>&minus;_PDF_(_v_/_S_), rather than as given in step 4,
 > - the shape formed by the set of points for which _z_ is 0 or less is convex and either&mdash;
->     - symmetric about the _v_-axis and fully inside the rectangle [&minus;1, 1]&times;[0, 1], or
->     - fully inside the rectangle [0, 1]&times;[0, 1] (as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and
+>     - (A) symmetric about the _v_-axis and fully inside the rectangle [&minus;1, 1]&times;\[0, 1\], or
+>     - (B) fully inside the rectangle [0, 1]&times;\[0, 1\] \(as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and
 > - that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.
 >
-> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a Gaussian random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution spans the positive real line, so the sign in step 5 of the algorithm is always positive; in addition, the distribution's ratio-of-uniforms shape is convex and fully inside [0, 1]&times;[0, 1], and meets the other requirements above.
+> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a Gaussian random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.
 
 <a id=License></a>
 ## License

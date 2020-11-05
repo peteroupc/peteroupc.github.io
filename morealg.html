@@ -565,18 +565,18 @@
 <p><strong>Note:</strong> This algorithm as given works for any distribution, not just the normal distribution, as long as&mdash;</p>
 
 <ul>
-<li>for all <em>x</em>, <em>PDF</em>(0) = 0 and <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s probability density function (PDF) or a function proportional to the PDF,</li>
+<li>for all <em>x</em>, <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s probability density function (PDF) or a function proportional to the PDF,</li>
 <li>the upper and lower bounds are calculated based on <em>z</em> = (<em>u</em>/<em>v</em>)<sup>2</sup>&minus;<em>PDF</em>(<em>v</em>/<em>S</em>), rather than as given in step 4,</li>
 <li>the shape formed by the set of points for which <em>z</em> is 0 or less is convex and either&mdash;
 
 <ul>
-<li>symmetric about the <em>v</em>-axis and fully inside the rectangle [&minus;1, 1]&times;[0, 1], or</li>
-<li>fully inside the rectangle [0, 1]&times;<a href="as%20long%20as%20the%20algorithm%20sets%20the%20sign%20in%20step%205%20to%20positive%20rather%20than%20a%20random%20sign">0, 1</a>, and</li>
+<li>(A) symmetric about the <em>v</em>-axis and fully inside the rectangle [&minus;1, 1]&times;[0, 1], or</li>
+<li>(B) fully inside the rectangle [0, 1]&times;[0, 1] (as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and</li>
 </ul></li>
 <li>that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.</li>
 </ul>
 
-<p><strong>Example:</strong> For <a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a> (exp(<em>N</em>) where <em>N</em> is a Gaussian random number), the bounds in step 4 are calculated based on (<em>u</em>/<em>v</em>)<sup>2</sup>&minus;exp(&minus;(ln(<em>v</em>/<em>S</em>))<sup>2</sup>/2)*<em>S</em>/<em>v</em>, since <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>.  Moreover, this distribution spans the positive real line, so the sign in step 5 of the algorithm is always positive; in addition, the distribution&#39;s ratio-of-uniforms shape is convex and fully inside [0, 1]&times;[0, 1], and meets the other requirements above.</p>
+<p><strong>Example:</strong> For <a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a> (exp(<em>N</em>) where <em>N</em> is a Gaussian random number), the bounds in step 4 are calculated based on (<em>u</em>/<em>v</em>)<sup>2</sup>&minus;exp(&minus;(ln(<em>v</em>/<em>S</em>))<sup>2</sup>/2)*<em>S</em>/<em>v</em>, since <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.</p>
 </blockquote>
 
 <p><a id=License></a></p>
