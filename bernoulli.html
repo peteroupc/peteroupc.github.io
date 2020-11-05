@@ -52,7 +52,7 @@
 <li><a href="#exp___lambda____c__minus__c"><strong>exp(<em>&lambda;</em> * <em>c</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___minus__c"><strong>exp(&minus;<em>&lambda;</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a></li>
-<li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)<sup>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
+<li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)*(<em>k</em> + <em>&lambda;</em>)) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#ln_1___lambda"><strong>ln(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus_ln_1___lambda"><strong>1 &minus; ln(1+<em>&lambda;</em>)</strong></a></li>
@@ -433,7 +433,7 @@
 
 <p><a id=1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a></p>
 
-<h4>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)<sup>*(<em>k</em> + <em>&lambda;</em>)</sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</h4>
+<h4>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)*(<em>k</em> + <em>&lambda;</em>)) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</h4>
 
 <p>An extension of the previous algorithm.  Here, <em>m</em> is an integer greater than 0.</p>
 
@@ -1717,7 +1717,7 @@
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
-<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, an unbiased estimator of <em>g</em>(<em>X</em>)) by a process that halts almost surely.</li>
+<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an unbiased estimator of <em>g</em>(<em>X</em>)) by a process that halts almost surely.</li>
 </ul>
 
 <p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with bias <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (that is, an unbiased estimator that has expected value <em>&lambda;</em> and halts almost surely) that outputs either 0 or 1.</p>
@@ -1789,7 +1789,7 @@ for i in range(iters):
 <p><em>Proof.</em> This proof of correctness takes advantage of Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; (Huber 2019)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  Using Huber&#39;s theorem requires proving two things:</p>
 
 <ul>
-<li>First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.</li>
+<li>First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.</li>
 <li>Second, we show the algorithm is locally correct when the recursive call in step 3 is replaced with an oracle that simulates the correct &quot;continued sub-logarithm&quot;.  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the &quot;continued sub-logarithm&quot; and will be at most 1 by construction.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (step 3) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the &quot;rejection piece&quot; that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at step 2 with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at step 2 with probability <em>f1</em> = (1 &minus; 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at step 3 with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
 </ul>
 

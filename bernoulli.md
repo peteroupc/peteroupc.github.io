@@ -38,7 +38,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**exp(_&lambda;_ * _c_ &minus; _c_)**](#exp___lambda____c__minus__c)
         - [**exp(&minus;_&lambda;_ &minus; _c_)**](#exp_minus___lambda___minus__c)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
-        - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)<sup>\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
+        - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
         - [**1 &minus; ln(1+_&lambda;_)**](#1_minus_ln_1___lambda)
@@ -341,7 +341,7 @@ This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an i
 3. Run the **algorithm for exp(&minus;&mu;)** using the _&mu;_ input coin, and return the result.
 
 <a id=1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
-#### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)<sup>\*(_k_ + _&lambda;_)</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
+#### 1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))
 
 An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
 
@@ -1323,7 +1323,7 @@ As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, h
 Glynn (2016)<sup>[**(42)**](#Note42)</sup> distinguishes between&mdash;
 
 - _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
-- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, an unbiased estimator of _g_(_X_)) by a process that halts almost surely.
+- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, building an unbiased estimator of _g_(_X_)) by a process that halts almost surely.
 
 Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with bias _&lambda;_ can be any "exact estimator" of _&lambda;_ (that is, an unbiased estimator that has expected value _&lambda;_ and halts almost surely) that outputs either 0 or 1.
 
@@ -1384,7 +1384,7 @@ However, the focus of this article is on algorithms that don't rely on calculati
 
 _Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019)<sup>[**(18)**](#Note18)</sup>.  Using Huber's theorem requires proving two things:
 
-- First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it's called recursively or the number of coefficients is infinite.
+- First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it's called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.
 - Second, we show the algorithm is locally correct when the recursive call in step 3 is replaced with an oracle that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (step 3) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at step 2 with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at step 2 with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at step 3 with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
 
 Since both conditions of Huber's theorem are satisfied, this completes the proof. &#x25a1;

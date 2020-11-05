@@ -87,11 +87,7 @@ An application of the continued fraction algorithm is the following algorithm th
 <a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
 ### Uniform Distribution Inside N-Dimensional Shapes
 
-The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that&mdash;
-
-- the shape's volume must be nonzero,
-- the shape must have a zero-volume boundary, and
-- the shape must assign zero probability to any zero-volume subset of it (such as a set of individual points).
+The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it (such as a set of individual points).
 
 The sampler's description has the following skeleton.
 
@@ -408,12 +404,23 @@ This sampler (as well as the Cauchy sampler given earlier) demonstrates the rati
 1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ and _c2_ each to 0.  Then set _d_ to 1.
 3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. (**InShape** for the transformed normal distribution.) For each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), calculate upper and lower bounds of (_u_/_v_)<sup>2</sup>+ln(_v_/_S_), with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), except that the bounds are each 1 if _v_ is 0.
+4. (**InShape** for the transformed normal distribution.) For each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), calculate upper and lower bounds of (_u_/_v_)<sup>2</sup>+4\*ln(_v_/_S_), using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), except that the bounds are each 1 if _v_ is 0.
 5. If all four upper bounds in step 4 are less than 0, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
     2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
 6. If all four lower bounds in step 4 are greater than 0, then go to step 2.
 7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+
+> **Note:** This algorithm as given works for any distribution, not just the normal distribution, as long as&mdash;
+>
+> - for all _x_, _PDF_(0) = 0 and _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's probability density function (PDF) or a function proportional to the PDF,
+> - the upper and lower bounds are calculated based on _z_ = (_u_/_v_)<sup>2</sup>&minus;_PDF_(_v_/_S_), rather than as given in step 4,
+> - the shape formed by the set of points for which _z_ is 0 or less is convex and either&mdash;
+>     - symmetric about the _v_-axis and fully inside the rectangle [&minus;1, 1]&times;[0, 1], or
+>     - fully inside the rectangle [0, 1]&times;[0, 1] (as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and
+> - that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.
+>
+> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a Gaussian random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution spans the positive real line, so the sign in step 5 of the algorithm is always positive; in addition, the distribution's ratio-of-uniforms shape is convex and fully inside [0, 1]&times;[0, 1], and meets the other requirements above.
 
 <a id=License></a>
 ## License
