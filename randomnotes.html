@@ -270,7 +270,7 @@ END METHOD
 <pre>METHOD GeometricStable(alpha, lamda, tau)
    rho = alpha*(1-tau)/2
    sign = -1
-   if RNDINT(1)==0 or RNDU01() &lt; tau
+   if tau==1 or RNDINT(1)==0 or RNDU01() &lt; tau
        rho = alpha*(1+tau)/2
        sign = 1
    end

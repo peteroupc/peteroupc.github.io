@@ -226,7 +226,7 @@ Methods implementing the strictly geometric stable and general geometric stable 
     METHOD GeometricStable(alpha, lamda, tau)
        rho = alpha*(1-tau)/2
        sign = -1
-       if RNDINT(1)==0 or RNDU01() < tau
+       if tau==1 or RNDINT(1)==0 or RNDU01() < tau
            rho = alpha*(1+tau)/2
            sign = 1
        end
