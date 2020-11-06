@@ -127,19 +127,19 @@
 
 <h3>Uniform Distribution Inside N-Dimensional Shapes</h3>
 
-<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in <em>N</em>-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it (such as a set of individual points).</p>
+<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, <em>d1</em>]&times;[0, <em>d2</em>]&times;...&times;[0,<em>dN</em>] in <em>N</em>-dimensional space, where <em>d1</em>, ..., <em>dN</em> are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).</p>
 
 <p>The sampler&#39;s description has the following skeleton.</p>
 
 <ol>
 <li>Generate <em>N</em> empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
-<li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>N</em> coordinates to 0, call the coordinates <em>c1</em>, <em>c2</em>, ..., <em>cN</em>.  Then set <em>d</em> to 1.</li>
+<li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>N</em> coordinates to 0, call the coordinates <em>c1</em>, <em>c2</em>, ..., <em>cN</em>.  Then set <em>d</em> to 1.  Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set that coordinate to an integer in [0, <em>dX</em>), chosen uniformly at random, where <em>dX</em> is the corresponding dimension&#39;s size.</li>
 <li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), multiply that coordinate by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
 <li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).  See below for implementation notes for this step.</li>
 <li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
 
 <ol>
-<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, set <em>p1</em>&#39;s fractional part to [3, 4, 2].)</li>
+<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, set <em>p1</em>&#39;s fractional part to [3, 4, 2].)  Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.</li>
 <li>For each PSRN (<em>p1</em>, ..., <em>pN</em>), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
 <li>For each PSRN, optionally do the following: With probability 1/2, set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
 <li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
@@ -185,19 +185,13 @@
 </ol></li>
 <li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is <em>YES</em> if any component returns <em>YES</em>; <em>NO</em> if all components return <em>NO</em>; and <em>MAYBE</em> otherwise).</li>
 <li>(Devroye 1986, chapter 8, section 3)<sup><a href="#Note4"><strong>(4)</strong></a></sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, and <em>N</em> is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
-<li>The algorithm can be extended to geometric shapes enclosed in the hyperrectangle [0, <em>d1</em>]&times;[0, <em>d2</em>]&times;...&times;[0,<em>dN</em>], where <em>d1</em>, ..., <em>dN</em> are integers greater than 0, as follows:
-
-<ol>
-<li>Add the following sentence at the end of step 2: &quot;For each coordinate (<em>c1</em>, ..., <em>cN</em>), set that coordinate to an integer in [0, <em>dX</em>), chosen uniformly at random, where <em>dX</em> is the corresponding dimension&#39;s size.&quot;</li>
-<li>Add the following sentence at the end of the first substep of step 5: &quot;Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.&quot;</li>
-</ol></li>
 </ul>
 
 <p><strong>Examples:</strong></p>
 
 <ul>
-<li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>; and <em>MAYBE</em> otherwise.  For a full diamond, step 5.3 in the algorithm is done for all <em>N</em> dimensions.</li>
-<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>; and <em>MAYBE</em> otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all <em>N</em> dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).</li>
+<li>The following example generates a point inside a quarter diamond (centered at (0, ..., 0), &quot;radius&quot; <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1) + ... + (<em>cN</em>+1)) &lt; <em>S</em>*<em>k</em>; <em>NO</em> if (<em>c1</em> + ... + <em>cN</em>) &gt; <em>S</em>*<em>k</em>; and <em>MAYBE</em> otherwise.  For a full diamond, step 5.3 in the algorithm is done for all <em>N</em> dimensions.</li>
+<li>The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>c1</em>+1)<sup>2</sup> + ... + (<em>cN</em>+1)<sup>2</sup>) &lt; (<em>S</em>*<em>k</em>)<sup>2</sup>; <em>NO</em> if (<em>c1</em><sup>2</sup> + ... + <em>cN</em><sup>2</sup>) &gt; (<em>S</em>*<em>k</em>)<sup>2</sup>; and <em>MAYBE</em> otherwise.  For a full hypersphere with radius 1, step 5.3 in the algorithm is done for all <em>N</em> dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> &lt; 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).</li>
 </ul>
 </blockquote>
 
@@ -549,20 +543,24 @@
 <p>This algorithm works for any univariate distribution as long as&mdash;</p>
 
 <ul>
-<li>for all <em>x</em>, <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and</li>
-<li><p><em>PDF</em> is continuous almost everywhere.</p></li>
+<li>for all <em>x</em>, <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF,</li>
+<li><em>PDF</em> is continuous almost everywhere, and</li>
+<li><p>the distribution&#39;s ratio-of-uniforms shape is covered entirely by the rectangle [0, 1]&times;[0, 1].</p></li>
 </ul>
 
 <ol>
 <li>Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em> and <em>p2</em>.</li>
 <li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>c1</em> and <em>c2</em> each to 0.  Then set <em>d</em> to 1.</li>
 <li>Multiply <em>c1</em> and <em>c2</em> each by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
-<li>Run an <strong>InShape</strong> function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when <em>z</em> &lt;= 0 everywhere in the box, where <em>u</em> lies in [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>], <em>v</em> lies in [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and <em>z</em> is 1 if <em>v</em> is 0, or (<em>v</em>/<em>S</em>)<sup>2</sup>&minus;<em>PDF</em>(<em>u</em>/<em>v</em>) otherwise. <strong>InShape</strong> returns <em>YES</em> if the box is fully inside the transformed PDF, <em>NO</em> if the box is fully outside it, and <em>MAYBE</em> in any other case.
+<li><p>Run an <strong>InShape</strong> function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when <em>z</em> &lt;= 0 everywhere in the box, where <em>u</em> lies in [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>], <em>v</em> lies in [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and <em>z</em> is&mdash;</p>
 
 <ul>
-<li>In some cases, such as those given in the notes under &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, it may be enough to calculate lower and upper bounds for <em>z</em> for each (<em>u</em>, <em>v</em>) pair in (<em>c1</em>,<em>c2</em>), (<em>c1</em>+1,<em>c2</em>), (<em>c1</em>,<em>c2</em>+1), and (<em>c1</em>+1,<em>c2</em>+1), using rational arithmetic and with an accuracy level that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and then return <em>YES</em> if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); <em>NO</em> if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and <em>MAYBE</em> otherwise.</li>
-<li>In other cases (including for the normal distribution, unfortunately), it may not be correct to do so.</li>
-</ul></li>
+<li>0 if <em>v</em> is 0, <em>u</em> is 0, and _PDF(0) &gt; 0, or</li>
+<li>1 if <em>v</em> is 0 in any other case, or</li>
+<li>(<em>v</em>/<em>S</em>)<sup>2</sup>&minus;<em>PDF</em>(<em>u</em>/<em>v</em>) otherwise.</li>
+</ul>
+
+<p><strong>InShape</strong> returns <em>YES</em> if the box is fully inside the transformed PDF, <em>NO</em> if the box is fully outside it, and <em>MAYBE</em> in any other case.</p></li>
 <li>If <strong>InShape</strong> as described in step 4 returns <em>YES</em>, then do the following:
 
 <ol>
@@ -576,11 +574,17 @@
 </ol>
 
 <blockquote>
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li>In some cases, such as those given in the third implementation note under &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, it may be enough to implement <strong>InShape</strong> in step 4 by calculating lower and upper bounds for <em>z</em> for each (<em>u</em>, <em>v</em>) pair in (<em>c1</em>,<em>c2</em>), (<em>c1</em>+1,<em>c2</em>), (<em>c1</em>,<em>c2</em>+1), and (<em>c1</em>+1,<em>c2</em>+1), using rational arithmetic and with an accuracy level that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and then returning <em>YES</em> if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); <em>NO</em> if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and <em>MAYBE</em> otherwise.  In other cases (including for both examples given below, unfortunately), it may not be correct to do so.</li>
+</ul>
+
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>For the normal distribution, <em>z</em> in step 4 is equivalent to (<em>u</em>/<em>v</em>)<sup>2</sup> + 4*ln(<em>v</em>/<em>S</em>), and since the distribution&#39;s ratio-of-uniforms shape is symmetric about the <em>v</em>-axis, the return value&#39;s sign is positive or negative with equal probability.</li>
-<li>For <a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a> (exp(<em>N</em>) where <em>N</em> is a normally-distributed random number), <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>, and the returned PSRN has a positive sign.</li>
+<li>For the normal distribution, <em>PDF</em> is proportional to exp(&minus;<em>x</em><sup>2</sup>/2), and since the distribution&#39;s ratio-of-uniforms shape is symmetric about the <em>v</em>-axis, the return value&#39;s sign is positive or negative with equal probability.</li>
+<li>For the standard lognormal distribution (<a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a>), <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>, and the returned PSRN has a positive sign.</li>
 </ol>
 </blockquote>
 

@@ -87,16 +87,16 @@ An application of the continued fraction algorithm is the following algorithm th
 <a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
 ### Uniform Distribution Inside N-Dimensional Shapes
 
-The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, 1]&times;[0, 1]&times;...&times;[0,1] in _N_-dimensional space. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it (such as a set of individual points).
+The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_] in _N_-dimensional space, where _d1_, ..., _dN_ are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).
 
 The sampler's description has the following skeleton.
 
 1. Generate _N_ empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
-2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.
+2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.  Then, for each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the corresponding dimension's size.
 3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
 4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
-    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
+    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)  Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate.
     2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
     3. For each PSRN, optionally do the following: With probability 1/2, set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
     4. Return the PSRNs _p1_, ..., _pN_, in that order.
@@ -127,14 +127,11 @@ The sampler's description has the following skeleton.
 >     5. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), its _implicit surface_ equation (for closed surfaces), or its _signed distance field_ (a quantized version of a signed distance function).
 > - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
 > - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, and _N_ is 2, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
-> - The algorithm can be extended to geometric shapes enclosed in the hyperrectangle [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_], where _d1_, ..., _dN_ are integers greater than 0, as follows:
->     1. Add the following sentence at the end of step 2: "For each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the corresponding dimension's size."
->     2. Add the following sentence at the end of the first substep of step 5: "Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate."
 >
 > **Examples:**
 >
-> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" 1): Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_; _NO_ if (_c1_ + ... + _cN_) > _S_; and _MAYBE_ otherwise.  For a full diamond, step 5.3 in the algorithm is done for all _N_ dimensions.
-> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius 1): Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < _S_<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > _S_<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
+> - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_\*_k_; _NO_ if (_c1_ + ... + _cN_) > _S_\*_k_; and _MAYBE_ otherwise.  For a full diamond, step 5.3 in the algorithm is done for all _N_ dimensions.
+> - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < (_S_\*_k_)<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > (_S_\*_k_)<sup>2</sup>; and _MAYBE_ otherwise.  For a full hypersphere with radius 1, step 5.3 in the algorithm is done for all _N_ dimensions.  In the case of a 2-dimensional circle, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(4)**](#Note4)</sup>).
 
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
 ### Building an Arbitrary-Precision Sampler
@@ -403,15 +400,19 @@ The Cauchy sampler given earlier demonstrates the ratio-of-uniforms technique fo
 
 This algorithm works for any univariate distribution as long as&mdash;
 
-- for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and
-- _PDF_ is continuous almost everywhere.
+- for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's PDF or a function proportional to the PDF,
+- _PDF_ is continuous almost everywhere, and
+- the distribution's ratio-of-uniforms shape is covered entirely by the rectangle [0, 1]&times;[0, 1].
 
 1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ and _c2_ each to 0.  Then set _d_ to 1.
 3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. Run an **InShape** function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when _z_ <= 0 everywhere in the box, where _u_ lies in \[_c1_/_S_, (_c1_+1)/_S_\], _v_ lies in \[_c2_/_S_, (_c2_+1)/_S_\], and _z_ is 1 if _v_ is 0, or (_v_/_S_)<sup>2</sup>&minus;_PDF_(_u_/_v_) otherwise. **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case.
-    - In some cases, such as those given in the notes under "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", it may be enough to calculate lower and upper bounds for _z_ for each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), and then return _YES_ if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); _NO_ if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and _MAYBE_ otherwise.
-    - In other cases (including for the normal distribution, unfortunately), it may not be correct to do so.
+4. Run an **InShape** function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when _z_ <= 0 everywhere in the box, where _u_ lies in \[_c1_/_S_, (_c1_+1)/_S_\], _v_ lies in \[_c2_/_S_, (_c2_+1)/_S_\], and _z_ is&mdash;
+    - 0 if _v_ is 0, _u_ is 0, and _PDF(0) > 0, or
+    - 1 if _v_ is 0 in any other case, or
+    - (_v_/_S_)<sup>2</sup>&minus;_PDF_(_u_/_v_) otherwise.
+
+    **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case.
 5. If **InShape** as described in step 4 returns _YES_, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
     2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
@@ -420,10 +421,14 @@ This algorithm works for any univariate distribution as long as&mdash;
 6. If **InShape** as described in step 4 returns _NO_, then go to step 2.
 7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
+> **Notes:**
+>
+> - In some cases, such as those given in the third implementation note under "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", it may be enough to implement **InShape** in step 4 by calculating lower and upper bounds for _z_ for each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), and then returning _YES_ if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); _NO_ if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and _MAYBE_ otherwise.  In other cases (including for both examples given below, unfortunately), it may not be correct to do so.
+>
 > **Examples:**
 >
-> 1. For the normal distribution, _z_ in step 4 is equivalent to (_u_/_v_)<sup>2</sup> + 4\*ln(_v_/_S_), and since the distribution's ratio-of-uniforms shape is symmetric about the _v_-axis, the return value's sign is positive or negative with equal probability.
-> 2. For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a normally-distributed random number), _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_, and the returned PSRN has a positive sign.
+> 1. For the normal distribution, _PDF_ is proportional to exp(&minus;_x_<sup>2</sup>/2), and since the distribution's ratio-of-uniforms shape is symmetric about the _v_-axis, the return value's sign is positive or negative with equal probability.
+> 2. For the standard lognormal distribution ([**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html)), _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_, and the returned PSRN has a positive sign.
 
 <a id=License></a>
 ## License

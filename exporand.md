@@ -1477,12 +1477,12 @@ def exprandscore(ln,ld,ln2,ld2):
 The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on \[0, 1\], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) _b_ (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14)<sup>[**(14)**](#Note14)</sup>.)
 
 1. Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a **SampleGeometricBag** Bernoulli factory that uses that PSRN.
-2. As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)  Let _f_(_U_) be the probability function modeled by this Bernoulli factory, where _U_ is the uniform random number built up by the PSRN. _f_ is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution's PDF is only known up to a normalization constant).  As shown by Keane and O'Brien <sup>[**(6)**](#Note6)</sup>, however, this step works if and only if _f_(_&lambda;_), in a given set in \[0, 1\]&mdash;
+2. As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the **SampleGeometricBag** factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)".)  Let _f_(_U_) be the probability density function (PDF) modeled by this Bernoulli factory, where _U_ is the uniform random number built up by the PSRN. _f_ is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution's PDF is only known up to a normalization constant).  As shown by Keane and O'Brien <sup>[**(6)**](#Note6)</sup>, however, this step works if and only if _f_(_&lambda;_), in a given set in \[0, 1\]&mdash;
     - is continuous everywhere,
     - does not go to 0 or 1 exponentially fast in value, and
     - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point,
 
-   and they give the example of 2 \* _&lambda;_ as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" for ways to simulate constant probabilities.
+   and they give the example of 2 \* _&lambda;_ as a function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see "[**Algorithms for Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants)" for ways to simulate constant probabilities.
 3. If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part _n_ digits (similarly to **FillGeometricBag** above), where _n_ is a precision parameter, then return the PSRN.
 
 However, the speed of this algorithm depends crucially on the mode (highest point) of _f_ in \[0, 1\].<sup>[**(21)**](#Note21)</sup>  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, _f_ will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of _f_ and have to be rejected.
@@ -1491,11 +1491,11 @@ The beta distribution's PDF at (1) fits the requirements of Keane and O'Brien (f
 
 This algorithm can be modified to produce random numbers in the interval \[_m_, _m_ + _y_\] (where _m_ and _y_ are rational numbers and _y_ is greater than 0), rather than \[0, 1\], as follows:
 
-1. Apply the algorithm above, except that a modified probability function _f&prime;_(_x_) = _f_(_x_ * _y_ + _m_) is used rather than _f_, where _x_ is the number in \[0, 1\] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.
+1. Apply the algorithm above, except that a modified function _f&prime;_(_x_) = _f_(_x_ * _y_ + _m_) is used rather than _f_, where _x_ is the number in \[0, 1\] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.
 2. Multiply the resulting random PSRN by _y_ via the second algorithm in "[**Multiplication**](#Multiplication)".  (Note that if _y_ has the form _b_<sup>_i_</sup>, this step is relatively trivial.)
 3. Add _m_ to the resulting random PSRN via the second algorithm in "[**Addition and Subtraction**](#Addition_and_Subtraction)".
 
-Note that here, the probability function _f&prime;_ must meet the requirements of Keane and O'Brien.  (For example, take the probability function `sqrt((x - 4) / 2)`, which isn't a Bernoulli factory function.  If we now seek to sample from the interval \[4, 4+2<sup>1</sup>\] = \[4, 6\], the _f_ used in step 2 is now `sqrt(x)`, which _is_ a Bernoulli factory function so that we can apply this algorithm.)
+Note that here, the function _f&prime;_ must meet the requirements of Keane and O'Brien.  (For example, take the function `sqrt((x - 4) / 2)`, which isn't a Bernoulli factory function.  If we now seek to sample from the interval \[4, 4+2<sup>1</sup>\] = \[4, 6\], the _f_ used in step 2 is now `sqrt(x)`, which _is_ a Bernoulli factory function so that we can apply this algorithm.)
 
 <a id=An_Example_The_Continuous_Bernoulli_Distribution></a>
 ### An Example: The Continuous Bernoulli Distribution
@@ -1609,7 +1609,7 @@ The complexity of the **algorithm for exp(&minus;_x_/_y_)** (which outputs 1 wit
     - the expected number of calls to the **algorithm for exp(&minus;_x_/_y_)** (with &gamma; = 1), which is the expected value of _G_ as described above, times
     - the bit complexity for each such call.
 
-If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer _k_ with probability function&mdash;
+If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer _k_ with probability mass function&mdash;
 
  - P(_k_) = &gamma;<sup>_k_</sup>/_k_! &minus; &gamma;<sup>_k_ + 1</sup>/(_k_ + 1)!,
 
@@ -1729,21 +1729,21 @@ For the **SampleGeometricBag**, there are two versions: one for binary (base 2) 
 <a id=Oberhoff_s_Exact_Rejection_Sampling_Method></a>
 ### Oberhoff's "Exact Rejection Sampling" Method
 
-The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup>[**(12)**](#Note12)</sup>, see also (Devroye and Gravel 2016)<sup>[**(27)**](#Note27)</sup>. (Note that if the probability function's domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)
+The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup>[**(12)**](#Note12)</sup>, see also (Devroye and Gravel 2016)<sup>[**(27)**](#Note27)</sup>. (Note that if the PDF's domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)
 
-1. Set _pdfmax_ to an upper bound of the probability function on the domain at \[0, 1\].  Let _base_ be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).
+1. Set _pdfmax_ to an upper bound of the PDF (or a multiple of the PDF) on the domain at \[0, 1\].  Let _base_ be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).
 2. Set _prefix_ to 0 and _prefixLength_ to 0.
 3. Set _y_ to a uniform random number in the interval \[0, _pdfmax_\].
-4. Let _pw_ be _base_<sup>&minus;_prefixLength_</sup>.  Set _lower_ and _upper_ to a lower or upper bound, respectively, of the probability function's value on the domain at \[_prefix_ * _pw_, _prefix_ * _pw_ + _pw_\].
+4. Let _pw_ be _base_<sup>&minus;_prefixLength_</sup>.  Set _lower_ and _upper_ to a lower or upper bound, respectively, of the value of the PDF (or multiple of the PDF) on the domain at \[_prefix_ * _pw_, _prefix_ * _pw_ + _pw_\].
 5. If _y_ turns out to be greater than _upper_, the prefix was rejected, so go to step 2.
 6. If _y_ turns out to be less than _lower_, the prefix was accepted.  Now do the following:
     1. While _prefixLength_ is less than the desired precision, set _prefix_ to _prefix_ * _base_ + _r_, where _r_ is a uniform random digit, then add 1 to _prefixLength_.
     2. Return _prefix_ * _base_<sup>&minus;_prefixLength_</sup>.  (If _prefixLength_ is somehow greater than the desired precision, then the algorithm could choose to round the return value to a number whose fractional part has the desired number of digits, with a rounding mode of choice.)
 7. Set _prefix_ to _prefix_ * _base_ + _r_, where _r_ is a uniform random digit, then add 1 to _prefixLength_, then go to step 4.
 
-Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating _y_ with a fixed number of digits, unless _y_ is a uniform PSRN (see also "[**Application to Weighted Reservoir Sampling**](#Application_to_Weighted_Reservoir_Sampling)").  For practical purposes, the lower and upper bounds calculated in step 4 should depend on _prefixLength_ (the higher _prefixLength_ is, the more accurate).
+Because this algorithm requires evaluating the PDF (or a multiple of the PDF) and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating _y_ with a fixed number of digits, unless _y_ is a uniform PSRN (see also "[**Application to Weighted Reservoir Sampling**](#Application_to_Weighted_Reservoir_Sampling)").  For practical purposes, the lower and upper bounds calculated in step 4 should depend on _prefixLength_ (the higher _prefixLength_ is, the more accurate).
 
-Oberhoff also describes _prefix distributions_ that sample a box that covers the probability function, with probability proportional to the box's area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.
+Oberhoff also describes _prefix distributions_ that sample a box that covers the PDF, with probability proportional to the box's area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.
 
 <a id=Setting_Digits_by_Digit_Probabilities></a>
 ### Setting Digits by Digit Probabilities
@@ -1758,7 +1758,7 @@ An absolutely continuous distribution can thus be built if we can find a sequenc
 
 where &beta; = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
 
-For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this probability function (which is proportional to the PDF) will often show whether the function is discontinuous:
+For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 
 - Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-&beta; digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = &beta;).
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).

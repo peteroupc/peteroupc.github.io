@@ -1883,7 +1883,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <ol>
 <li>Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
-<li><p>As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability function modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the PSRN. <em>f</em> is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s PDF is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(<em>&lambda;</em>), in a given set in [0, 1]&mdash;</p>
+<li><p>As the PSRN builds up a uniform random number, accept the PSRN with a probability that can be represented by a Bernoulli factory algorithm (that takes the <strong>SampleGeometricBag</strong> factory from step 1 as part of its input), or reject it otherwise. (A number of these algorithms can be found in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.)  Let <em>f</em>(<em>U</em>) be the probability density function (PDF) modeled by this Bernoulli factory, where <em>U</em> is the uniform random number built up by the PSRN. <em>f</em> is a multiple of the PDF for the underlying continuous distribution (as a result, this algorithm can be used even if the distribution&#39;s PDF is only known up to a normalization constant).  As shown by Keane and O&#39;Brien <sup><a href="#Note6"><strong>(6)</strong></a></sup>, however, this step works if and only if <em>f</em>(<em>&lambda;</em>), in a given set in [0, 1]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere,</li>
@@ -1891,7 +1891,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>either returns a constant value in [0, 1] everywhere, or returns a value in [0, 1] at each of the points 0 and 1 and a value in (0, 1) at each other point,</li>
 </ul>
 
-<p>and they give the example of 2 * <em>&lambda;</em> as a probability function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
+<p>and they give the example of 2 * <em>&lambda;</em> as a function that cannot be represented by a Bernoulli factory.  Notice that the probability can be a constant, including an irrational number; see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants"><strong>Algorithms for Irrational Constants</strong></a>&quot; for ways to simulate constant probabilities.</p></li>
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
@@ -1902,12 +1902,12 @@ def exprandscore(ln,ld,ln2,ld2):
 <p>This algorithm can be modified to produce random numbers in the interval [<em>m</em>, <em>m</em> + <em>y</em>] (where <em>m</em> and <em>y</em> are rational numbers and <em>y</em> is greater than 0), rather than [0, 1], as follows:</p>
 
 <ol>
-<li>Apply the algorithm above, except that a modified probability function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>y</em> + <em>m</em>) is used rather than <em>f</em>, where <em>x</em> is the number in [0, 1] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.</li>
+<li>Apply the algorithm above, except that a modified function <em>f&prime;</em>(<em>x</em>) = <em>f</em>(<em>x</em> * <em>y</em> + <em>m</em>) is used rather than <em>f</em>, where <em>x</em> is the number in [0, 1] that is built up by the PSRN, and that the choice is not made to fill the PSRN as given in step 3 of that algorithm.</li>
 <li>Multiply the resulting random PSRN by <em>y</em> via the second algorithm in &quot;<a href="#Multiplication"><strong>Multiplication</strong></a>&quot;.  (Note that if <em>y</em> has the form <em>b</em><sup><em>i</em></sup>, this step is relatively trivial.)</li>
 <li>Add <em>m</em> to the resulting random PSRN via the second algorithm in &quot;<a href="#Addition_and_Subtraction"><strong>Addition and Subtraction</strong></a>&quot;.</li>
 </ol>
 
-<p>Note that here, the probability function <em>f&prime;</em> must meet the requirements of Keane and O&#39;Brien.  (For example, take the probability function <code>sqrt((x - 4) / 2)</code>, which isn&#39;t a Bernoulli factory function.  If we now seek to sample from the interval [4, 4+2<sup>1</sup>] = [4, 6], the <em>f</em> used in step 2 is now <code>sqrt(x)</code>, which <em>is</em> a Bernoulli factory function so that we can apply this algorithm.)</p>
+<p>Note that here, the function <em>f&prime;</em> must meet the requirements of Keane and O&#39;Brien.  (For example, take the function <code>sqrt((x - 4) / 2)</code>, which isn&#39;t a Bernoulli factory function.  If we now seek to sample from the interval [4, 4+2<sup>1</sup>] = [4, 6], the <em>f</em> used in step 2 is now <code>sqrt(x)</code>, which <em>is</em> a Bernoulli factory function so that we can apply this algorithm.)</p>
 
 <p><a id=An_Example_The_Continuous_Bernoulli_Distribution></a></p>
 
@@ -2043,7 +2043,7 @@ def contbernoullidist(b, lamda, precision=53):
 </ul></li>
 </ul>
 
-<p>If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer <em>k</em> with probability function&mdash;</p>
+<p>If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer <em>k</em> with probability mass function&mdash;</p>
 
 <ul>
 <li>P(<em>k</em>) = &gamma;<sup><em>k</em></sup>/<em>k</em>! &minus; &gamma;<sup><em>k</em> + 1</sup>/(<em>k</em> + 1)!,</li>
@@ -2188,13 +2188,13 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability function is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, see also (Devroye and Gravel 2016)<sup><a href="#Note27"><strong>(27)</strong></a></sup>. (Note that if the probability function&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, see also (Devroye and Gravel 2016)<sup><a href="#Note27"><strong>(27)</strong></a></sup>. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
-<li>Set <em>pdfmax</em> to an upper bound of the probability function on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
+<li>Set <em>pdfmax</em> to an upper bound of the PDF (or a multiple of the PDF) on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
 <li>Set <em>prefix</em> to 0 and <em>prefixLength</em> to 0.</li>
 <li>Set <em>y</em> to a uniform random number in the interval [0, <em>pdfmax</em>].</li>
-<li>Let <em>pw</em> be <em>base</em><sup>&minus;<em>prefixLength</em></sup>.  Set <em>lower</em> and <em>upper</em> to a lower or upper bound, respectively, of the probability function&#39;s value on the domain at [<em>prefix</em> * <em>pw</em>, <em>prefix</em> * <em>pw</em> + <em>pw</em>].</li>
+<li>Let <em>pw</em> be <em>base</em><sup>&minus;<em>prefixLength</em></sup>.  Set <em>lower</em> and <em>upper</em> to a lower or upper bound, respectively, of the value of the PDF (or multiple of the PDF) on the domain at [<em>prefix</em> * <em>pw</em>, <em>prefix</em> * <em>pw</em> + <em>pw</em>].</li>
 <li>If <em>y</em> turns out to be greater than <em>upper</em>, the prefix was rejected, so go to step 2.</li>
 <li>If <em>y</em> turns out to be less than <em>lower</em>, the prefix was accepted.  Now do the following:
 
@@ -2205,9 +2205,9 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>Set <em>prefix</em> to <em>prefix</em> * <em>base</em> + <em>r</em>, where <em>r</em> is a uniform random digit, then add 1 to <em>prefixLength</em>, then go to step 4.</li>
 </ol>
 
-<p>Because this algorithm requires evaluating the probability function and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
+<p>Because this algorithm requires evaluating the PDF (or a multiple of the PDF) and finding its maximum and minimum values at an interval (which often requires floating-point arithmetic and is often not trivial), this algorithm appears here in the appendix rather than in the main text.  Moreover, there is additional approximation error from generating <em>y</em> with a fixed number of digits, unless <em>y</em> is a uniform PSRN (see also &quot;<a href="#Application_to_Weighted_Reservoir_Sampling"><strong>Application to Weighted Reservoir Sampling</strong></a>&quot;).  For practical purposes, the lower and upper bounds calculated in step 4 should depend on <em>prefixLength</em> (the higher <em>prefixLength</em> is, the more accurate).</p>
 
-<p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the probability function, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.</p>
+<p>Oberhoff also describes <em>prefix distributions</em> that sample a box that covers the PDF, with probability proportional to the box&#39;s area, but these distributions will have to support a fixed maximum prefix length and so will only approximate the underlying continuous distribution.</p>
 
 <p><a id=Setting_Digits_by_Digit_Probabilities></a></p>
 
@@ -2225,7 +2225,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(<em>&lambda;</em>) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = <em>&lambda;</em>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
 
-<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this probability function (which is proportional to the PDF) will often show whether the function is discontinuous:</p>
+<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:</p>
 
 <ul>
 <li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>
