@@ -20,7 +20,7 @@ More specifically, step 6 can be changed as follows:
 
 - (6.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_k_+1)&minus;loggamma((_n_&minus;_k_)+1)+ln(_m_)+ln(2)\*_k_&minus;(_n_+2) (where loggamma(_x_) is the logarithm of the gamma function).
 - (6a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _e_ to 0 minus that number.
-- (6b.) If _e_ is greater than _p_, go to step 2.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  Then, go to step 2 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
+- (6b.) If _e_ is greater than _p_, go to step 2.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 2 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
 
@@ -74,7 +74,7 @@ A _compound distribution_ is simply the minimum of _N_ random variables distribu
 - <small><sup id=Note7>(7)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., "The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications", _Pak. J. Stat. Oper. Res._ XIV(3), 2018.</small>
 - <small><sup id=Note8>(8)</sup> Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.</small>
 - <small><sup id=Note9>(9)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
-- <small><sup id=Note10>(10)</sup> ugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.</small>
+- <small><sup id=Note10>(10)</sup> Eugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.</small>
 
 <a id=License></a>
 ## License

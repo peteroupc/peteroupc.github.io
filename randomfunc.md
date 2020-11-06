@@ -1181,7 +1181,7 @@ The _Poisson distribution_ uses a parameter `mean` (also known as &lambda;). &la
 
 In this document, `Poisson(mean)` is a Poisson-distributed number if `mean` is greater than 0, or 0 if `mean` is 0.
 
-The following method generates a Poisson random number with mean `mx`/`my`, using the approach suggested by (Flajolet et al., 2010)<sup>[**(34)**](#Note34)</sup>.  In the method, `UniformNew()` creates a _u-rand_, an "empty" random number in [0, 1], whose bits are not yet determined (Karney 2014)<sup>[**(33)**](#Note33)</sup>, and `UniformLess(a, b)` returns whether one _u-rand_ (`a`) is less than another (`b`), building up the bits of both as necessary.  For a less exact algorithm, replace `UniformNew()` with `RNDINT(1000)` and `UniformLess(a, b)` with `a < b`.
+The following method generates a Poisson random number with mean `mx`/`my`, using the approach suggested by (Flajolet et al., 2010)<sup>[**(34)**](#Note34)</sup>.  In the method, `UniformNew()` creates a _partially-sampled random number_ (an "empty" random number whose contents are not yet determined) with a positive sign, an integer part of 0, and an empty fractional part (for more information, see [**my article on this topic**](https://peteroupc.github.io/exporand.html)), and `UniformLess(a, b)` returns whether one partially-sampled random number (`a`) is less than another (`b`), and samples unbiased random bits from both numbers as necessary (see the **UniformLess** algorithm in the same article).  For a less exact algorithm, replace `UniformNew()` with `RNDINT(1000)` and `UniformLess(a, b)` with `a < b`.
 
     METHOD PoissonInt(mx, my)
         if my == 0: return error
@@ -1875,7 +1875,7 @@ Miscellaneous:
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: Square root of a chi-squared random number.  See chi-squared distribution.
 - **Compound Poisson distribution**: See [**Transformations of Random Numbers: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
-- **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = RNDRANGE(-1, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
+- **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = (RNDINT(1) * 2 - 1) * RNDU01()` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Dagum distribution**: See beta prime distribution.
 - **Dirichlet distribution**: [**This distribution**](https://en.wikipedia.org/wiki/Dirichlet_distribution) \(e.g., (Devroye 1986)<sup>[**(13)**](#Note13)</sup>, p. 593-594) can be sampled by generating _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomfunc.md#Gamma_Distribution) numbers, each with separate parameters, taking their sum<sup>[**(15)**](#Note15)</sup>, dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
 - **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDU01OneExc())` (see also Saucier 2000, p. 15, which shows the wrong X axes).

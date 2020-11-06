@@ -32,7 +32,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Requests**](#Requests)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
-    - [**Normal Distribution via Ratio of Uniforms**](#Normal_Distribution_via_Ratio_of_Uniforms)
+    - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
 - [**License**](#License)
 
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
@@ -116,7 +116,7 @@ The sampler's description has the following skeleton.
 >         - _MAYBE_ in any other case, or if the function is unsure.
 >
 >         In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
->     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment inside the enclosing hypercube crosses the shape at most once, then **InShape** can return&mdash;
+>     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment's endpoints (an example is an axis-aligned quarter of a circular disk where the disk's center is (0, 0)), then **InShape** can return&mdash;
 >         - _YES_ if all the box's corners are in the shape;
 >         - _NO_ if none of the box's corners are in the shape; and
 >         - _MAYBE_ in any other case, or if the function is unsure.
@@ -396,31 +396,34 @@ We would like to see new implementations of the following:
 
 &nbsp;
 
-<a id=Normal_Distribution_via_Ratio_of_Uniforms></a>
-### Normal Distribution via Ratio of Uniforms
+<a id=Ratio_of_Uniforms></a>
+### Ratio of Uniforms
 
-This sampler (as well as the Cauchy sampler given earlier) demonstrates the ratio-of-uniforms technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(10)**](#Note10)</sup>.  It involves transforming a probability density function into a compact shape.  This sampler for the normal distribution appears here in the appendix since it involves calculating upper and lower bounds of logarithms which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup>[**(12)**](#Note12)</sup>, which doesn't require calculating logarithms.
+The Cauchy sampler given earlier demonstrates the ratio-of-uniforms technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(10)**](#Note10)</sup>.  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup>[**(12)**](#Note12)</sup>, which doesn't require calculating logarithms or other transcendental functions.
+
+This algorithm works for any univariate distribution as long as&mdash;
+
+- for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and
+- _PDF_ is continuous almost everywhere.
 
 1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ and _c2_ each to 0.  Then set _d_ to 1.
 3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. (**InShape** for the transformed normal distribution.) For each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), calculate upper and lower bounds of (_u_/_v_)<sup>2</sup>+4\*ln(_v_/_S_), using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), except that the bounds are each 1 if _v_ is 0.
-5. If all four upper bounds in step 4 are less than 0, then do the following:
+4. Run an **InShape** function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when _z_ <= 0 everywhere in the box, where _u_ lies in \[_c1_/_S_, (_c1_+1)/_S_\], _v_ lies in \[_c2_/_S_, (_c2_+1)/_S_\], and _z_ is either 1 if _v_ is 0, or (_u_/_v_)<sup>2</sup>&minus;_PDF_(_v_/_S_) otherwise. **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case.
+    - In some cases, such as those given in the notes under "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", it may be enough to calculate lower and upper bounds for _z_ for each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1) using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), and then return _YES_ if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); _NO_ if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and _MAYBE_ otherwise.
+    - In other cases (including for the normal distribution, unfortunately), it may not be correct to do so.
+5. If **InShape** as described in step 4 returns _YES_, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
-    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
-6. If all four lower bounds in step 4 are greater than 0, then go to step 2.
+    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
+    3. If the transformed PDF is symmetric about the _v_-axis, set the resulting PSRN's sign to positive or negative with equal probability.  Otherwise, set the PSRN's sign to positive.
+    4. Return the PSRN.
+6. If **InShape** as described in step 4 returns _NO_, then go to step 2.
 7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
-> **Note:** This algorithm as given works for any distribution, not just the normal distribution, as long as&mdash;
+> **Examples:**
 >
-> - for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's probability density function (PDF) or a function proportional to the PDF,
-> - the upper and lower bounds are calculated based on _z_ = (_u_/_v_)<sup>2</sup>&minus;_PDF_(_v_/_S_), rather than as given in step 4,
-> - the shape formed by the set of points for which _z_ is 0 or less is convex and either&mdash;
->     - (A) symmetric about the _v_-axis and fully inside the rectangle [&minus;1, 1]&times;\[0, 1\], or
->     - (B) fully inside the rectangle [0, 1]&times;\[0, 1\] \(as long as the algorithm sets the sign in step 5 to positive rather than a random sign), and
-> - that shape has a zero-volume boundary and a nonzero finite volume, and assigns zero probability to any zero-volume subset of it.
->
-> **Example:** For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a normally-distributed random number), the bounds in step 4 are calculated based on (_u_/_v_)<sup>2</sup>&minus;exp(&minus;(ln(_v_/_S_))<sup>2</sup>/2)\*_S_/_v_, since _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_.  Moreover, this distribution meets the requirements above, and the sign in step 5 of the algorithm is always positive since condition (B) is met.
+> 1. For the normal distribution, _PDF_(_x_) is proportional to &minus;4\*ln(_v_/_S_), and since the distribution's ratio-of-uniforms shape is symmetric about the _v_-axis, the return value's sign is positive or negative with equal probability.
+> 2. For [**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html) (exp(_N_) where _N_ is a normally-distributed random number), _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_, and the returned PSRN has a positive sign.
 
 <a id=License></a>
 ## License

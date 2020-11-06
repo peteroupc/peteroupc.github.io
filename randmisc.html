@@ -27,7 +27,7 @@
 <ul>
 <li>(6.) Let <em>p</em> be loggamma(<em>n</em>+1)&minus;loggamma(<em>k</em>+1)&minus;loggamma((<em>n</em>&minus;<em>k</em>)+1)+ln(<em>m</em>)+ln(2)*<em>k</em>&minus;(<em>n</em>+2) (where loggamma(<em>x</em>) is the logarithm of the gamma function).</li>
 <li>(6a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set <em>e</em> to 0 minus that number.</li>
-<li>(6b.) If <em>e</em> is greater than <em>p</em>, go to step 2.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  Then, go to step 2 if <em>e</em> is greater than the upper bound, or return <em>ret</em> if <em>e</em> is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.)</li>
+<li>(6b.) If <em>e</em> is greater than <em>p</em>, go to step 2.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  In that case, go to step 2 if <em>e</em> is greater than the upper bound, or return <em>ret</em> if <em>e</em> is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.)</li>
 </ul>
 
 <p>My implementation of loggamma and the natural logarithm (<a href="https://peteroupc.github.io/interval.py"><strong>interval.py</strong></a>) relies on rational interval arithmetic (Daumas et al. 2007)<sup><a href="#Note4"><strong>(4)</strong></a></sup> and a fast converging version of Stirling&#39;s formula (Schumacher 2016)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
@@ -92,7 +92,7 @@
 <li><small><sup id=Note7>(7)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., &quot;The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications&quot;, <em>Pak. J. Stat. Oper. Res.</em> XIV(3), 2018.</small></li>
 <li><small><sup id=Note8>(8)</sup> Hosseini, B., Afshari, M., &quot;The Generalized Odd Gamma-G Family of Distributions:  Properties and Application&quot;, <em>Austrian Journal of Statistics</em> vol. 47, Feb. 2018.</small></li>
 <li><small><sup id=Note9>(9)</sup> Tahir, M.H., Cordeiro, G.M., &quot;Compounding of distributions: a survey and new generalized classes&quot;, <em>Journal of Statistical Distributions and Applications</em> 3(13), 2016.</small></li>
-<li><small><sup id=Note10>(10)</sup> ugene, N., Lee, C., Famoye, F., &quot;Beta-normal distribution and its applications&quot;, <em>Commun. Stat. Theory Methods</em> 31, 2002.</small></li>
+<li><small><sup id=Note10>(10)</sup> Eugene, N., Lee, C., Famoye, F., &quot;Beta-normal distribution and its applications&quot;, <em>Commun. Stat. Theory Methods</em> 31, 2002.</small></li>
 </ul>
 
 <p><a id=License></a></p>
