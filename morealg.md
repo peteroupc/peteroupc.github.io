@@ -33,7 +33,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
-- [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
+    - [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
 - [**License**](#License)
 
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
@@ -354,7 +354,7 @@ We would like to see new implementations of the following:
 - Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
 - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
 
-The "Uniform Distribution Inside N-Dimensional Shapes" section contained implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
+The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
 
 <a id=Notes></a>
 ## Notes
@@ -397,7 +397,7 @@ This algorithm works for any univariate distribution as long as&mdash;
     - 1 if _v_ is 0 in any other case, or
     - (_v_/_S_)<sup>2</sup>&minus;_PDF_(_u_/_v_) otherwise.
 
-    **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case.
+    **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case.  See the next section for implementation notes.
 5. If **InShape** as described in step 4 returns _YES_, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
     2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
@@ -412,7 +412,7 @@ This algorithm works for any univariate distribution as long as&mdash;
 > 2. For the standard lognormal distribution ([**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html)), _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_, and the returned PSRN has a positive sign.
 
 <a id=Implementation_Notes_for_Box_Shape_Intersection></a>
-## Implementation Notes for Box/Shape Intersection
+### Implementation Notes for Box/Shape Intersection
 
 The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" algorithm uses a function called **InShape** to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of **InShape** for a particular shape.
 
@@ -429,12 +429,14 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _MAYBE_ in any other case.
 
     For example, if _f_ is (_t1_<sup>2</sup>+_t2_<sup>2</sup>&minus;1), which describes a quarter disk, **InShape** should build two intervals, namely _t1_ = \[_c1_/_S_, (_c1_+1)/_S_\] and _t2_ = \[_c2_/_S_, (_c2_+1)/_S_\], and evaluate _f_(_t1_, _t2_) using interval arithmetic.
+
+    One thing to point out, though: If _f_ calls the exp(_x_) function where _x_ can potentially have a high absolute value, say 10000 or higher, the exp function can run a very long time in order to calculate proper bounds for the result, since the number of digits in exp(_x_) grows linearly with _x_.  In this case, it may help to transform the inequality to its logarithmic version.  For example, by applying ln(.) to each side of the inequality _y_<sup>2</sup> <= exp(&minus;(_x_/_y_)<sup>2</sup>/2), the inequality becomes 2\*ln(_y_) <= &minus;(_x_/_y_)<sup>2</sup>/2 and thus becomes 2\*ln(_y_) + (_x_/_y_)<sup>2</sup>/2 <= 0 and thus becomes 4\*ln(_y_) + (_x_/_y_)<sup>2</sup> <= 0.
 4. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment's endpoints (an example is an axis-aligned quarter of a circular disk where the disk's center is (0, 0)), then **InShape** can return&mdash;
     - _YES_ if all the box's corners are in the shape;
     - _NO_ if none of the box's corners are in the shape; and
     - _MAYBE_ in any other case, or if the function is unsure.
 
-    If **InShape** uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on _S_ (the higher _S_ is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, **InShape** can build four intervals, one for each corner; evaluate (_x_<sup>2</sup>+_y_<sup>2</sup>&minus;1); and return _YES_ only if all four results have upper bounds less than 1, _NO_ only if their lower bounds are all greater than 1, and _MAYBE_ in any other case.
+    If **InShape** uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on _S_ (the higher _S_ is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, **InShape** can build four intervals, one for each corner; evaluate (_x_<sup>2</sup>+_y_<sup>2</sup>&minus;1); and return _YES_ only if all four results have upper bounds less than 0, _NO_ only if all four results have lower bounds greater than 0, and _MAYBE_ in any other case.
 5. If **InShape** expresses a shape in the form of a [**_signed distance function_**](https://en.wikipedia.org/wiki/Signed_distance_function), namely a function that describes the closest distance from any point in space to the shape's boundary, it can return&mdash;
     - _YES_ if the signed distance (or an upper bound of such distance) at each of the box's corners, after dividing their coordinates by _S_, is less than &minus;_&sigma;_ (where _&sigma;_ is an upper bound for sqrt(_N_)/(_S_\*2), such as 1/_S_);
     - _NO_ if the signed distance (or a lower bound of such distance) at each of the box's corners is greater than _&sigma;_; and

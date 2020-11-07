@@ -51,8 +51,8 @@
 
 <ul>
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
-</ul></li>
 <li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
+</ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -480,7 +480,7 @@
 <li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
 </ul>
 
-<p>The &quot;Uniform Distribution Inside N-Dimensional Shapes&quot; section contained implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</p>
+<p>The appendix contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</p>
 
 <p><a id=Notes></a></p>
 
@@ -534,7 +534,7 @@
 <li>(<em>v</em>/<em>S</em>)<sup>2</sup>&minus;<em>PDF</em>(<em>u</em>/<em>v</em>) otherwise.</li>
 </ul>
 
-<p><strong>InShape</strong> returns <em>YES</em> if the box is fully inside the transformed PDF, <em>NO</em> if the box is fully outside it, and <em>MAYBE</em> in any other case.</p></li>
+<p><strong>InShape</strong> returns <em>YES</em> if the box is fully inside the transformed PDF, <em>NO</em> if the box is fully outside it, and <em>MAYBE</em> in any other case.  See the next section for implementation notes.</p></li>
 <li>If <strong>InShape</strong> as described in step 4 returns <em>YES</em>, then do the following:
 
 <ol>
@@ -558,7 +558,7 @@
 
 <p><a id=Implementation_Notes_for_Box_Shape_Intersection></a></p>
 
-<h2>Implementation Notes for Box/Shape Intersection</h2>
+<h3>Implementation Notes for Box/Shape Intersection</h3>
 
 <p>The &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot; algorithm uses a function called <strong>InShape</strong> to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of <strong>InShape</strong> for a particular shape.</p>
 
@@ -572,16 +572,18 @@
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
 </ul>
 
-<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p></li>
+<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
 <li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note13"><strong>(13)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, at least assuming that the shape is convex, <strong>InShape</strong> can return:</p>
 
 <ul>
-<li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than 0,</li>
-<li><em>NO</em> if the interval result of <em>f</em> has a lower bound greater than 0, and</li>
+<li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than 0;</li>
+<li><em>NO</em> if the interval result of <em>f</em> has a lower bound greater than 0; and</li>
 <li><em>MAYBE</em> in any other case.</li>
 </ul>
 
-<p>For example, if <em>f</em> is (<em>t1</em><sup>2</sup>+<em>t2</em><sup>2</sup>&minus;1), which describes a quarter disk, <strong>InShape</strong> should build two intervals, namely <em>t1</em> = [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>] and <em>t2</em> = [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and evaluate <em>f</em>(<em>t1</em>, <em>t2</em>) using interval arithmetic.</p></li>
+<p>For example, if <em>f</em> is (<em>t1</em><sup>2</sup>+<em>t2</em><sup>2</sup>&minus;1), which describes a quarter disk, <strong>InShape</strong> should build two intervals, namely <em>t1</em> = [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>] and <em>t2</em> = [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and evaluate <em>f</em>(<em>t1</em>, <em>t2</em>) using interval arithmetic.</p>
+
+<p>One thing to point out, though: If <em>f</em> calls the exp(<em>x</em>) function where <em>x</em> can potentially have a high absolute value, say 10000 or higher, the exp function can run a very long time in order to calculate proper bounds for the result, since the number of digits in exp(<em>x</em>) grows linearly with <em>x</em>.  In this case, it may help to transform the inequality to its logarithmic version.  For example, by applying ln(.) to each side of the inequality <em>y</em><sup>2</sup> &lt;= exp(&minus;(<em>x</em>/<em>y</em>)<sup>2</sup>/2), the inequality becomes 2*ln(<em>y</em>) &lt;= &minus;(<em>x</em>/<em>y</em>)<sup>2</sup>/2 and thus becomes 2*ln(<em>y</em>) + (<em>x</em>/<em>y</em>)<sup>2</sup>/2 &lt;= 0 and thus becomes 4*ln(<em>y</em>) + (<em>x</em>/<em>y</em>)<sup>2</sup> &lt;= 0.</p></li>
 <li><p>If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment&#39;s endpoints (an example is an axis-aligned quarter of a circular disk where the disk&#39;s center is (0, 0)), then <strong>InShape</strong> can return&mdash;</p>
 
 <ul>
@@ -590,7 +592,7 @@
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
 </ul>
 
-<p>If <strong>InShape</strong> uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, <strong>InShape</strong> can build four intervals, one for each corner; evaluate (<em>x</em><sup>2</sup>+<em>y</em><sup>2</sup>&minus;1); and return <em>YES</em> only if all four results have upper bounds less than 1, <em>NO</em> only if their lower bounds are all greater than 1, and <em>MAYBE</em> in any other case.</p></li>
+<p>If <strong>InShape</strong> uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, <strong>InShape</strong> can build four intervals, one for each corner; evaluate (<em>x</em><sup>2</sup>+<em>y</em><sup>2</sup>&minus;1); and return <em>YES</em> only if all four results have upper bounds less than 0, <em>NO</em> only if all four results have lower bounds greater than 0, and <em>MAYBE</em> in any other case.</p></li>
 <li>If <strong>InShape</strong> expresses a shape in the form of a <a href="https://en.wikipedia.org/wiki/Signed_distance_function"><strong><em>signed distance function</em></strong></a>, namely a function that describes the closest distance from any point in space to the shape&#39;s boundary, it can return&mdash;
 
 <ul>
