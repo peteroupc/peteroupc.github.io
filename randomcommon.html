@@ -149,7 +149,7 @@
 <ul>
 <li>If the string needs to be typed in by end users, or to be memorable, it may be important to choose a character set carefully or <a href="https://espadrine.github.io/blog/posts/a-base32-checksum.html"><strong>allow typing mistakes to be detected</strong></a>.</li>
 <li>If the string identifies something, the application may require strings it generates to be unique; see <a href="https://peteroupc.github.io/random.html#Unique_Random_Identifiers"><strong>Unique Random Identifiers</strong></a> for considerations.</li>
-<li>If the string is in the nature of a password, a bearer credential, or another secret value, then it has to be generated using a <a href="https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages"><strong>cryptographic RNG</strong></a> (such as the <code>secrets</code> module in Python or the <code>random_bytes</code> function in PHP).</li>
+<li>If the string is a secret value of any kind, including a password, a bearer credential, a session identifier, a nonce, a &quot;confirmation code&quot;, a &quot;verification code&quot;, or a &quot;forgot-password&quot; code, then the string has to be generated using a <a href="https://peteroupc.github.io/random.html#Existing_RNG_APIs_in_Programming_Languages"><strong>cryptographic RNG</strong></a> (such as the <code>secrets</code> module in Python or the <code>random_bytes</code> function in PHP).</li>
 </ul>
 
 <p><a id=Choosing_Items_with_Separate_Probabilities></a></p>
