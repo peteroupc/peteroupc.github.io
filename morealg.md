@@ -29,10 +29,11 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Cauchy Distribution**](#Cauchy_Distribution)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
-- [**Requests**](#Requests)
+- [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
+- [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
 - [**License**](#License)
 
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
@@ -94,7 +95,7 @@ The sampler's description has the following skeleton.
 1. Generate _N_ empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_, _p2_, ..., _pN_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _N_ coordinates to 0, call the coordinates _c1_, _c2_, ..., _cN_.  Then set _d_ to 1.  Then, for each coordinate (_c1_, ..., _cN_), set that coordinate to an integer in [0, _dX_), chosen uniformly at random, where _dX_ is the corresponding dimension's size.
 3. For each coordinate (_c1_, ..., _cN_), multiply that coordinate by _base_ and add a digit chosen uniformly at random to that coordinate.
-4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).  See below for implementation notes for this step.
+4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.  See the [**appendix**](#Implementation_Notes_for_Box_Shape_Intersection) for further implementation notes.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)  Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate.
     2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
@@ -107,25 +108,6 @@ The sampler's description has the following skeleton.
 >
 > - See (Li and El Gamal 2016)<sup>[**(2)**](#Note2)</sup> and (Oberhoff 2018)<sup>[**(3)**](#Note3)</sup> for related work on encoding random points uniformly distributed in a shape.
 > - Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
-> - Implementation notes for step 4:
->
->     1. **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
->     2. If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
->         - _YES_ if all the box's corners are in the shape;
->         - _NO_ if none of the box's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->
->         In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).
->     3. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment's endpoints (an example is an axis-aligned quarter of a circular disk where the disk's center is (0, 0)), then **InShape** can return&mdash;
->         - _YES_ if all the box's corners are in the shape;
->         - _NO_ if none of the box's corners are in the shape; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->     4. If **InShape** expresses a shape in the form of a [**_signed distance function_**](https://en.wikipedia.org/wiki/Signed_distance_function), namely a function that describes the closest distance from any point in space to the shape's boundary, it can return&mdash;
->         - _YES_ if the signed distance at each of the box's corners (after dividing their coordinates by _S_) is less than &minus;_&sigma;_ (where _&sigma;_ is an upper bound for sqrt(_N_)/(_S_\*2), such as 1/_S_);
->         - _NO_ if the signed distance at each of the box's corners is greater than _&sigma;_; and
->         - _MAYBE_ in any other case, or if the function is unsure.
->     5. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), its _implicit surface_ equation (for closed surfaces), or its _signed distance field_ (a quantized version of a signed distance function).
-> - An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
 > - (Devroye 1986, chapter 8, section 3)<sup>[**(4)**](#Note4)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, _N_ is 2, and _d1_ = _d2_ = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
 >
 > **Examples:**
@@ -364,13 +346,15 @@ For the Garima distribution (Shanker 2016)<sup>[**(8)**](#Note8)</sup>, _w_ = (1
 
 For the i-Garima distribution (Singh and Das 2020)<sup>[**(9)**](#Note9)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
 
-<a id=Requests></a>
-## Requests
+<a id=Requests_and_Open_Questions></a>
+## Requests and Open Questions
 
 We would like to see new implementations of the following:
 
 - Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
 - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
+
+The "Uniform Distribution Inside N-Dimensional Shapes" section contained implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
 
 <a id=Notes></a>
 ## Notes
@@ -387,6 +371,7 @@ We would like to see new implementations of the following:
 - <small><sup id=Note10>(10)</sup> Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.</small>
 - <small><sup id=Note11>(11)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
 - <small><sup id=Note12>(12)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note13>(13)</sup> I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -421,14 +406,41 @@ This algorithm works for any univariate distribution as long as&mdash;
 6. If **InShape** as described in step 4 returns _NO_, then go to step 2.
 7. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
-> **Notes:**
->
-> - In some cases, such as those given in the third implementation note under "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", it may be enough to implement **InShape** in step 4 by calculating lower and upper bounds for _z_ for each (_u_, _v_) pair in (_c1_,_c2_), (_c1_+1,_c2_), (_c1_,_c2_+1), and (_c1_+1,_c2_+1), using rational arithmetic and with an accuracy level that depends on _S_ (the higher _S_ is, the more accurate), and then returning _YES_ if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); _NO_ if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and _MAYBE_ otherwise.  In other cases (including for both examples given below, unfortunately), it may not be correct to do so.
->
 > **Examples:**
 >
 > 1. For the normal distribution, _PDF_ is proportional to exp(&minus;_x_<sup>2</sup>/2), and since the distribution's ratio-of-uniforms shape is symmetric about the _v_-axis, the return value's sign is positive or negative with equal probability.
 > 2. For the standard lognormal distribution ([**Gibrat's distribution**](https://mathworld.wolfram.com/GibratsDistribution.html)), _PDF_(_x_) is proportional to exp(&minus;(ln(_x_))<sup>2</sup>/2)/_x_, and the returned PSRN has a positive sign.
+
+<a id=Implementation_Notes_for_Box_Shape_Intersection></a>
+## Implementation Notes for Box/Shape Intersection
+
+The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" algorithm uses a function called **InShape** to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of **InShape** for a particular shape.
+
+1. **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
+2. If the shape is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
+    - _YES_ if all the box's corners are in the shape;
+    - _NO_ if none of the box's corners are in the shape and if the shape's boundary does not intersect with the box's boundary; and
+    - _MAYBE_ in any other case, or if the function is unsure.
+
+    In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.
+3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) <= 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals<sup>[**(13)**](#Note13)</sup> with an accuracy that depends on _S_ (the higher _S_ is, the more accurate).  Then, at least assuming that the shape is convex, **InShape** can return:
+    - _YES_ if the interval result of _f_ has an upper bound less than 0;
+    - _NO_ if the interval result of _f_ has a lower bound greater than 0; and
+    - _MAYBE_ in any other case.
+
+    For example, if _f_ is (_t1_<sup>2</sup>+_t2_<sup>2</sup>&minus;1), which describes a quarter disk, **InShape** should build two intervals, namely _t1_ = \[_c1_/_S_, (_c1_+1)/_S_\] and _t2_ = \[_c2_/_S_, (_c2_+1)/_S_\], and evaluate _f_(_t1_, _t2_) using interval arithmetic.
+4. If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment's endpoints (an example is an axis-aligned quarter of a circular disk where the disk's center is (0, 0)), then **InShape** can return&mdash;
+    - _YES_ if all the box's corners are in the shape;
+    - _NO_ if none of the box's corners are in the shape; and
+    - _MAYBE_ in any other case, or if the function is unsure.
+
+    If **InShape** uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on _S_ (the higher _S_ is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, **InShape** can build four intervals, one for each corner; evaluate (_x_<sup>2</sup>+_y_<sup>2</sup>&minus;1); and return _YES_ only if all four results have upper bounds less than 1, _NO_ only if their lower bounds are all greater than 1, and _MAYBE_ in any other case.
+5. If **InShape** expresses a shape in the form of a [**_signed distance function_**](https://en.wikipedia.org/wiki/Signed_distance_function), namely a function that describes the closest distance from any point in space to the shape's boundary, it can return&mdash;
+    - _YES_ if the signed distance (or an upper bound of such distance) at each of the box's corners, after dividing their coordinates by _S_, is less than &minus;_&sigma;_ (where _&sigma;_ is an upper bound for sqrt(_N_)/(_S_\*2), such as 1/_S_);
+    - _NO_ if the signed distance (or a lower bound of such distance) at each of the box's corners is greater than _&sigma;_; and
+    - _MAYBE_ in any other case, or if the function is unsure.
+6. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), its _implicit surface_ equation (for closed surfaces), or its _signed distance field_ (a quantized version of a signed distance function).
+7. An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
 
 <a id=License></a>
 ## License

@@ -45,13 +45,14 @@
 <li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
 </ul></li>
-<li><a href="#Requests"><strong>Requests</strong></a></li>
+<li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 </ul></li>
+<li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -135,7 +136,7 @@
 <li>Generate <em>N</em> empty uniform partially-sampled random numbers (PSRNs), with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em>, <em>p2</em>, ..., <em>pN</em>.</li>
 <li>Set <em>S</em> to <em>base</em>, where <em>base</em> is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set <em>N</em> coordinates to 0, call the coordinates <em>c1</em>, <em>c2</em>, ..., <em>cN</em>.  Then set <em>d</em> to 1.  Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set that coordinate to an integer in [0, <em>dX</em>), chosen uniformly at random, where <em>dX</em> is the corresponding dimension&#39;s size.</li>
 <li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), multiply that coordinate by <em>base</em> and add a digit chosen uniformly at random to that coordinate.</li>
-<li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).  See below for implementation notes for this step.</li>
+<li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  <strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.  See the <a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>appendix</strong></a> for further implementation notes.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).</li>
 <li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
 
 <ol>
@@ -154,36 +155,6 @@
 <ul>
 <li>See (Li and El Gamal 2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup> and (Oberhoff 2018)<sup><a href="#Note3"><strong>(3)</strong></a></sup> for related work on encoding random points uniformly distributed in a shape.</li>
 <li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.</li>
-<li><p>Implementation notes for step 4:</p>
-
-<ol>
-<li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
-<li><p>If the shape in question is convex, and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return&mdash;</p>
-
-<ul>
-<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
-<li><em>NO</em> if none of the box&#39;s corners are in the shape and if the shape&#39;s boundary does not intersect with the box&#39;s boundary; and</li>
-<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
-</ul>
-
-<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p></li>
-<li>If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment&#39;s endpoints (an example is an axis-aligned quarter of a circular disk where the disk&#39;s center is (0, 0)), then <strong>InShape</strong> can return&mdash;
-
-<ul>
-<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
-<li><em>NO</em> if none of the box&#39;s corners are in the shape; and</li>
-<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
-</ul></li>
-<li>If <strong>InShape</strong> expresses a shape in the form of a <a href="https://en.wikipedia.org/wiki/Signed_distance_function"><strong><em>signed distance function</em></strong></a>, namely a function that describes the closest distance from any point in space to the shape&#39;s boundary, it can return&mdash;
-
-<ul>
-<li><em>YES</em> if the signed distance at each of the box&#39;s corners (after dividing their coordinates by <em>S</em>) is less than &minus;<em>&sigma;</em> (where <em>&sigma;</em> is an upper bound for sqrt(<em>N</em>)/(<em>S</em>*2), such as 1/<em>S</em>);</li>
-<li><em>NO</em> if the signed distance at each of the box&#39;s corners is greater than <em>&sigma;</em>; and</li>
-<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
-</ul></li>
-<li><strong>InShape</strong> implementations can also involve a shape&#39;s <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), its <em>implicit surface</em> equation (for closed surfaces), or its <em>signed distance field</em> (a quantized version of a signed distance function).</li>
-</ol></li>
-<li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is <em>YES</em> if any component returns <em>YES</em>; <em>NO</em> if all components return <em>NO</em>; and <em>MAYBE</em> otherwise).</li>
 <li>(Devroye 1986, chapter 8, section 3)<sup><a href="#Note4"><strong>(4)</strong></a></sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
 </ul>
 
@@ -498,9 +469,9 @@
 
 <p>For the i-Garima distribution (Singh and Das 2020)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, <em>w</em> = (2+<em>&theta;</em>)/(3+<em>&theta;</em>).</p>
 
-<p><a id=Requests></a></p>
+<p><a id=Requests_and_Open_Questions></a></p>
 
-<h2>Requests</h2>
+<h2>Requests and Open Questions</h2>
 
 <p>We would like to see new implementations of the following:</p>
 
@@ -508,6 +479,8 @@
 <li>Algorithms that implement <strong>InShape</strong> for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
 <li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
 </ul>
+
+<p>The &quot;Uniform Distribution Inside N-Dimensional Shapes&quot; section contained implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</p>
 
 <p><a id=Notes></a></p>
 
@@ -526,6 +499,7 @@
 <li><small><sup id=Note10>(10)</sup> Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</small></li>
 <li><small><sup id=Note11>(11)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
 <li><small><sup id=Note12>(12)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+<li><small><sup id=Note13>(13)</sup> I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -574,12 +548,6 @@
 </ol>
 
 <blockquote>
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li>In some cases, such as those given in the third implementation note under &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, it may be enough to implement <strong>InShape</strong> in step 4 by calculating lower and upper bounds for <em>z</em> for each (<em>u</em>, <em>v</em>) pair in (<em>c1</em>,<em>c2</em>), (<em>c1</em>+1,<em>c2</em>), (<em>c1</em>,<em>c2</em>+1), and (<em>c1</em>+1,<em>c2</em>+1), using rational arithmetic and with an accuracy level that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and then returning <em>YES</em> if all four upper bounds are less than 0 (indicating they are all found to lie in the transformed PDF); <em>NO</em> if all four lower bounds are greater than 0 (indicating they are all found to lie outside the transformed PDF); and <em>MAYBE</em> otherwise.  In other cases (including for both examples given below, unfortunately), it may not be correct to do so.</li>
-</ul>
-
 <p><strong>Examples:</strong></p>
 
 <ol>
@@ -587,6 +555,52 @@
 <li>For the standard lognormal distribution (<a href="https://mathworld.wolfram.com/GibratsDistribution.html"><strong>Gibrat&#39;s distribution</strong></a>), <em>PDF</em>(<em>x</em>) is proportional to exp(&minus;(ln(<em>x</em>))<sup>2</sup>/2)/<em>x</em>, and the returned PSRN has a positive sign.</li>
 </ol>
 </blockquote>
+
+<p><a id=Implementation_Notes_for_Box_Shape_Intersection></a></p>
+
+<h2>Implementation Notes for Box/Shape Intersection</h2>
+
+<p>The &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot; algorithm uses a function called <strong>InShape</strong> to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of <strong>InShape</strong> for a particular shape.</p>
+
+<ol>
+<li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
+<li><p>If the shape is convex, and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
+<li><em>NO</em> if none of the box&#39;s corners are in the shape and if the shape&#39;s boundary does not intersect with the box&#39;s boundary; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul>
+
+<p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).</p></li>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note13"><strong>(13)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, at least assuming that the shape is convex, <strong>InShape</strong> can return:</p>
+
+<ul>
+<li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than 0,</li>
+<li><em>NO</em> if the interval result of <em>f</em> has a lower bound greater than 0, and</li>
+<li><em>MAYBE</em> in any other case.</li>
+</ul>
+
+<p>For example, if <em>f</em> is (<em>t1</em><sup>2</sup>+<em>t2</em><sup>2</sup>&minus;1), which describes a quarter disk, <strong>InShape</strong> should build two intervals, namely <em>t1</em> = [<em>c1</em>/<em>S</em>, (<em>c1</em>+1)/<em>S</em>] and <em>t2</em> = [<em>c2</em>/<em>S</em>, (<em>c2</em>+1)/<em>S</em>], and evaluate <em>f</em>(<em>t1</em>, <em>t2</em>) using interval arithmetic.</p></li>
+<li><p>If point (0, 0, ..., 0) is on or inside the shape, and the shape is such that every axis-aligned line segment that begins in one face of the hypercube and ends in another face crosses the shape at most once, ignoring the segment&#39;s endpoints (an example is an axis-aligned quarter of a circular disk where the disk&#39;s center is (0, 0)), then <strong>InShape</strong> can return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if all the box&#39;s corners are in the shape;</li>
+<li><em>NO</em> if none of the box&#39;s corners are in the shape; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul>
+
+<p>If <strong>InShape</strong> uses rational interval arithmetic, it can build an interval for each corner, evaluate the shape for each corner individually and with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate), and treat a corner as inside or outside the shape only if the result of the evaluation clearly indicates that.  Using the example of a quarter disk, <strong>InShape</strong> can build four intervals, one for each corner; evaluate (<em>x</em><sup>2</sup>+<em>y</em><sup>2</sup>&minus;1); and return <em>YES</em> only if all four results have upper bounds less than 1, <em>NO</em> only if their lower bounds are all greater than 1, and <em>MAYBE</em> in any other case.</p></li>
+<li>If <strong>InShape</strong> expresses a shape in the form of a <a href="https://en.wikipedia.org/wiki/Signed_distance_function"><strong><em>signed distance function</em></strong></a>, namely a function that describes the closest distance from any point in space to the shape&#39;s boundary, it can return&mdash;
+
+<ul>
+<li><em>YES</em> if the signed distance (or an upper bound of such distance) at each of the box&#39;s corners, after dividing their coordinates by <em>S</em>, is less than &minus;<em>&sigma;</em> (where <em>&sigma;</em> is an upper bound for sqrt(<em>N</em>)/(<em>S</em>*2), such as 1/<em>S</em>);</li>
+<li><em>NO</em> if the signed distance (or a lower bound of such distance) at each of the box&#39;s corners is greater than <em>&sigma;</em>; and</li>
+<li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
+</ul></li>
+<li><strong>InShape</strong> implementations can also involve a shape&#39;s <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), its <em>implicit surface</em> equation (for closed surfaces), or its <em>signed distance field</em> (a quantized version of a signed distance function).</li>
+<li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is <em>YES</em> if any component returns <em>YES</em>; <em>NO</em> if all components return <em>NO</em>; and <em>MAYBE</em> otherwise).</li>
+</ol>
 
 <p><a id=License></a></p>
 
