@@ -338,9 +338,9 @@ class LogConcaveSampler:
             if u < self.q:
                 ret = -self.sp + self.q * v
             elif u < self.qr:
-                ret = self.tp + self.r * math.log(1 / v)
+                ret = self.tp + self.r * math.log(1 / random.random())
             else:
-                ret = -self.sp - self.p * math.log(1 / v)
+                ret = -self.sp - self.p * math.log(1 / random.random())
             chi = random.random()
             logchi = math.log(chi)
             pr = self.psi(ret)
