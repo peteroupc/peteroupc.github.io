@@ -381,15 +381,17 @@ The appendix contains implementation notes for **InShape**, which determines whe
 <a id=Ratio_of_Uniforms></a>
 ### Ratio of Uniforms
 
-The Cauchy sampler given earlier demonstrates the ratio-of-uniforms technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(10)**](#Note10)</sup>.  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup>[**(12)**](#Note12)</sup>, which doesn't require calculating logarithms or other transcendental functions.
+The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(10)**](#Note10)</sup>.  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup>[**(12)**](#Note12)</sup>, which doesn't require calculating logarithms or other transcendental functions.
 
 This algorithm works for any univariate distribution as long as&mdash;
 
-- for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's PDF or a function proportional to the PDF, and
+- for all _x_, _PDF_(_x_) < &infin; and _PDF_(_x_)\*_x_<sup>2</sup> < &infin;, where _PDF_ is the distribution's PDF or a function proportional to the PDF,
 - _PDF_ is continuous almost everywhere, and
 - either&mdash;
     - the distribution's ratio-of-uniforms shape (the transformed PDF) is covered entirely by the rectangle [0, ceil(_d1_)]&times;[0, ceil(_d2_)], where _d1_ is not less than the highest value of _x_\*sqrt(_PDF_(_x_)) anywhere, and _d2_ is not less than the highest value of sqrt(_PDF_(_x_)) anywhere, or
     - half of that shape is covered this way and the shape is symmetric about the _v_-axis.
+
+The algorithm follows.
 
 1. Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs _p1_ and _p2_.
 2. Set _S_ to _base_, where _base_ is the base of digits to be stored by the PSRNs (such as 2 for binary or 10 for decimal).  Then set _c1_ to an integer in the interval [0, _d1_), chosen uniformly at random, then set _c2_ to an integer in [0, _d2_), chosen uniformly at random, then set _d_ to 1.
@@ -412,7 +414,7 @@ This algorithm works for any univariate distribution as long as&mdash;
 <a id=Implementation_Notes_for_Box_Shape_Intersection></a>
 ### Implementation Notes for Box/Shape Intersection
 
-The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" algorithm uses a function called **InShape** to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of **InShape** for a particular shape.
+The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" algorithm uses a function called **InShape** to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust implementation of **InShape** for a particular shape, especially because the boxes being tested can be arbitrarily small.
 
 1. **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.
 2. If the shape is convex, and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return&mdash;
@@ -421,7 +423,7 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _MAYBE_ in any other case, or if the function is unsure.
 
     In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.
-3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) <= 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals<sup>[**(13)**](#Note13)</sup> with an accuracy that depends on _S_ (the higher _S_ is, the more accurate).  Then, at least assuming that the shape is convex, **InShape** can return:
+3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) <= 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup>[**(11)**](#Note11)</sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals<sup>[**(13)**](#Note13)</sup> with an accuracy that depends on _S_ (the higher _S_ is, the more accurate).  Then, at least assuming that the shape is convex and the point (0, 0, ..., 0) is on or inside that shape, **InShape** can return:
     - _YES_ if the interval result of _f_ has an upper bound less than 0;
     - _NO_ if the interval result of _f_ has a lower bound greater than 0; and
     - _MAYBE_ in any other case.

@@ -512,20 +512,22 @@
 
 <h3>Ratio of Uniforms</h3>
 
-<p>The Cauchy sampler given earlier demonstrates the ratio-of-uniforms technique for sampling a distribution (Kinderman and Monahan 1977)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It involves transforming the distribution&#39;s density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
+<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It involves transforming the distribution&#39;s density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, is probably less efficient than the normal distribution sampler by Karney (2014)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
 
 <p>This algorithm works for any univariate distribution as long as&mdash;</p>
 
 <ul>
-<li>for all <em>x</em>, <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF, and</li>
+<li>for all <em>x</em>, <em>PDF</em>(<em>x</em>) &lt; &infin; and <em>PDF</em>(<em>x</em>)*<em>x</em><sup>2</sup> &lt; &infin;, where <em>PDF</em> is the distribution&#39;s PDF or a function proportional to the PDF,</li>
 <li><em>PDF</em> is continuous almost everywhere, and</li>
-<li><p>either&mdash;</p>
+<li>either&mdash;
 
 <ul>
 <li>the distribution&#39;s ratio-of-uniforms shape (the transformed PDF) is covered entirely by the rectangle [0, ceil(<em>d1</em>)]&times;[0, ceil(<em>d2</em>)], where <em>d1</em> is not less than the highest value of <em>x</em>*sqrt(<em>PDF</em>(<em>x</em>)) anywhere, and <em>d2</em> is not less than the highest value of sqrt(<em>PDF</em>(<em>x</em>)) anywhere, or</li>
 <li>half of that shape is covered this way and the shape is symmetric about the <em>v</em>-axis.</li>
 </ul></li>
 </ul>
+
+<p>The algorithm follows.</p>
 
 <ol>
 <li>Generate two empty PSRNs, with a positive sign, an integer part of 0, and an empty fractional part.  Call the PSRNs <em>p1</em> and <em>p2</em>.</li>
@@ -558,7 +560,7 @@
 
 <h3>Implementation Notes for Box/Shape Intersection</h3>
 
-<p>The &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot; algorithm uses a function called <strong>InShape</strong> to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust and exact implementation of <strong>InShape</strong> for a particular shape.</p>
+<p>The &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot; algorithm uses a function called <strong>InShape</strong> to determine whether an axis-aligned box is either outside a shape, fully inside the shape, or partially inside the shape.  The following are notes that will aid in developing a robust implementation of <strong>InShape</strong> for a particular shape, especially because the boxes being tested can be arbitrarily small.</p>
 
 <ol>
 <li><strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.</li>
@@ -571,7 +573,7 @@
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
-<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note13"><strong>(13)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, at least assuming that the shape is convex, <strong>InShape</strong> can return:</p>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note11"><strong>(11)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note13"><strong>(13)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, at least assuming that the shape is convex and the point (0, 0, ..., 0) is on or inside that shape, <strong>InShape</strong> can return:</p>
 
 <ul>
 <li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than 0;</li>
