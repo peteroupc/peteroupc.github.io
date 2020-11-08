@@ -1064,7 +1064,7 @@ def genshape(inshape):
                 d += 1
 
 class ShapeSampler:
-    def __init__(self, inshape):
+    def __init__(self, inshape, dx=1, dy=1):
         """ Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
        inshape is a function that takes three parameters (x, y, s) and
        returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
@@ -1072,12 +1072,14 @@ class ShapeSampler:
        """
         self.yeses = []
         self.maybes = []
+        self.dx = dx
+        self.dy = dy
         self.base = 2
         self.k = 4
         self.inshape = inshape
         s = self.base ** self.k
-        for x in range(s):
-            for y in range(s):
+        for x in range(s * dx):
+            for y in range(s * dy):
                 v = inshape(x, y, s)
                 if v == 1:
                     self.yeses.append([x, y])
@@ -1092,8 +1094,8 @@ class ShapeSampler:
         d = 1
         while not done:
             s = self.base
-            cx = 0
-            cy = 0
+            cx = random.randint(0, self.dx - 1)
+            cy = random.randint(0, self.dy - 1)
             box = random.randint(0, len(self.yeses) + len(self.maybes) - 1)
             d = self.k
             if box < len(self.yeses):
@@ -1126,6 +1128,8 @@ class ShapeSampler:
             cx //= self.base
             psrny[2][d - 1 - i] = cy % self.base
             cy //= self.base
+        psrnx[1] = cx
+        psrny[1] = cy
         psrnx[0] = -1 if random.randint(0, 1) == 0 else 1
         psrny[0] = -1 if random.randint(0, 1) == 0 else 1
         return [psrnx, psrny]
