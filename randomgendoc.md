@@ -2307,6 +2307,8 @@ FUNCTIONS
 
     loggamma(k, v=4)
 
+    logpoisson(lamda, n, v=4)
+
     stirling1(n, k)
 
 FILE

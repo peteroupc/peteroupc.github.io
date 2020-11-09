@@ -587,8 +587,6 @@ class FInterval:
         )
 
     def __repr__(self):
-        # return "[%s, %s]" % (Decimal(self.inf.numerator)/self.inf.denominator,
-        #                           Decimal(self.sup.numerator)/self.sup.denominator)
         return "[%s, %s]" % (float(self.inf), float(self.sup))
 
 # Yannis Manolopoulos. 2002. "Binomial coefficient computation:
@@ -771,6 +769,13 @@ def logbinprob(n, k, v=4):
     divisor = FInterval(2).log(v + 4) * n  # ln(2)*n = ln(2**n)
     return logbinco(n, k, v) - divisor
 
+def logpoisson(lamda, n, v=4):
+    # Log of the probability that a Poisson(lamda) random number is n.
+    # v is an accuracy parameter.
+    return FInterval(lamda).log(v + 4) * n - lamda - loggamma(n + 1, v)
+
 if __name__ == "__main__":
-    for i in range(800000, 800020):
-        print([i, math.lgamma(i), loggamma(i, 20)])
+    print("----")
+    print(logpoisson(10, 15) / 2)  # log(sqrt(PoissonProb))
+    print(logpoisson(2 ** 30, 2 ** 30, 10) / 2)  # log(sqrt(PoissonProb))
+    print(math.log(math.sqrt(10 ** 15 * math.exp(-10) / math.gamma(15 + 1))))
