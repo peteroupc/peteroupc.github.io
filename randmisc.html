@@ -38,7 +38,7 @@
 
 <h2>On a Geometric Sampler</h2>
 
-<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random number expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>.</p>
+<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random number expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>. (Note that the terminology &quot;geometric random number&quot; has conflicting meanings in academic works.)</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, and <em>d</em> to 0.</li>
@@ -72,13 +72,13 @@
 <li>If <em>j</em> is even, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> + <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>) to <em>pnum</em>. Otherwise, set <em>pnum</em> to <em>pnum</em>*<em>qden</em> &minus; <em>pden</em>*<em>qnum</em>*choose(<em>m</em>,<em>j</em>) to <em>pnum</em>.</li>
 <li>Multiply <em>pden</em> by <em>qden</em>, then multiply <em>qnum</em> by <em>px</em>, then multiply <em>qden</em> by <em>py</em>, then add 1 to <em>j</em>, then go to the third substep.</li>
 <li>(Now check the probability.) Multiply <em>r</em> by 2, then add an unbiased random bit (either 0 or 1 with equal probability) to <em>r</em>.</li>
-<li>If <em>r</em> &lt;= floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) &minus; 2, add a uniform random integer in [0, 2<sup><em>k</em>*<em>b</em>) to <em>m</em> and return <em>m</em> (and, if requested, the number <em>k</em>&minus;<em>b</em>&minus;1). If <em>r</em> &gt;= floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) + 1, return &minus;1.  If neither is the case, add 1 to <em>b</em>.</li>
+<li>If <em>r</em> &lt;= floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) &minus; 2, add a uniform random integer in [0, 2<sup><em>k</em>*<em>b</em></sup>) to <em>m</em> and return <em>m</em> (and, if requested, the number <em>k</em>&minus;<em>b</em>&minus;1). If <em>r</em> &gt;= floor((<em>pnum</em>*2<sup><em>b</em></sup>)/<em>pden</em>) + 1, return &minus;1.  If neither is the case, add 1 to <em>b</em>.</li>
 </ol></li>
 <li>Add an unbiased random bit to <em>m</em>. (At this point, <em>m</em> is fully sampled.)</li>
 <li>Run the first sub-algorithm with <em>n</em> = <em>m</em>, except in step 1 of that sub-algorithm, set <em>r</em> to the value of <em>r</em> built up by this algorithm, rather than 0, and set <em>i</em> to 2<sup><em>k</em></sup>, rather than 2.  If that sub-algorithm returns 1, return <em>m</em> (and, if requested, the number &minus;1).  Otherwise, return &minus;1.</li>
 </ol>
 
-<p>As used in the Bringmann paper, a bounded geometric(<em>p</em>, <em>n</em>) random number is a geometric(<em>p</em>) random number or <em>n</em>, whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.</p>
+<p>As used in the Bringmann paper, a bounded geometric(<em>p</em>, <em>n</em>) random number is a geometric(<em>p</em>) random number or <em>n</em> (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, <em>d</em> to 0, and <em>m2</em> to the smallest power of 2 that is greater than <em>n</em> (or equivalently, 2<sup><em>bits</em></sup> where <em>bits</em> is the minimum number of bits needed to store <em>n</em>).</li>

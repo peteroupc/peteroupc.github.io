@@ -29,7 +29,7 @@ Note that a binomial(_n_, 1/2) random number, where _n_ is odd, can be generated
 <a id=On_a_Geometric_Sampler></a>
 ## On a Geometric Sampler
 
-The following algorithm is equivalent to the geometric(_px_/_py_) sampler that appeared in (Bringmann and Friedrich 2013)<sup>[**(6)**](#Note6)</sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(_p_) random number expresses the number of failing trials before the first success, where each trial is independent and has success probability _p_.
+The following algorithm is equivalent to the geometric(_px_/_py_) sampler that appeared in (Bringmann and Friedrich 2013)<sup>[**(6)**](#Note6)</sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(_p_) random number expresses the number of failing trials before the first success, where each trial is independent and has success probability _p_. (Note that the terminology "geometric random number" has conflicting meanings in academic works.)
 
 1. Set _pn_ to _px_, _k_ to 0, and _d_ to 0.
 2. While _pn_\*2 <= _py_, add 1 to _k_ and multiply _pn_ by 2.
@@ -56,11 +56,11 @@ The second sub-algorithm returns an integer in [0, 2<sup>_k_</sup>) with probabi
     4. If _j_ is even, set _pnum_ to _pnum_\*_qden_ + _pden_\*_qnum_\*choose(_m_,_j_) to _pnum_. Otherwise, set _pnum_ to _pnum_\*_qden_ &minus; _pden_\*_qnum_\*choose(_m_,_j_) to _pnum_.
     5. Multiply _pden_ by _qden_, then multiply _qnum_ by _px_, then multiply _qden_ by _py_, then add 1 to _j_, then go to the third substep.
     6. (Now check the probability.) Multiply _r_ by 2, then add an unbiased random bit (either 0 or 1 with equal probability) to _r_.
-    7. If _r_ <= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in [0, 2<sup>_k_\*_b_) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ >= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1.  If neither is the case, add 1 to _b_.
+    7. If _r_ <= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in [0, 2<sup>_k_\*_b_</sup>) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ >= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1.  If neither is the case, add 1 to _b_.
 8. Add an unbiased random bit to _m_. (At this point, _m_ is fully sampled.)
 9. Run the first sub-algorithm with _n_ = _m_, except in step 1 of that sub-algorithm, set _r_ to the value of _r_ built up by this algorithm, rather than 0, and set _i_ to 2<sup>_k_</sup>, rather than 2.  If that sub-algorithm returns 1, return _m_ (and, if requested, the number &minus;1).  Otherwise, return &minus;1.
 
-As used in the Bringmann paper, a bounded geometric(_p_, _n_) random number is a geometric(_p_) random number or _n_, whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.
+As used in the Bringmann paper, a bounded geometric(_p_, _n_) random number is a geometric(_p_) random number or _n_ (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.
 
 1. Set _pn_ to _px_, _k_ to 0, _d_ to 0, and _m2_ to the smallest power of 2 that is greater than _n_ (or equivalently, 2<sup>_bits_</sup> where _bits_ is the minimum number of bits needed to store _n_).
 2. While _pn_\*2 <= _py_, add 1 to _k_ and multiply _pn_ by 2.

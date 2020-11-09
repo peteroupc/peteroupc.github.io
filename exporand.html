@@ -672,7 +672,7 @@
 
 <ol>
 <li> Set <em>N</em> to 0.</li>
-<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step. (When the algorithm moves to the next step, <em>N</em> is what the Flajolet paper calls a <em>geometric(1/2)</em> random number, hence the name &quot;geometric bag&quot;, but the terminology &quot;geometric random number&quot; is avoided in this article since it has several conflicting meanings in the literature.)</li>
+<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step. (When the algorithm moves to the next step, <em>N</em> is what the Flajolet paper calls a <em>geometric(1/2)</em> random number, hence the name &quot;geometric bag&quot;, but the terminology &quot;geometric random number&quot; is avoided in this article since it has several conflicting meanings in academic works.)</li>
 <li> If the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the fractional part&#39;s capacity as necessary.  (As a result of this step, there may be &quot;gaps&quot; in the uniform PSRN where no digit was sampled yet.)</li>
 <li> Return the item at position <em>N</em>.</li>
 </ol>

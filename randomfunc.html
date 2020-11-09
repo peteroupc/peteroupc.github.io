@@ -1258,7 +1258,7 @@ END METHOD
 
 <p>This distribution has a simple implementation: <code>count = 0; for i in 0...trials: count=count+ZeroOrOne(px, py)</code>.  But for large numbers of trials, this can be very slow.</p>
 
-<p>The pseudocode below implements an exact sampler of this distribution, with certain optimizations based on (Farach-Colton and Tsai 2015)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.  Here, the parameter <code>p</code> is expressed as a ratio <code>px</code>/<code>py</code>.</p>
+<p>The pseudocode below implements an exact sampler of this distribution, with certain optimizations based on (Farach-Colton and Tsai 2015)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.  (Another exact sampler is given in (Bringmann et al. 2014)<sup><a href="#Note90"><strong>(90)</strong></a></sup> and described in my &quot;<a href="https://peteroupc.github.io/randmisc.html"><strong>Miscellaneous Observations on Randomization</strong></a>&quot;.) Here, the parameter <code>p</code> is expressed as a ratio <code>px</code>/<code>py</code>.</p>
 
 <p>&nbsp;</p>
 
@@ -1320,7 +1320,7 @@ END METHOD
 
 <h3>Negative Binomial Distribution</h3>
 
-<p>In this document, the <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>). Each trial is independent and has a success probability of <code>px/py</code> (where 0 means never and 1 means always).</p>
+<p>In this document, the <em>negative binomial distribution</em> models the number of failing trials that happen before a fixed number of successful trials (<code>successes</code>). Each trial is independent and has a success probability of <code>px/py</code> (where 0 means never and 1 means always). The following is a naïve implementation; see also the notes for the geometric distribution, a special case of this one.</p>
 
 <pre>METHOD NegativeBinomialInt(successes, px, py)
     // Needs to be 0 or greater; px must not be 0
@@ -1363,7 +1363,12 @@ END METHOD
 <p>The geometric distribution is a negative binomial distribution with <code>successes = 1</code>.  In this document, a geometric random number is the number of failures that have happened before one success happens.  For example, if <code>p</code> is 1/2, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The negative binomial and geometric distributions are defined differently in different works.  For example, <em>Mathematica</em>&#39;s definition excludes the last success, but the definition in (Devroye 1986, p. 498)<sup><a href="#Note10"><strong>(10)</strong></a></sup> includes it.  And some works may define a negative binomial number as the number of successes before N failures, rather than vice versa.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The negative binomial and geometric distributions are defined differently in different works.  For example, <em>Mathematica</em>&#39;s definition excludes the last success, but the definition in (Devroye 1986, p. 498)<sup><a href="#Note10"><strong>(10)</strong></a></sup> includes it.  And some works may define a negative binomial number as the number of successes before N failures, rather than vice versa.</li>
+<li>A <em>bounded geometric</em> random number is either <em>n</em> (an integer greater than 0) or a geometric random number, whichever is less.   Exact and efficient samplers for the geometric and bounded geometric distributions are given in (Bringmann and Friedrich 2013)<sup><a href="#Note91"><strong>(91)</strong></a></sup> and described in my &quot;<a href="https://peteroupc.github.io/randmisc.html"><strong>Miscellaneous Observations on Randomization</strong></a>&quot;.)</li>
+</ol>
 </blockquote>
 
 <p><a id=Exponential_Distribution></a></p>
@@ -2601,6 +2606,8 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note87>(87)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></li>
 <li><small><sup id=Note88>(88)</sup> Describing differences between SQL dialects is outside the scope of this document, but <a href="http://flourishlib.com/docs/FlourishSQL"><strong>Flourish SQL</strong></a> describes many such differences, including those concerning randomization features provided by SQL dialects.</small></li>
 <li><small><sup id=Note89>(89)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></li>
+<li><small><sup id=Note90>(90)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
+<li><small><sup id=Note91>(91)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

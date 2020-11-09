@@ -497,7 +497,7 @@ The algorithm **SampleGeometricBag** returns 1 with a probability built up by a 
 For base 2, the following **SampleGeometricBag** algorithm can be used, which is closer to the one given in the Flajolet paper:
 
 1.  Set _N_ to 0.
-2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step. (When the algorithm moves to the next step, _N_ is what the Flajolet paper calls a _geometric(1/2)_ random number, hence the name "geometric bag", but the terminology "geometric random number" is avoided in this article since it has several conflicting meanings in the literature.)
+2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step. (When the algorithm moves to the next step, _N_ is what the Flajolet paper calls a _geometric(1/2)_ random number, hence the name "geometric bag", but the terminology "geometric random number" is avoided in this article since it has several conflicting meanings in academic works.)
 3.  If the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the fractional part's capacity as necessary.  (As a result of this step, there may be "gaps" in the uniform PSRN where no digit was sampled yet.)
 4.  Return the item at position _N_.
 
