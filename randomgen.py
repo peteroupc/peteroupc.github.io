@@ -2156,57 +2156,54 @@ Returns 'list'. """
         # n*p <= 1.
         return self._sampleOnePToNEx(px, py, n, 0, 2)
 
-    def _sampleOnePToM(self, p, k, returnBitCount=False):
-        # With probability (1-p)^m, returns m, where
+    def _sampleOnePToM(self, px, py, k, returnBitCount=False):
+        # With probability (1-px/py)^m, returns m, where
         # m is uniform in [0, 2^k) and (2^k)*p <= 1.
         # Otherwise, returns -1.
         r = 0
-        i = 1
         m = 0
-        mbit = k - 1
-        pi = 0
-        broken = i > k
-        while True:
-            if i <= k:
-                m |= self.randbit() << mbit
-                mbit -= 1
-                if i == k:
-                    # All of m was sampled, so calculate whole
-                    # probability
-                    if (
-                        self._sampleOnePToNEx(p.numerator, p.denominator, m, r, 1 << i)
-                        == 1
-                    ):
-                        if returnBitCount:
-                            return m, mbit
-                        while mbit >= 0:
-                            m |= self.randbit() << mbit
-                            mbit -= 1
-                        return m
-                    else:
-                        if returnBitCount:
-                            return -1, 0
-                        return -1
-                else:
-                    pi = 0
-                    # If i < k, sum i+2 summands of the binomial equivalent
-                    # of the probability, using high bits of m
-                    for j in range(min(m + 1, i + 2 + 1)):
-                        pi += RandomGen._binco(m, j) * (-p) ** j
+        for b in range(1, k):
+            m |= self.randbit() << (k - b)
+            # Sum b+2 summands of the binomial equivalent
+            # of the probability, using high bits of m
+            pnum = 1
+            pden = 1
+            qnum = px
+            qden = py
+            j = 1
+            while j <= m and j <= b + 2:  # for j in range(1, min(m+1,b+2+1)):
+                bco = RandomGen._binco(m, j)
+                # Add a summand, namely bco*(-px/py)**j
+                if j % 2 == 0:  # Even
+                    pnum = pnum * qden + pden * bco * qnum
+                else:  # Odd
+                    pnum = pnum * qden - pden * bco * qnum
+                pden *= qden
+                qnum *= px
+                qden *= py
+                j += 1
             r = (r << 1) + self.randbit()
-            bk = int(pi * 2 ** i)
+            bk = int(pnum * 2 ** b) // pden
             if r <= bk - 2:
                 if returnBitCount:
-                    return m, mbit
-                while mbit >= 0:
-                    m |= self.randbit() << mbit
-                    mbit -= 1
+                    return m, k - b - 1
+                m |= self.rndintexc(1 << (k - b))
                 return m
             if r >= bk + 1:
                 if returnBitCount:
                     return -1, 0
                 return -1
-            i += 1
+        m |= self.randbit()
+        # All of m was sampled, so calculate whole
+        # probability
+        if self._sampleOnePToNEx(px, py, m, r, 1 << k) == 1:
+            if returnBitCount:
+                return m, -1
+            return m
+        else:
+            if returnBitCount:
+                return -1, 0
+            return -1
 
     def boundedGeometric(self, px, py, n):
         """ Generates a bounded geometric random number, defined
@@ -2231,20 +2228,20 @@ Returns 'list'. """
             return min(n, self.negativebinomialint(1, px, py))
         # Calculate k for px/py
         k = 0
-        pn = px
         m2 = 1 << n.bit_length()
+        pn = px
         while pn * 2 <= py:
             k += 1
             pn *= 2
         # Start bounded geometric sampler
+        # print(["k",k,pn,py])
         d = 0
         while self._sampleOnePToN(px, py, 1 << k) == 1:
             d += 1
             if (d << k) >= m2:
                 return n
         while True:
-            m, mbit = self._sampleOnePToM(p, k, True)
-            # print(["sampling",m,mbit])
+            m, mbit = self._sampleOnePToM(px, py, k, True)
             if m >= 0:
                 while mbit >= 0:
                     b = self.randbit()
@@ -2254,10 +2251,7 @@ Returns 'list'. """
                         break
                 if (d << k) + m >= m2:
                     return n
-                while mbit >= 0:
-                    b = self.randbit()
-                    m |= b << mbit
-                    mbit -= 1
+                m += self.rndintexc(1 << (mbit + 1))
                 return min(n, (d << k) + m)
 
     def negativebinomialint(self, successes, px, py):
@@ -2294,7 +2288,6 @@ Returns 'list'. """
         # Programming_ (pp. 267-278).
         # Calculate k for px/py
         k = 0
-        p = Fraction(px, py)
         pn = px
         while pn * 2 <= py:
             k += 1
@@ -2304,7 +2297,7 @@ Returns 'list'. """
         while self._sampleOnePToN(px, py, 1 << k) == 1:
             d += 1
         while True:
-            m = self._sampleOnePToM(p, k)
+            m = self._sampleOnePToM(px, py, k)
             if m >= 0:
                 return (d << k) + m
 
