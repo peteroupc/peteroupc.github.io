@@ -325,6 +325,92 @@ def psrn_complement(x):
 def psrn_new_01():
     return [1, 0, []]
 
+def psrn_in_range(bmin, bmax, digits=2):
+    if bmin >= bmax or bmin < 0 or bmax <= 0:
+        raise ValueError
+    a = psrn_new_01()
+    if bmax == 1 and bmin == 0:
+        return a
+    bmaxi = int(bmax)
+    bmini = int(bmin)
+    if bmini == bmin and bmaxi == bmax:
+        a[0] = 1
+        a[1] = random.randint(bmini, bmaxi - 1)
+        return a
+    count = 0
+    while True:
+        count += 1
+        # if count>=200 and count%50==0: print(count)
+        a[0] = 1
+        if bmaxi == bmax:
+            a[1] = random.randint(bmini, bmaxi - 1)
+        else:
+            a[1] = random.randint(bmini, bmaxi)
+        # print([a[1],"bmini",bmini,float(bmin),"bmaxi",bmaxi,float(bmax)])
+        if a[1] > bmini and a[1] < bmaxi:
+            return a
+        if bmin == bmini and a[1] == bmini and a[1] < bmaxi:
+            return a
+        i = 0
+        bmaxv = bmax - bmaxi
+        bminv = bmin - bmini
+        if a[1] != bmini and a[1] != bmaxi:
+            raise ValueError
+        # TODO: Describe an optimized procedure when a[1]==bmini==bmaxi
+        if a[1] == bmini:
+            success = 0
+            while True:
+                bminv *= digits
+                dmin = int(bminv)
+                bminv -= dmin
+                if i >= len(a[2]):
+                    a[2].append(None)
+                if a[2][i] == None:
+                    a[2][i] = random.randint(0, digits - 1)
+                ad = a[2][i]
+                # print([i,"=bmini<bmaxi",dmin,ad,a,float(bminv),"bmini",a[1]])
+                if ad > dmin:
+                    success = 1
+                    break
+                if ad < dmin:
+                    a = psrn_new_01()
+                    break
+                i += 1
+            if not success:
+                continue
+        i = 0
+        if a[1] == bmaxi:
+            success = 0
+            if bmaxi == 0 and bmaxi != bmax and len(a[2]) == 0:
+                while True:
+                    d = int(bmaxv * digits)
+                    if d != 0:
+                        break
+                    bmaxv *= digits
+                    bmaxv -= d
+                    a[2].append(0)
+                    i += 1
+            while True:
+                bmaxv *= digits
+                dmax = int(bmaxv)
+                bmaxv -= dmax
+                if i >= len(a[2]):
+                    a[2].append(None)
+                if a[2][i] == None:
+                    a[2][i] = random.randint(0, digits - 1)
+                ad = a[2][i]
+                # print([i,"=bmaxi>bmini",dmax,ad,a,"bmaxi",a[1]])
+                if ad < dmax:
+                    success = 1
+                    break
+                if ad > dmax or bmaxv == 0:
+                    a = psrn_new_01()
+                    break
+                i += 1
+            if not success:
+                continue
+        return a
+
 def psrn_less(psrn1, psrn2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
@@ -1148,6 +1234,7 @@ class ShapeSampler2:
         # Because of bisections and the restriction of root box sizes to
         # integers, the denominator must be a power of 2.
         # Moreover, coords are assumed to be non-negative.
+        # TODO: Describe this special case of RandUniformInRange
         if coord[0].numerator < 0:
             raise NotImplementedError
         if coord[1].numerator < 0:
@@ -1155,7 +1242,7 @@ class ShapeSampler2:
         # Get greatest denominator
         denom = max(coord[0].denominator, coord[1].denominator)
         c1 = int(coord[0] * denom)
-        c2 = int(coord[1] * denom)
+        c2 = int((coord[1] - coord[0]) * denom)
         if c2 > 1:
             c1 += random.randint(0, c2 - 1)
         fracsize = denom.bit_length() - 1
@@ -1578,6 +1665,35 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
+    def psrn_in_range_test(frac1, frac2, i=0, digits=2):
+        f1 = min(frac1, frac2)
+        f2 = max(frac1, frac2)
+        if f1 == f2:
+            try:
+                psrn_in_range(f1, f2, digits=digits)
+            except:
+                pass
+            return
+        mult = psrn_in_range(f1, f2, digits=digits)
+        m = _readpsrn2(mult, minprec=32, digits=digits)
+        # print([mult,m,"f1",float(f1),float(f2)])
+        if m < f1 or m > f2:
+            raise ValueError
+        if i < 10:
+            sample1 = [random.uniform(float(f1), float(f2)) for _ in range(2000)]
+            sample2 = [
+                _readpsrn2(
+                    psrn_in_range(f1, f2, digits=digits), minprec=32, digits=digits
+                )
+                for _ in range(2000)
+            ]
+            ks = st.ks_2samp(sample1, sample2)
+            if ks.pvalue < 1e-6:
+                print("    psrn_in_range_test(%s,%s,digits=%d)" % (f1, f2, digits))
+                print(ks)
+                print("    # %s - %s" % (min(sample1), max(sample1)))
+                print("    # %s - %s" % (min(sample2), max(sample2)))
+
     def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0, digits=2):
         pfc = [x for x in pf]
         pfcs = str(pfc)
@@ -1773,6 +1889,12 @@ if __name__ == "__main__":
         p = [p[0], p[1], [x for x in p[2]]]
         return _readpsrn2(p, minprec=32, digits=digits)
 
+    for i in range(1000):
+        ps, pi, pf = random_psrn(digits=2)
+        frac = Fraction(random.randint(0, 32), random.randint(1, 32))
+        frac2 = Fraction(random.randint(0, 32), random.randint(1, 32))
+        psrn_in_range_test(frac, frac2, i, digits=2)
+
     bern = bernoulli.Bernoulli()
     sample = [psrn_fill(rayleighpsrn(bern)) for i in range(10000)]
     ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
@@ -1808,6 +1930,12 @@ if __name__ == "__main__":
     add_psrn_and_fraction_test(1, 0, [], Fraction(-2, 1), digits=10)
 
     for digits in [2, 3, 10, 5, 16]:
+        for i in range(1000):
+            ps, pi, pf = random_psrn(digits=digits)
+            frac = Fraction(random.randint(0, 32), random.randint(1, 32))
+            frac2 = Fraction(random.randint(0, 32), random.randint(1, 32))
+            psrn_in_range_test(frac, frac2, i, digits=digits)
+
         for i in range(1000):
             ps, pi, pf = random_psrn(digits=digits)
             frac = Fraction(random.randint(1, 9), random.randint(1, 9))
@@ -1869,7 +1997,7 @@ if __name__ == "__main__":
 
         for i in range(1000):
             ps, pi, pf = random_psrn(digits=digits)
-            frac = Fraction(random.randint(1, 9), random.randint(1, 9))
+            frac = Fraction(random.randint(1, 32), random.randint(1, 32))
             if random.random() < 0.5:
                 frac = -frac
             multiply_psrn_by_fraction_test(ps, pi, pf, frac, i, digits=digits)
