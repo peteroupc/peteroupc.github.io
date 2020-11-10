@@ -210,7 +210,7 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 > 2. The **RandUniform** algorithm is equivalent to generating the product of a random number (**b**) and a uniform(0, 1) random number.
 > 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform(0, 1) random numbers.
 
-The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** almost surely.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
+The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** almost surely.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
 
 1. If **bmin** is greater than or equal to **bmax**, if **bmin** is less than 0, or if **bmax** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
@@ -248,7 +248,18 @@ The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a
     6. Add 1 to _i_ and go to the second substep.
 12. Return **a**.
 
-The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  It is equivalent to the **RandUniformInRange** algorithm with **a** = **a**, **bmin** = 0, and **bmax** = **b**.
+The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one real number **bmin** and less than another real number **bmax** almost surely. It works for both positive and negative real numbers, but it's specified separately from **RandUniformInRangePositive** to reduce clutter.
+
+1. If **bmin** is greater than or equal to **bmax**, return an error.  If **bmin** and **bmax** are both 0 or greater, return the result of **RandUniformInRangePositive**.
+2. If **bmin** and **bmax** are both 0 or less, call **RandUniformInRangePositive** with **bmin** = abs(**bmax**) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
+3. (At this point, **bmin** is less than 0 and **bmax** is greater than 0.) Create an empty uniform PSRN **a**.
+4. Set _bmaxi_ to either floor(**bmax**) if **bmax** is 0 or greater, or &minus;ceil(abs(**bmax**)) otherwise, and set _bmini_ to either floor(**bmin**) if **bmin** is 0 or greater, or &minus;ceil(abs(**bmin**)) otherwise.  (This is a less confusing way to express the floor of **bmax** or **bmin**.)
+5. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
+6. If _ipart_ is _bmini_, then _ipart_ will be less than 0, so get the result of **RandUniformInRangePositive** with **bmin** = **bmin** and **bmax** = _ipart_+1, set the result's fractional part to negative, and return the result.
+7. If _ipart_ is _bmaxi_, then _ipart_ will be 0 or greater, so return the result of **RandUniformInRangePositive** with **bmin** = _ipart_ and **bmax** = **bmax**.
+8. (At this point, _ipart_ is neither _bmini_ nor _bmaxi_.) Set **a**'s sign to either positive if _ipart_ is 0 or greater, or negative otherwise; then set **a**'s integer part to abs(_ipart_+1) if _ipart_ is negative, or _ipart_ otherwise; then return **a**.
+
+The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  It is equivalent to the **RandUniformInRangePositive** algorithm with **a** = **a**, **bmin** = 0, and **bmax** = **b**.
 
 <a id=Sampling_E_rands></a>
 ### Sampling E-rands

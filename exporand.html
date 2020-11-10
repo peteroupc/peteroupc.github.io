@@ -290,7 +290,7 @@
 </ol>
 </blockquote>
 
-<p>The <strong>RandUniformInRange</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one non-negative real number <strong>bmin</strong> and less than another positive real number <strong>bmax</strong> almost surely.  This algorithm works whether <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number or not (for example, either number can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number.</p>
+<p>The <strong>RandUniformInRangePositive</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one non-negative real number <strong>bmin</strong> and less than another positive real number <strong>bmax</strong> almost surely.  This algorithm works whether <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number or not (for example, either number can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, if <strong>bmin</strong> is less than 0, or if <strong>bmax</strong> is 0 or less, return an error.</li>
@@ -348,7 +348,20 @@
 <li>Return <strong>a</strong>.</li>
 </ol>
 
-<p>The <strong>RandUniformFromReal</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than a real number <strong>b</strong> almost surely.  It is equivalent to the <strong>RandUniformInRange</strong> algorithm with <strong>a</strong> = <strong>a</strong>, <strong>bmin</strong> = 0, and <strong>bmax</strong> = <strong>b</strong>.</p>
+<p>The <strong>RandUniformInRange</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one real number <strong>bmin</strong> and less than another real number <strong>bmax</strong> almost surely. It works for both positive and negative real numbers, but it&#39;s specified separately from <strong>RandUniformInRangePositive</strong> to reduce clutter.</p>
+
+<ol>
+<li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, return an error.  If <strong>bmin</strong> and <strong>bmax</strong> are both 0 or greater, return the result of <strong>RandUniformInRangePositive</strong>.</li>
+<li>If <strong>bmin</strong> and <strong>bmax</strong> are both 0 or less, call <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = abs(<strong>bmax</strong>) and <strong>bmax</strong> = abs(<strong>bmin</strong>), set the result&#39;s fractional part to negative, and return the result.</li>
+<li>(At this point, <strong>bmin</strong> is less than 0 and <strong>bmax</strong> is greater than 0.) Create an empty uniform PSRN <strong>a</strong>.</li>
+<li>Set <em>bmaxi</em> to either floor(<strong>bmax</strong>) if <strong>bmax</strong> is 0 or greater, or &minus;ceil(abs(<strong>bmax</strong>)) otherwise, and set <em>bmini</em> to either floor(<strong>bmin</strong>) if <strong>bmin</strong> is 0 or greater, or &minus;ceil(abs(<strong>bmin</strong>)) otherwise.  (This is a less confusing way to express the floor of <strong>bmax</strong> or <strong>bmin</strong>.)</li>
+<li>Set <em>ipart</em> to an integer chosen uniformly at random in the interval [<em>bmini</em>, <em>bmaxi</em>] (e.g., <code>RNDINT(bmini, bmaxi)</code>).  If <em>bmaxi</em> is equal to <strong>bmax</strong>, the integer is chosen from the interval [<em>bmini</em>, <em>bmaxi</em>&minus;1] instead.</li>
+<li>If <em>ipart</em> is <em>bmini</em>, then <em>ipart</em> will be less than 0, so get the result of <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = <strong>bmin</strong> and <strong>bmax</strong> = <em>ipart</em>+1, set the result&#39;s fractional part to negative, and return the result.</li>
+<li>If <em>ipart</em> is <em>bmaxi</em>, then <em>ipart</em> will be 0 or greater, so return the result of <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = <em>ipart</em> and <strong>bmax</strong> = <strong>bmax</strong>.</li>
+<li>(At this point, <em>ipart</em> is neither <em>bmini</em> nor <em>bmaxi</em>.) Set <strong>a</strong>&#39;s sign to either positive if <em>ipart</em> is 0 or greater, or negative otherwise; then set <strong>a</strong>&#39;s integer part to abs(<em>ipart</em>+1) if <em>ipart</em> is negative, or <em>ipart</em> otherwise; then return <strong>a</strong>.</li>
+</ol>
+
+<p>The <strong>RandUniformFromReal</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than a real number <strong>b</strong> almost surely.  It is equivalent to the <strong>RandUniformInRangePositive</strong> algorithm with <strong>a</strong> = <strong>a</strong>, <strong>bmin</strong> = 0, and <strong>bmax</strong> = <strong>b</strong>.</p>
 
 <p><a id=Sampling_E_rands></a></p>
 
