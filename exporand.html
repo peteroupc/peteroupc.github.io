@@ -269,12 +269,12 @@
 <p>The <strong>RandUniform</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than another PSRN (<strong>b</strong>) almost surely.  This algorithm samples digits of <strong>b</strong>&#39;s fractional part as necessary.  This algorithm should not be used if <strong>b</strong> is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value <strong>b</strong> had (or appeared to have) at the beginning of the algorithm; instead, the <strong>RandUniformFromReal</strong> algorithm, given later, should be used.  (For example, if <strong>b</strong> is 3.425..., one possible result of this algorithm is <strong>a</strong> = 3.42574... and <strong>b</strong> = 3.42575... Note that in this example, 3.425... is not considered an exact number.)</p>
 
 <ol>
-<li>Create an empty uniform PSRN <strong>a</strong>.  Let &beta; be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).  If <strong>b</strong>&#39;s integer part or sign is unsampled, or if <strong>b</strong>&#39;s sign is negative, return an error.</li>
+<li>Create an empty uniform PSRN <strong>a</strong>.  Let <em>&beta;</em> be the base (or radix) of digits stored in <strong>b</strong>&#39;s fractional part (e.g., 2 for binary or 10 for decimal).  If <strong>b</strong>&#39;s integer part or sign is unsampled, or if <strong>b</strong>&#39;s sign is negative, return an error.</li>
 <li>(We now set <strong>a</strong>&#39;s integer part and sign.) Set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [0, <em>bi</em>], where <em>bi</em> is <strong>b</strong>&#39;s integer part (e.g., <code>RNDINT(0, bi)</code>).  If <strong>a</strong>&#39;s integer part is less than <em>bi</em>, return <strong>a</strong>.</li>
 <li>(We now sample <strong>a</strong>&#39;s fractional part.)  Set <em>i</em> to 0.</li>
 <li>If <strong>b</strong>&#39;s integer part is 0 and <strong>b</strong>&#39;s fractional part begins with a sampled 0-digit, set <em>i</em> to the number of sampled zeros at the beginning of <strong>b</strong>&#39;s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append <em>i</em> zeros to <strong>a</strong>&#39;s fractional part.  (For example, if <strong>b</strong> is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin <strong>b</strong>&#39;s fractional part, so <em>i</em> is set to 3 and three zeros are appended to <strong>a</strong>&#39;s fractional part.)</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
-<li>If the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part is unsampled, sample the digit at that position according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and &beta; is 2, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-<em>&beta;</em> digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if <em>&beta;</em> is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>If the digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part is unsampled, sample the digit at that position according to the kind of PSRN <strong>b</strong> is. (For example, if <strong>b</strong> is a uniform PSRN and <em>&beta;</em> is 2, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is less than the corresponding digit for <strong>b</strong>, return <strong>a</strong>.</li>
 <li>If that digit is greater, then discard <strong>a</strong>, then create a new empty uniform PSRN <strong>a</strong>, then go to step 2.</li>
 <li>Add 1 to <em>i</em> and go to step 5.</li>
@@ -296,6 +296,14 @@
 <li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, if <strong>bmin</strong> is less than 0, or if <strong>bmax</strong> is 0 or less, return an error.</li>
 <li>Create an empty uniform PSRN <strong>a</strong>.</li>
 <li>Special case: If <strong>bmax</strong> is 1 and <strong>bmin</strong> is 0, set <strong>a</strong>&#39;s sign to positive, set <strong>a</strong>&#39;s integer part to 0, and return <strong>a</strong>.</li>
+<li>Special case: If <strong>bmax</strong> and <strong>bmin</strong> are rational numbers and their denominators are powers of <em>&beta;</em>, including 1 (where <em>&beta;</em> is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
+
+<ol>
+<li>Let <em>denom</em> be <strong>bmax</strong>&#39;s or <strong>bmin</strong>&#39;s denominator, whichever is greater.</li>
+<li>Set <em>c1</em> to floor(<strong>bmax</strong>*<em>denom</em>) and <em>c2</em> to floor((<strong>bmax</strong>&minus;<strong>bmin</strong>)*<em>denom</em>).</li>
+<li>If <em>c2</em> is greater than 1, add to <em>c1</em> an integer chosen uniformly at random in [0, <em>c2</em>) (e.g., <code>RNDINTEXC(0, c2)</code>).</li>
+<li>Let <em>d</em> be the base-<em>&beta;</em> logarithm of <em>denom</em> (this is equivalent to finding the minimum number of base-<em>&beta;</em> digits needed to store <em>denom</em> and subtracting 1). Transfer <em>c1</em>&#39;s least significant digits to <strong>a</strong>&#39;s fractional part; the variable <em>d</em> tells how many digits to transfer to each PSRN this way. Then set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to floor(<em>c1</em>/<em>&beta;</em><sup><em>d</em></sup>). (For example, if <em>&beta;</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <strong>a</strong>&#39;s fractional part to [3, 4, 2] and <strong>a</strong>&#39;s integer part to 7.)  Finally, return <strong>a</strong>.</li>
+</ol></li>
 <li>Calculate floor(<strong>bmax</strong>), and set <em>bmaxi</em> to the result.  Likewise, calculate floor(<strong>bmin</strong>) and set <em>bmini</em> to the result.</li>
 <li>If <em>bmini</em> is equal to <strong>bmin</strong> and <em>bmaxi</em> is equal to <strong>bmax</strong>, set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in [<em>bmini</em>, <em>bmaxi</em>) (e.g., <code>RNDINTEXC(bmini, bmaxi)</code>), then return <strong>a</strong>.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)</li>
 <li>(We now set <strong>a</strong>&#39;s integer part and sign.) Set <strong>a</strong>&#39;s sign to positive and <strong>a</strong>&#39;s integer part to an integer chosen uniformly at random in the interval [<em>bmini</em>, <em>bmaxi</em>] (e.g., <code>RNDINT(bmini, bmaxi)</code>).  If <em>bmaxi</em> is equal to <strong>bmax</strong>, the integer is chosen from the interval [<em>bmini</em>, <em>bmaxi</em>&minus;1] instead.  Return <strong>a</strong> if&mdash;
@@ -304,29 +312,32 @@
 <li><strong>a</strong>&#39;s integer part is greater than <em>bmini</em> and less than <em>bmaxi</em>, or</li>
 <li><em>bmini</em> is equal to <strong>bmin</strong>, and <strong>a</strong>&#39;s integer part is equal to <em>bmini</em> and less than <em>bmaxi</em>.</li>
 </ul></li>
-<li>(We now sample <strong>a</strong>&#39;s fractional part.)  Set <em>i</em> to 0. ( Then, <em>if <strong>bmax</strong> is known rational:</em> set <em>bmaxf</em> to <strong>bmax</strong> minus <em>bmaxi</em>, and <em>if <strong>bmin</strong> is known rational</em>, set <em>bminf</em> to <strong>bmin</strong> minus <em>bmini</em>.)</li>
-<li>If <strong>a</strong>&#39;s integer part is equal to <em>bmini</em>:
+<li>(We now sample <strong>a</strong>&#39;s fractional part.)  Set <em>i</em> to 0 and <em>istart</em> to 0. ( Then, <em>if <strong>bmax</strong> is known rational:</em> set <em>bmaxf</em> to <strong>bmax</strong> minus <em>bmaxi</em>, and <em>if <strong>bmin</strong> is known rational</em>, set <em>bminf</em> to <strong>bmin</strong> minus <em>bmini</em>.)</li>
+<li>(This step is not crucial for correctness, but helps improve its efficiency.  It sets <strong>a</strong>&#39;s fractional part to the initial digits shared by <strong>bmin</strong> and <strong>bmax</strong>.) If <strong>a</strong>&#39;s integer part is equal to <em>bmini</em> and <em>bmaxi</em>, then do the following in a loop:
+    1. Calculate the base-<em>&beta;</em> digit at position <em>i</em> of <strong>bmax</strong>&#39;s and <strong>bmin</strong>&#39;s fractional parts, and set <em>dmax</em> and <em>dmin</em> to those digits, respectively. (<em>If <strong>bmax</strong> is known rational:</em> Do this step by setting <em>dmax</em> to floor(<em>bmaxf</em>*<em>&beta;</em>) and <em>dmin</em> to floor(<em>bminf</em>*<em>&beta;</em>).)
+    2. If <em>dmin</em> equals <em>dmax</em>, append <em>dmin</em> to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em> (and, if <strong>bmax</strong> and/or <strong>bmin</strong> is known to be rational, set <em>bmaxf</em> to <em>bmaxf</em>*<em>&beta;</em>&minus;<em>d</em> and set <em>bminf</em> to <em>bminf</em>*<em>&beta;</em>&minus;<em>d</em>).  Otherwise, break from this loop and set <em>istart</em> to <em>i</em>.</li>
+<li>(Ensure the fractional part is greater than <strong>bmin</strong>&#39;s.) Set <em>i</em> to <em>istart</em>, then if <strong>a</strong>&#39;s integer part is equal to <em>bmini</em>:
 
 <ol>
-<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>bmin</strong>&#39;s fractional part, and set <em>dmin</em> to that digit.  (&beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary).</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
-<li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  If <em>ad</em> is greater than <em>dmin</em>, abort these substeps and go to step 9.</li>
-<li>Discard <strong>a</strong>, create a new empty uniform PSRN <strong>a</strong>, and abort these substeps and go to step 6 if <em>ad</em> is less than <em>dmin</em>.</li>
+<li>Calculate the base-<em>&beta;</em> digit at position <em>i</em> of <strong>bmin</strong>&#39;s fractional part, and set <em>dmin</em> to that digit.</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-<em>&beta;</em> digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if <em>&beta;</em> is 2, or binary, is <code>RNDINTEXC(2)</code>.)</li>
+<li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  If <em>ad</em> is greater than <em>dmin</em>, abort these substeps and go to step 11.</li>
+<li>Discard <strong>a</strong>, create a new empty uniform PSRN <strong>a</strong>, and abort these substeps and go to step 7 if <em>ad</em> is less than <em>dmin</em>.</li>
 <li>Add 1 to <em>i</em> and go to the first substep.</li>
 </ol></li>
-<li>Set <em>i</em> to 0, then if <strong>a</strong>&#39;s integer part is equal to <em>bmaxi</em>:
+<li>(Ensure the fractional part is less than <strong>bmax</strong>&#39;s.) Set <em>i</em> to <em>istart</em>, then if <strong>a</strong>&#39;s integer part is equal to <em>bmaxi</em>:
 
 <ol>
 <li>If <em>bmaxi</em> is 0 and not equal to <strong>bmax</strong>, and if <strong>a</strong> has no digits in its fractional part, then do the following in a loop:
 
 <ol>
-<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>bmax</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>bmax</strong> is known rational:</em> Do this step by setting <em>d</em> to floor(<em>bmaxf</em>*&beta;).)</li>
-<li>If <em>d</em> is 0, append a 0-digit to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em> (and, if <strong>bmax</strong> is known to be rational, set <em>bmaxf</em> to <em>bmaxf</em>*&beta;&minus;<em>d</em>).  Otherwise, break from this loop.</li>
+<li>Calculate the base-<em>&beta;</em> digit at position <em>i</em> of <strong>bmax</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>bmax</strong> is known rational:</em> Do this step by setting <em>d</em> to floor(<em>bmaxf</em>*<em>&beta;</em>).)</li>
+<li>If <em>d</em> is 0, append a 0-digit to <strong>a</strong>&#39;s fractional part, then add 1 to <em>i</em> (and, if <strong>bmax</strong> is known to be rational, set <em>bmaxf</em> to <em>bmaxf</em>*<em>&beta;</em>&minus;<em>d</em>).  Otherwise, break from this loop.</li>
 </ol></li>
-<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>bmax</strong>&#39;s fractional part, and set <em>dmax</em> to that digit. (<em>If <strong>bmax</strong> is known rational:</em> Do this step by multiplying <em>bmaxf</em> by &beta;, then setting <em>dmax</em> to floor(<em>bmaxf</em>), then subtracting <em>dmax</em> from <em>bmaxf</em>.)</li>
-<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random.</li>
+<li>Calculate the base-<em>&beta;</em> digit at position <em>i</em> of <strong>bmax</strong>&#39;s fractional part, and set <em>dmax</em> to that digit. (<em>If <strong>bmax</strong> is known rational:</em> Do this step by multiplying <em>bmaxf</em> by <em>&beta;</em>, then setting <em>dmax</em> to floor(<em>bmaxf</em>), then subtracting <em>dmax</em> from <em>bmaxf</em>.)</li>
+<li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position to a base-<em>&beta;</em> digit chosen uniformly at random.</li>
 <li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.  Return <strong>a</strong> if <em>ad</em> is less than <em>dmax</em>.</li>
-<li>Discard <strong>a</strong>, create a new empty uniform PSRN <strong>a</strong>, and abort these substeps and go to step 6 if&mdash;
+<li>Discard <strong>a</strong>, create a new empty uniform PSRN <strong>a</strong>, and abort these substeps and go to step 7 if&mdash;
 
 <ul>
 <li><em><strong>bmax</strong> is not known to be rational</em>, and either <em>ad</em> is greater than <em>dmax</em> or all the digits after the digit at position <em>i</em> of <strong>bmax</strong>&#39;s fractional part are zeros, or</li>
@@ -593,7 +604,7 @@
 <li>If <strong>a</strong>&#39;s sign is different from <em>bs</em>&#39;s sign, return 1 if <strong>a</strong>&#39;s sign is negative and 0 if it&#39;s positive.  If <strong>a</strong>&#39;s sign is positive, return 1 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 0 if greater. (Continue if both are equal.)  If <strong>a</strong>&#39;s sign is negative, return 0 if <strong>a</strong>&#39;s integer part is less than <em>bi</em>, or 1 if greater. (Continue if both are equal.)</li>
 <li>Set <em>i</em> to 0.</li>
 <li>If the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part is unsampled, set the digit at that position according to the kind of PSRN <strong>a</strong> is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
-<li>Calculate the base-&beta; digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by &beta;, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
+<li>Calculate the base-<em>&beta;</em> digit at position <em>i</em> of <strong>b</strong>&#39;s fractional part, and set <em>d</em> to that digit. (<em>If <strong>b</strong> is known rational:</em> Do this step by multiplying <em>bf</em> by <em>&beta;</em>, then setting <em>d</em> to floor(<em>bf</em>), then subtracting <em>d</em> from <em>bf</em>.)</li>
 <li>Let <em>ad</em> be the digit at position <em>i</em> of <strong>a</strong>&#39;s fractional part.</li>
 <li>Return 1 if&mdash;
 
@@ -625,7 +636,7 @@
 <p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>):</p>
 
 <ul>
-<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= &beta;<sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, &beta; is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
+<li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= <em>&beta;</em><sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, <em>&beta;</em> is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
 <li>(7.) Let <em>ak</em> be <strong>a</strong>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).</li>
 <li>(8.) If <em>ak</em> &lt;= <em>bk</em> &minus; 2, return either 1 if <strong>a</strong>&#39;s sign is positive or 0 otherwise.</li>
 <li>(9.) If <em>ak</em> &gt;= <em>bk</em> + 1, return either 1 if <strong>a</strong>&#39;s sign is negative or 0 otherwise.</li>
@@ -2245,15 +2256,15 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <p>An absolutely continuous distribution can thus be built if we can find a sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>PDF</em>, except if the sequence has the form&mdash;</p>
 
 <ul>
-<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/&beta;<sup><em>j</em></sup></sup>),</li>
+<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>w</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>w</em>/<em>&beta;</em><sup><em>j</em></sup></sup>),</li>
 </ul>
 
-<p>where &beta; = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(<em>&lambda;</em>) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = <em>&lambda;</em>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
+<p>where <em>&beta;</em> = 2, <em>y</em> &gt; 0, and <em>w</em> &gt; 0, and special cases include the uniform distribution (<em>y</em> = 1, <em>w</em> = 1), the truncated exponential(1) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = 1; (Devroye and Gravel 2015)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general exponential(<em>&lambda;</em>) distribution (<em>y</em> = (1/exp(1)), <em>w</em> = <em>&lambda;</em>).  Other sequences of the form <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)) will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1.</p>
 
 <p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:</p>
 
 <ul>
-<li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-&beta; digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = &beta;).</li>
+<li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-<em>&beta;</em> digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = <em>&beta;</em>).</li>
 <li>Let <em>t</em>(<em>x</em>) = &Pi;<sub><em>j</em> = 1, 2, ...</sub> <em>b</em><sub><em>j</em></sub> * <em>a</em><sub><em>j</em></sub> + (1 &minus; <em>b</em><sub><em>j</em></sub>) * (1 &minus; <em>a</em><sub><em>j</em></sub>).</li>
 <li>The relative probability for <em>x</em> is <em>t</em>(<em>x</em>) / (argmax<sub><em>z</em></sub> <em>t</em>(<em>z</em>)).</li>
 </ul>
@@ -2265,7 +2276,7 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 <li>the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.</li>
 </ul>
 
-<p>It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).</p>
+<p>It may be that something similar applies for <em>&beta;</em> other than 2 (non-base-2 or non-binary cases) as it does to <em>&beta;</em> = 2 (the base-2 or binary case).</p>
 
 <p><a id=License></a></p>
 

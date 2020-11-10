@@ -194,12 +194,12 @@ There are several algorithms for sampling uniform partially-sampled random numbe
 
 The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**) almost surely.  This algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromReal** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
 
-1. Create an empty uniform PSRN **a**.  Let &beta; be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).  If **b**'s integer part or sign is unsampled, or if **b**'s sign is negative, return an error.
+1. Create an empty uniform PSRN **a**.  Let _&beta;_ be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).  If **b**'s integer part or sign is unsampled, or if **b**'s sign is negative, return an error.
 2. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is **b**'s integer part (e.g., `RNDINT(0, bi)`).  If **a**'s integer part is less than _bi_, return **a**.
 3. (We now sample **a**'s fractional part.)  Set _i_ to 0.
 4. If **b**'s integer part is 0 and **b**'s fractional part begins with a sampled 0-digit, set _i_ to the number of sampled zeros at the beginning of **b**'s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append _i_ zeros to **a**'s fractional part.  (For example, if **b** is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin **b**'s fractional part, so _i_ is set to 3 and three zeros are appended to **a**'s fractional part.)
-5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
-6. If the digit at position _i_ of **b**'s fractional part is unsampled, sample the digit at that position according to the kind of PSRN **b** is. (For example, if **b** is a uniform PSRN and &beta; is 2, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
+5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if _&beta;_ is 2, or binary, is `RNDINTEXC(2)`.)
+6. If the digit at position _i_ of **b**'s fractional part is unsampled, sample the digit at that position according to the kind of PSRN **b** is. (For example, if **b** is a uniform PSRN and _&beta;_ is 2, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
 7. If the digit at position _i_ of **a**'s fractional part is less than the corresponding digit for **b**, return **a**.
 8. If that digit is greater, then discard **a**, then create a new empty uniform PSRN **a**, then go to step 2.
 9. Add 1 to _i_ and go to step 5.
@@ -215,30 +215,38 @@ The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a
 1. If **bmin** is greater than or equal to **bmax**, if **bmin** is less than 0, or if **bmax** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
 3. Special case: If **bmax** is 1 and **bmin** is 0, set **a**'s sign to positive, set **a**'s integer part to 0, and return **a**.
-4. Calculate floor(**bmax**), and set _bmaxi_ to the result.  Likewise, calculate floor(**bmin**) and set _bmini_ to the result.
-5. If _bmini_ is equal to **bmin** and _bmaxi_ is equal to **bmax**, set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[_bmini_, _bmaxi_\) (e.g., `RNDINTEXC(bmini, bmaxi)`), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
-6. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.  Return **a** if&mdash;
+4. Special case: If **bmax** and **bmin** are rational numbers and their denominators are powers of _&beta;_, including 1 (where _&beta;_ is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
+    1. Let _denom_ be **bmax**'s or **bmin**'s denominator, whichever is greater.
+    2. Set _c1_ to floor(**bmax**\*_denom_) and _c2_ to floor((**bmax**&minus;**bmin**)\*_denom_).
+    3. If _c2_ is greater than 1, add to _c1_ an integer chosen uniformly at random in \[0, _c2_) (e.g., `RNDINTEXC(0, c2)`).
+    4. Let _d_ be the base-_&beta;_ logarithm of _denom_ (this is equivalent to finding the minimum number of base-_&beta;_ digits needed to store _denom_ and subtracting 1). Transfer _c1_'s least significant digits to **a**'s fractional part; the variable _d_ tells how many digits to transfer to each PSRN this way. Then set **a**'s sign to positive and **a**'s integer part to floor(_c1_/_&beta;_<sup>_d_</sup>). (For example, if _&beta;_ is 10, _d_ is 3, and _c1_ is 7342, set **a**'s fractional part to \[3, 4, 2\] and **a**'s integer part to 7.)  Finally, return **a**.
+5. Calculate floor(**bmax**), and set _bmaxi_ to the result.  Likewise, calculate floor(**bmin**) and set _bmini_ to the result.
+6. If _bmini_ is equal to **bmin** and _bmaxi_ is equal to **bmax**, set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[_bmini_, _bmaxi_\) (e.g., `RNDINTEXC(bmini, bmaxi)`), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
+7. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.  Return **a** if&mdash;
     - **a**'s integer part is greater than _bmini_ and less than _bmaxi_, or
     - _bmini_ is equal to **bmin**, and **a**'s integer part is equal to _bmini_ and less than _bmaxi_.
-7. (We now sample **a**'s fractional part.)  Set _i_ to 0. ( Then, _if **bmax** is known rational:_ set _bmaxf_ to **bmax** minus _bmaxi_, and _if **bmin** is known rational_, set _bminf_ to **bmin** minus _bmini_.)
-8. If **a**'s integer part is equal to _bmini_:
-    1. Calculate the base-&beta; digit at position _i_ of **bmin**'s fractional part, and set _dmin_ to that digit.  (&beta; is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary).
-    2. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if &beta; is 2, or binary, is `RNDINTEXC(2)`.)
-    3. Let _ad_ be the digit at position _i_ of **a**'s fractional part.  If _ad_ is greater than _dmin_, abort these substeps and go to step 9.
-    4. Discard **a**, create a new empty uniform PSRN **a**, and abort these substeps and go to step 6 if _ad_ is less than _dmin_.
+8. (We now sample **a**'s fractional part.)  Set _i_ to 0 and _istart_ to 0. ( Then, _if **bmax** is known rational:_ set _bmaxf_ to **bmax** minus _bmaxi_, and _if **bmin** is known rational_, set _bminf_ to **bmin** minus _bmini_.)
+9. (This step is not crucial for correctness, but helps improve its efficiency.  It sets **a**'s fractional part to the initial digits shared by **bmin** and **bmax**.) If **a**'s integer part is equal to _bmini_ and _bmaxi_, then do the following in a loop:
+        1. Calculate the base-_&beta;_ digit at position _i_ of **bmax**'s and **bmin**'s fractional parts, and set _dmax_ and _dmin_ to those digits, respectively. (_If **bmax** is known rational:_ Do this step by setting _dmax_ to floor(_bmaxf_\*_&beta;_) and _dmin_ to floor(_bminf_\*_&beta;_).)
+        2. If _dmin_ equals _dmax_, append _dmin_ to **a**'s fractional part, then add 1 to _i_ (and, if **bmax** and/or **bmin** is known to be rational, set _bmaxf_ to _bmaxf_\*_&beta;_&minus;_d_ and set _bminf_ to _bminf_\*_&beta;_&minus;_d_).  Otherwise, break from this loop and set _istart_ to _i_.
+10. (Ensure the fractional part is greater than **bmin**'s.) Set _i_ to _istart_, then if **a**'s integer part is equal to _bmini_:
+    1. Calculate the base-_&beta;_ digit at position _i_ of **bmin**'s fractional part, and set _dmin_ to that digit.
+    2. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if _&beta;_ is 2, or binary, is `RNDINTEXC(2)`.)
+    3. Let _ad_ be the digit at position _i_ of **a**'s fractional part.  If _ad_ is greater than _dmin_, abort these substeps and go to step 11.
+    4. Discard **a**, create a new empty uniform PSRN **a**, and abort these substeps and go to step 7 if _ad_ is less than _dmin_.
     5. Add 1 to _i_ and go to the first substep.
-9. Set _i_ to 0, then if **a**'s integer part is equal to _bmaxi_:
+11. (Ensure the fractional part is less than **bmax**'s.) Set _i_ to _istart_, then if **a**'s integer part is equal to _bmaxi_:
     1. If _bmaxi_ is 0 and not equal to **bmax**, and if **a** has no digits in its fractional part, then do the following in a loop:
-        1. Calculate the base-&beta; digit at position _i_ of **bmax**'s fractional part, and set _d_ to that digit. (_If **bmax** is known rational:_ Do this step by setting _d_ to floor(_bmaxf_\*&beta;).)
-        2. If _d_ is 0, append a 0-digit to **a**'s fractional part, then add 1 to _i_ (and, if **bmax** is known to be rational, set _bmaxf_ to _bmaxf_\*&beta;&minus;_d_).  Otherwise, break from this loop.
-    2. Calculate the base-&beta; digit at position _i_ of **bmax**'s fractional part, and set _dmax_ to that digit. (_If **bmax** is known rational:_ Do this step by multiplying _bmaxf_ by &beta;, then setting _dmax_ to floor(_bmaxf_), then subtracting _dmax_ from _bmaxf_.)
-    3. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-&beta; digit chosen uniformly at random.
+        1. Calculate the base-_&beta;_ digit at position _i_ of **bmax**'s fractional part, and set _d_ to that digit. (_If **bmax** is known rational:_ Do this step by setting _d_ to floor(_bmaxf_\*_&beta;_).)
+        2. If _d_ is 0, append a 0-digit to **a**'s fractional part, then add 1 to _i_ (and, if **bmax** is known to be rational, set _bmaxf_ to _bmaxf_\*_&beta;_&minus;_d_).  Otherwise, break from this loop.
+    2. Calculate the base-_&beta;_ digit at position _i_ of **bmax**'s fractional part, and set _dmax_ to that digit. (_If **bmax** is known rational:_ Do this step by multiplying _bmaxf_ by _&beta;_, then setting _dmax_ to floor(_bmaxf_), then subtracting _dmax_ from _bmaxf_.)
+    3. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random.
     4. Let _ad_ be the digit at position _i_ of **a**'s fractional part.  Return **a** if _ad_ is less than _dmax_.
-    5. Discard **a**, create a new empty uniform PSRN **a**, and abort these substeps and go to step 6 if&mdash;
+    5. Discard **a**, create a new empty uniform PSRN **a**, and abort these substeps and go to step 7 if&mdash;
         - _**bmax** is not known to be rational_, and either _ad_ is greater than _dmax_ or all the digits after the digit at position _i_ of **bmax**'s fractional part are zeros, or
         - _**bmax** is known to be rational_, and either _ad_ is greater than _dmax_ or _bmaxf_ is 0
     6. Add 1 to _i_ and go to the second substep.
-10. Return **a**.
+12. Return **a**.
 
 The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  It is equivalent to the **RandUniformInRange** algorithm with **a** = **a**, **bmin** = 0, and **bmax** = **b**.
 
@@ -431,7 +439,7 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 3. If **a**'s sign is different from _bs_'s sign, return 1 if **a**'s sign is negative and 0 if it's positive.  If **a**'s sign is positive, return 1 if **a**'s integer part is less than _bi_, or 0 if greater. (Continue if both are equal.)  If **a**'s sign is negative, return 0 if **a**'s integer part is less than _bi_, or 1 if greater. (Continue if both are equal.)
 4. Set _i_ to 0.
 5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position according to the kind of PSRN **a** is. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
-6. Calculate the base-&beta; digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by &beta;, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
+6. Calculate the base-_&beta;_ digit at position _i_ of **b**'s fractional part, and set _d_ to that digit. (_If **b** is known rational:_ Do this step by multiplying _bf_ by _&beta;_, then setting _d_ to floor(_bf_), then subtracting _d_ from _bf_.)
 7. Let _ad_ be the digit at position _i_ of **a**'s fractional part.
 8. Return 1 if&mdash;
     - _ad_ is less than _d_ and **a**'s sign is positive,
@@ -449,7 +457,7 @@ The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b*
 
 An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)<sup>[**(15)**](#Note15)</sup>):
 
-- (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= &beta;<sup>&minus;_i_ &minus; 1</sup>, and such that _bp_ has the same sign as **b**.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).  For example, if **b** is &pi; or &minus;&pi;, &beta; is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
+- (6.) Calculate _bp_, which is an approximation to **b** such that abs(**b** &minus; _bp_) <= _&beta;_<sup>&minus;_i_ &minus; 1</sup>, and such that _bp_ has the same sign as **b**.  Let _bk_ be _bp_'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).  For example, if **b** is &pi; or &minus;&pi;, _&beta;_ is 10, and _i_ is 4, one possibility is _bp_ = 3.14159 and _bk_ = 314159.
 - (7.) Let _ak_ be **a**'s digit expansion up to the _i_ + 1 digits after the point (ignoring its sign).
 - (8.) If _ak_ <= _bk_ &minus; 2, return either 1 if **a**'s sign is positive or 0 otherwise.
 - (9.) If _ak_ >= _bk_ + 1, return either 1 if **a**'s sign is negative or 0 otherwise.
@@ -1767,13 +1775,13 @@ The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note
 
 An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _PDF_, except if the sequence has the form&mdash;
 
-- _a_<sub>_j_</sub> = _y_<sup>_w_/&beta;<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/&beta;<sup>_j_</sup></sup>),
+- _a_<sub>_j_</sub> = _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>),
 
-where &beta; = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
+where _&beta;_ = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2015)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
 
 For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 
-- Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-&beta; digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = &beta;).
+- Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-_&beta;_ digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = _&beta;_).
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
 - The relative probability for _x_ is _t_(_x_) / (argmax<sub>_z_</sub> _t_(_z_)).
 
@@ -1782,7 +1790,7 @@ It appears that the distribution's PDF will be continuous only if&mdash;
 - the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
 - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
 
-It may be that something similar applies for &beta; other than 2 (non-base-2 or non-binary cases) as it does to &beta; = 2 (the base-2 or binary case).
+It may be that something similar applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
 
 <a id=License></a>
 ## License

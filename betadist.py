@@ -337,10 +337,11 @@ def psrn_in_range(bmin, bmax, digits=2):
         a[0] = 1
         a[1] = random.randint(bmini, bmaxi - 1)
         return a
-    count = 0
+    # count = 0
     while True:
-        count += 1
-        # if count>=200 and count%50==0: print(count)
+        # count += 1
+        # if count>=20 and count%10==0:
+        #   print([count,float(bmin),float(bmax)])
         a[0] = 1
         if bmaxi == bmax:
             a[1] = random.randint(bmini, bmaxi - 1)
@@ -351,12 +352,24 @@ def psrn_in_range(bmin, bmax, digits=2):
             return a
         if bmin == bmini and a[1] == bmini and a[1] < bmaxi:
             return a
-        i = 0
         bmaxv = bmax - bmaxi
         bminv = bmin - bmini
         if a[1] != bmini and a[1] != bmaxi:
             raise ValueError
-        # TODO: Describe an optimized procedure when a[1]==bmini==bmaxi
+        i = 0
+        istart = 0
+        if a[1] == bmini and a[1] == bmaxi:
+            while True:
+                dmin = int(digits * bminv)
+                dmax = int(digits * bmaxv)
+                if dmin != dmax:
+                    break
+                a[2].append(dmin)
+                bminv = bminv * digits - dmin
+                bmaxv = bmaxv * digits - dmax
+                i += 1
+            istart = i
+        i = istart
         if a[1] == bmini:
             success = 0
             while True:
@@ -378,7 +391,7 @@ def psrn_in_range(bmin, bmax, digits=2):
                 i += 1
             if not success:
                 continue
-        i = 0
+        i = istart
         if a[1] == bmaxi:
             success = 0
             if bmaxi == 0 and bmaxi != bmax and len(a[2]) == 0:
