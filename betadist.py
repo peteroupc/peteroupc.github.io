@@ -1063,12 +1063,138 @@ def genshape(inshape):
                 s *= base
                 d += 1
 
+class _PavingNode:
+    def __init__(self, coords):
+        """ Represents a tree node of a mapped regular paving. """
+        self.mark = 0
+        self.coords = coords
+        self.left = None
+        self.right = None
+
+    def getBisection(self):
+        coord = 0
+        maxwid = self.coords[0][1] - self.coords[0][0]
+        for i in range(1, len(self.coords)):
+            wid = self.coords[i][1] - self.coords[i][0]
+            if wid > maxwid:  # Choose first widest coordinate
+                coord = i
+                maxwid = wid
+        # Bisect
+        sc = self.coords
+        leftcoords = [
+            [sc[i][0], sc[i][0] + maxwid / 2] if i == coord else sc[i]
+            for i in range(len(sc))
+        ]
+        rightcoords = [
+            [sc[i][0] + maxwid / 2, sc[i][1]] if i == coord else sc[i]
+            for i in range(len(sc))
+        ]
+        left = _PavingNode(leftcoords)
+        right = _PavingNode(rightcoords)
+        return left, right
+
+    def bisect(self):
+        if self.left != None or self.right != None:
+            raise ValueError
+        self.left, self.right = self.getBisection()
+        return self.left, self.right
+
+class ShapeSampler2:
+    YES = 1
+    NO = -1
+    MAYBE = 0
+
+    def __init__(self, inshape, dx=1, dy=1):
+        """ Builds a sampler for random numbers on or inside a 2-dimensional shape.
+       inshape is a function that takes a box described as [[min1, max1], ..., [minN, maxN]]
+       and returns 1 if the box is fully in the shape;
+       -1 if not; and 0 if partially.
+       dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
+       """
+        self.inshape = inshape
+        self.root = _PavingNode(
+            [[Fraction(0), Fraction(dx)], [Fraction(0), Fraction(dy)]]
+        )
+        self._setup(self.root)
+
+    def _setup(self, box, depth=0):
+        v = self.inshape(box.coords)
+        if v == ShapeSampler2.YES or v == ShapeSampler2.NO:
+            box.mark = v
+            # print([box.coords,box.mark])
+        else:  # MAYBE
+            if depth < 6:
+                left, right = box.bisect()
+                self._setup(left, depth + 1)
+                self._setup(right, depth + 2)
+            else:
+                # max. depth reached
+                box.mark = ShapeSampler2.MAYBE
+                # print([box.coords,box.mark])
+
+    def _traverse(self, box):
+        r = 0
+        d = 0
+        while True:
+            if box.left == None:
+                return box, r, d
+            else:
+                child = random.randint(0, 1)
+                r = (r << 1) | child
+                d += 1
+                box = box.left if child == 0 else box.right
+
+    def _makepsrn(self, coord):
+        # Because of bisections and the restriction of root box sizes to
+        # integers, the denominator must be a power of 2.
+        # Moreover, coords are assumed to be non-negative.
+        if coord[0].numerator < 0:
+            raise NotImplementedError
+        if coord[1].numerator < 0:
+            raise NotImplementedError
+        # Get greatest denominator
+        denom = max(coord[0].denominator, coord[1].denominator)
+        c1 = int(coord[0] * denom)
+        c2 = int(coord[1] * denom)
+        if c2 > 1:
+            c1 += random.randint(0, c2 - 1)
+        fracsize = denom.bit_length() - 1
+        psrn = [0, 0, [0 for i in range(fracsize)]]
+        # Set fractional part
+        for i in range(fracsize):
+            psrn[2][fracsize - 1 - i] = c1 & 1
+            c1 >>= 1
+        psrn[1] = c1  # Set integer part
+        psrn[0] = 1  # Sign is assumed to be positive
+        return psrn
+
+    def sample(self):
+        """ Generates a random point inside the shape. """
+        while True:
+            box, r, d = self._traverse(self.root)
+            while True:
+                if box.mark == ShapeSampler2.YES:
+                    return [
+                        self._makepsrn(box.coords[0]),
+                        self._makepsrn(box.coords[1]),
+                    ]
+                if box.mark == ShapeSampler2.NO:
+                    break
+                # Mark is MAYBE
+                child = random.randint(0, 1)
+                r = (r << 1) | child
+                d += 1
+                left, right = box.getBisection()
+                box = left if child == 0 else right
+                box.mark = self.inshape(box.coords)
+
 class ShapeSampler:
     def __init__(self, inshape, dx=1, dy=1):
         """ Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
        inshape is a function that takes three parameters (x, y, s) and
        returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
        -1 if not; and 0 if partially.
+       dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
        """
         self.yeses = []
         self.maybes = []
