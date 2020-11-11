@@ -1247,7 +1247,6 @@ class ShapeSampler2:
         # Because of bisections and the restriction of root box sizes to
         # integers, the denominator must be a power of 2.
         # Moreover, coords are assumed to be non-negative.
-        # TODO: Describe this special case of RandUniformInRange
         if coord[0].numerator < 0:
             raise NotImplementedError
         if coord[1].numerator < 0:
@@ -1901,12 +1900,6 @@ if __name__ == "__main__":
     def _cloneread(p, digits=2):
         p = [p[0], p[1], [x for x in p[2]]]
         return _readpsrn2(p, minprec=32, digits=digits)
-
-    for i in range(1000):
-        ps, pi, pf = random_psrn(digits=2)
-        frac = Fraction(random.randint(0, 32), random.randint(1, 32))
-        frac2 = Fraction(random.randint(0, 32), random.randint(1, 32))
-        psrn_in_range_test(frac, frac2, i, digits=2)
 
     bern = bernoulli.Bernoulli()
     sample = [psrn_fill(rayleighpsrn(bern)) for i in range(10000)]

@@ -296,7 +296,7 @@
 <li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, if <strong>bmin</strong> is less than 0, or if <strong>bmax</strong> is 0 or less, return an error.</li>
 <li>Create an empty uniform PSRN <strong>a</strong>.</li>
 <li>Special case: If <strong>bmax</strong> is 1 and <strong>bmin</strong> is 0, set <strong>a</strong>&#39;s sign to positive, set <strong>a</strong>&#39;s integer part to 0, and return <strong>a</strong>.</li>
-<li>Special case: If <strong>bmax</strong> and <strong>bmin</strong> are rational numbers and their denominators are powers of <em>&beta;</em>, including 1 (where <em>&beta;</em> is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
+<li>Special case: If <strong>bmax</strong> and <strong>bmin</strong> are rational numbers and each of their denominators is a power of <em>&beta;</em>, including 1 (where <em>&beta;</em> is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
 
 <ol>
 <li>Let <em>denom</em> be <strong>bmax</strong>&#39;s or <strong>bmin</strong>&#39;s denominator, whichever is greater.</li>
@@ -351,12 +351,12 @@
 <p>The <strong>RandUniformInRange</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one real number <strong>bmin</strong> and less than another real number <strong>bmax</strong> almost surely. It works for both positive and negative real numbers, but it&#39;s specified separately from <strong>RandUniformInRangePositive</strong> to reduce clutter.</p>
 
 <ol>
-<li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, return an error.  If <strong>bmin</strong> and <strong>bmax</strong> are both 0 or greater, return the result of <strong>RandUniformInRangePositive</strong>.</li>
-<li>If <strong>bmin</strong> and <strong>bmax</strong> are both 0 or less, call <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = abs(<strong>bmax</strong>) and <strong>bmax</strong> = abs(<strong>bmin</strong>), set the result&#39;s fractional part to negative, and return the result.</li>
+<li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, return an error.  If <strong>bmin</strong> and <strong>bmax</strong> are each 0 or greater, return the result of <strong>RandUniformInRangePositive</strong>.</li>
+<li>If <strong>bmin</strong> and <strong>bmax</strong> are each 0 or less, call <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = abs(<strong>bmax</strong>) and <strong>bmax</strong> = abs(<strong>bmin</strong>), set the result&#39;s fractional part to negative, and return the result.</li>
 <li>(At this point, <strong>bmin</strong> is less than 0 and <strong>bmax</strong> is greater than 0.) Create an empty uniform PSRN <strong>a</strong>.</li>
 <li>Set <em>bmaxi</em> to either floor(<strong>bmax</strong>) if <strong>bmax</strong> is 0 or greater, or &minus;ceil(abs(<strong>bmax</strong>)) otherwise, and set <em>bmini</em> to either floor(<strong>bmin</strong>) if <strong>bmin</strong> is 0 or greater, or &minus;ceil(abs(<strong>bmin</strong>)) otherwise.  (This is a less confusing way to express the floor of <strong>bmax</strong> or <strong>bmin</strong>.)</li>
 <li>Set <em>ipart</em> to an integer chosen uniformly at random in the interval [<em>bmini</em>, <em>bmaxi</em>] (e.g., <code>RNDINT(bmini, bmaxi)</code>).  If <em>bmaxi</em> is equal to <strong>bmax</strong>, the integer is chosen from the interval [<em>bmini</em>, <em>bmaxi</em>&minus;1] instead.</li>
-<li>If <em>ipart</em> is <em>bmini</em>, then <em>ipart</em> will be less than 0, so get the result of <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = <strong>bmin</strong> and <strong>bmax</strong> = <em>ipart</em>+1, set the result&#39;s fractional part to negative, and return the result.</li>
+<li>If <em>ipart</em> is <em>bmini</em>, then <em>ipart</em> will be less than 0, so get the result of <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = abs(<em>ipart</em>+1) and <strong>bmax</strong> = abs(<strong>bmin</strong>), set the result&#39;s fractional part to negative, and return the result.</li>
 <li>If <em>ipart</em> is <em>bmaxi</em>, then <em>ipart</em> will be 0 or greater, so return the result of <strong>RandUniformInRangePositive</strong> with <strong>bmin</strong> = <em>ipart</em> and <strong>bmax</strong> = <strong>bmax</strong>.</li>
 <li>(At this point, <em>ipart</em> is neither <em>bmini</em> nor <em>bmaxi</em>.) Set <strong>a</strong>&#39;s sign to either positive if <em>ipart</em> is 0 or greater, or negative otherwise; then set <strong>a</strong>&#39;s integer part to abs(<em>ipart</em>+1) if <em>ipart</em> is negative, or <em>ipart</em> otherwise; then return <strong>a</strong>.</li>
 </ol>

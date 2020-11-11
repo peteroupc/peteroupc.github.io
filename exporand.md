@@ -215,7 +215,7 @@ The **RandUniformInRangePositive** algorithm generates a uniformly distributed P
 1. If **bmin** is greater than or equal to **bmax**, if **bmin** is less than 0, or if **bmax** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
 3. Special case: If **bmax** is 1 and **bmin** is 0, set **a**'s sign to positive, set **a**'s integer part to 0, and return **a**.
-4. Special case: If **bmax** and **bmin** are rational numbers and their denominators are powers of _&beta;_, including 1 (where _&beta;_ is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
+4. Special case: If **bmax** and **bmin** are rational numbers and each of their denominators is a power of _&beta;_, including 1 (where _&beta;_ is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
     1. Let _denom_ be **bmax**'s or **bmin**'s denominator, whichever is greater.
     2. Set _c1_ to floor(**bmax**\*_denom_) and _c2_ to floor((**bmax**&minus;**bmin**)\*_denom_).
     3. If _c2_ is greater than 1, add to _c1_ an integer chosen uniformly at random in \[0, _c2_) (e.g., `RNDINTEXC(0, c2)`).
@@ -250,12 +250,12 @@ The **RandUniformInRangePositive** algorithm generates a uniformly distributed P
 
 The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one real number **bmin** and less than another real number **bmax** almost surely. It works for both positive and negative real numbers, but it's specified separately from **RandUniformInRangePositive** to reduce clutter.
 
-1. If **bmin** is greater than or equal to **bmax**, return an error.  If **bmin** and **bmax** are both 0 or greater, return the result of **RandUniformInRangePositive**.
-2. If **bmin** and **bmax** are both 0 or less, call **RandUniformInRangePositive** with **bmin** = abs(**bmax**) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
+1. If **bmin** is greater than or equal to **bmax**, return an error.  If **bmin** and **bmax** are each 0 or greater, return the result of **RandUniformInRangePositive**.
+2. If **bmin** and **bmax** are each 0 or less, call **RandUniformInRangePositive** with **bmin** = abs(**bmax**) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
 3. (At this point, **bmin** is less than 0 and **bmax** is greater than 0.) Create an empty uniform PSRN **a**.
 4. Set _bmaxi_ to either floor(**bmax**) if **bmax** is 0 or greater, or &minus;ceil(abs(**bmax**)) otherwise, and set _bmini_ to either floor(**bmin**) if **bmin** is 0 or greater, or &minus;ceil(abs(**bmin**)) otherwise.  (This is a less confusing way to express the floor of **bmax** or **bmin**.)
 5. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
-6. If _ipart_ is _bmini_, then _ipart_ will be less than 0, so get the result of **RandUniformInRangePositive** with **bmin** = **bmin** and **bmax** = _ipart_+1, set the result's fractional part to negative, and return the result.
+6. If _ipart_ is _bmini_, then _ipart_ will be less than 0, so get the result of **RandUniformInRangePositive** with **bmin** = abs(_ipart_+1) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
 7. If _ipart_ is _bmaxi_, then _ipart_ will be 0 or greater, so return the result of **RandUniformInRangePositive** with **bmin** = _ipart_ and **bmax** = **bmax**.
 8. (At this point, _ipart_ is neither _bmini_ nor _bmaxi_.) Set **a**'s sign to either positive if _ipart_ is 0 or greater, or negative otherwise; then set **a**'s integer part to abs(_ipart_+1) if _ipart_ is negative, or _ipart_ otherwise; then return **a**.
 
