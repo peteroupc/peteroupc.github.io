@@ -1832,10 +1832,11 @@ CLASSES
      |      - x: Desired probability, in [0, 1].
      |
      |  bernstein(self, f, alpha)
-     |      Bernstein polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
+     |      Polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
      |           (Goyal and Sigman 2012).
      |      - f: Function that returns 1 if heads and 0 if tails.
-     |      - alpha: List of Bernstein coefficients for the Bernstein polynomial,
+     |      - alpha: List of Bernstein coefficients for the polynomial (when written
+     |         in Bernstein form),
      |         whose degree is this list's length minus 1.
      |         For this to work, each coefficient must be in [0, 1].
      |

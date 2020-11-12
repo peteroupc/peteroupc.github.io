@@ -48,7 +48,7 @@
 <li><em>f</em>&prime;(<em>x</em>) = (&Sigma;<sub><em>k</em> = 0, ..., <em>n</em></sub> (&minus;1)<sup><em>k</em></sup> * choose(<em>n</em>, <em>k</em>) * ((<em>x</em> + <em>i</em>) &minus; <em>k</em>)<sup><em>n</em> &minus; 1</sup> * sign((<em>x</em> + <em>i</em>) &minus; <em>k</em>)) / (2*(n&minus;1)!),</li>
 </ul>
 
-<p>where <em>x</em> is a real number in [0, 1], and choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is the binomial coefficient.  Since <em>f</em>&prime; is a polynomial, it can be converted to a Bernstein polynomial whose control points describe the shape of the curve drawn out by <em>f</em>&prime;. (Bernstein polynomials are the backbone of the well-known Bézier curve.) A Bernstein polynomial has the form&mdash;</p>
+<p>where <em>x</em> is a real number in [0, 1], and choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is the binomial coefficient.  Since <em>f</em>&prime; is a polynomial, it can be rewritten in Bernstein form, so that it has <em>Bernstein coefficients</em>, which are equivalent to control points describing the shape of the curve drawn out by <em>f</em>&prime;. (The Bernstein coefficients are the backbone of the well-known Bézier curve.) A polynomial can be written in Bernstein form as&mdash;</p>
 
 <ul>
 <li>&Sigma;<sub><em>k</em> = 0, ..., <em>m</em></sub> choose(<em>m</em>, <em>k</em>) * <em>x</em><sup><em>k</em></sup> * (1 &minus; <em>x</em>)<sup><em>m</em> &minus; <em>k</em></sup> * <em>a</em>[<em>k</em>],</li>
@@ -305,7 +305,7 @@ def sum_of_uniform_base2(bern, precision=53):
 <li>Create a positive-sign zero-integer-part uniform PSRN, call it <em>ret</em>.</li>
 <li>Choose an integer in [0, 6), uniformly at random. (With this, the left piece is chosen at a 1/6 chance, the right piece at 1/6, and the middle piece at 2/3, corresponding to the relative areas occupied by the three pieces.)</li>
 <li>Remove all digits from <em>ret</em>.</li>
-<li><p>If 0 was chosen by step 2, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval [0, 1) and is a Bernstein polynomial (and Bézier curve) with control points (0, 0, 1/2).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:</p>
+<li><p>If 0 was chosen by step 2, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval [0, 1) and is a polynomial with Bernstein coefficients of (0, 1, 1/2) (and is thus a Bézier curve with those control points).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:</p>
 
 <ul>
 <li>Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If both of these calls return 1, then accept <em>ret</em> with probability 1/2.  This is the most &quot;naïve&quot; approach.</li>
@@ -314,8 +314,8 @@ def sum_of_uniform_base2(bern, precision=53):
 </ul>
 
 <p>If <em>ret</em> was accepted, optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</p></li>
-<li>If 2, 3, 4, or 5 was chosen by step 2, we will sample from the middle piece of the PDF, which runs along the interval [1, 2) and is a Bernstein polynomial with control points (1/2, 1, 1/2).  Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If neither or both of these calls return 1, then accept <em>ret</em>.  Otherwise, if one of these calls returns 1 and the other 0, then accept <em>ret</em> with probability 1/2.  If <em>ret</em> was accepted, optionally fill <em>ret</em> as given in step 4, then set <em>ret</em>&#39;s integer part to 1, then return <em>ret</em>.</li>
-<li><p>If 1 was chosen by step 2, we will sample from the right piece of the PDF, which runs along the interval [2, 3) and is a Bernstein polynomial with control points (1/2, 0, 0).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:</p>
+<li>If 2, 3, 4, or 5 was chosen by step 2, we will sample from the middle piece of the PDF, which runs along the interval [1, 2) and is a polynomial with Bernstein coefficients (control points) of (1/2, 1, 1/2).  Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If neither or both of these calls return 1, then accept <em>ret</em>.  Otherwise, if one of these calls returns 1 and the other 0, then accept <em>ret</em> with probability 1/2.  If <em>ret</em> was accepted, optionally fill <em>ret</em> as given in step 4, then set <em>ret</em>&#39;s integer part to 1, then return <em>ret</em>.</li>
+<li><p>If 1 was chosen by step 2, we will sample from the right piece of the PDF, which runs along the interval [2, 3) and is a polynomial with Bernstein coefficients (control points) of (1/2, 0, 0).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:</p>
 
 <ul>
 <li>Call the <strong>SampleGeometricBag</strong> algorithm twice on <em>ret</em>.  If both of these calls return 0, then accept <em>ret</em> with probability 1/2.  This is the most &quot;naïve&quot; approach.</li>
