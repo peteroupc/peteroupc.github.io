@@ -108,7 +108,14 @@ The "odd X Y" family uses two distributions, X and Y, where X is an arbitrary co
 
 Examples of this family include the "odd log-logistic G" family (where "G" or "generated" corresponds to Y) (Gleaton and Lynch 2006)<sup>[**(8)**](#Note8)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and Y is arbitrary) (Korkmaz et al. 2018)<sup>[**(9)**](#Note9)</sup>.  Many special cases of this family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some of these members have names that begin with the word "generalized", and in most such cases the quantile in step 2 should be calculated as (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ is a shape parameter greater than 0; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(10)**](#Note10)</sup>.
 
-A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(11)**](#Note11)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables (beta-G is the quantile of a beta-distributed random number, where the quantile comes from an arbitrary distribution (Eugene et al., 2002)<sup>[**(12)**](#Note12)</sup>), where _N_ is a random number expressing 1 plus the number of failures before the first success, with each success having the same probability.  A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(13)**](#Note13)</sup>.  An _inverse X distribution_ is the distribution of the reciprocal of a random number distributed as _X_.
+A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(11)**](#Note11)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables (beta-G is the quantile of a beta-distributed random number, where the quantile comes from an arbitrary distribution (Eugene et al., 2002)<sup>[**(12)**](#Note12)</sup>), where _N_ is a random number expressing 1 plus the number of failures before the first success, with each success having the same probability.  A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ is distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(13)**](#Note13)</sup>.  An _inverse X distribution_ (or _inverted X distribution_) is the distribution of the reciprocal of a random number distributed as _X_.
+
+<a id=Certain_Distributions></a>
+## Certain Distributions
+
+A _power function(a, c) distribution_ is distributed as _c_\*_U_<sup>1/_a_</sup>, where _U_ is a uniform(0,1) random number, _a_ > 0, and _c_ is a scale parameter greater than 0.
+
+A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distributed as the minimum of _N_ power function(_b_, _c_) random variables, where _N_ is distributed as the zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>) distribution.  (Jodrá 2020)<sup>[**(14)**](#Note14)</sup>.
 
 <a id=Notes></a>
 ## Notes
@@ -126,6 +133,7 @@ A _compound distribution_ is simply the minimum of _N_ random variables distribu
 - <small><sup id=Note11>(11)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
 - <small><sup id=Note12>(12)</sup> Eugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.</small>
 - <small><sup id=Note13>(13)</sup> Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.</small>
+- <small><sup id=Note14>(14)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
 
 <a id=License></a>
 ## License
