@@ -1498,17 +1498,17 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
           return merr
         END METHOD
 
-    Examples of expected values include the following:
+    Estimates of expected values include the following:
 
-    - The **`n`th raw moment** (mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
-    - The **mean**, if `EFUNC(x)` is `x`.
-    - The **`n`th sample central moment**, if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
+    - The **`n`th sample raw moment** (a raw moment is a mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
+    - The **sample mean**, the first sample raw moment.
+    - The **`n`th sample central moment** (a central moment is a moment about the mean) if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
     - The (biased) **sample variance**, the second sample central moment.
     - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
     If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if the average of multiple estimates, based on independent samples of the same distribution, is consistent with the expected value even as the number of estimates grows.  For example, an `Expectation` for the mean is an unbiased estimator, but an `Expectation` for the sample variance is not since there is more than one degree of freedom to the estimation (see "[**Variance**](https://mathworld.wolfram.com/Variance.html)" in MathWorld).  For an unbiased estimator, the error in the Monte Carlo estimation is largely due to _variance_, but variance reduction techniques are outside the scope of this document.
+    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if the average of multiple estimates, based on independent samples with fixed size `k` of the same distribution, is consistent with the true expected value (Halmos 1946)<sup>[**(91)**](#Note91)</sup>.  For example, an `Expectation` for any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but an `Expectation` for the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946)<sup>[**(92)**](#Note92)</sup>.  For an unbiased estimator, the error in the Monte Carlo estimation is largely due to _variance_, but variance reduction techniques are outside the scope of this document.
 
 2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 
@@ -2175,6 +2175,8 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note88>(88)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note89>(89)</sup> Describing differences between SQL dialects is outside the scope of this document, but [**Flourish SQL**](http://flourishlib.com/docs/FlourishSQL) describes many such differences, including those concerning randomization features provided by SQL dialects.</small>
 - <small><sup id=Note90>(90)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note91>(91)</sup> Halmos, P.R., "The theory of unbiased estimation", _Annals of Mathematical Statistics_ 17(1), 1946.</small>
+- <small><sup id=Note92>(92)</sup> Halmos, P.R., "The theory of unbiased estimation", _Annals of Mathematical Statistics_ 17(1), 1946.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -2202,7 +2204,7 @@ The randomization methods in this document will be deterministic (that is, produ
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
 
-The following method calculates the mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers, using the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  The method returns a two-item list containing the mean and that kind of variance in that order.  (Sample variance is the estimated variance of a population or distribution assuming `list` is a random sample of that population or distribution.)  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python's `statistics.stdev`).
+The following method calculates the (sample) mean and the [**bias-corrected sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers, using the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  The method returns a two-item list containing that kind of mean and that kind of variance in that order.  (Sample mean and sample variance are the estimated mean and variance of a population or distribution assuming `list` is a random sample of that population or distribution.)  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python's `statistics.stdev`).
 
     METHOD MeanAndVariance(list)
         if size(list)==0: return [0, 0]

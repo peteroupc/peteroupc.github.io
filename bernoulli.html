@@ -935,6 +935,18 @@
 <p><strong>Example:</strong> Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>: (1&minus;4(<em>&lambda;</em>&minus;1/2)<sup>2</sup>)*<em>c</em>, where <em>c</em> is in the interval (0, 1).  This is a polynomial that can be rewritten as &minus;4*<em>c</em>*<em>&lambda;</em><sup>2</sup>+4*<em>c</em>*<em>&lambda;</em>, so that this <em>power form</em> has coefficients (0, 4*<em>c</em>, &minus;4*<em>c</em>) and a degree (<em>n</em>) of 2. Using the matrix method by Ray and Nataraj (2012)<sup><a href="#Note29"><strong>(29)</strong></a></sup>, we get Bernstein coefficients (0, 2*<em>c</em>, 0).  Thus, for this polynomial, <em>a</em>[0] is 0,  <em>a</em>[1] is 2*<em>c</em>, and  <em>a</em>[2] is 0.  Thus, if <em>c</em> is in the interval (0, 1/2], these Bernstein coefficients are all in the interval [0, 1] allowing the function to be simulated via this algorithm.  For other values of <em>c</em>, this algorithm can be used only if the polynomial is transformed into an equivalent polynomial of higher degree, so that its Bernstein coefficients all lie in [0, 1]; the required degree approaches infinity as <em>c</em> approaches 1.<sup><a href="#Note47"><strong>(47)</strong></a></sup></p>
 </blockquote>
 
+<p>Niazadeh et al. (2020)<sup><a href="#Note48"><strong>(48)</strong></a></sup> describes multivariate monomials of the form &Pi;<sup><em>i</em> = 1, ..., <em>n</em></sup> &lambda;[<em>i</em>]<sup><em>a</em>[<em>i</em>]</sup> * (1&minus;&lambda;[<em>i</em>])<sup><em>b</em>[<em>i</em>]</sup>, where there are <em>n</em> coins, &lambda;[<em>i</em>] is the probability of heads of coin <em>i</em>, and <em>a</em>[<em>i</em>] and <em>b</em>[<em>i</em>] are parameters for coin <em>i</em> (specifically, of <em>a</em>+<em>b</em> flips, the first <em>a</em> flips must return heads to succeed).  (The same paper also describes polynomials that are weighted sums of this kind of monomials, but as explained in &quot;Convex Combinations&quot;, later, these polynomials can be simulated by choosing one of the monomials with probability proportional to its weight, then simulating that monomial.)</p>
+
+<ol>
+<li>For each <em>i</em> in [1, <em>n</em>]:
+
+<ol>
+<li>Flip the &lambda;[<em>i</em>] input coin exactly <em>a</em>[<em>i</em>] + <em>b</em>[<em>i</em>] times.</li>
+<li>Return 0 unless the first <em>a</em>[<em>i</em>] flips return 1 and the rest return 0.</li>
+</ol></li>
+<li>Return 1.</li>
+</ol>
+
 <p><a id=Certain_Algebraic_Functions></a></p>
 
 <h4>Certain Algebraic Functions</h4>
@@ -1476,7 +1488,7 @@
 
 <h4>Convex Combinations</h4>
 
-<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that returns heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
+<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that returns heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  Note that this is a weighted sum.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
@@ -1487,9 +1499,9 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Example 1. Generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.</li>
+<li>Example 1. Generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.</li>
 <li>Example 2. Generate a Poisson(<em>&mu;</em>) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
-<li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.</li>
+<li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
 </ol>
 </blockquote>
 
@@ -1672,6 +1684,7 @@
 <li><small><sup id=Note45>(45)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note46>(46)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note47>(47)</sup> And this shows that the polynomial couldn&#39;t be simulated if <em>c</em> were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see &quot;About Bernoulli Factories&quot;, earlier).</small></li>
+<li><small><sup id=Note48>(48)</sup> Niazadeh, R., Leme, R.P., Schneider, J., &quot;<a href="https://arxiv.org/abs/2011.03865v1">Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes</a>&quot;, arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

@@ -717,6 +717,13 @@ A polynomial can be written in _Bernstein form_ as &Sigma;<sub>_i_ = 0, ..., _n_
 >
 > **Example:** Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>: (1&minus;4(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Using the matrix method by Ray and Nataraj (2012)<sup>[**(29)**](#Note29)</sup>, we get Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], these Bernstein coefficients are all in the interval [0, 1] allowing the function to be simulated via this algorithm.  For other values of _c_, this algorithm can be used only if the polynomial is transformed into an equivalent polynomial of higher degree, so that its Bernstein coefficients all lie in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(47)**](#Note47)</sup>
 
+Niazadeh et al. (2020)<sup>[**(48)**](#Note48)</sup> describes multivariate monomials of the form &Pi;<sup>_i_ = 1, ..., _n_</sup> &lambda;\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;&lambda;\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, &lambda;\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] and _b_\[_i_\] are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads to succeed).  (The same paper also describes polynomials that are weighted sums of this kind of monomials, but as explained in "Convex Combinations", later, these polynomials can be simulated by choosing one of the monomials with probability proportional to its weight, then simulating that monomial.)
+
+1. For each _i_ in \[1, _n_\]:
+     1. Flip the &lambda;\[_i_] input coin exactly _a_\[_i_\] + _b_\[_i_\] times.
+     2. Return 0 unless the first _a_\[_i_\] flips return 1 and the rest return 0.
+2. Return 1.
+
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
 
@@ -1130,16 +1137,16 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 <a id=Convex_Combinations></a>
 #### Convex Combinations
 
-Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that returns heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(26)**](#Note26)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
+Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that returns heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  Note that this is a weighted sum.  See (Wästlund 1999, Theorem 2.7)<sup>[**(26)**](#Note26)</sup>.  (Alternatively, the algorithm can be seen as simulating **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
 2. Flip the coin represented by _X_ and return the result.
 
 > **Examples:**
 >
-> 1. Example 1. Generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.
+> 1. Example 1. Generate a Poisson random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson probabilities and _h_<sub>_i_</sub>() returning 1 with probability 1/(1+_i_), and 0 otherwise.
 > 2. Example 2. Generate a Poisson(_&mu;_) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&mu;_) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
-> 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.
+> 3. Example 3. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
@@ -1287,6 +1294,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 - <small><sup id=Note45>(45)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note46>(46)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note47>(47)</sup> And this shows that the polynomial couldn't be simulated if _c_ were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see "About Bernoulli Factories", earlier).</small>
+- <small><sup id=Note48>(48)</sup> Niazadeh, R., Leme, R.P., Schneider, J., "[Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes](https://arxiv.org/abs/2011.03865v1)", arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix

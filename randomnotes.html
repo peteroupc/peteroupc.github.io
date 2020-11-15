@@ -100,7 +100,7 @@ END METHOD
 <li>The following are some approximations to the normal distribution that papers have suggested:
 
 <ul>
-<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>. (Kabal 2000/2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot; on Wikipedia</strong></a>.  D. Thomas (2014)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> uniform random numbers as follows: <code>RNDU01() - RNDU01() + RNDU01() - ...</code>.</li>
+<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>. (Kabal 2000/2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDU01()</code> numbers, on Wikipedia.  D. Thomas (2014)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> uniform random numbers as follows: <code>RNDU01() - RNDU01() + RNDU01() - ...</code>.</li>
 <li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
 </ul></li>
 </ol>
@@ -626,7 +626,7 @@ END METHOD
 </thead><tbody>
 <tr>
 <td>Linear search with cumulative weights</td>
-<td>The <code>WeightedChoice</code> pseudocode calculates a list of cumulative weights (also known as a <em>cumulative distribution table</em> or <em>CDT</em>), then generates a random number less than the sum of (original) weights, then does a linear scan of the new list to find the highest item whose cumulative weight does not exceed the random number.</td>
+<td>The <code>WeightedChoice</code> pseudocode calculates a list of cumulative weights (also known as a <em>cumulative distribution table</em> or <em>CDT</em>), then generates a random number less than the sum of (original) weights, then does a linear scan of the new list to find the first item whose cumulative weight exceeds the random number.</td>
 </tr>
 <tr>
 <td><em>Fast Loaded Dice Roller</em> (Saad et al., 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</td>
