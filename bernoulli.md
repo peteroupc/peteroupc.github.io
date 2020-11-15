@@ -715,14 +715,16 @@ A polynomial can be written in _Bernstein form_ as &Sigma;<sub>_i_ = 0, ..., _n_
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (Note that the curve is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 > 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating Boolean functions (functions that use only AND, OR, NOT, and XOR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for discussion see (Qian et al. 2011)<sup>[**(28)**](#Note28)</sup>).
 >
-> **Example:** Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>: (1&minus;4(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Using the matrix method by Ray and Nataraj (2012)<sup>[**(29)**](#Note29)</sup>, we get Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], these Bernstein coefficients are all in the interval [0, 1] allowing the function to be simulated via this algorithm.  For other values of _c_, this algorithm can be used only if the polynomial is transformed into an equivalent polynomial of higher degree, so that its Bernstein coefficients all lie in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(47)**](#Note47)</sup>
+> **Example:** Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>: (1&minus;4(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Using the matrix method by Ray and Nataraj (2012)<sup>[**(29)**](#Note29)</sup>, we get Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], these Bernstein coefficients are all in the interval [0, 1] allowing the function to be simulated via this algorithm.  For other values of _c_, this algorithm can be used only if the polynomial is transformed into an equivalent polynomial of higher degree, so that its Bernstein coefficients all lie in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(30)**](#Note30)</sup>
 
-Niazadeh et al. (2020)<sup>[**(48)**](#Note48)</sup> describes multivariate monomials of the form &Pi;<sup>_i_ = 1, ..., _n_</sup> &lambda;\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;&lambda;\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, &lambda;\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] and _b_\[_i_\] are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads to succeed).  (The same paper also describes polynomials that are weighted sums of this kind of monomials, but as explained in "Convex Combinations", later, these polynomials can be simulated by choosing one of the monomials with probability proportional to its weight, then simulating that monomial.)
+Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes multivariate monomials of the form &Pi;<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] and _b_\[_i_\] are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
 
 1. For each _i_ in \[1, _n_\]:
      1. Flip the &lambda;\[_i_] input coin exactly _a_\[_i_\] + _b_\[_i_\] times.
      2. Return 0 unless the first _a_\[_i_\] flips return 1 and the rest return 0.
 2. Return 1.
+
+The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](_&lambda;_), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, and _c_\[_j_\] is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.) These polynomials can be simulated by choosing one of the monomials with probability proportional to its weight, then running the algorithm above on that monomial (see also "Convex Combinations", later).
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -741,7 +743,7 @@ where&mdash;
 - W(_k_) is the number of valid _k_-letter words and must be in the interval \[0, _&beta;_<sup>_k_</sup>\],
 - _&beta;_ is the alphabet size, or the number of "letters" in the alphabet (e.g., 2 for the cases discussed in the Flajolet paper), and is an integer 2 or greater,
 - the _ordinary generating function_ OGF(_x_) = W(0) + W(1) * _x_ + W(2) * _x_<sup>2</sup> + W(3) * _x_<sup>3</sup> + ..., and
-- the second formula incorporates a correction to Theorem 3.2 of the paper<sup>[**(30)**](#Note30)</sup>.
+- the second formula incorporates a correction to Theorem 3.2 of the paper<sup>[**(32)**](#Note32)</sup>.
 
 (Here, the _k_<sup>th</sup> coefficient of OGF(_x_) corresponds to W(_k_).)  The algorithm follows.
 
@@ -785,7 +787,7 @@ The following algorithms generate heads with a probability equal to an irrationa
 
 Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).  The following algorithm returns 1 with probability `p` and 0 otherwise, where `p` is a probability in the interval [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated "on-the-fly".
 
-In the algorithm (see also (Brassard et al., 2019)<sup>[**(31)**](#Note31)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
+In the algorithm (see also (Brassard et al., 2019)<sup>[**(33)**](#Note33)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Calculate `pa`, which is an approximation to `p` such that abs(`p`&minus;`pa`) <= `BASE`<sup>&minus;`k`</sup>.  Set `pk` to `pa`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
@@ -844,7 +846,7 @@ See the appendix for a correctness proof of Algorithm 3.
 <a id=Continued_Logarithms></a>
 #### Continued Logarithms
 
-The _continued logarithm_ (Gosper 1978)<sup>[**(32)**](#Note32)</sup>, (Borwein et al., 2016)<sup>[**(33)**](#Note33)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
+The _continued logarithm_ (Gosper 1978)<sup>[**(34)**](#Note34)</sup>, (Borwein et al., 2016)<sup>[**(35)**](#Note35)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -962,7 +964,7 @@ The algorithm follows.
 <a id=exp_minus__x___y></a>
 #### exp(&minus;_x_/_y_)
 
-This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(34)**](#Note34)</sup>.
+This algorithm takes integers _x_ >= 0 and _y_ > 0 and outputs 1 with probability `exp(-x/y)` or 0 otherwise. It originates from (Canonne et al. 2020)<sup>[**(36)**](#Note36)</sup>.
 
 1. Special case: If _x_ is 0, return 1. (This is because the probability becomes `exp(0) = 1`.)
 2. If `x > y` (so _x_/_y_ is greater than 1), call this algorithm (recursively) `floor(x/y)` times with _x_ = _y_ = 1 and once with _x_ = _x_ &minus; floor(_x_/_y_) \* _y_ and _y_ = _y_.  Return 1 if all these calls return 1; otherwise, return 0.
@@ -982,7 +984,7 @@ More specifically:
 
 The algorithm is then as follows:
 
-- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus;_&lambda;_)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(34)**](#Note34)</sup>.)
+- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus;_&lambda;_)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup>[**(36)**](#Note36)</sup>.)
 
 <a id=a___b___z></a>
 #### (_a_/_b_)<sup>_z_</sup>
@@ -1055,7 +1057,7 @@ In the following algorithm, _x_ is a real number in the interval [0, 1].
 6. If _k_ is odd, return 1 if _ret_ is less than _x_, or 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Go to step 1.
 
-In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(35)**](#Note35)</sup>.  See the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix for more information.
+In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup>.  See the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix for more information.
 
 <a id=2_1_exp_2_or_1_exp_0_1_exp_1></a>
 #### 2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))
@@ -1084,7 +1086,7 @@ This algorithm takes advantage of the theorem mentioned in the section "[**Proba
 <a id=1_exp__k__1_exp__k__1></a>
 #### (1 + exp(_k_)) / (1 + exp(_k_ + 1))
 
-This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(36)**](#Note36)</sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup>[**(8)**](#Note8)</sup> in this algorithm.  In this algorithm, _k_ must be an integer 0 or greater.
+This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(38)**](#Note38)</sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup>[**(8)**](#Note8)</sup> in this algorithm.  In this algorithm, _k_ must be an integer 0 or greater.
 
 1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
 2. Generate a uniform(0, 1) random number, call it _ret_.
@@ -1098,7 +1100,7 @@ This algorithm simulates this probability by computing lower and upper bounds of
 <a id=Euler_s_Constant___gamma></a>
 #### Euler's Constant _&gamma;_
 
-The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(37)**](#Note37)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.
+The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>  This solves an open question given in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  An algorithm for _&gamma;_ appears here even though it is not yet known whether this constant is irrational.
 
 1. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, _k_, and _prev_ to 0 each.
 2. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
@@ -1182,7 +1184,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(37)**](#Note37)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
+The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(39)**](#Note39)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all positive rational numbers, and
 - for which a sequence _err_\[0\], _err_\[1\], ..., is available that is monotonically nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
@@ -1217,7 +1219,7 @@ The case when _a_ is a _natural logarithm_ rather than a base-2 logarithm is tri
 4. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If neither is the case, return 1.
 5. Set _n_ to 1, then go to step 5.
 
-> **Example**: Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(38)**](#Note38)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(39)**](#Note39)</sup>.
+> **Example**: Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(40)**](#Note40)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(41)**](#Note41)</sup>.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -1276,25 +1278,25 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 - <small><sup id=Note28>(28)</sup> Weikang Qian, Marc D. Riedel, Ivo Rosenberg, "Uniform approximation and Bernstein polynomials with coefficients in the unit interval", _European Journal of Combinatorics_ 32(3), 2011,
 [**https://doi.org/10.1016/j.ejc.2010.11.004**](https://doi.org/10.1016/j.ejc.2010.11.004) [**http://www.sciencedirect.com/science/article/pii/S0195669810001666**](http://www.sciencedirect.com/science/article/pii/S0195669810001666)</small>
 - <small><sup id=Note29>(29)</sup> S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", Reliable Computing 17(1), 2012.</small>
-- <small><sup id=Note30>(30)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just "&Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (_&lambda;_/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
-- <small><sup id=Note31>(31)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
-- <small><sup id=Note32>(32)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
-- <small><sup id=Note33>(33)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
-- <small><sup id=Note34>(34)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
-- <small><sup id=Note35>(35)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
-- <small><sup id=Note36>(36)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
-- <small><sup id=Note37>(37)</sup> Mendo, L., "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020.</small>
-- <small><sup id=Note38>(38)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
-- <small><sup id=Note39>(39)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
-- <small><sup id=Note40>(40)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note41>(41)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
-- <small><sup id=Note42>(42)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note43>(43)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
-- <small><sup id=Note44>(44)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
-- <small><sup id=Note45>(45)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
-- <small><sup id=Note46>(46)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note47>(47)</sup> And this shows that the polynomial couldn't be simulated if _c_ were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see "About Bernoulli Factories", earlier).</small>
-- <small><sup id=Note48>(48)</sup> Niazadeh, R., Leme, R.P., Schneider, J., "[Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes](https://arxiv.org/abs/2011.03865v1)", arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small>
+- <small><sup id=Note30>(30)</sup> And this shows that the polynomial couldn't be simulated if _c_ were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see "About Bernoulli Factories", earlier).</small>
+- <small><sup id=Note31>(31)</sup> Niazadeh, R., Leme, R.P., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://arxiv.org/abs/2011.03865v1)", arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small>
+- <small><sup id=Note32>(32)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just "&Sigma; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (_&lambda;_/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
+- <small><sup id=Note33>(33)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", Entropy 2019(21)(92), doi:10.3390/e21010092.</small>
+- <small><sup id=Note34>(34)</sup> Bill Gosper, "Continued Fraction Arithmetic", 1978.</small>
+- <small><sup id=Note35>(35)</sup> Borwein, J.M., Calkin, N.J., et al., "Continued logarithms and associated continued fractions", 2016.</small>
+- <small><sup id=Note36>(36)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+- <small><sup id=Note37>(37)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
+- <small><sup id=Note38>(38)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
+- <small><sup id=Note39>(39)</sup> Mendo, L., "[**Simulating a coin with irrational bias using rational arithmetic**](https://arxiv.org/abs/2010.14901)", arXiv:2010.14901 [math.PR], 2020.</small>
+- <small><sup id=Note40>(40)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
+- <small><sup id=Note41>(41)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
+- <small><sup id=Note42>(42)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note43>(43)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
+- <small><sup id=Note44>(44)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note45>(45)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
+- <small><sup id=Note46>(46)</sup> Devroye, L., Gravel, C., "[**Sampling with arbitrary precision**](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.</small>
+- <small><sup id=Note47>(47)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note48>(48)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1304,16 +1306,16 @@ I acknowledge Luis Mendo, who responded to one of my open questions.
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(40)**](#Note40)</sup>.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(42)**](#Note42)</sup>.
 
-In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (_&lambda;_) into a coin with another bias (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(41)**](#Note41)</sup>, (Peres 1992)<sup>[**(42)**](#Note42)</sup>) and is calculated as&mdash;
+In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (_&lambda;_) into a coin with another bias (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(43)**](#Note43)</sup>, (Peres 1992)<sup>[**(44)**](#Note44)</sup>) and is calculated as&mdash;
 
 &nbsp;&nbsp;&nbsp;&nbsp;((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
 For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
 
-For certain values of _&lambda;_, Kozen (2014)<sup>[**(38)**](#Note38)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
+For certain values of _&lambda;_, Kozen (2014)<sup>[**(40)**](#Note40)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
@@ -1332,7 +1334,7 @@ As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, h
 - Function A: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2).
 - Function B: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2).
 
-Glynn (2016)<sup>[**(43)**](#Note43)</sup> distinguishes between&mdash;
+Glynn (2016)<sup>[**(45)**](#Note45)</sup> distinguishes between&mdash;
 
 - _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
 - _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, building an unbiased estimator of _g_(_X_)) by a process that halts almost surely.
@@ -1376,7 +1378,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(31)**](#Note31)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2015)<sup>[**(44)**](#Note44)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(33)**](#Note33)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2015)<sup>[**(46)**](#Note46)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
@@ -1433,7 +1435,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(45)**](#Note45)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(47)**](#Note47)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 
@@ -1484,12 +1486,12 @@ def valid_perm(f, x, n):
 <a id=Probabilities_Arising_from_the_Forsythe_Method></a>
 ### Probabilities Arising from the Forsythe Method
 
-The Forsythe method of random sampling (Forsythe 1972)<sup>[**(35)**](#Note35)</sup> gives rise to a class of interesting probability functions.
+The Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup> gives rise to a class of interesting probability functions.
 
 Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (_&delta;_).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _&delta;_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _&delta;_ is less than _x_ given that&mdash;
 
 - _k_ is odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>), or
-- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(46)**](#Note46)</sup>),
+- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(48)**](#Note48)</sup>),
 
 where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For example, the algorithm to simulate [**erf(_x_)/erf(1)**](#erf__x__erf_1) uses the fact that when&mdash;
 
@@ -1592,7 +1594,7 @@ The algorithm is an application of the [**convex combination**](#Convex_Combinat
 <a id=Calculating_Bounds_for_exp_1></a>
 ### Calculating Bounds for exp(1)
 
-The following implements the parts of Citterio and Pavani's algorithm (2016)<sup>[**(36)**](#Note36)</sup> needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.
+The following implements the parts of Citterio and Pavani's algorithm (2016)<sup>[**(38)**](#Note38)</sup> needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.
 
 Define the following operations:
 
