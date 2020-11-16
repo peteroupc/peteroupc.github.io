@@ -531,7 +531,7 @@ END METHOD
 
 <p>There are many algorithms for the <code>RNDINT(maxInclusive)</code> method, which generates uniform random integers in [0, maxInclusive].  This section deals with &quot;optimal&quot; <code>RNDINT</code> algorithms in terms of the number of random bits they use on average (assuming we have a source of &quot;truly&quot; random bits).</p>
 
-<p>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that any algorithm that uses only random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
+<p>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that any algorithm that uses only unbiased random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
 
 <p>As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal <em>and unbiased (exact)</em> will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, <code>n</code> will not be a power of 2, so that <code>n</code> will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree. (If <code>n</code> is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)</p>
 
@@ -607,7 +607,12 @@ END METHOD
 
 <h3>A Note on Weighted Choice Algorithms</h3>
 
-<p>Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of <code>WeightedChoice</code> that sample with replacement) involve generating random integers with separate probabilities.  And all of them can be described as a binary DDG tree just like integer generating algorithms.</p>
+<p>Just like integer generation algorithms (see the previous section), weighted choice algorithms (implementations of <code>WeightedChoice</code> that sample with replacement)&mdash;</p>
+
+<ul>
+<li>involve generating random integers with separate probabilities, and</li>
+<li>can all be described as a binary DDG tree.</li>
+</ul>
 
 <p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup><a href="#Note17"><strong>(17)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.</p>
 
@@ -666,7 +671,7 @@ END METHOD
 </tr>
 <tr>
 <td>&quot;Loaded Die from Biased Coins&quot;</td>
-<td>Given a list of probabilities <code>probs</code> that must sum to 1 and should be rational numbers: (1) Set <code>cumu</code> to 1 and <code>i</code> to 0; (2) with probability <code>probs[i]/cumu</code>, return <code>i</code>; (3) subtract <code>probs[i]</code> from <code>cumu</code>, then add 1 to <code>i</code>, then go to step 2.  For a correctness proof, see &quot;Darts, Dice, and Coins&quot;.</td>
+<td>Given a list of probabilities <code>probs</code> that must sum to 1 and should be rational numbers: (1) Set <code>cumu</code> to 1 and <code>i</code> to 0; (2) with probability <code>probs[i]/cumu</code>, return <code>i</code>; (3) subtract <code>probs[i]</code> from <code>cumu</code>, then add 1 to <code>i</code>, then go to step 2.  For a correctness proof, see &quot;Darts, Dice, and Coins&quot;.  If each probability in <code>probs</code> is calculated &quot;on the fly&quot;, this is also called sequential search; see chapter 10 of (Devroye 1986)<sup><a href="#Note12"><strong>(12)</strong></a></sup> (but this generally won&#39;t be exact unless all the probabilities involved are rational numbers).</td>
 </tr>
 <tr>
 <td>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup></td>
@@ -679,7 +684,7 @@ END METHOD
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> If the source of randomness is a &quot;biased coin&quot; which returns heads with <em>unknown</em> probability of heads and false otherwise, it can be turned into a &quot;fair&quot; coin (and so output unbiased bits) via <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>), so that the algorithms above can be used.</p>
+<p><strong>Note:</strong> If the source of randomness is a &quot;biased coin&quot; which returns heads with <em>unknown</em> probability of heads, and tails otherwise, it can be turned into a &quot;fair&quot; coin (and so output unbiased bits) via <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>), so that the algorithms above can be used.</p>
 </blockquote>
 
 <p><a id=Exact_Error_Bounded_and_Approximate_Algorithms></a></p>
