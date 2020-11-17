@@ -1017,11 +1017,12 @@ class BinomialSampler:
         """ Returns a number m such that m is in the
         interval [sqrt(x), sqrt(x)+3].  This rough approximation
         suffices for the binomial sampler. """
-        u = (x >> (x.bit_length() // 2)) + 2
+        u = 1 << ((x.bit_length() + 1) // 2)
+        i = 0
         while True:
             v = (u + x // u) // 2
-            if v == u:
-                return v + 1
+            if v >= u:
+                return u + 1
             u = v
 
     def sample(self, n):
