@@ -1633,7 +1633,7 @@
 
 <h2>Acknowledgments</h2>
 
-<p>I acknowledge Luis Mendo, who responded to one of my open questions.</p>
+<p>I acknowledge Luis Mendo, who responded to one of my open questions, as well as C. Karney.</p>
 
 <p><a id=Notes></a></p>
 
@@ -2043,11 +2043,18 @@ def valid_perm(f, x, n):
 <p>The algorithm is an application of the <a href="#Convex_Combinations"><strong>convex combination</strong></a> technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:</p>
 
 <ul>
-<li><em>g</em>(<em>n</em>): 2<sup>6 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 2<sup>8 * <em>n</em> + 2</sup> = 2<sup>&minus;2 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 4 = (6 * <em>n</em> + 1) / (2<sup>2 * <em>n</em> + 2</sup>), which is the probability that the sum of two random numbers that each express the number of failures before the first success, where the chance of a success is 1&minus;1/4 (the paper calls these two numbers <em>geometric</em>(1/4) random numbers, but this terminology is avoided in this article because it has several conflicting meanings in academic works), and one Bernoulli(5/9) random number, all of which are independent, equals <em>n</em>.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should probably read &quot;8 <em>n</em> + 2&quot;.)
+<li><p><em>g</em>(<em>n</em>): 2<sup>6 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 2<sup>8 * <em>n</em> + 2</sup> = 2<sup>&minus;2 * <em>n</em></sup> * (6 * <em>n</em> + 1) / 4 = (6 * <em>n</em> + 1) / (2<sup>2 * <em>n</em> + 2</sup>), which is the probability that the sum of the following independent random numbers equals <em>n</em>:</p>
 
 <ul>
-<li>Note 1: 9 * (<em>n</em> + 1) / (2<sup>2 * <em>n</em> + 4</sup>) is the probability that the sum of two independent random numbers, equals <em>n</em>, where each of the <em>m</em> numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.</li>
-<li>Note 2: <em>p</em><sup><em>n</em></sup> * (1 &minus; <em>p</em>)<sup><em>m</em></sup> * choose(<em>n</em> + <em>m</em> &minus; 1, <em>m</em> &minus; 1) is the probability that the sum of <em>m</em> independent random numbers equals <em>n</em> (a <em>negative binomial distribution</em>), where each of the <em>m</em> numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;<em>p</em>.</li>
+<li>Two random numbers that each express the number of failures before the first success, where the chance of a success is 1&minus;1/4 (the paper calls these two numbers <em>geometric</em>(1/4) random numbers, but this terminology is avoided in this article because it has several conflicting meanings in academic works).</li>
+<li>One Bernoulli(5/9) random number.</li>
+</ul>
+
+<p>This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should read &quot;8 <em>n</em> + 2&quot;.)</p>
+
+<ul>
+<li>Note 1: 9 * (<em>n</em> + 1) / (2<sup>2 * <em>n</em> + 4</sup>) is the probability that the sum of two independent random numbers equals <em>n</em>, where each of the two numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.</li>
+<li>Note 2: <em>p</em><sup><em>m</em></sup> * (1 &minus; <em>p</em>)<sup><em>n</em></sup> * choose(<em>n</em> + <em>m</em> &minus; 1, <em>m</em> &minus; 1) is the probability that the sum of <em>m</em> independent random numbers equals <em>n</em> (a <em>negative binomial distribution</em>), where each of the <em>m</em> numbers expresses the number of failures before the first success and the chance of a success is <em>p</em>.</li>
 <li>Note 3: <em>f</em>(<em>z</em>) * (1 &minus; <em>p</em>) + <em>f</em>(<em>z</em> &minus; 1) * <em>p</em> is the probability that the sum of two independent random numbers &mdash; a Bernoulli(<em>p</em>) number and an integer <em>z</em> with probability mass function <em>f</em>(.) &mdash; equals <em>z</em>.</li>
 </ul></li>
 <li><em>h</em><sub><em>n</em></sub>(): (choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em> * 2</sup>)<sup>3</sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.</li>

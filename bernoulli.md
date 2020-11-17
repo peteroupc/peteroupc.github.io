@@ -1245,7 +1245,7 @@ Charts showing the correctness and performance of some of these algorithms are f
 <a id=Acknowledgments></a>
 ## Acknowledgments
 
-I acknowledge Luis Mendo, who responded to one of my open questions.
+I acknowledge Luis Mendo, who responded to one of my open questions, as well as C. Karney.
 
 <a id=Notes></a>
 ## Notes
@@ -1587,9 +1587,14 @@ The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no d
 
 The algorithm is an application of the [**convex combination**](#Convex_Combinations) technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:
 
-- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of two random numbers that each express the number of failures before the first success, where the chance of a success is 1&minus;1/4 (the paper calls these two numbers _geometric_(1/4) random numbers, but this terminology is avoided in this article because it has several conflicting meanings in academic works), and one Bernoulli(5/9) random number, all of which are independent, equals _n_.  This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there may be an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should probably read "8 _n_ + 2".)
-    - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent random numbers, equals _n_, where each of the _m_ numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.
-    - Note 2: _p_<sup>_n_</sup> * (1 &minus; _p_)<sup>_m_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent random numbers equals _n_ (a _negative binomial distribution_), where each of the _m_ numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;_p_.
+- _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of the following independent random numbers equals _n_:
+
+    - Two random numbers that each express the number of failures before the first success, where the chance of a success is 1&minus;1/4 (the paper calls these two numbers _geometric_(1/4) random numbers, but this terminology is avoided in this article because it has several conflicting meanings in academic works).
+    - One Bernoulli(5/9) random number.
+
+    This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should read "8 _n_ + 2".)
+    - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent random numbers equals _n_, where each of the two numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.
+    - Note 2: _p_<sup>_m_</sup> * (1 &minus; _p_)<sup>_n_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent random numbers equals _n_ (a _negative binomial distribution_), where each of the _m_ numbers expresses the number of failures before the first success and the chance of a success is _p_.
     - Note 3: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and an integer _z_ with probability mass function _f_(.) &mdash; equals _z_.
 - _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.
 
