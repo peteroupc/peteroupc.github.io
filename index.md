@@ -34,6 +34,7 @@ Open-source articles on programming subjects.
     * [**Color Topics for Programmers**](./colorgen.html)
     * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
     * [**Chi-Squared Test**](./chisqtest.html)
+    * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 
 <a id=PDF_Versions></a>
 #### PDF Versions
@@ -47,6 +48,7 @@ Open-source articles on programming subjects.
 * [**How to Sample Unbounded Monotone Density Functions**](./unbounded.pdf)
 * [**Bernoulli Factory Algorithms**](./bernoulli.pdf)
 * [**Testing PRNGs for High-Quality Randomness**](./randomtest.pdf)
+* [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.pdf)
 * [**Examples of High-Quality PRNGs**](./hqprng.pdf)
 * [**Notes on Jumping PRNGs Ahead**](./jump.pdf)
 * [**A Note on Hash Functions**](./hash.pdf)
@@ -56,6 +58,7 @@ Open-source articles on programming subjects.
 * [**Color Topics for Programmers**](./colorgen.pdf)
 * [**Supplemental Color Topics for Programmers**](./suppcolor.pdf)
 * [**Chi-Squared Test**](./chisqtest.pdf)
+* [**Essentials of SVG**](https://peteroupc.github.io/svg.pdf)
 
 <a id=HTML_JavaScript></a>
 ### HTML/JavaScript

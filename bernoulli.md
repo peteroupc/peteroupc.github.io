@@ -724,7 +724,7 @@ Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes monomials (involv
      2. Flip the _&lambda;_\[_i_] input coin _b_\[_i_\] times.  If any of the flips returns 1, return 0.
 2. Return 1.
 
-The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](_&lambda;_), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
+The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
 
 Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "Convex Combinations", later).
 
@@ -1593,10 +1593,13 @@ The algorithm is an application of the [**convex combination**](#Convex_Combinat
     - One Bernoulli(5/9) random number.
 
     This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should read "8 _n_ + 2".)
-    - Note 1: 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent random numbers equals _n_, where each of the two numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.
-    - Note 2: _p_<sup>_m_</sup> * (1 &minus; _p_)<sup>_n_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent random numbers equals _n_ (a _negative binomial distribution_), where each of the _m_ numbers expresses the number of failures before the first success and the chance of a success is _p_.
-    - Note 3: _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and an integer _z_ with probability mass function _f_(.) &mdash; equals _z_.
 - _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.
+
+> **Notes:**
+>
+> 1. 9 * (_n_ + 1) / (2<sup>2 * _n_ + 4</sup>) is the probability that the sum of two independent random numbers equals _n_, where each of the two numbers expresses the number of failures before the first success and the chance of a success is 1&minus;1/4.
+> 2. _p_<sup>_m_</sup> * (1 &minus; _p_)<sup>_n_</sup> * choose(_n_ + _m_ &minus; 1, _m_ &minus; 1) is the probability that the sum of _m_ independent random numbers equals _n_ (a _negative binomial distribution_), where each of the _m_ numbers expresses the number of failures before the first success and the chance of a success is _p_.
+> 3. _f_(_z_) * (1 &minus; _p_) + _f_(_z_ &minus; 1) * _p_ is the probability that the sum of two independent random numbers &mdash; a Bernoulli(_p_) number and an integer _z_ with probability mass function _f_(.) &mdash; equals _z_.
 
 <a id=Calculating_Bounds_for_exp_1></a>
 ### Calculating Bounds for exp(1)

@@ -947,7 +947,7 @@
 <li>Return 1.</li>
 </ol>
 
-<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = &Sigma;<sub><em>j</em> = 1, ..., <em>k</em></sub> <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<em>&lambda;</em>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, and <em>c</em>[<em>j</em>] &gt;= 0 is the weight for monomial <em>j</em>.  (If there is only one coin, these polynomials are in Bernstein form if <em>c</em>[<em>j</em>] is <em>&alpha;</em>[<em>j</em>]*choose(<em>k</em>&minus;1, <em>j</em>&minus;1) where <em>&alpha;</em>[<em>j</em>] is a Bernstein coefficient in the interval [0, 1], and if <em>a</em>[1] = <em>j</em>&minus;1 and <em>b</em>[1] = <em>k</em>&minus;<em>j</em> for each monomial <em>j</em>.)</p>
+<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = &Sigma;<sub><em>j</em> = 1, ..., <em>k</em></sub> <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<strong><em>&lambda;</em></strong>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, <strong><em>&lambda;</em></strong> identifies the coins&#39; probabilities of heads, and <em>c</em>[<em>j</em>] &gt;= 0 is the weight for monomial <em>j</em>.  (If there is only one coin, these polynomials are in Bernstein form if <em>c</em>[<em>j</em>] is <em>&alpha;</em>[<em>j</em>]*choose(<em>k</em>&minus;1, <em>j</em>&minus;1) where <em>&alpha;</em>[<em>j</em>] is a Bernstein coefficient in the interval [0, 1], and if <em>a</em>[1] = <em>j</em>&minus;1 and <em>b</em>[1] = <em>k</em>&minus;<em>j</em> for each monomial <em>j</em>.)</p>
 
 <p>Let <em>C</em> be the sum of all <em>c</em>[<em>j</em>].  To simulate the probability <em>P</em>/<em>C</em>, choose one of the monomials with probability proportional to its weight (see &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a>&quot;), then run the algorithm above on that monomial (see also &quot;Convex Combinations&quot;, later).</p>
 
@@ -2050,15 +2050,19 @@ def valid_perm(f, x, n):
 <li>One Bernoulli(5/9) random number.</li>
 </ul>
 
-<p>This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should read &quot;8 <em>n</em> + 2&quot;.)</p>
-
-<ul>
-<li>Note 1: 9 * (<em>n</em> + 1) / (2<sup>2 * <em>n</em> + 4</sup>) is the probability that the sum of two independent random numbers equals <em>n</em>, where each of the two numbers expresses the number of failures before the first success, where the chance of a success is 1&minus;1/4.</li>
-<li>Note 2: <em>p</em><sup><em>m</em></sup> * (1 &minus; <em>p</em>)<sup><em>n</em></sup> * choose(<em>n</em> + <em>m</em> &minus; 1, <em>m</em> &minus; 1) is the probability that the sum of <em>m</em> independent random numbers equals <em>n</em> (a <em>negative binomial distribution</em>), where each of the <em>m</em> numbers expresses the number of failures before the first success and the chance of a success is <em>p</em>.</li>
-<li>Note 3: <em>f</em>(<em>z</em>) * (1 &minus; <em>p</em>) + <em>f</em>(<em>z</em> &minus; 1) * <em>p</em> is the probability that the sum of two independent random numbers &mdash; a Bernoulli(<em>p</em>) number and an integer <em>z</em> with probability mass function <em>f</em>(.) &mdash; equals <em>z</em>.</li>
-</ul></li>
+<p>This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the &quot;8 <em>n</em> + 4&quot; should read &quot;8 <em>n</em> + 2&quot;.)</p></li>
 <li><em>h</em><sub><em>n</em></sub>(): (choose(<em>n</em> * 2, <em>n</em>) / 2<sup><em>n</em> * 2</sup>)<sup>3</sup>, which is the probability of heads of the &quot;coin&quot; numbered <em>n</em>.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.</li>
 </ul>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>9 * (<em>n</em> + 1) / (2<sup>2 * <em>n</em> + 4</sup>) is the probability that the sum of two independent random numbers equals <em>n</em>, where each of the two numbers expresses the number of failures before the first success and the chance of a success is 1&minus;1/4.</li>
+<li><em>p</em><sup><em>m</em></sup> * (1 &minus; <em>p</em>)<sup><em>n</em></sup> * choose(<em>n</em> + <em>m</em> &minus; 1, <em>m</em> &minus; 1) is the probability that the sum of <em>m</em> independent random numbers equals <em>n</em> (a <em>negative binomial distribution</em>), where each of the <em>m</em> numbers expresses the number of failures before the first success and the chance of a success is <em>p</em>.</li>
+<li><em>f</em>(<em>z</em>) * (1 &minus; <em>p</em>) + <em>f</em>(<em>z</em> &minus; 1) * <em>p</em> is the probability that the sum of two independent random numbers &mdash; a Bernoulli(<em>p</em>) number and an integer <em>z</em> with probability mass function <em>f</em>(.) &mdash; equals <em>z</em>.</li>
+</ol>
+</blockquote>
 
 <p><a id=Calculating_Bounds_for_exp_1></a></p>
 
