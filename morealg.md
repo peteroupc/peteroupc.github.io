@@ -341,12 +341,14 @@ The following generator for the **rate ln(2)** is a special case of the previous
 
 A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(8)**](#Note8)</sup> with parameter _&theta;_ (a rational number greater than 0) can be generated as follows:
 
-- With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
-- Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
+1. With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
+2. Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
 For the Garima distribution (Shanker 2016)<sup>[**(9)**](#Note9)</sup>, _w_ = (1+_&theta;_)/(2+_&theta;_).
 
 For the i-Garima distribution (Singh and Das 2020)<sup>[**(10)**](#Note10)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
+
+For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup>[**(15)**](#Note15)</sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -375,6 +377,7 @@ The appendix contains implementation notes for **InShape**, which determines whe
 - <small><sup id=Note12>(12)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
 - <small><sup id=Note13>(13)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 - <small><sup id=Note14>(14)</sup> I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.</small>
+- <small><sup id=Note15>(15)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small>
 
 <a id=Appendix></a>
 ## Appendix

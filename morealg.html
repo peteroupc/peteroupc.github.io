@@ -462,14 +462,16 @@
 
 <p>A random number that follows the Lindley distribution (Lindley 1958)<sup><a href="#Note8"><strong>(8)</strong></a></sup> with parameter <em>&theta;</em> (a rational number greater than 0) can be generated as follows:</p>
 
-<ul>
+<ol>
 <li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate an exponential random number with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs) and return that number.</li>
 <li>Otherwise, generate two exponential random numbers with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
-</ul>
+</ol>
 
 <p>For the Garima distribution (Shanker 2016)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, <em>w</em> = (1+<em>&theta;</em>)/(2+<em>&theta;</em>).</p>
 
 <p>For the i-Garima distribution (Singh and Das 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, <em>w</em> = (2+<em>&theta;</em>)/(3+<em>&theta;</em>).</p>
+
+<p>For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.</p>
 
 <p><a id=Requests_and_Open_Questions></a></p>
 
@@ -503,6 +505,7 @@
 <li><small><sup id=Note12>(12)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
 <li><small><sup id=Note13>(13)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
 <li><small><sup id=Note14>(14)</sup> I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</small></li>
+<li><small><sup id=Note15>(15)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
