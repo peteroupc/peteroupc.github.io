@@ -50,6 +50,7 @@ Open-source articles on programming subjects.
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.pdf)
 * [**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.pdf)
 * [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.pdf)
+* [**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.pdf)
 * [**Examples of High-Quality PRNGs**](https://peteroupc.github.io/hqprng.pdf)
 * [**Notes on Jumping PRNGs Ahead**](https://peteroupc.github.io/jump.pdf)
 * [**A Note on Hash Functions**](https://peteroupc.github.io/hash.pdf)

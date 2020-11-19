@@ -48,6 +48,7 @@ Open-source articles on programming subjects.
 * [**How to Sample Unbounded Monotone Density Functions**](./unbounded.pdf)
 * [**Bernoulli Factory Algorithms**](./bernoulli.pdf)
 * [**Testing PRNGs for High-Quality Randomness**](./randomtest.pdf)
+* [**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.pdf)
 * [**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.pdf)
 * [**Examples of High-Quality PRNGs**](./hqprng.pdf)
 * [**Notes on Jumping PRNGs Ahead**](./jump.pdf)
