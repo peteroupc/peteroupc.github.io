@@ -127,23 +127,25 @@ In fact, the two families just given are a special case of the so-called "transf
 
 The following are special cases of the "transformed&ndash;transformer" family:
 
-- The "odd X G" family is another special case of the  in which _W_ is _x_/(1&minus;_x_) (and so _W_<sup>&minus;1</sup>(_x_) is _x_/(1+_x_)).  Examples of this family include the "odd log-logistic G" family (Gleaton and Lynch 2006)<sup>[**(12)**](#Note12)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and G is arbitrary) (Korkmaz et al. 2018)<sup>[**(13)**](#Note13)</sup>.
-- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(19)**](#Note19)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-sample quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must be included in the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the CDF for _Y_).
+- The "odd X G" family, in which _W_ is _x_/(1&minus;_x_) (and so _W_<sup>&minus;1</sup>(_x_) is _x_/(1+_x_)).  Examples of this family include the "odd log-logistic G" family (Gleaton and Lynch 2006)<sup>[**(12)**](#Note12)</sup> and the "generalized odd Weibull generated" family (where X is the Weibull distribution and G is arbitrary) (Korkmaz et al. 2018)<sup>[**(13)**](#Note13)</sup>.
+- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(14)**](#Note14)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must be included in the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the CDF for _Y_).
 
-Many special cases of the "transformed&ndash;transformer" family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some members of the "odd X Y" family have names that begin with the word "generalized", and in most such cases this corresponds to _W_<sup>&minus;1</sup>(_x_) = (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ > 0 is a shape parameter; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(14)**](#Note14)</sup>.
+Many special cases of the "transformed&ndash;transformer" family have been proposed in many papers, and usually their names suggest the distributions that make up this family.  Some members of the "odd X Y" family have names that begin with the word "generalized", and in most such cases this corresponds to _W_<sup>&minus;1</sup>(_x_) = (_x_/(1+_x_))<sup>1/_a_</sup>, where _a_ > 0 is a shape parameter; an example is the "generalized odd gamma-G" family (Hosseini et al. 2018)<sup>[**(15)**](#Note15)</sup>.
 
-A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(15)**](#Note15)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables, where _N_ is a random number expressing 1 plus the number of failures before the first success, with each success having the same probability.
+The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017)<sup>[**(20)**](#Note20)</sup> uses two distributions similarly to the "X-G" family: X is a special distribution described next, and G is a distribution with an easy-to-compute quantile function.  The family uses a shape parameter _&alpha_ > 0, and the algorithm for the "X-G" family is used, except step 1 now reads: "Generate a uniform(0, 1) random number _U_, then set _x_ to ln(_&alpha;_*_U_&minus;_U_+1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
 
-A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(16)**](#Note16)</sup>.
+A _compound distribution_ is simply the minimum of _N_ random variables distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(16)**](#Note16)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variables, where _N_ is a random number expressing 1 plus the number of failures before the first success, with each success having the same probability.
 
-An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random number distributed as _X_.  But an _inverse exponential distribution_ (Keller and Kamath 1982)<sup>[**(17)**](#Note17)</sup> is distributed as _&theta;_/ln(1/_U_) where _&theta;_ > 0 and _U_ is a uniform(0, 1) random number.
+A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(17)**](#Note17)</sup>.
+
+An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random number distributed as _X_.  But an _inverse exponential distribution_ (Keller and Kamath 1982)<sup>[**(18)**](#Note18)</sup> is distributed as _&theta;_/ln(1/_U_) where _&theta;_ > 0 and _U_ is a uniform(0, 1) random number.
 
 <a id=Certain_Distributions></a>
 ## Certain Distributions
 
 A _power function(a, c) distribution_ is distributed as _c_\*_U_<sup>1/_a_</sup>, where _U_ is a uniform(0,1) random number, _a_ > 0, and _c_ is a scale parameter greater than 0.
 
-A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distributed as the minimum of _N_ power function(_b_, _c_) random variables, where _N_ is distributed as the zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>) distribution.  (Jodrá 2020)<sup>[**(18)**](#Note18)</sup>.
+A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distributed as the minimum of _N_ power function(_b_, _c_) random variables, where _N_ is distributed as the zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>) distribution.  (Jodrá 2020)<sup>[**(19)**](#Note19)</sup>.
 
 <a id=Notes></a>
 ## Notes
@@ -161,12 +163,13 @@ A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distribu
 - <small><sup id=Note11>(11)</sup> Alzaatreh, A., Famoye, F., Lee, C., "A new method for generating families of continuous distributions", _Metron_ 71:63–79 (2013).</small>
 - <small><sup id=Note12>(12)</sup> Gleaton, J.U., Lynch, J. D., "Properties of generalized log-logistic families of lifetime distributions", _Journal of Probability and Statistical Science_ 4(1), 2006.</small>
 - <small><sup id=Note13>(13)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., "The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications", _Pak. J. Stat. Oper. Res._ XIV(3), 2018.</small>
-- <small><sup id=Note14>(14)</sup> Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.</small>
-- <small><sup id=Note15>(15)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
-- <small><sup id=Note16>(16)</sup> Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.</small>
-- <small><sup id=Note17>(17)</sup> Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).</small>
-- <small><sup id=Note18>(18)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
-- <small><sup id=Note19>(19)</sup> Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014.</small>
+- <small><sup id=Note14>(14)</sup> Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014.</small>
+- <small><sup id=Note15>(15)</sup> Hosseini, B., Afshari, M., "The Generalized Odd Gamma-G Family of Distributions:  Properties and Application", _Austrian Journal of Statistics_ vol. 47, Feb. 2018.</small>
+- <small><sup id=Note16>(16)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
+- <small><sup id=Note17>(17)</sup> Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.</small>
+- <small><sup id=Note18>(18)</sup> Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).</small>
+- <small><sup id=Note19>(19)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
+- <small><sup id=Note20>(20)</sup> Mahdavi, Abbas, and Debasis Kundu. "A new method for generating distributions with an application to exponential distribution." Communications in Statistics-Theory and Methods 46, no. 13 (2017): 6543-6557.</small>
 
 <a id=License></a>
 ## License

@@ -471,7 +471,7 @@
 
 <p>For the i-Garima distribution (Singh and Das 2020)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, <em>w</em> = (2+<em>&theta;</em>)/(3+<em>&theta;</em>).</p>
 
-<p>For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.</p>
+<p>For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.</p>
 
 <p><a id=Requests_and_Open_Questions></a></p>
 
@@ -501,11 +501,11 @@
 <li><small><sup id=Note8>(8)</sup> Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</small></li>
 <li><small><sup id=Note9>(9)</sup> Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</small></li>
 <li><small><sup id=Note10>(10)</sup> Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</small></li>
-<li><small><sup id=Note11>(11)</sup> Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</small></li>
-<li><small><sup id=Note12>(12)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
-<li><small><sup id=Note13>(13)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
-<li><small><sup id=Note14>(14)</sup> I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</small></li>
-<li><small><sup id=Note15>(15)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small></li>
+<li><small><sup id=Note11>(11)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small></li>
+<li><small><sup id=Note12>(12)</sup> Kinderman, A.J., Monahan, J.F., &quot;Computer generation of random variables using the ratio of uniform deviates&quot;, <em>ACM Transactions on Mathematical Software</em> 3(3), pp. 257-260, 1977.</small></li>
+<li><small><sup id=Note13>(13)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
+<li><small><sup id=Note14>(14)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+<li><small><sup id=Note15>(15)</sup> I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -518,7 +518,7 @@
 
 <h3>Ratio of Uniforms</h3>
 
-<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  It involves transforming the distribution&#39;s density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, is less elegant than, say, the normal distribution sampler by Karney (2014)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
+<p>The Cauchy sampler given earlier demonstrates the <em>ratio-of-uniforms</em> technique for sampling a distribution (Kinderman and Monahan 1977)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  It involves transforming the distribution&#39;s density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it&#39;s possible to achieve in rational arithmetic (Daumas et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, is less elegant than, say, the normal distribution sampler by Karney (2014)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, which doesn&#39;t require calculating logarithms or other transcendental functions.</p>
 
 <p>This algorithm works for any univariate (one-variable) distribution as long as&mdash;</p>
 
@@ -579,7 +579,7 @@
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
-<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note12"><strong>(12)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note14"><strong>(14)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, <strong>InShape</strong> can return:</p>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note13"><strong>(13)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note15"><strong>(15)</strong></a></sup> with an accuracy that depends on <em>S</em> (the higher <em>S</em> is, the more accurate).  Then, <strong>InShape</strong> can return:</p>
 
 <ul>
 <li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than or equal to 0;</li>
