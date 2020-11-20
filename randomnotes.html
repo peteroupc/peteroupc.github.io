@@ -484,8 +484,9 @@ END METHOD
 <li><small><sup id=Note32>(32)</sup> L. Hübschle-Schneider and P. Sanders, &quot;<a href="https://arxiv.org/abs/1903.00227v2"><strong>Parallel Weighted Random Sampling</strong></a>&quot;, arXiv:1903.00227v2  [cs.DS], 2019.</small></li>
 <li><small><sup id=Note33>(33)</sup> Y. Tang, &quot;An Empirical Study of Random Sampling Methods for Changing Discrete Distributions&quot;, Master&#39;s thesis, University of Alberta, 2019.</small></li>
 <li><small><sup id=Note34>(34)</sup> Roy, Sujoy Sinha, Frederik Vercauteren and Ingrid Verbauwhede. &quot;<a href="https://www.esat.kuleuven.be/cosic/publications/article-2372.pdf"><strong>High Precision Discrete Gaussian Sampling on FPGAs</strong></a>.&quot; <em>Selected Areas in Cryptography</em> (2013).</small></li>
-<li><small><sup id=Note35>(35)</sup> T. S. Han and M. Hoshi, &quot;Interval algorithm for random number generation&quot;, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997.</small></li>
-<li><small><sup id=Note36>(36)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
+<li><small><sup id=Note35>(35)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
+<li><small><sup id=Note36>(36)</sup> T. S. Han and M. Hoshi, &quot;Interval algorithm for random number generation&quot;, <em>IEEE Transactions on Information Theory</em> 43(2), March 1997.</small></li>
+<li><small><sup id=Note37>(37)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -675,11 +676,11 @@ END METHOD
 </tr>
 <tr>
 <td>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup></td>
-<td>Generates a DDG tree from the binary expansions of the probabilities. Is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
+<td>Generates a DDG tree from the binary expansions of the probabilities. Is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note34"><strong>(34)</strong></a></sup> and (Devroye and Gravel 2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
 </tr>
 <tr>
-<td>(Han and Hoshi 1997)<sup><a href="#Note35"><strong>(35)</strong></a></sup></td>
-<td>Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2015)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and comes within 3 bits, on average, of the optimal number of bits.</td>
+<td>(Han and Hoshi 1997)<sup><a href="#Note36"><strong>(36)</strong></a></sup></td>
+<td>Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2020)<sup><a href="#Note35"><strong>(35)</strong></a></sup> and comes within 3 bits, on average, of the optimal number of bits.</td>
 </tr>
 </tbody></table>
 
@@ -723,7 +724,7 @@ END METHOD
 
 <ol>
 <li>Generating an exponential random number via <code>-ln(RNDU01())</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Müller transformation.</li>
-<li>Generating an exponential random number using the <code>ExpoExact</code> method from the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).  See also (Oberhoff 2018)<sup><a href="#Note36"><strong>(36)</strong></a></sup>.</li>
+<li>Generating an exponential random number using the <code>ExpoExact</code> method from the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: <code>for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)</code>).  See also (Oberhoff 2018)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.</li>
 <li>Examples of <em>approximate algorithms</em> include generating a Gaussian random number via a sum of <code>RNDU01()</code>, or most cases of generating a random integer via modulo reduction (see &quot;<a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;).</li>
 </ol>
 </blockquote>
