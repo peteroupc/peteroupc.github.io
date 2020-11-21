@@ -1137,6 +1137,7 @@ def genshape(inshape):
     psrnx = psrn_new_01()
     psrny = psrn_new_01()
     base = 2
+    bitcount = 0
     while True:
         s = base
         cx = 0
@@ -1145,6 +1146,7 @@ def genshape(inshape):
         while True:
             cx = cx * base + random.randint(0, base - 1)
             cy = cy * base + random.randint(0, base - 1)
+            bitcount += 1
             el = inshape(cx, cy, s)
             if el > 0:
                 psrnx[2] = [0 for i in range(d)]
@@ -1156,7 +1158,7 @@ def genshape(inshape):
                     cy //= base
                 psrnx[0] = -1 if random.randint(0, 1) == 0 else 1
                 psrny[0] = -1 if random.randint(0, 1) == 0 else 1
-                return [psrnx, psrny]
+                return [psrnx, psrny, bitcount]
             elif el < 0:
                 break
             else:

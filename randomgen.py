@@ -367,14 +367,18 @@ class FastLoadedDiceRoller:
             if x < leaves:
                 label = self.leavesAndLabels[x + 1][y]
                 if label <= self.n:
-                    # NOTE: The variables label-1 and y are separate
+                    # NOTE: The number of bits consumed
+                    # by this call (A), as well as
+                    # (label - 1) (B), are two separate
                     # random variables that could be
                     # recycled via a randomness extraction
                     # method to generate additional uniform
                     # random bits, as explained by L.
-                    # Devroye and C. Gravel
-                    # ("Sampling with arbitrary precision",
-                    # 2015, arXiv:1502.02539 [cs.IT]).
+                    # Devroye and C. Gravel, arXiv:1502.02539 [cs. IT]
+                    # More specifically, the expected number of bits
+                    # that can be extracted this way is the amount
+                    # of randomness in A given that this call returns a
+                    # specific label.
                     return label - 1
                 x = 0
                 y = 0

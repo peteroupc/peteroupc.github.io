@@ -167,9 +167,9 @@ end
 def peres(bits,output)
   u=[]
   v=[]
-  len=bits.length-bits.length%2
-  return if len==0
-  i=0; while i<len
+  length=bits.length-bits.length%2
+  return if length==0
+  i=0; while i<length
     if bits[i]==0 and bits[i+1]==0
       u.push(0)
       v.push(0)
