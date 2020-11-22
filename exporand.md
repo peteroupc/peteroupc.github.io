@@ -252,12 +252,11 @@ The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a
 
 1. If **bmin** is greater than or equal to **bmax**, return an error.  If **bmin** and **bmax** are each 0 or greater, return the result of **RandUniformInRangePositive**.
 2. If **bmin** and **bmax** are each 0 or less, call **RandUniformInRangePositive** with **bmin** = abs(**bmax**) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
-3. (At this point, **bmin** is less than 0 and **bmax** is greater than 0.) Create an empty uniform PSRN **a**.
-4. Set _bmaxi_ to either floor(**bmax**) if **bmax** is 0 or greater, or &minus;ceil(abs(**bmax**)) otherwise, and set _bmini_ to either floor(**bmin**) if **bmin** is 0 or greater, or &minus;ceil(abs(**bmin**)) otherwise.  (Described this way to keep implementers from confusing floor with the integer part.)
-5. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
-6. If _ipart_ is _bmini_, then _ipart_ will be less than 0, so get the result of **RandUniformInRangePositive** with **bmin** = abs(_ipart_+1) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
-7. If _ipart_ is _bmaxi_, then _ipart_ will be 0 or greater, so return the result of **RandUniformInRangePositive** with **bmin** = _ipart_ and **bmax** = **bmax**.
-8. (At this point, _ipart_ is neither _bmini_ nor _bmaxi_.) Set **a**'s sign to either positive if _ipart_ is 0 or greater, or negative otherwise; then set **a**'s integer part to abs(_ipart_+1) if _ipart_ is negative, or _ipart_ otherwise; then return **a**.
+3. (At this point, **bmin** is less than 0 and **bmax** is greater than 0.) Set _bmaxi_ to either floor(**bmax**) if **bmax** is 0 or greater, or &minus;ceil(abs(**bmax**)) otherwise, and set _bmini_ to either floor(**bmin**) if **bmin** is 0 or greater, or &minus;ceil(abs(**bmin**)) otherwise.  (Described this way to keep implementers from confusing floor with the integer part.)
+4. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
+5. If _ipart_ is neither _bmini_ nor _bmaxi_, create a uniform PSRN **a** with an empty fractional part; then set **a**'s sign to either positive if _ipart_ is 0 or greater, or negative otherwise; then set **a**'s integer part to abs(_ipart_+1) if _ipart_ is less than 0, or _ipart_ otherwise; then return **a**.
+6. If _ipart_ is _bmini_, then create a uniform PSRN **a** with a positive sign, an integer part of abs(_ipart_+1), and an empty fractional part; then run **URandLessThanReal** with **a** = **a** and **b** = abs(**bmin**). If the result is 1, set **a**'s sign to negative and return **a**.  Otherwise, go to step 3.
+7. If _ipart_ is _bmaxi_, then create a uniform PSRN **a** with a positive sign, an integer part of _ipart_, and an empty fractional part; then run **URandLessThanReal** with **a** = **a** and **b** = **bmax**. If the result is 1, return **a**.  Otherwise, go to step 3.
 
 The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  It is equivalent to the **RandUniformInRangePositive** algorithm with **a** = **a**, **bmin** = 0, and **bmax** = **b**.
 
@@ -485,7 +484,7 @@ The following shows how to implement **URandLessThanReal** when **b** is a fract
 6. Set _c_ to 1 if _num_ * _pt_ >= _den_, and 0 otherwise.
 7. Set _d2_ to floor(_num_ * _pt_ / _den_).  (In base 2, this is equivalent to setting _d2_ to _c_.)
 8. If _d1_ is less than _d2_, return either 1 if **a**'s sign is positive, or 0 otherwise.  If _d1_ is greater than _d2_, return either 0 if **a**'s sign is positive, or 1 otherwise.
-9. If _c_ is 1, set _num_ to _num_ * _pt_ &minus; _den_, then multiply _den_ by _pt_.
+9. If _c_ is 1, set _num_ to _num_ \* _pt_ &minus; _den_ \* _d2_, then multiply _den_ by _pt_.
 10. If _num_ is 0, return either 0 if **a**'s sign is positive, or 1 otherwise.
 11. Multiply _pt_ by _base_, add 1 to _i_, and go to step 5.
 

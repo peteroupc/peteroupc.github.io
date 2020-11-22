@@ -325,7 +325,48 @@ def psrn_complement(x):
 def psrn_new_01():
     return [1, 0, []]
 
+def _floor(x):
+    v = int(x)
+    if x >= 0 or x == v:
+        return v
+    return v - 1
+
 def psrn_in_range(bmin, bmax, digits=2):
+    if bmin >= bmax:
+        raise ValueError
+    if bmin >= 0 and bmax >= 0:
+        return psrn_in_range_positive(bmin, bmax, digits)
+    if bmin <= 0 and bmax <= 0:
+        ret = psrn_in_range_positive(abs(bmax), abs(bmin), digits)
+        ret[0] = -1
+        return ret
+    while True:
+        a = psrn_new_01()
+        bmaxi = _floor(bmax)
+        bmini = _floor(bmin)
+        ipart = (
+            random.randint(bmini, bmaxi - 1)
+            if bmaxi == bmax
+            else random.randint(bmini, bmaxi)
+        )
+        if ipart != bmini and ipart != bmaxi:
+            a[0] = 1 if ipart >= 0 else -1
+            a[1] = abs(ipart + 1) if ipart < 0 else ipart
+            return a
+        if ipart == bmini:
+            a[0] = 1
+            a[1] = abs(ipart + 1)
+            if psrn_less_than_rational(a, abs(bmin), digits) == 1:
+                a[0] = -1
+                return a
+        if ipart == bmaxi:
+            a[0] = 1
+            a[1] = ipart
+            if psrn_less_than_rational(a, bmax, digits) == 1:
+                a[0] = 1
+                return a
+
+def psrn_in_range_positive(bmin, bmax, digits=2):
     if bmin >= bmax or bmin < 0 or bmax <= 0:
         raise ValueError
     a = psrn_new_01()
@@ -470,8 +511,8 @@ def _sgn(x):
         return -1
     return 0
 
-def psrn_less_than_rational(psrn, rat):
-    if psrn[0] < -1 or psrn[0] > 1 or psrn[1] == None:
+def psrn_less_than_rational(psrn, rat, digits=2):
+    if (psrn[0] != -1 and psrn[0] != 1) or psrn[1] == None:
         raise ValueError
     rat = rat if isinstance(rat, Fraction) else Fraction(rat)
     num = rat.numerator
@@ -501,29 +542,31 @@ def psrn_less_than_rational(psrn, rat):
     if num == 0:
         # Is an integer
         return 0 if psrn[0] > 0 else 1
-    pt = 2
+    pt = digits
     index = 0
     psrnlen = len(psrn[2])
     while True:
-        # Fill with next bit in a's uniform number
+        # Fill with next digit in a's uniform number
         while psrnlen <= index:
-            psrn[2].append(random.randint(0, 1))
+            psrn[2].append(random.randint(0, digits - 1))
             psrnlen += 1
         if psrn[2][index] == None:
-            psrn[2][index] = random.randint(0, 1)
+            psrn[2][index] = random.randint(0, digits - 1)
         d1 = psrn[2][index]
         c = 1 if num * pt >= den else 0
-        d2 = int(num * pt / den)
+        d2 = (num * pt) // den
+        if d2 < 0 or d2 >= digits:
+            raise ValueError
         if d1 < d2:
             return 1 if psrn[0] > 0 else 0
         if d1 > d2:
             return 0 if psrn[0] > 0 else 1
         if c == 1:
-            num = num * pt - den
-            den *= pt
+            num = num * pt - den * d2
+            den = den * pt
         if num == 0:
             return 0 if psrn[0] > 0 else 1
-        pt *= 2
+        pt *= digits
         index += 1
 
 def psrn_reciprocal(psrn1, digits=2):
@@ -1137,7 +1180,6 @@ def genshape(inshape):
     psrnx = psrn_new_01()
     psrny = psrn_new_01()
     base = 2
-    bitcount = 0
     while True:
         s = base
         cx = 0
@@ -1146,7 +1188,6 @@ def genshape(inshape):
         while True:
             cx = cx * base + random.randint(0, base - 1)
             cy = cy * base + random.randint(0, base - 1)
-            bitcount += 1
             el = inshape(cx, cy, s)
             if el > 0:
                 psrnx[2] = [0 for i in range(d)]
@@ -1158,7 +1199,7 @@ def genshape(inshape):
                     cy //= base
                 psrnx[0] = -1 if random.randint(0, 1) == 0 else 1
                 psrny[0] = -1 if random.randint(0, 1) == 0 else 1
-                return [psrnx, psrny, bitcount]
+                return [psrnx, psrny]
             elif el < 0:
                 break
             else:
@@ -1694,7 +1735,7 @@ if __name__ == "__main__":
         # print([mult,m,"f1",float(f1),float(f2)])
         if m < f1 or m > f2:
             raise ValueError
-        if i < 10:
+        if i < 100:
             sample1 = [random.uniform(float(f1), float(f2)) for _ in range(2000)]
             sample2 = [
                 _readpsrn2(
@@ -1704,10 +1745,21 @@ if __name__ == "__main__":
             ]
             ks = st.ks_2samp(sample1, sample2)
             if ks.pvalue < 1e-6:
-                print("    psrn_in_range_test(%s,%s,digits=%d)" % (f1, f2, digits))
+                print(
+                    "    psrn_in_range_test(Fraction(%d,%d),Fraction(%d,%d),digits=%d)"
+                    % (
+                        f1.numerator,
+                        f1.denominator,
+                        f2.numerator,
+                        f2.denominator,
+                        digits,
+                    )
+                )
                 print(ks)
                 print("    # %s - %s" % (min(sample1), max(sample1)))
                 print("    # %s - %s" % (min(sample2), max(sample2)))
+                dobucket(sample1)
+                dobucket(sample2)
 
     def multiply_psrn_by_fraction_test(ps, pi, pf, frac, i=0, digits=2):
         pfc = [x for x in pf]
@@ -1939,10 +1991,20 @@ if __name__ == "__main__":
     add_psrn_and_fraction_test(1, 0, [], Fraction(-2, 1), digits=10)
 
     for digits in [2, 3, 10, 5, 16]:
+        psrn_in_range_test(Fraction(-9, 11), Fraction(1, 23), digits=2)
+        psrn_in_range_test(Fraction(-25, 21), Fraction(13, 3), digits=2)
+        psrn_in_range_test(Fraction(-7, 18), Fraction(11, 17), digits=2)
+        psrn_in_range_test(Fraction(-6, 23), Fraction(13, 27), digits=2)
+        psrn_in_range_test(Fraction(-7, 26), Fraction(5, 7), digits=3)
+
         for i in range(1000):
             ps, pi, pf = random_psrn(digits=digits)
             frac = Fraction(random.randint(0, 32), random.randint(1, 32))
             frac2 = Fraction(random.randint(0, 32), random.randint(1, 32))
+            if random.random() < 0.5:
+                frac = -frac
+            if random.random() < 0.5:
+                frac2 = -frac2
             psrn_in_range_test(frac, frac2, i, digits=digits)
 
         for i in range(1000):

@@ -531,7 +531,7 @@ END METHOD
 
 <p>There are many algorithms for the <code>RNDINT(maxInclusive)</code> method, which generates uniform random integers in [0, maxInclusive].  This section deals with &quot;optimal&quot; <code>RNDINT</code> algorithms in terms of the number of random bits they use on average (assuming we have a source of &quot;truly&quot; random bits).</p>
 
-<p>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that any algorithm that uses only unbiased random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  They also gave lower bounds on the number of random bits an algorithm needs on average for this purpose.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>, so any <em>optimal</em> algorithm for <code>RNDINT</code> needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
+<p>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup> showed that any algorithm that uses only unbiased random bits to generate random integers with separate probabilities can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of <code>RNDINT</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>.  Knuth and Yao showed that any <em>optimal</em> algorithm for <code>RNDINT</code>, once described as a DDG tree, needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note17"><strong>(17)</strong></a></sup></p>
 
 <p>As also shown by Knuth and Yao, however, any integer generating algorithm that is both optimal <em>and unbiased (exact)</em> will also run forever in the worst case, even if it uses few random bits on average.  This is because in most cases, <code>n</code> will not be a power of 2, so that <code>n</code> will have an infinite binary expansion, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree. (If <code>n</code> is a power of 2, the binary expansion will be finite, so that the DDG tree will have a finite depth and no rejection leaves.)</p>
 
@@ -597,10 +597,12 @@ END METHOD
 </tr>
 </tbody></table>
 
-<p>There are various techniques that can reduce the number of bits &quot;wasted&quot; by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of Knuth and Yao, even if the algorithm isn&#39;t &quot;optimal&quot;.  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2020, section 2.3)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p>
+<p>There are various techniques that can reduce the number of bits &quot;wasted&quot; by an integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of <code>log2(n)</code> bits per random integer, even if the algorithm isn&#39;t &quot;optimal&quot;.  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in (Devroye and Gravel 2020, section 2.3)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p>
 
 <blockquote>
 <p><strong>Note:</strong> A similar question is how to generate a random integer given rolls of a fair die; more specifically, how to roll a <em>k</em>-sided die given a <em>p</em>-sided die.  This can&#39;t be done without &quot;wasting&quot; randomness, unless &quot;every prime number dividing <em>k</em> also divides <em>p</em>&quot; (see &quot;<a href="https://perso.math.u-pem.fr/kloeckner.benoit/papiers/DiceSimulation.pdf"><strong>Simulating a dice with a dice</strong></a>&quot; by B. Kloeckner, 2008).  However, since <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>) can turn die rolls into unbiased bits, so that the discussion above applies, this question is interesting only when someone wants to build instructions to choose a number at random by rolling real dice or flipping real coins.</p>
+
+<p><strong>Example</strong>: As an example of batching, to generate three digits from 0 through 9, we can call <code>RNDINT(999)</code> to generate an integer in [0, 999], then break the number it returns into three digits.</p>
 </blockquote>
 
 <p><a id=A_Note_on_Weighted_Choice_Algorithms></a></p>
@@ -614,9 +616,9 @@ END METHOD
 <li>can all be described as a binary DDG tree.</li>
 </ul>
 
-<p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights), so an optimal algorithm will use anywhere from 1.2800... to 3.2800... bits on average to generate a random number with these weights.<sup><a href="#Note17"><strong>(17)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.</p>
+<p>In this case, though, the number of random bits an algorithm uses on average is bounded from below by the sum of binary entropies of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights are 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is <code>(3/21) * log2(21/3) = 0.4010...</code>, and so on for the other weights).  Thus, any such algorithm will require at least 1.2800... bits on average to generate a random number with these weights.<sup><a href="#Note17"><strong>(17)</strong></a></sup>  Another difference from integer generation algorithms is that usually a special data structure has to be built for the sampling to work, and often there is a need to make updates to the structure as items are sampled.</p>
 
-<p>The following are some ways to implement <code>WeightedChoice</code>. The algorithms are generally not optimal in terms of the number of bits used, unless noted. For these samplers to be <em>error-bounded</em>:</p>
+<p>The following are some ways to implement <code>WeightedChoice</code>. (Some algorithms come close, on average, to the optimal number of random bits, and the notes may show this.) For these samplers to be <em>error-bounded</em>:</p>
 
 <ul>
 <li>Weights passed to these algorithms should first be converted to integers (see <code>IntegerWeightsListFP</code> or <code>NormalizeRatios</code> in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a>&quot; for conversion methods), or rational numbers when indicated.</li>
@@ -639,7 +641,7 @@ END METHOD
 </tr>
 <tr>
 <td>Samplers described in (Saad et al., 2020)<sup><a href="#Note25"><strong>(25)</strong></a></sup></td>
-<td>Uses integer weights only, and samples using random bits. The samplers are optimal in the sense given here as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.</td>
+<td>Uses integer weights only, and samples using random bits. The samplers come within 2 bits, on average, of the optimal number of bits as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>.</td>
 </tr>
 <tr>
 <td>Rejection sampling</td>
@@ -675,7 +677,7 @@ END METHOD
 </tr>
 <tr>
 <td>Knuth and Yao (1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup></td>
-<td>Generates a DDG tree from the binary expansions of the probabilities. Is optimal, or at least nearly so.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note34"><strong>(34)</strong></a></sup> and (Devroye and Gravel 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
+<td>Generates a DDG tree from the binary expansions of the probabilities. Comes within 2 bits, on average, of the optimal number of bits.  This is suggested in exercise 3.4.2 of chapter 15 of (Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Roy et al. 2013)<sup><a href="#Note34"><strong>(34)</strong></a></sup> and (Devroye and Gravel 2020)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
 </tr>
 <tr>
 <td>(Han and Hoshi 1997)<sup><a href="#Note35"><strong>(35)</strong></a></sup></td>

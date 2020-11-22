@@ -190,6 +190,13 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random number distributed as <em>X</em>.  But an <em>inverse exponential distribution</em> (Keller and Kamath 1982)<sup><a href="#Note21"><strong>(21)</strong></a></sup> is distributed as &minus;<em>&theta;</em>/ln(<em>U</em>) where <em>&theta;</em> &gt; 0 and <em>U</em> is a uniform(0, 1) random number.</p>
 
+<p>A <em>weight-biased X</em> or <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
+
+<ol>
+<li>Generate a random number that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
+<li>With probability <em>w</em>(<em>x</em>), return <em>x</em>.  Otherwise, go to step 1.</li>
+</ol>
+
 <blockquote>
 <p><strong>Note</strong>: This is a note on quantile generation using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</p>
 
@@ -233,7 +240,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 <li><small><sup id=Note15>(15)</sup> Gleaton, J.U., Lynch, J. D., &quot;Properties of generalized log-logistic families of lifetime distributions&quot;, <em>Journal of Probability and Statistical Science</em> 4(1), 2006.</small></li>
 <li><small><sup id=Note16>(16)</sup> Korkmaz, M.Ç., Alizadeh, M., et al., &quot;The Generalized Odd Weibull Generated Family of Distributions: Statistical Properties and Applications&quot;, <em>Pak. J. Stat. Oper. Res.</em> XIV(3), 2018.</small></li>
 <li><small><sup id=Note17>(17)</sup> Hosseini, B., Afshari, M., &quot;The Generalized Odd Gamma-G Family of Distributions:  Properties and Application&quot;, <em>Austrian Journal of Statistics</em> vol. 47, Feb. 2018.</small></li>
-<li><small><sup id=Note18>(18)</sup> N.H. Al Noor and N.K. Assi, &quot;Rayleigh-Rayleigh Distribution: Properties and Applications&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012038 (2020).</small></li>
+<li><small><sup id=Note18>(18)</sup> N.H. Al Noor and N.K. Assi, &quot;Rayleigh-Rayleigh Distribution: Properties and Applications&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012038 (2020).  The underlying Rayleigh distribution uses a parameter <em>&theta;</em> (or <em>&lambda;</em>), which is different from <em>Mathematica</em>&#39;s parameterization with <em>&sigma;</em> = sqrt(1/<em>&theta;</em><sup>2</sup>) = sqrt(1/<em>&lambda;</em><sup>2</sup>).  The first Rayleigh distribution uses <em>&theta;</em> and the second, <em>&lambda;</em>.</small></li>
 <li><small><sup id=Note19>(19)</sup> Boshi, M.A.A., et al., &quot;Generalized Gamma – Generalized Gompertz Distribution&quot;, <em>Journal of Physics: Conference Series</em> 1591, 012043 (2020).</small></li>
 <li><small><sup id=Note20>(20)</sup> Akdoğan, Y., Kus, C., et al., &quot;Geometric-Zero Truncated Poisson Distribution: Properties and Applications&quot;, <em>Gazi University Journal of Science</em> 32(4), 2019.</small></li>
 <li><small><sup id=Note21>(21)</sup> Keller, A.Z., Kamath A.R., &quot;Reliability analysis of CNC machine tools&quot;, <em>Reliability Engineering</em> 3 (1982).</small></li>

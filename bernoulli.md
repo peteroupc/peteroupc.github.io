@@ -40,6 +40,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
+        - [**_&lambda;_/(1+_&lambda;_)**](#lambda___1___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
         - [**1 &minus; ln(1+_&lambda;_)**](#1_minus_ln_1___lambda)
         - [**_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))**](#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
@@ -356,6 +357,11 @@ This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalve
 
 1. With probability 1/2, return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
+
+<a id=lambda___1___lambda></a>
+#### _&lambda;_/(1+_&lambda;_)
+
+Return 1 minus the result of the **algorithm for 1/(1+_&lambda;_)**.
 
 <a id=ln_1___lambda></a>
 #### ln(1+_&lambda;_)

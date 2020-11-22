@@ -42,7 +42,7 @@ Algorithm M in fact works in a surprisingly broad range of cases; for more, see 
 
 Pae (2005)<sup>[**(6)**](#Note6)</sup> and (Pae and Loui 2006)<sup>[**(7)**](#Note7)</sup> characterize _extracting functions_.  Informally, an _extracting function_ is a function that maps a fixed number of digits to a variable number of bits such that, whenever the input has a given number of ones, twos, etc., every output bit-string of a given length is as likely to occur as every other output bit-string of that length, regardless of the input's bias.<sup>[**(8)**](#Note8)</sup>  Among others, von Neumann's extractor and the one by Peres (1992)<sup>[**(9)**](#Note9)</sup> are extracting functions.  The Peres extractor takes a list of bits (zeros and ones with the same bias) as input and is described as follows:
 
-1. Create two empty lists named U and V. Then, while two or more bits remain:
+1. Create two empty lists named U and V. Then, while two or more bits remain in the input:
     1. If the next two bits are 0/0, append 0 to U and 0 to V.
     2. Otherwise, if those bits are 0/1, append 1 to U, then write a 0.
     3. Otherwise, if those bits are 1/0, append 1 to U, then write a 1.
