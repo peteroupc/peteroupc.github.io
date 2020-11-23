@@ -1118,7 +1118,7 @@ class BinomialSampler:
                     bincos[rv][0] = (
                         interval.logbinco(n2, rv, v)
                         + self._logint(m, v)
-                        + self._logint(2, v) * (k - (n2 + 2))
+                        + self._logint(2, v) * ((k - n2) + 2)
                     ).truncate()
                     # print([rv,v,bincos[rv][0]])
                     bincos[rv][1] = v
@@ -1137,7 +1137,7 @@ class BinomialSampler:
                     bc = (
                         interval.logbinco(n2, rv, v)
                         + self._logint(m, v)
-                        + self._logint(2, v) * (k - (n2 + 2))
+                        + self._logint(2, v) * ((k - n2) + 2)
                     ).truncate()
                     bincos[rv][0] = bc
                 if success:

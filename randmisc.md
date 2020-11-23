@@ -7,20 +7,21 @@
 
 Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is even), which is equivalent to the one that appeared in (Bringmann et al. 2014)<sup>[**(1)**](#Note1)</sup>, and adapted to be more programmer-friendly.
 
-1. Set _m_ to floor(sqrt(_n_)) + 1.
-2. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits (zeros or ones) until a zero is generated this way.  Set _k_ to the number of ones generated this way.
-3. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
-4. Set _ret_ to either _n_/2+_i_ or _n_/2&minus;_i_&minus;1 with equal probability.
-5. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 2.
-6. With probability choose(_n_, _ret_)\*_m_\*2<sup>_k_&minus;(_n_+2)</sup>, return _ret_.  Otherwise, go to step 2. (Here, choose(_n_, _k_) is a binomial coefficient.<sup>[**(2)**](#Note2)</sup>)
+1. If _n_ is less than 4, generate _n_ unbiased random bits (zeros or ones) and return their sum.
+2. Set _m_ to floor(sqrt(_n_)) + 1.
+3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits (zeros or ones) until a zero is generated this way.  Set _k_ to the number of ones generated this way.
+4. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
+5. Set _ret_ to either _n_/2+_i_ or _n_/2&minus;_i_&minus;1 with equal probability.
+6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
+7. With probability choose(_n_, _ret_)\*_m_\*2<sup>(_k_&minus;_n_)+2</sup>, return _ret_.  Otherwise, go to step 3. (Here, choose(_n_, _k_) is a binomial coefficient.<sup>[**(2)**](#Note2)</sup>)
 
-This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 6 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets large, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random number can be generated, negated, and compared with that logarithm to determine whether the step succeeds.
+This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as _n_ gets large, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge's approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random number can be generated, negated, and compared with that logarithm to determine whether the step succeeds.
 
-More specifically, step 6 can be changed as follows:
+More specifically, step 7 can be changed as follows:
 
-- (6.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_k_+1)&minus;loggamma((_n_&minus;_k_)+1)+ln(_m_)+ln(2)\*_k_&minus;(_n_+2) (where loggamma(_x_) is the logarithm of the gamma function).
-- (6a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _e_ to 0 minus that number.
-- (6b.) If _e_ is greater than _p_, go to step 2.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 2 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
+- (7.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_ret_+1)&minus;loggamma((_n_&minus;_ret_)+1)+ln(_m_)+ln(2)\*((_k_&minus;_n_)+2) (where loggamma(_x_) is the logarithm of the gamma function).
+- (7a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _e_ to 0 minus that number.
+- (7b.) If _e_ is greater than _p_, go to step 3.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 3 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula for the factorial's natural logarithm (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
 
