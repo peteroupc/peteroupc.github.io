@@ -1786,7 +1786,7 @@ An absolutely continuous distribution can thus be built if we can find a sequenc
 
 - _a_<sub>_j_</sub> = _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>),
 
-where _&beta;_ = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
+where _&beta;_ = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
 
 For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 

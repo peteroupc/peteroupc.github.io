@@ -12,9 +12,9 @@
 <p>Take the following sampler of a binomial(<em>n</em>, 1/2) distribution (where <em>n</em> is even), which is equivalent to the one that appeared in (Bringmann et al. 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, and adapted to be more programmer-friendly.</p>
 
 <ol>
-<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (zeros or ones) and return their sum.</li>
+<li>If <em>n</em> is less than 4, generate <em>n</em> unbiased random bits (zeros or ones) and return their sum.  Otherwise, if <em>n</em> is odd, set <em>ret</em> to the result of this algorithm with <em>n</em> = <em>n</em> &minus; 1, then add an unbiased random bit&#39;s value to <em>ret</em>, then return <em>ret</em>.</li>
 <li>Set <em>m</em> to floor(sqrt(<em>n</em>)) + 1.</li>
-<li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits (zeros or ones) until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+<li>(First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
 <li>Set <em>s</em> to an integer in [0, <em>m</em>) chosen uniformly at random, then set <em>i</em> to <em>k</em>*<em>m</em> + <em>s</em>.</li>
 <li>Set <em>ret</em> to either <em>n</em>/2+<em>i</em> or <em>n</em>/2&minus;<em>i</em>&minus;1 with equal probability.</li>
 <li>(Second, accept or reject <em>ret</em>.) If <em>ret</em> &lt; 0 or <em>ret</em> &gt; <em>n</em>, go to step 3.</li>

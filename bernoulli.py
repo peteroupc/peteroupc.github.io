@@ -129,8 +129,10 @@ class Bernoulli:
         return ret
 
     def _randbits(self, count):
-        self.totalbits += count
-        return self.r.randint(0, (1 << count) - 1)
+        ret = 0
+        for i in range(count):
+            ret = (ret << 1) + self.randbit()
+        return ret
 
     def _urandnew(self):
         return [0, 0]  # Multiple of 2^-X, followed by X
@@ -724,15 +726,6 @@ class Bernoulli:
             else:
                 if f2() == 1:
                     return 0
-
-    def _multicoin(self, coins):
-        # Morina et al. 2019; see also Dughmi et al. 2017
-        while True:
-            # Choose a random coin
-            c = self.r.randint(0, len(coins) - 1)
-            # Return it if it flips heads
-            if coins[c]() == 1:
-                return c
 
     def sin(self, f):
         """ Sine Bernoulli factory: B(p) => B(sin(p)).  Special

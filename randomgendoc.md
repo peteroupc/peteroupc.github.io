@@ -699,6 +699,8 @@ CLASSES
      |      The algorithm is simple to describe: "Flip a coin until it shows heads
      |         _k_ times.  The estimated bias is then `(k-1)/GammaDist(r, 1)`,
      |         where _r_ is the total number of coin flips."
+     |      The estimate is unbiased but has nonzero probability of being
+     |      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
      |      Reference: Huber, M., 2017. A Bernoulli mean estimate with
      |         known relative error distribution. Random Structures & Algorithms, 50(2),
      |         pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
@@ -723,6 +725,8 @@ CLASSES
      |      Estimates the mean of a random variable lying in [0, 1].
      |      This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
      |      number is less the result of the given function or 0 otherwise.
+     |      The estimate is unbiased but has nonzero probability of being
+     |      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
      |      coin: A function that returns a number in [0, 1].
      |      k: See gbas.
      |
@@ -1481,39 +1485,6 @@ CLASSES
 
 FUNCTIONS
     numericalTable(func, x, y, n=100)
-
-    urandfill(rg, a, bits=53)
-        Fills the unsampled bits of the given u-rand 'a' as necessary to
-              make a number with 'bits' many bits.  If the u-rand already has
-              that many bits or more, the u-rand is rounded using the round-to-nearest,
-              ties to even rounding rule.  Returns the resulting number as a
-              multiple of 2^'bits'.  Default for 'bits' is 53.
-        - rg: An object that must supply a 'randbit' method that generates an
-          unbiased random bit.
-
-    urandgreater(rg, a, b)
-        Determines whether the first u-rand is greater than another u-rand; returns
-              True if so and False otherwise.  During
-              the comparison, additional bits will be sampled in both u-rands if necessary
-              for the comparison.
-        - rg: An object that must supply a 'randbit' method that generates an
-          unbiased random bit.
-         - a, b: The first and second u-rands.
-
-    urandless(rg, a, b)
-        Determines whether the first u-rand is less than another u-rand; returns
-              True if so and False otherwise.  During
-              the comparison, additional bits will be sampled in both u-rands if necessary
-              for the comparison.
-        - rg: An object that must supply a 'randbit' method that generates an
-          unbiased random bit.
-         - a, b: The first and second u-rands.
-
-    urandnew()
-        Returns an object to serve as a partially-sampled uniform random
-        number called a "u-rand" (Karney, "Sampling exactly from the normal distribution").
-        A u-rand is a list of two numbers: the first is a multiple of 1/(2^X), and the second is X.
-        The urand created by this method will be "empty" (no bits sampled yet).
 
 FILE
     /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py

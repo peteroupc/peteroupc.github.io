@@ -161,7 +161,7 @@ require 'tmpdir'
 require 'fileutils'
 
 def preparePdfs()
-Dir.glob("*.md"){|fn|
+Dir.glob("comments.md"){|fn|
   next if fn=="README.md"
   next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")
@@ -175,6 +175,7 @@ Dir.glob("*.md"){|fn|
   puts(r[0,100])
   i=0
   while true
+    if i>10; break;end
     ii=i==0 ? "" : i.to_s
     rpdf=File.expand_path(".")+"/#{file}#{ii}.pdf"
     rtex=File.expand_path(".")+"/#{file}#{ii}.tex"
@@ -183,9 +184,13 @@ Dir.glob("*.md"){|fn|
     p rpdf
     outputengine="html5"
     output="-o '#{rtmppdf}'"
-    #output="-s -o '#{rtex}'"
+    output="-s -o '#{rtex}'"
     File.delete(rtex) rescue nil
-    puts `pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=chapter -t #{outputengine} #{output} --metadata pagetitle=\"#{title}\" /tmp/#{file}.md`
+    cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=chapter"
+    #cmd+=" -t #{outputengine}"
+    cmd+=" #{output} --metadata pagetitle=\"#{title}\" /tmp/#{file}.md"
+    puts cmd
+    puts `#{cmd}`
     p FileTest.exist?(rtmppdf)
     if !FileTest.exist?(rtmppdf) && !FileTest.exist?(rtex)
       i+=1; next
@@ -202,3 +207,5 @@ Dir.glob("*.md"){|fn|
   end
 }
 end
+
+preparePdfs()

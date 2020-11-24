@@ -7,9 +7,9 @@
 
 Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is even), which is equivalent to the one that appeared in (Bringmann et al. 2014)<sup>[**(1)**](#Note1)</sup>, and adapted to be more programmer-friendly.
 
-1. If _n_ is less than 4, generate _n_ unbiased random bits (zeros or ones) and return their sum.
+1. If _n_ is less than 4, generate _n_ unbiased random bits (zeros or ones) and return their sum.  Otherwise, if _n_ is odd, set _ret_ to the result of this algorithm with _n_ = _n_ &minus; 1, then add an unbiased random bit's value to _ret_, then return _ret_.
 2. Set _m_ to floor(sqrt(_n_)) + 1.
-3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits (zeros or ones) until a zero is generated this way.  Set _k_ to the number of ones generated this way.
+3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 4. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
 5. Set _ret_ to either _n_/2+_i_ or _n_/2&minus;_i_&minus;1 with equal probability.
 6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
