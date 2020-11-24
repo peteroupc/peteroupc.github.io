@@ -273,10 +273,10 @@ And here is Python code that implements this algorithm.  Note that it uses float
 ```
 def example_4_2_1(rg, bern, precision=53):
     while True:
-       ret=rg.kthsmallest_urand(2,2)
+       ret=rg.kthsmallest_psrn(2,2)
        k=1
        while True:
-          u=rg.kthsmallest_urand(2,2)
+          u=rg.kthsmallest_psrn(2,2)
           kden=4*k*k+2*k # erratum incorporated
           if randomgen.urandless(rg,u, ret) and \
              rg.zero_or_one(4, kden)==1 and \

@@ -12,6 +12,7 @@ https://creativecommons.org/publicdomain/zero/1.0/
 import math
 import random
 from fractions import Fraction
+from betadist import *
 
 _SIGBITS = 53
 _FLOAT_MAX = 1.7976931348623157e308
@@ -1111,8 +1112,7 @@ class RandomGen:
     def rndintexc(self, maxExclusive):
         if maxExclusive <= 0:
             raise ValueError("maxExclusive 0 or less")
-        return self.rng.randint(0, maxExclusive - 1)
-        # return self.rndint(maxExclusive - 1)
+        return self.rndint(maxExclusive - 1)
 
     def rndintrange(self, minInclusive, maxInclusive):
         # NOTE: Since Python integers are arbitrary-precision,
@@ -1766,12 +1766,12 @@ Returns 'list'. """
             # to be sorted, accept n
             if n <= 1:
                 return n
-            u = urandnew()
+            u = psrn_new_01()
             success = True
             i = 1
             while i < n and success:
-                u2 = urandnew()
-                if urandless(self, u, u2):
+                u2 = psrn_new_01()
+                if psrn_less(self, u, u2) == 1:
                     u = u2
                 else:
                     success = False  # Not sorted
@@ -2272,24 +2272,23 @@ Returns 'list'. """
         return [first + self.poisson(m) for m in othermeans]
 
     # The von Neumann exponential generator,
-    # but using u-rands as defined in Karney.
+    # but using uniform partially-sampled random numbers.
     def _expovnbits(self, bits=53):
         count = 0
         while True:
-            y1 = urandnew()
+            y1 = psrn_new_01()
             y = y1
             accept = True
             while True:
-                z = urandnew()
-                if urandgreater(self, y, z):
+                z = psrn_new_01()
+                if psrn_less(self, y, z) == 0:
                     accept = not accept
                     y = z
                 break
             if accept:
-                count += urandfill(self, y1, bits)
-                break
-            count += 1 << bits
-        return count * 1.0 / (1 << bits)
+                y1[1] = count
+                return psrn_fill(self, y1, precision=bits)
+            count += 1
 
     def exponential(self, lamda=1.0):
         if self.rndint(1) == 0:
@@ -3605,49 +3604,6 @@ Implements section 5 of Devroye and Gravel,
                 ubits = 0
         return ret
 
-    def quantile_urands(self, icdf, urands, digitplaces=53):
-        """
-Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
-- 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
-u-rands: `[[0,0] for i in range(5)]`.
-- 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-   and returns a number within 2^-digitplaces of the True inverse
-   CDF (inverse cumulative distribution function, or quantile function)
-   of u/2^ubits, and is monotonic for a given value of `digitplaces`.
-- 'digitplaces' is an accuracy expressed as a number of bits after the
-   point. Each quantile will be a multiple of 2^-digitplaces,
-   or have a smaller granularity. Default is 53.
-
-Example:  The following example generates the maximum of 10
-random numbers, to an accuracy of 2^53.
-
-ur=randgen.kthsmallest_urand(10, 10)
-maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
-       """
-        ubits = 0
-        base = 2
-        threshold = Fraction(1, base ** digitplaces) * 2
-        ret = [None for i in range(n)]
-        k = 0
-        while k < n:
-            incr = precision if (ubits == 0) else 8
-            ubits += incr
-            if urands[k][1] < ubits:
-                urands[k][0] <<= ubits - urands[k][1]
-                urands[k][0] |= self.rndintexc(1 << (ubits - urands[k][1]))
-                urands[k][1] = ubits
-            lower = icdf(urands[k][0], urands[k][1], precision)
-            upper = icdf(urands[k][0] + 1, urands[k][1], precision)
-            # ICDF can never go down
-            if lower > upper:
-                raise ValueError
-            diff = upper - lower
-            if diff <= threshold:
-                ret[k] = upper + (upper - lower) / 2
-                k += 1
-                ubits = 0
-        return ret
-
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """
 Generates 'n' random numbers that follow a continuous
@@ -3835,7 +3791,9 @@ _Non-Uniform Random Variate Generation_, 1986.
          - mn, mx: Sampling domain.  The random number
          will be in the interval [mn, mx].
          - n: How many random numbers to generate. Default is 1. """
-        return self.numbers_from_u01([rg.rndu01() for i in range(n)], None, cdf, mn, mx)
+        return self.numbers_from_u01(
+            [self.rndu01() for i in range(n)], None, cdf, mn, mx
+        )
 
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
         """ Transforms one or more random numbers into numbers
@@ -3948,7 +3906,7 @@ _Non-Uniform Random Variate Generation_, 1986.
         return ret
 
     def _kthsmallest_internal(self, ret, index, n, k, compl=0):
-        # Generate a sorted list of u-rands in the portion
+        # Generate a sorted list of uniform PSRNs in the portion
         # of ret at the position range [index, n + index].
         # compl=0 -> kth smallest; compl=1 -> kth largest
         # Early exit if we go beyond the kth smallest index
@@ -3966,28 +3924,25 @@ _Non-Uniform Random Variate Generation_, 1986.
         setbit = 1 - compl
         # Add clear bit to left-hand side
         for i in range(index, index + leftcount):
-            ret[i][0] = (ret[i][0] << 1) | clearbit
-            ret[i][1] += 1
+            ret[i][2].append(clearbit)
         # Recurse for left-hand side
         if leftcount > 1:
             self._kthsmallest_internal(ret, index, leftcount, k, compl)
         # Add set bit to right-hand side
         if index + leftcount < k:
             for i in range(index + leftcount, index + n):
-                ret[i][0] = (ret[i][0] << 1) | setbit
-                ret[i][1] += 1
+                ret[i][2].append(setbit)
             # Recurse for right-hand side
             if rightcount > 1:
                 self._kthsmallest_internal(ret, index + leftcount, rightcount, k, compl)
 
-    def kthsmallest_urand(self, n, k):
+    def kthsmallest_psrn(self, n, k):
         """ Generates the 'k'th smallest 'b'-bit uniform random
             number out of 'n' of them; returns the result in
-            the form of a "u-rand", or a partially sampled uniform
-            random number (Karney, "Sampling exactly from the normal distribution"). """
+            the form of a uniform partially-sampled random number. """
         if k <= 0 or k > n:
             raise ValueError
-        ret = [[0, 0] for i in range(n)]
+        ret = [psrn_new_01() for i in range(n)]
         if k < n / 2:
             # kth smallest
             self._kthsmallest_internal(ret, 0, n, k, 0)
@@ -4002,7 +3957,7 @@ _Non-Uniform Random Variate Generation_, 1986.
             number out of 'n' of them. """
         if k <= 0 or k > n:
             raise ValueError
-        return urandfill(self, self.kthsmallest_urand(n, k), b)
+        return psrn_fill(self, self.kthsmallest_psrn(n, k), precision=b)
 
     def fromDyadicDecompCode(self, code, precision=53):
         """ Generates a uniform random number contained in a box described
@@ -5226,7 +5181,7 @@ class KVectorSampler:
         """ Returns a list of 'n' random numbers of
          the distribution represented by this sampler.
          - rg: A random generator (RandGen) object. """
-        return [self._sampleone() for i in range(n)]
+        return [self._sampleone(rg) for i in range(n)]
 
 class AlmostRandom:
     def __init__(self, randgen, list):

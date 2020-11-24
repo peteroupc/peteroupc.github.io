@@ -773,7 +773,7 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     if int(bpower) == bpower and int(apower) == apower:
         a = int(afrac)
         b = int(bfrac)
-        return _urand_to_geobag(randomgen.RandomGen().kthsmallest_urand(a + b - 1, a))
+        return _urand_to_geobag(randomgen.RandomGen().kthsmallest_psrn(a + b - 1, a))
     # Split a and b into two parts which are relatively trivial to simulate
     if bfrac > 2 and afrac > 2:
         bintpart = int(bfrac) - 1
@@ -1780,7 +1780,7 @@ Oberhoff also describes _prefix distributions_ that sample a box that covers the
 
 In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number's digits according to those probabilities.  However, there seem to be limits on how practical this approach is.
 
-The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion, where the random number is in \[0, 1\] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
+The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
 
 An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _PDF_, except if the sequence has the form&mdash;
 

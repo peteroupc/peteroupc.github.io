@@ -134,32 +134,6 @@ class Bernoulli:
             ret = (ret << 1) + self.randbit()
         return ret
 
-    def _urandnew(self):
-        return [0, 0]  # Multiple of 2^-X, followed by X
-
-    def _urandless(self, a, b):
-        index = 0
-        while True:
-            # Fill with next bit in a's uniform number
-            if a[1] < index:
-                raise ValueError
-            if b[1] < index:
-                raise ValueError
-            if a[1] <= index:
-                a[1] += 1
-                a[0] = self.randbit() | (a[0] << 1)
-            # Fill with next bit in b's uniform number
-            if b[1] <= index:
-                b[1] += 1
-                b[0] = self.randbit() | (b[0] << 1)
-            aa = (a[0] >> (a[1] - 1 - index)) & 1
-            bb = (b[0] >> (b[1] - 1 - index)) & 1
-            if aa < bb:
-                return True
-            if aa > bb:
-                return False
-            index += 1
-
     def fill_geometric_bag(self, bag, precision=53):
         ret = 0
         lb = min(len(bag), precision)

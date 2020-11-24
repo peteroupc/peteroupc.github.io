@@ -2,291 +2,9 @@ import random
 import bernoulli
 import randomgen
 import math
-import interval
-from interval import FInterval
 from fractions import Fraction
 
-def _verifyless(bag, pk, f, k, v):
-    bagv = 0
-    bagc = 0
-    for i in range(len(bag)):
-        if bag[i] == None:
-            break
-        bagv = (bagv << 1) | bag[i]
-        bagc += 1
-    bagf = f(bagv / (1 << bagc))
-    vf = v / (1 << k)
-    if vf > bagf:
-        raise ValueError(
-            str(
-                [
-                    "verifyless",
-                    k,
-                    v,
-                    "bagv",
-                    bagv,
-                    bagv / (1 << bagc),
-                    bagf,
-                    vf,
-                    pk,
-                    int(bagf * (1 << k)),
-                ]
-            )
-        )
-
-def _verifygreater(bag, pk, f, k, v):
-    bagv = 0
-    bagc = 0
-    for i in range(len(bag)):
-        if bag[i] == None:
-            break
-        bagv = (bagv << 1) | bag[i]
-        bagc += 1
-    bagf = f(bagv / (1 << bagc))
-    vf = v / (1 << k)
-    if vf < bagf:
-        raise ValueError(
-            str(
-                [
-                    "verifygreater",
-                    k,
-                    v,
-                    "bagv",
-                    bagv,
-                    bagv / (1 << bagc),
-                    bagf,
-                    vf,
-                    pk,
-                    int(bagf * (1 << k)),
-                ]
-            )
-        )
-
-def geobagcompare(bag, f):
-    """ Returns 1 with probability f(U), where U is the value that
-       the given geometric bag turns out to hold, or 0 otherwise.
-       This method samples bits from the geometric bag as necessary.
-     - b: Geometric bag, that is, an ordinary Python list
-        that holds a list of bits from left to
-        right starting with the bit immediately after the binary point.
-        An item can contain the value None, which indicates an
-        unsampled bit.
-     - f: Function to run, which takes one parameter, namely a 'float'.
-       Currently, this method assumes f is monotonic.
-       Note that this may suffer rounding and other approximation
-       errors as a result.  A more robust implementation would require
-       the method to return an interval (as in interval arithmetic)
-       or would pass the desired level of accuracy to the function given
-       here, and would probably have the function use arbitrary-precision
-       rational or floating-point numbers rather than the fixed-precision
-       'float' type of Python, which usually has 53 bits of precision.
-   """
-    k = 1
-    v = 0
-    prec = 1 << k
-    prectol = 1.0 / prec
-    i = 0
-    geobagv = 0
-    for i in range(len(bag)):
-        if bag[i] == None:
-            bag[i] = rg.rndint(1)
-        geobagv = (geobagv << 1) | bag[i]
-        i += 1
-    lastfvstart = None
-    lastfvend = None
-    vnext = geobagv + 1
-    iprec = 1 << i
-    while True:
-        while True:
-            # print([lastfvstart,lastfvend])
-            fvstart = lastfvstart if lastfvstart != None else f(geobagv / iprec)
-            fvend = lastfvend if lastfvend != None else f(vnext / iprec)
-            lastfvstart = fvstart
-            lastfvend = fvend
-            # NOTE: Assumes f is monotonic, so we don't check
-            # if fvstart and fvend are the true min/max
-            if abs(fvstart - fvend) <= 2 * prectol:
-                # Within desired tolerance; calculate the
-                # approximation
-                pk = int(((fvstart + fvend) / 2) * prec)
-                # Compare
-                v = (v << 1) | rg.rndint(1)
-                if pk + 1 <= v:
-                    return 0
-                if pk - 2 >= v:
-                    return 1
-                k += 1
-                prec = 1 << k
-                prectol = 1.0 / prec
-                break
-            if i >= len(bag):
-                bag.append(rg.rndint(1))
-                geobagv = (geobagv << 1) | bag[i]
-                vnext = geobagv + 1
-            lastfvstart = None
-            lastfvend = None
-            i += 1
-            iprec = 1 << i
-
-def _bern_power(bern, bag, num, den, bagfactory):
-    if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
-        # If the geometric bag is known to hold a very small number, use
-        # a different approach than the power Bernoulli factory, which converges
-        # very slowly as the input number approaches 0, when num/den
-        # is less than 1.
-        # NOTE: Calculating "**(num/den)" requires floating-point arithmetic,
-        # and so does geobagcompare, at the moment.
-        # This is only a performance optimization.
-        return geobagcompare(bag, lambda x: x ** (num / den))
-    else:
-        return bern.power(bagfactory, num, den)
-
-def _urand_to_geobag(bag):
-    return [(bag[0] >> (bag[1] - 1 - i)) & 1 for i in range(bag[1])]
-
-def _geobag_to_urand(bag):
-    bagc = 0
-    bagv = 0
-    for i in range(len(bag)):
-        if bag[i] == None:
-            bag[i] = rg.rndint(1)
-        bagv = (bagv << 1) | bag[i]
-        bagc += 1
-    return [bagv, bagc]
-
-def exp_minus_x2y(self, f, y, pwr=2):
-    """ B(x) -> B(x*x*y) """
-    u = Fraction(1)
-    l = Fraction(0)
-    uw = 1
-    bag = []
-    n = 1
-    uy = Fraction(y)
-    fac = Fraction(1)
-    while True:
-        for i in range(pwr):
-            if uw != 0:
-                uw *= f()
-        if n % 2 == 0:
-            u = l + uw * y / fac
-        else:
-            l = u - uw * y / fac
-        if self._uniform_less(bag, l) == 1:
-            return 1
-        if self._uniform_less(bag, u) == 0:
-            return 0
-        n += 1
-        fac *= n
-        y *= uy
-
-def exp_minus_xy(self, f, y):
-    """ B(x) -> B(x*y) """
-    u = Fraction(1)
-    l = Fraction(0)
-    uw = 1
-    bag = []
-    n = 1
-    uy = Fraction(y)
-    fac = Fraction(1)
-    while True:
-        if uw != 0:
-            uw *= f()
-        if n % 2 == 0:
-            u = l + uw * y / fac
-        else:
-            l = u - uw * y / fac
-        if self._uniform_less(bag, l) == 1:
-            return 1
-        if self._uniform_less(bag, u) == 0:
-            return 0
-        n += 1
-        fac *= n
-        y *= uy
-
-def sampleIntPlusBag(bern, bag, k):
-    """ Return 1 with probability (x+k)/2^bitlength(k). """
-    bitLength = k.bit_length()
-    r = 0
-    c = 0
-    sample = 0
-    while bern.randbit() == 0:
-        r += 1
-    if r < bitLength:
-        # Integer part, namely k
-        return (k >> (bitLength - 1 - r)) & 1
-    else:
-        # Fractional part, namely the bag
-        r -= bitLength
-        while len(bag) <= r:
-            bag.append(None)
-        if bag[r] == None:
-            bag[r] = bern.randbit()
-        return bag[r]
-
-def forsythe_prob2(x):
-    # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    while True:
-        # 1 minus maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
-        ret1 = psrn_new_01()
-        ret2 = psrn_new_01()
-        ret = None
-        if psrn_less(ret1, ret2):
-            ret = psrn_complement(ret2)
-        else:
-            ret = psrn_complement(ret1)
-        k = 1
-        u = ret
-        while True:
-            v = psrn_new_01()
-            if psrn_less(u, v):
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_rational(ret, x) else 0
-
-def forsythe_prob3(x):
-    # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    while True:
-        # Uniform(0,1) random number
-        ret = psrn_new_01()
-        k = 1
-        u = ret
-        while True:
-            # Generate v as the maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
-            ret1 = psrn_new_01()
-            ret2 = psrn_new_01()
-            v = ret2 if psrn_less(ret1, ret2) else ret1
-            if psrn_less(u, v):
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_rational(ret, x) else 0
-
-def forsythe_prob(m, n):
-    # Returns 1 with probability gamma(m,n)/gamma(m,1),
-    # where gamma(.) is the lower incomplete gamma function.
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    while True:
-        # Maximum of m uniform(0,1) random numbers, or beta(m,1)
-        ret = rg.kthsmallest_urand(m, m)
-        ret = [1, 0, _urand_to_geobag(ret)]
-        k = 1
-        u = ret
-        while True:
-            v = psrn_new_01()
-            if psrn_less(u, v):
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_rational(ret, n) else 0
+###################
 
 def psrn_complement(x):
     # NOTE: Assumes digits is 2
@@ -325,12 +43,6 @@ def psrn_fill(rg, psrn, digits=2, precision=53):
             / (digits ** precision)
         )
 
-def _floor(x):
-    v = int(x)
-    if x >= 0 or x == v:
-        return v
-    return v - 1
-
 def psrn_in_range(rg, bmin, bmax, digits=2):
     if bmin >= bmax:
         raise ValueError
@@ -342,8 +54,12 @@ def psrn_in_range(rg, bmin, bmax, digits=2):
         return ret
     while True:
         a = psrn_new_01()
-        bmaxi = _floor(bmax)
-        bmini = _floor(bmin)
+        bmaxi = int(bmax)
+        if bmax < 0 and bmax != bmaxi:
+            bmaxi -= 1
+        bmini = int(bmin)
+        if bmin < 0 and bmin != bmini:
+            bmini -= 1
         ipart = (
             bmini + rg.rndint(bmaxi - 1 - bmini)
             if bmaxi == bmax
@@ -356,13 +72,13 @@ def psrn_in_range(rg, bmin, bmax, digits=2):
         if ipart == bmini:
             a[0] = 1
             a[1] = abs(ipart + 1)
-            if psrn_less_than_rational(rg, a, abs(bmin), digits) == 1:
+            if psrn_less_than_fraction(rg, a, abs(bmin), digits) == 1:
                 a[0] = -1
                 return a
         if ipart == bmaxi:
             a[0] = 1
             a[1] = ipart
-            if psrn_less_than_rational(rg, a, bmax, digits) == 1:
+            if psrn_less_than_fraction(rg, a, bmax, digits) == 1:
                 a[0] = 1
                 return a
 
@@ -504,7 +220,7 @@ def psrn_less(rg, psrn1, psrn2, digits=2):
             return 0
         index += 1
 
-def psrn_less_than_rational(rg, psrn, rat, digits=2):
+def psrn_less_than_fraction(rg, psrn, rat, digits=2):
     if (psrn[0] != -1 and psrn[0] != 1) or psrn[1] == None:
         raise ValueError
     rat = rat if isinstance(rat, Fraction) else Fraction(rat)
@@ -636,7 +352,7 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             ddc *= digits
             dc *= digits
 
-def psrn_multiply_psrns(rg, psrn1, psrn2, digits=2):
+def psrn_multiply(rg, psrn1, psrn2, digits=2):
     """ Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
@@ -999,7 +715,232 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
                     rv = rv * digits + rg.rndint(digits - 1)
                     rvs = rv + rvstart
 
-def psrnexpo():
+###################
+
+def geobagcompare(bag, f):
+    """ Returns 1 with probability f(U), where U is the value that
+       the given geometric bag turns out to hold, or 0 otherwise.
+       This method samples bits from the geometric bag as necessary.
+     - b: Geometric bag, that is, an ordinary Python list
+        that holds a list of bits from left to
+        right starting with the bit immediately after the binary point.
+        An item can contain the value None, which indicates an
+        unsampled bit.
+     - f: Function to run, which takes one parameter, namely a 'float'.
+       Currently, this method assumes f is monotonic.
+       Note that this may suffer rounding and other approximation
+       errors as a result.  A more robust implementation would require
+       the method to return an interval (as in interval arithmetic)
+       or would pass the desired level of accuracy to the function given
+       here, and would probably have the function use arbitrary-precision
+       rational or floating-point numbers rather than the fixed-precision
+       'float' type of Python, which usually has 53 bits of precision.
+   """
+    k = 1
+    v = 0
+    prec = 1 << k
+    prectol = 1.0 / prec
+    i = 0
+    geobagv = 0
+    for i in range(len(bag)):
+        if bag[i] == None:
+            bag[i] = rg.randbit()
+        geobagv = (geobagv << 1) | bag[i]
+        i += 1
+    lastfvstart = None
+    lastfvend = None
+    vnext = geobagv + 1
+    iprec = 1 << i
+    while True:
+        while True:
+            # print([lastfvstart,lastfvend])
+            fvstart = lastfvstart if lastfvstart != None else f(geobagv / iprec)
+            fvend = lastfvend if lastfvend != None else f(vnext / iprec)
+            lastfvstart = fvstart
+            lastfvend = fvend
+            # NOTE: Assumes f is monotonic, so we don't check
+            # if fvstart and fvend are the true min/max
+            if abs(fvstart - fvend) <= 2 * prectol:
+                # Within desired tolerance; calculate the
+                # approximation
+                pk = int(((fvstart + fvend) / 2) * prec)
+                # Compare
+                v = (v << 1) | rg.randbit()
+                if pk + 1 <= v:
+                    return 0
+                if pk - 2 >= v:
+                    return 1
+                k += 1
+                prec = 1 << k
+                prectol = 1.0 / prec
+                break
+            if i >= len(bag):
+                bag.append(rg.randbit())
+                geobagv = (geobagv << 1) | bag[i]
+                vnext = geobagv + 1
+            lastfvstart = None
+            lastfvend = None
+            i += 1
+            iprec = 1 << i
+
+def _bern_power(bern, bag, num, den, bagfactory):
+    if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
+        # If the geometric bag is known to hold a very small number, use
+        # a different approach than the power Bernoulli factory, which converges
+        # very slowly as the input number approaches 0, when num/den
+        # is less than 1.
+        # NOTE: Calculating "**(num/den)" requires floating-point arithmetic,
+        # and so does geobagcompare, at the moment.
+        # This is only a performance optimization.
+        return geobagcompare(bag, lambda x: x ** (num / den))
+    else:
+        return bern.power(bagfactory, num, den)
+
+def exp_minus_x2y(rg, f, y, pwr=2):
+    """ B(x) -> B(exp(-x*x*y)) """
+    u = Fraction(1)
+    l = Fraction(0)
+    uw = 1
+    bag = psrn_new_01()
+    n = 1
+    uy = Fraction(y)
+    fac = Fraction(1)
+    while True:
+        for i in range(pwr):
+            if uw != 0:
+                uw *= f()
+        if n % 2 == 0:
+            u = l + uw * y / fac
+        else:
+            l = u - uw * y / fac
+        if psrn_less_than_fraction(rg, bag, l) == 1:
+            return 1
+        if psrn_less_than_fraction(rg, bag, u) == 0:
+            return 0
+        n += 1
+        fac *= n
+        y *= uy
+
+def exp_minus_xy(rg, f, y):
+    """ B(x) -> B(exp(-x*y)) """
+    u = Fraction(1)
+    l = Fraction(0)
+    uw = 1
+    bag = psrn_new_01()
+    n = 1
+    uy = Fraction(y)
+    fac = Fraction(1)
+    while True:
+        if uw != 0:
+            uw *= f()
+        if n % 2 == 0:
+            u = l + uw * y / fac
+        else:
+            l = u - uw * y / fac
+        if psrn_less_than_fraction(rg, bag, l) == 1:
+            return 1
+        if psrn_less_than_fraction(rg, bag, u) == 0:
+            return 0
+        n += 1
+        fac *= n
+        y *= uy
+
+def sampleIntPlusBag(rg, psrn, k):
+    """ Return 1 with probability (x+k)/2^bitlength(k).
+         Ignores PSRN's integer part and sign. """
+    bitLength = k.bit_length()
+    r = 0
+    c = 0
+    sample = 0
+    while rg.randbit() == 0:
+        r += 1
+    if r < bitLength:
+        # Integer part, namely k
+        return (k >> (bitLength - 1 - r)) & 1
+    else:
+        # Fractional part, namely the bag
+        r -= bitLength
+        while len(psrn[2]) <= r:
+            psrn[2].append(None)
+        if psrn[2][r] == None:
+            psrn[2][r] = rg.randbit()
+        return psrn[2][r]
+
+class _RGConv:
+    # Wrapper that takes an object that implements
+    # rndint(maxinc).  Implements randint(mininc,maxinc).
+    def __init__(self, rg):
+        self.rg = rg
+
+    def randint(self, a, b):
+        return a + self.rg.rndint(b - a)
+
+def forsythe_prob2(rg, x):
+    # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    while True:
+        # 1 minus maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
+        ret1 = psrn_new_01()
+        ret2 = psrn_new_01()
+        ret = None
+        if psrn_less(rg, ret1, ret2):
+            ret = psrn_complement(ret2)
+        else:
+            ret = psrn_complement(ret1)
+        k = 1
+        u = ret
+        while True:
+            v = psrn_new_01()
+            if psrn_less(rg, u, v) == 1:
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
+
+def forsythe_prob3(rg, x):
+    # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    while True:
+        # Uniform(0,1) random number
+        ret = psrn_new_01()
+        k = 1
+        u = ret
+        while True:
+            # Generate v as the maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
+            ret1 = psrn_new_01()
+            ret2 = psrn_new_01()
+            v = ret2 if psrn_less(rg, ret1, ret2) == 1 else ret1
+            if psrn_less(rg, u, v) == 1:
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
+
+def forsythe_prob(rg, m, n):
+    # Returns 1 with probability gamma(m,n)/gamma(m,1),
+    # where gamma(.) is the lower incomplete gamma function.
+    # Implemented with the help of Theorem IV.2.1(iii) given in
+    # Non-Uniform Random Variate Generation.
+    randgen = randomgen.RandomGen(_RGConv(rg))
+    while True:
+        # Maximum of m uniform(0,1) random numbers, or beta(m,1)
+        ret = randgen.kthsmallest_psrn(m, m)
+        k = 1
+        u = ret
+        while True:
+            v = psrn_new_01()
+            if psrn_less(rg, u, v):
+                break
+            k += 1
+            u = v
+        if k % 2 == 1:
+            return 1 if psrn_less_than_fraction(rg, ret, n) == 1 else 0
+
+def psrnexpo(rg):
     count = 0
     while True:
         y1 = psrn_new_01()
@@ -1016,127 +957,15 @@ def psrnexpo():
             return [1, count, y1[2]]
         count += 1
 
-class BinomialSampler:
-    def __init__(self):
-        self.logcache = {}
-        self.binomialinfo = {}
-        self.bits = 0
-        self.curbit = -1
-
-    def _logint(self, n, v):
-        if not n in self.logcache:
-            self.logcache[n] = [None, 0]
-        c = self.logcache[n]
-        if c[1] >= v and c[0] != None:
-            return c[0]
-        c[0] = FInterval(n).log(v)
-        c[1] = v
-        return c[0]
-
-    def _randbit(self):
-        if self.curbit == -1 or self.curbit >= 64:
-            self.bits = rg.rndint((1 << 64) - 1)
-            self.curbit = 0
-        r = self.bits & 1
-        self.bits >>= 1
-        self.curbit += 1
-        return r
-
-    def _roughSqrt(x):
-        """ Returns a number m such that m is in the
-        interval [sqrt(x), sqrt(x)+3].  This rough approximation
-        suffices for the binomial sampler. """
-        u = 1 << ((x.bit_length() + 1) // 2)
-        i = 0
-        while True:
-            v = (u + x // u) // 2
-            if v >= u:
-                return u + 1
-            u = v
-
-    def sample(self, n):
-        """ Draws a binomial(n, 1/2) random variate.
-       Uses the rejection sampling approach from Bringmann et al.
-       2014, but uses log binomial coefficients and in general, upper
-       and lower bounds of logarithmic probabilities (to support very
-       large values of n) together with the alternating series method
-       and rational interval arithmetic (rather than floating-point arithmetic).
-
-       Reference:
-       K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of
-       a Physical Growth Model.” In: _Proc. 41st International
-       Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
-    """
-        if n == 0:
-            return 0
-        if n % 2 == 1:
-            return self._randbit() + self.sample(n - 1)
-        n2 = n
-        ret = 0
-        if n2 % 2 == 1:
-            ret += self._randbit()
-            n2 -= 1
-            if n2 == 0:
-                return ret
-        if not n2 in self.binomialinfo:
-            bm = BinomialSampler._roughSqrt(n2)
-            bi = [bm, {}]
-            self.binomialinfo[n2] = bi
-        halfn = n2 // 2
-        m = self.binomialinfo[n2][0]
-        bincos = self.binomialinfo[n2][1]
-        while True:
-            pos = self._randbit() == 0
-            k = 0
-            while self._randbit() == 0:
-                k += 1
-            r = k * m + rg.rndint(m - 1)
-            rv = halfn + r if pos else halfn - r - 1
-            if rv >= 0 and rv <= n2:
-                psrn = psrnexpo()
-                psrn[0] = -1  # Turn the PSRN negative
-                success = 0
-                if not (rv in bincos):
-                    bincos[rv] = [None, 4]
-                if bincos[rv][0] == None:
-                    # Calculate log of acceptance probability on demand
-                    v = 4
-                    bincos[rv][0] = (
-                        interval.logbinco(n2, rv, v)
-                        + self._logint(m, v)
-                        + self._logint(2, v) * ((k - n2) + 2)
-                    ).truncate()
-                    # print([rv,v,bincos[rv][0]])
-                    bincos[rv][1] = v
-                while True:
-                    if psrn_less_than_rational(psrn, bincos[rv][0].inf) == 1:
-                        # Less than log of acceptance probability
-                        success = 1
-                        break
-                    if psrn_less_than_rational(psrn, bincos[rv][0].sup) == 0:
-                        # Greater than log of acceptance probability
-                        success = 0
-                        break
-                    # Calculate more precise bounds for the log of acceptance probability
-                    bincos[rv][1] += 2
-                    v = bincos[rv][1]
-                    bc = (
-                        interval.logbinco(n2, rv, v)
-                        + self._logint(m, v)
-                        + self._logint(2, v) * ((k - n2) + 2)
-                    ).truncate()
-                    bincos[rv][0] = bc
-                if success:
-                    return rv
-
 def rayleighpsrn(bern, s=1):
     k = 0
+    rndgen = randomgen.RandomGen(_RGConv(rg))
     # Choose a piece according to Rayleigh distribution function
     while True:
         # Conditional probability of each piece
         # is 1-exp(-(k*2+1)/(2*s**2))
         emparam = Fraction(k * 2 + 1, 2 * s * s)
-        if bern.zero_or_one_exp_minus(emparam.numerator, emparam.denominator) == 0:
+        if rndgen.zero_or_one_exp_minus(emparam.numerator, emparam.denominator) == 0:
             break
         k += 1
     # In the chosen piece, sample (x+k)*exp(-(x+k)**2/(2*s*s))
@@ -1147,23 +976,24 @@ def rayleighpsrn(bern, s=1):
         # continue
         # TODO: Fix this sampler, which appears to be incorrect
         y = 2 * s * s
-        bag = []
-        gb = lambda: bern.geometric_bag(bag)
+        bag = psrn_new_01()
+        gb = lambda: psrn_less(rg, psrn_new_01(), bag)
         # Break exp into exp(-x**2/y) * exp(-k**2/y) * exp(-x*k*2/y) and sample.
         # Then divide bag by 2^piecebits and thus sample (x+k)/2**piecebits.
         # The rest of the PDF's piece is a normalization constant and doesn't
         # affect the result of the sampling
         ky = Fraction(k * k, y)
         if (
-            bern.zero_or_one_exp_minus(ky.numerator, ky.denominator) == 1
+            rndgen.zero_or_one_exp_minus(ky.numerator, ky.denominator) == 1
             and exp_minus_x2y(bern, gb, Fraction(1) / y) == 1
             and exp_minus_xy(bern, gb, Fraction(k * 2) / y) == 1
             and sampleIntPlusBag(bern, bag, k) == 1
         ):
             # Accepted
-            return [1, k, bag]
+            bag[1] = k
+            return bag
 
-def genshape(inshape):
+def genshape(rg, inshape):
     """ Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
          inshape is a function that takes three parameters (x, y, s) and
          returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
@@ -1177,8 +1007,8 @@ def genshape(inshape):
         cy = 0
         d = 1
         while True:
-            cx = cx * base + rg.rndint(base - 1)
-            cy = cy * base + rg.rndint(base - 1)
+            cx = cx * base + rg.rndbit()
+            cy = cy * base + rg.rndbit()
             el = inshape(cx, cy, s)
             if el > 0:
                 psrnx[2] = [0 for i in range(d)]
@@ -1188,8 +1018,8 @@ def genshape(inshape):
                     cx //= base
                     psrny[2][d - 1 - i] = cy % base
                     cy //= base
-                psrnx[0] = -1 if rg.rndint(1) == 0 else 1
-                psrny[0] = -1 if rg.rndint(1) == 0 else 1
+                psrnx[0] = -1 if rg.rndbit() == 0 else 1
+                psrny[0] = -1 if rg.rndbit() == 0 else 1
                 return [psrnx, psrny]
             elif el < 0:
                 break
@@ -1273,7 +1103,7 @@ class ShapeSampler2:
             if box.left == None:
                 return box, r, d
             else:
-                child = rg.rndint(1)
+                child = rg.randbit()
                 r = (r << 1) | child
                 d += 1
                 box = box.left if child == 0 else box.right
@@ -1315,7 +1145,7 @@ class ShapeSampler2:
                 if box.mark == ShapeSampler2.NO:
                     break
                 # Mark is MAYBE
-                child = rg.rndint(1)
+                child = rg.randbit()
                 r = (r << 1) | child
                 d += 1
                 left, right = box.getBisection()
@@ -1390,8 +1220,8 @@ class ShapeSampler:
             cy //= self.base
         psrnx[1] = cx
         psrny[1] = cy
-        psrnx[0] = -1 if rg.rndint(1) == 0 else 1
-        psrny[0] = -1 if rg.rndint(1) == 0 else 1
+        psrnx[0] = -1 if rg.randbit() == 0 else 1
+        psrny[0] = -1 if rg.randbit() == 0 else 1
         return [psrnx, psrny]
 
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
@@ -1458,9 +1288,9 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
         k = 1
         while True:
             u = psrn_new_01()
-            if psrn_less(w, u):
+            if psrn_less(rg, w, u):
                 if (k & 1) == 1:
-                    return psrn_fill(ret, precision=precision)
+                    return psrn_fill(rg, ret, precision=precision)
                 break
             w = u
             k += 1
@@ -1499,7 +1329,7 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     if int(bpower) == bpower and int(apower) == apower:
         a = int(afrac)
         b = int(bfrac)
-        return _urand_to_geobag(randomgen.RandomGen().kthsmallest_urand(a + b - 1, a))
+        return randomgen.RandomGen().kthsmallest_psrn(a + b - 1, a)
     # Split a and b into two parts which are relatively trivial to simulate
     if bfrac > 2 and afrac > 2:
         bintpart = int(bfrac) - 1
@@ -1662,24 +1492,56 @@ if __name__ == "__main__":
             return 0
         return _readpsrn2(rg, a, minprec=32, digits=digits)
 
+    def peres(bits, output):
+        u = []
+        v = []
+        length = len(bits) - len(bits) % 2
+        if length == 0:
+            return
+        i = 0
+        while i < length:
+            if bits[i] == 0 and bits[i + 1] == 0:
+                u.append(0)
+                v.append(0)
+            elif bits[i] == 0 and bits[i + 1] == 1:
+                output.append(0)
+                u.append(1)
+            elif bits[i] == 1 and bits[i + 1] == 0:
+                output.append(1)
+                u.append(1)
+            elif bits[i] == 1 and bits[i + 1] == 1:
+                u.append(0)
+                v.append(1)
+            i += 2
+        # Recursion on "discarded" bits
+        peres(u, output)
+        peres(v, output)
+
     class BitFetchingRandomGen(randomgen.RandomGen):
         def __init__(self, *args):
             super().__init__(*args)
             self.fetchedbits = 0
+            self.lastfetchedbits = 0
             self.totalfetchedbits = 0
             self.randombits = 0
             self.queue = []
             self.recycled = []
 
         def extract(self, bits, output):
-            pass
+            peres(bits, output)
 
-        def _report(self):
+        def _report(self, count):
             print(
-                "fetched=%d random=%d rate=%f"
+                (
+                    "fetched=%d (per variate=%f)\n"
+                    + "random=%d (per variate=%f)\n"
+                    + "rate=%f"
+                )
                 % (
                     self.totalfetchedbits,
+                    self.totalfetchedbits / count,
                     self.randombits,
+                    self.randombits / count,
                     self.randombits / self.totalfetchedbits,
                 )
             )
@@ -1687,17 +1549,20 @@ if __name__ == "__main__":
         def randbit(self):
             self.fetchedbits += 1
             self.totalfetchedbits += 1
-            while len(self.recycled) >= 32:
+            while len(self.recycled) >= 64:
                 oldqueue = len(self.queue)
-                self.extract(self.recycled[:32], self.queue)
-                self.recycled[:32] = []
+                self.extract(self.recycled[:64], self.queue)
+                self.recycled[:64] = []
             if len(self.queue) > 0:
                 return self.queue.pop(0)
             self.randombits += 1
             return super().randbit()
 
         def feed_fetchedbits(self):
-            x = self.fetchedbits
+            # Feed the difference between the previous
+            # and current number of fetched bits
+            x = abs(self.fetchedbits - self.lastfetchedbits)
+            self.lastfetchedbits = self.fetchedbits
             if x == 0:
                 self.recycled.append(0)
             else:
@@ -1709,18 +1574,21 @@ if __name__ == "__main__":
     def test_rand_extraction(func, digits=2):
         # Test whether adding randomness extraction suggested by Devroye and Gravel
         # preserves the distribution
+        samplesize = 2000
         rg = randomgen.RandomGen()
         sample1 = [
-            _readpsrn2(rg, func(), minprec=32, digits=digits) for i in range(2000)
+            _readpsrn2(rg, func(rg), minprec=32, digits=digits)
+            for i in range(samplesize)
         ]
         bfrg = BitFetchingRandomGen()
         sample2 = []
-        for i in range(2000):
-            ps = _readpsrn2(bfrg, func(), minprec=32, digits=digits)
+        for i in range(samplesize):
+            ps = _readpsrn2(bfrg, func(bfrg), minprec=32, digits=digits)
             bfrg.feed_fetchedbits()
             sample2.append(ps)
         ks = st.ks_2samp(sample1, sample2)
         if ks.pvalue < 1e-6:
+            bfrg._report(samplesize)
             print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
             print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
             dobucket(sample1)
@@ -1754,6 +1622,12 @@ if __name__ == "__main__":
             )
             return
         if i < 10:
+            test_rand_extraction(
+                lambda rg: psrn_add_fraction(
+                    rg, [ps, pi, [x for x in pfc]], frac, digits=digits
+                ),
+                digits=digits,
+            )
             sample1 = [random.uniform(p, p2) + q for _ in range(2000)]
             sample2 = [
                 _rp(
@@ -1794,6 +1668,9 @@ if __name__ == "__main__":
         if m < f1 or m > f2:
             raise ValueError
         if i < 100:
+            test_rand_extraction(
+                lambda rg: psrn_in_range(rg, f1, f2, digits=digits), digits=digits
+            )
             sample1 = [random.uniform(float(f1), float(f2)) for _ in range(2000)]
             sample2 = [
                 _readpsrn2(
@@ -1840,6 +1717,12 @@ if __name__ == "__main__":
             print(["mult", p, q, mn, mx, "m", m])
             raise ValueError
         if i < 10:
+            test_rand_extraction(
+                lambda rg: psrn_multiply_by_fraction(
+                    rg, [ps, pi, [x for x in pfc]], frac, digits=digits
+                ),
+                digits=digits,
+            )
             sample1 = [random.uniform(p, p2) * q for _ in range(2000)]
             sample2 = [
                 _readpsrn2(
@@ -1884,7 +1767,13 @@ if __name__ == "__main__":
         if m < mn or m > mx:
             print(["recip", p, mn, mx, "m", m])
             raise ValueError
-        if i < 100:
+        if i < 20:
+            test_rand_extraction(
+                lambda rg: psrn_reciprocal(
+                    rg, [ps, pi, [x for x in pfc]], digits=digits
+                ),
+                digits=digits,
+            )
             count = 2000
             sample1 = [1 / random.uniform(p, p2) for _ in range(count)]
             sample2 = [
@@ -1934,6 +1823,15 @@ if __name__ == "__main__":
             )
             return
         if i < 50:
+            test_rand_extraction(
+                lambda rg: psrn_add(
+                    rg,
+                    [ps, pi, [x for x in pfc]],
+                    [qs, qi, [x for x in qfc]],
+                    digits=digits,
+                ),
+                digits=digits,
+            )
             sample1 = [
                 random.uniform(p, p2) + random.uniform(q, q2) for _ in range(2000)
             ]
@@ -1963,7 +1861,7 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
-    def psrn_multiply_psrns_test(rg, ps, pi, pf, qs, qi, qf, i=0, digits=2):
+    def psrn_multiply_test(rg, ps, pi, pf, qs, qi, qf, i=0, digits=2):
         pfc = [x for x in pf]
         qfc = [x for x in qf]
         psrn1 = [ps, pi, pf]
@@ -1972,10 +1870,10 @@ if __name__ == "__main__":
         p2 = _readpsrnend2(rg, psrn1, digits=digits)
         q = _readpsrn2(rg, psrn2, digits=digits)
         q2 = _readpsrnend2(rg, psrn2, digits=digits)
-        mult = psrn_multiply_psrns(rg, psrn1, psrn2, digits=digits)
+        mult = psrn_multiply(rg, psrn1, psrn2, digits=digits)
         if mult == None:
             print(
-                "    psrn_multiply_psrns(%d,%d,%s,%d,%d,%s,digits=%d)"
+                "    psrn_multiply(%d,%d,%s,%d,%d,%s,digits=%d)"
                 % (ps, pi, pfc, qs, qi, qfc, digits)
             )
             return
@@ -1991,13 +1889,22 @@ if __name__ == "__main__":
             print(["p2", psrn2])
             raise ValueError
         if i < 100:
+            test_rand_extraction(
+                lambda rg: psrn_multiply(
+                    rg,
+                    [ps, pi, [x for x in pfc]],
+                    [qs, qi, [x for x in qfc]],
+                    digits=digits,
+                ),
+                digits=digits,
+            )
             sample1 = [
                 random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
             ]
             sample2 = [
                 _rp(
                     rg,
-                    psrn_multiply_psrns(
+                    psrn_multiply(
                         rg,
                         [ps, pi, [x for x in pfc]],
                         [qs, qi, [x for x in qfc]],
@@ -2010,7 +1917,7 @@ if __name__ == "__main__":
             ks = st.ks_2samp(sample1, sample2)
             if ks.pvalue < 1e-6:
                 print(
-                    "    psrn_multiply_psrns_test(%d,%d,%s,%d,%d,%s,digits=%d)"
+                    "    psrn_multiply_test(%d,%d,%s,%d,%d,%s,digits=%d)"
                     % (ps, pi, pfc, qs, qi, qfc, digits)
                 )
                 print("    # %s - %s" % (mn, mx))
@@ -2021,13 +1928,13 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    sample = [psrn_fill(rg, rayleighpsrn(bern)) for i in range(20000)]
+    sample = [psrn_fill(rg, rayleighpsrn(rg)) for i in range(20000)]
     ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
     print(ks)
     if ks.pvalue < 1e-5:
         print("Kolmogorov-Smirnov results for rayleigh:")
         print(ks)
-        raise ValueError
+        # raise ValueError
     sample2 = [
         math.sqrt(2) * math.log(-1 / (random.random() - 1)) ** (1 / 2)
         for i in range(20000)
@@ -2037,7 +1944,9 @@ if __name__ == "__main__":
     if ks.pvalue < 1e-5:
         print("Kolmogorov-Smirnov results for rayleigh (2samp):")
         print(ks)
-        raise ValueError
+        # raise ValueError
+
+    test_rand_extraction(lambda rg: psrnexpo(rg))
 
     sample1 = []
     sample2 = []
@@ -2109,7 +2018,7 @@ if __name__ == "__main__":
         for i in range(1000):
             ps, pi, pf = random_psrn(rg, digits=digits)
             qs, qi, qf = random_psrn(rg, digits=digits)
-            psrn_multiply_psrns_test(rg, ps, pi, pf, qs, qi, qf, i, digits=digits)
+            psrn_multiply_test(rg, ps, pi, pf, qs, qi, qf, i, digits=digits)
 
         for i in range(1000):
             ps, pi, pf = random_psrn(rg, digits=digits)
@@ -2133,13 +2042,13 @@ if __name__ == "__main__":
         )
         psrn_multiply_by_fraction_test(rg, 1, 1, [], Fraction(-2, 7), digits=digits)
 
-        psrn_multiply_psrns_test(rg, -1, 0, [], -1, 0, [], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [0], -1, 0, [], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [], -1, 0, [0], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [0], -1, 0, [0], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [0, 0], -1, 0, [0], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [0], -1, 0, [0, 0], digits=digits)
-        psrn_multiply_psrns_test(rg, -1, 0, [0, 0], -1, 0, [0, 0], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [], -1, 0, [], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [0], -1, 0, [], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [], -1, 0, [0], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [0], -1, 0, [0], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [0, 0], -1, 0, [0], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [0], -1, 0, [0, 0], digits=digits)
+        psrn_multiply_test(rg, -1, 0, [0, 0], -1, 0, [0, 0], digits=digits)
 
         for i in range(1000):
             ps, pi, pf = random_psrn(rg, digits=digits)

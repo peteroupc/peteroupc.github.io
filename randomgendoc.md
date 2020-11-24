@@ -916,11 +916,10 @@ CLASSES
      |      Generates the 'k'th smallest 'b'-bit uniform random
      |      number out of 'n' of them.
      |
-     |  kthsmallest_urand(self, n, k)
+     |  kthsmallest_psrn(self, n, k)
      |      Generates the 'k'th smallest 'b'-bit uniform random
      |      number out of 'n' of them; returns the result in
-     |      the form of a "u-rand", or a partially sampled uniform
-     |      random number (Karney, "Sampling exactly from the normal distribution").
+     |      the form of a uniform partially-sampled random number.
      |
      |  latlon(self)
      |      Generates an independent and uniform random latitude and
@@ -1143,24 +1142,6 @@ CLASSES
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
-     |
-     |  quantile_urands(self, icdf, urands, digitplaces=53)
-     |      Finds the quantile of 'n' uniform random numbers expressed as "u-rands", or partially-sampled uniform random numbers (Karney, "Sampling exactly from the normal distribution").  Implements section 5 of Devroye and Gravel,  "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
-     |      - 'urands' is a list of "u-rands", or partially-sampled uniform random numbers.  Each u-rand is a list of two items, namely a multiple of 1/2^X, followed by X.  For example, the following generates a list of five empty
-     |      u-rands: `[[0,0] for i in range(5)]`.
-     |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-     |         and returns a number within 2^-digitplaces of the True inverse
-     |         CDF (inverse cumulative distribution function, or quantile function)
-     |         of u/2^ubits, and is monotonic for a given value of `digitplaces`.
-     |      - 'digitplaces' is an accuracy expressed as a number of bits after the
-     |         point. Each quantile will be a multiple of 2^-digitplaces,
-     |         or have a smaller granularity. Default is 53.
-     |
-     |      Example:  The following example generates the maximum of 10
-     |      random numbers, to an accuracy of 2^53.
-     |
-     |      ur=randgen.kthsmallest_urand(10, 10)
-     |      maxrand=randgen.quantile_urands(icdf, [ur], 53)[0]
      |
      |  randbit(self)
      |
