@@ -16,7 +16,7 @@ def psrn_complement(x):
 def psrn_new_01():
     return [1, 0, []]
 
-def psrn_fill(rg, psrn, digits=2, precision=53):
+def psrn_fill(rg, psrn, precision=53, digits=2):
     af = 0
     afrac = psrn[2]
     asign = psrn[0]
@@ -715,6 +715,23 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
                     rv = rv * digits + rg.rndint(digits - 1)
                     rvs = rv + rvstart
 
+def psrnexpo(rg):
+    count = 0
+    while True:
+        y1 = psrn_new_01()
+        y = y1
+        accept = True
+        while True:
+            z = psrn_new_01()
+            if psrn_less(rg, y, z) == 0:
+                accept = not accept
+                y = z
+                continue
+            break
+        if accept:
+            return [1, count, y1[2]]
+        count += 1
+
 ###################
 
 def geobagcompare(bag, f):
@@ -796,75 +813,128 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
-def exp_minus_x2y(rg, f, y, pwr=2):
-    """ B(x) -> B(exp(-x*x*y)) """
-    u = Fraction(1)
-    l = Fraction(0)
-    uw = 1
-    bag = psrn_new_01()
-    n = 1
-    uy = Fraction(y)
-    fac = Fraction(1)
-    while True:
-        for i in range(pwr):
-            if uw != 0:
-                uw *= f()
-        if n % 2 == 0:
-            u = l + uw * y / fac
-        else:
-            l = u - uw * y / fac
-        if psrn_less_than_fraction(rg, bag, l) == 1:
-            return 1
-        if psrn_less_than_fraction(rg, bag, u) == 0:
-            return 0
-        n += 1
-        fac *= n
-        y *= uy
+def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
+    return psrn_fill(
+        _power_of_uniform_greaterthan1_geobag(bern, power, complement),
+        precision=precision,
+    )
 
-def exp_minus_xy(rg, f, y):
-    """ B(x) -> B(exp(-x*y)) """
-    u = Fraction(1)
-    l = Fraction(0)
-    uw = 1
+def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
+    if power < 1:
+        raise ValueError("Not supported")
+    if power == 1:
+        return psrn_new_01()
+    i = 1
+    powerfrac = Fraction(power)
+    powerrest = Fraction(1) - Fraction(1) / powerfrac
+    # Choose an interval
+    while (
+        bern.zero_or_one_power_ratio(1, 2, powerfrac.denominator, powerfrac.numerator)
+        == 1
+    ):
+        i += 1
+    # Crude choice of epsdividend:
+    # epsdividend = Fraction(1)/(powerfrac * 2**(i))
+    # The following choice of epsdividend makes eps_div
+    # much faster, but it requires floating-point arithmetic
+    # to calculate "**powerrest".  Using either choice does not
+    # affect the correctness of this algorithm.
+    probx = (2.0 ** (-i - 1)) ** powerrest
+    epsdividend = Fraction(probx) * 255 / 256
     bag = psrn_new_01()
-    n = 1
-    uy = Fraction(y)
-    fac = Fraction(1)
+    gb = lambda: bern.geometric_bag(bag[2])
+    bf = lambda: _bern_power(
+        bern, bag[2], powerrest.numerator, powerrest.denominator, gb
+    )
+    # print(i)
     while True:
-        if uw != 0:
-            uw *= f()
-        if n % 2 == 0:
-            u = l + uw * y / fac
-        else:
-            l = u - uw * y / fac
-        if psrn_less_than_fraction(rg, bag, l) == 1:
-            return 1
-        if psrn_less_than_fraction(rg, bag, u) == 0:
-            return 0
-        n += 1
-        fac *= n
-        y *= uy
+        # Limit sampling to the chosen interval
+        bag[2].clear()
+        for k in range(i - 1):
+            bag[2].append(0)
+        bag[2].append(1)
+        # Simulate epsdividend / x**(1-1/power)
+        if bern.eps_div(bf, epsdividend) == 1:
+            # Flip all bits if complement is true
+            return psrn_complement(bag) if complement else bag
 
-def sampleIntPlusBag(rg, psrn, k):
-    """ Return 1 with probability (x+k)/2^bitlength(k).
-         Ignores PSRN's integer part and sign. """
-    bitLength = k.bit_length()
-    r = 0
-    c = 0
-    sample = 0
-    while rg.randbit() == 0:
-        r += 1
-    if r < bitLength:
-        # Integer part, namely k
-        return (k >> (bitLength - 1 - r)) & 1
-    else:
-        # Fractional part, namely the bag
-        r -= bitLength
-        while len(psrn[2]) <= r:
-            psrn[2].append(None)
-        if psrn[2][r] == None:
-            psrn[2][r] = rg.randbit()
-        return psrn[2][r]
+def powerOfUniform(b, px, py, precision=53):
+    """ Generates a power of a uniform random number.
+         - px, py - Numerator and denominator of desired exponent for the uniform
+           random number.
+         - precision: Number of bits after the point that the result will contain.
+        """
+    # Special case of beta, returning power of px/py
+    # of a uniform random number, provided px/py
+    # is in (0, 1].
+    return betadist(b, py, px, 1, 1, precision)
+
+def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
+    return psrn_fill(betadist_geobag(b, ax, ay, bx, by), precision=precision)
+
+def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
+    """ Generates a beta-distributed random number with arbitrary
+          (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
+          (bx/by) are both 1 or greater, or if one of these parameters is
+         1 and the other is less than 1.
+         - b: Bernoulli object (from the "bernoulli" module).
+         - ax, ay: Numerator and denominator of first shape parameter.
+         - bx, by: Numerator and denominator of second shape parameter.
+         - precision: Number of bits after the point that the result will contain.
+        """
+    # Beta distribution for alpha>=1 and beta>=1
+    bag = psrn_new_01()
+    afrac = Fraction(ax) if ay == 1 else Fraction(ax, ay)
+    bfrac = Fraction(bx) if by == 1 else Fraction(bx, by)
+    bpower = bfrac - 1
+    apower = afrac - 1
+    # Special case for a=b=1
+    if bpower == 0 and apower == 0:
+        return bag
+    # Special case if a=1
+    if apower == 0 and bpower < 0:
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(by, bx), True)
+    # Special case if b=1
+    if bpower == 0 and apower < 0:
+        return _power_of_uniform_greaterthan1_geobag(b, Fraction(ay, ax), False)
+    if apower <= -1 or bpower <= -1:
+        raise ValueError
+    # Special case if a and b are integers
+    if int(bpower) == bpower and int(apower) == apower:
+        a = int(afrac)
+        b = int(bfrac)
+        return randomgen.RandomGen().kthsmallest_psrn(a + b - 1, a)
+    # Split a and b into two parts which are relatively trivial to simulate
+    if bfrac > 2 and afrac > 2:
+        bintpart = int(bfrac) - 1
+        aintpart = int(afrac) - 1
+        brest = bfrac - bintpart
+        arest = afrac - aintpart
+        # Generalized rejection method, p. 47
+        while True:
+            bag = betadist_geobag(b, aintpart, 1, bintpart, 1)
+            gb = lambda: b.geometric_bag(bag[2])
+            gbcomp = lambda: b.geometric_bag(bag[2]) ^ 1
+            if b.power(gbcomp, brest) == 1 and b.power(gb, arest) == 1:
+                return bag
+    # Create a "geometric bag" to hold a uniform random
+    # number (U), described by Flajolet et al. 2010
+    gb = lambda: b.geometric_bag(bag[2])
+    # Complement of "geometric bag"
+    gbcomp = lambda: b.geometric_bag(bag[2]) ^ 1
+    bp1 = lambda: (
+        1 if b.power(gbcomp, bpower) == 1 and b.power(gb, apower) == 1 else 0
+    )
+    while True:
+        # Create a uniform random number (U) bit-by-bit, and
+        # accept it with probability U^(a-1)*(1-U)^(b-1), which
+        # is the unnormalized PDF of the beta distribution
+        bag[2].clear()
+        if bp1() == 1:
+            # Accepted
+            return bag
+
+#####################
 
 class _RGConv:
     # Wrapper that takes an object that implements
@@ -875,123 +945,7 @@ class _RGConv:
     def randint(self, a, b):
         return a + self.rg.rndint(b - a)
 
-def forsythe_prob2(rg, x):
-    # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    while True:
-        # 1 minus maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
-        ret1 = psrn_new_01()
-        ret2 = psrn_new_01()
-        ret = None
-        if psrn_less(rg, ret1, ret2):
-            ret = psrn_complement(ret2)
-        else:
-            ret = psrn_complement(ret1)
-        k = 1
-        u = ret
-        while True:
-            v = psrn_new_01()
-            if psrn_less(rg, u, v) == 1:
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
-
-def forsythe_prob3(rg, x):
-    # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    while True:
-        # Uniform(0,1) random number
-        ret = psrn_new_01()
-        k = 1
-        u = ret
-        while True:
-            # Generate v as the maximum of two uniform(0,1) random numbers, or beta(2,1).pdf(x)
-            ret1 = psrn_new_01()
-            ret2 = psrn_new_01()
-            v = ret2 if psrn_less(rg, ret1, ret2) == 1 else ret1
-            if psrn_less(rg, u, v) == 1:
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
-
-def forsythe_prob(rg, m, n):
-    # Returns 1 with probability gamma(m,n)/gamma(m,1),
-    # where gamma(.) is the lower incomplete gamma function.
-    # Implemented with the help of Theorem IV.2.1(iii) given in
-    # Non-Uniform Random Variate Generation.
-    randgen = randomgen.RandomGen(_RGConv(rg))
-    while True:
-        # Maximum of m uniform(0,1) random numbers, or beta(m,1)
-        ret = randgen.kthsmallest_psrn(m, m)
-        k = 1
-        u = ret
-        while True:
-            v = psrn_new_01()
-            if psrn_less(rg, u, v):
-                break
-            k += 1
-            u = v
-        if k % 2 == 1:
-            return 1 if psrn_less_than_fraction(rg, ret, n) == 1 else 0
-
-def psrnexpo(rg):
-    count = 0
-    while True:
-        y1 = psrn_new_01()
-        y = y1
-        accept = True
-        while True:
-            z = psrn_new_01()
-            if psrn_less(rg, y, z) == 0:
-                accept = not accept
-                y = z
-                continue
-            break
-        if accept:
-            return [1, count, y1[2]]
-        count += 1
-
-def rayleighpsrn(bern, s=1):
-    k = 0
-    rndgen = randomgen.RandomGen(_RGConv(rg))
-    # Choose a piece according to Rayleigh distribution function
-    while True:
-        # Conditional probability of each piece
-        # is 1-exp(-(k*2+1)/(2*s**2))
-        emparam = Fraction(k * 2 + 1, 2 * s * s)
-        if rndgen.zero_or_one_exp_minus(emparam.numerator, emparam.denominator) == 0:
-            break
-        k += 1
-    # In the chosen piece, sample (x+k)*exp(-(x+k)**2/(2*s*s))
-    while True:
-        # x=random.random()
-        # if random.random()*2<(x+k)*math.exp(-(x+k)**2/(2*s*s)):
-        #   return x+k
-        # continue
-        # TODO: Fix this sampler, which appears to be incorrect
-        y = 2 * s * s
-        bag = psrn_new_01()
-        gb = lambda: psrn_less(rg, psrn_new_01(), bag)
-        # Break exp into exp(-x**2/y) * exp(-k**2/y) * exp(-x*k*2/y) and sample.
-        # Then divide bag by 2^piecebits and thus sample (x+k)/2**piecebits.
-        # The rest of the PDF's piece is a normalization constant and doesn't
-        # affect the result of the sampling
-        ky = Fraction(k * k, y)
-        if (
-            rndgen.zero_or_one_exp_minus(ky.numerator, ky.denominator) == 1
-            and exp_minus_x2y(bern, gb, Fraction(1) / y) == 1
-            and exp_minus_xy(bern, gb, Fraction(k * 2) / y) == 1
-            and sampleIntPlusBag(bern, bag, k) == 1
-        ):
-            # Accepted
-            bag[1] = k
-            return bag
+#####################
 
 def genshape(rg, inshape):
     """ Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -1224,142 +1178,6 @@ class ShapeSampler:
         psrny[0] = -1 if rg.randbit() == 0 else 1
         return [psrnx, psrny]
 
-def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
-    return bern.fill_geometric_bag(
-        _power_of_uniform_greaterthan1_geobag(bern, power, complement), precision
-    )
-
-def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
-    if power < 1:
-        raise ValueError("Not supported")
-    if power == 1:
-        return []  # Empty uniform random number
-    i = 1
-    powerfrac = Fraction(power)
-    powerrest = Fraction(1) - Fraction(1) / powerfrac
-    # Choose an interval
-    while (
-        bern.zero_or_one_power_ratio(1, 2, powerfrac.denominator, powerfrac.numerator)
-        == 1
-    ):
-        i += 1
-    # Crude choice of epsdividend:
-    # epsdividend = Fraction(1)/(powerfrac * 2**(i))
-    # The following choice of epsdividend makes eps_div
-    # much faster, but it requires floating-point arithmetic
-    # to calculate "**powerrest".  Using either choice does not
-    # affect the correctness of this algorithm.
-    probx = (2.0 ** (-i - 1)) ** powerrest
-    epsdividend = Fraction(probx) * 255 / 256
-    bag = []
-    gb = lambda: bern.geometric_bag(bag)
-    bf = lambda: _bern_power(bern, bag, powerrest.numerator, powerrest.denominator, gb)
-    # print(i)
-    while True:
-        # Limit sampling to the chosen interval
-        bag.clear()
-        for k in range(i - 1):
-            bag.append(0)
-        bag.append(1)
-        # Simulate epsdividend / x**(1-1/power)
-        if bern.eps_div(bf, epsdividend) == 1:
-            # Flip all bits if complement is true
-            bag = [x if x == None else 1 - x for x in bag] if complement else bag
-            return bag
-
-def powerOfUniform(b, px, py, precision=53):
-    """ Generates a power of a uniform random number.
-         - px, py - Numerator and denominator of desired exponent for the uniform
-           random number.
-         - precision: Number of bits after the point that the result will contain.
-        """
-    # Special case of beta, returning power of px/py
-    # of a uniform random number, provided px/py
-    # is in (0, 1].
-    return betadist(b, py, px, 1, 1, precision)
-
-def truncated_gamma(rg, bern, ax, ay, precision=53):
-    # Văduva's gamma generator truncated to [0, 1],
-    # when ax/ay is in (0, 1].  Described in Devroye 1986, p. 180.
-    while True:
-        ret = _power_of_uniform_greaterthan1_geobag(bern, Fraction(ay, ax))
-        ret = [1, 0, ret]
-        w = ret
-        k = 1
-        while True:
-            u = psrn_new_01()
-            if psrn_less(rg, w, u):
-                if (k & 1) == 1:
-                    return psrn_fill(rg, ret, precision=precision)
-                break
-            w = u
-            k += 1
-
-def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
-    return b.fill_geometric_bag(betadist_geobag(b, ax, ay, bx, by), precision)
-
-def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
-    """ Generates a beta-distributed random number with arbitrary
-          (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
-          (bx/by) are both 1 or greater, or if one of these parameters is
-         1 and the other is less than 1.
-         - b: Bernoulli object (from the "bernoulli" module).
-         - ax, ay: Numerator and denominator of first shape parameter.
-         - bx, by: Numerator and denominator of second shape parameter.
-         - precision: Number of bits after the point that the result will contain.
-        """
-    # Beta distribution for alpha>=1 and beta>=1
-    bag = []
-    afrac = Fraction(ax) if ay == 1 else Fraction(ax, ay)
-    bfrac = Fraction(bx) if by == 1 else Fraction(bx, by)
-    bpower = bfrac - 1
-    apower = afrac - 1
-    # Special case for a=b=1
-    if bpower == 0 and apower == 0:
-        return bag
-    # Special case if a=1
-    if apower == 0 and bpower < 0:
-        return _power_of_uniform_greaterthan1_geobag(b, Fraction(by, bx), True)
-    # Special case if b=1
-    if bpower == 0 and apower < 0:
-        return _power_of_uniform_greaterthan1_geobag(b, Fraction(ay, ax), False)
-    if apower <= -1 or bpower <= -1:
-        raise ValueError
-    # Special case if a and b are integers
-    if int(bpower) == bpower and int(apower) == apower:
-        a = int(afrac)
-        b = int(bfrac)
-        return randomgen.RandomGen().kthsmallest_psrn(a + b - 1, a)
-    # Split a and b into two parts which are relatively trivial to simulate
-    if bfrac > 2 and afrac > 2:
-        bintpart = int(bfrac) - 1
-        aintpart = int(afrac) - 1
-        brest = bfrac - bintpart
-        arest = afrac - aintpart
-        # Generalized rejection method, p. 47
-        while True:
-            bag = betadist_geobag(b, aintpart, 1, bintpart, 1)
-            gb = lambda: b.geometric_bag(bag)
-            gbcomp = lambda: b.geometric_bag(bag) ^ 1
-            if b.power(gbcomp, brest) == 1 and b.power(gb, arest) == 1:
-                return bag
-    # Create a "geometric bag" to hold a uniform random
-    # number (U), described by Flajolet et al. 2010
-    gb = lambda: b.geometric_bag(bag)
-    # Complement of "geometric bag"
-    gbcomp = lambda: b.geometric_bag(bag) ^ 1
-    bp1 = lambda: (
-        1 if b.power(gbcomp, bpower) == 1 and b.power(gb, apower) == 1 else 0
-    )
-    while True:
-        # Create a uniform random number (U) bit-by-bit, and
-        # accept it with probability U^(a-1)*(1-U)^(b-1), which
-        # is the unnormalized PDF of the beta distribution
-        bag.clear()
-        if bp1() == 1:
-            # Accepted
-            return bag
-
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
@@ -1475,7 +1293,10 @@ if __name__ == "__main__":
         return ret
 
     def _readpsrn2(rg, psrn, digits=2, minprec=None):
-        return _readpsrn(rg, psrn[0], psrn[1], psrn[2], digits, minprec)
+        if minprec == None:
+            return _readpsrn(rg, psrn[0], psrn[1], psrn[2], digits, minprec)
+        else:
+            return psrn_fill(rg, psrn, digits=digits, precision=minprec)
 
     def _readpsrnend2(rg, psrn, digits=2, minprec=None):
         return _readpsrnend(rg, psrn[0], psrn[1], psrn[2], digits, minprec)
@@ -1928,6 +1749,7 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
+    """
     sample = [psrn_fill(rg, rayleighpsrn(rg)) for i in range(20000)]
     ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
     print(ks)
@@ -1945,6 +1767,7 @@ if __name__ == "__main__":
         print("Kolmogorov-Smirnov results for rayleigh (2samp):")
         print(ks)
         # raise ValueError
+    """
 
     test_rand_extraction(lambda rg: psrnexpo(rg))
 

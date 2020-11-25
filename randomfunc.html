@@ -2060,7 +2060,7 @@ END METHOD
 end
 </pre>
 
-<p>Some cases require converting a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:</p>
+<p>Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:</p>
 
 <ul>
 <li>Distribution is <strong>discrete, with known PDF</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast even though it&#39;s exact in theory.  If the interval [a, b] covers all or almost all the distribution, then the application can store the interval&#39;s PDF values in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with the PDF (Walter 2019)<sup><a href="#Note63"><strong>(63)</strong></a></sup>.  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
@@ -2594,7 +2594,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note73>(73)</sup> Crooks, G.E., &quot;<a href="https://arxiv.org/abs/1005.3274v2"><strong>The Amoroso Distribution</strong></a>&quot;, arXiv:1005.3274v2 [math.ST], 2015.</small></li>
 <li><small><sup id=Note74>(74)</sup> Devroye, L., &quot;Expected Time Analysis of a Simple Recursive Poisson Random Variate Generator&quot;, <em>Computing</em> 46, pp. 165-173, 1991.</small></li>
 <li><small><sup id=Note75>(75)</sup> Giammatteo, P., and Di Mascio, T., &quot;Wilson-Hilferty-type approximation for Poisson Random Variable&quot;, <em>Advances in Science, Technology and Engineering Systems Journal</em> 5(2), 2020.</small></li>
-<li><small><sup id=Note76>(76)</sup> Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1984).</small></li>
+<li><small><sup id=Note76>(76)</sup> Bailey, R.W., &quot;Polar generation of random variates with the t distribution&quot;, <em>Mathematics of Computation</em> 62 (1994).</small></li>
 <li><small><sup id=Note77>(77)</sup> Stein, W.E. and Keblis, M.F., &quot;A new method to simulate the triangular distribution&quot;, <em>Mathematical and Computer Modelling</em> 49(5-6), 2009, pp.1143-1147.</small></li>
 <li><small><sup id=Note78>(78)</sup> Saha, M., et al., &quot;<a href="https://arxiv.org/abs/1909.01103"><strong>The extended xgamma distribution</strong></a>&quot;, arXiv:1909.01103 [math.ST], 2019.</small></li>
 <li><small><sup id=Note79>(79)</sup> Sen, S., et al., &quot;The xgamma distribution: statistical properties and application&quot;, 2016.</small></li>
