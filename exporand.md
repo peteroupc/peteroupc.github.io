@@ -1782,24 +1782,28 @@ In principle, a partially-sampled random number is possible by finding a sequenc
 
 The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the random number's bits become less and less biased as they move farther and farther from the binary point.
 
-An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _PDF_, except if the sequence has the form&mdash;
+An absolutely continuous distribution can thus be built if we can find a sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its digits to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _probability density function_ (PDF) in general.
 
-- _a_<sub>_j_</sub> = _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>),
+I conjecture the following:
 
-where _&beta;_ = 2, _y_ > 0, and _w_ > 0, and special cases include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  Other sequences of the form _z_(_j_)/(1 + _z_(_j_)) will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.
+1. For _&beta;_ = 2, the distribution's PDF will be continuous only if&mdash;
+
+    - the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
+    - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
+
+2. For _&beta;_ = 2, the distribution's PDF described in (1) will be discontinuous in general, except if the sequence has the form&mdash;
+
+    - _a_<sub>_j_</sub> = _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>),
+
+    where _y_ > 0 and _w_ > 0.  Special cases of this include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  As evidence in favor of this conjecture, experiments show that sequences _z_(_j_)/(1 + _z_(_j_)), other than sequences of the form just given, will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.  Claude Gravel gave me a hint that proving this conjecture might involve studying the distribution's characteristic function or Fourier transform.
+
+3. A similar behavior to (1) and (2) applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
 
 For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 
 - Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-_&beta;_ digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = _&beta;_).
 - Let _t_(_x_) = &Pi;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
 - The relative probability for _x_ is _t_(_x_) / (argmax<sub>_z_</sub> _t_(_z_)).
-
-It appears that the distribution's PDF will be continuous only if&mdash;
-
-- the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
-- the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
-
-It may be that something similar applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
 
 <a id=License></a>
 ## License

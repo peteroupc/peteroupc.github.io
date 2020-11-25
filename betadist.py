@@ -1749,26 +1749,6 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    """
-    sample = [psrn_fill(rg, rayleighpsrn(rg)) for i in range(20000)]
-    ks = st.kstest(sample, lambda x: st.rayleigh.cdf(x))
-    print(ks)
-    if ks.pvalue < 1e-5:
-        print("Kolmogorov-Smirnov results for rayleigh:")
-        print(ks)
-        # raise ValueError
-    sample2 = [
-        math.sqrt(2) * math.log(-1 / (random.random() - 1)) ** (1 / 2)
-        for i in range(20000)
-    ]
-    ks = st.ks_2samp(sample, sample2)
-    print(ks)
-    if ks.pvalue < 1e-5:
-        print("Kolmogorov-Smirnov results for rayleigh (2samp):")
-        print(ks)
-        # raise ValueError
-    """
-
     test_rand_extraction(lambda rg: psrnexpo(rg))
 
     sample1 = []
