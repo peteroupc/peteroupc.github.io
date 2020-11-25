@@ -260,6 +260,12 @@ The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a
 
 The **RandUniformFromReal** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than a real number **b** almost surely.  It is equivalent to the **RandUniformInRangePositive** algorithm with **a** = **a**, **bmin** = 0, and **bmax** = **b**.
 
+The **UniformComplement** algorithm generates 1 minus the value of a uniform PSRN (**a**) as follows:
+
+1. If **a**'s sign is negative or its integer part is other than 0, return an error.
+2. For each sampled digit in **a**'s fractional part, set it to _base_&minus;1&minus;_digit_, where _digit_ is the digit and _base_ is the base of digits stored by the PSRN, such as 2 for binary.
+3. Return **a**.
+
 <a id=Sampling_E_rands></a>
 ### Sampling E-rands
 
@@ -441,6 +447,8 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 7. Add 1 to _i_ and go to step 4.
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
+
+> **Note**: To sample the **maximum** of two uniform(0, 1) random numbers, or the **square root** of a uniform(0, 1) random number: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
 
 The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** almost surely, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 

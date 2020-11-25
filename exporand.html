@@ -362,6 +362,14 @@
 
 <p>The <strong>RandUniformFromReal</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than 0 and less than a real number <strong>b</strong> almost surely.  It is equivalent to the <strong>RandUniformInRangePositive</strong> algorithm with <strong>a</strong> = <strong>a</strong>, <strong>bmin</strong> = 0, and <strong>bmax</strong> = <strong>b</strong>.</p>
 
+<p>The <strong>UniformComplement</strong> algorithm generates 1 minus the value of a uniform PSRN (<strong>a</strong>) as follows:</p>
+
+<ol>
+<li>If <strong>a</strong>&#39;s sign is negative or its integer part is other than 0, return an error.</li>
+<li>For each sampled digit in <strong>a</strong>&#39;s fractional part, set it to <em>base</em>&minus;1&minus;<em>digit</em>, where <em>digit</em> is the digit and <em>base</em> is the base of digits stored by the PSRN, such as 2 for binary.</li>
+<li>Return <strong>a</strong>.</li>
+</ol>
+
 <p><a id=Sampling_E_rands></a></p>
 
 <h3>Sampling E-rands</h3>
@@ -607,6 +615,10 @@
 </ol>
 
 <p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to <code>RNDINTEXC(2)</code>.)</p>
+
+<blockquote>
+<p><strong>Note</strong>: To sample the <strong>maximum</strong> of two uniform(0, 1) random numbers, or the <strong>square root</strong> of a uniform(0, 1) random number: (1) Generate two uniform PSRNs <strong>a</strong> and <strong>b</strong> each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run <strong>RandLess</strong> on <strong>a</strong> and <strong>b</strong> in that order.  If the call returns 0, return <strong>a</strong>; otherwise, return <strong>b</strong>.</p>
+</blockquote>
 
 <p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> almost surely, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
