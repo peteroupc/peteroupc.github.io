@@ -174,18 +174,18 @@ def sampleIntPlusBag(rg, psrn, k):
 
 def rayleighpsrn(rg, s=1):
     k = 0
+    y = Fraction(2 * s * s)
     rndgen = randomgen.RandomGen(_RGConv(rg))
     # Choose a piece according to Rayleigh distribution function
     while True:
         # Conditional probability of each piece
         # is 1-exp(-(k*2+1)/(2*s**2))
-        emparam = Fraction(k * 2 + 1, 2 * s * s)
+        emparam = Fraction(k * 2 + 1) / y
         if rndgen.zero_or_one_exp_minus(emparam.numerator, emparam.denominator) == 0:
             break
         k += 1
     # In the chosen piece, sample (x+k)*exp(-(x+k)**2/(2*s*s))
     while True:
-        y = 2 * s * s
         ky = Fraction(k * k, y)
         bag = psrn_new_01()
         gb = lambda: psrn_less(rg, psrn_new_01(), bag)
@@ -203,3 +203,24 @@ def rayleighpsrn(rg, s=1):
             # Accepted
             bag[1] = k
             return bag
+
+if __name__ == "__main__":
+    # The following code tests some of the methods in this module.
+
+    import scipy.stats as st
+    import math
+    from betadist import _test_rand_extraction
+    from bernoulli import Bernoulli
+
+    _test_rand_extraction(lambda rg: rayleighpsrn(rg))
+    _test_rand_extraction(lambda rg: rayleighpsrn(rg, 2))
+    _test_rand_extraction(lambda rg: rayleighpsrn(rg, 0.5))
+    rg = Bernoulli()
+
+    def rgcoin(rg):
+        return lambda: rg.rndint(10) < 3
+
+    _test_rand_extraction(lambda rg: exp_minus_xy(rg, rgcoin(rg), 1), nofill=True)
+    _test_rand_extraction(lambda rg: exp_minus_xy(rg, rgcoin(rg), 3), nofill=True)
+    _test_rand_extraction(lambda rg: exp_minus_xy(rg, rgcoin(rg), 3.5), nofill=True)
+    _test_rand_extraction(lambda rg: exp_minus_xy(rg, rgcoin(rg), 0.5), nofill=True)

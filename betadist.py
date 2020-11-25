@@ -1178,6 +1178,139 @@ class ShapeSampler:
         psrny[0] = -1 if rg.randbit() == 0 else 1
         return [psrnx, psrny]
 
+def _peres(bits, output):
+    u = []
+    v = []
+    length = len(bits) - len(bits) % 2
+    if length == 0:
+        return
+    i = 0
+    while i < length:
+        if bits[i] == 0 and bits[i + 1] == 0:
+            u.append(0)
+            v.append(0)
+        elif bits[i] == 0 and bits[i + 1] == 1:
+            output.append(0)
+            u.append(1)
+        elif bits[i] == 1 and bits[i + 1] == 0:
+            output.append(1)
+            u.append(1)
+        elif bits[i] == 1 and bits[i + 1] == 1:
+            u.append(0)
+            v.append(1)
+        i += 2
+    # Recursion on "discarded" bits
+    _peres(u, output)
+    _peres(v, output)
+
+class _BitFetchingRandomGen:
+    def __init__(self, *args):
+        self.rg = randomgen.RandomGen(*args)
+        self.fetchedbits = 0
+        self.lastfetchedbits = 0
+        self.totalfetchedbits = 0
+        self.randombits = 0
+        self.queue = []
+        self.recycled = []
+
+    def extract(self, bits, output):
+        _peres(bits, output)
+
+    def _report(self, count):
+        print(
+            (
+                "fetched=%d (per variate=%f)\n"
+                + "random=%d (per variate=%f)\n"
+                + "rate=%f"
+            )
+            % (
+                self.totalfetchedbits,
+                self.totalfetchedbits / count,
+                self.randombits,
+                self.randombits / count,
+                self.randombits / max(1, self.totalfetchedbits),
+            )
+        )
+
+    def rndint(self, maxInclusive):
+        if maxInclusive < 0:
+            raise ValueError("maxInclusive less than 0")
+        if maxInclusive == 0:
+            return 0
+        if maxInclusive == 1:
+            return self.randbit()
+        # Lumbroso's fast dice roller method
+        x = 1
+        y = 0
+        while True:
+            x = x * 2
+            y = y * 2 + self.randbit()
+            if x > maxInclusive:
+                if y <= maxInclusive:
+                    return y
+                x = x - maxInclusive - 1
+                y = y - maxInclusive - 1
+
+    def randbit(self):
+        self.fetchedbits += 1
+        self.totalfetchedbits += 1
+        while len(self.recycled) >= 64:
+            oldqueue = len(self.queue)
+            self.extract(self.recycled[:64], self.queue)
+            self.recycled[:64] = []
+        if len(self.queue) > 0:
+            return self.queue.pop(0)
+        self.randombits += 1
+        return self.rg.randbit()
+
+    def feed_fetchedbits(self):
+        # Feed the difference between the previous
+        # and current number of fetched bits
+        x = abs(self.fetchedbits - self.lastfetchedbits)
+        self.lastfetchedbits = self.fetchedbits
+        if x == 0:
+            self.recycled.append(0)
+        else:
+            while x > 0:
+                self.recycled.append(x & 1)
+                x >>= 1
+        self.fetchedbits = 0
+
+def _test_rand_extraction(func, digits=2, nofill=False):
+
+    import scipy.stats as st
+
+    # Test whether adding randomness extraction suggested by Devroye and Gravel
+    # preserves the distribution
+    samplesize = 5000
+    rg = randomgen.RandomGen()
+    sample1 = [
+        func(rg) if nofill else psrn_fill(rg, func(rg), precision=32, digits=digits)
+        for i in range(samplesize)
+    ]
+    bfrg = _BitFetchingRandomGen()
+    sample2 = []
+    for i in range(samplesize):
+        ps = (
+            func(bfrg)
+            if nofill
+            else psrn_fill(bfrg, func(bfrg), precision=32, digits=digits)
+        )
+        bfrg.feed_fetchedbits()
+        sample2.append(ps)
+    ks = st.ks_2samp(sample1, sample2)
+    # bfrg._report(samplesize)
+    if ks.pvalue < 1e-4:
+        bfrg._report(samplesize)
+        print(ks)
+        print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
+        print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
+        try:
+            dobucket(sample1)
+            dobucket(sample2)
+        except:
+            pass
+
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
@@ -1313,108 +1446,6 @@ if __name__ == "__main__":
             return 0
         return _readpsrn2(rg, a, minprec=32, digits=digits)
 
-    def peres(bits, output):
-        u = []
-        v = []
-        length = len(bits) - len(bits) % 2
-        if length == 0:
-            return
-        i = 0
-        while i < length:
-            if bits[i] == 0 and bits[i + 1] == 0:
-                u.append(0)
-                v.append(0)
-            elif bits[i] == 0 and bits[i + 1] == 1:
-                output.append(0)
-                u.append(1)
-            elif bits[i] == 1 and bits[i + 1] == 0:
-                output.append(1)
-                u.append(1)
-            elif bits[i] == 1 and bits[i + 1] == 1:
-                u.append(0)
-                v.append(1)
-            i += 2
-        # Recursion on "discarded" bits
-        peres(u, output)
-        peres(v, output)
-
-    class BitFetchingRandomGen(randomgen.RandomGen):
-        def __init__(self, *args):
-            super().__init__(*args)
-            self.fetchedbits = 0
-            self.lastfetchedbits = 0
-            self.totalfetchedbits = 0
-            self.randombits = 0
-            self.queue = []
-            self.recycled = []
-
-        def extract(self, bits, output):
-            peres(bits, output)
-
-        def _report(self, count):
-            print(
-                (
-                    "fetched=%d (per variate=%f)\n"
-                    + "random=%d (per variate=%f)\n"
-                    + "rate=%f"
-                )
-                % (
-                    self.totalfetchedbits,
-                    self.totalfetchedbits / count,
-                    self.randombits,
-                    self.randombits / count,
-                    self.randombits / self.totalfetchedbits,
-                )
-            )
-
-        def randbit(self):
-            self.fetchedbits += 1
-            self.totalfetchedbits += 1
-            while len(self.recycled) >= 64:
-                oldqueue = len(self.queue)
-                self.extract(self.recycled[:64], self.queue)
-                self.recycled[:64] = []
-            if len(self.queue) > 0:
-                return self.queue.pop(0)
-            self.randombits += 1
-            return super().randbit()
-
-        def feed_fetchedbits(self):
-            # Feed the difference between the previous
-            # and current number of fetched bits
-            x = abs(self.fetchedbits - self.lastfetchedbits)
-            self.lastfetchedbits = self.fetchedbits
-            if x == 0:
-                self.recycled.append(0)
-            else:
-                while x > 0:
-                    self.recycled.append(x & 1)
-                    x >>= 1
-            self.fetchedbits = 0
-
-    def test_rand_extraction(func, digits=2):
-        # Test whether adding randomness extraction suggested by Devroye and Gravel
-        # preserves the distribution
-        samplesize = 2000
-        rg = randomgen.RandomGen()
-        sample1 = [
-            _readpsrn2(rg, func(rg), minprec=32, digits=digits)
-            for i in range(samplesize)
-        ]
-        bfrg = BitFetchingRandomGen()
-        sample2 = []
-        for i in range(samplesize):
-            ps = _readpsrn2(bfrg, func(bfrg), minprec=32, digits=digits)
-            bfrg.feed_fetchedbits()
-            sample2.append(ps)
-        ks = st.ks_2samp(sample1, sample2)
-        if ks.pvalue < 1e-6:
-            bfrg._report(samplesize)
-            print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
-            print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
-            dobucket(sample1)
-            dobucket(sample2)
-
     def psrn_add_fraction_test(rg, ps, pi, pf, frac, i=0, digits=2):
         pfc = [x for x in pf]
         pfcs = str(pfc)
@@ -1443,7 +1474,7 @@ if __name__ == "__main__":
             )
             return
         if i < 10:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_add_fraction(
                     rg, [ps, pi, [x for x in pfc]], frac, digits=digits
                 ),
@@ -1489,7 +1520,7 @@ if __name__ == "__main__":
         if m < f1 or m > f2:
             raise ValueError
         if i < 100:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_in_range(rg, f1, f2, digits=digits), digits=digits
             )
             sample1 = [random.uniform(float(f1), float(f2)) for _ in range(2000)]
@@ -1538,7 +1569,7 @@ if __name__ == "__main__":
             print(["mult", p, q, mn, mx, "m", m])
             raise ValueError
         if i < 10:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_multiply_by_fraction(
                     rg, [ps, pi, [x for x in pfc]], frac, digits=digits
                 ),
@@ -1589,7 +1620,7 @@ if __name__ == "__main__":
             print(["recip", p, mn, mx, "m", m])
             raise ValueError
         if i < 20:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_reciprocal(
                     rg, [ps, pi, [x for x in pfc]], digits=digits
                 ),
@@ -1644,7 +1675,7 @@ if __name__ == "__main__":
             )
             return
         if i < 50:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_add(
                     rg,
                     [ps, pi, [x for x in pfc]],
@@ -1710,7 +1741,7 @@ if __name__ == "__main__":
             print(["p2", psrn2])
             raise ValueError
         if i < 100:
-            test_rand_extraction(
+            _test_rand_extraction(
                 lambda rg: psrn_multiply(
                     rg,
                     [ps, pi, [x for x in pfc]],
@@ -1749,7 +1780,7 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    test_rand_extraction(lambda rg: psrnexpo(rg))
+    _test_rand_extraction(lambda rg: psrnexpo(rg))
 
     sample1 = []
     sample2 = []
