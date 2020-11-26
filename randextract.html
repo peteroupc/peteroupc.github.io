@@ -103,7 +103,7 @@
 
 <p>After a sampling method produces an output <em>Y</em>, both <em>X</em> (the number of random bits the sampler consumed) and <em>Y</em> (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)</p>
 
-<p>Now we discuss the issue of finding <em>P</em>(<em>X</em> | <em>Y</em>).  Generally, if the sampling algorithm uses a binary tree, with each leaf labeled with an outcome, <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows.  Let <em>L</em>(<em>&xi;</em>) be the number of leaves labeled <em>Y</em> at tree depth <em>&xi;</em>, divided by 2<sup><em>&xi;</em></sup> (<em>&xi;</em> starts at 0).  Then <em>P</em>(<em>X</em> | <em>Y</em>) is the sum of all <em>L</em>(<em>&xi;</em>) for all <em>&xi;</em> in [0, <em>X</em>], divided by the probability that the algorithm produces output <em>Y</em>.</p>
+<p>Now we discuss the issue of finding <em>P</em>(<em>X</em> | <em>Y</em>).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows.  Let <em>L</em>(<em>&xi;</em>) be the number of leaves labeled <em>Y</em> at tree depth <em>&xi;</em>, divided by 2<sup><em>&xi;</em></sup> (<em>&xi;</em> starts at 0).  Then <em>P</em>(<em>X</em> | <em>Y</em>) is the sum of all <em>L</em>(<em>&xi;</em>) for all <em>&xi;</em> in [0, <em>X</em>], divided by the probability that the sampler produces output <em>Y</em>.</p>
 
 <p>Unfortunately, this is not easy to calculate when <em>Y</em> can take on any of a large or even unbounded number of values.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</p>
 
@@ -134,6 +134,7 @@
 <li><small><sup id=Note14>(14)</sup> Montes Gutiérrez, I., &quot;Comparison of alternatives under uncertainty and imprecision&quot;, doctoral thesis, Universidad de Oviedo, 2014.</small></li>
 <li><small><sup id=Note15>(15)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. &quot;A fuzzy approach to stochastic dominance of random variables&quot;, in <em>International Fuzzy Systems Association World Congress</em> 2003.</small></li>
 <li><small><sup id=Note16>(16)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
+<li><small><sup id=Note17>(17)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

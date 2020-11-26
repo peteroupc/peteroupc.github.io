@@ -204,6 +204,21 @@ def rayleighpsrn(rg, s=1):
             bag[1] = k
             return bag
 
+def size_biased_poisson_ailamujia(rg, eta=1):
+    """ Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
+        Pak. J. Statistics 37(1), 19-38, 2021. """
+    rndgen = randomgen.RandomGen(_RGConv(rg))
+    z = 1
+    eta = Fraction(eta)
+    cumu = Fraction(1)
+    while True:
+        pr = Fraction(4 * eta ** 3 * z * (z + 1)) / (1 + 2 * eta) ** (z + 2)
+        prc = pr / cumu
+        if rndgen.zero_or_one(prc.numerator, prc.denominator) == 1:
+            return z
+        cumu -= pr
+        z += 1
+
 if __name__ == "__main__":
     # The following code tests some of the methods in this module and the betadist module.
 
@@ -212,6 +227,70 @@ if __name__ == "__main__":
     from betadist import _test_rand_extraction
     from bernoulli import Bernoulli
     from interval import FInterval
+
+    def dobucket(v, bounds=None):
+        a = Fraction(min(v))
+        b = Fraction(max(v))
+        if bounds != None:
+            a, b = bounds
+        size = int(max(30, math.ceil(b - a)))
+        allints = True
+        if size == 30:
+            for x in v:
+                if int(x) != x:
+                    allints = False
+                    break
+            if allints:
+                size = int(b - a)
+        else:
+            allints = False
+        if allints:
+            ls = [int(a + (b - a) * x / size) for x in range(size + 1)]
+        else:
+            ls = [a + (b - a) * (x / size) for x in range(size + 1)]
+        buckets = [0 for i in range(size)]
+        for x in v:
+            for i in range(len(buckets)):
+                if x >= ls[i] and x < ls[i + 1]:
+                    buckets[i] += 1
+                    break
+        showbuckets(ls, buckets)
+        return buckets
+
+    def showbuckets(ls, buckets):
+        mx = max(0.00000001, max(buckets))
+        sumbuckets = max(0.00000001, sum(buckets))
+        if mx == 0:
+            return
+        labels = [
+            ("%0.5f %d [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+            if int(buckets[i]) == buckets[i]
+            else ("%0.5f %f [%f]" % (ls[i], buckets[i], buckets[i] * 1.0 / sumbuckets))
+            for i in range(len(buckets))
+        ]
+        maxlen = max([len(x) for x in labels])
+        i = 0
+        while i < (len(buckets)):
+            print(
+                labels[i]
+                + " " * (1 + (maxlen - len(labels[i])))
+                + ("*" * int(buckets[i] * 40 / mx))
+            )
+            if (
+                buckets[i] == 0
+                and i + 2 < len(buckets)
+                and buckets[i + 1] == 0
+                and buckets[i + 2] == 0
+            ):
+                print(" ... ")
+                while (
+                    buckets[i] == 0
+                    and i + 2 < len(buckets)
+                    and buckets[i + 1] == 0
+                    and buckets[i + 2] == 0
+                ):
+                    i += 1
+            i += 1
 
     def normalroupt(u, v, s):
         if v.inf == 0:
@@ -233,6 +312,14 @@ if __name__ == "__main__":
             return -1
         return 0
 
+    rg = Bernoulli()
+    samp = [size_biased_poisson_ailamujia(rg, 0.2) for i in range(3000)]
+    dobucket(samp)
+    _test_rand_extraction(
+        lambda rg: size_biased_poisson_ailamujia(rg, 0.1), nofill=True
+    )
+    exit()
+
     paving = ShapeSampler2(normalroupaving)
     _test_rand_extraction(lambda rg: paving.sample(rg)[0])
     _test_rand_extraction(lambda rg: paving.sample(rg)[1])
@@ -240,7 +327,6 @@ if __name__ == "__main__":
     _test_rand_extraction(lambda rg: rayleighpsrn(rg))
     _test_rand_extraction(lambda rg: rayleighpsrn(rg, 2))
     _test_rand_extraction(lambda rg: rayleighpsrn(rg, 0.5))
-    rg = Bernoulli()
 
     def rgcoin(rg):
         return lambda: rg.rndint(10) < 3

@@ -77,7 +77,7 @@ Note that for a given _Y_, _P_(_X_ | _Y_) should decrease at a geometric rate as
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling algorithm uses a binary tree, with each leaf labeled with an outcome, _P_(_X_ | _Y_) is found as follows.  Let _L_(_&xi;_) be the number of leaves labeled _Y_ at tree depth _&xi;_, divided by 2<sup>_&xi;_</sup> (_&xi;_ starts at 0).  Then _P_(_X_ | _Y_) is the sum of all _L_(_&xi;_) for all _&xi;_ in \[0, _X_\], divided by the probability that the algorithm produces output _Y_.
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(17)**](#Note17)</sup>, _P_(_X_ | _Y_) is found as follows.  Let _L_(_&xi;_) be the number of leaves labeled _Y_ at tree depth _&xi;_, divided by 2<sup>_&xi;_</sup> (_&xi;_ starts at 0).  Then _P_(_X_ | _Y_) is the sum of all _L_(_&xi;_) for all _&xi;_ in \[0, _X_\], divided by the probability that the sampler produces output _Y_.
 
 Unfortunately, this is not easy to calculate when _Y_ can take on any of a large or even unbounded number of values.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -104,6 +104,7 @@ Unfortunately, this is not easy to calculate when _Y_ can take on any of a large
 - <small><sup id=Note14>(14)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
 - <small><sup id=Note15>(15)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
 - <small><sup id=Note16>(16)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
+- <small><sup id=Note17>(17)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
 <a id=Appendix></a>
 ## Appendix
