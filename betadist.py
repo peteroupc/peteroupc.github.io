@@ -1050,7 +1050,7 @@ class ShapeSampler2:
                 box.mark = ShapeSampler2.MAYBE
                 # print([box.coords,box.mark])
 
-    def _traverse(self, box):
+    def _traverse(self, box, rg):
         r = 0
         d = 0
         while True:
@@ -1062,7 +1062,7 @@ class ShapeSampler2:
                 d += 1
                 box = box.left if child == 0 else box.right
 
-    def _makepsrn(self, coord):
+    def _makepsrn(self, coord, rg):
         # Because of bisections and the restriction of root box sizes to
         # integers, the denominator must be a power of 2.
         # Moreover, coords are assumed to be non-negative.
@@ -1086,15 +1086,15 @@ class ShapeSampler2:
         psrn[0] = 1  # Sign is assumed to be positive
         return psrn
 
-    def sample(self):
+    def sample(self, rg):
         """ Generates a random point inside the shape. """
         while True:
-            box, r, d = self._traverse(self.root)
+            box, r, d = self._traverse(self.root, rg)
             while True:
                 if box.mark == ShapeSampler2.YES:
                     return [
-                        self._makepsrn(box.coords[0]),
-                        self._makepsrn(box.coords[1]),
+                        self._makepsrn(box.coords[0], rg),
+                        self._makepsrn(box.coords[1], rg),
                     ]
                 if box.mark == ShapeSampler2.NO:
                     break
@@ -1130,7 +1130,7 @@ class ShapeSampler:
                 if v == 0:
                     self.maybes.append([x, y])
 
-    def sample(self):
+    def sample(self, rg):
         """ Generates a random point inside the shape, in the form of a uniform PSRN. """
         psrnx = psrn_new_01()
         psrny = psrn_new_01()
@@ -1210,6 +1210,8 @@ class _BitFetchingRandomGen:
         self.lastfetchedbits = 0
         self.totalfetchedbits = 0
         self.randombits = 0
+        self.queuedbits = 0
+        self.queuedbitvalues = 0
         self.queue = []
         self.recycled = []
 
@@ -1221,6 +1223,7 @@ class _BitFetchingRandomGen:
             (
                 "fetched=%d (per variate=%f)\n"
                 + "random=%d (per variate=%f)\n"
+                + "queued bit mean=%f\n"
                 + "rate=%f"
             )
             % (
@@ -1228,6 +1231,7 @@ class _BitFetchingRandomGen:
                 self.totalfetchedbits / count,
                 self.randombits,
                 self.randombits / count,
+                self.queuedbitvalues / max(1, self.queuedbits),
                 self.randombits / max(1, self.totalfetchedbits),
             )
         )
@@ -1259,7 +1263,10 @@ class _BitFetchingRandomGen:
             self.extract(self.recycled[:64], self.queue)
             self.recycled[:64] = []
         if len(self.queue) > 0:
-            return self.queue.pop(0)
+            ret = self.queue.pop(0)
+            self.queuedbitvalues += ret
+            self.queuedbits += 1
+            return ret
         self.randombits += 1
         return self.rg.randbit()
 
@@ -1268,12 +1275,9 @@ class _BitFetchingRandomGen:
         # and current number of fetched bits
         x = abs(self.fetchedbits - self.lastfetchedbits)
         self.lastfetchedbits = self.fetchedbits
-        if x == 0:
-            self.recycled.append(0)
-        else:
-            while x > 0:
-                self.recycled.append(x & 1)
-                x >>= 1
+        while x > 0:
+            self.recycled.append(x & 1)
+            x >>= 1
         self.fetchedbits = 0
 
 def _test_rand_extraction(func, digits=2, nofill=False):
@@ -1299,7 +1303,7 @@ def _test_rand_extraction(func, digits=2, nofill=False):
         bfrg.feed_fetchedbits()
         sample2.append(ps)
     ks = st.ks_2samp(sample1, sample2)
-    # bfrg._report(samplesize)
+    bfrg._report(samplesize)
     if ks.pvalue < 1e-4:
         bfrg._report(samplesize)
         print(ks)

@@ -67,6 +67,24 @@ Some additional notes:
 - Extractors that maintain state, such as the Zhou and Bruck extractor tree, should be used only on sources whose bias does not change significantly over time.  Dividing the source into blocks, as in the previous note, and assigning one extractor instance to each block, can improve robustness for sources whose bias can change over time.
 - The lower bound on the average number of coin flips needed to turn a biased coin into an unbiased coin is as follows (and is a special case of the _entropy bound_; see, e.g., (Pae 2005)<sup>[**(6)**](#Note6)</sup>, (Peres 1992)<sup>[**(9)**](#Note9)</sup>): ln(2) / ((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)), where &lambda; is the bias of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin is strongly biased towards heads or tails.  (For certain values of &lambda;, Kozen (2014)<sup>[**(12)**](#Note12)</sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)
 
+Devroye and Gravel (2020)<sup>[**(13)**](#Note13)</sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+
+1. Start with the interval [0, 1].
+2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_ | _Y_) and from above by _P_(_X_&minus;1 | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].)
+3. Extract the bits, starting from the binary point, that the final interval's lower and upper bound have in common (or 0 bits if the upper bound is 1). (For example, if the final interval is [0.101010..., 0.101110...] in binary, the bits 1, 0, 1 are extracted, since the common bits starting from the point are 101.)
+
+Note that for a given _Y_, _P_(_X_ | _Y_) should decrease at a geometric rate as _X_ increases (each _P_ is no more than half the previous one), and this decreasing rate is crucial for the algorithm's correctness; the interval is not allowed to shrink to a single point, since otherwise step 3 would go on forever.
+
+After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
+
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling algorithm uses a binary tree, with each leaf labeled with an outcome, _P_(_X_ | _Y_) is found as follows.  Let _L_(_&chi;_) be the number of leaves labeled _Y_ at tree depth _&chi;_, divided by 2<sup>_&chi;_</sup> (_&chi;_ starts at 0).  Then _P_(_X_ | _Y_) is the sum of all _L_(_&chi;_) for all _&chi;_ in [0, _X_), divided by the probability that the algorithm produces output _Y_.
+
+Unfortunately, this is not easy to calculate when _Y_ can take on a large or even unbounded number of values.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
+
+1. Let _z_ be abs(_X_&minus;_lastX_), where _lastX_ is either the last value of _X_ fed to this extractor for this batch or 0 if there is no such value.
+2. If _z_ is greater than 0, feed the bits of _z_ from most significant to least significant to a queue of extractor inputs.
+3. Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.
+
 <a id=Notes></a>
 ## Notes
 
@@ -82,9 +100,10 @@ Some additional notes:
 - <small><sup id=Note10>(10)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
 - <small><sup id=Note11>(11)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
 - <small><sup id=Note12>(12)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
-- <small><sup id=Note13>(13)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
-- <small><sup id=Note14>(14)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
-- <small><sup id=Note15>(15)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
+- <small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
+- <small><sup id=Note14>(14)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
+- <small><sup id=Note15>(15)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
+- <small><sup id=Note16>(16)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -96,7 +115,7 @@ Some additional notes:
 
 Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
 
-More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
+More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(14)**](#Note14)</sup>, (De Schuymer et al. 2003)<sup>[**(15)**](#Note15)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
 
 **Proposition 1.** _Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
@@ -113,9 +132,9 @@ For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means tha
 
 **Proposition 2.** _Let X and Y be real-valued random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent._
 
-_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003)<sup>[**(14)**](#Note14)</sup>.  Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any given _z_ (e.g., _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
+_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003)<sup>[**(15)**](#Note15)</sup>.  Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any given _z_ (e.g., _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
 
-If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup>[**(13)**](#Note13)</sup>, we see that we can replace&mdash;
+If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup>[**(14)**](#Note14)</sup>, we see that we can replace&mdash;
 
 - the left hand side of Equation 3.5 with 0 &minus; 0, since it's a difference of expectations of the same distribution function and random variable, and
 - the right hand side with (1/2) \* 0, since the difference of  _P_(_X_ =_Y_) and  _P_(_X_ = _X&prime;_) is taken and _P_(_X_ =_Y_) is equivalent to _P_(_X_ = _X&prime;_), which is equivalent because _X_, _X&prime;_ and _Y_ are identically distributed by the hypotheses of this proposition and Theorem 3.12.
@@ -128,7 +147,7 @@ Here are some of the many examples where this algorithm works:
 - Set _X_ and _Y_ to two independent uniform(0, 1) random numbers.  Or...
 - Set _X_ and _Y_ to two independent uniform(0, 1) random numbers, then set _Y_ to (_X_+_Y_)/2.
 
-See also a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(15)**](#Note15)</sup>.
+See also a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(16)**](#Note16)</sup>.
 
 <a id=License></a>
 ## License

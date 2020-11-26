@@ -1799,13 +1799,13 @@ I conjecture the following:
     - the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
     - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
 
-2. For _&beta;_ = 2, the distribution's PDF described in (1) will be discontinuous in general, except if the sequence has the form&mdash;
+2. The distribution's PDF will be continuous only if the sequence has the form&mdash;
 
-    - _a_<sub>_j_</sub> = _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_w_/_&beta;_<sup>_j_</sup></sup>),
+    - _a_<sub>_j_</sub> = exp(<sup>_w_/_&beta;_<sup>_j_</sup>)</sup>/(1 + exp(<sup>_w_/_&beta;_<sup>_j_</sup>)</sup>),
 
-    where _y_ > 0 and _w_ > 0.  Special cases of this include the uniform distribution (_y_ = 1, _w_ = 1), the truncated exponential(1) distribution (_y_ = (1/exp(1)), _w_ = 1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_y_ = (1/exp(1)), _w_ = _&lambda;_).  As evidence in favor of this conjecture, experiments show that sequences _z_(_j_)/(1 + _z_(_j_)), other than sequences of the form just given, will generally result in a discontinuous PDF even if _z_(_j_) converges to 1.  Claude Gravel gave me a hint that proving this conjecture might involve studying the distribution's characteristic function or Fourier transform.
+    where _&beta;_ = 2 and _w_ is a constant.  Special cases of this include the uniform distribution (_w_ = 0), the truncated exponential(1) distribution (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_w_ = &minus;_&lambda;_).  As another special case, we have 1 minus a truncated exponential(_w_) random number when _w_ > 0.  This also includes the special case _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.  As evidence in favor of this conjecture, experiments show that sequences _z_(_j_)/(1 + _z_(_j_)), other than sequences of the form just given, will generally result in a discontinuous PDF even if _z_(_j_) converges to 1 and even if _&beta;_ is other than 2.  Claude Gravel gave me a hint that proving this conjecture might involve studying the distribution's characteristic function.
 
-3. A similar behavior to (1) and (2) applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
+3. A similar behavior to (1) applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
 
 For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 

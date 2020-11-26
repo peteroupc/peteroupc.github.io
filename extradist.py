@@ -205,12 +205,37 @@ def rayleighpsrn(rg, s=1):
             return bag
 
 if __name__ == "__main__":
-    # The following code tests some of the methods in this module.
+    # The following code tests some of the methods in this module and the betadist module.
 
     import scipy.stats as st
     import math
     from betadist import _test_rand_extraction
     from bernoulli import Bernoulli
+    from interval import FInterval
+
+    def normalroupt(u, v, s):
+        if v.inf == 0:
+            return FInterval(0)
+        wid = v.width()
+        n = 5
+        while wid < 1:
+            wid *= 8
+            n += 1
+        return (u / v) ** 2 + 4 * (v).log(n)
+
+    def normalroupaving(coord):
+        a = normalroupt(
+            FInterval(coord[0][0], coord[0][1]), FInterval(coord[1][0], coord[1][1]), 1
+        )
+        if a.sup < 0:
+            return 1
+        if a.inf > 0:
+            return -1
+        return 0
+
+    paving = ShapeSampler2(normalroupaving)
+    _test_rand_extraction(lambda rg: paving.sample(rg)[0])
+    _test_rand_extraction(lambda rg: paving.sample(rg)[1])
 
     _test_rand_extraction(lambda rg: rayleighpsrn(rg))
     _test_rand_extraction(lambda rg: rayleighpsrn(rg, 2))

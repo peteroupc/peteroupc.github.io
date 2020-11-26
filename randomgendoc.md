@@ -2391,7 +2391,7 @@ CLASSES
      |      -1 if not; and 0 if partially.
      |      dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
      |
-     |  sample(self)
+     |  sample(self, rg)
      |      Generates a random point inside the shape, in the form of a uniform PSRN.
      |
      |  ----------------------------------------------------------------------
@@ -2413,7 +2413,7 @@ CLASSES
      |      -1 if not; and 0 if partially.
      |      dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
      |
-     |  sample(self)
+     |  sample(self, rg)
      |      Generates a random point inside the shape.
      |
      |  ----------------------------------------------------------------------
