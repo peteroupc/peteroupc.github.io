@@ -77,9 +77,9 @@ Note that for a given _Y_, _P_(_X_ | _Y_) should decrease at a geometric rate as
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(17)**](#Note17)</sup>, _P_(_X_ | _Y_) is found as follows.  Let _L_(_&xi;_) be the number of leaves labeled _Y_ at tree depth _&xi;_, divided by 2<sup>_&xi;_</sup> (_&xi;_ starts at 0).  Then _P_(_X_ | _Y_) is the sum of all _L_(_&xi;_) for all _&xi;_ in \[0, _X_\], divided by the probability that the sampler produces output _Y_.
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(14)**](#Note14)</sup>, _P_(_X_ | _Y_) is found as follows.  Let _L_(_z_) be the number of leaves labeled _Y_ at tree depth _z_, divided by 2<sup>_z_</sup> (_z_ starts at 0).  Then _P_(_X_ | _Y_) is the sum of all _L_(_z_) for all _z_ in \[0, _X_\], divided by the probability that the sampler produces output _Y_.
 
-Unfortunately, this is not easy to calculate when _Y_ can take on any of a large or even unbounded number of values.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
+Unfortunately, this is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
 1. Let _z_ be abs(_X_&minus;_lastX_), where _lastX_ is either the last value of _X_ fed to this extractor for this batch or 0 if there is no such value.
 2. If _z_ is greater than 0, feed the bits of _z_ from most significant to least significant to a queue of extractor inputs.
@@ -101,10 +101,10 @@ Unfortunately, this is not easy to calculate when _Y_ can take on any of a large
 - <small><sup id=Note11>(11)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
 - <small><sup id=Note12>(12)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
-- <small><sup id=Note14>(14)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
-- <small><sup id=Note15>(15)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
-- <small><sup id=Note16>(16)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
-- <small><sup id=Note17>(17)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note14>(14)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note15>(15)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
+- <small><sup id=Note16>(16)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
+- <small><sup id=Note17>(17)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -116,7 +116,7 @@ Unfortunately, this is not easy to calculate when _Y_ can take on any of a large
 
 Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
 
-More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(14)**](#Note14)</sup>, (De Schuymer et al. 2003)<sup>[**(15)**](#Note15)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
+More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(15)**](#Note15)</sup>, (De Schuymer et al. 2003)<sup>[**(16)**](#Note16)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions:
 
 **Proposition 1.** _Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent._
 
@@ -133,9 +133,9 @@ For the "if" part:  If _X_ and _Y_ are statistically indifferent, this means tha
 
 **Proposition 2.** _Let X and Y be real-valued random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent._
 
-_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003)<sup>[**(15)**](#Note15)</sup>.  Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any given _z_ (e.g., _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
+_Proof._ By definition, _X_ and _Y_ are statistically indifferent if and only if _X_ is statistically preferred to _Y_ and vice versa (that is, P(_X_>_Y_) + P(_X_=_Y_)/2 >= P(_Y_>_X_) + P(_Y_=_X_)/2) (De Schuymer et al. 2003)<sup>[**(16)**](#Note16)</sup>.  Moreover, because both random variables are identically distributed, their distribution functions _F_<sub>_X_</sub> and  _F_<sub>_Y_</sub> are the same, and therefore their values and expectations for any given _z_ (e.g., _F_<sub>_X_</sub>(_z_) and E[_F_<sub>_X_</sub>(_z_)], respectively) are the same.
 
-If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup>[**(14)**](#Note14)</sup>, we see that we can replace&mdash;
+If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup>[**(15)**](#Note15)</sup>, we see that we can replace&mdash;
 
 - the left hand side of Equation 3.5 with 0 &minus; 0, since it's a difference of expectations of the same distribution function and random variable, and
 - the right hand side with (1/2) \* 0, since the difference of  _P_(_X_ =_Y_) and  _P_(_X_ = _X&prime;_) is taken and _P_(_X_ =_Y_) is equivalent to _P_(_X_ = _X&prime;_), which is equivalent because _X_, _X&prime;_ and _Y_ are identically distributed by the hypotheses of this proposition and Theorem 3.12.
@@ -148,7 +148,7 @@ Here are some of the many examples where this algorithm works:
 - Set _X_ and _Y_ to two independent uniform(0, 1) random numbers.  Or...
 - Set _X_ and _Y_ to two independent uniform(0, 1) random numbers, then set _Y_ to (_X_+_Y_)/2.
 
-See also a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(16)**](#Note16)</sup>.
+See also a procedure given as a remark near the end of a paper by Camion (1974)<sup>[**(17)**](#Note17)</sup>.
 
 <a id=License></a>
 ## License

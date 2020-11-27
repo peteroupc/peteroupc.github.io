@@ -703,19 +703,22 @@ def loggamma(k, v=4):
     # Usually, Stirling's approximation diverges, which however is inappropriate for
     # use in exact sampling algorithms, where series expansions must converge
     # in order for the algorithm to halt almost surely.
-    # Unfortunately, since the formula from the paper is monotonically increasing and
+    # Unfortunately, the formula from the paper is monotonically increasing and
     # that paper didn't specify the exact rate of convergence or
     # an upper bound on the error incurred when truncating the series (a bound required
-    # for our purposes of exact sampling), I employed
-    # an ad hoc bound in this method.
+    # for our purposes of exact sampling).  For this reason, this method
+    # employs an error bound suggested to me by the user "Simply Beautiful Art"
+    # from the Mathematics Stack Exchange community:
+    # The error is abs(t[n+1]**2 / (t[n+2] - t[n+1])), where t[n+1] and t[n+2] are the first
+    # two neglected terms.
     xn = k - 1
     logx = FInterval(xn).log(v * 2)
     ret = xn * logx - xn + (logx + _logpi2cache[v]) / 2
     rb = _FRACTION_ZERO
     d = 1
     # print("rsup",float(ret.sup))
-    lastterm = _FRACTION_ZERO
-    ediff = _FRACTION_ZERO
+    lastterm1 = _FRACTION_ZERO
+    lastterm2 = _FRACTION_ZERO
     for i in range(1, v + 2):
         nn = 0
         nd = 1
@@ -737,20 +740,16 @@ def loggamma(k, v=4):
         if i % 2 == 1:
             term = -term
         if i == v + 1:
-            lastterm = term
-            # remainder=(mg-mm)-float(rb)
-            ediff += abs(lastterm)  # Add the first "neglected" term to the error bound
-            # print([i,"mg-mm",mg-mm,"remainder",remainder,
-            #      "termdiff",float(abs(ediff*v)/remainder)])
+            lastterm = abs(term)
+        elif i == v + 2:
+            lastterm2 = abs(term)
         else:
             oldrb = rb
             rb += term
-            ediff = abs(term)  # Ad hoc error bound
-            # print([float(ediff),float(Fraction(n)/d),
-            #      float(ediff/max(1e-20,oldediff))])
+    ediff = abs(lastterm * lastterm / (lastterm2 - lastterm))
     ret += rb
     retinf = max(ret.inf, 0)
-    retsup = max(ret.sup + ediff * v, 0)
+    retsup = max(ret.sup + ediff, 0)
     return FInterval(retinf, retsup)
 
 def logbinco(n, k, v=4):
@@ -779,3 +778,10 @@ if __name__ == "__main__":
     print(logpoisson(10, 15) / 2)  # log(sqrt(PoissonProb))
     print(logpoisson(2 ** 30, 2 ** 30, 10) / 2)  # log(sqrt(PoissonProb))
     print(math.log(math.sqrt(10 ** 15 * math.exp(-10) / math.gamma(15 + 1))))
+    last = None
+    for i in range(4, 15):
+        n = loggamma(1000, i)
+        if last != None and (n.inf < last.inf or n.sup > last.sup):
+            raise ValueError
+        print([n, math.lgamma(1000)])
+        last = n
