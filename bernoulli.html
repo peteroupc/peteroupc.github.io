@@ -126,8 +126,8 @@
 <li><a href="#Simulating_the_Probability_Generating_Function"><strong>Simulating the Probability Generating Function</strong></a></li>
 <li><a href="#Integrals"><strong>Integrals</strong></a></li>
 <li><a href="#Certain_Converging_Series"><strong>Certain Converging Series</strong></a></li>
-</ul></li>
 <li><a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Correctness_and_Performance_Charts"><strong>Correctness and Performance Charts</strong></a></li>
@@ -266,7 +266,7 @@
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>d[n]</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>d[n]</em>.</li>
-<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -287,7 +287,7 @@
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
@@ -305,7 +305,7 @@
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the flip returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 </ol>
 
@@ -685,7 +685,7 @@
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again. (Note that in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>. (Here we divide by the factorial of 2-times-<em>n</em>.)</li>
-<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2 &minus; 1) * (<em>n</em> * 2), then go to step 3.</li>
 </ol>
 
@@ -703,7 +703,7 @@
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
-<li>If <em>ret</em> is less than <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2) * (<em>n</em> * 2 + 1), then go to step 3.</li>
 </ol>
 
@@ -1614,9 +1614,9 @@
 
 <p><a id=General_Factory_Functions></a></p>
 
-<h3>General Factory Functions</h3>
+<h4>General Factory Functions</h4>
 
-<p>The following algorithm simulates a factory function <em>f</em>(<em>&lambda;</em>) via two sequences of polynomials.  One sequence of polynomials must be non-increasing and converge from below to <em>f</em>, and the other sequence must be non-decreasing and converge from above to <em>f</em>.  For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note49"><strong>(49)</strong></a></sup>, although an error in Algorithm I is noted below.  In this algorithm:</p>
+<p>The following algorithm simulates a factory function <em>f</em>(<em>&lambda;</em>) via two sequences of polynomials.  One sequence of polynomials must be non-increasing and converge from below to <em>f</em>, and the other sequence must be non-decreasing and converge from above to <em>f</em>.  For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, although an error in Algorithm I is noted below.  In this algorithm:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the Bernstein coefficient <em>k</em> for a degree-<em>n</em> polynomial that approximates <em>f</em> from below.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>.</li>
@@ -1627,18 +1627,17 @@
 <p>The algorithm follows.</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random number, call it <em>g0</em>.</li>
-<li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>prevcount</em> to 0, and set <em>ones</em> to 0. Set <em>i</em> to 0.</li>
-<li>(Find the first pair of polynomials that lie in [0, 1], doubling the degree if needed.) If <strong>fbound</strong>(2<sup><em>i</em></sup>) returns an upper or lower bound that is less than 0 or greater than 1, add 1 to <em>i</em> and repeat this step.  Otherwise, go to the next step.</li>
-<li>Set <em>istart</em> to <em>i</em>.</li>
-<li>(Loop.) Set <em>degree</em> to 2<sup><em>i</em></sup>.</li>
-<li>Flip the input coin (<em>degree</em>&minus;<em>prevcount</em>) times.  For each 1 returned this way, add 1 to <em>ones</em>.</li>
+<li>Generate a uniform(0, 1) random number, call it <em>ret</em>.</li>
+<li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>prevcount</em> to 0, and set <em>ones</em> to 0. Set <em>degree</em> to 1.</li>
+<li>(Find the first pair of polynomials that lie in [0, 1], doubling the degree if needed.) If <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2 and repeat this step.  Otherwise, go to the next step.</li>
+<li>Set <em>startdegree</em> to <em>degree</em>.</li>
+<li>(Loop.) Flip the input coin (<em>degree</em>&minus;<em>prevcount</em>) times.  For each 1 returned this way, add 1 to <em>ones</em>.</li>
 <li>Set <em>&#x2113;</em> to <strong>fbelow</strong>(<em>degree</em>, <em>ones</em>), set <em>u</em> to <strong>fabove</strong>(<em>degree</em>, <em>ones</em>), and set <em>prevcount</em> to <em>degree</em>.</li>
-<li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>i</em> is <em>istart</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
-<li>If <em>i</em> is greater than <em>istart</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
+<li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
+<li>If <em>degree</em> is greater than <em>startdegree</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
 <li>Let <em>m</em> be (<em>ut</em>&minus;<em>&#x2113;t</em>)/(<em>us</em>&minus;<em>&#x2113;s</em>).  Set <em>&#x2113;t</em> to <em>&#x2113;t</em>+(<em>&#x2113;</em>&minus;<em>&#x2113;s</em>)*<em>m</em>, and set <em>ut</em> to <em>ut</em>&minus;(<em>us</em>&minus;<em>u</em>)*<em>m</em>.</li>
-<li>If <em>g0</em> is less than (or equal to) <em>&#x2113;t</em>, return 1.  If <em>g0</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>(Double the degree.) Add 1 to <em>i</em> and go to step 5.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;t</em>, return 1.  If <em>ret</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>(Double the degree and restart the loop.) Multiply <em>degree</em> by 2 and go to step 5.</li>
 </ol>
 
 <blockquote>
@@ -1651,8 +1650,8 @@
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note50"><strong>(50)</strong></a></sup> and has an upper bound of 1.08989.</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove(<em>n</em>, <em>n</em>)</strong>].</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note43"><strong>(43)</strong></a></sup> and has an upper bound of 1.08989.</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove</strong>(<em>n</em>, <em>n</em>)].</li>
 </ul></li>
 </ol>
 </blockquote>
@@ -1669,7 +1668,7 @@
 <li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo&#39;s algorithm for <a href="#Certain_Power_Series"><strong>certain power series</strong></a>.</li>
 <li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.</li>
 <li>Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
-<li>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have rational coefficients (or Bernstein coefficients that are rational numbers and lie in [0, 1]).  Especially helpful would be an automated procedure to compute such sequences for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, 8/10)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</li>
+<li>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have rational coefficients (or Bernstein coefficients that are rational numbers and lie in [0, 1]).  Especially helpful would be an automated procedure to compute such sequences for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, 8/10)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and for the method for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>.</li>
 <li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
 </ul>
 
@@ -1736,15 +1735,15 @@
 <li><small><sup id=Note39>(39)</sup> Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020.</small></li>
 <li><small><sup id=Note40>(40)</sup> Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</small></li>
 <li><small><sup id=Note41>(41)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
-<li><small><sup id=Note42>(42)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note43>(43)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note44>(44)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note45>(45)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note46>(46)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note47>(47)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note48>(48)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note49>(49)</sup> Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</small></li>
-<li><small><sup id=Note50>(50)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note42>(42)</sup> Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</small></li>
+<li><small><sup id=Note43>(43)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note44>(44)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note45>(45)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note46>(46)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note47>(47)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
+<li><small><sup id=Note48>(48)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
+<li><small><sup id=Note49>(49)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note50>(50)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1757,9 +1756,9 @@
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note42"><strong>(42)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (<em>&lambda;</em>) into a coin with another bias (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note43"><strong>(43)</strong></a></sup>, (Peres 1992)<sup><a href="#Note44"><strong>(44)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (<em>&lambda;</em>) into a coin with another bias (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note45"><strong>(45)</strong></a></sup>, (Peres 1992)<sup><a href="#Note46"><strong>(46)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</p>
@@ -1790,7 +1789,7 @@
 <li>Function B: 2 * <em>&lambda;</em>, when <em>&lambda;</em> lies in (0, 1/2 &minus; <em>&#x03F5;</em>), where <em>&#x03F5;</em> is in (0, 1/2).</li>
 </ul>
 
-<p>Glynn (2016)<sup><a href="#Note45"><strong>(45)</strong></a></sup> distinguishes between&mdash;</p>
+<p>Glynn (2016)<sup><a href="#Note47"><strong>(47)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
@@ -1839,7 +1838,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
@@ -1914,7 +1913,7 @@ for i in range(iters):
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
@@ -1975,7 +1974,7 @@ def valid_perm(f, x, n):
 
 <ul>
 <li><em>k</em> is odd is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>), or</li>
-<li><em>k</em> is even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also (Monahan 1979)<sup><a href="#Note48"><strong>(48)</strong></a></sup>),</li>
+<li><em>k</em> is even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also (Monahan 1979)<sup><a href="#Note50"><strong>(50)</strong></a></sup>),</li>
 </ul>
 
 <p>where DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function  (CDF) of <em>E</em>.  For example, the algorithm to simulate <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a> uses the fact that when&mdash;</p>
