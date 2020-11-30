@@ -1569,7 +1569,7 @@
 
 <ul>
 <li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all positive rational numbers, and</li>
-<li>for which a sequence <em>err</em>[0], <em>err</em>[1], ..., is available that is monotonically nonincreasing and converges to 0, where <em>err</em>[<em>n</em>] is an upper bound on the error from truncating the series <em>a</em> after summing the first <em>n</em>+1 terms.</li>
+<li>for which a sequence <em>err</em>[0], <em>err</em>[1], ..., is available that is nonincreasing and converges to 0, where <em>err</em>[<em>n</em>] is an upper bound on the error from truncating the series <em>a</em> after summing the first <em>n</em>+1 terms.</li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -1616,11 +1616,11 @@
 
 <h4>General Factory Functions</h4>
 
-<p>The following algorithm simulates a factory function <em>f</em>(<em>&lambda;</em>) via two sequences of polynomials.  One sequence of polynomials must be non-increasing and converge from below to <em>f</em>, and the other sequence must be non-decreasing and converge from above to <em>f</em>.  For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, although an error in Algorithm I is noted below.  In this algorithm:</p>
+<p>The following algorithm simulates a factory function <em>f</em>(<em>&lambda;</em>) via two sequences of polynomials.  One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.  For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, although an error in Algorithm I is noted below.  In this algorithm:</p>
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the Bernstein coefficient <em>k</em> for a degree-<em>n</em> polynomial that approximates <em>f</em> from below.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>.</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the Bernstein coefficient <em>k</em> for a degree-<em>n</em> polynomial that approximates <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>.</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from below, where <em>k</em> is in the interval [0, <em>n</em>].  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>.</li>
 <li><strong>fbound</strong>(<em>n</em>) returns the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>].</li>
 </ul>
 
@@ -1641,7 +1641,13 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The efficiency of this algorithm depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require math concepts that are much too advanced for this document.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The efficiency of this algorithm depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require math concepts that are much too advanced for this document.</li>
+<li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
+<li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
+</ol>
 
 <p><strong>Example:</strong></p>
 
@@ -1649,7 +1655,7 @@
 <li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note43"><strong>(43)</strong></a></sup> and has an upper bound of 1.08989.</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove</strong>(<em>n</em>, <em>n</em>)].</li>
 </ul></li>
@@ -1668,7 +1674,7 @@
 <li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo&#39;s algorithm for <a href="#Certain_Power_Series"><strong>certain power series</strong></a>.</li>
 <li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.</li>
 <li>Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
-<li>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have rational coefficients (or Bernstein coefficients that are rational numbers and lie in [0, 1]).  Especially helpful would be an automated procedure to compute such sequences for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, 8/10)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and for the method for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>.</li>
+<li>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and for the method for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>.</li>
 <li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
 </ul>
 

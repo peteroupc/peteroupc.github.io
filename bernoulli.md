@@ -1197,7 +1197,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(39)**](#Note39)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all positive rational numbers, and
-- for which a sequence _err_\[0\], _err_\[1\], ..., is available that is monotonically nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
+- for which a sequence _err_\[0\], _err_\[1\], ..., is available that is nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
 
 The algorithm follows.
 
@@ -1234,10 +1234,10 @@ The case when _a_ is a _natural logarithm_ rather than a base-2 logarithm is tri
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
 
-The following algorithm simulates a factory function _f_(_&lambda;_) via two sequences of polynomials.  One sequence of polynomials must be non-increasing and converge from below to _f_, and the other sequence must be non-decreasing and converge from above to _f_.  For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(42)**](#Note42)</sup>, although an error in Algorithm I is noted below.  In this algorithm:
+The following algorithm simulates a factory function _f_(_&lambda;_) via two sequences of polynomials.  One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.  For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients.  The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(42)**](#Note42)</sup>, although an error in Algorithm I is noted below.  In this algorithm:
 
-- **fbelow**(_n_, _k_) is a lower bound of the Bernstein coefficient _k_ for a degree-_n_ polynomial that approximates _f_ from below.  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_.
-- **fabove**(_n_, _k_) is an upper bound of the Bernstein coefficient _k_ for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_.
+- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_.
+- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_.
 - **fbound**(_n_) returns the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\].
 
 The algorithm follows.
@@ -1254,12 +1254,16 @@ The algorithm follows.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 11. (Double the degree and restart the loop.) Multiply _degree_ by 2 and go to step 5.
 
-> **Note:** The efficiency of this algorithm depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require math concepts that are much too advanced for this document.
+> **Notes:**
+>
+> 1. The efficiency of this algorithm depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require math concepts that are much too advanced for this document.
+> 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
+> 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
 >
 > **Example:**
 >
 > 1. If _f_(_&lambda;_) = min(_&lambda;_, _c_) with _c_ in the interval (0, 1), then the following implementations can be used:
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _S_/sqrt(_n_), where _S_ = (4306+837\*sqrt(6))/5832 is Sikkema's constant (Sikkema 1961)<sup>[**(43)**](#Note43)</sup> and has an upper bound of 1.08989.
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
 
@@ -1271,7 +1275,7 @@ The algorithm follows.
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
     - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
-    - For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have rational coefficients (or Bernstein coefficients that are rational numbers and lie in \[0, 1\]).  Especially helpful would be an automated procedure to compute such sequences for a large class of factory functions (such as concave and piecewise linear functions such as min(_&lambda;_, 8/10)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup> and for the method for [**general factory functions**](#General_Factory_Functions).
+    - For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup> and for the method for [**general factory functions**](#General_Factory_Functions).
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as &pi; or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant &pi; is not desired; however, a series expansion that converges to a fraction of &pi; is.
