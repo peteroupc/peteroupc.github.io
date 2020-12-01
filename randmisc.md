@@ -120,7 +120,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 
 - The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017)<sup>[**(10)**](#Note10)</sup>. The family uses a shape parameter _&alpha;_ > 0, and the algorithm for the "X-G" families is used, except step 1 now reads: "Generate a uniform(0, 1) random number _U_, then set _x_ to ln((_&alpha;_&minus;1)\*_U_ + 1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
 - The _exponentiated_ family (Mudholkar and Srivastava 1993)<sup>[**(11)**](#Note11)</sup>. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate a uniform(0, 1) random number _U_, then set _x_ to _U_<sup>1/_a_</sup>."
-- The _transmuted-G_ family (described, for example, by Tahir and Cordeiro (2016)<sup>[**(12)**](#Note12)</sup>). The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random number in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup>[**(3)**](#Note3)</sup>: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform(0, 1) random number. Otherwise, generate two uniform(0, 1) random numbers, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)"
+- The _transmuted-G_ family (described, for example, by Tahir and Cordeiro (2016)<sup>[**(12)**](#Note12)</sup>). The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random number in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup>[**(3)**](#Note3)</sup>: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform(0, 1) random number. Otherwise, generate two uniform(0, 1) random numbers, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)".
 
 In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013)<sup>[**(13)**](#Note13)</sup> that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number with the same support as X and meets certain other conditions.  The following algorithm samples a random number from this kind of family:
 
@@ -165,6 +165,10 @@ A _power function(a, c) distribution_ is distributed as _c_\*_U_<sup>1/_a_</sup>
 
 A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distributed as the minimum of _N_ power function(_b_, _c_) random variables, where _N_ is distributed as the zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>) distribution.  (Jodrá 2020)<sup>[**(22)**](#Note22)</sup>.
 
+A _Lehmann Weibull_(_a1_, _a2_, _&beta;_) random number (Elgohari and Yousof 2020)<sup>[**(23)**](#Note23)</sup> is distributed as (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_, where _a1_, _a2_, and _&beta;_ are greater than 0, and _U_ is a uniform(0, 1) random number.  Alternatively, distributed as _E_<sup>1/_a1_</sup>/_a2_ where _E_ is an exponential(_&beta;_) random number.
+
+A _Marshall&ndash;Olkin_(_&alpha;_) random number is distributed as (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1), where _&alpha;_ is in the interval [0, 1], and _U_ is a uniform(0, 1) random number.
+
 <a id=Notes></a>
 ## Notes
 
@@ -190,6 +194,7 @@ A _right-truncated Weibull(a, b, c) distribution_ (truncated at _c_) is distribu
 - <small><sup id=Note20>(20)</sup> Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).</small>
 - <small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note22>(22)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
+- <small><sup id=Note23>(23)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
 
 <a id=License></a>
 ## License
