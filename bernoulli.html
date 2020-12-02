@@ -249,7 +249,7 @@
 <li>1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...).</li>
 </ol>
 
-<p>In the first two cases, replace &quot;let <em>result</em> be 1&quot; in the algorithm with &quot;let <em>result</em> be 0&quot;.  In the last two cases, replace &quot;let <em>v</em> be 1&quot; with &quot;let <em>v</em> be 0&quot;.</p>
+<p>In the first two cases, replace &quot;let <em>result</em> be 1&quot; in the algorithm with &quot;let <em>result</em> be 0&quot;.  In the last two cases, replace &quot;let <em>v</em> be 1&quot; with &quot;let <em>v</em> be 0&quot;.  Also, as pointed out by Mendo, the <em>c</em>[<em>i</em>] can also sum to less than 1, in which case if the algorithm would return 1, instead it returns a number that is 1 with probability equal to the sum of all <em>c</em>[<em>i</em>], and 0 otherwise.</p>
 
 <p>(Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.</p>
 
@@ -428,7 +428,7 @@
 <p>This new algorithm uses the base-2 logarithm <em>k</em> + <em>&lambda;</em>, where <em>k</em> is an integer 0 or greater, and is useful when this logarithm is very large.</p>
 
 <ol>
-<li>If <em>k</em> &gt; 0, generate unbiased bits until a zero bit or <em>k</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
+<li>If <em>k</em> &gt; 0, generate unbiased random bits until a zero bit or <em>k</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
 <li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> using the <em>&mu;</em> input coin, and return the result.</li>
 </ol>
@@ -440,7 +440,7 @@
 <p>An extension of the previous algorithm.  Here, <em>m</em> is an integer greater than 0.</p>
 
 <ol>
-<li>If <em>k</em> &gt; 0, generate unbiased bits until a zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a block of all zeros was generated this way, return 0.</li>
+<li>If <em>k</em> &gt; 0, generate unbiased random bits until an zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
 <li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> <em>m</em> times, using the <em>&mu;</em> input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.</li>
 </ol>
