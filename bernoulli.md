@@ -347,7 +347,7 @@ This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an i
 
 An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
 
-1. If _k_ &gt; 0, generate unbiased random bits until an zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
+1. If _k_ &gt; 0, generate unbiased random bits until a zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
 2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
 3. Run the **algorithm for exp(&minus;&mu;)** _m_ times, using the _&mu;_ input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.
 

@@ -440,7 +440,7 @@
 <p>An extension of the previous algorithm.  Here, <em>m</em> is an integer greater than 0.</p>
 
 <ol>
-<li>If <em>k</em> &gt; 0, generate unbiased random bits until an zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
+<li>If <em>k</em> &gt; 0, generate unbiased random bits until a zero bit or <em>k</em>*<em>m</em> bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.</li>
 <li>Create an input coin <em>&mu;</em> that does the following: &quot;Flip the input coin, then run the <strong>algorithm for ln(2)</strong> (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>Run the <strong>algorithm for exp(&minus;&mu;)</strong> <em>m</em> times, using the <em>&mu;</em> input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.</li>
 </ol>
