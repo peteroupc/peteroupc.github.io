@@ -6,7 +6,7 @@ Zhou, H. and Bruck, J., 2012. Streaming algorithms for optimal generation of ran
 
 Because this algorithm is stateful, it is best implemented on biased-coin sources whose bias does not change significantly over time.
 
-Written by Peter O. Any copyright is released to the Public Domain under Creative Commons CC0.
+Written by Peter O. Any copyright to this work is released to the Public Domain under Creative Commons CC0.
 
 =end
 
