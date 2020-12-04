@@ -6054,7 +6054,14 @@ values for this parameter are invalid.</p></li>
  a 64-bit signed integer. This is a low-level method that is useful
  for implementing custom CBOR encoding methodologies. This method
  encodes the given major type and value in the shortest form allowed
- for the major type.</p>
+ for the major type.<p>There are other useful things to note when
+ encoding CBOR that are not covered by this WriteValue method. To
+ mark the start of an indefinite-length array, write the 8-bit byte
+ 0x9f to the output stream. To mark the start of an indefinite-length
+ map, write the 8-bit byte 0xbf to the output stream. To mark the end
+ of an indefinite-length array or map, write the 8-bit byte 0xff to
+ the output stream. For examples, see the WriteValue(InputStream, int,
+ int) overload.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -6097,7 +6104,13 @@ the array; 5: number of key-value pairs in the map; 6: tag number;
  a 32-bit signed integer. This is a low-level method that is useful
  for implementing custom CBOR encoding methodologies. This method
  encodes the given major type and value in the shortest form allowed
- for the major type.<p> </p><p>In the following example, an array of
+ for the major type.<p>There are other useful things to note when
+ encoding CBOR that are not covered by this WriteValue method. To
+ mark the start of an indefinite-length array, write the 8-bit byte
+ 0x9f to the output stream. To mark the start of an indefinite-length
+ map, write the 8-bit byte 0xbf to the output stream. To mark the end
+ of an indefinite-length array or map, write the 8-bit byte 0xff to
+ the output stream.</p><p> </p><p>In the following example, an array of
  three objects is written as CBOR to a data stream.</p>
   <pre>/* array, length 3<em>/ CBORObject.WriteValue(stream, 4, 3); /</em> item 1 <em>/ CBORObject.Write(&quot;hello world&quot;, stream); CBORObject.Write(25, stream); /</em> item 2<em>/ CBORObject.Write(false, stream); /</em> item 3<em>/</pre> <p>In the following
  example, a map consisting of two key-value pairs is written as CBOR
@@ -6146,7 +6159,13 @@ the array; 5: number of key-value pairs in the map; 6: tag number;
  an arbitrary-precision integer. This is a low-level method that is
  useful for implementing custom CBOR encoding methodologies. This
  method encodes the given major type and value in the shortest form
- allowed for the major type.</p>
+ allowed for the major type.<p>There are other useful things to note
+ when encoding CBOR that are not covered by this WriteValue method.
+ To mark the start of an indefinite-length array, write the 8-bit
+ byte 0x9f to the output stream. To mark the start of an
+ indefinite-length map, write the 8-bit byte 0xbf to the output
+ stream. To mark the end of an indefinite-length array or map, write
+ the 8-bit byte 0xff to the output stream.</p></p>
 
 <p><strong>Parameters:</strong></p>
 

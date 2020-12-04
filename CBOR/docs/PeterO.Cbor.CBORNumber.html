@@ -22,7 +22,9 @@
 <li><code><a href="#CanFitInSingle">CanFitInSingle()</a></code> - Returns whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value.</li>
 <li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</li>
 <li><code><a href="#CanTruncatedIntFitInInt64">CanTruncatedIntFitInInt64()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63.</li>
-<li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares two CBOR numbers.</li>
+<li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Compares this CBOR number with a 32-bit signed integer.</li>
+<li><code><a href="#CompareTo_long">CompareTo(long)</a></code> - Compares this CBOR number with a 64-bit signed integer.</li>
+<li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares this CBOR number with another.</li>
 <li><code><a href="#Divide_PeterO_Cbor_CBORNumber">Divide(PeterO.Cbor.CBORNumber)</a></code> - Returns the quotient of this number and another number.</li>
 <li><code><a href="#FromByte_byte">FromByte(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
 <li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Creates a CBOR number object from a CBOR object representing a number (that is, one for which the IsNumber property in.</li>
@@ -225,6 +227,52 @@ The exact result of the operation might be too big to fit in memory (or might re
 
 <p><code>true</code>  if this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63; otherwise,  <code>false</code> .</p>
 
+<p><a id="CompareTo_int"></a></p>
+
+<h3>CompareTo</h3>
+
+<pre>public int CompareTo(
+    int other);
+</pre>
+
+<p>Compares this CBOR number with a 32-bit signed integer. In this implementation, the two numbers&#39; mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A value to compare with. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null. This implementation returns a positive number if  <i>other</i>
+ is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
+
+<p>.</p>
+
+<p><a id="CompareTo_long"></a></p>
+
+<h3>CompareTo</h3>
+
+<pre>public int CompareTo(
+    long other);
+</pre>
+
+<p>Compares this CBOR number with a 64-bit signed integer. In this implementation, the two numbers&#39; mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>other</i>: A value to compare with. Can be null.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A negative number, if this value is less than the other object; or 0, if both values are equal; or a positive number, if this value is less than the other object or if the other object is null. This implementation returns a positive number if  <i>other</i>
+ is null, to conform to the.NET definition of CompareTo. This is the case even in the Java version of this library, for consistency&#39;s sake, even though implementations of  <code>Comparable.compareTo()</code>  in Java ought to throw an exception if they receive a null argument rather than treating null as less or greater than any object.</p>
+
+<p>.</p>
+
 <p><a id="CompareTo_PeterO_Cbor_CBORNumber"></a></p>
 
 <h3>CompareTo</h3>
@@ -233,7 +281,7 @@ The exact result of the operation might be too big to fit in memory (or might re
     PeterO.Cbor.CBORNumber other);
 </pre>
 
-<p>Compares two CBOR numbers. In this implementation, the two numbers&#39; mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
+<p>Compares this CBOR number with another. In this implementation, the two numbers&#39; mathematical values are compared. Here, NaN (not-a-number) is considered greater than any number.</p>
 
 <p><b>Parameters:</b></p>
 
