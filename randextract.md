@@ -122,7 +122,7 @@ More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relations
 
 _Proof._ For any _X_ and _Y_ there are only three mutually exclusive possibilities, _X_>_Y_, _Y_>_X_, and _X_=_Y_.   For the algorithm to return 0, _X_ must be less than _Y_, and for it to return 1, _X_ must be greater than _Y_.
 
-For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_X_>_Y_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
+For the "only if" part: For the algorithm to return 0 or 1 with equal probability, it must be that P(_X_>_Y_) = P(_Y_>_X_).  But this necessarily means that P(_X_>_Y_) and P(_Y_>_X_) are both 1/2 or less.  And if we assign half of the remainder (the remainder being P(_X_=_Y_)) to each probability, we get&mdash;
 
 - P(_X_>_Y_) + P(_X_=_Y_)/2 = 1/2, and
 - P(_Y_>_X_) + P(_X_=_Y_)/2 = 1/2,

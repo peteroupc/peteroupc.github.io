@@ -1,14 +1,12 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.DispositionBuilder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.ContentDisposition.Builder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Mail.DispositionBuilder</h1>
+<h1>PeterO.Mail.ContentDisposition.Builder</h1>
 
-<h2>PeterO.Mail.DispositionBuilder</h2>
+<h2>PeterO.Mail.ContentDisposition.Builder</h2>
 
-<pre>public class DispositionBuilder
+<pre>public sealed class Builder
 </pre>
-
-<p><b>Deprecated.</b> Use ContentDisposition.Builder instead.</p>
 
 <p>A mutable data type that allows a content disposition to be built.</p>
 
@@ -27,9 +25,9 @@
 
 <p><a id="Void_ctor_PeterO_Mail_ContentDisposition"></a></p>
 
-<h3>DispositionBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public DispositionBuilder(
+<pre>public Builder(
     PeterO.Mail.ContentDisposition mt);
 </pre>
 
@@ -52,13 +50,13 @@ is null.</li>
 
 <p><a id="Void_ctor_System_String"></a></p>
 
-<h3>DispositionBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public DispositionBuilder(
+<pre>public Builder(
     string type);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the given disposition type.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.ContentDisposition.Builder.html">PeterO.Mail.ContentDisposition.Builder</a> class using the given disposition type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -79,9 +77,9 @@ Type is empty.</p></li>
 
 <p><a id="Void_ctor"></a></p>
 
-<h3>DispositionBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public DispositionBuilder();
+<pre>public Builder();
 </pre>
 
 <p>Initializes a new instance of the <a href="PeterO.Mail.DispositionBuilder.html">PeterO.Mail.DispositionBuilder</a> class using the disposition type &quot;attachment&quot; .</p>
@@ -142,7 +140,7 @@ The property is being set and the value is an empty string.</p></li>
 
 <h3>RemoveParameter</h3>
 
-<pre>public PeterO.Mail.DispositionBuilder RemoveParameter(
+<pre>public PeterO.Mail.ContentDisposition.Builder RemoveParameter(
     string name);
 </pre>
 
@@ -170,7 +168,7 @@ is null.</li>
 
 <h3>SetDispositionType</h3>
 
-<pre>public PeterO.Mail.DispositionBuilder SetDispositionType(
+<pre>public PeterO.Mail.ContentDisposition.Builder SetDispositionType(
     string str);
 </pre>
 
@@ -202,7 +200,7 @@ Str is empty.</p></li>
 
 <h3>SetParameter</h3>
 
-<pre>public PeterO.Mail.DispositionBuilder SetParameter(
+<pre>public PeterO.Mail.ContentDisposition.Builder SetParameter(
     string name,
     string value);
 </pre>
