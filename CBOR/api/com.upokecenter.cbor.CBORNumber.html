@@ -46,8 +46,12 @@ its fractional part, would be -(2^31) or greater, and less than
 Returns whether this object&#39;s value, converted to an integer by discarding
 its fractional part, would be -(2^63) or greater, and less than
 2^63.</li>
+<li><code>int compareTo​(int other)</code><br>
+Compares this CBOR number with a 32-bit signed integer.</li>
+<li><code>int compareTo​(long other)</code><br>
+Compares this CBOR number with a 64-bit signed integer.</li>
 <li><code>int compareTo​(CBORNumber other)</code><br>
-Compares two CBOR numbers.</li>
+Compares this CBOR number with another.</li>
 <li><code>CBORNumber Divide​(CBORNumber b)</code><br>
 Returns the quotient of this number and another number.</li>
 <li><code>static CBORNumber FromByte​(byte inputByte)</code><br>
@@ -1001,12 +1005,60 @@ to store).</p></li>
 
 <h3>compareTo</h3>
 
+<pre>public int compareTo​(int other)
+</pre>
+
+<p>Compares this CBOR number with a 32-bit signed integer. In this
+ implementation, the two numbers&#39; mathematical values are compared.
+ Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - A value to compare with. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A negative number, if this value is less than the other object; or
+0, if both values are equal; or a positive number, if this value is
+less than the other object or if the other object is null. This
+implementation returns a positive number if.</li>
+</ul>
+
+<h3>compareTo</h3>
+
+<pre>public int compareTo​(long other)
+</pre>
+
+<p>Compares this CBOR number with a 64-bit signed integer. In this
+ implementation, the two numbers&#39; mathematical values are compared.
+ Here, NaN (not-a-number) is considered greater than any number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>other</code> - A value to compare with. Can be null.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A negative number, if this value is less than the other object; or
+0, if both values are equal; or a positive number, if this value is
+less than the other object or if the other object is null. This
+implementation returns a positive number if.</li>
+</ul>
+
+<h3>compareTo</h3>
+
 <pre>public int compareTo​(CBORNumber other)
 </pre>
 
-<p>Compares two CBOR numbers. In this implementation, the two numbers&#39;
- mathematical values are compared. Here, NaN (not-a-number) is
- considered greater than any number.</p>
+<p>Compares this CBOR number with another. In this implementation, the two
+ numbers&#39; mathematical values are compared. Here, NaN (not-a-number)
+ is considered greater than any number.</p>
 
 <p><strong>Specified by:</strong></p>
 
