@@ -9,17 +9,18 @@
 </pre>
 
 <p>Represents an object in Concise Binary Object Representation (CBOR) and
- contains methods for reading and writing CBOR data. CBOR is defined in
- RFC 8949.</p><p> </p><p><b>Converting CBOR objects</b></p> <p>There are
- many ways to get a CBOR object, including from bytes, objects, streams
- and JSON, as described below.</p> <p><b>To and from byte arrays:</b>
- The CBORObject.DecodeFromBytes method converts a byte array in CBOR
- format to a CBOR object. The EncodeToBytes method converts a CBOR
- object to its corresponding byte array in CBOR format.</p> <p><b>To
- and from data streams:</b> The CBORObject.Write methods write many
- kinds of objects to a data stream, including numbers, CBOR objects,
- strings, and arrays of numbers and strings. The CBORObject.Read method
- reads a CBOR object from a data stream.</p> <p><b>To and from other
+ contains methods for reading and writing CBOR data. CBOR is an
+ Internet Standard and defined in RFC 8949.</p><p> </p><p><b>Converting
+ CBOR objects</b></p> <p>There are many ways to get a CBOR object,
+ including from bytes, objects, streams and JSON, as described
+ below.</p> <p><b>To and from byte arrays:</b> The
+ CBORObject.DecodeFromBytes method converts a byte array in CBOR format
+ to a CBOR object. The EncodeToBytes method converts a CBOR object to
+ its corresponding byte array in CBOR format.</p> <p><b>To and from
+ data streams:</b> The CBORObject.Write methods write many kinds of
+ objects to a data stream, including numbers, CBOR objects, strings,
+ and arrays of numbers and strings. The CBORObject.Read method reads a
+ CBOR object from a data stream.</p> <p><b>To and from other
  objects:</b> The <code>CBORObject.FromObject</code> method converts many
  kinds of objects to a CBOR object, including numbers, strings, and
  arrays and maps of numbers and strings. Methods like AsNumber and
