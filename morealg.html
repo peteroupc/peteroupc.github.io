@@ -22,7 +22,11 @@
 
 <ul>
 <li><a href="#Certain_Numbers_Based_on_the_Golden_Ratio"><strong>Certain Numbers Based on the Golden Ratio</strong></a></li>
-<li><a href="#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1"><strong>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>n</em>)/&gamma;(<em>m</em>, 1)).</strong></a></li>
+<li><a href="#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1"><strong>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>n</em>)/&gamma;(<em>m</em>, 1)).</strong></a>
+
+<ul>
+<li><a href="#Derivative_slope_of_arctan___lambda"><strong>Derivative (slope) of arctan(<em>&lambda;</em>)</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
 
@@ -116,6 +120,21 @@
 <li>Generate a uniform(0, 1) random number <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
 <li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>n</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
+</ol>
+
+<p><a id=Derivative_slope_of_arctan___lambda></a></p>
+
+<h4>Derivative (slope) of arctan(<em>&lambda;</em>)</h4>
+
+<p>This algorithm involves the series expansion of this function (1 &minus; <em>&lambda;</em><sup>2</sup> + <em>&lambda;</em><sup>4</sup> &minus; ...) and involves the general martingale algorithm.</p>
+
+<ol>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
+<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
+<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>

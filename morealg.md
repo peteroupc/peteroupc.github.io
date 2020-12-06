@@ -14,6 +14,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Bernoulli Factories and Irrational Probability Simulation**](#Bernoulli_Factories_and_Irrational_Probability_Simulation)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1)
+        - [**Derivative (slope) of arctan(_&lambda;_)**](#Derivative_slope_of_arctan___lambda)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
@@ -80,6 +81,7 @@ An application of the continued fraction algorithm is the following algorithm th
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
 
+<a id=Derivative_slope_of_arctan___lambda></a>
 #### Derivative (slope) of arctan(_&lambda;_)
 
 This algorithm involves the series expansion of this function (1 &minus; _&lambda;_<sup>2</sup> + _&lambda;_<sup>4</sup> &minus; ...) and involves the general martingale algorithm.

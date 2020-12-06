@@ -1586,7 +1586,7 @@
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
-<p>If the series <em>a</em>, given above, is instead the <em>base-2 logarithm</em> of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity&#39;s sake, even though logarithms for such probabilities are negative, all the <em>a</em>[<em>i</em>] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
+<p>If the series <em>a</em>, given above, is instead a sequence that converges to the <em>base-2 logarithm</em> of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity&#39;s sake, even though logarithms for such probabilities are negative, all the <em>a</em>[<em>i</em>] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
 <li>Set <em>intinf</em> to floor(max(0, abs(<em>a</em>[0]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)</li>
@@ -1598,7 +1598,7 @@
 <li>Set <em>n</em> to 1, then go to step 5.</li>
 </ol>
 
-<p>The case when <em>a</em> is a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
+<p>The case when <em>a</em> converges to a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
 <li>Generate an exponential random number <em>E</em> (with rate 1).</li>
