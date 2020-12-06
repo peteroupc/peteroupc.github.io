@@ -80,6 +80,17 @@ An application of the continued fraction algorithm is the following algorithm th
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd, return a number that is 1 if _ret_ is less than _n_ and 0 otherwise. (If _ret_ is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
 
+#### Derivative (slope) of arctan(_&lambda;_)
+
+This algorithm involves the series expansion of this function (1 &minus; _&lambda;_<sup>2</sup> + _&lambda;_<sup>4</sup> &minus; ...) and involves the general martingale algorithm.
+
+1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+2. Generate a uniform(0, 1) random number _ret_.
+3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
+4. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
+5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+6. Add 1 to _n_ and go to step 3.
+
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
 
