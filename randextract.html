@@ -91,27 +91,7 @@
 <li>The lower bound on the average number of coin flips needed to turn a biased coin into an unbiased coin is as follows (and is a special case of the <em>entropy bound</em>; see, e.g., (Pae 2005)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, (Peres 1992)<sup><a href="#Note9"><strong>(9)</strong></a></sup>): ln(2) / ((&lambda; &minus; 1) * ln(1 &minus; &lambda;) &minus; &lambda; * ln(&lambda;)), where &lambda; is the bias of the input coin and ranges from 0 for always tails to 1 for always heads.  According to this formula, a growing number of coin flips is needed if the input coin is strongly biased towards heads or tails.  (For certain values of &lambda;, Kozen (2014)<sup><a href="#Note12"><strong>(12)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is non-trivial and assumes &lambda; is known.)</li>
 </ul>
 
-<p>Devroye and Gravel (2020)<sup><a href="#Note13"><strong>(13)</strong></a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em> (or <em>P</em>(<em>X</em> | <em>Y</em>) for short):</p>
-
-<ol>
-<li>Start with the interval [0, 1].</li>
-<li>For each pair (<em>X</em>, <em>Y</em>) in the batch, the interval shrinks from below by <em>P</em>(<em>X</em> | <em>Y</em>) and from above by <em>P</em>(<em>X</em>&minus;1 | <em>Y</em>). (For example, if [0.2, 0.8] (range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is [0.2+0.1*0.6, 0.2+0.8*0.6] = [0.26, 0.68].)</li>
-<li>Extract the bits, starting from the binary point, that the final interval&#39;s lower and upper bound have in common (or 0 bits if the upper bound is 1). (For example, if the final interval is [0.101010..., 0.101110...] in binary, the bits 1, 0, 1 are extracted, since the common bits starting from the point are 101.)</li>
-</ol>
-
-<p>Note that for a given <em>Y</em>, <em>P</em>(<em>X</em> | <em>Y</em>) should decrease at a geometric rate as <em>X</em> increases (each <em>P</em> is no more than half the previous one), and this decreasing rate is crucial for the algorithm&#39;s correctness; the interval is not allowed to shrink to a single point, since otherwise step 3 would go on forever.</p>
-
-<p>After a sampling method produces an output <em>Y</em>, both <em>X</em> (the number of random bits the sampler consumed) and <em>Y</em> (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)</p>
-
-<p>Now we discuss the issue of finding <em>P</em>(<em>X</em> | <em>Y</em>).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, <em>P</em>(<em>X</em> | <em>Y</em>) is found as follows: Take a weighted count of all leaves labeled <em>Y</em> up to depth <em>X</em> (where the weight for depth <em>z</em> is 1/2<sup><em>z</em></sup>), then divide it by a weighted count of all leaves labeled <em>Y</em> at all depths (for instance, if the tree has two leaves labeled <em>Y</em> at <em>z</em>=2, three at <em>z</em>=3, and three at <em>z</em>=4, and <em>X</em> is 3, then <em>P</em>(<em>X</em> | <em>Y</em>) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled y at every depth, this is implemented by finding <em>P</em>(<em>Y</em>), or the probability to output <em>Y</em>, then chopping <em>P</em>(<em>Y</em>) up to the x&#39;th binary digit and dividing by the original <em>P</em>(<em>Y</em>) (for instance, if <em>X</em> is 4 and P(<em>Y</em>) is 0.101011..., then <em>P</em>(<em>X</em> | <em>Y</em>) is 0.1010 / 0.101011...).</p>
-
-<p>Unfortunately, <em>P</em>(<em>X</em> | <em>Y</em>) is not easy to calculate when the number of values <em>Y</em> can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes <em>bits</em> as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor.  The algorithm counts the number of bits it consumes (<em>X</em>) to produce an output, then feeds <em>X</em> to the extractor as follows.</p>
-
-<ol>
-<li>Let <em>z</em> be abs(<em>X</em>&minus;<em>lastX</em>), where <em>lastX</em> is either the last value of <em>X</em> fed to this extractor for this batch or 0 if there is no such value.</li>
-<li>If <em>z</em> is greater than 0, feed the bits of <em>z</em> from most significant to least significant to a queue of extractor inputs.</li>
-<li>Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.</li>
-</ol>
+<p>Devroye and Gravel (2020)<sup><a href="#Note13"><strong>(13)</strong></a></sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes <em>X</em> random bits to produce a specific output <em>Y</em>.  Since the algorithm seems not to be well developed, I discuss this extractor in detail elsewhere, in &quot;<a href="https://peteroupc.github.io/randmisc.html"><strong>Miscellaneous Notes on Randomization</strong></a>&quot;.</p>
 
 <p><a id=Notes></a></p>
 
@@ -131,10 +111,9 @@
 <li><small><sup id=Note11>(11)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS].</small></li>
 <li><small><sup id=Note12>(12)</sup> Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</small></li>
 <li><small><sup id=Note13>(13)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note14>(14)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
-<li><small><sup id=Note15>(15)</sup> Montes Gutiérrez, I., &quot;Comparison of alternatives under uncertainty and imprecision&quot;, doctoral thesis, Universidad de Oviedo, 2014.</small></li>
-<li><small><sup id=Note16>(16)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. &quot;A fuzzy approach to stochastic dominance of random variables&quot;, in <em>International Fuzzy Systems Association World Congress</em> 2003.</small></li>
-<li><small><sup id=Note17>(17)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
+<li><small><sup id=Note14>(14)</sup> Montes Gutiérrez, I., &quot;Comparison of alternatives under uncertainty and imprecision&quot;, doctoral thesis, Universidad de Oviedo, 2014.</small></li>
+<li><small><sup id=Note15>(15)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. &quot;A fuzzy approach to stochastic dominance of random variables&quot;, in <em>International Fuzzy Systems Association World Congress</em> 2003.</small></li>
+<li><small><sup id=Note16>(16)</sup> Camion, Paul, &quot;Unbiased die rolling with a biased die&quot;, North Carolina State University. Dept. of Statistics, 1974.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -149,7 +128,7 @@
 
 <p>Algorithm M works regardless of what numbers <em>X</em> and <em>Y</em> can take on and with what probability, and even if the &quot;dice&quot; for <em>X</em> and <em>Y</em> are loaded differently, as long as the chance that the first &quot;die&quot; shows a number less than the second &quot;die&quot; is the same as the chance that the first &quot;die&quot; shows a greater number, and as long as each <em>pair</em> of throws is independent of any other.</p>
 
-<p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, (De Schuymer et al. 2003)<sup><a href="#Note16"><strong>(16)</strong></a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random &quot;vector&quot; [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions:</p>
+<p>More formally, P(<em>X</em> &lt; <em>Y</em>) must be equal to P(<em>X</em> &gt; <em>Y</em>).  This relationship is equivalent to <em>statistical indifference</em> (Montes Gutiérrez 2014)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, (De Schuymer et al. 2003)<sup><a href="#Note15"><strong>(15)</strong></a></sup>. This relationship works even if <em>X</em> and <em>Y</em> are dependent on each other but independent of everything else; this is easy to see if we treat <em>X</em> and <em>Y</em> as a single random &quot;vector&quot; [<em>X</em>, <em>Y</em>].  This is shown by the following two propositions:</p>
 
 <p><strong>Proposition 1.</strong> <em>Let X and Y be real-valued random variables.  Then Algorithm M outputs 0 or 1 with equal probability if and only if X and Y are statistically indifferent.</em></p>
 
@@ -168,9 +147,9 @@
 
 <p><strong>Proposition 2.</strong> <em>Let X and Y be real-valued random variables that are independent, identically distributed, and defined on the same probability space.  Then X and Y are statistically indifferent.</em></p>
 
-<p><em>Proof.</em> By definition, <em>X</em> and <em>Y</em> are statistically indifferent if and only if <em>X</em> is statistically preferred to <em>Y</em> and vice versa (that is, P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 &gt;= P(<em>Y</em>&gt;<em>X</em>) + P(<em>Y</em>=<em>X</em>)/2) (De Schuymer et al. 2003)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  Moreover, because both random variables are identically distributed, their distribution functions <em>F</em><sub><em>X</em></sub> and  <em>F</em><sub><em>Y</em></sub> are the same, and therefore their values and expectations for any given <em>z</em> (e.g., <em>F</em><sub><em>X</em></sub>(<em>z</em>) and E[<em>F</em><sub><em>X</em></sub>(<em>z</em>)], respectively) are the same.</p>
+<p><em>Proof.</em> By definition, <em>X</em> and <em>Y</em> are statistically indifferent if and only if <em>X</em> is statistically preferred to <em>Y</em> and vice versa (that is, P(<em>X</em>&gt;<em>Y</em>) + P(<em>X</em>=<em>Y</em>)/2 &gt;= P(<em>Y</em>&gt;<em>X</em>) + P(<em>Y</em>=<em>X</em>)/2) (De Schuymer et al. 2003)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  Moreover, because both random variables are identically distributed, their distribution functions <em>F</em><sub><em>X</em></sub> and  <em>F</em><sub><em>Y</em></sub> are the same, and therefore their values and expectations for any given <em>z</em> (e.g., <em>F</em><sub><em>X</em></sub>(<em>z</em>) and E[<em>F</em><sub><em>X</em></sub>(<em>z</em>)], respectively) are the same.</p>
 
-<p>If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, we see that we can replace&mdash;</p>
+<p>If we look at Theorem 3.12 in (Montes Gutiérrez 2014)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, we see that we can replace&mdash;</p>
 
 <ul>
 <li>the left hand side of Equation 3.5 with 0 &minus; 0, since it&#39;s a difference of expectations of the same distribution function and random variable, and</li>
@@ -187,7 +166,7 @@
 <li>Set <em>X</em> and <em>Y</em> to two independent uniform(0, 1) random numbers, then set <em>Y</em> to (<em>X</em>+<em>Y</em>)/2.</li>
 </ul>
 
-<p>See also a procedure given as a remark near the end of a paper by Camion (1974)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</p>
+<p>See also a procedure given as a remark near the end of a paper by Camion (1974)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 

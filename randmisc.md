@@ -2,6 +2,19 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+<a id=Contents></a>
+## Contents
+
+- [**Contents**](#Contents)
+- [**On a Binomial Sampler**](#On_a_Binomial_Sampler)
+- [**On a Geometric Sampler**](#On_a_Geometric_Sampler)
+- [**Sampling Unbounded Monotone Density Functions**](#Sampling_Unbounded_Monotone_Density_Functions)
+- [**Certain Families of Distributions**](#Certain_Families_of_Distributions)
+- [**Certain Distributions**](#Certain_Distributions)
+- [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
+- [**Notes**](#Notes)
+- [**License**](#License)
+
 <a id=On_a_Binomial_Sampler></a>
 ## On a Binomial Sampler
 
@@ -169,6 +182,25 @@ A _Lehmann Weibull_(_a1_, _a2_, _&beta;_) random number (Elgohari and Yousof 202
 
 A _Marshall&ndash;Olkin_(_&alpha;_) random number is distributed as (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1), where _&alpha;_ is in the interval [0, 1], and _U_ is a uniform(0, 1) random number.
 
+<a id=Batching_Random_Samples_via_Randomness_Extraction></a>
+## Batching Random Samples via Randomness Extraction
+
+Devroye and Gravel (2020)<sup>[**(24)**](#Note24)</sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+
+1. Start with the interval [0, 1].
+2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_ | _Y_) and from above by _P_(_X_&minus;1 | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].  Note, though, that for correctness, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)
+3. Extract the bits, starting from the binary point, that the final interval's lower and upper bound have in common (or 0 bits if the upper bound is 1). (For example, if the final interval is [0.101010..., 0.101110...] in binary, the bits 1, 0, 1 are extracted, since the common bits starting from the point are 101.)
+
+After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Note that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
+
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(25)**](#Note25)</sup>, _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+
+Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
+
+1. Let _z_ be abs(_X_&minus;_lastX_), where _lastX_ is either the last value of _X_ fed to this extractor for this batch or 0 if there is no such value.
+2. If _z_ is greater than 0, feed the bits of _z_ from most significant to least significant to a queue of extractor inputs.
+3. Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.
+
 <a id=Notes></a>
 ## Notes
 
@@ -181,8 +213,8 @@ A _Marshall&ndash;Olkin_(_&alpha;_) random number is distributed as (1&minus;_U_
 - <small><sup id=Note7>(7)</sup> Bringmann, K., and Friedrich, T., 2013, July. Exact and efficient generation of geometric random variates and random graphs, in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
 - <small><sup id=Note8>(8)</sup> Ahmad, Z. et al. "Recent Developments in Distribution Theory: A Brief Survey and Some New Generalized Classes of distributions." Pakistan Journal of Statistics and Operation Research 15 (2019): 87-110.</small>
 - <small><sup id=Note9>(9)</sup> Eugene, N., Lee, C., Famoye, F., "Beta-normal distribution and its applications", _Commun. Stat. Theory Methods_ 31, 2002.</small>
-- <small><sup id=Note10>(10)</sup> Mahdavi, Abbas, and Debasis Kundu. "A new method for generating distributions with an application to exponential distribution." Communications in Statistics-Theory and Methods 46, no. 13 (2017): 6543-6557.</small>
-- <small><sup id=Note11>(11)</sup> Mudholkar, G. S., Srivastava, D. K., "Exponentiated Weibull family for analyzing bathtub failure-rate data", _IEEE Transactions on Reliability 42(2), 299-302, 1993.</small>
+- <small><sup id=Note10>(10)</sup> Mahdavi, Abbas, and Debasis Kundu. "A new method for generating distributions with an application to exponential distribution." _Communications in Statistics -- Theory and Methods_ 46, no. 13 (2017): 6543-6557.</small>
+- <small><sup id=Note11>(11)</sup> Mudholkar, G. S., Srivastava, D. K., "Exponentiated Weibull family for analyzing bathtub failure-rate data", _IEEE Transactions on Reliability_ 42(2), 299-302, 1993.</small>
 - <small><sup id=Note12>(12)</sup> Tahir, M.H., Cordeiro, G.M., "Compounding of distributions: a survey and new generalized classes", _Journal of Statistical Distributions and Applications_ 3(13), 2016.</small>
 - <small><sup id=Note13>(13)</sup> Alzaatreh, A., Famoye, F., Lee, C., "A new method for generating families of continuous distributions", _Metron_ 71:63–79 (2013).</small>
 - <small><sup id=Note14>(14)</sup> Aljarrah, M.A., Lee, C. and Famoye, F., "On generating T-X family of distributions using quantile functions", Journal of Statistical Distributions and Applications,1(2), 2014.</small>
@@ -195,6 +227,8 @@ A _Marshall&ndash;Olkin_(_&alpha;_) random number is distributed as (1&minus;_U_
 - <small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note22>(22)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
 - <small><sup id=Note23>(23)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
+- <small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
+- <small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
 <a id=License></a>
 ## License
