@@ -83,9 +83,9 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1/sqrt(2)**](#1_sqrt_2)
         - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
-        - [**&pi; / 12**](#pi_12)
-        - [**&pi; / 4**](#pi_4)
-        - [**1 / &pi;**](#1_pi)
+        - [**_&pi;_ / 12**](#pi___12)
+        - [**_&pi;_ / 4**](#pi___4)
+        - [**1 / _&pi;_**](#1___pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
@@ -122,7 +122,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Other Algorithms for exp(&minus;_&lambda;_)**](#Other_Algorithms_for_exp_minus___lambda)
-    - [**Sketch of Derivation of the Algorithm for 1 / &pi;**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
+    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
     - [**Calculating Bounds for exp(1)**](#Calculating_Bounds_for_exp_1)
 - [**License**](#License)
 
@@ -224,6 +224,15 @@ If the alternating series has the form&mdash;
 
 then modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
 
+(Nacu and Peres 2005, proposition 16)<sup>[**(5)**](#Note5)</sup>.  This algorithm simulates a function of the form&mdash;
+
+&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
+
+where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&epsilon;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&epsilon;_.
+
+1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&epsilon;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&epsilon;), _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&epsilon;_.  If any of these calls returns 0, return 0.  Otherwise, return 1."
+2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm** once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&epsilon;, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&epsilon;_, and return the result.
+
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
@@ -323,7 +332,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 Used in (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup> to apply an exponential weight (here, _c_) to an input coin.
 
 1. Generate a Poisson(_c_) random integer, call it _N_.
-2. Flip the input coin until the flip returns 0 or the coin is flipped _N_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
+2. Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
 
 <a id=exp_minus___lambda___minus__c></a>
 #### exp(&minus;_&lambda;_ &minus; _c_)
@@ -674,7 +683,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 
 (Lee et al. 2014)<sup>[**(19)**](#Note19)</sup>  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_, which must be greater than 0 and be chosen such that _&#x03F5;_ is less than _&lambda;_.
 
-1. If _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
+1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
 3. With probability _&#x03F5;_, return 1.
 4. Run the **2014 algorithm**, **2016 algorithm**, or **2019 algorithm**, with the _&mu;_ input coin, _x_/_y_ = 1 / (1 &minus; _&#x03F5;_),  _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&gamma;_. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (_&lambda;_ &minus; _&#x03F5;_)/(1 &minus; _&#x03F5;_) or 1 &minus; (1 &minus; _&lambda;_)/(1 &minus; _&#x03F5;_)).
@@ -725,7 +734,7 @@ A polynomial can be written in _Bernstein form_ as &Sigma;<sub>_i_ = 0, ..., _n_
 >
 > **Example:** Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. Using the matrix method by Ray and Nataraj (2012)<sup>[**(29)**](#Note29)</sup>, we get Bernstein coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], these Bernstein coefficients are all in the interval [0, 1] allowing the function to be simulated via this algorithm.  For other values of _c_, this algorithm requires computing the Bernstein coefficients, then elevating the polynomial's degree enough times so that those Bernstein coefficients all lie in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(30)**](#Note30)</sup>
 
-Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes monomials (involving one or more coins) of the form &Pi;<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] >= 0 and _b_\[_i_\] >= 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
+Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes monomials (involving one or more coins) of the form _&pi;_<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] >= 0 and _b_\[_i_\] >= 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
 
 1. For each _i_ in \[1, _n_\]:
      1. Flip the _&lambda;_\[_i_] input coin _a_\[_i_\] times.  If any of the flips returns 0, return 0.
@@ -741,7 +750,7 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".   The functions belong to a class called _algebraic functions_ (functions that can be a solution of a polynomial system).
 
-According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.
+According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a factory function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.
 
 The following algorithm simulates the following algebraic function:
 
@@ -800,7 +809,7 @@ Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).
 In the algorithm (see also (Brassard et al., 2019)<sup>[**(33)**](#Note33)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
 1. Set `u` to 0 and `k` to 1.
-2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Calculate `pa`, which is an approximation to `p` such that abs(`p`&minus;`pa`) <= `BASE`<sup>&minus;`k`</sup>.  Set `pk` to `pa`'s digit expansion up to the `k` digits after the point.  Example: If `p` is &pi;/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
+2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Calculate `pa`, which is an approximation to `p` such that abs(`p`&minus;`pa`) <= `BASE`<sup>&minus;`k`</sup>.  Set `pk` to `pa`'s digit expansion up to the `k` digits after the point.  Example: If `p` is _&pi;_/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
 3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Continued_Fractions></a>
@@ -918,24 +927,24 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
-<a id=pi_12></a>
-#### &pi; / 12
+<a id=pi___12></a>
+#### _&pi;_ / 12
 
 Two algorithms:
 
 - First algorithm: Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
 - Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
 
-<a id=pi_4></a>
-#### &pi; / 4
+<a id=pi___4></a>
+#### _&pi;_ / 4
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
-<a id=1_pi></a>
-#### 1 / &pi;
+<a id=1___pi></a>
+#### 1 / _&pi;_
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
@@ -989,7 +998,7 @@ This algorithm is similar to the previous algorithm, except that the exponent, _
 
 More specifically:
 
-1. Decompose _z_ into _n_ > 0 positive components that sum to _z_.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = &pi;, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
+1. Decompose _z_ into _n_ > 0 positive components that sum to _z_.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = _&pi;_, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
 2. For each component _LC_\[_i_\] found this way, let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
 
 The algorithm is then as follows:
@@ -1166,7 +1175,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected or average value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>.
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
-2. Flip the input coin until the flip returns 0 or the coin is flipped _X_ times.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
+2. Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 
 <a id=Integrals></a>
 #### Integrals
@@ -1181,6 +1190,8 @@ This can be done by modifying the algorithm as follows:
 - Generate a uniform(0, 1) random number _u_ at the start of the algorithm.
 - Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample from the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 
+> **Note**: The integral simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
+
 I have found that it's possible to simulate the following integral, namely&mdash;
 
 - &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
@@ -1189,7 +1200,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 
 - Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random number _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
 - Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) and return the result."
-- If the algorithm would return 1, it returns 0 instead with probability 1 &minus; (_b_ &minus; _a_).
+- If the algorithm would return 1, it instead returns a number that is 1 with probability _b_ &minus; _a_ and 0 otherwise.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
@@ -1211,7 +1222,7 @@ The algorithm follows.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-If the series _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+If _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
@@ -1270,16 +1281,17 @@ The algorithm follows.
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-- See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
-- I request expressions of mathematical functions that can be expressed in any of the following ways:
+1. See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
+2. I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
     - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup> and for the method for [**general factory functions**](#General_Factory_Functions).
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
 
-    All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as &pi; or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant &pi; is not desired; however, a series expansion that converges to a fraction of &pi; is.
-- Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
+    All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
+3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
+4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1434,7 +1446,7 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
     1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
     2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
     3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ &minus; _fmax_) <= 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
-4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is &pi;, _b_ is 10, and _k_ is 2, _pk_ is 314.
+4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is _&pi;_, _b_ is 10, and _k_ is 2, _pk_ is 314.
 5. If _pk_ + 1 <= _v_, return 0. If _pk_ &minus; 2 >= _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
 However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.
@@ -1626,20 +1638,20 @@ An alternative version of the algorithm above doesn't generate a random number a
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-<a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a>
-### Sketch of Derivation of the Algorithm for 1 / &pi;
+<a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
+### Sketch of Derivation of the Algorithm for 1 / _&pi;_
 
-The Flajolet paper presented an algorithm to simulate 1 / &pi; but provided no derivation.  Here is a sketch of how this algorithm works.
+The Flajolet paper presented an algorithm to simulate 1 / _&pi;_ but provided no derivation.  Here is a sketch of how this algorithm works.
 
-The algorithm is an application of the [**convex combination**](#Convex_Combinations) technique.  Namely, 1 / &pi; can be seen as a convex combination of two components:
+The algorithm is an application of the [**convex combination**](#Convex_Combinations) technique.  Namely, 1 / _&pi;_ can be seen as a convex combination of two components:
 
 - _g_(_n_): 2<sup>6 * _n_</sup> * (6 * _n_ + 1) / 2<sup>8 * _n_ + 2</sup> = 2<sup>&minus;2 * _n_</sup> * (6 * _n_ + 1) / 4 = (6 * _n_ + 1) / (2<sup>2 * _n_ + 2</sup>), which is the probability that the sum of the following independent random numbers equals _n_:
 
     - Two random numbers that each express the number of failures before the first success, where the chance of a success is 1&minus;1/4 (the paper calls these two numbers _geometric_(1/4) random numbers, but this terminology is avoided in this article because it has several conflicting meanings in academic works).
     - One Bernoulli(5/9) random number.
 
-    This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / &pi; algorithm.  (This also shows that there is an error in the identity for 1 / &pi; given in the Flajolet paper: the "8 _n_ + 4" should read "8 _n_ + 2".)
-- _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / &pi; algorithm.
+    This corresponds to step 1 of the convex combination algorithm and steps 2 through 4 of the 1 / _&pi;_ algorithm.  (This also shows that there is an error in the identity for 1 / _&pi;_ given in the Flajolet paper: the "8 _n_ + 4" should read "8 _n_ + 2".)
+- _h_<sub>_n_</sub>(): (choose(_n_ * 2, _n_) / 2<sup>_n_ * 2</sup>)<sup>3</sup>, which is the probability of heads of the "coin" numbered _n_.  This corresponds to step 2 of the convex combination algorithm and step 5 of the 1 / _&pi;_ algorithm.
 
 > **Notes:**
 >
