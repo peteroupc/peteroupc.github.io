@@ -975,7 +975,7 @@
 
 <h4>Certain Algebraic Functions</h4>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;.   The functions belong to a class called <em>algebraic functions</em> (functions that can be a solution of a polynomial system).</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;, or more generally a <em>stochastic grammar</em>.   The functions belong to a class called <em>algebraic functions</em> (functions that can be a solution of a polynomial system).</p>
 
 <p>According to (Mossel and Peres 2005)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, a factory function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.</p>
 
@@ -989,7 +989,7 @@
 <p>where&mdash;</p>
 
 <ul>
-<li>W(<em>k</em>) is the number of valid <em>k</em>-letter words and must be in the interval [0, <em>&beta;</em><sup><em>k</em></sup>],</li>
+<li>W(<em>k</em>) is a number in the interval [0, <em>&beta;</em><sup><em>k</em></sup>] and is the number of <em>k</em>-letter words that can be produced by the stochastic grammar in question,</li>
 <li><em>&beta;</em> is the alphabet size, or the number of &quot;letters&quot; in the alphabet (e.g., 2 for the cases discussed in the Flajolet paper), and is an integer 2 or greater,</li>
 <li>the <em>ordinary generating function</em> OGF(<em>x</em>) = W(0) + W(1) * <em>x</em> + W(2) * <em>x</em><sup>2</sup> + W(3) * <em>x</em><sup>3</sup> + ..., and</li>
 <li>the second formula incorporates a correction to Theorem 3.2 of the paper<sup><a href="#Note32"><strong>(32)</strong></a></sup>.</li>
@@ -1000,7 +1000,7 @@
 <ol>
 <li>Set <em>g</em> to 0.</li>
 <li>With probability <em>&lambda;</em>, add 1 to <em>g</em> and repeat this step.  Otherwise, go to step 3.</li>
-<li>Return a number that is 1 with probability W(<em>g</em>)/<em>&beta;</em><sup><em>g</em></sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a <em>g</em>-letter word uniformly at random and &quot;parsing&quot; that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its &quot;letters&quot; is generated.)</li>
+<li>Return a number that is 1 with probability W(<em>g</em>)/<em>&beta;</em><sup><em>g</em></sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a <em>g</em>-letter word uniformly at random and &quot;parsing&quot; that word using a binary stochastic grammar to determine whether that word can be produced by that grammar.  Note that this determination can be made this way as each of the word&#39;s &quot;letters&quot; is generated.)</li>
 </ol>
 
 <p>An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two &quot;letters&quot;.  For example, in the case of <em>ternary stochastic grammars</em>, the alphabet size is 3 and <em>&beta;</em> is 3 in the algorithm above.  In general, for <em><em>&beta;</em>-ary stochastic grammars</em>, the alphabet size is <em>&beta;</em>, which can be any integer 2 or greater.</p>
@@ -1010,7 +1010,7 @@
 
 <ol>
 <li>The following is an example from the Flajolet paper. A <em>g</em>-letter binary word can be &quot;parsed&quot; as follows to determine whether that word encodes a ternary tree: &quot;3. If <em>g</em> is 0, return 0.  Otherwise, set <em>i</em> to 1 and <em>d</em> to 1.; 3a. Generate an unbiased random bit (that is, either 0 or 1, chosen with equal probability), then subtract 1 from <em>d</em> if that bit is 0, or add 2 to <em>d</em> otherwise.; 3b. Add 1 to <em>i</em>. Then, if <em>i</em> &lt; <em>g</em> and <em>d</em> &gt; 0, go to step 3a.; 3c. Return 1 if <em>d</em> is 0 and <em>i</em> is <em>g</em>, or 0 otherwise.&quot;</li>
-<li><p>If W(<em>g</em>), the number of valid <em>g</em>-letter words, has the form&mdash;</p>
+<li><p>If W(<em>g</em>), the number of <em>g</em>-letter words that can be produced by the stochastic grammar in question, has the form&mdash;</p>
 
 <ul>
 <li>choose(<em>g</em>, <em>g</em>/<em>t</em>) * (<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup> (the number of <em>g</em>-letter words with exactly <em>g</em>/<em>t</em> A&#39;s, for an alphabet size of <em>&beta;</em>) if <em>g</em> is divisible by <em>t</em>, and</li>
@@ -1715,7 +1715,7 @@
 <h2>Notes</h2>
 
 <ul>
-<li><small><sup id=Note1>(1)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560v2"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560v2  [math.PR], 2010.</small></li>
+<li><small><sup id=Note1>(1)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010.</small></li>
 <li><small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
 <li><small><sup id=Note3>(3)</sup> There is an analogue to the Bernoulli factory problem called the <em>quantum Bernoulli factory</em>, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike <em>classical</em> algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the <em>quantum Bernoulli factory</em> is outside the scope of this document, but it should be noted that more factory functions can be &quot;constructed&quot; using quantum-mechanical operations than by classical algorithms.  For example, a factory function defined in [0, 1] has to meet the requirements proved by Keane and O&#39;Brien except it can touch 0 and/or 1 at a finite number of points in the domain, but its value still cannot go to 0 or 1 exponentially fast (Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4).</small></li>
 <li><small><sup id=Note4>(4)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1308.1562v2"><strong>Nearly optimal Bernoulli factories for linear functions</strong></a>&quot;, arXiv:1308.1562v2  [math.PR], 2014.</small></li>
@@ -1814,7 +1814,7 @@
 <p>Glynn (2016)<sup><a href="#Note47"><strong>(47)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
-<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
+<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> (same &quot;shape&quot;, location, and scale of probabilities) as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
 <li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an unbiased estimator of <em>g</em>(<em>X</em>)) by a process that halts almost surely.</li>
 </ul>
 
@@ -1920,7 +1920,7 @@ for i in range(iters):
 
 <ul>
 <li>EGF(<em>&lambda;</em>) = &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (<em>&lambda;</em><sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!) (the <em>exponential generating function</em> or EGF, which completely determines a permutation class), and</li>
-<li>V(<em>n</em>) is the number of <em>valid</em> permutations of size <em>n</em> (and must be in the interval [0, <em>n</em>!]).</li>
+<li>V(<em>n</em>) is a number in the interval [0, <em>n</em>!] and is the number of permutations of size <em>n</em> that meet the requirements of the permutation class in question.</li>
 </ul>
 
 <p>Effectively, a random number <em>G</em> is generated by flipping the coin until it returns 0 and counting the number of ones (the paper calls <em>G</em> a <em>geometric</em>(<em>&lambda;</em>) random number, but this terminology is avoided in this article because it has several conflicting meanings in academic works), and then accepted with probability V(<em>G</em>)/<em>G</em>! (where <em>G</em>! is the number of <em>possible</em> permutations of size <em>G</em>, or 1 if <em>G</em> is 0), and rejected otherwise.  The probability that <em>r</em> random numbers are rejected this way is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>, where <em>p</em> = (1 &minus; <em>&lambda;</em>) * EGF(<em>&lambda;</em>).</p>
@@ -1977,8 +1977,10 @@ def r_rejects_prob(f, x, r):
     return p*(1-p)**r
 
 def valid_perm(f, x, n):
-    # Number of valid permutations of size n for the
-    # von Neumann schema with the given e.g.f.
+    # Number of permutations of size n that meet
+    # the requirements of the permutation class
+    # determined by the given e.g.f. for the
+    # von Neumann schema
     return coeffext(f, x, n)*factorial(n)
 </pre>
 
@@ -2039,7 +2041,7 @@ def valid_perm(f, x, n):
 <ol>
 <li>Create an empty list.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, and append <em>u</em> to the end of the list.</li>
-<li>If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.</li>
+<li>If the items in the list do not form a permutation that meets the permutation class&#39;s requirements, return the number of items in the list minus 1.  Otherwise, go to step 2.</li>
 </ol>
 
 <p>This algorithm returns the number <em>n</em> with the following probability:</p>
@@ -2047,7 +2049,7 @@ def valid_perm(f, x, n):
 <p><em>G</em>(<em>n</em>) = (1 &minus; <em>V</em>(<em>n</em> + 1)/(<em>V</em>(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>G</em>(<em>j</em>) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (<em>V</em>(<em>n</em>) * (<em>n</em> + 1) &minus; <em>V</em>(<em>n</em> + 1)) / (<em>V</em>(0) * (<em>n</em> + 1)!),</p>
 
-<p>where <em>V</em>(<em>n</em>) is the number of valid permutations of size <em>n</em>. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
+<p>where <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
 
 <p>For either algorithm, the probability that the generated <em>n</em>&mdash;</p>
 
@@ -2057,7 +2059,7 @@ def valid_perm(f, x, n):
 <li>is less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</li>
 </ul>
 
-<p>For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).</p>
+<p>For example, if the second algorithm uses the class of permutations whose numbers are sorted in ascending order (making the EGF exp(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead uses the class of alternating permutations (making the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).</p>
 
 <p><strong>Open Questions:</strong></p>
 
@@ -2076,7 +2078,7 @@ def valid_perm(f, x, n):
 <li>if each random number in the list beyond the first follows the same but arbitrary distribution?</li>
 <li>if the previous two conditions are given?</li>
 </ul></li>
-<li>In the second algorithm, what distribution does the first number in the list follow when the algorithm returns <em>n</em> (or one of a set of values of <em>n</em>), with or without the conditions given in question 2?  For example, if the algorithm treats sorted permutations as valid, it is known since von Neumann&#39;s 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of <em>n</em>.</li>
+<li>In the second algorithm, what distribution does the first number in the list follow when the algorithm returns <em>n</em> (or one of a set of values of <em>n</em>), with or without the conditions given in question 2?  For example, if the algorithm uses the class of permutations whose numbers are sorted in ascending order, it is known since von Neumann&#39;s 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of <em>n</em>.</li>
 </ol>
 
 <p><a id=Other_Algorithms_for_exp_minus___lambda></a></p>

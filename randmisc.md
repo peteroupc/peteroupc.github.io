@@ -176,11 +176,11 @@ A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a wei
 
 In the table below, _U_ is a uniform(0, 1) random number.
 
-| This distribution: |  is distributed as: | and uses these parameters: |
+| This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Right-truncated Weibull(_a_, _b_, _c_). | Minimum of _N_ power function(_b_, _c_) random variables, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
-| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(22)**](#Note22)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
+| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(22)**](#Note22)</sup>. | Minimum of _N_ power function(_b_, _c_) random variables, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
+| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(23)**](#Note23)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
 | Marshall&ndash;Olkin(_&alpha;_). | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016)<sup>[**(24)**](#Note24)</sup>. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
@@ -196,7 +196,7 @@ Devroye and Gravel (2020)<sup>[**(21)**](#Note21)</sup> suggest the following ra
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Noteice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(23)**](#Note23)</sup>, _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(25)**](#Note25)</sup>, _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
 
 Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -228,9 +228,10 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 - <small><sup id=Note19>(19)</sup> Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.</small>
 - <small><sup id=Note20>(20)</sup> Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).</small>
 - <small><sup id=Note21>(21)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
-- <small><sup id=Note22>(22)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
-- <small><sup id=Note23>(23)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note22>(22)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
+- <small><sup id=Note23>(23)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
 - <small><sup id=Note24>(24)</sup> Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).</small>
+- <small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 
 <a id=License></a>
 ## License

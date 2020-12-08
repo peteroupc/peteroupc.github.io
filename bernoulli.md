@@ -83,9 +83,9 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1/sqrt(2)**](#1_sqrt_2)
         - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
-        - [**&pi; / 12**](#pi_12)
-        - [**&pi; / 4**](#pi_4)
-        - [**1 / _&pi;_**](#1_pi)
+        - [**_&pi;_ / 12**](#pi___12)
+        - [**_&pi;_ / 4**](#pi___4)
+        - [**1 / _&pi;_**](#1___pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
@@ -122,7 +122,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Other Algorithms for exp(&minus;_&lambda;_)**](#Other_Algorithms_for_exp_minus___lambda)
-    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
+    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
     - [**Calculating Bounds for exp(1)**](#Calculating_Bounds_for_exp_1)
 - [**License**](#License)
 
@@ -748,7 +748,7 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of valid bitstrings.  The rules for determining whether a bitstring is valid are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".   The functions belong to a class called _algebraic functions_ (functions that can be a solution of a polynomial system).
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how certain functions can be simulated by generating a bitstring and determining whether that bitstring belongs to a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters", or more generally a _stochastic grammar_.   The functions belong to a class called _algebraic functions_ (functions that can be a solution of a polynomial system).
 
 According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a factory function can be simulated by a pushdown automaton only if that function can be a solution of a polynomial system with rational coefficients.
 
@@ -759,7 +759,7 @@ The following algorithm simulates the following algebraic function:
 
 where&mdash;
 
-- W(_k_) is the number of valid _k_-letter words and must be in the interval \[0, _&beta;_<sup>_k_</sup>\],
+- W(_k_) is a number in the interval \[0, _&beta;_<sup>_k_</sup>\] and is the number of _k_-letter words that can be produced by the stochastic grammar in question,
 - _&beta;_ is the alphabet size, or the number of "letters" in the alphabet (e.g., 2 for the cases discussed in the Flajolet paper), and is an integer 2 or greater,
 - the _ordinary generating function_ OGF(_x_) = W(0) + W(1) * _x_ + W(2) * _x_<sup>2</sup> + W(3) * _x_<sup>3</sup> + ..., and
 - the second formula incorporates a correction to Theorem 3.2 of the paper<sup>[**(32)**](#Note32)</sup>.
@@ -768,14 +768,14 @@ where&mdash;
 
 1. Set _g_ to 0.
 2. With probability _&lambda;_, add 1 to _g_ and repeat this step.  Otherwise, go to step 3.
-3. Return a number that is 1 with probability W(_g_)/_&beta;_<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word uniformly at random and "parsing" that word using a binary stochastic grammar to determine whether that word is valid.  Note that the word can be determined to be valid as each of its "letters" is generated.)
+3. Return a number that is 1 with probability W(_g_)/_&beta;_<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word uniformly at random and "parsing" that word using a binary stochastic grammar to determine whether that word can be produced by that grammar.  Note that this determination can be made this way as each of the word's "letters" is generated.)
 
 An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and _&beta;_ is 3 in the algorithm above.  In general, for <em>_&beta;_-ary stochastic grammars</em>, the alphabet size is _&beta;_, which can be any integer 2 or greater.
 
 > **Examples:**
 >
 > 1. The following is an example from the Flajolet paper. A _g_-letter binary word can be "parsed" as follows to determine whether that word encodes a ternary tree: "3. If _g_ is 0, return 0.  Otherwise, set _i_ to 1 and _d_ to 1.; 3a. Generate an unbiased random bit (that is, either 0 or 1, chosen with equal probability), then subtract 1 from _d_ if that bit is 0, or add 2 to _d_ otherwise.; 3b. Add 1 to _i_. Then, if _i_ < _g_ and _d_ > 0, go to step 3a.; 3c. Return 1 if _d_ is 0 and _i_ is _g_, or 0 otherwise."
-> 2. If W(_g_), the number of valid _g_-letter words, has the form&mdash;
+> 2. If W(_g_), the number of _g_-letter words that can be produced by the stochastic grammar in question, has the form&mdash;
 >
 >     - choose(_g_, _g_/_t_) \* (_&beta;_&minus;1)<sup>_g_&minus;_g_/_t_</sup> (the number of _g_-letter words with exactly _g_/_t_ A's, for an alphabet size of _&beta;_) if _g_ is divisible by _t_, and
 >     - 0 otherwise,
@@ -927,7 +927,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
-<a id=pi_12></a>
+<a id=pi___12></a>
 #### _&pi;_ / 12
 
 Two algorithms:
@@ -935,7 +935,7 @@ Two algorithms:
 - First algorithm: Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
 - Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
 
-<a id=pi_4></a>
+<a id=pi___4></a>
 #### _&pi;_ / 4
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -943,7 +943,7 @@ Two algorithms:
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
-<a id=1_pi></a>
+<a id=1___pi></a>
 #### 1 / _&pi;_
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -1291,7 +1291,7 @@ The algorithm follows.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
-4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[Certain Algebraic Functions](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.) 
+4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1306,7 +1306,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 <a id=Notes></a>
 ## Notes
 
-- <small><sup id=Note1>(1)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
+- <small><sup id=Note1>(1)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.</small>
 - <small><sup id=Note2>(2)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 - <small><sup id=Note3>(3)</sup> There is an analogue to the Bernoulli factory problem called the _quantum Bernoulli factory_, with the same goal of simulating functions of unknown probabilities, but this time with algorithms that employ quantum-mechanical operations (unlike _classical_ algorithms that employ no such operations).  However, quantum-mechanical programming is far from being accessible to most programmers at the same level as classical programming, and will likely remain so for the foreseeable future.  For this reason, the _quantum Bernoulli factory_ is outside the scope of this document, but it should be noted that more factory functions can be "constructed" using quantum-mechanical operations than by classical algorithms.  For example, a factory function defined in \[0, 1\] has to meet the requirements proved by Keane and O'Brien except it can touch 0 and/or 1 at a finite number of points in the domain, but its value still cannot go to 0 or 1 exponentially fast (Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4).</small>
 - <small><sup id=Note4>(4)</sup> Huber, M., "[**Nearly optimal Bernoulli factories for linear functions**](https://arxiv.org/abs/1308.1562v2)", arXiv:1308.1562v2  [math.PR], 2014.</small>
@@ -1483,7 +1483,7 @@ _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the
 where&mdash;
 
 - EGF(_&lambda;_) = &Sigma;<sub>_k_ = 0, 1, ...</sub> (_&lambda;_<sup>_k_</sup> * V(_k_) / _k_!) (the _exponential generating function_ or EGF, which completely determines a permutation class), and
-- V(_n_) is the number of _valid_ permutations of size _n_ (and must be in the interval \[0, _n_!\]).
+- V(_n_) is a number in the interval \[0, _n_!\] and is the number of permutations of size _n_ that meet the requirements of the permutation class in question.
 
 Effectively, a random number _G_ is generated by flipping the coin until it returns 0 and counting the number of ones (the paper calls _G_ a _geometric_(_&lambda;_) random number, but this terminology is avoided in this article because it has several conflicting meanings in academic works), and then accepted with probability V(_G_)/_G_! (where _G_! is the number of _possible_ permutations of size _G_, or 1 if _G_ is 0), and rejected otherwise.  The probability that _r_ random numbers are rejected this way is _p_*(1 &minus; _p_)<sup>_r_</sup>, where _p_ = (1 &minus; _&lambda;_) * EGF(_&lambda;_).
 
@@ -1536,8 +1536,10 @@ def r_rejects_prob(f, x, r):
     return p*(1-p)**r
 
 def valid_perm(f, x, n):
-    # Number of valid permutations of size n for the
-    # von Neumann schema with the given e.g.f.
+    # Number of permutations of size n that meet
+    # the requirements of the permutation class
+    # determined by the given e.g.f. for the
+    # von Neumann schema
     return coeffext(f, x, n)*factorial(n)
 ```
 
@@ -1585,14 +1587,14 @@ Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier 
 
 1. Create an empty list.
 2. Generate a uniform(0, 1) random number _u_, and append _u_ to the end of the list.
-3. If the items in the list do not form a valid permutation, return the number of items in the list minus 1.  Otherwise, go to step 2.
+3. If the items in the list do not form a permutation that meets the permutation class's requirements, return the number of items in the list minus 1.  Otherwise, go to step 2.
 
 This algorithm returns the number _n_ with the following probability:
 
 _G_(_n_) = (1 &minus; _V_(_n_ + 1)/(_V_(_n_) * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _G_(_j_) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (_V_(_n_) * (_n_ + 1) &minus; _V_(_n_ + 1)) / (_V_(0) * (_n_ + 1)!),
 
-where _V_(_n_) is the number of valid permutations of size _n_. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(_&lambda;_)+1/cos(_&lambda;_).
+where _V_(_n_) is the number of permutations of size _n_ that meet the permutation class's requirements. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(_&lambda;_)+1/cos(_&lambda;_).
 
 For either algorithm, the probability that the generated _n_&mdash;
 
@@ -1600,7 +1602,7 @@ For either algorithm, the probability that the generated _n_&mdash;
 - is even is 1 / EGF(1), or
 - is less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).
 
-For example, if the second algorithm treats sorted permutations as valid (making the EGF exp(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead treats alternating permutations as valid (making the EGF tan(_&lambda;_)+1/cos(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
+For example, if the second algorithm uses the class of permutations whose numbers are sorted in ascending order (making the EGF exp(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead uses the class of alternating permutations (making the EGF tan(_&lambda;_)+1/cos(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
 
 **Open Questions:**
 
@@ -1612,7 +1614,7 @@ For example, if the second algorithm treats sorted permutations as valid (making
     - if the first random number in the list has an arbitrary (not necessarily uniform) distribution?
     - if each random number in the list beyond the first follows the same but arbitrary distribution?
     - if the previous two conditions are given?
-3. In the second algorithm, what distribution does the first number in the list follow when the algorithm returns _n_ (or one of a set of values of _n_), with or without the conditions given in question 2?  For example, if the algorithm treats sorted permutations as valid, it is known since von Neumann's 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of _n_.
+3. In the second algorithm, what distribution does the first number in the list follow when the algorithm returns _n_ (or one of a set of values of _n_), with or without the conditions given in question 2?  For example, if the algorithm uses the class of permutations whose numbers are sorted in ascending order, it is known since von Neumann's 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of _n_.
 
 <a id=Other_Algorithms_for_exp_minus___lambda></a>
 ### Other Algorithms for exp(&minus;_&lambda;_)
@@ -1638,7 +1640,7 @@ An alternative version of the algorithm above doesn't generate a random number a
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-<a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a>
+<a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
 
 The Flajolet paper presented an algorithm to simulate 1 / _&pi;_ but provided no derivation.  Here is a sketch of how this algorithm works.
