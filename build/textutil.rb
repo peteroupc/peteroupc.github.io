@@ -161,7 +161,7 @@ require 'tmpdir'
 require 'fileutils'
 
 def preparePdfs()
-Dir.glob("comments.md"){|fn|
+Dir.glob("*.md"){|fn|
   next if fn=="README.md"
   next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")
@@ -184,10 +184,10 @@ Dir.glob("comments.md"){|fn|
     p rpdf
     outputengine="html5"
     output="-o '#{rtmppdf}'"
-    output="-s -o '#{rtex}'"
+    #output="-s -o '#{rtex}'"
     File.delete(rtex) rescue nil
     cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=chapter"
-    #cmd+=" -t #{outputengine}"
+    cmd+=" -t #{outputengine}"
     cmd+=" #{output} --metadata pagetitle=\"#{title}\" /tmp/#{file}.md"
     puts cmd
     puts `#{cmd}`

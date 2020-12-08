@@ -83,9 +83,9 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1/sqrt(2)**](#1_sqrt_2)
         - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
-        - [**_&pi;_ / 12**](#pi___12)
-        - [**_&pi;_ / 4**](#pi___4)
-        - [**1 / _&pi;_**](#1___pi)
+        - [**&pi; / 12**](#pi_12)
+        - [**&pi; / 4**](#pi_4)
+        - [**1 / _&pi;_**](#1_pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
@@ -122,7 +122,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Other Algorithms for exp(&minus;_&lambda;_)**](#Other_Algorithms_for_exp_minus___lambda)
-    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
+    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
     - [**Calculating Bounds for exp(1)**](#Calculating_Bounds_for_exp_1)
 - [**License**](#License)
 
@@ -927,7 +927,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
-<a id=pi___12></a>
+<a id=pi_12></a>
 #### _&pi;_ / 12
 
 Two algorithms:
@@ -935,7 +935,7 @@ Two algorithms:
 - First algorithm: Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
 - Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
 
-<a id=pi___4></a>
+<a id=pi_4></a>
 #### _&pi;_ / 4
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -943,7 +943,7 @@ Two algorithms:
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
-<a id=1___pi></a>
+<a id=1_pi></a>
 #### 1 / _&pi;_
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -1291,7 +1291,7 @@ The algorithm follows.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
-4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
+4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[Certain Algebraic Functions](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.) 
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1396,7 +1396,7 @@ As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, h
 
 Glynn (2016)<sup>[**(47)**](#Note47)</sup> distinguishes between&mdash;
 
-- _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
+- _exact simulation_, or generating random numbers with the same _distribution_ (same "shape", location, and scale of probabilities) as that of _g_(_X_), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
 - _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, building an unbiased estimator of _g_(_X_)) by a process that halts almost surely.
 
 Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with bias _&lambda;_ can be any "exact estimator" of _&lambda;_ (that is, an unbiased estimator that has expected value _&lambda;_ and halts almost surely) that outputs either 0 or 1.
@@ -1638,7 +1638,7 @@ An alternative version of the algorithm above doesn't generate a random number a
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-<a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
+<a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
 
 The Flajolet paper presented an algorithm to simulate 1 / _&pi;_ but provided no derivation.  Here is a sketch of how this algorithm works.
