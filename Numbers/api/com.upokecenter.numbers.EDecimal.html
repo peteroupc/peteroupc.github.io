@@ -499,6 +499,9 @@ Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
 Creates an arbitrary-precision decimal number from a 32-bit signed integer.</li>
 <li><code>static EDecimal FromInt64​(long valueSmall)</code><br>
 Creates an arbitrary-precision decimal number from a 64-bit signed integer.</li>
+<li><code>static EDecimal FromInt64AsUnsigned​(long longerValue)</code><br>
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+arbitrary-precision decimal number.</li>
 <li><code>static EDecimal FromSingle​(float flt)</code><br>
 Creates an arbitrary-precision decimal number from a 32-bit binary
 floating-point number.</li>
@@ -1526,6 +1529,31 @@ integer.</li>
 <li>An arbitrary-precision decimal number with the exponent set to 0.</li>
 </ul>
 
+<h3>FromInt64AsUnsigned</h3>
+
+<pre>public static EDecimal FromInt64AsUnsigned​(long longerValue)
+</pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision decimal number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+the return value will represent it. If this value is less than 0,
+the return value will store 2^64 plus this value instead.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision decimal number with the exponent set to 0. If
+<code>longerValue</code> is 0 or greater, the return value will represent
+it. If <code>longerValue</code> is less than 0, the return value will
+store 2^64 plus this value instead.</li>
+</ul>
+
 <h3>FromInt64</h3>
 
 <pre>public static EDecimal FromInt64​(long valueSmall)
@@ -1543,7 +1571,8 @@ integer.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision decimal number with the exponent set to 0.</li>
+<li>This number&#39;s value as an arbitrary-precision decimal number with
+the exponent set to 0.</li>
 </ul>
 
 <h3>FromSingle</h3>

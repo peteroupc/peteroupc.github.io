@@ -165,6 +165,9 @@ Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
 Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code>static ERational FromInt64​(long inputInt64)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
+<li><code>static ERational FromInt64AsUnsigned​(long longerValue)</code><br>
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+arbitrary-precision rational number.</li>
 <li><code>static ERational FromSingle​(float flt)</code><br>
 Converts a 32-bit binary floating-point number to a rational number.</li>
 <li><code>static ERational FromSingleBits​(int value)</code><br>
@@ -3022,6 +3025,31 @@ value is infinity or not-a-number.</li>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
 an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
+</ul>
+
+<h3>FromInt64AsUnsigned</h3>
+
+<pre>public static ERational FromInt64AsUnsigned​(long longerValue)
+</pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision rational number.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+the return value will represent it. If this value is less than 0,
+the return value will store 2^64 plus this value instead.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision rational number. If <code>longerValue</code> is 0
+or greater, the return value will represent it. If <code>
+longerValue</code> is less than 0, the return value will store 2^64 plus
+this value instead.</li>
 </ul>
 
 <h3>FromInt64</h3>

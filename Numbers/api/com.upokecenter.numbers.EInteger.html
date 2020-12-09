@@ -125,6 +125,9 @@ Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
 Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromInt64​(long longerValue)</code><br>
 Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
+<li><code>static EInteger FromInt64AsUnsigned​(long longerValue)</code><br>
+Converts an unsigned integer expressed as a 64-bit signed integer to an
+arbitrary-precision integer.</li>
 <li><code>static EInteger FromRadixString​(byte[] bytes,
            int radix)</code><br>
 Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
@@ -601,6 +604,31 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <ul>
 <li>An arbitrary-precision integer with the same value as the 64-bit
 number.</li>
+</ul>
+
+<h3>FromInt64AsUnsigned</h3>
+
+<pre>public static EInteger FromInt64AsUnsigned​(long longerValue)
+</pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an
+ arbitrary-precision integer.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longerValue</code> - A 64-bit signed integer. If this value is 0 or greater,
+the return value will represent it. If this value is less than 0,
+the return value will store 2^64 plus this value instead.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer. If <code>longerValue</code> is 0 or
+greater, the return value will represent it. If <code>longerValue</code>
+is less than 0, the return value will store 2^64 plus this value
+instead.</li>
 </ul>
 
 <h3>FromInt64</h3>

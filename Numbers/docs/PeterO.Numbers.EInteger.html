@@ -69,6 +69,7 @@
 <li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
+<li><code><a href="#FromInt64AsUnsigned_long">FromInt64AsUnsigned(long)</a></code> - Converts an unsigned integer expressed as a 64-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#FromRadixString_byte_int">FromRadixString(byte[], int)</a></code> - Converts a sequence of bytes (interpreted as text) to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixString_char_int">FromRadixString(char[], int)</a></code> - Converts a sequence of char s to an arbitrary-precision integer in a given radix.</li>
 <li><code><a href="#FromRadixString_string_int">FromRadixString(string, int)</a></code> - Converts a string to an arbitrary-precision integer in a given radix.</li>
@@ -1094,6 +1095,26 @@ is a 64-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer with the same value as the 64-bit number.</p>
+
+<p><a id="FromInt64AsUnsigned_long"></a></p>
+
+<h3>FromInt64AsUnsigned</h3>
+
+<pre>public static PeterO.Numbers.EInteger FromInt64AsUnsigned(
+    long longerValue);
+</pre>
+
+<p>Converts an unsigned integer expressed as a 64-bit signed integer to an arbitrary-precision integer.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>longerValue</i>: A 64-bit signed integer. If this value is 0 or greater, the return value will represent it. If this value is less than 0, the return value will store 2^64 plus this value instead.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>An arbitrary-precision integer. If &quot;longerValue&quot; is 0 or greater, the return value will represent it. If &quot;longerValue&quot; is less than 0, the return value will store 2^64 plus this value instead.</p>
 
 <p><a id="FromRadixString_byte_int"></a></p>
 

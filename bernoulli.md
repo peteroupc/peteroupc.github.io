@@ -83,9 +83,9 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**1/sqrt(2)**](#1_sqrt_2)
         - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
         - [**arctan(_x_/_y_) \* _y_/_x_**](#arctan__x___y___y___x)
-        - [**_&pi;_ / 12**](#pi___12)
-        - [**_&pi;_ / 4**](#pi___4)
-        - [**1 / _&pi;_**](#1___pi)
+        - [**&pi; / 12**](#pi_12)
+        - [**&pi; / 4**](#pi_4)
+        - [**1 / _&pi;_**](#1_pi)
         - [**(_a_/_b_)<sup>_x_/_y_</sup>**](#a___b___x___y)
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
@@ -119,10 +119,10 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
-    - [**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)
+    - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Other Algorithms for exp(&minus;_&lambda;_)**](#Other_Algorithms_for_exp_minus___lambda)
-    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
+    - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1_pi)
     - [**Calculating Bounds for exp(1)**](#Calculating_Bounds_for_exp_1)
 - [**License**](#License)
 
@@ -927,7 +927,7 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
-<a id=pi___12></a>
+<a id=pi_12></a>
 #### _&pi;_ / 12
 
 Two algorithms:
@@ -935,7 +935,7 @@ Two algorithms:
 - First algorithm: Use the algorithm for **arcsin(1/2) / 2**.  Where the algorithm says to "flip the input coin", instead generate an unbiased random bit.
 - Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for **&pi; / 4** and return the result.
 
-<a id=pi___4></a>
+<a id=pi_4></a>
 #### _&pi;_ / 4
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -943,7 +943,7 @@ Two algorithms:
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
 
-<a id=1___pi></a>
+<a id=1_pi></a>
 #### 1 / _&pi;_
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
@@ -1076,12 +1076,14 @@ In the following algorithm, _x_ is a real number in the interval [0, 1].
 6. If _k_ is odd, return 1 if _ret_ is less than _x_, or 0 otherwise. (If _ret_ is implemented as a uniform PSRN, this comparison should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Go to step 1.
 
-In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup>.  See the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix for more information.
+In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup>.  See the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix for more information.
+
+> **Note:** If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 instead.
 
 <a id=2_1_exp_2_or_1_exp_0_1_exp_1></a>
 #### 2 / (1 + exp(2)) or (1 + exp(0)) / (1 + exp(1))
 
-This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
+This algorithm takes advantage of formula 2 mentioned in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_)))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_).
 
 1. Generate an **exponential** random number _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
@@ -1093,7 +1095,7 @@ This algorithm takes advantage of formula 2 mentioned in the section "[**Probabi
 <a id=1_exp_1_1_exp_2></a>
 #### (1 + exp(1)) / (1 + exp(2))
 
-This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from the Forsythe Method**](#Probabilities_Arising_from_the_Forsythe_Method)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
+This algorithm takes advantage of the theorem mentioned in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.  Here, the relevant probability is rewritten as 1 &minus; (&int;<sub>(&minus;&infin;, 1/2)</sub> exp(&minus;max(0, min(1, _z_))) * exp(&minus;_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;max(0, min(1, _z_)) * exp(&minus;_z_) _dz_).
 
 1. Generate an **exponential** random number _ex_, then set _k_ to 1.
 2. Set _u_ to point to the same value as _ex_.
@@ -1291,7 +1293,7 @@ The algorithm follows.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
-4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
+4. According to (Mossel and Peres 2005)<sup>[**(20)**](#Note20)</sup>, a pushdown automaton can take a coin with unknown bias _&lambda;_ and turn it into a coin with bias _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[Certain Algebraic Functions](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(22)**](#Note22)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1553,49 +1555,16 @@ where _p_ = ( &Sigma;<sub>_k_=0,1,...</sub> (_&kappa;_(_k_; _&lambda;_)\*V(_k_)/
 
 > **Example:**  If _G_ is a Poisson(_z_<sup>2</sup>/4) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 
-<a id=Probabilities_Arising_from_the_Forsythe_Method></a>
-### Probabilities Arising from the Forsythe Method
-
-The Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup> gives rise to a class of interesting probability functions.
-
-Let _D_ and _E_ be two probability distributions.  Draw one number from _D_, call it _&delta;_.  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _&delta;_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _&delta;_ is less than _x_ given that&mdash;
-
-- _k_ is odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>), or
-- _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(50)**](#Note50)</sup>),
-
-where DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function  (CDF) of _E_.  For example, the algorithm to simulate [**erf(_x_)/erf(1)**](#erf__x__erf_1) uses the fact that when&mdash;
-
-- DPDF is the uniform(0,1) distribution's PDF, which is 1 in the interval [0, 1] and 0 elsewhere, and
-- ECDF is the CDF for the maximum of two uniform(0,1) random numbers, which is simply _z_<sup>2</sup>,
-
-then Formula 1 above becomes&mdash;
-
-- (&int;<sub>[0, _x_]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_) / (&int;<sub>[0, 1]</sub> exp(&minus;(_z_<sup>2</sup>)) _dz_), &nbsp;&nbsp;&nbsp;(Formula 3)
-
-and thus erf(_x_)/erf(1).  If the last step in the algorithm reads "Return 0" rather than "Go to step 1", then the algorithm simulates the probability erf(_x_)\*sqrt(&pi;)/2 (and the denominator in Formulas 1 and 3 becomes 1).
-
 <a id=Probabilities_Arising_from_Certain_Permutations></a>
 ### Probabilities Arising from Certain Permutations
 
-Consider the following algorithm:
+Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.
 
-1. Generate a uniform(0, 1) random number _u_, then set _k_ to 1.
-2. Generate another uniform(0, 1) random number _v_.
-3. If _k_ is odd and _u_ is less than _v_, or if _k_ is even and _v_ is less than _u_, return _k_.
-4. Set _u_ to _v_, then add 1 to _k_, then go to step 2.
-
-This algorithm generates an alternating sequence of a random length, and in doing so, it returns the number _n_ with the following probability:
-
-_C_(_n_) = (1 &minus; _a_<sub>_n_ + 1</sub>/(_a_<sub>_n_</sub> * (_n_ + 1)) ) * (1 &minus; &Sigma;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _C_(_j_) )<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;= (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!,
-
-where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_.
-
-Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can extend the algorithm to certain kinds of permutation as follows:
+Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can describe an algorithm that produces a random number given a permutation class as follows:
 
 1. Create an empty list.
 2. Generate a uniform(0, 1) random number _u_, and append _u_ to the end of the list.
-3. If the items in the list do not form a permutation that meets the permutation class's requirements, return the number of items in the list minus 1.  Otherwise, go to step 2.
+3. Let _n_ be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class's requirements, return _n_.  Otherwise, go to step 2.
 
 This algorithm returns the number _n_ with the following probability:
 
@@ -1604,25 +1573,43 @@ _G_(_n_) = (1 &minus; _V_(_n_ + 1)/(_V_(_n_) * (_n_ + 1)) ) * (1 &minus; &Sigma;
 
 where _V_(_n_) is the number of permutations of size _n_ that meet the permutation class's requirements. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(_&lambda;_)+1/cos(_&lambda;_).
 
-For either algorithm, the probability that the generated _n_&mdash;
+For this algorithm, the probability that the generated _n_&mdash;
 
 - is odd is 1 &minus; 1 / EGF(1), or
 - is even is 1 / EGF(1), or
 - is less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).
 
-For example, if the second algorithm uses the class of permutations whose numbers are sorted in ascending order (making the EGF exp(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead uses the class of alternating permutations (making the EGF tan(_&lambda;_)+1/cos(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
+For example, if the second algorithm uses the class of permutations whose numbers are sorted in ascending order (making the EGF exp(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead uses the permutations whose numbers alternate between low and high (making the EGF tan(_&lambda;_)+1/cos(_&lambda;_)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).
+
+This algorithm can also be used to produce continuous random numbers, which will depend on the EGF (permutation class), which return values of _n_ we care about, and so on.  Specifically, consider the following algorithm:
+
+1. Create an empty list.
+2. If the list is empty, generate a random number distributed as _D_, call it _&delta;_.  Otherwise, generate a random number distributed as _E_.  Either way, append the random number to the end of the list.
+3. Let _n_ be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class's requirements, return _n_.  Otherwise, go to step 2.
+
+Then the algorithm's behavior is given in the tables below.
+
+| Permutation Class | Distribution _D_ | Distribution _E_ | The algorithm returns _n_ with this probability: |
+ --- | --- | --- | --- |
+| Alternating numbers (_X1_ > _X2_ < _X3_ > ...) | Uniform(0,1) | Uniform(0,1) | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. |
+
+| Permutation Class | Distribution _D_ | Distribution _E_ | The distribution of _&delta;_ given that _n_ is ... |
+ --- | --- | --- | --- |
+| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(44)**](#Note44)</sup>. |
+
+| Permutation Class | Distribution _D_ | Distribution _E_ | The probability that _&delta;_ is less than _x_ given that _n_is ... |
+ --- | --- | --- | --- |
+| Numbers sorted in descending order | Arbitrary | Arbitrary | Odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>; see also Forsythe 1972<sup>[**(37)**](#Note37)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative  distribution function (CDF) of _E_. |
+| Numbers sorted in descending order | Arbitrary | Arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(50)**](#Note50)</sup>).  DPDF and ECDF are as above. |
+| Numbers sorted in descending order | Uniform(0,1) | Max. of two uniform(0,1) | Odd is Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> (see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 **Open Questions:**
 
 1. In the first algorithm, what is the probability of generating a random number _n_ (or generating any of a set of values of _n_)&mdash;
-    - if _u_ (step 1) has an arbitrary (not necessarily uniform) distribution?
-    - if _v_ (step 2) follows the same but arbitrary distribution?
-    - if the previous two conditions are given?
-2. In the second algorithm, what is the probability of generating a random number _n_ (or generating any of a set of values of _n_)&mdash;
     - if the first random number in the list has an arbitrary (not necessarily uniform) distribution?
     - if each random number in the list beyond the first follows the same but arbitrary distribution?
     - if the previous two conditions are given?
-3. In the second algorithm, what distribution does the first number in the list follow when the algorithm returns _n_ (or one of a set of values of _n_), with or without the conditions given in question 2?  For example, if the algorithm uses the class of permutations whose numbers are sorted in ascending order, it is known since von Neumann's 1951 algorithm that that number has a truncated exponential distribution when the algorithm returns an odd value of _n_.
+2. How can the tables above be filled for other permutation classes and different combinations of distributions _D_ and _E_?
 
 <a id=Other_Algorithms_for_exp_minus___lambda></a>
 ### Other Algorithms for exp(&minus;_&lambda;_)
@@ -1648,7 +1635,7 @@ An alternative version of the algorithm above doesn't generate a random number a
 4. If _k_ > 0 and _w_ is less than _U_, go to step 1.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
 
-<a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
+<a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
 
 The Flajolet paper presented an algorithm to simulate 1 / _&pi;_ but provided no derivation.  Here is a sketch of how this algorithm works.
