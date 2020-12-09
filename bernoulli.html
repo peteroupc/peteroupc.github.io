@@ -100,9 +100,9 @@
 <li><a href="#1_sqrt_2"><strong>1/sqrt(2)</strong></a></li>
 <li><a href="#tanh_1_2_or_exp_1_minus_1_exp_1_1"><strong>tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)</strong></a></li>
 <li><a href="#arctan__x___y___y___x"><strong>arctan(<em>x</em>/<em>y</em>) * <em>y</em>/<em>x</em></strong></a></li>
-<li><a href="#pi_12"><strong>&pi; / 12</strong></a></li>
-<li><a href="#pi_4"><strong>&pi; / 4</strong></a></li>
-<li><a href="#1_pi"><strong>1 / <em>&pi;</em></strong></a></li>
+<li><a href="#pi___12"><strong><em>&pi;</em> / 12</strong></a></li>
+<li><a href="#pi___4"><strong><em>&pi;</em> / 4</strong></a></li>
+<li><a href="#1___pi"><strong>1 / <em>&pi;</em></strong></a></li>
 <li><a href="#a___b___x___y"><strong>(<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong></a></li>
 <li><a href="#exp_minus__x___y"><strong>exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
 <li><a href="#exp_minus__z"><strong>exp(&minus;<em>z</em>)</strong></a></li>
@@ -144,9 +144,8 @@
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
 <li><a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a></li>
-<li><a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a></li>
 <li><a href="#Other_Algorithms_for_exp_minus___lambda"><strong>Other Algorithms for exp(&minus;<em>&lambda;</em>)</strong></a></li>
-<li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1_pi"><strong>Sketch of Derivation of the Algorithm for 1 / <em>&pi;</em></strong></a></li>
+<li><a href="#Sketch_of_Derivation_of_the_Algorithm_for_1___pi"><strong>Sketch of Derivation of the Algorithm for 1 / <em>&pi;</em></strong></a></li>
 <li><a href="#Calculating_Bounds_for_exp_1"><strong>Calculating Bounds for exp(1)</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -1213,7 +1212,7 @@
 <li>Go to step 1.</li>
 </ol>
 
-<p><a id=pi_12></a></p>
+<p><a id=pi___12></a></p>
 
 <h4><em>&pi;</em> / 12</h4>
 
@@ -1224,7 +1223,7 @@
 <li>Second algorithm: With probability 2/3, return 0.  Otherwise, run the algorithm for <strong>&pi; / 4</strong> and return the result.</li>
 </ul>
 
-<p><a id=pi_4></a></p>
+<p><a id=pi___4></a></p>
 
 <h4><em>&pi;</em> / 4</h4>
 
@@ -1235,7 +1234,7 @@
 <li>If <em>n</em> is less than 3, return the result of the <strong>algorithm for arctan(1/2) * 2</strong>.  Otherwise, if <em>n</em> is 3, return 0.  Otherwise, return the result of the <strong>algorithm for arctan(1/3) * 3</strong>.</li>
 </ol>
 
-<p><a id=1_pi></a></p>
+<p><a id=1___pi></a></p>
 
 <h4>1 / <em>&pi;</em></h4>
 
@@ -1699,7 +1698,7 @@
 
 <p>All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as <em>&pi;</em> or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that <em>directly</em> contains the constant <em>&pi;</em> is not desired; however, a series expansion that converges to a fraction of <em>&pi;</em> is.</p></li>
 <li>Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section &quot;<a href="#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;.</li>
-<li>According to (Mossel and Peres 2005)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, a pushdown automaton can take a coin with unknown bias <em>&lambda;</em> and turn it into a coin with bias <em>f</em>(<em>&lambda;</em>) only if <em>f</em> is a factory function and can be a solution of a polynomial system with rational coefficients. (See &quot;<a href="#Certain_Algebraic_Functions">Certain Algebraic Functions</a>&quot;.)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate <em>any</em> <em>f</em> of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which <em>probability generating functions</em> can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.) </li>
+<li>According to (Mossel and Peres 2005)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, a pushdown automaton can take a coin with unknown bias <em>&lambda;</em> and turn it into a coin with bias <em>f</em>(<em>&lambda;</em>) only if <em>f</em> is a factory function and can be a solution of a polynomial system with rational coefficients. (See &quot;<a href="#Certain_Algebraic_Functions"><strong>Certain Algebraic Functions</strong></a>&quot;.)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate <em>any</em> <em>f</em> of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which <em>probability generating functions</em> can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)</li>
 </ol>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
@@ -2023,7 +2022,7 @@ def valid_perm(f, x, n):
 <p><em>G</em>(<em>n</em>) = (1 &minus; <em>V</em>(<em>n</em> + 1)/(<em>V</em>(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>G</em>(<em>j</em>) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (<em>V</em>(<em>n</em>) * (<em>n</em> + 1) &minus; <em>V</em>(<em>n</em> + 1)) / (<em>V</em>(0) * (<em>n</em> + 1)!),</p>
 
-<p>where <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the first algorithm in this section expresses the special case of alternating permutations and corresponds to the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
+<p>where <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
 
 <p>For this algorithm, the probability that the generated <em>n</em>&mdash;</p>
 
@@ -2032,8 +2031,6 @@ def valid_perm(f, x, n):
 <li>is even is 1 / EGF(1), or</li>
 <li>is less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</li>
 </ul>
-
-<p>For example, if the second algorithm uses the class of permutations whose numbers are sorted in ascending order (making the EGF exp(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/exp(1). If that algorithm instead uses the permutations whose numbers alternate between low and high (making the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>)), then the algorithm returns an odd number with probability 1 &minus; 1/(tan(1)+1/cos(1)).</p>
 
 <p>This algorithm can also be used to produce continuous random numbers, which will depend on the EGF (permutation class), which return values of <em>n</em> we care about, and so on.  Specifically, consider the following algorithm:</p>
 
@@ -2051,13 +2048,22 @@ def valid_perm(f, x, n):
 <th>Distribution <em>D</em></th>
 <th>Distribution <em>E</em></th>
 <th>The algorithm returns <em>n</em> with this probability:</th>
+<th>The probability that <em>n</em> is ...</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>Alternating numbers (<em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...)</td>
+<td>Numbers sorted in descending order</td>
+<td>Uniform(0,1)</td>
+<td>Uniform(0,1)</td>
+<td><em>n</em> / ((<em>n</em> + 1)!).</td>
+<td>Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1).</td>
+</tr>
+<tr>
+<td>Alternating numbers</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
 <td>(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1) &minus; <em>a</em><sub><em>n</em> + 1</sub>) / (<em>n</em> + 1)!, where <em>a</em><sub><em>i</em></sub> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</td>
+<td>Odd is 1&minus;cos(1)/(sin(1)+1).<br/>Even is cos(1)/(sin(1)+1).</td>
 </tr>
 </tbody></table>
 
@@ -2082,14 +2088,14 @@ def valid_perm(f, x, n):
 <th>Permutation Class</th>
 <th>Distribution <em>D</em></th>
 <th>Distribution <em>E</em></th>
-<th>The probability that <em>&delta;</em> is less than <em>x</em> given that _n_is ...</th>
+<th>The probability that <em>&delta;</em> is less than <em>x</em> given that <em>n</em> is ...</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Arbitrary</td>
 <td>Arbitrary</td>
-<td>Odd is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note37"><strong>(37)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative  distribution function (CDF) of <em>E</em>.</td>
+<td>Odd is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note37"><strong>(37)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function (CDF) of <em>E</em>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2101,22 +2107,15 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Max. of two uniform(0,1)</td>
-<td>Odd is Formula 1, where DPDF(<em>z</em>) = 1 and ECDF(<em>z</em>) = <em>z</em><sup>2</sup> (see also <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a>).</td>
+<td>Odd is erf(<em>x</em>)/erf(1) (Formula 1, where DPDF(<em>z</em>) = 1 and ECDF(<em>z</em>) = <em>z</em><sup>2</sup> for <em>z</em> in [0, 1]; see also <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a>).</td>
 </tr>
 </tbody></table>
 
-<p><strong>Open Questions:</strong></p>
+<blockquote>
+<p><strong>Note:</strong> All the functions possible for formulas 1 and 2 are nondecreasing functions.</p>
+</blockquote>
 
-<ol>
-<li>In the first algorithm, what is the probability of generating a random number <em>n</em> (or generating any of a set of values of <em>n</em>)&mdash;
-
-<ul>
-<li>if the first random number in the list has an arbitrary (not necessarily uniform) distribution?</li>
-<li>if each random number in the list beyond the first follows the same but arbitrary distribution?</li>
-<li>if the previous two conditions are given?</li>
-</ul></li>
-<li>How can the tables above be filled for other permutation classes and different combinations of distributions <em>D</em> and <em>E</em>?</li>
-</ol>
+<p><strong>Open Question:</strong>  How can the tables above be filled for other permutation classes and different combinations of distributions <em>D</em> and <em>E</em>?</p>
 
 <p><a id=Other_Algorithms_for_exp_minus___lambda></a></p>
 
@@ -2150,7 +2149,7 @@ def valid_perm(f, x, n):
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
 </ol>
 
-<p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1_pi></a></p>
+<p><a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a></p>
 
 <h3>Sketch of Derivation of the Algorithm for 1 / <em>&pi;</em></h3>
 
