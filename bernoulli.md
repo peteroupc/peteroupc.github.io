@@ -1551,14 +1551,14 @@ A variation on the von Neumann schema occurs if _G_ is generated differently tha
 
 where _p_ = ( &Sigma;<sub>_k_=0,1,...</sub> (_&kappa;_(_k_; _&lambda;_)\*V(_k_)/(_k_!)) ), and where _&kappa;_(_n_; _&lambda;_) is the probability that _G_ is _n_, with parameter _&lambda;_ or the input coin's probability of heads.  Also, the probability that _r_ random numbers are rejected by the modified algorithm is _p_*(1 &minus; _p_)<sup>_r_</sup>.
 
-> **Example:**  If _G_ is a Poisson(1) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(2), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
+> **Example:**  If _G_ is a Poisson(_z_<sup>2</sup>/4) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
 
 <a id=Probabilities_Arising_from_the_Forsythe_Method></a>
 ### Probabilities Arising from the Forsythe Method
 
 The Forsythe method of random sampling (Forsythe 1972)<sup>[**(37)**](#Note37)</sup> gives rise to a class of interesting probability functions.
 
-Let _D_ and _E_ be two probability distributions.  Draw one number from _D_ (_&delta;_).  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _&delta;_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _&delta;_ is less than _x_ given that&mdash;
+Let _D_ and _E_ be two probability distributions.  Draw one number from _D_, call it _&delta;_.  Then draw numbers from _E_ (_e1_, _e2_, etc.) until a number drawn this way is greater than the previous drawn number (which can be _&delta;_).  Then count the numbers drawn from _E_ this way, call the count _k_.  Then the probability that _&delta;_ is less than _x_ given that&mdash;
 
 - _k_ is odd is (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>), or
 - _k_ is even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also (Monahan 1979)<sup>[**(50)**](#Note50)</sup>),

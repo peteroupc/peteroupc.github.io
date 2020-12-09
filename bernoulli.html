@@ -1997,7 +1997,7 @@ def valid_perm(f, x, n):
 <p>where <em>p</em> = ( &Sigma;<sub><em>k</em>=0,1,...</sub> (<em>&kappa;</em>(<em>k</em>; <em>&lambda;</em>)*V(<em>k</em>)/(<em>k</em>!)) ), and where <em>&kappa;</em>(<em>n</em>; <em>&lambda;</em>) is the probability that <em>G</em> is <em>n</em>, with parameter <em>&lambda;</em> or the input coin&#39;s probability of heads.  Also, the probability that <em>r</em> random numbers are rejected by the modified algorithm is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>.</p>
 
 <blockquote>
-<p><strong>Example:</strong>  If <em>G</em> is a Poisson(1) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(2), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</p>
+<p><strong>Example:</strong>  If <em>G</em> is a Poisson(<em>z</em><sup>2</sup>/4) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</p>
 </blockquote>
 
 <p><a id=Probabilities_Arising_from_the_Forsythe_Method></a></p>
@@ -2006,7 +2006,7 @@ def valid_perm(f, x, n):
 
 <p>The Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note37"><strong>(37)</strong></a></sup> gives rise to a class of interesting probability functions.</p>
 
-<p>Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em> (<em>&delta;</em>).  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be <em>&delta;</em>).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that <em>&delta;</em> is less than <em>x</em> given that&mdash;</p>
+<p>Let <em>D</em> and <em>E</em> be two probability distributions.  Draw one number from <em>D</em>, call it <em>&delta;</em>.  Then draw numbers from <em>E</em> (<em>e1</em>, <em>e2</em>, etc.) until a number drawn this way is greater than the previous drawn number (which can be <em>&delta;</em>).  Then count the numbers drawn from <em>E</em> this way, call the count <em>k</em>.  Then the probability that <em>&delta;</em> is less than <em>x</em> given that&mdash;</p>
 
 <ul>
 <li><em>k</em> is odd is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>), or</li>
