@@ -800,6 +800,8 @@ The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * 
 
 The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are _rational_ constants are trivial to simulate.  If fair coins are available, the `ZeroOrOne` method, which is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions), should be used.  If coins with unknown bias are available, then a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) method should be used to turn them into fair coins.)
 
+> **Note:** The parameters in these algorithms can be random numbers.  In this case, the probability of heads will be the _expected value_ (average value) of the probability involved.  For example, if we use the **algorithm for exp(&minus;_z_)** and take _z_ to be a Poisson(_&lambda;_) random number, the new probability of heads is exp(_&lambda;_\*exp(&minus;1)&minus;_&lambda;_).  This example can be found using the computer algebra library SymPy as follows: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
+
 <a id=Digit_Expansions></a>
 #### Digit Expansions
 
@@ -1287,7 +1289,14 @@ The algorithm follows.
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
     - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
-    - For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup> and for the method for [**general factory functions**](#General_Factory_Functions).
+    - For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.
+
+        Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)
+
+        These sequences are required for the method in (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup> and for the method for [**general factory functions**](#General_Factory_Functions).  See also my questions on _Mathematics Stack Exchange_:
+
+        - [**Computing converging polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).
+        - [**Bounds of Bernstein coefficients**](https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst).
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
@@ -1491,7 +1500,7 @@ Effectively, a random number _G_ is generated by flipping the coin until it retu
 Examples of permutation classes include&mdash;
 
 - single-cycle permutations (EGF(_&lambda;_) = Cyc(_&lambda;_) = ln(1/(1 &minus; _&lambda;_)); V(_n_) = (_n_ &minus; 1)!)
-- sorted permutations (EGF(_&lambda;_) = Set(_&lambda;_) = exp(_&lambda;_); V(_n_) = 1),
+- sorted permutations, or permutations whose numbers are sorted in descending order (EGF(_&lambda;_) = Set(_&lambda;_) = exp(_&lambda;_); V(_n_) = 1),
 - all permutations (EGF(_&lambda;_) = Seq(_&lambda;_) = 1/(1 &minus; _&lambda;_); V(_n_) = _n_!),
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
@@ -1544,7 +1553,7 @@ def valid_perm(f, x, n):
     return coeffext(f, x, n)*factorial(n)
 ```
 
-> **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.
+> **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  For example, using the class of _sorted permutations_, we can generate a Poisson(_&lambda;_) random number via the von Neumann schema.
 
 A variation on the von Neumann schema occurs if _G_ is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return _n_ with probability&mdash;
 

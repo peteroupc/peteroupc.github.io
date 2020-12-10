@@ -1045,6 +1045,10 @@
 
 <p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method, which is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>, should be used.  If coins with unknown bias are available, then a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> method should be used to turn them into fair coins.)</p>
 
+<blockquote>
+<p><strong>Note:</strong> The parameters in these algorithms can be random numbers.  In this case, the probability of heads will be the <em>expected value</em> (average value) of the probability involved.  For example, if we use the <strong>algorithm for exp(&minus;<em>z</em>)</strong> and take <em>z</em> to be a Poisson(<em>&lambda;</em>) random number, the new probability of heads is exp(<em>&lambda;</em>*exp(&minus;1)&minus;<em>&lambda;</em>).  This example can be found using the computer algebra library SymPy as follows: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</p>
+</blockquote>
+
 <p><a id=Digit_Expansions></a></p>
 
 <h4>Digit Expansions</h4>
@@ -1692,7 +1696,16 @@
 <li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo&#39;s algorithm for <a href="#Certain_Power_Series"><strong>certain power series</strong></a>.</li>
 <li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.</li>
 <li>Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
-<li>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.) These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and for the method for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>.</li>
+<li><p>For a given function, two sequences of polynomials in Bernstein form, one of which converges from above to that function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.</p>
+
+<p>Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as concave and piecewise linear functions such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)</p>
+
+<p>These sequences are required for the method in (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> and for the method for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>.  See also my questions on <em>Mathematics Stack Exchange</em>:</p>
+
+<ul>
+<li><a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>Computing converging polynomials</strong></a>.</li>
+<li><a href="https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst"><strong>Bounds of Bernstein coefficients</strong></a>.</li>
+</ul></li>
 <li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
 </ul>
 
@@ -1932,7 +1945,7 @@ for i in range(iters):
 
 <ul>
 <li>single-cycle permutations (EGF(<em>&lambda;</em>) = Cyc(<em>&lambda;</em>) = ln(1/(1 &minus; <em>&lambda;</em>)); V(<em>n</em>) = (<em>n</em> &minus; 1)!)</li>
-<li>sorted permutations (EGF(<em>&lambda;</em>) = Set(<em>&lambda;</em>) = exp(<em>&lambda;</em>); V(<em>n</em>) = 1),</li>
+<li>sorted permutations, or permutations whose numbers are sorted in descending order (EGF(<em>&lambda;</em>) = Set(<em>&lambda;</em>) = exp(<em>&lambda;</em>); V(<em>n</em>) = 1),</li>
 <li>all permutations (EGF(<em>&lambda;</em>) = Seq(<em>&lambda;</em>) = 1/(1 &minus; <em>&lambda;</em>); V(<em>n</em>) = <em>n</em>!),</li>
 <li>alternating permutations of even size (EGF(<em>&lambda;</em>) = 1/cos(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000364"><strong>A000364</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>), and</li>
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
@@ -1988,7 +2001,7 @@ def valid_perm(f, x, n):
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.</p>
+<p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  For example, using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random number via the von Neumann schema.</p>
 </blockquote>
 
 <p>A variation on the von Neumann schema occurs if <em>G</em> is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return <em>n</em> with probability&mdash;</p>
