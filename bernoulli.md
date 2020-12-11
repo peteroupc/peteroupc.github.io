@@ -1168,7 +1168,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >
 > 1. Example 1. Generate a Poisson(_&mu;_) random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
 > 2. Example 2. Generate a Poisson(_&mu;_) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&mu;_) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
-> 3. Example 3. Generate a Poisson(_&mu;_) random number _X_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  This probability can be found using the computer algebra library SymPy as follows: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
+> 3. Example 3. Generate a Poisson(_&mu;_) random number _X_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
 > 4. Example 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
@@ -1269,9 +1269,10 @@ The algorithm follows.
 
 > **Notes:**
 >
-> 1. The efficiency of this algorithm depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require math concepts that are much too advanced for this document.
+> 1. The efficiency of this algorithm depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require very advanced math concepts.
 > 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 > 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
+> 4. If _f_ has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, if _f_ is _C_<sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup>[**(51)**](#Note51)</sup>:  Let _m_ be the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) and **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8).  The following Python code uses the SymPy computer algebra library to calculate _m_ and the necessary values for **fbound(_n_)**, given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: `i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i),maximum(d,x,i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)`.
 >
 > **Example:**
 >
@@ -1366,6 +1367,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note48>(48)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note49>(49)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note50>(50)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note51>(51)</sup> Gzyl, Henryk, and José Luis Palacios. “The Weierstrass Approximation Theorem and Large Deviations.” The American Mathematical Monthly, vol. 104, no. 7, 1997, pp. 650–653.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1405,7 +1407,7 @@ As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, h
 
 Glynn (2016)<sup>[**(47)**](#Note47)</sup> distinguishes between&mdash;
 
-- _exact simulation_, or generating random numbers with the same _distribution_ (same "shape", location, and scale of probabilities) as that of _g_(_X_), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
+- _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities), where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
 - _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, building an estimator of _g_(_X_) that is _unbiased_ and not merely _consistent_ or _asymptotically unbiased_) by a process that halts almost surely.
 
 Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with bias _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.

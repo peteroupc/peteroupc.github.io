@@ -38,6 +38,9 @@ greater, and is less than 2^63.</li>
 Returns whether this object&#39;s value can be converted to a 32-bit floating
 point number without its value being rounded to another numerical
 value.</li>
+<li><code>boolean CanFitInUInt64()</code><br>
+Returns whether this object&#39;s numerical value is an integer, is 0 or
+greater, and is less than 2^64.</li>
 <li><code>boolean CanTruncatedIntFitInInt32()</code><br>
 Returns whether this object&#39;s value, converted to an integer by discarding
 its fractional part, would be -(2^31) or greater, and less than
@@ -46,6 +49,9 @@ its fractional part, would be -(2^31) or greater, and less than
 Returns whether this object&#39;s value, converted to an integer by discarding
 its fractional part, would be -(2^63) or greater, and less than
 2^63.</li>
+<li><code>boolean CanTruncatedIntFitInUInt64()</code><br>
+Returns whether this object&#39;s value, converted to an integer by discarding
+its fractional part, would be 0 or greater, and less than 2^64.</li>
 <li><code>int compareTo​(int other)</code><br>
 Compares this CBOR number with a 32-bit signed integer.</li>
 <li><code>int compareTo​(long other)</code><br>
@@ -263,6 +269,22 @@ less than 2^31; otherwise, <code>false</code>.</li>
 <li><code>true</code> if this object&#39;s value, converted to an integer by
 discarding its fractional part, would be -(2^63) or greater, and
 less than 2^63; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanTruncatedIntFitInUInt64</h3>
+
+<pre>public boolean CanTruncatedIntFitInUInt64()
+</pre>
+
+<p>Returns whether this object&#39;s value, converted to an integer by discarding
+ its fractional part, would be 0 or greater, and less than 2^64.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s value, converted to an integer by
+discarding its fractional part, would be 0 or greater, and less than
+2^64; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>CanFitInSingle</h3>
@@ -734,6 +756,21 @@ than 9223372036854775807.</li>
 <ul>
 <li><code>true</code> if this object&#39;s numerical value is an integer, is
 -(2^63) or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
+</ul>
+
+<h3>CanFitInUInt64</h3>
+
+<pre>public boolean CanFitInUInt64()
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is 0 or
+ greater, and is less than 2^64.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li><code>true</code> if this object&#39;s numerical value is an integer, is 0 or
+greater, and is less than 2^64; otherwise, <code>false</code>.</li>
 </ul>
 
 <h3>IsInfinity</h3>

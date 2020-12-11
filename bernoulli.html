@@ -1528,7 +1528,7 @@
 <ol>
 <li>Example 1. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&mu;</em>).</li>
 <li>Example 2. Generate a Poisson(<em>&mu;</em>) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
-<li>Example 3. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  This probability can be found using the computer algebra library SymPy as follows: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
+<li>Example 3. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
 <li>Example 4. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
 </ol>
 </blockquote>
@@ -1663,9 +1663,10 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The efficiency of this algorithm depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require math concepts that are much too advanced for this document.</li>
+<li>The efficiency of this algorithm depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require very advanced math concepts.</li>
 <li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
 <li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
+<li>If <em>f</em> has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, if <em>f</em> is <em>C</em><sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup><a href="#Note51"><strong>(51)</strong></a></sup>:  Let <em>m</em> be the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8).  The following Python code uses the SymPy computer algebra library to calculate <em>m</em> and the necessary values for <strong>fbound(<em>n</em>)</strong>, given a <em>C</em><sup>2</sup> continuous function <code>func</code> that uses the variable <code>x</code>: <code>i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i),maximum(d,x,i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)</code>.</li>
 </ol>
 
 <p><strong>Example:</strong></p>
@@ -1779,6 +1780,7 @@
 <li><small><sup id=Note48>(48)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
 <li><small><sup id=Note49>(49)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note50>(50)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note51>(51)</sup> Gzyl, Henryk, and José Luis Palacios. “The Weierstrass Approximation Theorem and Large Deviations.” The American Mathematical Monthly, vol. 104, no. 7, 1997, pp. 650–653.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1827,7 +1829,7 @@
 <p>Glynn (2016)<sup><a href="#Note47"><strong>(47)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
-<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> (same &quot;shape&quot;, location, and scale of probabilities) as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
+<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
 <li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an estimator of <em>g</em>(<em>X</em>) that is <em>unbiased</em> and not merely <em>consistent</em> or <em>asymptotically unbiased</em>) by a process that halts almost surely.</li>
 </ul>
 
