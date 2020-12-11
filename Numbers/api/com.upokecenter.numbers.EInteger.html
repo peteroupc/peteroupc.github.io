@@ -625,10 +625,9 @@ the return value will store 2^64 plus this value instead.</li>
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>An arbitrary-precision integer. If <code>longerValue</code> is 0 or
-greater, the return value will represent it. If <code>longerValue</code>
-is less than 0, the return value will store 2^64 plus this value
-instead.</li>
+<li>An arbitrary-precision integer. If &quot;longerValue&quot; is 0 or greater,
+the return value will represent it. If &quot;longerValue&quot; is less than 0,
+the return value will store 2^64 plus this value instead.</li>
 </ul>
 
 <h3>FromInt64</h3>
@@ -2107,11 +2106,11 @@ Returns 0 if this object&#39;s value is 0 or negative 1.</li>
 
 <ul>
 <li>The number of bits in this object&#39;s value, except for its sign.
-Returns 0 if this object&#39;s value is 0 or negative 1. Returns 2^63 -
-1 (<code>Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java)
-if the number of bits is 2^63 - 1 or greater. (Use <code>
-GetUnsignedBitLengthAsEInteger</code> instead if the application relies on
-the exact number of bits.).</li>
+Returns 0 if this object&#39;s value is 0 or negative 1. If the return
+value would be greater than 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET
+or <code>Long.MAX_VALUE</code> in Java), returns 2^63 - 1 instead. (Use
+<code>GetSignedBitLengthAsEInteger</code> instead of this method if the
+application relies on the exact number of bits.).</li>
 </ul>
 
 <h3>GetSignedBitLength</h3>
@@ -2222,10 +2221,11 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 <ul>
 <li>The number of bits in this object&#39;s absolute value. Returns 0 if
 this object&#39;s value is 0, and returns 1 if the value is negative 1.
-Returns 2^63 - 1 (<code>Long.MAX_VALUE</code> in.NET or <code>
-Long.MAX_VALUE</code> in Java) if the number of bits is 2^63 - 1 or
-greater. (Use <code>GetUnsignedBitLengthAsEInteger</code> instead if the
-application relies on the exact number of bits.).</li>
+If the return value would be greater than 2^63 - 1(<code>
+Long.MAX_VALUE</code> in.NET or <code>Long.MAX_VALUE</code> in Java), returns
+2^63 - 1 instead. (Use <code>GetUnsignedBitLengthAsEInteger</code>
+instead of this method if the application relies on the exact number
+of bits.).</li>
 </ul>
 
 <h3>GetUnsignedBitLength</h3>

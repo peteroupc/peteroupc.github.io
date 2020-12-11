@@ -1045,10 +1045,6 @@
 
 <p>The following algorithms generate heads with a probability equal to an irrational number.  (On the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method, which is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>, should be used.  If coins with unknown bias are available, then a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> method should be used to turn them into fair coins.)</p>
 
-<blockquote>
-<p><strong>Note:</strong> The parameters in these algorithms can be random numbers.  In this case, the probability of heads will be the <em>expected value</em> (average value) of the probability involved.  For example, if we use the <strong>algorithm for exp(&minus;<em>z</em>)</strong> and take <em>z</em> to be a Poisson(<em>&lambda;</em>) random number, the new probability of heads is exp(<em>&lambda;</em>*exp(&minus;1)&minus;<em>&lambda;</em>).  This example can be found using the computer algebra library SymPy as follows: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</p>
-</blockquote>
-
 <p><a id=Digit_Expansions></a></p>
 
 <h4>Digit Expansions</h4>
@@ -1519,7 +1515,7 @@
 
 <h4>Convex Combinations</h4>
 
-<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that returns heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  Note that this is a weighted sum.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  (Alternatively, the algorithm can be seen as simulating <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
+<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that returns heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm simulates the following function: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  Note that this is a weighted sum.  See (Wästlund 1999, Theorem 2.7)<sup><a href="#Note26"><strong>(26)</strong></a></sup>.  (Alternatively, the algorithm can be seen as returning heads with probability <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.</li>
@@ -1530,9 +1526,10 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Example 1. Generate a Poisson random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.</li>
+<li>Example 1. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&amp;mu</em>).</li>
 <li>Example 2. Generate a Poisson(<em>&mu;</em>) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
-<li>Example 3. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
+<li>Example 3. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  This probability can be found using the computer algebra library SymPy as follows: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
+<li>Example 4. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
 </ol>
 </blockquote>
 
@@ -1831,10 +1828,10 @@
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> (same &quot;shape&quot;, location, and scale of probabilities) as that of <em>g</em>(<em>X</em>), where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
-<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an unbiased estimator of <em>g</em>(<em>X</em>)) by a process that halts almost surely.</li>
+<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an estimator of <em>g</em>(<em>X</em>) that is <em>unbiased</em> and not merely <em>consistent</em> or <em>asymptotically unbiased</em>) by a process that halts almost surely.</li>
 </ul>
 
-<p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with bias <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (that is, an unbiased estimator that has expected value <em>&lambda;</em> and halts almost surely) that outputs either 0 or 1.</p>
+<p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with bias <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
 <p><a id=Convergence_of_Bernoulli_Factories></a></p>
 
@@ -2001,7 +1998,7 @@ def valid_perm(f, x, n):
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  For example, using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random number via the von Neumann schema.</p>
+<p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  For example, using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random number via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.</p>
 </blockquote>
 
 <p>A variation on the von Neumann schema occurs if <em>G</em> is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return <em>n</em> with probability&mdash;</p>

@@ -1508,7 +1508,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 
     If the sampling domain is also limited to random numbers meeting a given condition (such as `x < 2` or `x != 10`), then the estimated expected value is also called the estimated _conditional expectation_.
 
-    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if the average of multiple estimates, based on independent samples with fixed size `k` of the same distribution, is consistent with the true expected value (Halmos 1946)<sup>[**(47)**](#Note47)</sup>.  For example, an `Expectation` for any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but an `Expectation` for the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946)<sup>[**(47)**](#Note47)</sup>.  For an unbiased estimator, the error in the Monte Carlo estimation is largely due to _variance_, but variance reduction techniques are outside the scope of this document.
+    Monte Carlo estimation makes a difference between _biased_ and _unbiased_ estimators. An estimator is _unbiased_ if multiple independent samples of size `k` (from the same distribution) are expected to average to the true expected value regardless of `k` (Halmos 1946)<sup>[**(47)**](#Note47)</sup>.  For example, an `Expectation` for any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but an `Expectation` for the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946)<sup>[**(47)**](#Note47)</sup>.  For an unbiased estimator, the error in the Monte Carlo estimation is due to _variance_, but variance reduction techniques are outside the scope of this document.
 
 2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is a way to estimate a multidimensional integral; randomly sampled numbers are put into a list (`nums`) and the estimated integral and its standard error are then calculated with `Expectation(nums)` with `EFUNC(x) = x`, and multiplied by the volume of the sampling domain.
 
@@ -2223,7 +2223,7 @@ The following method calculates the (sample) mean and the [**bias-corrected samp
         return [xm, xs*1.0/(size(list)-1)]
     END METHOD
 
-> **Note:** The population variance (or biased sample variance) is found by dividing by `size(list)` rather than `(size(list)-1)`, and the standard deviation of the population or a sample of it is the square root of that variance.
+> **Note:** The population variance (or biased sample variance) is found by dividing by `size(list)` rather than `(size(list)-1)`, and the standard deviation of the population is the population variance's square root.
 
 <a id=Norm_Calculation></a>
 ### Norm Calculation
