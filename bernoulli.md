@@ -1251,13 +1251,12 @@ The following algorithm simulates a factory function _f_(_&lambda;_) via two seq
 
 - **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_.
 - **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_.
-- **fbound**(_n_) returns the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\].
 
 The algorithm follows.
 
 1. Generate a uniform(0, 1) random number, call it _ret_.
-2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _prevcount_ to 0, and set _ones_ to 0. Set _degree_ to 1.
-3. (Find the first pair of polynomials that lie in [0, 1], doubling the degree if needed.) If **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2 and repeat this step.  Otherwise, go to the next step.
+2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _prevcount_ to 0, and set _ones_ to 0.
+3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
 5. (Loop.) Flip the input coin (_degree_&minus;_prevcount_) times.  For each 1 returned this way, add 1 to _ones_.
 6. Set _&#x2113;_ to **fbelow**(_degree_, _ones_), set _u_ to **fabove**(_degree_, _ones_), and set _prevcount_ to _degree_.
@@ -1265,7 +1264,7 @@ The algorithm follows.
 8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _od_ be _degree_/2.  Set _&#x2113;s_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fbelow**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_, and set _us_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fabove**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_.
 9. Let _m_ be (_ut_&minus;_&#x2113;t_)/(_us_&minus;_&#x2113;s_).  Set _&#x2113;t_ to _&#x2113;t_+(_&#x2113;_&minus;_&#x2113;s_)\*_m_, and set _ut_ to _ut_&minus;(_us_&minus;_u_)\*_m_.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-11. (Double the degree and restart the loop.) Multiply _degree_ by 2 and go to step 5.
+11. (Find the next pair of polynomials and restart the loop.) Increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
 
 > **Notes:**
 >
@@ -1280,6 +1279,26 @@ The algorithm follows.
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _S_/sqrt(_n_), where _S_ = (4306+837\*sqrt(6))/5832 is Sikkema's constant (Sikkema 1961)<sup>[**(45)**](#Note45)</sup> and has an upper bound of 1.08989.
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
+
+Another algorithm for simulating a factory function via polynomials was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Note23)</sup>; it assumes the same sequence of polynomials is available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.
+
+1. Set _ones_ to 0, and set _lastdegree_ to 0.
+2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
+3. Set _startdegree_ to _degree_.
+4. Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+5. Set _c_ to choose(_degree_, _ones_).
+6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_), and calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_).
+7. If _degree_ = _startdegree_, set _a&prime;_\[_degree_,_ones_\] to _a_\[_degree_,_ones_\] and set _b&prime;_\[_degree_,_ones_\] to _beta_\[_degree_,_ones_\].
+8. If _degree_ > _startdegree_, then:
+    1. Let _diff_ = _degree_&minus;_lastdegree_, let _u_ = max(0, _ones_&minus;_lastdegree_),
+and let _v_ = min(_ones_, _diff_).  (The following substeps remove outcomes from _a_ and _b_ that would have terminated the algorithm earlier.  It differs from step (f) of section 3 of the paper, which appears to be incorrect, and was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) published by A. C. Thomas.)
+    2. Calculate _&alpha;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _a_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _a_\[_s_,_t_\] is calculated as floor(**fbelow**(_s_, _t_)\*choose(_s_, _t_)), and may be stored for later use.
+    3. Calculate _&beta;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _b_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _b_\[_s_,_t_\] is calculated as floor((1&minus;**fabove**(_s_, _t_))\*choose(_s_, _t_)), and may be stored for later use.
+    4. Set _a&prime;_\[_degree_,_ones_\] to _a_\[_degree_,_ones_\] &minus; _&alpha;_.
+    5. Set _b&prime;_\[_degree_,_ones_\] to _b_\[_degree_,_ones_\] &minus; _&beta;_.
+9. Call **WeightedChoice**(_a&prime;_\[_degree_,_ones_\], _b&prime;_\[_degree_,_ones_\], _c_&minus;_a_\[_degree_,_ones_\]&minus;_b_\[_degree_,_ones_\]), where **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)". (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.  Note the lack of prime symbols in the last weight.)
+10. If the number generated by step 9 is 0, return 1.  If the number generated by that step is 1, return 0.
+11. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to degree, then increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
