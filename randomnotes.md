@@ -38,7 +38,7 @@ probability that a normally-distributed random number will be within one standar
 There are a number of methods for sampling the normal distribution. An application can combine some or all of these.
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
-2. In the _Box&ndash;Müller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
+2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent normally-distributed random numbers.  The polar method (given as `NormalPolar` below) likewise produces two independent normal random numbers at a time.
 3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>.
 
 For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)</sup>, and (Malik and Hemani 2016)<sup>[**(3)**](#Note3)</sup>.
@@ -545,7 +545,7 @@ There are many ways to describe closeness between two distributions.  One sugges
 >
 > **Examples:**
 >
-> 1. Generating an exponential random number via `-ln(RNDU01())` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Müller transformation.
+> 1. Generating an exponential random number via `-ln(RNDU01())` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
 > 2. Generating an exponential random number using the `ExpoExact` method from the section "[**Exponential Distribution**](https://peteroupc.github.io/randomfunc.html#Exponential_Distribution)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end (an example when the return value has 53 bits after the point is as follows: `for i in 54..100: ret = ret + RNDINT(1) * pow(2,-i)`).  See also (Oberhoff 2018)<sup>[**(36)**](#Note36)</sup>.
 > 3. Examples of _approximate algorithms_ include generating a Gaussian random number via a sum of `RNDU01()`, or most cases of generating a random integer via modulo reduction (see "[**A Note on Integer Generation Algorithms**](#A_Note_on_Integer_Generation_Algorithms)").
 
