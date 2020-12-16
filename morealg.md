@@ -100,9 +100,9 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
 
-Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(2)**](#Note2)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) via the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".
+Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). (This is a piecewise linear function with two pieces: a rising linear part and a constant part.) This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(2)**](#Note2)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) via the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".
 
-The code in the [**appendix**](#Appendix) uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The main method to do so is called `calc_linear_func(eps, mult, n)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `n` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
+The code in the [**appendix**](#Appendix) uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The method to do so is called `calc_linear_func(eps, mult, count)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `count` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
 
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
@@ -489,13 +489,13 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
 
 ```
 def bernstein_n(func, x, n, pt=None):
-  # Create a polynomial that approximates func and uses
+  # Create a polynomial that approximates func, which in turn uses
   # the symbol x.  The polynomial's degree is n and is evaluated
   # at the point pt (or at x if not given).
   if pt==None: pt=x
   ret=0
   for i in range(0, n+1):
-    ret+=func.subs(x,S(i)/n).n()*binomial(n,i)*pt**i*(1-pt)**(n-i)
+    ret+=func.subs(x,S(i)/n)*binomial(n,i)*pt**i*(1-pt)**(n-i)
   return ret
 
 def xfunc(y,sym,eps=S(2)/10,mult=2):
@@ -510,7 +510,7 @@ def xfunc(y,sym,eps=S(2)/10,mult=2):
   x=-((y-(1-eps))/eps)**po/mult + y/mult
   return Min(sym*y/x,y)
 
-def calc_linear_func(eps=S(5)/10, mult=1, n=10):
+def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    # Calculates the degrees and Y parameters
    # of a sequence of polynomials that converge
    # from above to min(x*mult, 1-eps).
@@ -519,22 +519,31 @@ def calc_linear_func(eps=S(5)/10, mult=1, n=10):
    polys=[]
    eps=S(eps)
    mult=S(mult)
-   n=S(n)
+   count=S(count)
    bs=20
    ypt=1-(eps/4)
+   x=symbols('x')
    tfunc=Min(x*mult,1-eps)
+   tfn=tfunc.subs(x,(1-eps)/mult).n()
    xpt=xfunc(ypt,x,eps=eps,mult=mult)
    bits=5
+   oldbx=None
    i=0
-   while i<n:
-     bx=bernstein_n(xpt,x,bits,pt=(1-eps)/mult)
-     bxn=bx.n()
-     tfn=tfunc.subs(x,(1-eps)/mult).n()
-     if bxn > tfn:
+   lastbxn = 1
+   diffs=[]
+   while i<count:
+     bx=bernstein_n(xpt,x,bits,x)
+     bxn=bx.subs(x,(1-eps)/mult).n()
+     if bxn > tfn and bxn < lastbxn:
        # Dominates target function
+       #if oldbx!=None:
+       #   diffs.append(bx)
+       #   diffs.append(oldbx-bx)
+       oldbx=bx
+       lastbxn = bxn
        polys.append([bits,ypt])
        print("    [%d,%s]," % (bits,ypt))
-       ypt-=(ypt-(1-eps))/4
+       ypt-=(ypt-(1-eps))/8
        xpt=xfunc(ypt,x,eps=eps,mult=mult)
        bits+=20
        i+=1
