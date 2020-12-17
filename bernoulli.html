@@ -116,7 +116,7 @@
 <li><a href="#1_exp_1_1_exp_2"><strong>(1 + exp(1)) / (1 + exp(2))</strong></a></li>
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 <li><a href="#Euler_s_Constant___gamma"><strong>Euler&#39;s Constant <em>&gamma;</em></strong></a></li>
-<li><a href="#exp_minus__x___y___s___t"><strong>exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em></strong></a></li>
+<li><a href="#exp_minus__x___y___z___t"><strong>exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em></strong></a></li>
 <li><a href="#ln_2"><strong>ln(2)</strong></a></li>
 <li><a href="#ln_1__y___z"><strong>ln(1+<em>y</em>/<em>z</em>)</strong></a></li>
 </ul></li>
@@ -928,7 +928,7 @@
 </ul>
 
 <p>and then <em>&delta;</em>[<em>i</em>] and <em>&eta;</em>[<em>i</em>] can be seen as control points for two different 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curves</strong></a>, where the <em>&delta;</em> curve is always on or &quot;below&quot; the <em>&eta;</em> curve.  For each curve, <em>&lambda;</em> is the relative position on that curve, the curve begins at  <em>&delta;</em>[0] or <em>&eta;</em>[0], and the curve ends at <em>&delta;</em>[<em>n</em>] or <em>&eta;</em>[<em>n</em>]. See also the next section.</p></li>
-<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an <em>n</em>-bit word and looking up whether that word is &quot;passing&quot;, &quot;failing&quot;, or neither, among all <em>n</em>-bit words with <em>j</em> ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup><em>n</em></sup> is relatively small).  Moreover, this approach works only if <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] are integers (or if <em>d</em>[<em>i</em>] is replaced with floor(<em>d</em>[<em>i</em>]) and <em>e</em>[<em>i</em>] with ceil(<em>e</em>[<em>i</em>]) (Holtz et al. 2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, but this, of course, suffers from rounding error).  See also (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p></li>
+<li><p>This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an <em>n</em>-bit word and looking up whether that word is &quot;passing&quot;, &quot;failing&quot;, or neither, among all <em>n</em>-bit words with <em>j</em> ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup><em>n</em></sup> is relatively small).  Moreover, this approach works only if <em>d</em>[<em>i</em>] and <em>e</em>[<em>i</em>] are integers (or if <em>d</em>[<em>i</em>] is replaced with floor(<em>d</em>[<em>i</em>]) and <em>e</em>[<em>i</em>] with ceil(<em>e</em>[<em>i</em>]) (Holtz et al. 2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, but this, of course, suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p></li>
 </ol>
 </blockquote>
 
@@ -1481,11 +1481,11 @@
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
-<p><a id=exp_minus__x___y___s___t></a></p>
+<p><a id=exp_minus__x___y___z___t></a></p>
 
-<h4>exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em></h4>
+<h4>exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em></h4>
 
-<p>This algorithm is again based on an algorithm is due to Mendo (2020)<sup><a href="#Note39"><strong>(39)</strong></a></sup>.  In this algorithm, <em>x</em>, <em>y</em>, <em>s</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>s</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em> is in the interval [0, 1].</p>
+<p>This algorithm is again based on an algorithm due to Mendo (2020)<sup><a href="#Note39"><strong>(39)</strong></a></sup>.  In this algorithm, <em>x</em>, <em>y</em>, <em>z</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>z</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>z</em>/<em>t</em> is in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>s</em> is 0, return 0.  If <em>x</em> is 0, return a number that is 1 with probability <em>s</em>/<em>t</em> and 0 otherwise.</li>
@@ -1494,7 +1494,7 @@
 <li>If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 9.</li>
 <li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 9.</li>
 <li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&#x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
-<li>(This step adds two terms of exp(&minus;<em>x</em>/<em>y</em>)&#39;s alternating series, multiplied by <em>s</em>/<em>t</em>, to <em>lamunq</em>, and sets <em>&#x03F5;</em> to an upper bound on how close the current sum is to the desired probability.)  Let <em>m</em> be <em>n</em>*2.  Set <em>&#x03F5;</em> to <em>s</em>*<em>x</em><sup><em>m</em></sup>/(<em>t</em>*(<em>m</em>!)*<em>y</em><sup><em>m</em></sup>).  If <em>m</em> is 0, add <em>s</em>*(<em>y</em>&minus;<em>x</em>)/(<em>t</em>*<em>y</em>) to <em>lamunq</em>. Otherwise, add <em>s</em>*<em>x</em><sup><em>m</em></sup>*(<em>m</em>*<em>y</em>&minus;<em>x</em>+<em>y</em>) / (<em>t</em>*<em>y</em><sup><em>m</em>+1</sup>*((<em>m</em>+1)!)) to <em>lamunq</em>.</li>
+<li>(This step adds two terms of exp(&minus;<em>x</em>/<em>y</em>)&#39;s alternating series, multiplied by <em>z</em>/<em>t</em>, to <em>lamunq</em>, and sets <em>&#x03F5;</em> to an upper bound on how close the current sum is to the desired probability.)  Let <em>m</em> be <em>n</em>*2.  Set <em>&#x03F5;</em> to <em>z</em>*<em>x</em><sup><em>m</em></sup>/(<em>t</em>*(<em>m</em>!)*<em>y</em><sup><em>m</em></sup>).  If <em>m</em> is 0, add <em>z</em>*(<em>y</em>&minus;<em>x</em>)/(<em>t</em>*<em>y</em>) to <em>lamunq</em>. Otherwise, add <em>z</em>*<em>x</em><sup><em>m</em></sup>*(<em>m</em>*<em>y</em>&minus;<em>x</em>+<em>y</em>) / (<em>t</em>*<em>y</em><sup><em>m</em>+1</sup>*((<em>m</em>+1)!)) to <em>lamunq</em>.</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 <li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
 <li>With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
@@ -1655,14 +1655,22 @@
 
 <h4>General Factory Functions</h4>
 
-<p>The following algorithm simulates a factory function <em>f</em>(<em>&lambda;</em>) via two sequences of polynomials.  One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.  For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients, and for each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree). The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, although an error in Algorithm I is noted below.  In this algorithm:</p>
+<p>A coin with unknown bias <em>&lambda;</em> can be turned into a coin with bias <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that works with two sequences of polynomials:</p>
+
+<ul>
+<li>One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.</li>
+<li>For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.</li>
+<li>For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree).</li>
+</ul>
+
+<p>This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from below, where <em>k</em> is in the interval [0, <em>n</em>].  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>.</li>
 </ul>
 
-<p>The algorithm follows.</p>
+<p>The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note42"><strong>(42)</strong></a></sup>, although an error in Algorithm I is noted below.  The first algorithm follows.</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random number, call it <em>ret</em>.</li>
@@ -1678,7 +1686,7 @@
 <li>(Find the next pair of polynomials and restart the loop.) Increase <em>degree</em> so that the next pair of polynomials has degree equal to <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 5.</li>
 </ol>
 
-<p>Another algorithm for simulating a factory function via polynomials was given in Thomas and Blanchet (2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>; it assumes the same sequence of polynomials is available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.</p>
+<p>The second algorithm was given in Thomas and Blanchet (2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>; it assumes the same sequence of polynomials is available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.</p>
 
 <ol>
 <li>Set <em>ones</em> to 0, and set <em>lastdegree</em> to 0.</li>
@@ -1707,7 +1715,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The efficiency of these algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require very advanced math concepts.</li>
+<li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>, and may thus require very advanced math concepts.</li>
 <li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
 <li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
 <li>If <em>f</em> has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, if <em>f</em> is <em>C</em><sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup><a href="#Note43"><strong>(43)</strong></a></sup>:  Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8).  The following Python code uses the SymPy computer algebra library to calculate <em>m</em> and the necessary values for <strong>fbound(<em>n</em>)</strong>, given a <em>C</em><sup>2</sup> continuous function <code>func</code> that uses the variable <code>x</code>: <code>i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)</code>.</li>

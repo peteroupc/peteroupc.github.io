@@ -99,7 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
-        - [**exp(&minus;_x_/_y_) \* _s_/_t_**](#exp_minus__x___y___s___t)
+        - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
         - [**ln(2)**](#ln_2)
         - [**ln(1+_y_/_z_)**](#ln_1__y___z)
     - [**General Algorithms**](#General_Algorithms)
@@ -716,7 +716,7 @@ The algorithm follows.
 >
 >     and then _&delta;_\[_i_\] and _&eta;_\[_i_\] can be seen as control points for two different 1-dimensional [**Bézier curves**](https://en.wikipedia.org/wiki/Bézier_curve), where the _&delta;_ curve is always on or "below" the _&eta;_ curve.  For each curve, _&lambda;_ is the relative position on that curve, the curve begins at  _&delta;_\[0\] or _&eta;_\[0\], and the curve ends at _&delta;_\[_n_\] or _&eta;_\[_n_\]. See also the next section.
 >
-> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup>_n_</sup> is relatively small).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Holtz et al. 2011)<sup>[**(24)**](#Note24)</sup>, but this, of course, suffers from rounding error).  See also (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>.
+> 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup>_n_</sup> is relatively small).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Holtz et al. 2011)<sup>[**(24)**](#Note24)</sup>, but this, of course, suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012)<sup>[**(23)**](#Note23)</sup>.
 
 <a id=Certain_Polynomials_in_Bernstein_Form></a>
 #### Certain Polynomials in Bernstein Form
@@ -1133,10 +1133,10 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-<a id=exp_minus__x___y___s___t></a>
-#### exp(&minus;_x_/_y_) \* _s_/_t_
+<a id=exp_minus__x___y___z___t></a>
+#### exp(&minus;_x_/_y_) \* _z_/_t_
 
-This algorithm is again based on an algorithm is due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>.  In this algorithm, _x_, _y_, _s_, and _t_ are integers greater than 0, except _x_ and/or _s_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _s_/_t_ is in the interval [0, 1].
+This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>.  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _z_/_t_ is in the interval [0, 1].
 
 1. If _s_ is 0, return 0.  If _x_ is 0, return a number that is 1 with probability _s_/_t_ and 0 otherwise.
 2. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
@@ -1144,7 +1144,7 @@ This algorithm is again based on an algorithm is due to Mendo (2020)<sup>[**(39)
 4. If _lamunq_+_&#x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 9.
 5. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 9.
 6. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-7. (This step adds two terms of exp(&minus;_x_/_y_)'s alternating series, multiplied by _s_/_t_, to _lamunq_, and sets _&#x03F5;_ to an upper bound on how close the current sum is to the desired probability.)  Let _m_ be _n_\*2.  Set _&#x03F5;_ to _s_\*_x_<sup>_m_</sup>/(_t_\*(_m_!)\*_y_<sup>_m_</sup>).  If _m_ is 0, add _s_\*(_y_&minus;_x_)/(_t_\*_y_) to _lamunq_. Otherwise, add _s_\*_x_<sup>_m_</sup>\*(_m_\*_y_&minus;_x_+_y_) / (_t_\*_y_<sup>_m_+1</sup>\*((_m_+1)!)) to _lamunq_.
+7. (This step adds two terms of exp(&minus;_x_/_y_)'s alternating series, multiplied by _z_/_t_, to _lamunq_, and sets _&#x03F5;_ to an upper bound on how close the current sum is to the desired probability.)  Let _m_ be _n_\*2.  Set _&#x03F5;_ to _z_\*_x_<sup>_m_</sup>/(_t_\*(_m_!)\*_y_<sup>_m_</sup>).  If _m_ is 0, add _z_\*(_y_&minus;_x_)/(_t_\*_y_) to _lamunq_. Otherwise, add _z_\*_x_<sup>_m_</sup>\*(_m_\*_y_&minus;_x_+_y_) / (_t_\*_y_<sup>_m_+1</sup>\*((_m_+1)!)) to _lamunq_.
 8. Add 1 to _n_ and go to step 4.
 9. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 10. With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
@@ -1264,12 +1264,18 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
 
-The following algorithm simulates a factory function _f_(_&lambda;_) via two sequences of polynomials.  One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.  For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients, and for each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree). The algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(42)**](#Note42)</sup>, although an error in Algorithm I is noted below.  In this algorithm:
+A coin with unknown bias _&lambda;_ can be turned into a coin with bias _f_(_&lambda;_), where _f_ is any factory function, via an algorithm that works with two sequences of polynomials:
+
+- One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.
+- For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients.
+- For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree).
+
+This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
 
 - **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_.
 - **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_.
 
-The algorithm follows.
+The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(42)**](#Note42)</sup>, although an error in Algorithm I is noted below.  The first algorithm follows.
 
 1. Generate a uniform(0, 1) random number, call it _ret_.
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
@@ -1283,7 +1289,7 @@ The algorithm follows.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 11. (Find the next pair of polynomials and restart the loop.) Increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
 
-Another algorithm for simulating a factory function via polynomials was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Note23)</sup>; it assumes the same sequence of polynomials is available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.
+The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Note23)</sup>; it assumes the same sequence of polynomials is available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.
 
 1. Set _ones_ to 0, and set _lastdegree_ to 0.
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
@@ -1305,7 +1311,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 
 > **Notes:**
 >
-> 1. The efficiency of these algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require very advanced math concepts.
+> 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_, and may thus require very advanced math concepts.
 > 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 > 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
 > 4. If _f_ has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, if _f_ is _C_<sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup>[**(43)**](#Note43)</sup>:  Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) and **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8).  The following Python code uses the SymPy computer algebra library to calculate _m_ and the necessary values for **fbound(_n_)**, given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: `i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)`.
