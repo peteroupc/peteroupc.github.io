@@ -116,6 +116,7 @@
 <li><a href="#1_exp_1_1_exp_2"><strong>(1 + exp(1)) / (1 + exp(2))</strong></a></li>
 <li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
 <li><a href="#Euler_s_Constant___gamma"><strong>Euler&#39;s Constant <em>&gamma;</em></strong></a></li>
+<li><a href="#exp_minus__x___y___s___t"><strong>exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em></strong></a></li>
 <li><a href="#ln_2"><strong>ln(2)</strong></a></li>
 <li><a href="#ln_1__y___z"><strong>ln(1+<em>y</em>/<em>z</em>)</strong></a></li>
 </ul></li>
@@ -1480,6 +1481,25 @@
 <li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
+<p><a id=exp_minus__x___y___s___t></a></p>
+
+<h4>exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em></h4>
+
+<p>This algorithm is again based on an algorithm is due to Mendo (2020)<sup><a href="#Note39"><strong>(39)</strong></a></sup>.  In this algorithm, <em>x</em>, <em>y</em>, <em>s</em>, and <em>t</em> are integers greater than 0, except <em>x</em> and/or <em>s</em> may be 0, and must be such that exp(&minus;<em>x</em>/<em>y</em>) * <em>s</em>/<em>t</em> is in the interval [0, 1].</p>
+
+<ol>
+<li>If <em>s</em> is 0, return 0.  If <em>x</em> is 0, return a number that is 1 with probability <em>s</em>/<em>t</em> and 0 otherwise.</li>
+<li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, and <em>k</em> to 0 each.</li>
+<li>Add 1 to <em>k</em>, then add <em>s</em>/(2<sup><em>k</em></sup>) to <em>lam</em>.</li>
+<li>If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 9.</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em></sup>), go to step 9.</li>
+<li>If <em>lamunq</em> &gt; <em>lam</em> + 1/(2<sup><em>k</em>+1</sup>) and <em>lamunq</em>+<em>&#x03F5;</em> &lt; 3/(2<sup><em>k</em>+1</sup>), go to step 8.</li>
+<li>(This step adds two terms of exp(&minus;<em>x</em>/<em>y</em>)&#39;s alternating series, multiplied by <em>s</em>/<em>t</em>, to <em>lamunq</em>, and sets <em>&#x03F5;</em> to an upper bound on how close the current sum is to the desired probability.)  Let <em>m</em> be <em>n</em>*2.  Set <em>&#x03F5;</em> to <em>s</em>*<em>x</em><sup><em>m</em></sup>/(<em>t</em>*(<em>m</em>!)*<em>y</em><sup><em>m</em></sup>).  If <em>m</em> is 0, add <em>s</em>*(<em>y</em>&minus;<em>x</em>)/(<em>t</em>*<em>y</em>) to <em>lamunq</em>. Otherwise, add <em>s</em>*<em>x</em><sup><em>m</em></sup>*(<em>m</em>*<em>y</em>&minus;<em>x</em>+<em>y</em>) / (<em>t</em>*<em>y</em><sup><em>m</em>+1</sup>*((<em>m</em>+1)!)) to <em>lamunq</em>.</li>
+<li>Add 1 to <em>n</em> and go to step 4.</li>
+<li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &lt;= <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
+<li>With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
+</ol>
+
 <p><a id=ln_2></a></p>
 
 <h4>ln(2)</h4>
@@ -1496,7 +1516,7 @@
 
 <h4>ln(1+<em>y</em>/<em>z</em>)</h4>
 
-<p>See also the algorithm given earlier for ln(1+<em>&lambda;</em>).  In this algorithm, <em>y</em>/<em>z</em> is a rational number 0 or greater and less than 1.</p>
+<p>See also the algorithm given earlier for ln(1+<em>&lambda;</em>).  In this algorithm, <em>y</em>/<em>z</em> is a rational number in the interval [0, 1].</p>
 
 <ol>
 <li>If <em>y</em>/<em>z</em> is 0, return 0.</li>

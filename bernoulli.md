@@ -99,6 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
+        - [**exp(&minus;_x_/_y_) \* _s_/_t_**](#exp_minus__x___y___s___t)
         - [**ln(2)**](#ln_2)
         - [**ln(1+_y_/_z_)**](#ln_1__y___z)
     - [**General Algorithms**](#General_Algorithms)
@@ -1132,6 +1133,22 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
+<a id=exp_minus__x___y___s___t></a>
+#### exp(&minus;_x_/_y_) \* _s_/_t_
+
+This algorithm is again based on an algorithm is due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>.  In this algorithm, _x_, _y_, _s_, and _t_ are integers greater than 0, except _x_ and/or _s_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _s_/_t_ is in the interval [0, 1].
+
+1. If _s_ is 0, return 0.  If _x_ is 0, return a number that is 1 with probability _s_/_t_ and 0 otherwise.
+2. Set _&#x03F5;_ to 1, then set _n_, _lamunq_, _lam_, _s_, and _k_ to 0 each.
+3. Add 1 to _k_, then add _s_/(2<sup>_k_</sup>) to _lam_.
+4. If _lamunq_+_&#x03F5;_ <= _lam_ + 1/(2<sup>_k_</sup>), go to step 9.
+5. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 9.
+6. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
+7. (This step adds two terms of exp(&minus;_x_/_y_)'s alternating series, multiplied by _s_/_t_, to _lamunq_, and sets _&#x03F5;_ to an upper bound on how close the current sum is to the desired probability.)  Let _m_ be _n_\*2.  Set _&#x03F5;_ to _s_\*_x_<sup>_m_</sup>/(_t_\*(_m_!)\*_y_<sup>_m_</sup>).  If _m_ is 0, add _s_\*(_y_&minus;_x_)/(_t_\*_y_) to _lamunq_. Otherwise, add _s_\*_x_<sup>_m_</sup>\*(_m_\*_y_&minus;_x_+_y_) / (_t_\*_y_<sup>_m_+1</sup>\*((_m_+1)!)) to _lamunq_.
+8. Add 1 to _n_ and go to step 4.
+9. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
+10. With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+
 <a id=ln_2></a>
 #### ln(2)
 
@@ -1144,7 +1161,7 @@ A special case of the algorithm for ln(1+_&lambda;_) given earlier.
 <a id=ln_1__y___z></a>
 #### ln(1+_y_/_z_)
 
-See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number 0 or greater and less than 1.
+See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number in the interval [0, 1].
 
 1. If _y_/_z_ is 0, return 0.
 2. With probability 1/2, return a number that is 1 with probability _y_/_z_ and 0 otherwise.

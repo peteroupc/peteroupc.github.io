@@ -486,7 +486,7 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - For unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise.
     - For intersections, the final result is _YES_ if all components return _YES_; _NO_ if any component returns _NO_; and _MAYBE_ otherwise.
     - For differences between two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_; _NO_ if the first shape returns _NO_ or if both shapes return _YES_; and _MAYBE_ otherwise.
-    - For the exclusive OR of two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_ or vice versa; _NO_ if both shapes return _NO_ or both return _YES_; and _MAYBE_ otherwise.
+    - For the exclusive OR of two shapes, the final result is _YES_ if one shape returns _YES_ and the other returns _NO_; _NO_ if both shapes return _NO_ or both return _YES_; and _MAYBE_ otherwise.
 
 <a id=Sympy_Code_for_Piecewise_Linear_Factory_Functions></a>
 ### Sympy Code for Piecewise Linear Factory Functions
