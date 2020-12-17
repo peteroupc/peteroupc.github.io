@@ -482,24 +482,30 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _NO_ if the signed distance (or a lower bound of such distance) at each of the box's corners is greater than _&sigma;_; and
     - _MAYBE_ in any other case, or if the function is unsure.
 6. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), its _implicit surface_ equation (for closed surfaces), or its _signed distance field_ (a quantized version of a signed distance function).
-7. An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box (for example, for unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise).
+7. An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
+    - For unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise.
+    - For intersections, the final result is _YES_ if all components return _YES_; _NO_ if any component returns _NO_; and _MAYBE_ otherwise.
+    - For differences between two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_; _NO_ if the first shape returns _NO_ or if both shapes return _YES_; and _MAYBE_ otherwise.
+    - For the exclusive OR of two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_ or vice versa; _NO_ if both shapes return _NO_ or both return _YES_; and _MAYBE_ otherwise.
 
 <a id=Sympy_Code_for_Piecewise_Linear_Factory_Functions></a>
 ### Sympy Code for Piecewise Linear Factory Functions
 
 ```
 def bernstein_n(func, x, n, pt=None):
+  # Bernstein operator.
   # Create a polynomial that approximates func, which in turn uses
   # the symbol x.  The polynomial's degree is n and is evaluated
   # at the point pt (or at x if not given).
   if pt==None: pt=x
   ret=0
   for i in range(0, n+1):
-    ret+=func.subs(x,S(i)/n)*binomial(n,i)*pt**i*(1-pt)**(n-i)
+    j=i
+    ret+=func.subs(x,S(j)/n)*binomial(n,j)*pt**j*(1-pt)**(n-j)
   return ret
 
-def xfunc(y,sym,eps=S(2)/10,mult=2):
-  # Calculate x-point given y, eps, and mult.
+def inflec(y,eps=S(2)/10,mult=2):
+  # Calculate the inflection point (x) given y, eps, and mult.
   # The formula is not found in the paper by Thomas and
   # Blanchet 2012, but in
   # the supplemental source code uploaded by
@@ -508,7 +514,12 @@ def xfunc(y,sym,eps=S(2)/10,mult=2):
   eps=S(eps)
   mult=S(mult)
   x=-((y-(1-eps))/eps)**po/mult + y/mult
-  return Min(sym*y/x,y)
+  return x
+
+def xfunc(y,sym,eps=S(2)/10,mult=2):
+  # Calculate Bernstein "control polygon" given y,
+  # eps, and mult.
+  return Min(sym*y/inflec(y,eps,mult),y)
 
 def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    # Calculates the degrees and Y parameters
@@ -527,7 +538,7 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    tfn=tfunc.subs(x,(1-eps)/mult).n()
    xpt=xfunc(ypt,x,eps=eps,mult=mult)
    bits=5
-   oldbx=None
+   #oldbx=None
    i=0
    lastbxn = 1
    diffs=[]
@@ -539,17 +550,28 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
        #if oldbx!=None:
        #   diffs.append(bx)
        #   diffs.append(oldbx-bx)
-       oldbx=bx
+       #oldbx=bx
        lastbxn = bxn
        polys.append([bits,ypt])
        print("    [%d,%s]," % (bits,ypt))
-       ypt-=(ypt-(1-eps))/8
+       # Find y2 such that y2 < ypt and
+       # bx(inflec(y2, ...)) >= y2,
+       # so that next Bernstein expansion will go
+       # underneath the previous one
+       while True:
+         ypt-=(ypt-(1-eps))/4
+         xpt=inflec(ypt,eps=eps,mult=mult).n()
+         bxs=bx.subs(x,xpt).n()
+         if bxs>=ypt.n():
+            break
        xpt=xfunc(ypt,x,eps=eps,mult=mult)
        bits+=20
        i+=1
      else:
-       bits=int(bits*125/100)
+       bits=int(bits*200/100)
    return polys
+
+calc_linear_func(count=8)
 ```
 
 <a id=License></a>
