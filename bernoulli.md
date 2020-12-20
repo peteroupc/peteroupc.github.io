@@ -99,7 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
-        - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
+        - [**exp(&minus;_x_/_y_) \* _s_/_t_**](#exp_minus__x___y___s___t)
         - [**ln(2)**](#ln_2)
         - [**ln(1+_y_/_z_)**](#ln_1__y___z)
     - [**General Algorithms**](#General_Algorithms)
@@ -743,7 +743,7 @@ Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes monomials (involv
 
 The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
 
-Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
+Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[Convex Combinations](#Convex_Combinations)", later).
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -788,7 +788,7 @@ An extension to this algorithm, not mentioned in the Flajolet paper, is the use 
 >
 >     The ordinary generating function for this modified algorithm is thus&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;OGF(_z_) = <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _z_\*_&alpha;_<sup>_&alpha;_</sup>\*(_&beta;_&minus;1)<sup>_&alpha;_&minus;1</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* _&beta;_<sup>_&alpha;_&minus;1</sup>)).
 > 4.  The probability involved in example 2 likewise involves hypergeometric functions:
->
+> 
 >     - (1 &minus; _&lambda;_) * <sub>_t_&minus;1</sub>_F_<sub>_t_&minus;2</sub>(1/_t_, 2/_t_, ..., (_t_&minus;1)/_t_; 1/(_t_&minus;1), ..., (_t_&minus;2)/(_t_&minus;1); _&lambda;_<sup>_t_</sup>\*_t_<sup>_t_</sup>\*(_&beta;_&minus;1)<sup>_t_&minus;1</sup>/((_t_&minus;1)<sup>_t_&minus;1</sup> \* _&beta;_<sup>_t_</sup>)).
 
 <a id=Expressions_Involving_Polylogarithms></a>
@@ -1136,7 +1136,7 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-<a id=exp_minus__x___y___z___t></a>
+<a id=exp_minus__x___y___s___t></a>
 #### exp(&minus;_x_/_y_) \* _z_/_t_
 
 This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>.  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _z_/_t_ is in the interval [0, 1].
@@ -1186,10 +1186,11 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 
 > **Examples:**
 >
-> 1. Example 1. Generate a Poisson(_&mu;_) random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
-> 2. Example 2. Generate a Poisson(_&mu;_) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&mu;_) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
-> 3. Example 3. Generate a Poisson(_&mu;_) random number _X_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
-> 4. Example 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
+> 1. Generate a Poisson(_&mu;_) random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
+> 2. Generate a Poisson(_&mu;_) random number _X_ and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&mu;_) mentioned earlier, and corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 if _i_ is 0, and 0 otherwise.
+> 3. Generate a Poisson(_&mu;_) random number _X_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
+> 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(10)**](#Note10)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
+> 5. (Wästlund 1999)<sup>[**(26)**](#Note26)</sup>: Generate a Poisson(1) random number _X_, then flip the input coin _X_ times.  Return 0 if any of the flips returns 1, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&lambda;_), and corresponds to _g_(_i_) being the Poisson(1) probabilities, namely 1/(_i_!\*exp(1)), and _h_<sub>_i_</sub>() being (1&minus;_&lambda;_)<sup>_i_</sup>.
 
 <a id=Simulating_the_Probability_Generating_Function></a>
 #### Simulating the Probability Generating Function
