@@ -1551,10 +1551,11 @@
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Example 1. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&mu;</em>).</li>
-<li>Example 2. Generate a Poisson(<em>&mu;</em>) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
-<li>Example 3. Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
-<li>Example 4. <em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
+<li>Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&mu;</em>).</li>
+<li>Generate a Poisson(<em>&mu;</em>) random number <em>X</em> and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson(<em>&mu;</em>) probabilities and <em>h</em><sub><em>i</em></sub>() returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
+<li>Generate a Poisson(<em>&mu;</em>) random number <em>X</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
+<li><em>Bernoulli Race</em> (Dughmi et al. 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
+<li>(Wästlund 1999)<sup><a href="#Note26"><strong>(26)</strong></a></sup>: Generate a Poisson(1) random number <em>X</em>, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&lambda;</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson(1) probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1&minus;<em>&lambda;</em>)<sup><em>i</em></sup>.</li>
 </ol>
 </blockquote>
 
@@ -1697,10 +1698,9 @@
 <li>Set <em>ones</em> to 0, and set <em>lastdegree</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
+<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
 <li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).</li>
-<li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>), and calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>).</li>
-<li>If <em>degree</em> equals <em>startdegree</em>, set <em>a&prime;</em>[<em>degree</em>,<em>ones</em>] to <em>a</em>[<em>degree</em>,<em>ones</em>] and set <em>b&prime;</em>[<em>degree</em>,<em>ones</em>] to <em>b</em>[<em>degree</em>,<em>ones</em>].</li>
+<li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>) and set <em>acount</em> to it, then calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>) and set <em>bcount</em> to it, then subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>, then:
 
 <ol>
@@ -1708,11 +1708,10 @@
 and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substeps remove outcomes from <em>a</em> and <em>b</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
 <li>Calculate <em>&alpha;</em> = &Sigma;<sub><em>k</em>=<em>u</em>,...,<em>v</em></sub> <em>a</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*choose(<em>diff</em>, <em>k</em>).  In this substep, <em>a</em>[<em>s</em>,<em>t</em>] is calculated as floor(<strong>fbelow</strong>(<em>s</em>, <em>t</em>)*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
 <li>Calculate <em>&beta;</em> = &Sigma;<sub><em>k</em>=<em>u</em>,...,<em>v</em></sub> <em>b</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*choose(<em>diff</em>, <em>k</em>).  In this substep, <em>b</em>[<em>s</em>,<em>t</em>] is calculated as floor((1&minus;<strong>fabove</strong>(<em>s</em>, <em>t</em>))*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
-<li>Set <em>a&prime;</em>[<em>degree</em>,<em>ones</em>] to <em>a</em>[<em>degree</em>,<em>ones</em>] &minus; <em>&alpha;</em>.</li>
-<li>Set <em>b&prime;</em>[<em>degree</em>,<em>ones</em>] to <em>b</em>[<em>degree</em>,<em>ones</em>] &minus; <em>&beta;</em>.</li>
+<li>Subtract <em>&alpha;</em> from <em>acount</em>, then subtract <em>&beta;</em> from <em>bcount</em>.</li>
 </ol></li>
-<li>Call <strong>WeightedChoice</strong>(<em>a&prime;</em>[<em>degree</em>,<em>ones</em>], <em>b&prime;</em>[<em>degree</em>,<em>ones</em>], <em>c</em>&minus;<em>a</em>[<em>degree</em>,<em>ones</em>]&minus;<em>b</em>[<em>degree</em>,<em>ones</em>]), where <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;. (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.  Note the lack of prime symbols in the last weight.)</li>
-<li>If the number generated by step 9 is 0, return 1.  If the number generated by that step is 1, return 0.</li>
+<li>Call <strong>WeightedChoice</strong>(<em>acount</em>, <em>bcount</em>, <em>c</em>), where <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;. (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.)</li>
+<li>If the number generated by the previous step is 0, return 1.  If the number generated by that step is 1, return 0.</li>
 <li>(Find the next pair of polynomials and restart the loop.) Set <em>lastdegree</em> to <em>degree</em>, then increase <em>degree</em> so that the next pair of polynomials has degree equal to <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 4.</li>
 </ol>
 
@@ -1727,7 +1726,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
 </ol>
 
-<p><strong>Example:</strong></p>
+<p><strong>Examples:</strong></p>
 
 <ol>
 <li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup><a href="#Note44"><strong>(44)</strong></a></sup>:
@@ -1736,6 +1735,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note45"><strong>(45)</strong></a></sup> and has an upper bound of 1.08989.</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove</strong>(<em>n</em>, <em>n</em>)].</li>
+</ul></li>
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2, then notes 2 and 4 above suggest the following:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*8).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/(4*<em>n</em>)].</li>
 </ul></li>
 </ol>
 </blockquote>

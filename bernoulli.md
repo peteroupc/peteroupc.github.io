@@ -99,7 +99,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**(1 + exp(1)) / (1 + exp(2))**](#1_exp_1_1_exp_2)
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler's Constant _&gamma;_**](#Euler_s_Constant___gamma)
-        - [**exp(&minus;_x_/_y_) \* _s_/_t_**](#exp_minus__x___y___s___t)
+        - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
         - [**ln(2)**](#ln_2)
         - [**ln(1+_y_/_z_)**](#ln_1__y___z)
     - [**General Algorithms**](#General_Algorithms)
@@ -743,7 +743,7 @@ Niazadeh et al. (2020)<sup>[**(31)**](#Note31)</sup> describes monomials (involv
 
 The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
 
-Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[Convex Combinations](#Convex_Combinations)", later).
+Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -788,7 +788,7 @@ An extension to this algorithm, not mentioned in the Flajolet paper, is the use 
 >
 >     The ordinary generating function for this modified algorithm is thus&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;OGF(_z_) = <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _z_\*_&alpha;_<sup>_&alpha;_</sup>\*(_&beta;_&minus;1)<sup>_&alpha;_&minus;1</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* _&beta;_<sup>_&alpha;_&minus;1</sup>)).
 > 4.  The probability involved in example 2 likewise involves hypergeometric functions:
-> 
+>
 >     - (1 &minus; _&lambda;_) * <sub>_t_&minus;1</sub>_F_<sub>_t_&minus;2</sub>(1/_t_, 2/_t_, ..., (_t_&minus;1)/_t_; 1/(_t_&minus;1), ..., (_t_&minus;2)/(_t_&minus;1); _&lambda;_<sup>_t_</sup>\*_t_<sup>_t_</sup>\*(_&beta;_&minus;1)<sup>_t_&minus;1</sup>/((_t_&minus;1)<sup>_t_&minus;1</sup> \* _&beta;_<sup>_t_</sup>)).
 
 <a id=Expressions_Involving_Polylogarithms></a>
@@ -1136,7 +1136,7 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ <= _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-<a id=exp_minus__x___y___s___t></a>
+<a id=exp_minus__x___y___z___t></a>
 #### exp(&minus;_x_/_y_) \* _z_/_t_
 
 This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(39)**](#Note39)</sup>.  In this algorithm, _x_, _y_, _z_, and _t_ are integers greater than 0, except _x_ and/or _z_ may be 0, and must be such that exp(&minus;_x_/_y_) \* _z_/_t_ is in the interval [0, 1].
@@ -1298,20 +1298,18 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Not
 1. Set _ones_ to 0, and set _lastdegree_ to 0.
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
-4. Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 5. Set _c_ to choose(_degree_, _ones_).
-6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_), and calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_).
-7. If _degree_ equals _startdegree_, set _a&prime;_\[_degree_,_ones_\] to _a_\[_degree_,_ones_\] and set _b&prime;_\[_degree_,_ones_\] to _b_\[_degree_,_ones_\].
-8. If _degree_ is greater than _startdegree_, then:
+6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
+7. If _degree_ is greater than _startdegree_, then:
     1. Let _diff_ be _degree_&minus;_lastdegree_, let _u_ be max(0, _ones_&minus;_lastdegree_),
 and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes from _a_ and _b_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
     2. Calculate _&alpha;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _a_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _a_\[_s_,_t_\] is calculated as floor(**fbelow**(_s_, _t_)\*choose(_s_, _t_)), and may be stored for later use.
     3. Calculate _&beta;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _b_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _b_\[_s_,_t_\] is calculated as floor((1&minus;**fabove**(_s_, _t_))\*choose(_s_, _t_)), and may be stored for later use.
-    4. Set _a&prime;_\[_degree_,_ones_\] to _a_\[_degree_,_ones_\] &minus; _&alpha;_.
-    5. Set _b&prime;_\[_degree_,_ones_\] to _b_\[_degree_,_ones_\] &minus; _&beta;_.
-9. Call **WeightedChoice**(_a&prime;_\[_degree_,_ones_\], _b&prime;_\[_degree_,_ones_\], _c_&minus;_a_\[_degree_,_ones_\]&minus;_b_\[_degree_,_ones_\]), where **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)". (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.  Note the lack of prime symbols in the last weight.)
-10. If the number generated by step 9 is 0, return 1.  If the number generated by that step is 1, return 0.
-11. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
+    4. Subtract _&alpha;_ from _acount_, then subtract _&beta;_ from _bcount_.
+8. Call **WeightedChoice**(_acount_, _bcount_, _c_), where **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)". (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.)
+9. If the number generated by the previous step is 0, return 1.  If the number generated by that step is 1, return 0.
+10. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
 
 > **Notes:**
 >
@@ -1321,12 +1319,16 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 > 4. If _f_ has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, if _f_ is _C_<sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup>[**(43)**](#Note43)</sup>:  Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) and **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8).  The following Python code uses the SymPy computer algebra library to calculate _m_ and the necessary values for **fbound(_n_)**, given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: `i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)`.
 > 5. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(23)**](#Note23)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
 >
-> **Example:**
+> **Examples:**
 >
 > 1. If _f_(_&lambda;_) = min(_&lambda;_, _c_) with _c_ in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup>[**(44)**](#Note44)</sup>:
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _S_/sqrt(_n_), where _S_ = (4306+837\*sqrt(6))/5832 is Sikkema's constant (Sikkema 1961)<sup>[**(45)**](#Note45)</sup> and has an upper bound of 1.08989.
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
+> 2. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2, then notes 2 and 4 above suggest the following:
+>     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
+>     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*8).
+>     - **fbound**(_n_) = [0, (1/2) + 1/(4\*_n_)].
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
