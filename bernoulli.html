@@ -1013,7 +1013,7 @@
 <li><p>If W(<em>g</em>), the number of <em>g</em>-letter words that can be produced by the stochastic grammar in question, has the form&mdash;</p>
 
 <ul>
-<li>choose(<em>g</em>, <em>g</em>/<em>t</em>) * (<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup> (the number of <em>g</em>-letter words with exactly <em>g</em>/<em>t</em> A&#39;s, for an alphabet size of <em>&beta;</em>) if <em>g</em> is divisible by <em>t</em>&lt;&lt;|Here, &quot;choose(<em>g</em>, <em>g</em>/<em>t</em>)&quot; means that out of <em>g</em> letters, <em>g</em>/<em>t</em> of them must be A&#39;s, and &quot;(<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup>&quot; is the number of words that have <em>g</em>&minus;<em>g</em>/<em>t</em> letters other than A, given that the remaining letters were A&#39;s.&gt;&gt;, and</li>
+<li>choose(<em>g</em>, <em>g</em>/<em>t</em>) * (<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup> (the number of <em>g</em>-letter words with exactly <em>g</em>/<em>t</em> A&#39;s, for an alphabet size of <em>&beta;</em>) if <em>g</em> is divisible by <em>t</em><sup><a href="#Note53"><strong>(53)</strong></a></sup>, and</li>
 <li>0 otherwise,</li>
 </ul>
 
@@ -1574,11 +1574,11 @@
 
 <h4>Integrals</h4>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how to turn an algorithm that simulates <em>f</em>(<em>&lambda;</em>) into an algorithm that simulates the following integral:</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> showed how to turn an algorithm that simulates <em>f</em>(<em>&lambda;</em>) into an algorithm that simulates the following probability:</p>
 
 <ul>
 <li>(1/<em>&lambda;</em>) &int;<sub>[0, <em>&lambda;</em>]</sub> <em>f</em>(<em>u</em>) <em>du</em>, or equivalently,</li>
-<li>&int;<sub>[0, 1]</sub> <em>f</em>(<em>u</em> * <em>&lambda;</em>) <em>du</em>.</li>
+<li>&int;<sub>[0, 1]</sub> <em>f</em>(<em>u</em> * <em>&lambda;</em>) <em>du</em> (an integral).</li>
 </ul>
 
 <p>This can be done by modifying the algorithm as follows:</p>
@@ -1589,7 +1589,7 @@
 </ul>
 
 <blockquote>
-<p><strong>Note</strong>: The integral simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.</p>
+<p><strong>Note</strong>: The probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.</p>
 </blockquote>
 
 <p>I have found that it&#39;s possible to simulate the following integral, namely&mdash;</p>
@@ -1857,6 +1857,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note50>(50)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
 <li><small><sup id=Note51>(51)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note52>(52)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note53>(53)</sup> Here, &quot;choose(<em>g</em>, <em>g</em>/<em>t</em>)&quot; means that out of <em>g</em> letters, <em>g</em>/<em>t</em> of them must be A&#39;s, and &quot;(<em>&beta;</em>&minus;1)^<em>g</em>&minus;<em>g</em>/<em>t</em>&quot; is the number of words that have <em>g</em>&minus;<em>g</em>/<em>t</em> letters other than A, given that the remaining letters were A&#39;s.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
