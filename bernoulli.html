@@ -1588,10 +1588,6 @@
 <li>Instead of flipping the input coin, flip a coin that does the following: &quot;Flip the input coin, then <a href="#Algorithms"><strong>sample from the number <em>u</em></strong></a>.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
 </ul>
 
-<blockquote>
-<p><strong>Note</strong>: The probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.</p>
-</blockquote>
-
 <p>I have found that it&#39;s possible to simulate the following integral, namely&mdash;</p>
 
 <ul>
@@ -1605,6 +1601,10 @@
 <li>Instead of flipping the input coin, flip a coin that does the following: &quot;<a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> and return the result.&quot;</li>
 <li>If the algorithm would return 1, it instead returns a number that is 1 with probability <em>b</em> &minus; <em>a</em> and 0 otherwise.</li>
 </ul>
+
+<blockquote>
+<p><strong>Note</strong>: If <em>a</em> is 0 and <em>b</em> is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.</p>
+</blockquote>
 
 <p><a id=Certain_Converging_Series></a></p>
 

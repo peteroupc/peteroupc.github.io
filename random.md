@@ -491,15 +491,15 @@ A cryptographic RNG is not required to reseed itself.
 
 A PRNG is a high-quality RNG if&mdash;
 - it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),
-- the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more, and
+- the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and
 - it either&mdash;
     - provides multiple sequences that are different for each seed, have at least 2<sup>64</sup> numbers each, do not overlap, and behave like independent random number sequences (at least for nearly all practical purposes outside of information security),
     - has a maximum "random" number cycle length equal to the number of different seeds the PRNG admits, or
     - has a minimum "random" number cycle length of 2<sup>127</sup> or greater.
 
-The high-quality PRNG should admit any of 2<sup>127</sup> or more seeds.
-
 Every cryptographic RNG is also a high-quality RNG.
+
+If an application uses a high-quality PRNG, then if possible, it should use one that admits any of 2<sup>127</sup> or more seeds.
 
 > **Examples:** Examples of high-quality PRNGs include xoshiro256\*\*, xoroshiro128\*\*, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a [**separate page**](https://peteroupc.github.io/hqprng.html).
 

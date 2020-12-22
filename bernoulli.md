@@ -1213,8 +1213,6 @@ This can be done by modifying the algorithm as follows:
 - Generate a uniform(0, 1) random number _u_ at the start of the algorithm.
 - Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample from the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
 
-> **Note**: The probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
-
 I have found that it's possible to simulate the following integral, namely&mdash;
 
 - &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
@@ -1224,6 +1222,8 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 - Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random number _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
 - Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) and return the result."
 - If the algorithm would return 1, it instead returns a number that is 1 with probability _b_ &minus; _a_ and 0 otherwise.
+
+> **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series

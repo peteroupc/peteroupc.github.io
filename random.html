@@ -738,7 +738,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>it generates bits that behave like independent uniform random bits (at least for nearly all practical purposes outside of information security),</li>
-<li>the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more, and</li>
+<li>the number of different seeds the PRNG admits without shortening or compressing those seeds is 2<sup>63</sup> or more (that is, the PRNG can produce any of at least 2<sup>63</sup> different number sequences, which it can generally do only if the PRNG has at least 63 bits of state), and</li>
 <li>it either&mdash;
 
 <ul>
@@ -748,9 +748,9 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 </ul></li>
 </ul>
 
-<p>The high-quality PRNG should admit any of 2<sup>127</sup> or more seeds.</p>
-
 <p>Every cryptographic RNG is also a high-quality RNG.</p>
+
+<p>If an application uses a high-quality PRNG, then if possible, it should use one that admits any of 2<sup>127</sup> or more seeds.</p>
 
 <blockquote>
 <p><strong>Examples:</strong> Examples of high-quality PRNGs include xoshiro256**, xoroshiro128**, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a <a href="https://peteroupc.github.io/hqprng.html"><strong>separate page</strong></a>.</p>
