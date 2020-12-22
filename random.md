@@ -396,15 +396,15 @@ In a list with `N` different items, there are `N` factorial (that is, `1 * 2 * .
 
 In practice, an application can **shuffle a list** by doing a [**Fisher&ndash;Yates shuffle**](https://en.wikipedia.org/wiki/Fisher-Yates_shuffle), which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup>[**(29)**](#Note29)</sup> &mdash; and is implemented correctly in [**another document of mine**](https://peteroupc.github.io/randomfunc.html).
 
-However, if a PRNG admits fewer seeds than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
+However, if a PRNG admits fewer seeds (and thus can produce fewer number sequences) than the number of permutations, then there are **some permutations that that PRNG can't choose** when it shuffles that list. (This is not the same as _generating_ all permutations of a list, which, for a list big enough, can't be done by any computer in a reasonable time.)
 
 On the other hand, for a list big enough, it's generally **more important to have shuffles act random** than to choose from among all permutations.
 
 An application that shuffles a list can do the shuffling&mdash;
 
 1. using a cryptographic RNG, preferably one with a security strength of `b` bits or greater, or
-2. if a noncryptographic RNG is otherwise appropriate, using a _high-quality PRNG_ that&mdash;
-    - admits `b`-bit seeds without shortening or compressing those seeds, and
+2. if a noncryptographic RNG is otherwise appropriate, using a [**_high-quality PRNG_**](#High_Quality_RNGs_Requirements) that&mdash;
+    - has a `b`-bit or bigger state, and
     - is initialized with a seed derived from data with at least **`b` bits of** [**_entropy_**](#Nondeterministic_Sources_and_Seed_Generation), or "randomness".
 
 For shuffling purposes, `b` can usually be calculated by taking `n` factorial minus 1 (where `n` is the list's size) and calculating its bit length.  A Python example is `b = (math.factorial(n)-1).bit_length()`.  See also (van Staveren 2000, "Lack of randomness")<sup>[**(30)**](#Note30)</sup>.  For shuffling purposes, an application may limit `b` to 256 or greater, in cases when variety of permutations is not important. For other sampling tasks, the following Python examples show how to calculate `b`:
@@ -499,7 +499,7 @@ A PRNG is a high-quality RNG if&mdash;
 
 Every cryptographic RNG is also a high-quality RNG.
 
-If an application uses a high-quality PRNG, then if possible, it should use one that admits any of 2<sup>127</sup> or more seeds.
+Where a noncryptographic PRNG is appropriate, an application should use a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.
 
 > **Examples:** Examples of high-quality PRNGs include xoshiro256\*\*, xoroshiro128\*\*, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a [**separate page**](https://peteroupc.github.io/hqprng.html).
 

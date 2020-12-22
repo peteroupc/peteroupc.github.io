@@ -603,7 +603,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>In practice, an application can <strong>shuffle a list</strong> by doing a <a href="https://en.wikipedia.org/wiki/Fisher-Yates_shuffle"><strong>Fisher&ndash;Yates shuffle</strong></a>, which is unfortunately easy to mess up &mdash; see (Atwood 2007)<sup><a href="#Note29"><strong>(29)</strong></a></sup> &mdash; and is implemented correctly in <a href="https://peteroupc.github.io/randomfunc.html"><strong>another document of mine</strong></a>.</p>
 
-<p>However, if a PRNG admits fewer seeds than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
+<p>However, if a PRNG admits fewer seeds (and thus can produce fewer number sequences) than the number of permutations, then there are <strong>some permutations that that PRNG can&#39;t choose</strong> when it shuffles that list. (This is not the same as <em>generating</em> all permutations of a list, which, for a list big enough, can&#39;t be done by any computer in a reasonable time.)</p>
 
 <p>On the other hand, for a list big enough, it&#39;s generally <strong>more important to have shuffles act random</strong> than to choose from among all permutations.</p>
 
@@ -611,10 +611,10 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ol>
 <li>using a cryptographic RNG, preferably one with a security strength of <code>b</code> bits or greater, or</li>
-<li>if a noncryptographic RNG is otherwise appropriate, using a <em>high-quality PRNG</em> that&mdash;
+<li>if a noncryptographic RNG is otherwise appropriate, using a <a href="#High_Quality_RNGs_Requirements"><strong><em>high-quality PRNG</em></strong></a> that&mdash;
 
 <ul>
-<li>admits <code>b</code>-bit seeds without shortening or compressing those seeds, and</li>
+<li>has a <code>b</code>-bit or bigger state, and</li>
 <li>is initialized with a seed derived from data with at least <strong><code>b</code> bits of</strong> <a href="#Nondeterministic_Sources_and_Seed_Generation"><strong><em>entropy</em></strong></a>, or &quot;randomness&quot;.</li>
 </ul></li>
 </ol>
@@ -750,7 +750,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>Every cryptographic RNG is also a high-quality RNG.</p>
 
-<p>If an application uses a high-quality PRNG, then if possible, it should use one that admits any of 2<sup>127</sup> or more seeds.</p>
+<p>Where a noncryptographic PRNG is appropriate, an application should use a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.</p>
 
 <blockquote>
 <p><strong>Examples:</strong> Examples of high-quality PRNGs include xoshiro256**, xoroshiro128**, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a <a href="https://peteroupc.github.io/hqprng.html"><strong>separate page</strong></a>.</p>
