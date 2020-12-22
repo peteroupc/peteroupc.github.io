@@ -1939,6 +1939,17 @@ CLASSES
      |  rndintexc(self, maxexc)
      |      Returns a random integer in [0, maxexc).
      |
+     |  simulate(coin, fbelow, fabove, fbound)
+     |      Simulates a general factory function defined by two
+     |      sequences of polynomials that converge from above and below.
+     |      - coin(): Function that returns 1 or 0 with a fixed probability.
+     |      - fbelow(n, k): Calculates the Bernstein coordinate (not the value),
+     |        or a lower bound, of the degree-n lower polynomial at the point k/n.
+     |      - fabove(n, k): Calculates the Bernstein coordinate (not the value),
+     |        or an upper bound, of the degree-n upper polynomial at the point k/n.
+     |      - fbound(n): Returns a tuple or list specifying the highest value of
+     |         fbelow and fabove, respectively, for the given n.
+     |
      |  sin(self, f)
      |      Sine Bernoulli factory: B(p) => B(sin(p)).  Special
      |      case of Algorithm3 of reverse-time martingale paper.

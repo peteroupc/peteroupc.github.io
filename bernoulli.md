@@ -1285,13 +1285,13 @@ The first algorithm implements the reverse-time martingale framework (Algorithm 
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
-5. (Loop.) Flip the input coin (_degree_&minus;_lastdegree_) times.  For each 1 returned this way, add 1 to _ones_.
+5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 6. Set _&#x2113;_ to **fbelow**(_degree_, _ones_), set _u_ to **fabove**(_degree_, _ones_), and set _lastdegree_ to _degree_.
 7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
 8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _od_ be _degree_/2.  Set _&#x2113;s_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fbelow**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_, and set _us_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fabove**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_.
 9. Let _m_ be (_ut_&minus;_&#x2113;t_)/(_us_&minus;_&#x2113;s_).  Set _&#x2113;t_ to _&#x2113;t_+(_&#x2113;_&minus;_&#x2113;s_)\*_m_, and set _ut_ to _ut_&minus;(_us_&minus;_u_)\*_m_.
 10. If _ret_ is less than (or equal to) _&#x2113;t_, return 1.  If _ret_ is less than _ut_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-11. (Find the next pair of polynomials and restart the loop.) Increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
+11. (Find the next pair of polynomials and restart the loop.) Increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 5.
 
 The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Note23)</sup>; it assumes the same sequences of polynomials are available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.
 
@@ -1303,13 +1303,14 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(23)**](#Not
 6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
 7. If _degree_ is greater than _startdegree_, then:
     1. Let _diff_ be _degree_&minus;_lastdegree_, let _u_ be max(0, _ones_&minus;_lastdegree_),
-and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes from _a_ and _b_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
-    2. Calculate _&alpha;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _a_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _a_\[_s_,_t_\] is calculated as floor(**fbelow**(_s_, _t_)\*choose(_s_, _t_)), and may be stored for later use.
-    3. Calculate _&beta;_ = &Sigma;<sub>_k_=_u_,...,_v_</sub> _b_\[_lastdegree_, _ones_&minus;_k_\]\*choose(_diff_, _k_).  In this substep, _b_\[_s_,_t_\] is calculated as floor((1&minus;**fabove**(_s_, _t_))\*choose(_s_, _t_)), and may be stored for later use.
-    4. Subtract _&alpha;_ from _acount_, then subtract _&beta;_ from _bcount_.
+and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes from _acount_ and _bcount_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
+    2. For each integer _k_ in the interval [_u_, _v_]:
+        1. Set _d_ to choose(_diff_, _k_).
+        2. Subtract (_a_\[_lastdegree_, _ones_&minus;_k_\]\*_d_) from _acount_.  Here, _a_\[_s_,_t_\] is calculated as floor(**fbelow**(_s_, _t_)\*choose(_s_, _t_)), and may be stored for later use.
+        3. Subtract (_b_\[_lastdegree_, _ones_&minus;_k_\]\*_d_) from _bcount_.  Here, _b_\[_s_,_t_\] is calculated as floor((1&minus;**fabove**(_s_, _t_))\*choose(_s_, _t_)), and may be stored for later use.
 8. Call **WeightedChoice**(_acount_, _bcount_, _c_), where **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)". (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.)
 9. If the number generated by the previous step is 0, return 1.  If the number generated by that step is 1, return 0.
-10. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
+10. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
 
 > **Notes:**
 >
@@ -1329,6 +1330,10 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*8).
 >     - **fbound**(_n_) = [0, (1/2) + 1/(4\*_n_)].
+> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then notes 2 and 4 above suggest the following:
+>     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
+>     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*8).
+>     - **fbound**(_n_) = [0, (1/2) + 9/(16\*_n_)].
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

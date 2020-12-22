@@ -1116,6 +1116,76 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
+    def _binco(n, k):
+        # Binomial coefficient
+        ret = 1
+        for i in range(n - k + 1, n + 1):
+            ret *= Fraction(i, (n - i + 1))
+        return int(ret)
+
+    def simulate(coin, fbelow, fabove, fbound):
+        """ Simulates a general factory function defined by two
+       sequences of polynomials that converge from above and below.
+       - coin(): Function that returns 1 or 0 with a fixed probability.
+       - fbelow(n, k): Calculates the Bernstein coordinate (not the value),
+         or a lower bound, of the degree-n lower polynomial at the point k/n.
+       - fabove(n, k): Calculates the Bernstein coordinate (not the value),
+         or an upper bound, of the degree-n upper polynomial at the point k/n.
+       - fbound(n): Returns a tuple or list specifying the highest value of
+          fbelow and fabove, respectively, for the given n. """
+        ones = 0
+        lastdegree = 0
+        degree = 1
+        while True:
+            fb = fbound(degree)
+            if fb[0] >= 0 and fb[1] <= 1:
+                break
+            degree *= 2
+        startdegree = degree
+        a = {}
+        b = {}
+        while True:
+            for i in range(degree - lastdegree):
+                if coin() == 1:
+                    ones += 1
+            c = int(self._binco(degree, ones))
+            a[(degree, ones)] = int(fbelow(degree, ones) * c)
+            b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
+            # print([degree,ones,float(fbelow(degree,ones)),float(fabove(degree,ones))])
+            acount = a[(degree, ones)]
+            bcount = b[(degree, ones)]
+            c -= acount + bcount
+            if degree > startdegree:
+                diff = degree - lastdegree
+                u = max(ones - lastdegree, 0)
+                v = min(ones, diff)
+                alpha = 0
+                beta = 0
+                for k in range(u, v + 1):
+                    o = ones - k
+                    if not (lastdegree, o) in a:
+                        a[(lastdegree, o)] = int(
+                            fbelow(lastdegree, o) * int(self._binco(lastdegree, o))
+                        )
+                    if not (lastdegree, o) in b:
+                        b[(lastdegree, o)] = int(
+                            (1 - fabove(lastdegree, o))
+                            * int(self._binco(lastdegree, o))
+                        )
+                    st = int(self._binco(diff, k))
+                    alpha += a[(lastdegree, o)] * st
+                    beta += b[(lastdegree, o)] * st
+                acount -= alpha
+                bcount -= beta
+                # print(["ac",alpha,beta,acount,bcount])
+            r = self.rndint((acount + bcount + c) - 1)
+            if r < acount:
+                return 1
+            if r < acount + bcount:
+                return 0
+            lastdegree = degree
+            degree *= 2
+
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
     num = 1

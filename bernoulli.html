@@ -1683,13 +1683,13 @@
 <li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>(Loop.) Flip the input coin (<em>degree</em>&minus;<em>lastdegree</em>) times.  For each 1 returned this way, add 1 to <em>ones</em>.</li>
+<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
 <li>Set <em>&#x2113;</em> to <strong>fbelow</strong>(<em>degree</em>, <em>ones</em>), set <em>u</em> to <strong>fabove</strong>(<em>degree</em>, <em>ones</em>), and set <em>lastdegree</em> to <em>degree</em>.</li>
 <li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
 <li>Let <em>m</em> be (<em>ut</em>&minus;<em>&#x2113;t</em>)/(<em>us</em>&minus;<em>&#x2113;s</em>).  Set <em>&#x2113;t</em> to <em>&#x2113;t</em>+(<em>&#x2113;</em>&minus;<em>&#x2113;s</em>)*<em>m</em>, and set <em>ut</em> to <em>ut</em>&minus;(<em>us</em>&minus;<em>u</em>)*<em>m</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;t</em>, return 1.  If <em>ret</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>(Find the next pair of polynomials and restart the loop.) Increase <em>degree</em> so that the next pair of polynomials has degree equal to <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 5.</li>
+<li>(Find the next pair of polynomials and restart the loop.) Increase <em>degree</em> so that the next pair of polynomials has degree equal to a higher value of <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 5.</li>
 </ol>
 
 <p>The second algorithm was given in Thomas and Blanchet (2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>; it assumes the same sequences of polynomials are available as in the previous algorithm.   An algorithm equivalent to that algorithm is given below.</p>
@@ -1705,14 +1705,18 @@
 
 <ol>
 <li>Let <em>diff</em> be <em>degree</em>&minus;<em>lastdegree</em>, let <em>u</em> be max(0, <em>ones</em>&minus;<em>lastdegree</em>),
-and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substeps remove outcomes from <em>a</em> and <em>b</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
-<li>Calculate <em>&alpha;</em> = &Sigma;<sub><em>k</em>=<em>u</em>,...,<em>v</em></sub> <em>a</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*choose(<em>diff</em>, <em>k</em>).  In this substep, <em>a</em>[<em>s</em>,<em>t</em>] is calculated as floor(<strong>fbelow</strong>(<em>s</em>, <em>t</em>)*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
-<li>Calculate <em>&beta;</em> = &Sigma;<sub><em>k</em>=<em>u</em>,...,<em>v</em></sub> <em>b</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*choose(<em>diff</em>, <em>k</em>).  In this substep, <em>b</em>[<em>s</em>,<em>t</em>] is calculated as floor((1&minus;<strong>fabove</strong>(<em>s</em>, <em>t</em>))*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
-<li>Subtract <em>&alpha;</em> from <em>acount</em>, then subtract <em>&beta;</em> from <em>bcount</em>.</li>
+and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep removes outcomes from <em>acount</em> and <em>bcount</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
+<li>For each integer <em>k</em> in the interval [<em>u</em>, <em>v</em>]:
+
+<ol>
+<li>Set <em>d</em> to choose(<em>diff</em>, <em>k</em>).</li>
+<li>Subtract (<em>a</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*<em>d</em>) from <em>acount</em>.  Here, <em>a</em>[<em>s</em>,<em>t</em>] is calculated as floor(<strong>fbelow</strong>(<em>s</em>, <em>t</em>)*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
+<li>Subtract (<em>b</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*<em>d</em>) from <em>bcount</em>.  Here, <em>b</em>[<em>s</em>,<em>t</em>] is calculated as floor((1&minus;<strong>fabove</strong>(<em>s</em>, <em>t</em>))*choose(<em>s</em>, <em>t</em>)), and may be stored for later use.</li>
+</ol></li>
 </ol></li>
 <li>Call <strong>WeightedChoice</strong>(<em>acount</em>, <em>bcount</em>, <em>c</em>), where <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;. (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.)</li>
 <li>If the number generated by the previous step is 0, return 1.  If the number generated by that step is 1, return 0.</li>
-<li>(Find the next pair of polynomials and restart the loop.) Set <em>lastdegree</em> to <em>degree</em>, then increase <em>degree</em> so that the next pair of polynomials has degree equal to <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 4.</li>
+<li>(Find the next pair of polynomials and restart the loop.) Set <em>lastdegree</em> to <em>degree</em>, then increase <em>degree</em> so that the next pair of polynomials has degree equal to a higher value of <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 4.</li>
 </ol>
 
 <blockquote>
@@ -1742,6 +1746,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*8).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/(4*<em>n</em>)].</li>
+</ul></li>
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then notes 2 and 4 above suggest the following:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2 + (9/16) / (<em>n</em>*8).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 9/(16*<em>n</em>)].</li>
 </ul></li>
 </ol>
 </blockquote>
