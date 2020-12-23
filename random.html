@@ -750,7 +750,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <p>Every cryptographic RNG is also a high-quality RNG.</p>
 
-<p>Where a noncryptographic PRNG is appropriate, an application should use a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.</p>
+<p>Where a noncryptographic PRNG is appropriate, an application should use, if possible, a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.</p>
 
 <blockquote>
 <p><strong>Examples:</strong> Examples of high-quality PRNGs include xoshiro256**, xoroshiro128**, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a <a href="https://peteroupc.github.io/hqprng.html"><strong>separate page</strong></a>.</p>

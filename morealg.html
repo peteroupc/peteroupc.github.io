@@ -54,7 +54,7 @@
 <ul>
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 <li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
-<li><a href="#Sympy_Code_for_Piecewise_Linear_Factory_Functions"><strong>Sympy Code for Piecewise Linear Factory Functions</strong></a></li>
+<li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -474,7 +474,7 @@
 <p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random number.  Here, <em>x</em> is a rational number that&#39;s greater than 1.  In the algorithm, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</p>
 
 <ol>
-<li>(Samples the integer part of the random number.) Generate a random number that expresses the number of failed trials before the first success, where each trial has success rate 1&minus;1/<em>x</em>.  Set <em>k</em> to that random number.  (This is also known as a &quot;geometric random number&quot;, but this terminology is avoided because it has conflicting meanings in academic works.  If <em>x</em> is a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.)</li>
+<li>(Samples the integer part of the random number.) Generate a random number that expresses the number of failed trials before the first success, where each trial succeeds with probability 1&minus;1/<em>x</em>.  Set <em>k</em> to that random number.  (This is also known as a &quot;geometric random number&quot;, but this terminology is avoided because it has conflicting meanings in academic works.  If <em>x</em> is a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.)</li>
 <li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
 <li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)    If <em>x</em> is not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If <em>x</em> is not a power of 2, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
@@ -482,7 +482,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Set <em>k</em> to a bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random number (Bringmann and Friedrich 2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, or more simply, the lesser of <em>m</em> or the number of failed trials before the first success, where each trial has success rate 1&minus;1/<em>x</em>. (If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Set <em>k</em> to a bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random number (Bringmann and Friedrich 2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, or more simply, the lesser of <em>m</em> or the number of failed trials before the first success, where each trial succeeds with probability 1&minus;1/<em>x</em>. (If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
 </blockquote>
 
 <p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
@@ -619,7 +619,7 @@
 </ul>
 
 <p>In the case of two-dimensional shapes, the shape&#39;s corners are (<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, <em>c2</em>/<em>S</em>), (<em>c1</em>,(<em>c2</em>+1)/<em>S</em>), and ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.</p></li>
-<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note16"><strong>(16)</strong></a></sup> with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return:</p>
+<li><p>If the shape is given as an inequality of the form <em>f</em>(<em>t1</em>, ..., <em>tN</em>) &lt;= 0, <strong>InShape</strong> should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, <strong>InShape</strong> should build one interval for each dimension of the box and evaluate <em>f</em> using those intervals<sup><a href="#Note16"><strong>(16)</strong></a></sup> with an accuracy that increases as <em>S</em> increases.  Then, <strong>InShape</strong> can return&mdash;</p>
 
 <ul>
 <li><em>YES</em> if the interval result of <em>f</em> has an upper bound less than or equal to 0;</li>
@@ -657,9 +657,9 @@
 </ul></li>
 </ol>
 
-<p><a id=Sympy_Code_for_Piecewise_Linear_Factory_Functions></a></p>
+<p><a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a></p>
 
-<h3>Sympy Code for Piecewise Linear Factory Functions</h3>
+<h3>SymPy Code for Piecewise Linear Factory Functions</h3>
 
 <pre>def bernstein_n(func, x, n, pt=None):
   # Bernstein operator.
@@ -668,9 +668,12 @@
   # at the point pt (or at x if not given).
   if pt==None: pt=x
   ret=0
+  v=[binomial(n,j) for j in range(n//2+1)]
   for i in range(0, n+1):
-    j=i
-    ret+=func.subs(x,S(j)/n)*binomial(n,j)*pt**j*(1-pt)**(n-j)
+    oldret=ret
+    bin=v[i] if i&lt;len(v) else v[n-i]
+    ret+=func.subs(x,S(i)/n)*bin*pt**i*(1-pt)**(n-i)
+    if pt!=x and ret==oldret and ret&gt;0: break
   return ret
 
 def inflec(y,eps=S(2)/10,mult=2):
@@ -712,25 +715,26 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    lastbxn = 1
    diffs=[]
    while i&lt;count:
-     bx=bernstein_n(xpt,x,bits,x)
-     bxn=bx.subs(x,(1-eps)/mult).n()
+     bx=bernstein_n(xpt,x,bits,(1-eps)/mult)
+     bxn=bx.n()
      if bxn &gt; tfn and bxn &lt; lastbxn:
        # Dominates target function
        #if oldbx!=None:
        #   diffs.append(bx)
        #   diffs.append(oldbx-bx)
        #oldbx=bx
+       oldxpt=xpt
        lastbxn = bxn
        polys.append([bits,ypt])
        print(&quot;    [%d,%s],&quot; % (bits,ypt))
        # Find y2 such that y2 &lt; ypt and
-       # bx(inflec(y2, ...)) &gt;= y2,
+       # bernstein_n(oldxpt,x,bits,inflec(y2, ...)) &gt;= y2,
        # so that next Bernstein expansion will go
        # underneath the previous one
        while True:
          ypt-=(ypt-(1-eps))/4
          xpt=inflec(ypt,eps=eps,mult=mult).n()
-         bxs=bx.subs(x,xpt).n()
+         bxs=bernstein_n(oldxpt,x,bits,xpt).n()
          if bxs&gt;=ypt.n():
             break
        xpt=xfunc(ypt,x,eps=eps,mult=mult)

@@ -296,7 +296,6 @@ class Bernoulli:
                 # Subtract 2**-pt from frac
                 a = (a << pt) - b
                 b <<= pt
-                # frac-=Fraction(1,1<<pt)
             # Frac is now 0, so result can only be 0
             if a == 0:
                 return 0
@@ -1353,12 +1352,13 @@ class DiceEnterprise:
             raise ValueError
         oldrlen = -1
         for j in range(len(poly)):
-            r = poly[j][1:]
+            r = poly[j][1:]  # Get powers of variables
             if len(r) == 1:
-                r = [0, r[0]]
+                r = [0, r[0]]  # Special case
             if oldrlen >= 0 and oldrlen != len(r):
                 raise ValueError
             oldrlen = len(r)
+            # Append coefficient, powers, and result to ladder
             self.ladder.append([[Fraction(poly[j][0])], r, [result]])
         self._dirty = True
         return self
@@ -1746,12 +1746,6 @@ class DiceEnterprise:
             if t + p != nn:
                 return False
         return True
-
-    def _a_allowed(self, a, ntilde):
-        if len(a) == 2:  # Special case: only one power
-            return a[1] == ntilde[0] and ntilde[1] == 0
-        else:
-            return a[1:] == ntilde
 
     def _make_positive(self, newladder, result, degree, dimension):
         for n in self._simplex(degree, dimension):
