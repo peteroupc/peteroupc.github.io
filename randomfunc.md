@@ -1023,7 +1023,7 @@ The pseudocode below implements an exact sampler of this distribution, with cert
           half = floor(trials / 2)
           return BinomialInt(half, 1, 2) + BinomialInt(trials - half, 1, 2)
         else
-          if mod(trials,2)==1
+          if rem(trials,2)==1
             count=count+RNDINT(1)
             trials=trials-1
           end
@@ -1079,7 +1079,7 @@ In this document, the _negative binomial distribution_ models the number of fail
 If `successes` is a non-integer, the distribution is often called a _Pólya distribution_.  In that case, it can be sampled using the following pseudocode (Heaukulani and Roy 2019)<sup>[**(31)**](#Note31)</sup>:
 
     METHOD PolyaInt(sx, sy, px, py)
-       isinteger=mod(sx,sy)==0
+       isinteger=rem(sx,sy)==0
        sxceil=ceil(sx/sy)
        while true
           w=NegativeBinomialInt(sxceil, px, py)
@@ -1146,7 +1146,7 @@ The pseudocode below shows two algorithms. The first, `ExpoRatio`, generates an 
       if x==0: return 1 // exp(0) = 1
       if x > y
         xf = floor(x/y)
-        x = mod(x, y)
+        x = rem(x, y)
         if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
         for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
         return 1
@@ -1193,12 +1193,12 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
         if mx==my: return PoissonInt(1,2)+PoissonInt(1,2)
         if mx > my
            // Mean is 1 or greater
-           mm=mod(mx, my)
+           mm=rem(mx, my)
            if mm == 0
               mf=floor(mx/my)
               ret=0
-              if mod(mf, 2)==0: ret=ret+PoissonInt(1, 1)
-              if mod(mf, 2)==0: mf=mf-1
+              if rem(mf, 2)==0: ret=ret+PoissonInt(1, 1)
+              if rem(mf, 2)==0: mf=mf-1
               ret=ret+PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
               return ret
            else: return PoissonInt(mm, my)+
@@ -1686,7 +1686,7 @@ The following method generates a random number from a distribution via inversion
           if ubits==0: incr=precision
           // NOTE: If a uniform number (`n`) is already pregenerated,
           // use the following instead:
-          // u = mod(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
+          // u = rem(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
           u=u*pow(BASE,incr)+RNDINTEXC(pow(BASE,incr))
           ubits=ubits+incr
           // Get upper and lower bound
@@ -1967,7 +1967,7 @@ This section contains ways to choose independent uniform random points in or on 
 <a id=Random_Points_Inside_a_Simplex></a>
 #### Random Points Inside a Simplex
 
-The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. The special case of 3 points came from (Osada et al. 2002)<sup>[**(83)**](#Note83)</sup>. See also (Grimme 2015)<sup>[**(84)**](#Note84)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
+The following pseudocode generates a random point inside an _n_-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, _points_, a list consisting of the _n_ plus one vertices of the simplex, all of a single dimension _n_ or greater. The special case of 3 points came from Osada et al. (2002)<sup>[**(83)**](#Note83)</sup>. See also Grimme (2015)<sup>[**(84)**](#Note84)</sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.
 
     METHOD VecAddProd(a, b, c)
       for j in 0...size(a): a[j]=a[j]+b[j]*c

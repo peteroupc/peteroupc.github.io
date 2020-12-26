@@ -1278,7 +1278,7 @@ END METHOD
       half = floor(trials / 2)
       return BinomialInt(half, 1, 2) + BinomialInt(trials - half, 1, 2)
     else
-      if mod(trials,2)==1
+      if rem(trials,2)==1
         count=count+RNDINT(1)
         trials=trials-1
       end
@@ -1339,7 +1339,7 @@ END METHOD
 <p>If <code>successes</code> is a non-integer, the distribution is often called a <em>Pólya distribution</em>.  In that case, it can be sampled using the following pseudocode (Heaukulani and Roy 2019)<sup><a href="#Note31"><strong>(31)</strong></a></sup>:</p>
 
 <pre>METHOD PolyaInt(sx, sy, px, py)
-   isinteger=mod(sx,sy)==0
+   isinteger=rem(sx,sy)==0
    sxceil=ceil(sx/sy)
    while true
       w=NegativeBinomialInt(sxceil, px, py)
@@ -1413,7 +1413,7 @@ METHOD ZeroOrOneExpMinus(x, y)
   if x==0: return 1 // exp(0) = 1
   if x &gt; y
     xf = floor(x/y)
-    x = mod(x, y)
+    x = rem(x, y)
     if x&gt;0 and ZeroOrOneExpMinus(x, y) == 0: return 0
     for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
     return 1
@@ -1464,12 +1464,12 @@ END METHOD
     if mx==my: return PoissonInt(1,2)+PoissonInt(1,2)
     if mx &gt; my
        // Mean is 1 or greater
-       mm=mod(mx, my)
+       mm=rem(mx, my)
        if mm == 0
           mf=floor(mx/my)
           ret=0
-          if mod(mf, 2)==0: ret=ret+PoissonInt(1, 1)
-          if mod(mf, 2)==0: mf=mf-1
+          if rem(mf, 2)==0: ret=ret+PoissonInt(1, 1)
+          if rem(mf, 2)==0: mf=mf-1
           ret=ret+PoissonInt(mf/2, 1)+PoissonInt(mf/2, 1)
           return ret
        else: return PoissonInt(mm, my)+
@@ -2048,7 +2048,7 @@ END METHOD
       if ubits==0: incr=precision
       // NOTE: If a uniform number (`n`) is already pregenerated,
       // use the following instead:
-      // u = mod(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
+      // u = rem(floor(n*pow(BASE, ubits+incr)), pow(BASE, incr))
       u=u*pow(BASE,incr)+RNDINTEXC(pow(BASE,incr))
       ubits=ubits+incr
       // Get upper and lower bound
@@ -2366,7 +2366,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 
 <h4>Random Points Inside a Simplex</h4>
 
-<p>The following pseudocode generates a random point inside an <em>n</em>-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater. The special case of 3 points came from (Osada et al. 2002)<sup><a href="#Note83"><strong>(83)</strong></a></sup>. See also (Grimme 2015)<sup><a href="#Note84"><strong>(84)</strong></a></sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.</p>
+<p>The following pseudocode generates a random point inside an <em>n</em>-dimensional simplex (simplest convex figure, such as a line segment, triangle, or tetrahedron).  It takes one parameter, <em>points</em>, a list consisting of the <em>n</em> plus one vertices of the simplex, all of a single dimension <em>n</em> or greater. The special case of 3 points came from Osada et al. (2002)<sup><a href="#Note83"><strong>(83)</strong></a></sup>. See also Grimme (2015)<sup><a href="#Note84"><strong>(84)</strong></a></sup>, which shows MATLAB code for generating a random point uniformly inside a simplex just described, but in a different way.</p>
 
 <pre>METHOD VecAddProd(a, b, c)
   for j in 0...size(a): a[j]=a[j]+b[j]*c
