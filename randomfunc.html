@@ -1041,6 +1041,7 @@ end
 <li><code>WEIGHT_OF_ITEM(item, thisIndex)</code> is a placeholder for arbitrary code that calculates the integer weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.</li>
 <li><code>ITEM_OUTPUT(item, thisIndex, key)</code> is a placeholder for code that returns the item to store in the list; this can include the item&#39;s value, its index starting at 0, the item&#39;s key, or any combination of these.</li>
 <li> <code>ExpoNew(weight)</code> creates an &quot;empty&quot; exponential number with rate <code>weight</code>, whose bits are not yet determined (see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Exponential Random Numbers</strong></a>&quot;), and <code>ExpoLess(a, b)</code> returns whether one exponential number (<code>a</code>) is less than another (<code>b</code>), building up the bits of both as necessary.  For a less exact algorithm, replace <code>ExpoNew(weight)</code> with <code>ExpoRatio(1000000, weight, 1)</code> and <code>ExpoLess(a, b)</code> with <code>a &lt; b</code>.</li>
+<li>The items in the returned list are in no particular order.  A <code>Shuffle()</code> can be done to that list if desired.</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1080,9 +1081,6 @@ end
   end
   list=[]
   for v in 0...size(queue): AddItem(list, queue[v][1])
-  // Optional shuffling here.
-  // See NOTE 4 in RandomKItemsFromFile code.
-  if size(list)&gt;=2: Shuffle(list)
   return list
 end
 </pre>
@@ -1150,17 +1148,8 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li><p>One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:</p>
-
-<pre>index = WeightedChoice([80, 20])
-number = 0
-// If index 0 was chosen, roll one die
-if index==0: number = RNDINTRANGE(1,6)
-// Else index 1 was chosen, so roll three dice
-else: number = RNDINTRANGE(1,6) +
-   RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
-</pre></li>
-<li><p>Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note26"><strong>(26)</strong></a></sup></p></li>
+<li>One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled: <code>index = WeightedChoice([80, 20]); number = 0; if index==0: number = RNDINTRANGE(1,6); else: number = RNDINTRANGE(1,6) + RNDINTRANGE(1,6) + RNDINTRANGE(1,6)</code>.</li>
+<li>Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the <code>weights</code> list holds the n-dimensional &quot;volume&quot; of each simpler shape).  For example, a simple closed 2D polygon can be <a href="https://en.wikipedia.org/wiki/Polygon_triangulation"><strong><em>triangulated</em></strong></a>, or decomposed into <a href="#Random_Points_Inside_a_Simplex"><strong>triangles</strong></a>, and a mixture of those triangles can be sampled.<sup><a href="#Note26"><strong>(26)</strong></a></sup></li>
 <li><p>Take a set of nonoverlapping integer ranges (for example, [0, 5], [7, 8], [20, 25]).  To choose an independent uniform random integer from those ranges:</p>
 
 <ul>
@@ -1408,14 +1397,12 @@ METHOD ExpoNumerator(denom)
 END METHOD
 
 METHOD ZeroOrOneExpMinus(x, y)
-  // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
   if y &lt;= 0 or x&lt;0: return error
   if x==0: return 1 // exp(0) = 1
   if x &gt; y
-    xf = floor(x/y)
     x = rem(x, y)
     if x&gt;0 and ZeroOrOneExpMinus(x, y) == 0: return 0
-    for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
+    for i in 0...floor(x/y): if ZeroOrOneExpMinus(1,1) == 0: return 0
     return 1
   end
   r = 1
@@ -1484,12 +1471,8 @@ END METHOD
       k = 0
       w = nothing
       while true
-         // Similar to generating k, a geometric random
-         // number, then accepting or rejecting based on whether
-         // none of the random numbers are out of order
-         // (NOTE: Flajolet et al. define a geometric
-         // distribution as number of SUCCESSES BEFORE
-         // FAILURE, not counting the failure.)
+         // Generate a random number of random numbers
+         // and determine whether they are sorted
          if ZeroOrOne(mx,my)==0: return k
          u2 = UniformNew()
          // Break if we find an out-of-order number

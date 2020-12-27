@@ -173,7 +173,7 @@ The algorithm below generates a random number from the von Mises distribution, a
         s = (1 + rho * rho) / (2 * rho)
         while true
             u = RNDRANGEMaxExc(-pi, pi)
-            v = RNDU01ZeroOneExc()
+            v = RNDRANGEMinMaxExc(0, 1)
             z = cos(u)
             w = (1 + s*z) / (s + z)
             y = kappa * (s - w)

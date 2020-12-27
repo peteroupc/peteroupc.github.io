@@ -819,6 +819,7 @@ If the number of items in a list is not known in advance, then the following pse
 - `WEIGHT_OF_ITEM(item, thisIndex)` is a placeholder for arbitrary code that calculates the integer weight of an individual item based on its value and its index (starting at 0); the item is ignored if its weight is 0 or less.
 - `ITEM_OUTPUT(item, thisIndex, key)` is a placeholder for code that returns the item to store in the list; this can include the item's value, its index starting at 0, the item's key, or any combination of these.
 -  `ExpoNew(weight)` creates an "empty" exponential number with rate `weight`, whose bits are not yet determined (see "[**Partially-Sampled Exponential Random Numbers**](https://peteroupc.github.io/exporand.html)"), and `ExpoLess(a, b)` returns whether one exponential number (`a`) is less than another (`b`), building up the bits of both as necessary.  For a less exact algorithm, replace `ExpoNew(weight)` with `ExpoRatio(1000000, weight, 1)` and `ExpoLess(a, b)` with `a < b`.
+- The items in the returned list are in no particular order.  A `Shuffle()` can be done to that list if desired.
 
 &nbsp;
 
@@ -857,9 +858,6 @@ If the number of items in a list is not known in advance, then the following pse
       end
       list=[]
       for v in 0...size(queue): AddItem(list, queue[v][1])
-      // Optional shuffling here.
-      // See NOTE 4 in RandomKItemsFromFile code.
-      if size(list)>=2: Shuffle(list)
       return list
     end
 
@@ -919,16 +917,7 @@ A _mixture_ consists of two or more probability distributions with separate prob
 
 > **Examples:**
 >
-> 1. One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled:
->
->         index = WeightedChoice([80, 20])
->         number = 0
->         // If index 0 was chosen, roll one die
->         if index==0: number = RNDINTRANGE(1,6)
->         // Else index 1 was chosen, so roll three dice
->         else: number = RNDINTRANGE(1,6) +
->            RNDINTRANGE(1,6) + RNDINTRANGE(1,6)
->
+> 1. One mixture consists of the sum of three six-sided virtual die rolls and the result of one six-sided die roll, but there is an 80% chance to roll one six-sided virtual die rather than three.  The following pseudocode shows how this mixture can be sampled: `index = WeightedChoice([80, 20]); number = 0; if index==0: number = RNDINTRANGE(1,6); else: number = RNDINTRANGE(1,6) + RNDINTRANGE(1,6) + RNDINTRANGE(1,6)`.
 > 2. Choosing an independent uniform random point, from a complex shape (in any number of dimensions) is equivalent to doing such sampling from a mixture of simpler shapes that make up the complex shape (here, the `weights` list holds the n-dimensional "volume" of each simpler shape).  For example, a simple closed 2D polygon can be [**_triangulated_**](https://en.wikipedia.org/wiki/Polygon_triangulation), or decomposed into [**triangles**](#Random_Points_Inside_a_Simplex), and a mixture of those triangles can be sampled.<sup>[**(26)**](#Note26)</sup>
 > 3. Take a set of nonoverlapping integer ranges (for example, [0, 5], [7, 8], [20, 25]).  To choose an independent uniform random integer from those ranges:
 >     - Create a list (`weights`) of weights for each range.  Each range is given a weight of `(mx - mn) + 1`, where `mn` is that range's minimum and `mx` is its maximum.
@@ -1141,14 +1130,12 @@ The pseudocode below shows two algorithms. The first, `ExpoRatio`, generates an 
     END METHOD
 
     METHOD ZeroOrOneExpMinus(x, y)
-      // Generates 1 with probability exp(-x/y) (Canonne et al. 2020)
       if y <= 0 or x<0: return error
       if x==0: return 1 // exp(0) = 1
       if x > y
-        xf = floor(x/y)
         x = rem(x, y)
         if x>0 and ZeroOrOneExpMinus(x, y) == 0: return 0
-        for i in 0...xf: if ZeroOrOneExpMinus(1,1) == 0: return 0
+        for i in 0...floor(x/y): if ZeroOrOneExpMinus(1,1) == 0: return 0
         return 1
       end
       r = 1
@@ -1213,12 +1200,8 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
           k = 0
           w = nothing
           while true
-             // Similar to generating k, a geometric random
-             // number, then accepting or rejecting based on whether
-             // none of the random numbers are out of order
-             // (NOTE: Flajolet et al. define a geometric
-             // distribution as number of SUCCESSES BEFORE
-             // FAILURE, not counting the failure.)
+             // Generate a random number of random numbers
+             // and determine whether they are sorted
              if ZeroOrOne(mx,my)==0: return k
              u2 = UniformNew()
              // Break if we find an out-of-order number
