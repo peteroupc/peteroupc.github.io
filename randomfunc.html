@@ -1624,11 +1624,10 @@ END METHOD
 <p>This section defines the following methods that generate independent uniform random real numbers:</p>
 
 <ul>
-<li><code>RNDU01</code>: Interval [0, 1].</li>
-<li><code>RNDRANGE</code>: Interval [a, b].</li>
-<li><code>RNDRANGEMaxExc</code>: Interval [a, b).</li>
-<li><code>RNDRANGEMinExc</code>: Interval (a, b].</li>
-<li><code>RNDRANGEMinMaxExc</code>: Interval (a, b).</li>
+<li><code>RNDRANGE(a, b)</code>: Interval [a, b].</li>
+<li><code>RNDRANGEMaxExc(a, b)</code>: Interval [a, b).</li>
+<li><code>RNDRANGEMinExc(a, b)</code>: Interval (a, b].</li>
+<li><code>RNDRANGEMinMaxExc(a, b)</code>: Interval (a, b).</li>
 </ul>
 
 <p>The sections that follow show how these methods can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random number</strong></a>.</p>
@@ -1646,13 +1645,11 @@ END METHOD
 <li><code>RNDRANGEMinMaxExc(a, b)</code>: <code>RNDINTRANGE(fpa + 1, fpb - 1)</code>, or an error if <code>fpa &gt;= fpb or a == fpb - 1</code>.  For the special case where <code>a</code> is 0 and <code>b</code> is 1: <code>(RNDINT(n - 2) + 1)</code> or <code>(RNDINTEXC(n - 1) + 1)</code>.</li>
 </ul>
 
-<p>In addition, <code>RNDU01()</code> is equivalent to <code>RNDRANGE(0, 1)</code>.</p>
-
 <p><a id=For_Rational_Number_Formats></a></p>
 
 <h4>For Rational Number Formats</h4>
 
-<p>For rational number formats with a fixed denominator, the <code>RNDRANGE</code> family and <code>RNDU01</code> can be implemented in the numerator as given in the previous section for fixed-point formats.</p>
+<p>For rational number formats with a fixed denominator, the <code>RNDRANGE</code> family can be implemented in the numerator as given in the previous section for fixed-point formats.</p>
 
 <p><a id=For_Floating_Point_Number_Formats></a></p>
 
@@ -1735,7 +1732,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>The other four methods can be derived from <code>RNDRANGE</code> as follows:</p>
+<p>The other members of the <code>RNDRANGE</code> family can be derived from <code>RNDRANGE</code> as follows:</p>
 
 <ul>
 <li><strong><code>RNDRANGEMaxExc</code>, interval [<code>mn</code>, <code>mx</code>)</strong>:
@@ -1753,7 +1750,6 @@ END METHOD
 <ul>
 <li>Generate <code>RNDRANGE(mn, mx)</code> in a loop until a number other than <code>mn</code> or <code>mx</code> is generated this way.  Return an error if <code>mn &gt;= mx</code> (treating positive and negative zero as different).</li>
 </ul></li>
-<li><strong><code>RNDU01()</code></strong>: <code>RNDRANGE(0, 1)</code>.</li>
 </ul>
 
 <blockquote>
@@ -2197,7 +2193,7 @@ above for returning more than one random number in one call.</p>
 <li><strong>Cauchy (Lorentz) distribution</strong>&dagger;:  <code>Stable(1, 0)</code>.  This distribution is similar to the normal distribution, but with &quot;fatter&quot; tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975)<sup><a href="#Note72"><strong>(72)</strong></a></sup>: Generate <code>x = RNDRANGEMinExc(0,1)</code> and <code>y = RNDRANGEMinExc(0,1)</code> until <code>x * x + y * y &lt;= 1</code>, then generate <code>(RNDINT(1) * 2 - 1) * y / x</code>.</li>
 <li><strong>Chi-squared distribution</strong>: <code>GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)</code>, where <code>df</code> is the number of degrees of freedom and <code>sms</code> is the sum of mean squares (where <code>sms</code> other than 0 indicates a <em>noncentral</em> distribution).</li>
 <li><strong>Dice</strong>: See <a href="#Dice"><strong>Dice</strong></a>.</li>
-<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDU01()) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, as well as returning infinity if <code>RNDU01()</code> becomes 1. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDU01())</code>), chosen at random each time; an alternative is <code>ln(1/RNDRANGEMinExc(0,1))</code> mentioned in (Devroye 2006)<sup><a href="#Note66"><strong>(66)</strong></a></sup>.</li>
+<li><strong>Exponential distribution</strong>: See <a href="#Exponential_Distribution"><strong>Exponential Distribution</strong></a>.  The na&iuml;ve implementation <code>-ln(1-RNDRANGE(0, 1)) / lamda</code> has several problems, such as being ill-conditioned at large values because of the distribution&#39;s right-sided tail (Pedersen 2018)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, as well as returning infinity if <code>RNDRANGE(0, 1)</code> becomes 1. An application can reduce some of these problems by applying Pedersen&#39;s suggestion of using either <code>-ln(RNDRANGEMinExc(0, 0.5))</code> or <code>-log1p(-RNDRANGEMinExc(0, 0.5))</code> (rather than <code>-ln(1-RNDRANGE(0, 1))</code>), chosen at random each time; an alternative is <code>ln(1/RNDRANGEMinExc(0,1))</code> mentioned in (Devroye 2006)<sup><a href="#Note66"><strong>(66)</strong></a></sup>.</li>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)<sup><a href="#Note73"><strong>(73)</strong></a></sup>, (<code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
@@ -2206,7 +2202,7 @@ above for returning more than one random number in one call.</p>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
 <li><strong>Laplace (double exponential) distribution</strong>&dagger;: <code>(Expo(1) - Expo(1))</code>.</li>
-<li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDU01() * RNDU01()</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
+<li><strong>Logarithmic distribution</strong>&#x2b26;: <code>RNDRANGE(0, 1) * RNDRANGE(0, 1)</code> (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.</li>
 <li><strong>Logarithmic normal distribution</strong>: <code>exp(Normal(mu, sigma))</code>, where <code>mu</code> and <code>sigma</code> are the underlying normal distribution&#39;s parameters.</li>
 <li><strong>Multinormal distribution</strong>: See multivariate normal distribution.</li>
 <li><strong>Multivariate normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
@@ -2215,8 +2211,8 @@ same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(Gamm
 <li><strong>Pareto distribution</strong>: <code>pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum</code>, where <code>alpha</code>  is the shape and <code>minimum</code> is the minimum.</li>
 <li><strong>Rayleigh distribution</strong>&dagger;: <code>sqrt(Expo(0.5))</code>.  If the scale parameter (<code>sigma</code>) follows a logarithmic normal distribution, the result is a <em>Suzuki distribution</em>.</li>
 <li><strong>Standard normal distribution</strong>&dagger;: <code>Normal(0, 1)</code>.  See also <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDU01(),-2.0/df)-1) * df)</code> (Bailey 1994)<sup><a href="#Note76"><strong>(76)</strong></a></sup>.</li>
-<li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)<sup><a href="#Note77"><strong>(77)</strong></a></sup>: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDU01()</code>, and <code>b = RNDU01()</code>.</li>
+<li><strong>Student&#39;s <em>t</em>-distribution</strong>: <code>Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))</code>, where <code>df</code> is the number of degrees of freedom, and <em>cent</em> is the mean of the normally-distributed random number.  A <code>cent</code> other than 0 indicates a <em>noncentral</em> distribution.  Alternatively, <code>cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDRANGE(0, 1),-2.0/df)-1) * df)</code> (Bailey 1994)<sup><a href="#Note76"><strong>(76)</strong></a></sup>.</li>
+<li><strong>Triangular distribution</strong>&dagger; (Stein and Keblis 2009)<sup><a href="#Note77"><strong>(77)</strong></a></sup>: <code>(1-alpha) * min(a, b) + alpha * max(a, b)</code>, where <code>alpha</code> is in [0, 1], <code>a = RNDRANGE(0, 1)</code>, and <code>b = RNDRANGE(0, 1)</code>.</li>
 <li><strong>Weibull distribution</strong>: See generalized extreme value distribution.</li>
 </ul>
 
@@ -2239,14 +2235,14 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Birnbaum&ndash;Saunders distribution</strong>: <code>pow(sqrt(4+x*x)+x,2)/(4.0*lamda)</code>, where <code>x = Normal(0,gamma)</code>, <code>gamma</code> is a shape parameter, and <code>lamda</code> is a scale parameter.</li>
 <li><strong>Chi distribution</strong>: Square root of a chi-squared random number.  See chi-squared distribution.</li>
 <li><strong>Compound Poisson distribution</strong>: See <a href="#Transformations_of_Random_Numbers_Additional_Examples"><strong>Transformations of Random Numbers: Additional Examples</strong></a>.</li>
-<li><strong>Cosine distribution</strong>&#x2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = (RNDINT(1) * 2 - 1) * RNDU01()</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
+<li><strong>Cosine distribution</strong>&#x2b26;: <code>atan2(x, sqrt(1 - x * x)) / pi</code>, where <code>x = (RNDINT(1) * 2 - 1) * RNDRANGE(0, 1)</code> (Saucier 2000, p. 17; inverse sine replaced with <code>atan2</code> equivalent).</li>
 <li><strong>Dagum distribution</strong>: See beta prime distribution.</li>
 <li><strong>Dirichlet distribution</strong>: <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution"><strong>This distribution</strong></a> (e.g., (Devroye 1986)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, p. 593-594) can be sampled by generating <em>n</em>+1 random <a href="https://peteroupc.github.io/randomfunc.md#Gamma_Distribution"><strong>gamma-distributed</strong></a> numbers, each with separate parameters, taking their sum<sup><a href="#Note16"><strong>(16)</strong></a></sup>, dividing them by that sum, and taking the first <em>n</em> numbers. (The <em>n</em>+1 numbers sum to 1, but the Dirichlet distribution models the first <em>n</em> of them, which will generally sum to less than 1.)</li>
-<li><strong>Double logarithmic distribution</strong>&#x2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDU01())</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
+<li><strong>Double logarithmic distribution</strong>&#x2b26;: <code>(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDRANGE(0, 1))</code> (see also Saucier 2000, p. 15, which shows the wrong X axes).</li>
 <li><strong>Erlang distribution</strong>: <code>GammaDist(n, 1.0 / lamda)</code>.  Returns a number that simulates a sum of <code>n</code> exponential random numbers with the given <code>lamda</code> parameter.</li>
 <li><strong>Estoup distribution</strong>: See zeta distribution.</li>
 <li><strong>Exponential power distribution</strong> (generalized normal distribution version 1): <code>(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)</code>, where <code>a</code> is a shape parameter.</li>
-<li><strong>Extended xgamma distribution</strong> (Saha et al. 2019)<sup><a href="#Note78"><strong>(78)</strong></a></sup>: <code>GammaDist(alpha + x, theta)</code>, where <code>x</code> is 0 with probability <code>theta/(theta+beta)</code> (e.g., if  <code>RNDU01() &lt;= theta/(theta+beta)</code>) and 2 otherwise, and where <code>alpha</code>, <code>theta</code>, and <code>beta</code> are shape parameters.  If <code>alpha = 0</code>, the result is an <strong>xgamma distribution</strong> (Sen et al., 2016)<sup><a href="#Note79"><strong>(79)</strong></a></sup>.</li>
+<li><strong>Extended xgamma distribution</strong> (Saha et al. 2019)<sup><a href="#Note78"><strong>(78)</strong></a></sup>: <code>GammaDist(alpha + x, theta)</code>, where <code>x</code> is 0 with probability <code>theta/(theta+beta)</code> (e.g., if  <code>RNDRANGE(0, 1) &lt;= theta/(theta+beta)</code>) and 2 otherwise, and where <code>alpha</code>, <code>theta</code>, and <code>beta</code> are shape parameters.  If <code>alpha = 0</code>, the result is an <strong>xgamma distribution</strong> (Sen et al., 2016)<sup><a href="#Note79"><strong>(79)</strong></a></sup>.</li>
 <li><strong>Fr&eacute;chet distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
 <li><strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong>: See <a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a>.</li>
@@ -2259,7 +2255,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Weibull distribution</strong>: <code>1 - 1.0/a * GEV(-1.0/a)</code> (or <code>pow(Expo(1), 1.0/a)</code>), where <code>a</code> is a shape parameter.</li>
 <li><strong>Fr&eacute;chet distribution</strong>: <code>1 + 1.0/a * GEV(1.0/a)</code> (or <code>pow(Expo(1), -1.0/a)</code>), where <code>a</code> is a shape parameter.</li>
 </ul></li>
-<li><strong>Generalized Tukey lambda distribution</strong>: <code>(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc</code>, where <code>x</code> is <code>RNDU01()</code>, <code>lamda1</code> and <code>lamda2</code> are shape parameters, <code>s1</code> and <code>s2</code> are scale parameters, and <code>loc</code> is a location parameter.</li>
+<li><strong>Generalized Tukey lambda distribution</strong>: <code>(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc</code>, where <code>x</code> is <code>RNDRANGE(0, 1)</code>, <code>lamda1</code> and <code>lamda2</code> are shape parameters, <code>s1</code> and <code>s2</code> are scale parameters, and <code>loc</code> is a location parameter.</li>
 <li><strong>Half-normal distribution</strong>. Parameterizations include:
 
 <ul>
@@ -2270,7 +2266,7 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Hypergeometric distribution</strong>: See <a href="#Hypergeometric_Distribution"><strong>Hypergeometric Distribution</strong></a>.</li>
 <li><strong>Hypoexponential distribution</strong>: See <a href="#Transformations_of_Random_Numbers"><strong>Transformations of Random Numbers</strong></a>.</li>
 <li><strong>Inverse chi-squared distribution</strong>&dagger;: <code>df / (GammaDist(df * 0.5, 2))</code>, where <code>df</code> is the number of degrees of freedom.  The scale parameter (<code>sigma</code>) is usually <code>1.0 / df</code>.</li>
-<li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> with probability <code>mu / (mu + n)</code> (e.g., if <code>RNDU01() &lt;= mu / (mu + n)</code>), or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
+<li><strong>Inverse Gaussian distribution (Wald distribution)</strong>: Generate <code>n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)</code>, where <code>y = pow(Normal(0, 1), 2)</code>, then return <code>n</code> with probability <code>mu / (mu + n)</code> (e.g., if <code>RNDRANGE(0, 1) &lt;= mu / (mu + n)</code>), or <code>mu * mu / n</code> otherwise. <code>mu</code> is the mean and <code>lamda</code> is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
 <li><strong><code>k</code>th-order statistic</strong>: <code>BetaDist(k, n+1-k)</code>. Returns the <code>k</code>th smallest out of <code>n</code> uniform random numbers. See also (Devroye 1986, p. 210)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</li>
 <li><strong>Kumaraswamy distribution</strong>&#x2b26;: <code>pow(BetaDist(1, b), 1.0 / a)</code>, where <code>a</code> and <code>b</code> are shape parameters.</li>
 <li><strong>Landau distribution</strong>: See stable distribution.</li>
@@ -2311,8 +2307,8 @@ the two parameters of the beta distribution, and <code>trials</code> is a parame
 <li><strong>Stable distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Stable_Distribution"><strong>Stable Distribution</strong></a>. <em>Four-parameter stable distribution</em>: <code>Stable(alpha, beta) * sigma + mu</code>, where <code>mu</code> is the mean and <code>sigma</code> is the scale; if <code>alpha</code> and <code>beta</code> are 1, the result is a <em>Landau distribution</em>.  <em>&quot;Type 0&quot; stable distribution</em>: <code>Stable(alpha, beta) * sigma + (mu - sigma * beta * x)</code>, where <code>x</code> is <code>ln(sigma)*2.0/pi</code> if <code>alpha</code> is 1, and <code>tan(pi*0.5*alpha)</code> otherwise.</li>
 <li><strong>Standard complex normal distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution"><strong>Multivariate Normal (Multinormal) Distribution</strong></a>.</li>
 <li><strong>Suzuki distribution</strong>: See Rayleigh distribution.</li>
-<li><strong>Tukey lambda distribution</strong>: <code>(pow(x, lamda)-pow(1.0-x,lamda))/lamda</code>, where <code>x</code> is <code>RNDU01()</code> and <code>lamda</code> is a shape parameter.</li>
-<li><strong>Twin-<em>t</em> distribution</strong> (Baker and Jackson 2018)<sup><a href="#Note81"><strong>(81)</strong></a></sup>: Generate <code>x</code>, a random Student&#39;s <em>t</em>-distributed number (not a noncentral one).  Accept <code>x</code> with probability <code>z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)</code> (e.g., if <code>RNDU01() &lt; z</code>), where <code>y = x * x / df</code> and <code>df</code> is the degrees of freedom used to generate the number; repeat this process otherwise.</li>
+<li><strong>Tukey lambda distribution</strong>: <code>(pow(x, lamda)-pow(1.0-x,lamda))/lamda</code>, where <code>x</code> is <code>RNDRANGE(0, 1)</code> and <code>lamda</code> is a shape parameter.</li>
+<li><strong>Twin-<em>t</em> distribution</strong> (Baker and Jackson 2018)<sup><a href="#Note81"><strong>(81)</strong></a></sup>: Generate <code>x</code>, a random Student&#39;s <em>t</em>-distributed number (not a noncentral one).  Accept <code>x</code> with probability <code>z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)</code> (e.g., if <code>RNDRANGE(0, 1) &lt; z</code>), where <code>y = x * x / df</code> and <code>df</code> is the degrees of freedom used to generate the number; repeat this process otherwise.</li>
 <li><strong>von Mises distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#von_Mises_Distribution"><strong>von Mises Distribution</strong></a>.</li>
 <li><strong>Waring&ndash;Yule distribution</strong>: See beta negative binomial distribution.</li>
 <li><strong>Wigner (semicircle) distribution</strong>&dagger;: <code>(BetaDist(1.5, 1.5)*2-1)</code>.  The scale parameter (<code>sigma</code>) is the semicircular radius.</li>

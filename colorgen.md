@@ -1435,7 +1435,7 @@ where `value` is a number 0 or greater and 1 or less (0 and 1 are the start and 
 
 The following techniques can be used to generate random colors. In this section:
 
-- `RNDRANGE`, `RNDU01`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
+- `RNDRANGE`, `RNDINT`, and `RNDINTEXC` are methods defined in my article on [**random number generation methods**](https://peteroupc.github.io/randomfunc.html).
 - Some techniques here refer to a ***light&ndash;dark factor***.  This factor can be implemented by any of the following, in order of preference from most to least.
     1. The color's [**CIELAB**](#CIELAB) lightness (_L*_) divided by 100, or another value from 0 through 1 that expresses a color's lightness (in terms of human perception).
     2. [**`Luminance(color)`**](#Luminance_Factor_Grayscale).
@@ -1446,23 +1446,23 @@ The following techniques can be used to generate random colors. In this section:
 The techniques follow.
 
 - Generating a random string in the [**HTML color format**](#HTML_Format_and_Other_Text_Formats) can be done by generating a [**random hexadecimal string**](https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String) with length 6, then inserting the string "#" at the beginning of that string.
-- Generating a random three-component color in the **0-1 format** can be done as follows: `[RNDU01(), RNDU01(), RNDU01()]`.
+- Generating a random three-component color in the **0-1 format** can be done as follows: `[RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]`.
 - Generating a random **8-bpc encoded RGB color** can be done as follows: `From888(RNDINT(16777215))`.
 - To generate a random **dark RGB color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light&ndash;dark factor_  is less than a given threshold, e.g., 0.5, or
+    - generate `color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]` until a _light&ndash;dark factor_  is less than a given threshold, e.g., 0.5, or
     - generate `color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]`, where `maxComp` is the
        maximum value of each color component, e.g., 0.5.
 - To generate a random **light RGB color**, either&mdash;
-    - generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light&ndash;dark factor_ is greater than a given threshold, e.g., 0.5, or
-    - generate `color = [minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp), minComp + RNDU01() * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
-- One way to generate a random **pastel RGB color** is to generate `color = [RNDU01(), RNDU01(), RNDU01()]` until a _light&ndash;dark factor_ is greater than 0.75 and less than 0.9.
-- To generate a **random three-component color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDU01())`.
+    - generate `color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]` until a _light&ndash;dark factor_ is greater than a given threshold, e.g., 0.5, or
+    - generate `color = [minComp + RNDRANGE(0, 1) * (1.0 - minComp), minComp + RNDRANGE(0, 1) * (1.0 - minComp), minComp + RNDRANGE(0, 1) * (1.0 - minComp)]`, where `minComp` is the minimum value of each color component, e.g., 0.5.
+- One way to generate a random **pastel RGB color** is to generate `color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]` until a _light&ndash;dark factor_ is greater than 0.75 and less than 0.9.
+- To generate a **random three-component color at or between two others** (`color1` and `color2`), generate `Lerp3(color1, color2, RNDRANGE(0, 1))`.
 - To generate a **random shade** of a given RGB color, generate `Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))`.
 - To generate a **random tint** of a given RGB color, generate `Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))`.
 - To generate a **random tone** of a given RGB color, generate `Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGE(0.0, 0.9))`.
-- To generate a **random monochrome RGB color**, generate `HslToRgb(H, RNDU01(),RNDU01())`, where `H` is an arbitrary [**hue**](#HSV).
+- To generate a **random monochrome RGB color**, generate `HslToRgb(H, RNDRANGE(0, 1),RNDRANGE(0, 1))`, where `H` is an arbitrary [**hue**](#HSV).
 - **Random color sampling:**
-    - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDU01())`.
+    - To select a random continuous color from a color map (`colormap`): `ColorMapContinuous(colormap, RNDRANGE(0, 1))`.
     - To select one random color from a color map (`colormap`): `colormap[RNDINTEXC(size(colormap))]`.  See also [**"Sampling With Replacement: Choosing a Random Item from a List"**](https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List).
     - To select several random colors from a color map: See [**"Sampling Without Replacement: Choosing Several Unique Items"**](https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items).
 - **Similar random colors:** Generating a random color that's similar to another can be done by generating a random color (`color1`) until `COLORDIFF(color1, color2)` (defined [**earlier**](#Color_Differences)) is less than a predetermined threshold, where `color2` is the color to compare.

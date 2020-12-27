@@ -100,7 +100,7 @@ END METHOD
 <li>The following are some approximations to the normal distribution that papers have suggested:
 
 <ul>
-<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>. (Kabal 2000/2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDU01()</code> numbers, on Wikipedia.  D. Thomas (2014)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> uniform random numbers as follows: <code>RNDU01() - RNDU01() + RNDU01() - ...</code>.</li>
+<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>. (Kabal 2000/2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDRANGE(0, 1)</code> numbers, on Wikipedia.  D. Thomas (2014)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> uniform random numbers as follows: <code>RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...</code>.</li>
 <li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
 </ul></li>
 </ol>
@@ -131,7 +131,7 @@ END METHOD
        r = 1.0/(1+w)
        while true
             z = 0
-            x = RNDU01()
+            x = RNDRANGE(0, 1)
             if x &lt;= r: z = -ln(x/r)
             else: z = -Expo(lamda)
             ret = exp(-z/meanLifetime)
@@ -161,7 +161,7 @@ END METHOD
     end
     ret = d * v
     if meanLifetime &lt; 1
-       ret = ret * pow(RNDU01(), 1.0 / meanLifetime)
+       ret = ret * pow(RNDRANGE(0, 1), 1.0 / meanLifetime)
     end
     return ret * scale
 END METHOD
@@ -180,13 +180,13 @@ END METHOD
 <p>The following method generates a random number that follows a <em>beta distribution</em>, in the interval [0, 1).</p>
 
 <pre>METHOD BetaDist(a, b)
-  if b==1 and a==1: return RNDU01()
+  if b==1 and a==1: return RNDRANGE(0, 1)
   // Min-of-uniform
-  if a==1: return 1.0-pow(RNDU01(),1.0/b)
+  if a==1: return 1.0-pow(RNDRANGE(0, 1),1.0/b)
   // Max-of-uniform.  Use only if a is small to
   // avoid accuracy problems, as pointed out
   // by Devroye 1986, p. 675.
-  if b==1 and a &lt; 10: return pow(RNDU01(),1.0/a)
+  if b==1 and a &lt; 10: return pow(RNDRANGE(0, 1),1.0/a)
   x=GammaDist(a,1)
   return x/(x+GammaDist(b,1))
 END METHOD
@@ -270,7 +270,7 @@ END METHOD
 <pre>METHOD GeometricStable(alpha, lamda, tau)
    rho = alpha*(1-tau)/2
    sign = -1
-   if tau==1 or RNDINT(1)==0 or RNDU01() &lt; tau
+   if tau==1 or RNDINT(1)==0 or RNDRANGE(0, 1) &lt; tau
        rho = alpha*(1+tau)/2
        sign = 1
    end
@@ -439,9 +439,9 @@ END METHOD
 <p>Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;</p>
 
 <ul>
-<li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDU01()</code>,</li>
-<li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDU01()</code>,</li>
-<li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDU01()</code> (indicating no dependence between the numbers), and</li>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDRANGE(0, 1)</code>,</li>
+<li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDRANGE(0, 1)</code>,</li>
+<li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDRANGE(0, 1)</code> (indicating no dependence between the numbers), and</li>
 <li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
 </ul>
 
@@ -703,7 +703,7 @@ END METHOD
 <li>can generate independent uniform random real numbers</li>
 </ul>
 
-<p>(Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially errors involving floating-point arithmetic or irrational numbers. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>. All methods given on this page are exact unless otherwise noted.  Note that <code>RNDU01</code> or <code>RNDRANGE</code> are exact in theory, but have no required implementation.</p></li>
+<p>(Devroye 1986, p. 1-2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  However, an exact algorithm implemented on real-life computers can incur rounding and other errors, especially errors involving floating-point arithmetic or irrational numbers. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note12"><strong>(12)</strong></a></sup>. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGE</code> method is exact in theory, but has no required implementation.</p></li>
 <li><p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
 <ul>
@@ -724,9 +724,9 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>Generating an exponential random number via <code>-ln(RNDU01())</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.</li>
+<li>Generating an exponential random number via <code>-ln(RNDRANGE(0, 1))</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.</li>
 <li>Generating an exponential random number using the <code>ExpoExact</code> method from the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#Exponential_Distribution"><strong>Exponential Distribution</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)<sup><a href="#Note36"><strong>(36)</strong></a></sup>.</li>
-<li>Examples of <em>approximate algorithms</em> include generating a Gaussian random number via a sum of <code>RNDU01()</code>, or most cases of generating a random integer via modulo reduction (see &quot;<a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;).</li>
+<li>Examples of <em>approximate algorithms</em> include generating a Gaussian random number via a sum of <code>RNDRANGE(0, 1)</code>, or most cases of generating a random integer via modulo reduction (see &quot;<a href="#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;).</li>
 </ol>
 </blockquote>
 
