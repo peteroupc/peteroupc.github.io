@@ -782,7 +782,6 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>Four methods for random integers: 0 to <code>n</code> including <code>n</code>, 0 to <code>n</code> excluding <code>n</code>, <code>a</code> to <code>b</code> including <code>b</code>, and <code>a</code> to <code>b</code> excluding <code>b</code>.</li>
-<li>Four methods for random numbers bounded by 0 and 1, with and without the endpoints.</li>
 <li>Four methods for random numbers bounded by <code>a</code> and <code>b</code>, with and without the endpoints.</li>
 </ul></li>
 </ol>
@@ -846,7 +845,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <ul>
 <li>In general, hash functions carry the risk that two processes will end up with the same PRNG seed (a <em>collision risk</em>) or that a seed not allowed by the PRNG is produced (a &quot;rejection risk&quot;), but this risk decreases the more seeds the PRNG admits (see &quot;<a href="https://en.wikipedia.org/wiki/Birthday_problem"><strong>Birthday problem</strong></a>&quot;).</li>
-<li>M. O&#39;Neill (in &quot;Developing a seed_seq Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, <code>seed_seq_fe128</code> hashes 128-bit seeds to 128-bit or longer unique values.</li>
+<li>M. O&#39;Neill (in &quot;Developing a <code>seed_seq</code> Alternative&quot;, Apr. 30, 2015) developed hash functions (<code>seed_seq_fe</code>) that are designed to avoid collisions if possible, and otherwise to reduce collision bias.   For example, <code>seed_seq_fe128</code> hashes 128-bit seeds to 128-bit or longer unique values.</li>
 <li>An application can handle a rejected seed by hashing with a different value or by using a backup seed instead, depending on how tolerant the application is to bias.</li>
 <li>See also Matsumoto, M., et al., &quot;Common defects in initialization of pseudorandom number generators&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 17(4), Sep. 2007.</small></li>
 </ul></li>
@@ -873,18 +872,15 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <li><small><sup id=Note35>(35)</sup> For suggested &quot;full-period&quot; <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator"><strong>LCGs</strong></a>, see tables 3, 5, 7, and 8 of Steele and Vigna, &quot;<a href="https://arxiv.org/abs/2001.05304"><strong>Computationally easy, spectrally good multipliers for congruential pseudorandom number generators</strong></a>&quot;, arXiv:2001.05304 [cs.DS].</small></li>
 <li><small><sup id=Note36>(36)</sup> Verifiable delay functions are different from proofs of work, in which there can be multiple correct answers. These functions were first formally defined in Boneh, D., Bonneau, J., et al., &quot;Verifiable Delay Functions&quot;, 2018, but such functions appeared earlier in Lenstra, A.K., Wesolowski, B., &quot;A random zoo: sloth, unicorn, and trx&quot;, 2015.</small></li>
 <li><small><sup id=Note37>(37)</sup> It is outside the scope of this page to explain how to build a protocol using verifiable delay functions, commitment schemes, or mental card game schemes, especially because such protocols are not yet standardized for general use and few implementations of them are used in production.</small></li>
-<li><small><sup id=Note38>(38)</sup> Implementing a cryptographic RNG involves many security considerations, including these:
+<li><p><small><sup id=Note38>(38)</sup> Implementing a cryptographic RNG involves many security considerations, including these:</p>
 
 <ol>
 <li>If an application runs code from untrusted sources in the same operating system process in which a cryptographic RNG&#39;s state is stored, it&#39;s possible for malicious code to read out that state via side-channel attacks. A cryptographic RNG should not be implemented in such a process. See (A) and see also (B).</li>
 <li>A cryptographic RNG&#39;s state could be reused due to process forking or virtual machine snapshot resets.  See (C) and (D), for example.</li>
 <li>If a cryptographic RNG is not &quot;constant-time&quot; (the RNG is data-dependent), its timing differences could be exploited in a security attack.</li>
-</ol></li>
-</ul>
+</ol>
 
-<p>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br/>(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.</small></p>
-
-<ul>
+<p>(A) &quot;Post-Spectre Threat Model Re-Think&quot; in the Chromium source code repository (May 29, 2018).<br/>(B) Bernstein, D.J. &quot;Entropy Attacks!&quot;, Feb. 5, 2014.<br/>(C) Everspaugh, A., Zhai, Y., et al. &quot;Not-So-Random Numbers in Virtualized Linux and the Whirlwind RNG&quot;, 2014.<br/>(D) Ristenpart, T., Yilek, S. &quot;When Good Randomness Goes Bad: Virtual Machine Reset Vulnerabilities and Hedging Deployed Cryptography&quot;, 2010.<br/>For a detailed notion of a secure RNG, see Coretti, Dodis, et al., &quot;Seedless Fruit is the Sweetest: Random Number Generation, Revisited&quot;, 2019.</small></p></li>
 <li><small><sup id=Note39>(39)</sup> This data can come from nondeterministic sources, and also include process identifiers, time stamps, environment variables, random numbers, virtual machine guest identifiers, and/or other data specific to the session or to the instance of the RNG.  See also NIST SP 800-90A and the previous note.</small></li>
 <li><small><sup id=Note40>(40)</sup> Bernstein, D.J.  &quot;Fast-key-erasure random number generators&quot;, Jun. 23, 2017.</small></li>
 <li><small><sup id=Note41>(41)</sup> An example is the &quot;shrinking generator&quot; technique to combine two RNGs; see J. D. Cook, &quot;Using one RNG to sample another&quot;, June 4, 2019, for more.</small></li>

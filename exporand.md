@@ -27,7 +27,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Introduction**](#Introduction)
     - [**About This Document**](#About_This_Document)
 - [**Contents**](#Contents)
-- [**Notation**](#Notation)
 - [**About the Beta Distribution**](#About_the_Beta_Distribution)
 - [**About the Exponential Distribution**](#About_the_Exponential_Distribution)
 - [**About Partially-Sampled Random Numbers**](#About_Partially_Sampled_Random_Numbers)
@@ -77,11 +76,6 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
 - [**License**](#License)
 
-<a id=Notation></a>
-## Notation
-
-In this document, `RNDINT(x)` is a uniformly-distributed random integer in the interval \[0, x\], `RNDINTEXC(x)` is a uniformly-distributed random integer in the interval \[0, x\), and `RNDU01OneExc()` is a uniformly-distributed random real number in the interval \[0, 1\).
-
 <a id=About_the_Beta_Distribution></a>
 ## About the Beta Distribution
 
@@ -99,7 +93,7 @@ Although `alpha` and `beta` can each be greater than 0, the sampler presented in
 
 The _exponential distribution_ takes a parameter _&lambda;_.  Informally speaking, a random number that follows an exponential distribution is the number of units of time between one event and the next, and _&lambda;_ is the expected average number of events per unit of time.  Usually, _&lambda;_ is equal to 1.
 
-An exponential random number is commonly generated as follows: `-ln(1 - RNDU01OneExc()) / lamda`.  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[**(8)**](#Note8)</sup>.)  This page presents an alternative way to sample exponential random numbers.
+An exponential random number is commonly generated as follows: `-ln(1 - X) / lamda`, where `X` is a uniformly-distributed random real number in the interval \[0, 1\).  (This particular formula is not robust, though, for reasons that are outside the scope of this document, but see (Pedersen 2018)<sup>[**(8)**](#Note8)</sup>.)  This page presents an alternative way to sample exponential random numbers.
 
 <a id=About_Partially_Sampled_Random_Numbers></a>
 ## About Partially-Sampled Random Numbers
@@ -133,7 +127,7 @@ Each additional digit of a uniform PSRN's fractional part is sampled simply by s
 <a id=Exponential_Partially_Sampled_Random_Numbers></a>
 ### Exponential Partially-Sampled Random Numbers
 
-In this document, an **exponential PSRN** (or **_e-rand_**, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - RNDU01())` is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random number in a given interval.)
+In this document, an **exponential PSRN** (or **_e-rand_**, named similarly to Karney's "u-rands" for partially-sampled uniform random numbers (Karney 2014)<sup>[**(1)**](#Note1)</sup>) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random number of the given rate.  Also, because `-ln(1 - X)`, where `X` is a uniform(0, 1) random number, is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random number in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random number in a given interval.)
 
 Algorithms for sampling e-rands are given in the section "Algorithms for the Beta and Exponential Distributions".
 
@@ -195,11 +189,11 @@ There are several algorithms for sampling uniform partially-sampled random numbe
 The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) that is greater than 0 and less than another PSRN (**b**) almost surely.  This algorithm samples digits of **b**'s fractional part as necessary.  This algorithm should not be used if **b** is known to be a real number rather than a partially-sampled random number, since this algorithm could overshoot the value **b** had (or appeared to have) at the beginning of the algorithm; instead, the **RandUniformFromReal** algorithm, given later, should be used.  (For example, if **b** is 3.425..., one possible result of this algorithm is **a** = 3.42574... and **b** = 3.42575... Note that in this example, 3.425... is not considered an exact number.)
 
 1. Create an empty uniform PSRN **a**.  Let _&beta;_ be the base (or radix) of digits stored in **b**'s fractional part (e.g., 2 for binary or 10 for decimal).  If **b**'s integer part or sign is unsampled, or if **b**'s sign is negative, return an error.
-2. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is **b**'s integer part (e.g., `RNDINT(0, bi)`).  If **a**'s integer part is less than _bi_, return **a**.
+2. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[0, _bi_\], where _bi_ is **b**'s integer part (note that _bi_ is included).  If **a**'s integer part is less than _bi_, return **a**.
 3. (We now sample **a**'s fractional part.)  Set _i_ to 0.
 4. If **b**'s integer part is 0 and **b**'s fractional part begins with a sampled 0-digit, set _i_ to the number of sampled zeros at the beginning of **b**'s fractional part.  A nonzero digit or an unsampled digit ends this sequence.  Then append _i_ zeros to **a**'s fractional part.  (For example, if **b** is 5.000302 or 4.000 or 0.0008, there are three sampled zeros that begin **b**'s fractional part, so _i_ is set to 3 and three zeros are appended to **a**'s fractional part.)
-5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if _&beta;_ is 2, or binary, is `RNDINTEXC(2)`.)
-6. If the digit at position _i_ of **b**'s fractional part is unsampled, sample the digit at that position according to the kind of PSRN **b** is. (For example, if **b** is a uniform PSRN and _&beta;_ is 2, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
+5. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random (such as an unbiased random bit if _&beta;_ is 2). (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
+6. If the digit at position _i_ of **b**'s fractional part is unsampled, sample the digit at that position according to the kind of PSRN **b** is. (For example, if **b** is a uniform PSRN and _&beta;_ is 2, this can be done by setting the digit at that position to an unbiased random bit.)
 7. If the digit at position _i_ of **a**'s fractional part is less than the corresponding digit for **b**, return **a**.
 8. If that digit is greater, then discard **a**, then create a new empty uniform PSRN **a**, then go to step 2.
 9. Add 1 to _i_ and go to step 5.
@@ -218,11 +212,11 @@ The **RandUniformInRangePositive** algorithm generates a uniformly distributed P
 4. Special case: If **bmax** and **bmin** are rational numbers and each of their denominators is a power of _&beta;_, including 1 (where _&beta;_ is the desired digit base, or radix, of the uniform PSRN, such as 10 for decimal or 2 for binary), then do the following:
     1. Let _denom_ be **bmax**'s or **bmin**'s denominator, whichever is greater.
     2. Set _c1_ to floor(**bmax**\*_denom_) and _c2_ to floor((**bmax**&minus;**bmin**)\*_denom_).
-    3. If _c2_ is greater than 1, add to _c1_ an integer chosen uniformly at random in \[0, _c2_) (e.g., `RNDINTEXC(0, c2)`).
+    3. If _c2_ is greater than 1, add to _c1_ an integer chosen uniformly at random in \[0, _c2_) \(note that _c2_ is excluded).
     4. Let _d_ be the base-_&beta;_ logarithm of _denom_ (this is equivalent to finding the minimum number of base-_&beta;_ digits needed to store _denom_ and subtracting 1). Transfer _c1_'s least significant digits to **a**'s fractional part; the variable _d_ tells how many digits to transfer to each PSRN this way. Then set **a**'s sign to positive and **a**'s integer part to floor(_c1_/_&beta;_<sup>_d_</sup>). (For example, if _&beta;_ is 10, _d_ is 3, and _c1_ is 7342, set **a**'s fractional part to \[3, 4, 2\] and **a**'s integer part to 7.)  Finally, return **a**.
 5. Calculate floor(**bmax**), and set _bmaxi_ to the result.  Likewise, calculate floor(**bmin**) and set _bmini_ to the result.
-6. If _bmini_ is equal to **bmin** and _bmaxi_ is equal to **bmax**, set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[_bmini_, _bmaxi_\) (e.g., `RNDINTEXC(bmini, bmaxi)`), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
-7. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.  Return **a** if&mdash;
+6. If _bmini_ is equal to **bmin** and _bmaxi_ is equal to **bmax**, set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in \[_bmini_, _bmaxi_\) \(note that _bmaxi_ is excluded), then return **a**.  (It should be noted that determining whether a real number is equal to another is undecidable in general.)
+7. (We now set **a**'s integer part and sign.) Set **a**'s sign to positive and **a**'s integer part to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] \(note that _bmaxi_ is included).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.  Return **a** if&mdash;
     - **a**'s integer part is greater than _bmini_ and less than _bmaxi_, or
     - _bmini_ is equal to **bmin**, and **a**'s integer part is equal to _bmini_ and less than _bmaxi_.
 8. (We now sample **a**'s fractional part.)  Set _i_ to 0 and _istart_ to 0. ( Then, _if **bmax** is known rational:_ set _bmaxf_ to **bmax** minus _bmaxi_, and _if **bmin** is known rational_, set _bminf_ to **bmin** minus _bmini_.)
@@ -231,7 +225,7 @@ The **RandUniformInRangePositive** algorithm generates a uniformly distributed P
         2. If _dmin_ equals _dmax_, append _dmin_ to **a**'s fractional part, then add 1 to _i_ (and, if **bmax** and/or **bmin** is known to be rational, set _bmaxf_ to _bmaxf_\*_&beta;_&minus;_d_ and set _bminf_ to _bminf_\*_&beta;_&minus;_d_).  Otherwise, break from this loop and set _istart_ to _i_.
 10. (Ensure the fractional part is greater than **bmin**'s.) Set _i_ to _istart_, then if **a**'s integer part is equal to _bmini_:
     1. Calculate the base-_&beta;_ digit at position _i_ of **bmin**'s fractional part, and set _dmin_ to that digit.
-    2. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  An example if _&beta;_ is 2, or binary, is `RNDINTEXC(2)`.)
+    2. If the digit at position _i_ of **a**'s fractional part is unsampled, set the digit at that position to a base-_&beta;_ digit chosen uniformly at random (such as an unbiased random bit if _&beta;_ is 2, or binary). (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)
     3. Let _ad_ be the digit at position _i_ of **a**'s fractional part.  If _ad_ is greater than _dmin_, abort these substeps and go to step 11.
     4. Discard **a**, create a new empty uniform PSRN **a**, and abort these substeps and go to step 7 if _ad_ is less than _dmin_.
     5. Add 1 to _i_ and go to the first substep.
@@ -253,7 +247,7 @@ The **RandUniformInRange** algorithm generates a uniformly distributed PSRN (**a
 1. If **bmin** is greater than or equal to **bmax**, return an error.  If **bmin** and **bmax** are each 0 or greater, return the result of **RandUniformInRangePositive**.
 2. If **bmin** and **bmax** are each 0 or less, call **RandUniformInRangePositive** with **bmin** = abs(**bmax**) and **bmax** = abs(**bmin**), set the result's fractional part to negative, and return the result.
 3. (At this point, **bmin** is less than 0 and **bmax** is greater than 0.) Set _bmaxi_ to either floor(**bmax**) if **bmax** is 0 or greater, or &minus;ceil(abs(**bmax**)) otherwise, and set _bmini_ to either floor(**bmin**) if **bmin** is 0 or greater, or &minus;ceil(abs(**bmin**)) otherwise.  (Described this way to keep implementers from confusing floor with the integer part.)
-4. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (e.g., `RNDINT(bmini, bmaxi)`).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
+4. Set _ipart_ to an integer chosen uniformly at random in the interval \[_bmini_, _bmaxi_\] (note that _bmaxi_ is included).  If _bmaxi_ is equal to **bmax**, the integer is chosen from the interval \[_bmini_, _bmaxi_&minus;1\] instead.
 5. If _ipart_ is neither _bmini_ nor _bmaxi_, create a uniform PSRN **a** with an empty fractional part; then set **a**'s sign to either positive if _ipart_ is 0 or greater, or negative otherwise; then set **a**'s integer part to abs(_ipart_+1) if _ipart_ is less than 0, or _ipart_ otherwise; then return **a**.
 6. If _ipart_ is _bmini_, then create a uniform PSRN **a** with a positive sign, an integer part of abs(_ipart_+1), and an empty fractional part; then run **URandLessThanReal** with **a** = **a** and **b** = abs(**bmin**). If the result is 1, set **a**'s sign to negative and return **a**.  Otherwise, go to step 3.
 7. If _ipart_ is _bmaxi_, then create a uniform PSRN **a** with a positive sign, an integer part of _ipart_, and an empty fractional part; then run **URandLessThanReal** with **a** = **a** and **b** = **bmax**. If the result is 1, return **a**.  Otherwise, go to step 3.
@@ -446,7 +440,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 6. If **a**'s sign is negative, return 0 if _da_ is less than _db_, or 1 if _da_ is greater than _db_.
 7. Add 1 to _i_ and go to step 4.
 
-**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to `RNDINTEXC(2)`.)
+**URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to an unbiased random bit.)
 
 > **Note**: To sample the **maximum** of two uniform(0, 1) random numbers, or the **square root** of a uniform(0, 1) random number: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
 
@@ -1671,7 +1665,7 @@ If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the
 - giving each item an exponential random number with _&lambda;_ = _w_, call it a key, and
 - choosing the item with the smallest key
 
-(see also (Efraimidis 2015)<sup>[**(26)**](#Note26)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-RNDU01())/w` in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
+(see also (Efraimidis 2015)<sup>[**(26)**](#Note26)</sup>). However, using fully-sampled exponential random numbers as keys (such as the naïve idiom `-ln(1-X)/w`, where `X` is a uniform(0, 1) random number, in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it's possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the `exprandless` method returns one of only two answers&mdash;either "less" or "greater"&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other almost surely.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.
 
 <a id=Open_Questions></a>
 ## Open Questions
@@ -1713,7 +1707,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note7>(7)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560v2)", arXiv:0906.5560v2  [math.PR], 2010.</small>
 - <small><sup id=Note8>(8)</sup> Pedersen, K., "[**Reconditioning your quantile function**](https://arxiv.org/abs/1704.07949)", arXiv:1704.07949 [stat.CO], 2018.</small>
 - <small><sup id=Note9>(9)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note10>(10)</sup> As noted by von Neumann (1951), a uniform random number bounded by 0 and 1 can be produced by "juxtapos[ing] enough random binary digits".  In this sense, the random number is `RNDINTEXC(B)/pow(B, 1) + RNDINTEXC(B)/pow(B, 2) + RNDINTEXC(B)/pow(B, 3) + ...` (where `B` is the digit base 2), perhaps "forc[ing] the last [random bit] to be 1" "[t]o avoid any bias".  It is not hard to see that this approach can be applied to generate any digit expansion of any base, not just 2.</small>
+- <small><sup id=Note10>(10)</sup> As noted by von Neumann (1951), a uniform random number bounded by 0 and 1 can be produced by "juxtapos[ing] enough random binary digits".  In this sense, the random number is _X1_/`B`<sup>1</sup> + _X2_/`B`<sup>2</sup> + ..., (where `B` is the digit base 2, and _X1_, _X2_, etc. are independent uniform random integers in the interval \[0, `B`\)), perhaps "forc[ing] the last [random bit] to be 1" "[t]o avoid any bias".  It is not hard to see that this approach can be applied to generate any digit expansion of any base, not just 2.</small>
 - <small><sup id=Note11>(11)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
 - <small><sup id=Note12>(12)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 - <small><sup id=Note13>(13)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>

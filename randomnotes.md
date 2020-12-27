@@ -45,7 +45,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
-            a=RNDU01ZeroExc()
+            a=RNDRANGEMinExc(0,1)
             b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
             if b*b <= -a * a * 4 * ln(a)
               return (RNDINT(1) * 2 - 1) *
@@ -56,8 +56,8 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)
 
     METHOD NormalPolar(mu, sigma)
       while true
-        a = RNDU01ZeroExc()
-        b = RNDU01ZeroExc()
+        a = RNDRANGEMinExc(0,1)
+        b = RNDRANGEMinExc(0,1)
         if RNDINT(1) == 0: a = 0 - a
         if RNDINT(1) == 0: b = 0 - b
         c = a * a + b * b
@@ -121,7 +121,7 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
                v = v * v * v
                if v > 0: break
             end
-            u = RNDU01ZeroExc()
+            u = RNDRANGEMinExc(0,1)
             x2 = x * x
             if u < 1 - (0.0331 * x2 * x2): break
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break

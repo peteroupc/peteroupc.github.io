@@ -67,7 +67,7 @@ probability that a normally-distributed random number will be within one standar
 
 <pre>METHOD NormalRatioOfUniforms(mu, sigma)
     while true
-        a=RNDU01ZeroExc()
+        a=RNDRANGEMinExc(0,1)
         b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
         if b*b &lt;= -a * a * 4 * ln(a)
           return (RNDINT(1) * 2 - 1) *
@@ -78,8 +78,8 @@ END METHOD
 
 METHOD NormalPolar(mu, sigma)
   while true
-    a = RNDU01ZeroExc()
-    b = RNDU01ZeroExc()
+    a = RNDRANGEMinExc(0,1)
+    b = RNDRANGEMinExc(0,1)
     if RNDINT(1) == 0: a = 0 - a
     if RNDINT(1) == 0: b = 0 - b
     c = a * a + b * b
@@ -154,7 +154,7 @@ END METHOD
            v = v * v * v
            if v &gt; 0: break
         end
-        u = RNDU01ZeroExc()
+        u = RNDRANGEMinExc(0,1)
         x2 = x * x
         if u &lt; 1 - (0.0331 * x2 * x2): break
         if ln(u) &lt; (0.5 * x2) + (d * (1 - v + ln(v))): break
