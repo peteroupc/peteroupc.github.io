@@ -52,7 +52,7 @@ All the randomization methods presented on this page assume we have a source of 
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers) and "[**A Note on Integer Generation Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms)".  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -131,9 +131,11 @@ However, the following are some of the many considerations involving random stri
 <a id=Choosing_Items_with_Separate_Probabilities></a>
 ## Choosing Items with Separate Probabilities
 
-_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
+_Weighted choice_ (also known as a _categorical distribution_) is a random choice of items, where each item has a _weight_ and is chosen with a probability proportional to its weight.
 
-The algorithm shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.  See "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)" for a survey of algorithms.
+For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
+
+The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
 
 Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:
 

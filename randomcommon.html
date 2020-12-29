@@ -62,7 +62,7 @@
 
 <h2>Uniform Numbers in a Range</h2>
 
-<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a> and &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Integer_Generation_Algorithms"><strong>A Note on Integer Generation Algorithms</strong></a>&quot;.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <pre>function randomInt(minInclusive, maxExclusive) {
   var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -156,9 +156,11 @@
 
 <h2>Choosing Items with Separate Probabilities</h2>
 
-<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.  For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;, which covers choices in which items are taken and put back.</p>
+<p><em>Weighted choice</em> (also known as a <em>categorical distribution</em>) is a random choice of items, where each item has a <em>weight</em> and is chosen with a probability proportional to its weight.</p>
 
-<p>The algorithm shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  They include rejection sampling, Vose&#39;s version of the alias method (<code>VoseAlias</code>; see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information), and the Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  See &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a>&quot; for a survey of algorithms.</p>
+<p>For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;, which covers choices in which items are taken and put back.</p>
+
+<p>The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  They include rejection sampling, Vose&#39;s version of the alias method (<code>VoseAlias</code>; see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information), and the Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</p>
 
 <p>Weighted choice <em>without replacement</em> is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:</p>
 
