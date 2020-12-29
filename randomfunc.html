@@ -282,7 +282,7 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
   // of random bits returned by NEXTRAND() ). This will
   // be a constant here, though.
   modBits = ln(MODULUS)/ln(2)
-  // Fast dice roller algorithm.
+  // Lumbroso&#39;s Fast Dice Roller.
   x = 1
   y = 0
   nextBit = modBits
@@ -344,37 +344,37 @@ END METHOD
 <td>Constant</td>
 </tr>
 <tr>
-<td><em>Modulo reduction</em>: Generate <code>bignumber</code> as above, then find <code>rem(bignumber, n)</code></td>
+<td><em>Modulo reduction</em>: Generate <code>bignumber</code> as above, then find <code>rem(bignumber, n)</code>.</td>
 <td>No</td>
 <td>No</td>
 <td>Constant</td>
 </tr>
 <tr>
-<td><em>Fast Dice Roller</em> (Lumbroso 2013)<sup><a href="#Note6"><strong>(6)</strong></a></sup></td>
+<td><em>Fast Dice Roller</em> (Lumbroso 2013)<sup><a href="#Note6"><strong>(6)</strong></a></sup> (see pseudocode above).</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td>Math Forum (2004)<sup><a href="#Note7"><strong>(7)</strong></a></sup> or (Mennucci 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup> (batching/recycling random bits)</td>
+<td>Math Forum (2004)<sup><a href="#Note7"><strong>(7)</strong></a></sup> or (Mennucci 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup> (batching/recycling random bits).</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td>&quot;FP Multiply&quot; surveyed by <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>M. O&#39;Neill</strong></a></td>
+<td>&quot;FP Multiply&quot; surveyed by <a href="http://www.pcg-random.org/posts/bounded-rands.html"><strong>M. O&#39;Neill</strong></a>.</td>
 <td>No</td>
 <td>No</td>
 <td>Constant</td>
 </tr>
 <tr>
-<td>Algorithm in &quot;Conclusion&quot; section by O&#39;Neill</td>
+<td>Algorithm in &quot;Conclusion&quot; section by O&#39;Neill.</td>
 <td>No</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td>&quot;Debiased&quot; and &quot;Bitmask with Rejection&quot; surveyed by M. O&#39;Neill</td>
+<td>&quot;Debiased&quot; and &quot;Bitmask with Rejection&quot; surveyed by M. O&#39;Neill.</td>
 <td>No</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
@@ -386,7 +386,7 @@ END METHOD
 
 <ol>
 <li><strong><code>RNDINT</code> as a binary tree walker.</strong> Donald E. Knuth and Andrew C. Yao (1976)<sup><a href="#Note9"><strong>(9)</strong></a></sup> showed that any algorithm that generates random integers using random unbiased bits (including <code>RNDINT</code> algorithms) can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of <code>RNDINT(maxInclusive)</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>.<br/>Knuth and Yao showed that any <em>optimal</em> DDG tree algorithm needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note10"><strong>(10)</strong></a></sup>  But as they also showed, for the algorithm to be both optimal <em>and unbiased (exact)</em>, it must run forever in the worst case, even if it uses few random bits on average.  This is because <code>n</code> will have an infinite binary expansion except when <code>n</code> is a power of 2, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree.<br/>Because of this, there is no general way to &quot;fix&quot; the worst case of running forever, while still having an unbiased (exact) algorithm.  For instance, the <em>modulo reduction</em> method can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the bias occurs because only some outcomes can replace rejection leaves this way.  For the same reason, stopping the <em>rejection sampler</em> after a fixed number of tries likewise leads to bias. However, which outcomes are biased this way depends on the algorithm.</li>
-<li><strong>Reducing &quot;bit waste&quot;.</strong> There are various ways to reduce the number of bits &quot;wasted&quot; by <code>RNDINT</code> or another integer-generating algorithm, and bring that algorithm closer to the theoretical lower bound of <code>log2(n)</code> bits per random integer, even if the algorithm is far from this bound.  These techniques, which include batching, bit recycling, and randomness extraction, are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in Devroye and Gravel (2020, section 2.3)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  <em>Batching example</em>: To generate three digits from 0 through 9, we can call <code>RNDINT(999)</code> to generate an integer in [0, 999], then break the number it returns into three digits.</li>
+<li><strong>Reducing &quot;bit waste&quot;.</strong> Any integer-generating algorithm, including <code>RNDINT</code>, needs at least <code>log2(n)</code> bits per random number on average, as noted above, but most of them use many more.  There are various ways to bring an algorithm closer to <code>log2(n)</code>.  They include batching, bit recycling, and randomness extraction, and they are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in Devroye and Gravel (2020, section 2.3)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  <em>Batching example</em>: To generate three digits from 0 through 9, we can call <code>RNDINT(999)</code> to generate an integer in [0, 999], then break the number it returns into three digits.</li>
 <li><strong>Simulating dice.</strong> If we have a (virtual) fair <em>p</em>-sided die, how can we use it to simulate rolls of a <em>k</em>-sided die?  This can&#39;t be done without &quot;wasting&quot; randomness, unless &quot;every prime number dividing <em>k</em> also divides <em>p</em>&quot; (see &quot;<a href="https://perso.math.u-pem.fr/kloeckner.benoit/papiers/DiceSimulation.pdf"><strong>Simulating a dice with a dice</strong></a>&quot; by B. Kloeckner, 2008).  However, since <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>) can turn die rolls into unbiased bits, so that the discussion above applies, this question is interesting only when someone wants to build instructions to choose a number at random by rolling real dice or flipping real coins.</li>
 </ol>
 </blockquote>
@@ -1038,7 +1038,7 @@ METHOD CumulativeWeightedChoice(weights)
 END METHOD
 </pre>
 
-<p>The following are various ways to implement <code>WeightedChoice</code>. (Many of them require using a special data structure.) For best results, weights passed to these algorithms should first be converted to integers (see <code>IntegerWeightsListFP</code> or <code>NormalizeRatios</code> in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a>&quot; for conversion methods), or rational numbers when indicated.  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so they should be avoided.</p>
+<p>The following are various ways to implement <code>WeightedChoice</code>. (Many of them require using a special data structure.) For best results, weights passed to these algorithms should first be converted to integers (see <code>IntegerWeightsListFP</code> or <code>NormalizeRatios</code> in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a>&quot; for conversion methods), or rational numbers when indicated.  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.</p>
 
 <table><thead>
 <tr>
@@ -2602,7 +2602,7 @@ END METHOD
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> Pedersen, K., &quot;<a href="https://arxiv.org/abs/1704.07949v3"><strong>Reconditioning your quantile function</strong></a>&quot;, arXiv:1704.07949v3 [stat.CO], 2018.</small></li>
-<li><small><sup id=Note2>(2)</sup> For an exercise solved by part of the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.  Part of the pseudocode uses the Fast Dice Roller in Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
+<li><small><sup id=Note2>(2)</sup> For an exercise solved by part of the <code>RNDINT</code> pseudocode, see A. Koenig and B. E. Moo, <em>Accelerated C++</em>, 2000; see also a <a href="http://mathalope.co.uk/2014/10/26/accelerated-c-solution-to-exercise-7-9/"><strong>blog post by Johnny Chan</strong></a>.</small></li>
 <li><small><sup id=Note3>(3)</sup> An example of such a source is a Gaussian noise generator.  This kind of source is often called an <em>entropy source</em>.</small></li>
 <li><small><sup id=Note4>(4)</sup> D. Lemire, &quot;A fast alternative to the modulo reduction&quot;, Daniel Lemire&#39;s blog, 2016.</small></li>
 <li><small><sup id=Note5>(5)</sup> Lemire, D., &quot;<a href="https://arxiv.org/abs/1805.10941v4"><strong>Fast Random Integer Generation in an Interval</strong></a>&quot;, arXiv:1805.10941v4  [cs.DS], 2018.</small></li>
