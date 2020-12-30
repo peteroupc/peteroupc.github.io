@@ -24,7 +24,7 @@ Take the following sampler of a binomial(_n_, 1/2) distribution (where _n_ is ev
 2. Set _m_ to floor(sqrt(_n_)) + 1.
 3. (First, sample from an envelope of the binomial curve.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 4. Set _s_ to an integer in [0, _m_) chosen uniformly at random, then set _i_ to _k_\*_m_ + _s_.
-5. Set _ret_ to either _n_/2+_i_ or _n_/2&minus;_i_&minus;1 with equal probability.
+5. Set _ret_ to either (_n_/2)+_i_ or (_n_/2)&minus;_i_&minus;1 with equal probability.
 6. (Second, accept or reject _ret_.) If _ret_ < 0 or _ret_ > _n_, go to step 3.
 7. With probability choose(_n_, _ret_)\*_m_\*2<sup>(_k_&minus;_n_)+2</sup>, return _ret_.  Otherwise, go to step 3. (Here, choose(_n_, _k_) is a binomial coefficient.<sup>[**(2)**](#Note2)</sup>)
 
@@ -208,7 +208,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
-- <small><sup id=Note2>(2)</sup> choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_.</small>
+- <small><sup id=Note2>(2)</sup> choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in the interval \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_.</small>
 - <small><sup id=Note3>(3)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note4>(4)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
 - <small><sup id=Note5>(5)</sup> R. Schumacher, "[**Rapidly Convergent Summation Formulas involving Stirling Series**](https://arxiv.org/abs/1602.00336v1)", arXiv:1602.00336v1 [math.NT], 2016.</small>
