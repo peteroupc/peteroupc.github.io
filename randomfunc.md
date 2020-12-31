@@ -1577,7 +1577,7 @@ If&mdash;
 
 - the discrete distribution has a **known PDF** (`PDF(x)`, more properly called _probability mass function_),
 - the interval [`mini`, `maxi`] covers all the distribution, and
-- the PDF's values are all rational numbers,
+- the PDF's values are all rational numbers (numbers of the form `y/z` where `y` and `z` are integers),
 
 the following method samples exactly from that distribution:
 
@@ -1616,14 +1616,14 @@ METHOD SampleDiscreteCDF(mini, maxi)
 END METHOD
 ```
 
-In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless its PDF's or CDF's values cover all the distribution and are calculated exactly (without error).
+In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless the PDF's or CDF's values cover all the distribution and are calculated exactly (without error).
 
-- If the PDF's or CDF's values are calculated as floating-point numbers of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`)<sup>[**(75)**](#Note75)</sup>, there are various ways to turn these numbers to rational numbers or integers.
+- If the PDF's or CDF's values are calculated as **floating-point numbers** of the form  `FPSignificand` * `FPRadix`<sup>`FPExponent`</sup> (which include Java's `double` and `float`)<sup>[**(75)**](#Note75)</sup>, there are various ways to turn these numbers to rational numbers or integers.
     1. One way is to use `FPRatio(x)` (in the pseudocode below), which is lossless and calculates the rational number for the given floating-point number `x`.
     2. Another way is to scale and round the values to integers (e.g., `round(x * mult)` where `mult` is a large integer); this is not lossless.
-    3. A third way is to approximate the PDF's values to integers as given in (Saad et al., 2020)<sup>[**(76)**](#Note76)</sup>; this is not lossless and works only in the PDF case.
-- If the PDF's or CDF's values are calculated as rational numbers, these numbers can be turned into integer weights using either `NormalizeRatios`, which is lossless, or (2) or (3) above, which are not.
-- If the distribution takes on an infinite number of values, an appropriate interval [`mini`, `maxi`] can be chosen that covers almost all of the distribution.
+    3. A third way is to approximate the PDF's values to integers in a way that bounds the error, such as given in (Saad et al., 2020)<sup>[**(76)**](#Note76)</sup>; this is not lossless and works only in the PDF case.
+- If the PDF's or CDF's values are calculated as **rational numbers**, these numbers can be turned into integer weights using either `NormalizeRatios`, which is lossless, or (2) or (3) above, which are not.
+- If the distribution takes on an **infinite number of values**, an appropriate interval [`mini`, `maxi`] can be chosen that covers almost all of the distribution.
 
 ```
 METHOD FPRatio(fp)
@@ -1668,10 +1668,12 @@ The following method generates a random number from a distribution via inversion
        end
     end
 
+If the quantile is _Lipschitz continuous_, meaning that its slope doesn't tend to a vertical slope anywhere, then the following generates a random number with accuracy `acc`: `parts = acc * 4 * max(1, ceil(L)); u = RNDINTEXC(parts); b=Q(u/parts,(u+1)/parts,acc); return b[0]+(b[1]-b[0])/2`, where `Q(a,b,acc)` returns lower and upper bounds of the quantiles for `a` and `b`, respectively, that differ from the true quantiles by no more than `acc`; and `L` is an upper bound of the quantile's maximum slope.  This chooses a random interval of size `acc*4*max(1, ceil(L))`, and because the quantile is Lipschitz continuous, the values at each interval's bounds are guaranteed to vary by no more than `2*acc` (or `4*acc` when the rounding in `Q()` is considered), which is needed to ensure an accuracy of `acc` (see also Devroye and Gravel 2020<sup>[**(11)**](#Note11)</sup>).
+
 Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
 - Distribution is **discrete, with known PDF**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(19)**](#Note19)</sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast even though it's exact in theory.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the interval's PDF values in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with the PDF (Walter 2019)<sup>[**(77)**](#Note77)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
-- Distribution is **continuous, with known PDF**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF in [`mini`, `maxi`], with pieces up to `step` wide.  See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(78)**](#Note78)</sup>, (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> in the Python sample code <sup>[**(79)**](#Note79)</sup>.
+- Distribution is **continuous, with known PDF**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(78)**](#Note78)</sup>, (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> in the Python sample code <sup>[**(79)**](#Note79)</sup>.
 - Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
 
 &nbsp;

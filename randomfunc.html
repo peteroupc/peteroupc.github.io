@@ -2025,7 +2025,7 @@ number in the sequence.</li>
 <ul>
 <li>the discrete distribution has a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>),</li>
 <li>the interval [<code>mini</code>, <code>maxi</code>] covers all the distribution, and</li>
-<li>the PDF&#39;s values are all rational numbers,</li>
+<li>the PDF&#39;s values are all rational numbers (numbers of the form <code>y/z</code> where <code>y</code> and <code>z</code> are integers),</li>
 </ul>
 
 <p>the following method samples exactly from that distribution:</p>
@@ -2065,18 +2065,18 @@ END METHOD
 END METHOD
 </pre>
 
-<p>In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless its PDF&#39;s or CDF&#39;s values cover all the distribution and are calculated exactly (without error).</p>
+<p>In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless the PDF&#39;s or CDF&#39;s values cover all the distribution and are calculated exactly (without error).</p>
 
 <ul>
-<li>If the PDF&#39;s or CDF&#39;s values are calculated as floating-point numbers of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note75"><strong>(75)</strong></a></sup>, there are various ways to turn these numbers to rational numbers or integers.
+<li>If the PDF&#39;s or CDF&#39;s values are calculated as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note75"><strong>(75)</strong></a></sup>, there are various ways to turn these numbers to rational numbers or integers.
 
 <ol>
 <li>One way is to use <code>FPRatio(x)</code> (in the pseudocode below), which is lossless and calculates the rational number for the given floating-point number <code>x</code>.</li>
 <li>Another way is to scale and round the values to integers (e.g., <code>round(x * mult)</code> where <code>mult</code> is a large integer); this is not lossless.</li>
-<li>A third way is to approximate the PDF&#39;s values to integers as given in (Saad et al., 2020)<sup><a href="#Note76"><strong>(76)</strong></a></sup>; this is not lossless and works only in the PDF case.</li>
+<li>A third way is to approximate the PDF&#39;s values to integers in a way that bounds the error, such as given in (Saad et al., 2020)<sup><a href="#Note76"><strong>(76)</strong></a></sup>; this is not lossless and works only in the PDF case.</li>
 </ol></li>
-<li>If the PDF&#39;s or CDF&#39;s values are calculated as rational numbers, these numbers can be turned into integer weights using either <code>NormalizeRatios</code>, which is lossless, or (2) or (3) above, which are not.</li>
-<li>If the distribution takes on an infinite number of values, an appropriate interval [<code>mini</code>, <code>maxi</code>] can be chosen that covers almost all of the distribution.</li>
+<li>If the PDF&#39;s or CDF&#39;s values are calculated as <strong>rational numbers</strong>, these numbers can be turned into integer weights using either <code>NormalizeRatios</code>, which is lossless, or (2) or (3) above, which are not.</li>
+<li>If the distribution takes on an <strong>infinite number of values</strong>, an appropriate interval [<code>mini</code>, <code>maxi</code>] can be chosen that covers almost all of the distribution.</li>
 </ul>
 
 <pre>METHOD FPRatio(fp)
@@ -2125,11 +2125,13 @@ END METHOD
 end
 </pre>
 
+<p>If the quantile is <em>Lipschitz continuous</em>, meaning that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with accuracy <code>acc</code>: <code>parts = acc * 4 * max(1, ceil(L)); u = RNDINTEXC(parts); b=Q(u/parts,(u+1)/parts,acc); return b[0]+(b[1]-b[0])/2</code>, where <code>Q(a,b,acc)</code> returns lower and upper bounds of the quantiles for <code>a</code> and <code>b</code>, respectively, that differ from the true quantiles by no more than <code>acc</code>; and <code>L</code> is an upper bound of the quantile&#39;s maximum slope.  This chooses a random interval of size <code>acc*4*max(1, ceil(L))</code>, and because the quantile is Lipschitz continuous, the values at each interval&#39;s bounds are guaranteed to vary by no more than <code>2*acc</code> (or <code>4*acc</code> when the rounding in <code>Q()</code> is considered), which is needed to ensure an accuracy of <code>acc</code> (see also Devroye and Gravel 2020<sup><a href="#Note11"><strong>(11)</strong></a></sup>).</p>
+
 <p>Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:</p>
 
 <ul>
 <li>Distribution is <strong>discrete, with known PDF</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast even though it&#39;s exact in theory.  If the interval [a, b] covers all or almost all the distribution, then the application can store the interval&#39;s PDF values in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with the PDF (Walter 2019)<sup><a href="#Note77"><strong>(77)</strong></a></sup>.  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide.  See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note78"><strong>(78)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> in the Python sample code <sup><a href="#Note79"><strong>(79)</strong></a></sup>.</li>
+<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide. (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>. See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note78"><strong>(78)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> in the Python sample code <sup><a href="#Note79"><strong>(79)</strong></a></sup>.</li>
 <li>Distribution is <strong>continuous, with known CDF</strong>: See <code>numbers_from_u01</code> in the Python sample code.</li>
 </ul>
 
