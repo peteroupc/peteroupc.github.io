@@ -1929,7 +1929,7 @@ Returns 'list'. """
         """ Generates 1 with probability exp(-px/py); 0 otherwise.
                Reference:
                Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-               for Differential Privacy", arXiv:2004.00010v2 [cs.DS], 2020. """
+               for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020. """
         if y <= 0 or x < 0:
             raise ValueError
         if x == 0:

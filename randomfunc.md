@@ -243,7 +243,7 @@ There are many algorithms for `RNDINT(maxInclusive)`, as shown in the table belo
 
 > **Notes:**
 >
-> 1. **`RNDINT` as a binary tree walker.** Donald E. Knuth and Andrew C. Yao (1976)<sup>[**(9)**](#Note9)</sup> showed that any algorithm that generates random integers using random unbiased bits (including `RNDINT` algorithms) can be described as a _binary tree_ (also known as a _DDG tree_ or _discrete distribution generating tree_).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of `RNDINT(maxInclusive)`, there are `n = maxInclusive + 1` outcomes that each occur with probability `1/n`.<br/>Knuth and Yao showed that any _optimal_ DDG tree algorithm needs at least `log2(n)` and at most `log2(n) + 2` bits on average (where `log2(x) = ln(x)/ln(2)`).<sup>[**(10)**](#Note10)</sup>  But as they also showed, for the algorithm to be _unbiased (exact)_, it must run forever in the worst case, even if it uses few random bits on average (that is, there is no way in general to "fix" this worst case while remaining unbiased).  This is because `n` will have an infinite binary expansion except when `n` is a power of 2, so that the resulting DDG tree will have to either be infinitely deep, or include "rejection leaves" at the end of the tree.<br/>For instance, the _modulo reduction_ method can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the method is biased because only some outcomes can replace rejection leaves this way.  For the same reason, stopping the _rejection sampler_ after a fixed number of tries likewise leads to bias. However, which outcomes are biased this way depends on the algorithm.
+> 1. **`RNDINT` as a binary tree walker.** Donald E. Knuth and Andrew C. Yao (1976)<sup>[**(9)**](#Note9)</sup> showed that any algorithm that generates random integers using random unbiased bits (including `RNDINT` algorithms) can be described as a _binary tree_ (also known as a _DDG tree_ or _discrete distribution generating tree_).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of `RNDINT(maxInclusive)`, there are `n = maxInclusive + 1` outcomes that each occur with probability `1/n`.<br/>Knuth and Yao showed that any _optimal_ DDG tree algorithm needs at least `log2(n)` and at most `log2(n) + 2` bits on average (where `log2(x) = ln(x)/ln(2)`).<sup>[**(10)**](#Note10)</sup>  But as they also showed, for the algorithm to be _unbiased (exact)_, it must run forever in the worst case, even if it uses few random bits on average (that is, there is no way in general to "fix" this worst case while remaining unbiased).  This is because `1/n` will have an infinite run of base-2 digits except when `n` is a power of 2, so that the resulting DDG tree will have to either be infinitely deep, or include "rejection leaves" at the end of the tree.<br/>For instance, the _modulo reduction_ method can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the method is biased because only some outcomes can replace rejection leaves this way.  For the same reason, stopping the _rejection sampler_ after a fixed number of tries likewise leads to bias. However, which outcomes are biased this way depends on the algorithm.
 > 2. **Reducing "bit waste".** Any integer-generating algorithm, including `RNDINT`, needs at least `log2(n)` bits per random number on average, as noted above, but most of them use many more.  There are various ways to bring an algorithm closer to `log2(n)`.  They include batching, bit recycling, and randomness extraction, and they are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in Devroye and Gravel (2020, section 2.3)<sup>[**(11)**](#Note11)</sup>.  _Batching example_: To generate three digits from 0 through 9, we can call `RNDINT(999)` to generate an integer in \[0, 999\], then break the number it returns into three digits.
 > 3. **Simulating dice.** If we have a (virtual) fair _p_-sided die, how can we use it to simulate rolls of a _k_-sided die?  This can't be done without "wasting" randomness, unless "every prime number dividing _k_ also divides _p_" (see "[**Simulating a dice with a dice**](https://perso.math.u-pem.fr/kloeckner.benoit/papiers/DiceSimulation.pdf)" by B. Kloeckner, 2008).  However, since _randomness extraction_ (see my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html)) can turn die rolls into unbiased bits, so that the discussion above applies, this question is interesting only when someone wants to build instructions to choose a number at random by rolling real dice or flipping real coins.
 
@@ -638,16 +638,9 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
 <a id=Random_Dates_and_Times></a>
 ### Random Dates and Times
 
-Pseudocode like the following can be used to choose a **random date-and-time** bounded by two dates-and-times (`date1`, `date2`).  In the following pseudocode, `DATETIME_TO_NUMBER` and `NUMBER_TO_DATETIME` convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).
+Pseudocode like the following can be used to choose a **random date-and-time** bounded by two dates-and-times (`date1`, `date2`): `dtnum1 = DATETIME_TO_NUMBER(date1); dtnum2 = DATETIME_TO_NUMBER(date2); num = RNDINTRANGE(date1, date2); result = NUMBER_TO_DATETIME(num)`.
 
-         dtnum1 = DATETIME_TO_NUMBER(date1)
-         dtnum2 = DATETIME_TO_NUMBER(date2)
-         // Choose a random date-and-time
-         // in [dtnum1, dtnum2].  Any other
-         // random selection strategy can be
-         // used here instead.
-         num = RNDINTRANGE(date1, date2)
-         result = NUMBER_TO_DATETIME(num)
+In that pseudocode, `DATETIME_TO_NUMBER` and `NUMBER_TO_DATETIME` convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).  Instead of `RNDINTRANGE(date1, date2)`, any other random selection strategy can be used.
 
 <a id=Randomization_in_Statistical_Testing></a>
 ### Randomization in Statistical Testing
@@ -796,7 +789,7 @@ The following are various ways to implement `WeightedChoice`. (Many of them requ
 | Hübschle-Schneider and Sanders (2019)<sup>[**(39)**](#Note39)</sup>. | Parallel weighted random samplers. |
 | (Tang 2019)<sup>[**(40)**](#Note40)</sup>. | Presents various algorithms, including two- and multi-level search, binary search (with cumulative weights), and a new "flat" method. |
 | "Loaded Die from Biased Coins" | Given a list of probabilities `probs` that must sum to 1 and should be rational numbers: (1) Set `cumu` to 1 and `i` to 0; (2) with probability `probs[i]/cumu`, return `i`; (3) subtract `probs[i]` from `cumu`, then add 1 to `i`, then go to step 2.  For a correctness proof, see "Darts, Dice, and Coins".  If each probability in `probs` is calculated "on the fly", this is also called sequential search; see chapter 10 of Devroye (1986)<sup>[**(19)**](#Note19)</sup> (but this generally won't be exact unless all the probabilities involved are rational numbers). |
-| Knuth and Yao (1976)<sup>[**(9)**](#Note9)</sup> | Generates a binary DDG tree from the binary expansions of the probabilities. Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986)<sup>[**(19)**](#Note19)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>.  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly". |
+| Knuth and Yao (1976)<sup>[**(9)**](#Note9)</sup> | Generates a binary DDG tree from the binary expansions of the probabilities (that is, they have the base-2 form 0.bbbbbb... where b is 0 or 1). Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986)<sup>[**(19)**](#Note19)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>.  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly". |
 | Han and Hoshi (1997)<sup>[**(41)**](#Note41)</sup> | Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> and comes within 3 bits, on average, of the optimal number of random bits per sample. |
 
 > **Notes:**
@@ -1057,7 +1050,7 @@ The pseudocode below implements an exact sampler of this distribution, with cert
         end
       else
         // Based on proof of Theorem 2 in Farach-Colton and Tsai.
-        // Decompose px/py into its binary expansion.
+        // Decompose px/py into its base-2 digits.
         pw = MakeRatio(px, py)
         pt = MakeRatio(1, 2)
         while trials>0 and pw>0
@@ -1362,7 +1355,7 @@ For floating-point number formats representing numbers of the form `FPSign` * `s
 - `FPRADIX` is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.
 - `FPExponent(x)` returns the value of `e` for the number `x` such that the number of digits in `s` equals `FPPRECISION`.  Returns `MINEXP` if `x = 0` or if `e` would be less than `MINEXP`.
 - `FPSignificand(x)` returns `s`, the significand of the number `x`.  Returns 0 if `x = 0`. Has `FPPRECISION` digits unless `FPExponent(x) == MINEXP`.
-- `FPSign(x)` returns either -1 or 1 indicating whether the number is positive or negative.  Can be -1 even if `s` is 0.
+- `FPSign(x)` returns either -1 or 1 indicating whether the number is positive or negative.  Can be &minus;1 even if `s` is 0.
 
 See also (Downey 2007)<sup>[**(59)**](#Note59)</sup> and the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl).
 

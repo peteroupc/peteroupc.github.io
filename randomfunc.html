@@ -385,7 +385,7 @@ END METHOD
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><strong><code>RNDINT</code> as a binary tree walker.</strong> Donald E. Knuth and Andrew C. Yao (1976)<sup><a href="#Note9"><strong>(9)</strong></a></sup> showed that any algorithm that generates random integers using random unbiased bits (including <code>RNDINT</code> algorithms) can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of <code>RNDINT(maxInclusive)</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>.<br/>Knuth and Yao showed that any <em>optimal</em> DDG tree algorithm needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note10"><strong>(10)</strong></a></sup>  But as they also showed, for the algorithm to be <em>unbiased (exact)</em>, it must run forever in the worst case, even if it uses few random bits on average (that is, there is no way in general to &quot;fix&quot; this worst case while remaining unbiased).  This is because <code>n</code> will have an infinite binary expansion except when <code>n</code> is a power of 2, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree.<br/>For instance, the <em>modulo reduction</em> method can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the method is biased because only some outcomes can replace rejection leaves this way.  For the same reason, stopping the <em>rejection sampler</em> after a fixed number of tries likewise leads to bias. However, which outcomes are biased this way depends on the algorithm.</li>
+<li><strong><code>RNDINT</code> as a binary tree walker.</strong> Donald E. Knuth and Andrew C. Yao (1976)<sup><a href="#Note9"><strong>(9)</strong></a></sup> showed that any algorithm that generates random integers using random unbiased bits (including <code>RNDINT</code> algorithms) can be described as a <em>binary tree</em> (also known as a <em>DDG tree</em> or <em>discrete distribution generating tree</em>).  Random unbiased bits trace a path in this tree, and each leaf (terminal node) in the tree represents an outcome.  In the case of <code>RNDINT(maxInclusive)</code>, there are <code>n = maxInclusive + 1</code> outcomes that each occur with probability <code>1/n</code>.<br/>Knuth and Yao showed that any <em>optimal</em> DDG tree algorithm needs at least <code>log2(n)</code> and at most <code>log2(n) + 2</code> bits on average (where <code>log2(x) = ln(x)/ln(2)</code>).<sup><a href="#Note10"><strong>(10)</strong></a></sup>  But as they also showed, for the algorithm to be <em>unbiased (exact)</em>, it must run forever in the worst case, even if it uses few random bits on average (that is, there is no way in general to &quot;fix&quot; this worst case while remaining unbiased).  This is because <code>1/n</code> will have an infinite run of base-2 digits except when <code>n</code> is a power of 2, so that the resulting DDG tree will have to either be infinitely deep, or include &quot;rejection leaves&quot; at the end of the tree.<br/>For instance, the <em>modulo reduction</em> method can be represented by a DDG tree in which rejection leaves are replaced with labeled outcomes, but the method is biased because only some outcomes can replace rejection leaves this way.  For the same reason, stopping the <em>rejection sampler</em> after a fixed number of tries likewise leads to bias. However, which outcomes are biased this way depends on the algorithm.</li>
 <li><strong>Reducing &quot;bit waste&quot;.</strong> Any integer-generating algorithm, including <code>RNDINT</code>, needs at least <code>log2(n)</code> bits per random number on average, as noted above, but most of them use many more.  There are various ways to bring an algorithm closer to <code>log2(n)</code>.  They include batching, bit recycling, and randomness extraction, and they are discussed, for example, in the Math Forum page and the Lumbroso and Mennucci papers referenced above, and in Devroye and Gravel (2020, section 2.3)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  <em>Batching example</em>: To generate three digits from 0 through 9, we can call <code>RNDINT(999)</code> to generate an integer in [0, 999], then break the number it returns into three digits.</li>
 <li><strong>Simulating dice.</strong> If we have a (virtual) fair <em>p</em>-sided die, how can we use it to simulate rolls of a <em>k</em>-sided die?  This can&#39;t be done without &quot;wasting&quot; randomness, unless &quot;every prime number dividing <em>k</em> also divides <em>p</em>&quot; (see &quot;<a href="https://perso.math.u-pem.fr/kloeckner.benoit/papiers/DiceSimulation.pdf"><strong>Simulating a dice with a dice</strong></a>&quot; by B. Kloeckner, 2008).  However, since <em>randomness extraction</em> (see my <a href="https://peteroupc.github.io/randextract.html"><strong>Note on Randomness Extraction</strong></a>) can turn die rolls into unbiased bits, so that the discussion above applies, this question is interesting only when someone wants to build instructions to choose a number at random by rolling real dice or flipping real coins.</li>
 </ol>
@@ -881,17 +881,9 @@ END METHOD
 
 <h3>Random Dates and Times</h3>
 
-<p>Pseudocode like the following can be used to choose a <strong>random date-and-time</strong> bounded by two dates-and-times (<code>date1</code>, <code>date2</code>).  In the following pseudocode, <code>DATETIME_TO_NUMBER</code> and <code>NUMBER_TO_DATETIME</code> convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).</p>
+<p>Pseudocode like the following can be used to choose a <strong>random date-and-time</strong> bounded by two dates-and-times (<code>date1</code>, <code>date2</code>): <code>dtnum1 = DATETIME_TO_NUMBER(date1); dtnum2 = DATETIME_TO_NUMBER(date2); num = RNDINTRANGE(date1, date2); result = NUMBER_TO_DATETIME(num)</code>.</p>
 
-<pre>     dtnum1 = DATETIME_TO_NUMBER(date1)
-     dtnum2 = DATETIME_TO_NUMBER(date2)
-     // Choose a random date-and-time
-     // in [dtnum1, dtnum2].  Any other
-     // random selection strategy can be
-     // used here instead.
-     num = RNDINTRANGE(date1, date2)
-     result = NUMBER_TO_DATETIME(num)
-</pre>
+<p>In that pseudocode, <code>DATETIME_TO_NUMBER</code> and <code>NUMBER_TO_DATETIME</code> convert a date-and-time to or from a number, respectively, at the required granularity, for instance, month, day, or hour granularity (the details of such conversion depend on the date-and-time format and are outside the scope of this document).  Instead of <code>RNDINTRANGE(date1, date2)</code>, any other random selection strategy can be used.</p>
 
 <p><a id=Randomization_in_Statistical_Testing></a></p>
 
@@ -1096,7 +1088,7 @@ END METHOD
 </tr>
 <tr>
 <td>Knuth and Yao (1976)<sup><a href="#Note9"><strong>(9)</strong></a></sup></td>
-<td>Generates a binary DDG tree from the binary expansions of the probabilities. Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
+<td>Generates a binary DDG tree from the binary expansions of the probabilities (that is, they have the base-2 form 0.bbbbbb... where b is 0 or 1). Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, implemented in <em>randomgen.py</em> as the <code>discretegen</code> method, and also described in (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  <code>discretegen</code> can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion &quot;on the fly&quot;.</td>
 </tr>
 <tr>
 <td>Han and Hoshi (1997)<sup><a href="#Note41"><strong>(41)</strong></a></sup></td>
@@ -1410,7 +1402,7 @@ END METHOD
     end
   else
     // Based on proof of Theorem 2 in Farach-Colton and Tsai.
-    // Decompose px/py into its binary expansion.
+    // Decompose px/py into its base-2 digits.
     pw = MakeRatio(px, py)
     pt = MakeRatio(1, 2)
     while trials&gt;0 and pw&gt;0
@@ -1758,7 +1750,7 @@ END METHOD
 <li><code>FPRADIX</code> is the digit base of the floating-point format.  Equals 2 for binary64 and binary32.</li>
 <li><code>FPExponent(x)</code> returns the value of <code>e</code> for the number <code>x</code> such that the number of digits in <code>s</code> equals <code>FPPRECISION</code>.  Returns <code>MINEXP</code> if <code>x = 0</code> or if <code>e</code> would be less than <code>MINEXP</code>.</li>
 <li><code>FPSignificand(x)</code> returns <code>s</code>, the significand of the number <code>x</code>.  Returns 0 if <code>x = 0</code>. Has <code>FPPRECISION</code> digits unless <code>FPExponent(x) == MINEXP</code>.</li>
-<li><code>FPSign(x)</code> returns either -1 or 1 indicating whether the number is positive or negative.  Can be -1 even if <code>s</code> is 0.</li>
+<li><code>FPSign(x)</code> returns either -1 or 1 indicating whether the number is positive or negative.  Can be &minus;1 even if <code>s</code> is 0.</li>
 </ul>
 
 <p>See also (Downey 2007)<sup><a href="#Note59"><strong>(59)</strong></a></sup> and the <a href="https://gitlab.com/christoph-conrads/rademacher-fpl"><strong>Rademacher Floating-Point Library</strong></a>.</p>

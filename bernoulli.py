@@ -40,7 +40,7 @@ class Bernoulli:
       functions that can be expressed as power series." Stochastic Processes and their
       Applications 129, no. 11 (2019): 4366-4384.
       - Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-      for Differential Privacy", arXiv:2004.00010v2 [cs.DS], 2020.
+      for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
       - Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using
       atomic regeneration with application to Sequential Monte Carlo,
       arXiv:1407.5770v1  [stat.CO]

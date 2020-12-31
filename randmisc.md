@@ -208,7 +208,7 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(27)**](#Note27)</sup>; Canonne et al. (2020)<sup>[**(28)**](#Note28)</sup>.
+This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(26)**](#Note26)</sup>; Canonne et al. (2020)<sup>[**(27)**](#Note27)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y <= 0 or x<0: return error
@@ -243,7 +243,7 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(26)**](#Note26)</sup>.
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(28)**](#Note28)</sup>
 
 <a id=Notes></a>
 ## Notes
@@ -273,9 +273,9 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
 - <small><sup id=Note23>(23)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
 - <small><sup id=Note24>(24)</sup> Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).</small>
 - <small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
-- <small><sup id=Note26>(26)</sup> No note text yet.</small>
-- <small><sup id=Note27>(27)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-- <small><sup id=Note28>(28)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010v2)", arXiv:2004.00010v2 [cs.DS], 2020.</small>
+- <small><sup id=Note26>(26)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note27>(27)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
+- <small><sup id=Note28>(28)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>
 ## License
