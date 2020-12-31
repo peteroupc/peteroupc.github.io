@@ -2125,8 +2125,6 @@ END METHOD
 end
 </pre>
 
-<p>If the quantile is <em>Lipschitz continuous</em>, meaning that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with accuracy <code>acc</code>: <code>parts = acc * 4 * max(1, ceil(L)); u = RNDINTEXC(parts); b=Q(u/parts,(u+1)/parts,acc); return b[0]+(b[1]-b[0])/2</code>, where <code>Q(a,b,acc)</code> returns lower and upper bounds of the quantiles for <code>a</code> and <code>b</code>, respectively, that differ from the true quantiles by no more than <code>acc</code>; and <code>L</code> is an upper bound of the quantile&#39;s maximum slope.  This chooses a random interval of size <code>acc*4*max(1, ceil(L))</code>, and because the quantile is Lipschitz continuous, the values at each interval&#39;s bounds are guaranteed to vary by no more than <code>2*acc</code> (or <code>4*acc</code> when the rounding in <code>Q()</code> is considered), which is needed to ensure an accuracy of <code>acc</code> (see also Devroye and Gravel 2020<sup><a href="#Note11"><strong>(11)</strong></a></sup>).</p>
-
 <p>Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:</p>
 
 <ul>
