@@ -156,7 +156,7 @@ A _compound distribution_ is simply the minimum of _N_ random variables distribu
 
 A _complementary compound distribution_ is the maximum of _N_ random variables distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(19)**](#Note19)</sup>.
 
-An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random number distributed as _X_.  But an _inverse exponential distribution_ (Keller and Kamath 1982)<sup>[**(20)**](#Note20)</sup> is distributed as &minus;_&theta;_/ln(_U_) where _&theta;_ > 0 and _U_ is a uniform(0, 1) random number.
+An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random number distributed as _X_.  For example, an _inverse exponential_ random number (Keller and Kamath 1982)<sup>[**(20)**](#Note20)</sup> is the reciprocal of an exponential(1) random number (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random number) and may be scaled by a parameter _&theta;_ > 0.
 
 A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
