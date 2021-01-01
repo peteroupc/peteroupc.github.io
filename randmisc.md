@@ -206,7 +206,7 @@ This note is about generating random numbers from a continuous distribution via 
 
 Let G be a distribution for which the quantile is wanted.
 
-**Lipschitz-continuous quantiles.** If G is absolutely continuous and its quantile function is _Lipschitz continuous_, which roughly means that its slope doesn't tend to a vertical slope anywhere, then the following generates a random number with accuracy _&epsilon;_:
+**Lipschitz-continuous quantiles.** If G is absolutely continuous and its quantile function is _Lipschitz continuous_, which roughly means that its slope doesn't tend to a vertical slope anywhere, then the following generates a random number with an error tolerance of _&epsilon;_:
 
 1. Let _parts_ be ceil(1/(_&epsilon;_ / max(1, ceil(_L_)))), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_).
 2. Generate a uniform random integer in the interval [0, _parts_), call it _u_.

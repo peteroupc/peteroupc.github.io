@@ -297,7 +297,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <p>Let G be a distribution for which the quantile is wanted.</p>
 
-<p><strong>Lipschitz-continuous quantiles.</strong> If G is absolutely continuous and its quantile function is <em>Lipschitz continuous</em>, which roughly means that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with accuracy <em>&epsilon;</em>:</p>
+<p><strong>Lipschitz-continuous quantiles.</strong> If G is absolutely continuous and its quantile function is <em>Lipschitz continuous</em>, which roughly means that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with an error tolerance of <em>&epsilon;</em>:</p>
 
 <ol>
 <li>Let <em>parts</em> be ceil(1/(<em>&epsilon;</em> / max(1, ceil(<em>L</em>)))), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>).</li>
