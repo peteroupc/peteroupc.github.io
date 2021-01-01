@@ -293,42 +293,28 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <h2>Randomization via Quantiles</h2>
 
-<p>This note is about generating random numbers from a continuous distribution via inverse transform sampling (or via quantiles).</p>
+<p>This note is about generating random numbers from a continuous distribution via inverse transform sampling (or via quantiles), using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval [<em>a</em>, <em>b</em>]; it contains a sign, an integer part, and a fractional part made up of base-<em>&beta;</em> digits.</p>
 
-<p>Let G be a distribution for which the quantile is wanted.</p>
+<p>Let G be a distribution for which the quantile is wanted, and let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile.</p>
 
-<p><strong>Lipschitz-continuous quantiles.</strong> If G is absolutely continuous and its quantile function is <em>Lipschitz continuous</em>, which roughly means that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with an error tolerance of <em>&epsilon;</em>:</p>
-
-<ol>
-<li>Let <em>parts</em> be ceil(1/(<em>&epsilon;</em> / max(1, ceil(<em>L</em>)))), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>).</li>
-<li>Generate a uniform random integer in the interval [0, <em>parts</em>), call it <em>u</em>.</li>
-<li>Let <em>a</em> be <em>u</em>/<em>parts</em>, and let <em>b</em> be (<em>u</em>+1)/parts.  Calculate lower and upper bounds of the quantiles of <em>u</em>/<em>parts</em> and (<em>u</em>+1)/<em>parts</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
-<li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>) / 2.</li>
-</ol>
-
-<p>This chooses a random interval of size equal to <em>parts</em>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 3 adds an additional error of at most <em>&epsilon;</em>), which is needed to ensure an accuracy of <em>&epsilon;</em> (see also Devroye and Gravel 2020<sup><a href="#Note24"><strong>(24)</strong></a></sup>).</p>
-
-<p>If the quantile for distribution G is Lipschitz continuous, this usually means that the distribution takes on only values in a bounded interval.</p>
-
-<p><strong>Uniform partially-sampled random numbers.</strong> Here are notes on quantile generation using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval [<em>a</em>, <em>b</em>]; it contains a sign, an integer part, and a fractional part made up of base-<em>&beta;</em> digits.</p>
-
-<p>The algorithm for Lipschitz-continuous quantiles can be adapted for uniform PSRNs as follows:</p>
+<p>When a random number <em>x</em> is a uniform PSRN in [0, 1], then the following calculate a quantile from that number with a desired error tolerance of <em>&epsilon;</em> (see (Devroye and Gravel 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>):</p>
 
 <ol>
-<li>Let <em>parts</em> and <em>L</em> be as in the previous algorithm.  Let <em>x</em> be a uniform PSRN in the interval [0, 1] (if it doesn&#39;t already exist, <em>x</em> can be a new uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part).</li>
-<li>For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
-<li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>].  Calculate lower and upper bounds of the quantiles of <em>a</em> and <em>b</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
-<li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>) / 2.</li>
-</ol>
-
-<p>The following works for more general quantile functions. Let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile. When a random number <em>x</em> is a uniform PSRN, then to calculate a quantile from that number (see (Devroye and Gravel 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>):</p>
-
-<ol>
-<li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of the quantile of <em>f</em>(<em>a</em>) and an upper bound of the quantile of <em>f</em>(<em>b</em>) differ by no more than 2*<em>&epsilon;</em>, where <em>&epsilon;</em> is the desired error tolerance.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
+<li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of the quantile of <em>f</em>(<em>a</em>) and an upper bound of the quantile of <em>f</em>(<em>b</em>) differ by no more than 2*<em>&epsilon;</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
 <li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
 </ol>
 
-<p>The disadvantage is that the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G&#39;s probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>).  This involves calculating lower and upper bounds of the quantiles of <em>f</em>(<em>a</em>) and <em>f</em>(<em>b</em>) (the bounds are [<em>alow</em>, <em>ahigh</em>] and [<em>blow</em>, <em>bhigh</em>] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff&#39;s method (described in an <a href="https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>appendix to the PSRN article</strong></a>) to the distribution G limited to the interval [<em>alow</em>, <em>bhigh</em>] and accepting the resulting PSRN if it clearly lies in [<em>ahigh</em>, <em>blow</em>] or rejecting it if it clearly lies outside [<em>alow</em>, <em>bhigh</em>].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it&#39;s clear whether to accept or reject the output PSRN.</p>
+<p>If <em>f</em>(<em>t</em>) = <em>t</em> and the quantile function is <em>Lipschitz continuous</em>, which roughly means that it&#39;s a continuous function whose slope doesn&#39;t tend to a vertical slope anywhere, then the following algorithm calculates the quantile with error tolerance <em>&epsilon;</em>:</p>
+
+<ol>
+<li>Let <em>d</em> be ceiling((ln(max(1,<em>L</em>)) &minus; ln(&epsilon;)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
+<li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>].  Calculate lower and upper bounds of the quantiles of <em>a</em> and <em>b</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
+<li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
+</ol>
+
+<p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020<sup><a href="#Note24"><strong>(24)</strong></a></sup>).  A Lipschitz-continuous quantile function usually means that the distribution takes on only values in a bounded interval.</p>
+
+<p>The disadvantage to both algorithms is that the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G&#39;s probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>).  This involves calculating lower and upper bounds of the quantiles of <em>f</em>(<em>a</em>) and <em>f</em>(<em>b</em>) (the bounds are [<em>alow</em>, <em>ahigh</em>] and [<em>blow</em>, <em>bhigh</em>] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff&#39;s method (described in an <a href="https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>appendix to the PSRN article</strong></a>) to the distribution G limited to the interval [<em>alow</em>, <em>bhigh</em>] and accepting the resulting PSRN if it clearly lies in [<em>ahigh</em>, <em>blow</em>] or rejecting it if it clearly lies outside [<em>alow</em>, <em>bhigh</em>].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it&#39;s clear whether to accept or reject the output PSRN.</p>
 
 <p><a id=ExpoExact></a></p>
 

@@ -612,7 +612,7 @@ Creates a new empty CBOR array.</li>
 Creates a new empty CBOR map that stores its keys in an undefined order.</li>
 <li><code>static CBORObject NewOrderedMap()</code><br>
 Creates a new empty CBOR map that ensures that keys are stored in the order
-in which they are inserted.</li>
+in which they are first inserted.</li>
 <li><code>static CBORObject Read​(java.io.InputStream stream)</code><br>
 Reads an object in CBOR format from a data stream.</li>
 <li><code>static CBORObject Read​(java.io.InputStream stream,
@@ -3401,7 +3401,7 @@ is null.</p></li>
 </pre>
 
 <p>Creates a new empty CBOR map that ensures that keys are stored in the order
- in which they are inserted.</p>
+ in which they are first inserted.</p>
 
 <p><strong>Returns:</strong></p>
 
