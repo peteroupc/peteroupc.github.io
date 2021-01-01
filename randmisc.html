@@ -297,26 +297,28 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <p>Let G be a distribution for which the quantile is wanted.</p>
 
-<p><strong>Lipschitz quantiles.</strong> If G&#39;s quantile function is <em>Lipschitz continuous</em>, meaning that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with accuracy <code>acc</code>: <code>parts = ceil(1/ ( acc / max(1, ceil(L))) ); u = RNDINTEXC(parts); bound=Q(u/parts,(u+1)/parts,acc/2); return bound[0]+(bound[1]-bound[0])/2</code>, where&mdash;</p>
+<p><strong>Lipschitz-continuous quantiles.</strong> If G is absolutely continuous and its quantile function is <em>Lipschitz continuous</em>, which roughly means that its slope doesn&#39;t tend to a vertical slope anywhere, then the following generates a random number with accuracy <em>&epsilon;</em>:</p>
 
-<ul>
-<li><code>RNDINTEXC(x)</code> generates a random integer in the interval [0, <code>x</code>);</li>
-<li><code>Q(a,b,tol)</code> returns lower and upper bounds of the quantiles for <code>a</code> and <code>b</code>, respectively, that are within <code>tol</code> of the true quantiles; and</li>
-<li><code>L</code> is an upper bound of the quantile function&#39;s maximum slope.</li>
-</ul>
+<ol>
+<li>Let <em>parts</em> be ceil(1/(<em>&epsilon;</em> / max(1, ceil(<em>L</em>)))), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>).</li>
+<li>Generate a uniform random integer in the interval [0, <em>parts</em>), call it <em>u</em>.</li>
+<li>Let <em>a</em> be <em>u</em>/<em>parts</em>, and let <em>b</em> be (<em>u</em>+1)/parts.  Calculate lower and upper bounds of the quantiles of <em>u</em>/<em>parts</em> and (<em>u</em>+1)/<em>parts</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
+<li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>) / 2.</li>
+</ol>
 
-<p>This chooses a random interval of size equal to <code>parts</code>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than <code>2*acc</code>, which is needed to ensure an accuracy of <code>acc</code> (see also Devroye and Gravel 2020<sup><a href="#Note24"><strong>(24)</strong></a></sup>).</p>
+<p>This chooses a random interval of size equal to <em>parts</em>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 3 adds an additional error of at most <em>&epsilon;</em>), which is needed to ensure an accuracy of <em>&epsilon;</em> (see also Devroye and Gravel 2020<sup><a href="#Note24"><strong>(24)</strong></a></sup>).</p>
 
 <p>If the quantile for distribution G is Lipschitz continuous, this usually means that the distribution takes on only values in a bounded interval.</p>
 
 <p><strong>Uniform partially-sampled random numbers.</strong> Here are notes on quantile generation using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval [<em>a</em>, <em>b</em>]; it contains a sign, an integer part, and a fractional part made up of base-<em>&beta;</em> digits.</p>
 
-<p>The algorithm for Lipschitz quantiles can be adapted for uniform PSRNs as follows:</p>
+<p>The algorithm for Lipschitz-continuous quantiles can be adapted for uniform PSRNs as follows:</p>
 
 <ol>
-<li>Let <em>x</em> be a uniform PSRN in the interval [0, 1] (if it doesn&#39;t already exist, <em>x</em> can be a new uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part).</li>
+<li>Let <em>parts</em> and <em>L</em> be as in the previous algorithm.  Let <em>x</em> be a uniform PSRN in the interval [0, 1] (if it doesn&#39;t already exist, <em>x</em> can be a new uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part).</li>
 <li>For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
-<li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>]; calculate <em>bound</em> = <code>Q(a, b, acc/2)</code>; then return <em>bound</em>[0]+(<em>bound</em>[1]&minus;<em>bound</em>[0])/2.</li>
+<li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>].  Calculate lower and upper bounds of the quantiles of <em>a</em> and <em>b</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
+<li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>) / 2.</li>
 </ol>
 
 <p>The following works for more general quantile functions. Let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile. When a random number <em>x</em> is a uniform PSRN, then to calculate a quantile from that number (see (Devroye and Gravel 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>):</p>
