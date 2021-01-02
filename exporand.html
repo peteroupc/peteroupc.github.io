@@ -176,7 +176,7 @@
 <li>(Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
 </ul>
 
-<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.<sup><a href="#Note10"><strong>(10)</strong></a></sup>  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniformly-distributed random number in a given interval.  For example, if the PSRN is 3.356..., then it represents a random number that is uniformly distributed in the interval [3.356, 3.357].)</p>
+<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)<sup><a href="#Note9"><strong>(9)</strong></a></sup> in the binary case.<sup><a href="#Note10"><strong>(10)</strong></a></sup>  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if it was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniformly-distributed random number in a given interval.  For example, if the PSRN is 3.356..., then it represents a random number that is uniformly distributed in the interval [3.356, 3.357].)</p>
 
 <p><a id=Exponential_Partially_Sampled_Random_Numbers></a></p>
 
@@ -2140,6 +2140,7 @@ def contbernoullidist(b, lamda, precision=53):
 <ol>
 <li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
 <li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division?</li>
+<li>Are the conjectures in the section &quot;<a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a>&quot; true?</li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>
