@@ -307,7 +307,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 <p>If <em>f</em>(<em>t</em>) = <em>t</em> and the quantile function is <em>Lipschitz continuous</em>, which roughly means that it&#39;s a continuous function whose slope doesn&#39;t tend to a vertical slope anywhere, then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
-<li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(&epsilon;)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
+<li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
 <li>The PSRN <em>x</em> now lies in the interval [<em>a</em>, <em>b</em>].  Calculate lower and upper bounds of the quantiles of <em>a</em> and <em>b</em>, respectively, that are within <em>&epsilon;</em>/2 of the true quantiles, call the bounds <em>low</em> and <em>high</em>, respectively.</li>
 <li>Return <em>low</em>+(<em>high</em>&minus;<em>low</em>)/2.</li>
 </ol>

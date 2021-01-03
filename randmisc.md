@@ -213,7 +213,7 @@ When a random number _x_ is a uniform PSRN in \[0, 1\], then the following gener
 
 If _f_(_t_) = _t_ and the quantile function is _Lipschitz continuous_, which roughly means that it's a continuous function whose slope doesn't tend to a vertical slope anywhere, then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
-1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(&epsilon;)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
+1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of the quantiles of _a_ and _b_, respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
