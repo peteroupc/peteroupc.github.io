@@ -550,12 +550,12 @@ This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al
 The algorithm to simulate sin(_&lambda;_) follows.
 
 1. Flip the input coin.  If it returns 0, return 0.
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, and set _fac_ to 6.
-2. Generate a uniform(0, 1) random number _ret_.
-3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ / _fac_.
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 3.
+2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, and set _fac_ to 6.
+3. Generate a uniform(0, 1) random number _ret_.
+4. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
+5. If _n_ is even, set _u_ to _&#x2113;_ + _w_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ / _fac_.
+6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 4.
 
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>

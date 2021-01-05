@@ -1974,24 +1974,25 @@ number in the sequence.</li>
 <li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note72"><strong>(72)</strong></a></sup>.</li>
 </ol></li>
 <li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)<sup><a href="#Note70"><strong>(70)</strong></a></sup>, sec. 5.3.4.</li>
-<li><strong>Fitting a known distribution</strong> (such as the normal distribution), with unknown parameters, to data can be done by <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"><strong>maximum likelihood estimation</strong></a>, among other ways.  If several kinds of distributions are possible fitting choices, then the kind showing the best <em>goodness of fit</em> for the data (e.g., chi-squared goodness of fit) is chosen.</li>
+<li><strong>Fitting a known distribution</strong> (such as the normal distribution), with unknown parameters, to data can be done by <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation"><strong>maximum likelihood estimation</strong></a>, among other ways.</li>
 </ul></li>
 <li><p><strong>Regression models.</strong> A <em>regression model</em> is a model that summarizes data as a formula and an error term.  If an application has data in the form of inputs and outputs (e.g., monthly sales figures) and wants to sample a random but plausible output given a known input point (e.g., sales for a future month), then the application can fit and sample a regression model for that data.  For example, a <em>linear regression model</em>, which simulates the value of <code>y</code> given known inputs <code>a</code> and <code>b</code>, can be sampled as follows: <code>y = c1 * a + c2 * b + c3 + Normal(0, sqrt(mse))</code>, where <code>mse</code> is the mean squared error and <code>c1</code>, <code>c2</code>, and <code>c3</code> are the coefficients of the model.  (Here, <code>Normal(0, sqrt(mse))</code> is the error term.)</p></li>
 <li><p><strong>Generative models.</strong> These are machine learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  <a href="https://en.wikipedia.org/wiki/Generative_adversarial_network"><strong><em>Generative adversarial networks</em></strong></a> are one kind of generative model.</p></li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> If the existing data points each belong in one of several <em>categories</em>:</p>
+<p><strong>Notes:</strong></p>
 
-<ul>
-<li>Choosing a random category could be done by choosing a random number weighted on the number of data points in each category (see &quot;<a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot;).</li>
-<li>Choosing a random data point <em>and</em> its category could be done&mdash;
+<ol>
+<li>Usually, more than one kind of model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, or parametric distributions).  If several kinds of model are fitting choices, then the kind showing the best <em>goodness of fit</em> for the data set (e.g., chi-squared goodness of fit) should be chosen.</li>
+<li>If the existing data points each belong in one of several <em>categories</em>, choosing a random category could be done by choosing a random number weighted on the number of data points in each category (see &quot;<a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot;).</li>
+<li>If the existing data points each belong in one of several <em>categories</em>, choosing a random data point <em>and</em> its category could be done&mdash;
 
 <ol>
 <li>by choosing a random data point based on all the existing data points, then finding its category (e.g., via machine learning models known as <em>classification models</em>), or</li>
 <li>by choosing a random category as given above, then by choosing a random data point based only on the existing data points of that category.</li>
 </ol></li>
-</ul>
+</ol>
 </blockquote>
 
 <p><a id=Random_Numbers_from_an_Arbitrary_Distribution></a></p>

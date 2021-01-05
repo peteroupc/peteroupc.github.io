@@ -622,10 +622,10 @@ _extrabernnumbers = {}
 def bernoullinum(n):
     # Calculates Bernoulli numbers
     global _extrabernnumbers
-    if n % 2 == 1:
-        return 0
     if n < len(_BERNNUMBERS):
         return _BERNNUMBERS[n]
+    if n % 2 == 1:
+        return 0
     if n in _extrabernnumbers:
         return _extrabernnumbers[n]
     # print(n)
