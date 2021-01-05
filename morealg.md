@@ -103,12 +103,12 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 
 There are two algorithms.
 
-The first uses Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+The first uses the so-called Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _k_ equal to 1.  Then the following steps are taken.
 
-1. If _pos_ is 1: With probability 1/2, flip the input coin and return the result.
-2. If _pos_ is greater than 1, then do the following with probability _pos_/(1+_pos_):
-    - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_pos_ and 0 otherwise.
-3. Run this algorithm recursively, but with _pos_ = _pos_ + 2.  If the result is 1, return 0.  Otherwise, go to step 1.
+1. If _k_ is 1: With probability 1/2, flip the input coin and return the result.
+2. If _k_ is greater than 1, then do the following with probability _k_/(1+_k_):
+    - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_k_ and 0 otherwise.
+3. Run this algorithm recursively, but with _k_ = _k_ + 2.  If the result is 1, return 0.  Otherwise, go to step 1.
 
 The second algorithm involves the series expansion of tanh(.) and involves the general martingale algorithm.
 

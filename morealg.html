@@ -145,16 +145,16 @@
 
 <p>There are two algorithms.</p>
 
-<p>The first uses Lambert&#39;s continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p>The first uses the so-called Lambert&#39;s continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>k</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>If <em>pos</em> is 1: With probability 1/2, flip the input coin and return the result.</li>
-<li>If <em>pos</em> is greater than 1, then do the following with probability <em>pos</em>/(1+<em>pos</em>):
+<li>If <em>k</em> is 1: With probability 1/2, flip the input coin and return the result.</li>
+<li>If <em>k</em> is greater than 1, then do the following with probability <em>k</em>/(1+<em>k</em>):
 
 <ul>
-<li>Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>pos</em> and 0 otherwise.</li>
+<li>Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 </ul></li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 2.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Run this algorithm recursively, but with <em>k</em> = <em>k</em> + 2.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p>The second algorithm involves the series expansion of tanh(.) and involves the general martingale algorithm.</p>
