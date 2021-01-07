@@ -145,7 +145,7 @@
 
 <p>There are two algorithms.</p>
 
-<p>The first uses the so-called Lambert&#39;s continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>k</em> equal to 1.  Then the following steps are taken.</p>
+<p>The first takes advantage of the so-called Lambert&#39;s continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>k</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>If <em>k</em> is 1: With probability 1/2, flip the input coin and return the result.</li>
@@ -157,7 +157,7 @@
 <li>Run this algorithm recursively, but with <em>k</em> = <em>k</em> + 2.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>The second algorithm involves the series expansion of tanh(.) and involves the general martingale algorithm.</p>
+<p>The second algorithm involves an alternating series expansion of tanh(.) and involves the general martingale algorithm.</p>
 
 <p>First, define the following operation:</p>
 
@@ -184,7 +184,7 @@
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
 <li>(Loop.) If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
-<li>Let <em>m</em> be 2*(<em>n</em>+1).  <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>. Let <em>t</em> be abs(<em>b</em>)*2<sup><em>m</em></sup>*(2<sup><em>m</em></sup>&minus;1)/(<em>m</em>!).</li>
+<li>(Calculate the next term of the alternating series for tanh.) Let <em>m</em> be 2*(<em>n</em>+1).  <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>. Let <em>t</em> be abs(<em>b</em>)*2<sup><em>m</em></sup>*(2<sup><em>m</em></sup>&minus;1)/(<em>m</em>!).</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>t</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>t</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>

@@ -1316,7 +1316,18 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 > 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_.
 > 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 > 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
-> 4. If _f_ has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, if _f_ is _C_<sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup>[**(47)**](#Note47)</sup>:  Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) and **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8).  The following Python code uses the SymPy computer algebra library to calculate _m_ and the necessary values for **fbound(_n_)**, given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: `i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)`.<sup>[**(48)**](#Note48)</sup>
+> 4. If _f_ has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, if _f_ is _C_<sup>2</sup> continuous there) (incorporating Powell 1981)<sup>[**(47)**](#Note47)</sup>:  Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then:
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is concave), and
+>     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is convex).
+>
+>     The following Python code uses the SymPy computer algebra library to calculate _m_ and the necessary values for **fbound(_n_)**, given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: `i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)`.<sup>[**(48)**](#Note48)</sup>
+>
+>     However, this method of finding **fabove** and **fbelow** works only if _f_, in the interval [0, 1\]&mdash;
+>     - has a minimum of greater than 0 and a maximum of less than 1, or
+>     - is convex and has a minimum of greater than 0, or
+>     - is concave and has a maximum of less than 1.
+>
+>     For example, this method can't be used for _g_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, even though _g_ is C<sup>2</sup> continuous, since _g_ is convex yet has a minimum of 0.
 > 5. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
 >
 > **Examples:**
@@ -1333,6 +1344,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*8).
 >     - **fbound**(_n_) = [0, (1/2) + 9/(16\*_n_)].
+> 4. These algorithms can't be used for the function _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, since _f_ is convex yet has a minimum of 0.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -1418,7 +1430,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note44>(44)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note45>(45)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
 - <small><sup id=Note46>(46)</sup> Flegal, J.M., Herbei, R., "Exact sampling from intractible probability distributions via a Bernoulli factory", _Electronic Journal of Statistics_ 6, 10-37, 2012.</small>
-- <small><sup id=Note47>(47)</sup> Gzyl, Henryk, and José Luis Palacios. “The Weierstrass Approximation Theorem and Large Deviations.” The American Mathematical Monthly, vol. 104, no. 7, 1997, pp. 650–653.</small>
+- <small><sup id=Note47>(47)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981.</small>
 - <small><sup id=Note48>(48)</sup> Unfortunately, finding the maximum can fail for some functions `d`; a less robust alternative is to use `d.subs(x, nsolve(diff(d), 0.5),(0,1),solver='bisect')+0.1`.</small>
 - <small><sup id=Note49>(49)</sup> Lorentz, G.G., _Bernstein Polynomials_, 1953.</small>
 - <small><sup id=Note50>(50)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>

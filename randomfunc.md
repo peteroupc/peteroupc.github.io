@@ -1548,7 +1548,7 @@ Generating random data points based on how a list of data points is distributed 
 
 > **Notes:**
 >
-> 1. Usually, more than one kind of model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, or parametric distributions).  If several kinds of model are fitting choices, then the kind showing the best _goodness of fit_ for the data set (e.g., chi-squared goodness of fit) should be chosen.
+> 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best _predictive accuracy_ for the data set (e.g., _goodness of fit_, precision, recall) should be chosen.
 > 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a random number weighted on the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
 > 3. If the existing data points each belong in one of several _categories_, choosing a random data point _and_ its category could be done&mdash;
 >     1. by choosing a random data point based on all the existing data points, then finding its category (e.g., via machine learning models known as _classification models_), or

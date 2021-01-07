@@ -1725,7 +1725,24 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>.</li>
 <li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
 <li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
-<li>If <em>f</em> has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, if <em>f</em> is <em>C</em><sup>2</sup> continuous there) (Gzyl and Palacios 1997)<sup><a href="#Note47"><strong>(47)</strong></a></sup>:  Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8).  The following Python code uses the SymPy computer algebra library to calculate <em>m</em> and the necessary values for <strong>fbound(<em>n</em>)</strong>, given a <em>C</em><sup>2</sup> continuous function <code>func</code> that uses the variable <code>x</code>: <code>i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)</code>.<sup><a href="#Note48"><strong>(48)</strong></a></sup></li>
+<li><p>If <em>f</em> has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, if <em>f</em> is <em>C</em><sup>2</sup> continuous there) (incorporating Powell 1981)<sup><a href="#Note47"><strong>(47)</strong></a></sup>:  Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave), and</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex).</li>
+</ul>
+
+<p>The following Python code uses the SymPy computer algebra library to calculate <em>m</em> and the necessary values for <strong>fbound(<em>n</em>)</strong>, given a <em>C</em><sup>2</sup> continuous function <code>func</code> that uses the variable <code>x</code>: <code>i=Interval(0, 1); d=diff(diff(func)); m=Max(maximum(-d, x, i), maximum(d, x, i)); bound1=minimum(func,x,i)-m/(n*8); bound2=maximum(func,x,i)+m/(n*8)</code>.<sup><a href="#Note48"><strong>(48)</strong></a></sup></p>
+
+<p>However, this method of finding <strong>fabove</strong> and <strong>fbelow</strong> works only if <em>f</em>, in the interval [0, 1]&mdash;</p>
+
+<ul>
+<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
+<li>is convex and has a minimum of greater than 0, or</li>
+<li>is concave and has a maximum of less than 1.</li>
+</ul>
+
+<p>For example, this method can&#39;t be used for <em>g</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, even though <em>g</em> is C<sup>2</sup> continuous, since <em>g</em> is convex yet has a minimum of 0.</p></li>
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
 </ol>
 
@@ -1753,6 +1770,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2 + (9/16) / (<em>n</em>*8).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 9/(16*<em>n</em>)].</li>
 </ul></li>
+<li>These algorithms can&#39;t be used for the function <em>f</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, since <em>f</em> is convex yet has a minimum of 0.</li>
 </ol>
 </blockquote>
 
@@ -1852,7 +1870,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note44>(44)</sup> Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</small></li>
 <li><small><sup id=Note45>(45)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
 <li><small><sup id=Note46>(46)</sup> Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</small></li>
-<li><small><sup id=Note47>(47)</sup> Gzyl, Henryk, and José Luis Palacios. “The Weierstrass Approximation Theorem and Large Deviations.” The American Mathematical Monthly, vol. 104, no. 7, 1997, pp. 650–653.</small></li>
+<li><small><sup id=Note47>(47)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981.</small></li>
 <li><small><sup id=Note48>(48)</sup> Unfortunately, finding the maximum can fail for some functions <code>d</code>; a less robust alternative is to use <code>d.subs(x, nsolve(diff(d), 0.5),(0,1),solver=&#39;bisect&#39;)+0.1</code>.</small></li>
 <li><small><sup id=Note49>(49)</sup> Lorentz, G.G., <em>Bernstein Polynomials</em>, 1953.</small></li>
 <li><small><sup id=Note50>(50)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>

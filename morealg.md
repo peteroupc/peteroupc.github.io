@@ -103,14 +103,14 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 
 There are two algorithms.
 
-The first uses the so-called Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _k_ equal to 1.  Then the following steps are taken.
+The first takes advantage of the so-called Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _k_ equal to 1.  Then the following steps are taken.
 
 1. If _k_ is 1: With probability 1/2, flip the input coin and return the result.
 2. If _k_ is greater than 1, then do the following with probability _k_/(1+_k_):
     - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_k_ and 0 otherwise.
 3. Run this algorithm recursively, but with _k_ = _k_ + 2.  If the result is 1, return 0.  Otherwise, go to step 1.
 
-The second algorithm involves the series expansion of tanh(.) and involves the general martingale algorithm.
+The second algorithm involves an alternating series expansion of tanh(.) and involves the general martingale algorithm.
 
 First, define the following operation:
 
@@ -128,7 +128,7 @@ The algorithm is then as follows:
 2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 3. Generate a uniform(0, 1) random number _ret_.
 4. (Loop.) If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
-5. Let _m_ be 2\*(_n_+1).  **Get the _m_<sup>th</sup> Bernoulli number**, call it _b_. Let _t_ be abs(_b_)\*2<sup>_m_</sup>\*(2<sup>_m_</sup>&minus;1)/(_m_!).
+5. (Calculate the next term of the alternating series for tanh.) Let _m_ be 2\*(_n_+1).  **Get the _m_<sup>th</sup> Bernoulli number**, call it _b_. Let _t_ be abs(_b_)\*2<sup>_m_</sup>\*(2<sup>_m_</sup>&minus;1)/(_m_!).
 6. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _t_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _t_.
 7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 8. Add 1 to _n_ and go to step 4.
