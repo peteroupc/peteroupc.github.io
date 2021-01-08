@@ -2,6 +2,8 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+**2020 Mathematics Subject Classification:** 60-08, 60-04.
+
 This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:
 
 * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)

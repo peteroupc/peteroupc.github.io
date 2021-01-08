@@ -5,6 +5,8 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
+<p><strong>2020 Mathematics Subject Classification:</strong> 60-08, 60-04.</p>
+
 <p><a id=Introduction></a></p>
 
 <h2>Introduction</h2>
@@ -1731,34 +1733,39 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>.</li>
 <li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
 <li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
-<li><p>If <em>f</em> has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, if <em>f</em> is <em>C</em><sup>2</sup> continuous there) (incorporating Powell 1981)<sup><a href="#Note48"><strong>(48)</strong></a></sup>:  Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then:</p>
+<li><p>The following method (see Powell 1981)<sup><a href="#Note48"><strong>(48)</strong></a></sup> implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>), in the interval [0, 1]&mdash;</p>
+
+<ul>
+<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions  (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
+<li>either&mdash;
+
+<ul>
+<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
+<li>is convex and has a minimum of greater than 0, or</li>
+<li>is concave and has a maximum of less than 1.</li>
+</ul></li>
+</ul>
+
+<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex).</li>
 </ul>
 
-<p>The SymPy code in the <a href="#Appendix"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given a C<sup>2</sup> continuous function.  However, this method of finding <strong>fabove</strong> and <strong>fbelow</strong> works only if <em>f</em>, in the interval [0, 1]&mdash;</p>
-
-<ul>
-<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
-<li>is convex and has a minimum of greater than 0, or</li>
-<li>is concave and has a maximum of less than 1.</li>
-</ul>
-
-<p>For example, this method can&#39;t be used for <em>g</em>(<em>&lambda;</em>) = cosh(<em>&lambda;</em>) &minus; 1, even though <em>g</em> is C<sup>2</sup> continuous, since <em>g</em> is convex yet has a minimum of 0.</p></li>
+<p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate_C2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.</p></li>
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
-<li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note59"><strong>(59)</strong></a></sup>), since both bounds would then be available at once.</li>
+<li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note49"><strong>(49)</strong></a></sup>), since both bounds would then be available at once.</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup><a href="#Note49"><strong>(49)</strong></a></sup>:
+<li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup><a href="#Note50"><strong>(50)</strong></a></sup>:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note50"><strong>(50)</strong></a></sup> and has an upper bound of 1.08989.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note51"><strong>(51)</strong></a></sup> and has an upper bound of 1.08989.</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove</strong>(<em>n</em>, <em>n</em>)].</li>
 </ul></li>
 <li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2, then notes 2 and 4 above suggest the following:
@@ -1794,7 +1801,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)</p>
 
-<p>I have found <a href="https://math.stackexchange.com/questions/3889382"><strong>several methods</strong></a> to compute such sequences, but most of them have issues that I seek clarification on.  For example, the method of Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup> requires knowing the function&#39;s smoothness class and requires the function to be bounded away from 0 and 1; moreover the method uses several constants, namely <em>s</em>, <em>θ<sub>α</sub></em>, and <em>D</em>, with no easy lower bounds.  As another example, Gal&#39;s method (1989)<sup><a href="#Note51"><strong>(51)</strong></a></sup> produces polynomials that converge too slowly to be practical.</p>
+<p>I have found <a href="https://math.stackexchange.com/questions/3889382"><strong>several methods</strong></a> to compute such sequences, but most of them have issues that I seek clarification on.  For example, the method of Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup> requires knowing the function&#39;s smoothness class and requires the function to be bounded away from 0 and 1; moreover the method uses several constants, namely <em>s</em>, <em>θ<sub>α</sub></em>, and <em>D</em>, with no easy lower bounds.  As another example, Gal&#39;s method (1989)<sup><a href="#Note52"><strong>(52)</strong></a></sup> produces polynomials that converge too slowly to be practical.</p>
 
 <p>See also my questions on <em>Mathematics Stack Exchange</em>:</p>
 
@@ -1876,17 +1883,17 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note46>(46)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
 <li><small><sup id=Note47>(47)</sup> Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</small></li>
 <li><small><sup id=Note48>(48)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981.</small></li>
-<li><small><sup id=Note49>(49)</sup> Lorentz, G.G., <em>Bernstein Polynomials</em>, 1953.</small></li>
-<li><small><sup id=Note50>(50)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
-<li><small><sup id=Note51>(51)</sup> Gal, S.G., &quot;Constructive approximation by monotonous polynomial sequences in LipMα, with α ∈ (0, 1]&quot;, <em>Journal of Approximation Theory</em> 59 (1989).</small></li>
-<li><small><sup id=Note52>(52)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note53>(53)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note54>(54)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note55>(55)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note56>(56)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note57>(57)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note58>(58)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note59>(59)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
+<li><small><sup id=Note49>(49)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
+<li><small><sup id=Note50>(50)</sup> Lorentz, G.G., <em>Bernstein Polynomials</em>, 1953.</small></li>
+<li><small><sup id=Note51>(51)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note52>(52)</sup> Gal, S.G., &quot;Constructive approximation by monotonous polynomial sequences in LipMα, with α ∈ (0, 1]&quot;, <em>Journal of Approximation Theory</em> 59 (1989).</small></li>
+<li><small><sup id=Note53>(53)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note54>(54)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note55>(55)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note56>(56)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
+<li><small><sup id=Note57>(57)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
+<li><small><sup id=Note58>(58)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note59>(59)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1899,9 +1906,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note52"><strong>(52)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (<em>&lambda;</em>) into a coin with another bias (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note53"><strong>(53)</strong></a></sup>, (Peres 1992)<sup><a href="#Note54"><strong>(54)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (<em>&lambda;</em>) into a coin with another bias (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note54"><strong>(54)</strong></a></sup>, (Peres 1992)<sup><a href="#Note55"><strong>(55)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</p>
@@ -1932,7 +1939,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Function B: 2 * <em>&lambda;</em>, when <em>&lambda;</em> lies in (0, 1/2 &minus; <em>&#x03F5;</em>), where <em>&#x03F5;</em> is in (0, 1/2).</li>
 </ul>
 
-<p>Glynn (2016)<sup><a href="#Note55"><strong>(55)</strong></a></sup> distinguishes between&mdash;</p>
+<p>Glynn (2016)<sup><a href="#Note56"><strong>(56)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
@@ -1981,7 +1988,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note36"><strong>(36)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note56"><strong>(56)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note36"><strong>(36)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note57"><strong>(57)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
@@ -2078,7 +2085,7 @@ bound2=rmaximum(func,x)+m/(n*8)
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note57"><strong>(57)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note58"><strong>(58)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
@@ -2221,7 +2228,7 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>Odd is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note52"><strong>(52)</strong></a></sup>.</td>
+<td>Odd is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.</td>
 </tr>
 </tbody></table>
 
@@ -2243,7 +2250,7 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Arbitrary</td>
 <td>Arbitrary</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note59"><strong>(59)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
