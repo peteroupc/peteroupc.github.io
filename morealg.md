@@ -16,6 +16,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _n_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___n__gamma__m__1)
     - [**Derivative (slope) of arctan(_&lambda;_)**](#Derivative_slope_of_arctan___lambda)
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
+    - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
@@ -107,12 +108,26 @@ This algorithm involves an application of the general martingale algorithm to th
 1. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random number _ret_.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
-4. If _w_ is 0, set _u_ to _l_ and go to step 6.  (The estimate _&lambda;_<sup>_n_\*2</sup> is 0, so no more terms are added and we use _l_ as the final estimate for cosh(_&lambda;_)&minus;1.)
-5. Let _m_ be (_n_\*2), let _&alpha;_ be 1/(_m_!) (a term of the Taylor series), and let _err_ be 2/((_m_+1)!) (the error term).  Add _&alpha;_ to _l_, then set _u_ to _l_ + _err_.
+4. If _w_ is 0, set _u_ to _&#x2113;_ and go to step 6.  (The estimate _&lambda;_<sup>_n_\*2</sup> is 0, so no more terms are added and we use _&#x2113;_ as the final estimate for cosh(_&lambda;_)&minus;1.)
+5. Let _m_ be (_n_\*2), let _&alpha;_ be 1/(_m_!) (a term of the Taylor series), and let _err_ be 2/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
 6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 3.
 
 In this algorithm, the error term, which follows from _Taylor's theorem_, has a numerator of 2 because 2 is higher than the maximum value that the function's slope, slope-of-slope, etc. functions can achieve anywhere in the interval [0, 1].
+
+<a id=sinh___lambda___2></a>
+### sinh(_&lambda;_)/2
+
+This algorithm involves an application of the general martingale algorithm to the Taylor series for sinh(_&lambda;_)/2, which is _&lambda;_<sup>1</sup>/(1!\*2) + _&lambda;_<sup>3</sup>/(3!\*2) + ..., or as used here, _&lambda;_\* (1/2 + _&lambda;_<sup>2</sup>/(3!\*2) + _&lambda;_<sup>4</sup>/(5!\*2) + ...).
+
+1. Flip the input coin.  If it returns 0, return 0.
+2. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 1/2 (the first term is added already), and set _n_ to 1.
+3. Generate a uniform(0, 1) random number _ret_.
+4. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
+5. If _w_ is 0, set _u_ to _&#x2113;_ and go to step 7. (No more terms are added here.)
+6. Let _m_ be (_n_\*2+1), let _&alpha;_ be 1/(_m_!\*2) (a term of the Taylor series), and let _err_ be 1/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
+7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+8. Add 1 to _n_ and go to step 4.
 
 <a id=tanh___lambda></a>
 ### tanh(_&lambda;_)
