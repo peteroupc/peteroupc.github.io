@@ -1939,7 +1939,7 @@ CLASSES
      |  rndintexc(self, maxexc)
      |      Returns a random integer in [0, maxexc).
      |
-     |  simulate(coin, fbelow, fabove, fbound)
+     |  simulate(self, coin, fbelow, fabove, fbound)
      |      Simulates a general factory function defined by two
      |      sequences of polynomials that converge from above and below.
      |      - coin(): Function that returns 1 or 0 with a fixed probability.

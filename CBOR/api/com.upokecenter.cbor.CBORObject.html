@@ -2410,8 +2410,7 @@ set on the given options object. Also thrown if the given type
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
-parameter <code>enc</code> is null, or the parameter <code>t</code> or <code>
-pod</code> is null.</p></li>
+parameter <code>enc</code> is null, or the parameter <code>t</code> is null.</p></li>
 </ul>
 
 <h3>DecodeObjectFromBytes</h3>
@@ -2464,8 +2463,7 @@ set on the given options object. Also thrown if the given type
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
-parameter <code>enc</code> is null, or the parameter <code>t</code> or <code>
-pod</code> is null.</p></li>
+parameter <code>t</code> or <code>pod</code> is null.</p></li>
 </ul>
 
 <h3>DecodeObjectFromBytes</h3>
@@ -2513,8 +2511,7 @@ set on the given options object. Also thrown if the given type
 given object&#39;s nesting is too deep, or another error occurred when
 serializing the object.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>data</code> is null, or the
-parameter <code>enc</code> is null, or the parameter <code>t</code> or <code>
-pod</code> is null.</p></li>
+parameter <code>t</code> is null.</p></li>
 </ul>
 
 <h3>FromObject</h3>
@@ -3118,9 +3115,9 @@ CBORObject.Null if the object is null.</li>
  integer that is treated as a 64-bit unsigned integer (such as.NET&#39;s
  UInt64, which has no direct equivalent in the Java language), in the
  sense that the value is treated as 2^64 plus the original value if
- it&#39;s negative.</p> <pre>long x = -40L; // Example 64-bit value treated as 2^64-40. CBORObject obj = CBORObject.FromObject(v &lt; 0 ? EInteger.FromInt32(1).ShiftLeft(64).Add(v) : EInteger.FromInt64(v));</pre> <p>In the Java version, which has
+ it&#39;s negative.</p> <pre>long x = -40L; /* Example 64-bit value treated as 2^64-40.<em>/ CBORObject obj = CBORObject.FromObject(v &lt; 0 ? EInteger.FromInt32(1).ShiftLeft(64).Add(v) : EInteger.FromInt64(v));</pre> <p>In the Java version, which has
  java.math.getBigInteger(), the following can be used instead:</p>
- <pre>long x = -40L; // Example 64-bit value treated as 2^64-40. CBORObject obj = CBORObject.FromObject(v &lt; 0 ? BigInteger.valueOf(1).shiftLeft(64).add(BigInteger.valueOf(v)) : BigInteger.valueOf(v));</pre></p>
+ <pre>long x = -40L; /</em> Example 64-bit value treated as 2^64-40.*/ CBORObject obj = CBORObject.FromObject(v &lt; 0 ? BigInteger.valueOf(1).shiftLeft(64).add(BigInteger.valueOf(v)) : BigInteger.valueOf(v));</pre></p>
 
 <p><strong>Parameters:</strong></p>
 

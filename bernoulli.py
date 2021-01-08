@@ -1115,14 +1115,14 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
-    def _binco(n, k):
+    def _binco(self, n, k):
         # Binomial coefficient
         ret = 1
         for i in range(n - k + 1, n + 1):
             ret *= Fraction(i, (n - i + 1))
         return int(ret)
 
-    def simulate(coin, fbelow, fabove, fbound):
+    def simulate(self, coin, fbelow, fabove, fbound):
         """ Simulates a general factory function defined by two
        sequences of polynomials that converge from above and below.
        - coin(): Function that returns 1 or 0 with a fixed probability.
@@ -1176,7 +1176,8 @@ class Bernoulli:
                     beta += b[(lastdegree, o)] * st
                 acount -= alpha
                 bcount -= beta
-                # print(["ac",alpha,beta,acount,bcount])
+                if acount + bcount + c <= 0:
+                    print(["ac", alpha, beta, acount, bcount, c])
             r = self.rndint((acount + bcount + c) - 1)
             if r < acount:
                 return 1
@@ -1447,6 +1448,7 @@ class DiceEnterprise:
         newladder = []
         for v in self.ladder:
             for k in range(len(self.ladder[0][1])):
+                # Copy coefficients, powers, and results
                 nl = [[x for x in v[0]], [x for x in v[1]], [x for x in v[2]]]
                 nl[1][k] += 1
                 newladder.append(nl)

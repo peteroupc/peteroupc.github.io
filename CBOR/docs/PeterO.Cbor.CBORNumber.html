@@ -20,8 +20,10 @@
 <li><code><a href="#CanFitInInt32">CanFitInInt32()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^31) or greater, and is less than 2^31.</li>
 <li><code><a href="#CanFitInInt64">CanFitInInt64()</a></code> - Returns whether this object&#39;s numerical value is an integer, is -(2^63) or greater, and is less than 2^63.</li>
 <li><code><a href="#CanFitInSingle">CanFitInSingle()</a></code> - Returns whether this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value.</li>
+<li><code><a href="#CanFitInUInt64">CanFitInUInt64()</a></code> - Returns whether this object&#39;s numerical value is an integer, is 0 or greater, and is less than 2^64.</li>
 <li><code><a href="#CanTruncatedIntFitInInt32">CanTruncatedIntFitInInt32()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^31) or greater, and less than 2^31.</li>
 <li><code><a href="#CanTruncatedIntFitInInt64">CanTruncatedIntFitInInt64()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63.</li>
+<li><code><a href="#CanTruncatedIntFitInUInt64">CanTruncatedIntFitInUInt64()</a></code> - Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be 0 or greater, and less than 2^64.</li>
 <li><code><a href="#CompareTo_int">CompareTo(int)</a></code> - Compares this CBOR number with a 32-bit signed integer.</li>
 <li><code><a href="#CompareTo_long">CompareTo(long)</a></code> - Compares this CBOR number with a 64-bit signed integer.</li>
 <li><code><a href="#CompareTo_PeterO_Cbor_CBORNumber">CompareTo(PeterO.Cbor.CBORNumber)</a></code> - Compares this CBOR number with another.</li>
@@ -201,6 +203,19 @@ The exact result of the operation might be too big to fit in memory (or might re
 
 <p><code>true</code>  if this object&#39;s value can be converted to a 32-bit floating point number without its value being rounded to another numerical value, or if this is a not-a-number value, even if the value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point number; otherwise,  <code>false</code> .</p>
 
+<p><a id="CanFitInUInt64"></a></p>
+
+<h3>CanFitInUInt64</h3>
+
+<pre>public bool CanFitInUInt64();
+</pre>
+
+<p>Returns whether this object&#39;s numerical value is an integer, is 0 or greater, and is less than 2^64.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object&#39;s numerical value is an integer, is 0 or greater, and is less than 2^64; otherwise,  <code>false</code> .</p>
+
 <p><a id="CanTruncatedIntFitInInt32"></a></p>
 
 <h3>CanTruncatedIntFitInInt32</h3>
@@ -226,6 +241,19 @@ The exact result of the operation might be too big to fit in memory (or might re
 <p><b>Return Value:</b></p>
 
 <p><code>true</code>  if this object&#39;s value, converted to an integer by discarding its fractional part, would be -(2^63) or greater, and less than 2^63; otherwise,  <code>false</code> .</p>
+
+<p><a id="CanTruncatedIntFitInUInt64"></a></p>
+
+<h3>CanTruncatedIntFitInUInt64</h3>
+
+<pre>public bool CanTruncatedIntFitInUInt64();
+</pre>
+
+<p>Returns whether this object&#39;s value, converted to an integer by discarding its fractional part, would be 0 or greater, and less than 2^64.</p>
+
+<p><b>Return Value:</b></p>
+
+<p><code>true</code>  if this object&#39;s value, converted to an integer by discarding its fractional part, would be 0 or greater, and less than 2^64; otherwise,  <code>false</code> .</p>
 
 <p><a id="CompareTo_int"></a></p>
 
