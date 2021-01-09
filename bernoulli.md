@@ -1707,11 +1707,12 @@ Then the algorithm's behavior is given in the tables below.
  --- | --- | --- | --- | --- |
 | Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | _n_ / ((_n_ + 1)!). | Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1). |
 | Alternating numbers | Uniform(0,1) | Uniform(0,1) | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1).<br/>Even is cos(1)/(sin(1)+1). |
+
 | Permutation Class | Distribution _D_ | Distribution _E_ | The probability that _&delta;_ is less than _x_ given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Arbitrary | Arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>; see also Forsythe 1972<sup>[**(40)**](#Note40)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Arbitrary | Arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(59)**](#Note59)</sup>).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(_z_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of _&delta;_ is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(53)**](#Note53)</sup>. |
+| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of _&delta;_ is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(53)**](#Note53)</sup>. |
 | Numbers sorted in descending order | Uniform(0,1) | Max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Note:** All the functions possible for formulas 1 and 2 are nondecreasing functions.

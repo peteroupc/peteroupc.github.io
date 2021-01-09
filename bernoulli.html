@@ -2216,47 +2216,39 @@ def valid_perm(f, x, n):
 <td>(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1) &minus; <em>a</em><sub><em>n</em> + 1</sub>) / (<em>n</em> + 1)!, where <em>a</em><sub><em>i</em></sub> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</td>
 <td>Odd is 1&minus;cos(1)/(sin(1)+1).<br/>Even is cos(1)/(sin(1)+1).</td>
 </tr>
+</tbody></table>
+
+<table><thead>
 <tr>
-<td>Permutation Class</td>
-<td>Distribution <em>D</em></td>
-<td>Distribution <em>E</em></td>
-<td>The probability that <em>&delta;</em> is less than <em>x</em> given that <em>n</em> is ...</td>
-<td></td>
+<th>Permutation Class</th>
+<th>Distribution <em>D</em></th>
+<th>Distribution <em>E</em></th>
+<th>The probability that <em>&delta;</em> is less than <em>x</em> given that <em>n</em> is ...</th>
 </tr>
-<tr>
-<td>---</td>
-<td>---</td>
-<td>---</td>
-<td>---</td>
-<td></td>
-</tr>
+</thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Arbitrary</td>
 <td>Arbitrary</td>
 <td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note40"><strong>(40)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function (CDF) of <em>E</em>.<br>If <em>x</em> is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
-<td></td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Arbitrary</td>
 <td>Arbitrary</td>
 <td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note59"><strong>(59)</strong></a></sup>).  DPDF and ECDF are as above.</td>
-<td></td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>Odd is ((1&minus;exp(<em>z</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.</td>
-<td></td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Max. of two uniform(0,1)</td>
 <td>Odd is erf(<em>x</em>)/erf(1) (uses Formula 1, where DPDF(<em>z</em>) = 1 and ECDF(<em>z</em>) = <em>z</em><sup>2</sup> for <em>z</em> in [0, 1]; see also <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a>).</td>
-<td></td>
 </tr>
 </tbody></table>
 

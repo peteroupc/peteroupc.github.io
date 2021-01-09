@@ -135,11 +135,11 @@
 <li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>x</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
 </ol>
 
-<p>Derivation:  See Formula 1 in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Problems_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>, where:</p>
+<p>Derivation:  See Formula 1 in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot;, where:</p>
 
 <ul>
 <li><code>ECDF(x)</code>  is the uniform(0,1) distribution&#39;s cumulative distribution function, namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
-<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random numbers, namely <em>m</em>*<em>x</em><sup>1&minus;<em>m</em></sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
+<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random numbers, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
 </ul>
 
 <p><a id=Derivative_slope_of_arctan___lambda></a></p>

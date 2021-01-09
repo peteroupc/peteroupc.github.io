@@ -96,10 +96,10 @@ An application of the continued fraction algorithm is the following algorithm th
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
 5. If _k_ is odd, return a number that is 1 if _ret_ is less than _x_ and 0 otherwise. (If _ret_ is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via **URandLessThanReal**.)  If _k_ is even, go to step 1.
 
-Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Problems_Arising_from_Certain_Permutations), where:
+Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
 
 - `ECDF(x)`  is the uniform(0,1) distribution's cumulative distribution function, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
-- `DPDF(x)` is the probability density function for the maximum of _m_ uniform(0,1) random numbers, namely _m_\*_x_<sup>1&minus;_m_</sup> if _x_ is in \[0, 1\], and 0 otherwise.
+- `DPDF(x)` is the probability density function for the maximum of _m_ uniform(0,1) random numbers, namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
 
 <a id=Derivative_slope_of_arctan___lambda></a>
 ### Derivative (slope) of arctan(_&lambda;_)
