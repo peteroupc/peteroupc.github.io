@@ -2,6 +2,8 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+**Abstract:** This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on sampling methods that _exactly_ simulate a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
+
 **2020 Mathematics Subject Classification:** 60-08, 60-04.
 
 <a id=Introduction></a>
@@ -1557,10 +1559,10 @@ def rmaximum(f,x): # Try maximum, and fall back if it fails
      return maximum(f,x,Interval(0, 1))
   except:
      # 0.1 is added below as a bias
-     return (f).subs(x, nsolve(diff(f), (0,1), solver='bisect'))+0.1
+     return (f).subs(x, nsolve(diff(f), (0,1)))+0.1
 
 d=diff(diff(func))
-m=Max(rmaximum(diff(-d),x),rmaximum(diff(d),x))
+m=Max(rmaximum(-d,x),rmaximum(d,x))
 bound1=rminimum(func,x)-m/(n*8)
 bound2=rmaximum(func,x)+m/(n*8)
 ```
