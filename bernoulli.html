@@ -1749,8 +1749,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then:</p>
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
 </ul>
 
 <p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate_C2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.</p></li>
@@ -1768,14 +1768,14 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>S</em>/sqrt(<em>n</em>), where <em>S</em> = (4306+837*sqrt(6))/5832 is Sikkema&#39;s constant (Sikkema 1961)<sup><a href="#Note51"><strong>(51)</strong></a></sup> and has an upper bound of 1.08989.</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, <strong>fabove</strong>(<em>n</em>, <em>n</em>)].</li>
 </ul></li>
-<li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2, then notes 2 and 4 above suggest the following:
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2, then note 4 suggests the following:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*8).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/(4*<em>n</em>)].</li>
 </ul></li>
-<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then notes 2 and 4 above suggest the following:
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then notes 4 suggests the following:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>

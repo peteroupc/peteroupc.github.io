@@ -1330,8 +1330,8 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >         - is concave and has a maximum of less than 1.
 >
 >     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then:
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is concave).
->     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is convex).
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
+>     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
 >     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate_C2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
 > 5. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
@@ -1343,11 +1343,11 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _S_/sqrt(_n_), where _S_ = (4306+837\*sqrt(6))/5832 is Sikkema's constant (Sikkema 1961)<sup>[**(51)**](#Note51)</sup> and has an upper bound of 1.08989.
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
-> 2. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2, then notes 2 and 4 above suggest the following:
+> 2. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2, then note 4 suggests the following:
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*8).
 >     - **fbound**(_n_) = [0, (1/2) + 1/(4\*_n_)].
-> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then notes 2 and 4 above suggest the following:
+> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then notes 4 suggests the following:
 >     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*8).
 >     - **fbound**(_n_) = [0, (1/2) + 9/(16\*_n_)].
