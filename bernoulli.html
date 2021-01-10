@@ -2062,7 +2062,7 @@ bound2=rmaximum(func,x)+m/(n*8)
 
 <h3>The von Neumann Schema</h3>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> describes what it calls the <em>von Neumann schema</em> (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it&#39;s not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random integer <em>n</em>, greater than 0, with probability equal to&mdash;</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup> describes what it calls the <em>von Neumann schema</em> (sec. 2).  Although the von Neumann schema is used in several Bernoulli factories given here, it&#39;s not a Bernoulli factory itself since it could produce random numbers other than 0 and 1, which is why this section appears in the appendix.  Given a permutation class and an input coin, the von Neumann schema generates a random integer <em>n</em>, 0 or greater, with probability equal to&mdash;</p>
 
 <ul>
 <li>(<em>&lambda;</em><sup><em>n</em></sup> * V(<em>n</em>) / <em>n</em>!) / EGF(<em>&lambda;</em>),</li>
@@ -2208,6 +2208,13 @@ def valid_perm(f, x, n):
 <td>Uniform(0,1)</td>
 <td><em>n</em> / ((<em>n</em> + 1)!).</td>
 <td>Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1).</td>
+</tr>
+<tr>
+<td>Numbers sorted in descending order</td>
+<td>Arbitrary</td>
+<td>Arbitrary</td>
+<td>(&int;<sup>(&minus;&infin;,&infin;)</sup> DPDF(<em>z</em>) * (ECDF(<em>z</em>)<sup><em>n</em>&minus;1</sup>/((<em>n</em>&minus;1)!) &minus; ECDF(<em>z</em>)<sup><em>n</em></sup>/(<em>n</em>!)) <em>dz</em>), for all <em>n</em> &gt; 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV)<sup><a href="#Note9"><strong>(9)</strong></a></sup>. DPDF and ECDF are defined later.</td>
+<td>Odd is denominator of formula 1 below.</td>
 </tr>
 <tr>
 <td>Alternating numbers</td>
