@@ -1315,28 +1315,41 @@ def _test_rand_extraction(func, digits=2, nofill=False):
         except:
             pass
 
+def addto1(rg):
+    # Simulates the number of random numbers
+    # in [0,1] needed to produce a sum greater than 1.
+    pa = psrn_new_01()
+    i = 1
+    while True:
+        pa = psrn_add(rg, pa, psrn_new_01())
+        i += 1
+        if pa[1] > 0:
+            break
+    return i
+
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.
 
     import scipy.stats as st
     import math
 
-    def dobucket(v, bounds=None):
+    def dobucket(v, bounds=None, allints=None):
         a = Fraction(min(v))
         b = Fraction(max(v))
         if bounds != None:
             a, b = bounds
         size = int(max(30, math.ceil(b - a)))
-        allints = True
-        if size == 30:
-            for x in v:
-                if int(x) != x:
-                    allints = False
-                    break
-            if allints:
-                size = int(b - a)
-        else:
-            allints = False
+        if allints != True and allints != False:
+            allints = True
+            if size == 30:
+                for x in v:
+                    if int(x) != x:
+                        allints = False
+                        break
+                if allints:
+                    size = int(b - a)
+            else:
+                allints = False
         if allints:
             ls = [int(a + (b - a) * x / size) for x in range(size + 1)]
         else:

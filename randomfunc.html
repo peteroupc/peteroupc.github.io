@@ -140,7 +140,7 @@
 <ul>
 <li><a href="#Sampling_for_Discrete_Distributions"><strong>Sampling for Discrete Distributions</strong></a></li>
 <li><a href="#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a></li>
-<li><a href="#Rejection_Sampling_with_a_PDF"><strong>Rejection Sampling with a PDF</strong></a></li>
+<li><a href="#Rejection_Sampling_with_a_PDF_Like_Function"><strong>Rejection Sampling with a PDF-Like Function</strong></a></li>
 <li><a href="#Alternating_Series"><strong>Alternating Series</strong></a></li>
 <li><a href="#Markov_Chain_Monte_Carlo"><strong>Markov-Chain Monte Carlo</strong></a></li>
 </ul></li>
@@ -2005,7 +2005,7 @@ number in the sequence.</li>
 
 <ul>
 <li>The <a href="https://en.wikipedia.org/wiki/Cumulative_distribution_function"><strong><em>cumulative distribution function</em></strong></a>, or <em>CDF</em>, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].</li>
-<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  In this document, the area under the PDF need not equal 1.<sup><a href="#Note72"><strong>(72)</strong></a></sup></li>
+<li>The <a href="https://en.wikipedia.org/wiki/Probability_density_function"><strong><em>probability density function</em></strong></a>, or <em>PDF</em>, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  Technically, the area under the PDF equals 1.<sup><a href="#Note72"><strong>(72)</strong></a></sup>  Moreover, the term PDF applies only to continuous distributions.  In this document, the term &quot;<strong>PDF-like function</strong>&quot; means the PDF, the probability mass function, or a function that&#39;s proportional to either.</li>
 <li>The <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is the inverse of the CDF and maps numbers in the interval [0, 1) to numbers in the distribution, from low to high.</li>
 </ul>
 
@@ -2024,9 +2024,9 @@ number in the sequence.</li>
 <p>If&mdash;</p>
 
 <ul>
-<li>the discrete distribution has a <strong>known PDF</strong> (<code>PDF(x)</code>, more properly called <em>probability mass function</em>),</li>
+<li>the discrete distribution has a <strong>known PDF-like function</strong> (<code>PDF(x)</code>),</li>
 <li>the interval [<code>mini</code>, <code>maxi</code>] covers all the distribution, and</li>
-<li>the PDF&#39;s values are all rational numbers (numbers of the form <code>y/z</code> where <code>y</code> and <code>z</code> are integers),</li>
+<li>the function&#39;s values are all rational numbers (numbers of the form <code>y/z</code> where <code>y</code> and <code>z</code> are integers),</li>
 </ul>
 
 <p>the following method samples exactly from that distribution:</p>
@@ -2066,17 +2066,17 @@ END METHOD
 END METHOD
 </pre>
 
-<p>In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless the PDF&#39;s or CDF&#39;s values cover all the distribution and are calculated exactly (without error).</p>
+<p>In other cases, the discrete distribution can still be approximately sampled.  The following cases will lead to an approximate sampler unless the values of the CDF or PDF-like function cover all the distribution and are calculated exactly (without error).</p>
 
 <ul>
-<li>If the PDF&#39;s or CDF&#39;s values are calculated as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note74"><strong>(74)</strong></a></sup>, there are various ways to turn these numbers to rational numbers or integers.
+<li>If the values of the CDF or PDF-like function are calculated as <strong>floating-point numbers</strong> of the form  <code>FPSignificand</code> * <code>FPRadix</code><sup><code>FPExponent</code></sup> (which include Java&#39;s <code>double</code> and <code>float</code>)<sup><a href="#Note74"><strong>(74)</strong></a></sup>, there are various ways to turn these numbers to rational numbers or integers.
 
 <ol>
 <li>One way is to use <code>FPRatio(x)</code> (in the pseudocode below), which is lossless and calculates the rational number for the given floating-point number <code>x</code>.</li>
 <li>Another way is to scale and round the values to integers (e.g., <code>round(x * mult)</code> where <code>mult</code> is a large integer); this is not lossless.</li>
-<li>A third way is to approximate the PDF&#39;s values to integers in a way that bounds the error, such as given in (Saad et al., 2020)<sup><a href="#Note75"><strong>(75)</strong></a></sup>; this is not lossless and works only in the PDF case.</li>
+<li>A third way is to approximate the values of the PDF-like function to integers in a way that bounds the error, such as given in (Saad et al., 2020)<sup><a href="#Note75"><strong>(75)</strong></a></sup>; this is not lossless and works only for PDF-like functions.</li>
 </ol></li>
-<li>If the PDF&#39;s or CDF&#39;s values are calculated as <strong>rational numbers</strong>, these numbers can be turned into integer weights using either <code>NormalizeRatios</code>, which is lossless, or (2) or (3) above, which are not.</li>
+<li>If the values of the CDF or PDF-like function are calculated as <strong>rational numbers</strong>, these numbers can be turned into integer weights using either <code>NormalizeRatios</code>, which is lossless, or (2) or (3) above, which are not.</li>
 <li>If the distribution takes on an <strong>infinite number of values</strong>, an appropriate interval [<code>mini</code>, <code>maxi</code>] can be chosen that covers almost all of the distribution.</li>
 </ul>
 
@@ -2129,8 +2129,8 @@ end
 <p>Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:</p>
 
 <ul>
-<li>Distribution is <strong>discrete, with known PDF</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast even though it&#39;s exact in theory.  If the interval [a, b] covers all or almost all the distribution, then the application can store the interval&#39;s PDF values in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with the PDF (Walter 2019)<sup><a href="#Note76"><strong>(76)</strong></a></sup>.  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
-<li>Distribution is <strong>continuous, with known PDF</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide. (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>. See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note77"><strong>(77)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> in the Python sample code <sup><a href="#Note78"><strong>(78)</strong></a></sup>.</li>
+<li>Distribution is <strong>discrete, with known PDF-like function</strong>: The most general method is sequential search (Devroye 1986, p. 85)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: <code>i = 0; p = PDF(i); while u01 &gt; p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p</code>, but this is not always fast even though it&#39;s exact in theory.  If the interval [a, b] covers all or almost all the distribution, then the application can store the PDF-like function&#39;s values in that interval in a list and call <code>WChoose</code>: <code>for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))</code>.  Note that finding the quantile based on the <strong>CDF</strong> instead can introduce more error than with PDF-like functions (Walter 2019)<sup><a href="#Note76"><strong>(76)</strong></a></sup>.  See also <code>integers_from_u01</code> in the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>.</li>
+<li>Distribution is <strong>continuous, with known PDF-like function</strong>: <code>ICDFFromContPDF(u01, mini, maxi, step)</code>, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [<code>mini</code>, <code>maxi</code>], with pieces up to <code>step</code> wide. (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>. See also <code>DensityInversionSampler</code>, <code>numbers_from_u01</code>, and <code>numbers_from_dist_inversion</code> (Derflinger et al. 2010)<sup><a href="#Note77"><strong>(77)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> in the Python sample code <sup><a href="#Note78"><strong>(78)</strong></a></sup>.</li>
 <li>Distribution is <strong>continuous, with known CDF</strong>: See <code>numbers_from_u01</code> in the Python sample code.</li>
 </ul>
 
@@ -2179,13 +2179,13 @@ END METHOD
 </ol>
 </blockquote>
 
-<p><a id=Rejection_Sampling_with_a_PDF></a></p>
+<p><a id=Rejection_Sampling_with_a_PDF_Like_Function></a></p>
 
-<h4>Rejection Sampling with a PDF</h4>
+<h4>Rejection Sampling with a PDF-Like Function</h4>
 
-<p>If the distribution <strong>has a known PDF</strong>, and the PDF can be more easily sampled by another distribution with its own PDF (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with the latter distribution until a number (<code>n</code>) that satisfies <code>r &lt;= PDF(n)</code>, where <code>r = RNDRANGEMaxExc(0, PDF2(n))</code>, is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>).</p>
+<p>If the distribution <strong>has a known PDF-like function</strong>, and that function can be more easily sampled by another distribution with its own PDF-like function (<code>PDF2</code>) that &quot;dominates&quot; <code>PDF</code> in the sense that <code>PDF2(x) &gt;= PDF(x)</code> at every valid <code>x</code>, then generate random numbers with the latter distribution until a number (<code>n</code>) that satisfies <code>r &lt;= PDF(n)</code>, where <code>r = RNDRANGEMaxExc(0, PDF2(n))</code>, is generated this way (that is, sample points in <code>PDF2</code> until a point falls within <code>PDF</code>).</p>
 
-<p>A variant of rejection sampling is the <em>squeeze principle</em>, in which a third PDF (<code>PDF3</code>) is chosen that is &quot;dominated&quot; by the first PDF (<code>PDF</code>) and easier to sample than <code>PDF</code>.  Here, a number is accepted if <code>r &lt;= PDF3(n)</code> or <code>r &lt;= PDF(n)</code> (Devroye 1986, p. 53)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
+<p>A variant of rejection sampling is the <em>squeeze principle</em>, in which a third PDF-like function (<code>PDF3</code>) is chosen that is &quot;dominated&quot; by the first one (<code>PDF</code>) and easier to sample than <code>PDF</code>.  Here, a number is accepted if <code>r &lt;= PDF3(n)</code> or <code>r &lt;= PDF(n)</code> (Devroye 1986, p. 53)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</p>
 
 <p>See also (von Neumann 1951)<sup><a href="#Note52"><strong>(52)</strong></a></sup>; (Devroye 1986)<sup><a href="#Note18"><strong>(18)</strong></a></sup>, pp. 41-43; &quot;<a href="#Rejection_Sampling"><strong>Rejection Sampling</strong></a>&quot;; and &quot;<a href="https://mathworks.com/help/stats/generating-random-data.html"><strong>Generating Pseudorandom Numbers</strong></a>&quot;.</p>
 
@@ -2193,9 +2193,9 @@ END METHOD
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution <strong>is discrete</strong>, generate <code>x</code> with <code>x = RNDINTEXCRANGE(low, high)</code> instead.</li>
-<li>A custom distribution&#39;s PDF, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s PDF, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF &quot;dominates&quot; the other PDF (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = Expo(1)</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</li>
-<li>The normal distribution&#39;s upside-down bell curve has the PDF <code>1-exp(-(x*x))</code>, and the highest point for this PDF is <code>peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))</code>. Sampling this distribution then uses the algorithm in example 1.</li>
+<li>To sample a random number in the interval [<code>low</code>, <code>high</code>) from a PDF-like function with a positive maximum value no greater than <code>peak</code> at that interval, generate <code>x = RNDRANGEMaxExc(low, high)</code> and <code>y = RNDRANGEMaxExc(0, peak)</code> until <code>y &lt; PDF(x)</code>, then take the last <code>x</code> generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution <strong>is discrete</strong>, generate <code>x</code> with <code>x = RNDINTEXCRANGE(low, high)</code> instead.</li>
+<li>A PDF-like function for a custom distribution, <code>PDF</code>, is <code>exp(-abs(x*x*x))</code>, and the exponential distribution&#39;s, <code>PDF2</code>, is <code>exp(-x)</code>.  The exponential PDF-like function <code>PDF2</code> &quot;dominates&quot; <code>PDF</code> (at every <code>x</code> 0 or greater) if we multiply it by 1.5, so that <code>PDF2</code> is now <code>1.5 * exp(-x)</code>.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within <code>PDF</code>.  This is done by generating <code>n = Expo(1)</code> until <code>PDF(n) &gt;= RNDRANGEMaxExc(0, PDF2(n))</code>.</li>
+<li>The normal distribution&#39;s upside-down bell curve has the PDF-like function <code>1-exp(-(x*x))</code>, and the highest point for this function is <code>peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))</code>. Sampling this distribution then uses the algorithm in example 1.</li>
 </ol>
 
 <p><strong>Note:</strong> In the Python sample code, <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py"><strong>moore.py</strong></a> and <code>numbers_from_dist</code> generate random numbers from a distribution via rejection sampling (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, (Sainudiin and York 2013)<sup><a href="#Note80"><strong>(80)</strong></a></sup>.</p>
@@ -2205,7 +2205,7 @@ END METHOD
 
 <h4>Alternating Series</h4>
 
-<p>If the target PDF is not known exactly, but can be approximated from above and below by two series expansions that converge to the PDF as more terms are added, the  <em>alternating series method</em> can be used.  This still requires a &quot;dominating&quot; PDF (<code>PDF2(x)</code>) to serve as the &quot;easy-to-sample&quot; distribution.  Call the series expansions <code>UPDF(x, n)</code> and <code>LPDF(x, n)</code>, respectively, where <code>n</code> is the number of terms in the series to add.  To generate a random number using this method (Devroye 2006)<sup><a href="#Note79"><strong>(79)</strong></a></sup>: (1) Generate a random number <code>x</code> that follows the &quot;dominating&quot; distribution; (2) set <code>n</code> to 0; (3) accept <code>x</code> if <code>r &lt;= LPDF(x, n)</code>, or go to step 1 if <code>r &gt;= UPDF(x, n)</code>, or repeat this step with <code>n</code> increased by 1 if neither is the case.</p>
+<p>If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  <em>alternating series method</em> can be used.  This still requires a &quot;dominating&quot; PDF-like function (<code>PDF2(x)</code>) to serve as the &quot;easy-to-sample&quot; distribution.  Call the series expansions <code>UPDF(x, n)</code> and <code>LPDF(x, n)</code>, respectively, where <code>n</code> is the number of terms in the series to add.  To generate a random number using this method (Devroye 2006)<sup><a href="#Note79"><strong>(79)</strong></a></sup>: (1) Generate a random number <code>x</code> that follows the &quot;dominating&quot; distribution; (2) set <code>n</code> to 0; (3) accept <code>x</code> if <code>r &lt;= LPDF(x, n)</code>, or go to step 1 if <code>r &gt;= UPDF(x, n)</code>, or repeat this step with <code>n</code> increased by 1 if neither is the case.</p>
 
 <p><a id=Markov_Chain_Monte_Carlo></a></p>
 
@@ -2213,7 +2213,7 @@ END METHOD
 
 <p><a href="https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo"><strong>Markov-chain Monte Carlo</strong></a> (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a <em>Markov chain</em> of random values that build on each other until they converge to the given distribution.  In general, however, a given chain&#39;s random values will have a statistical <em>dependence</em> on each other, and it takes an unknown time for the chain to converge (which is why techniques such as &quot;thinning&quot; -- keeping only every Nth sample -- or &quot;burn-in&quot; -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution&#39;s sampling domain for other samplers, such as rejection sampling (above).</p>
 
-<p>MCMC algorithms<sup><a href="#Note81"><strong>(81)</strong></a></sup> include <em>Metropolis&ndash;Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF, but two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
+<p>MCMC algorithms<sup><a href="#Note81"><strong>(81)</strong></a></sup> include <em>Metropolis&ndash;Hastings</em>, <em>slice sampling</em>, and <em>Gibbs sampling</em> (see also the <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a random number from the previous distribution (<em>conditional distributions</em>), that converge to a <em>joint distribution</em>.</p>
 
 <blockquote>
 <p><strong>Example:</strong> In one Gibbs sampler, an initial value for <code>y</code> is chosen, then multiple <code>x</code>, <code>y</code> pairs of random numbers are generated, where <code>x = BetaDist(y, 5)</code> then <code>y = Poisson(x * 10)</code>.</p>
@@ -2646,14 +2646,12 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note69>(69)</sup> Saucier, R. &quot;Computer Generation of Statistical Distributions&quot;, March 2000.</small></li>
 <li><small><sup id=Note70>(70)</sup> Other references on density estimation include <a href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation"><strong>a Wikipedia article on multiple-variable kernel density estimation</strong></a>, and a <a href="https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation"><strong>blog post by M. Kay</strong></a>.</small></li>
 <li><small><sup id=Note71>(71)</sup> &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</small></li>
-<li><p><small><sup id=Note72>(72)</sup> More formally&mdash;</p>
+<li><small><sup id=Note72>(72)</sup> More formally&mdash;
 
 <ul>
 <li>the PDF is the <em>derivative</em> (instantaneous rate of change) of the distribution&#39;s CDF (that is, PDF(x) = CDF&prime;(x)), and</li>
-<li>the CDF is also defined as the <em>integral</em> (&quot;area under the curve&quot;) of the PDF,</li>
-</ul>
-
-<p>provided the PDF&#39;s values are all 0 or greater and the area under the PDF&#39;s curve is 1.</small></p></li>
+<li>the CDF is also defined as the <em>integral</em> (&quot;area under the curve&quot;) of the PDF.</small></li>
+</ul></li>
 <li><small><sup id=Note73>(73)</sup> A <em>discrete distribution</em> is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
 
 <ul>

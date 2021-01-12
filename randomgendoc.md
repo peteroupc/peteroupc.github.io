@@ -2448,6 +2448,8 @@ CLASSES
      |  YES = 1
 
 FUNCTIONS
+    addto1(rg)
+
     betadist(b, ax=1, ay=1, bx=1, by=1, precision=53)
 
     betadist_geobag(b, ax=1, ay=1, bx=1, by=1)

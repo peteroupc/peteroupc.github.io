@@ -1670,7 +1670,7 @@
 
 <h4>General Factory Functions</h4>
 
-<p>A coin with unknown bias <em>&lambda;</em> can be turned into a coin with bias <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that works with two sequences of polynomials:</p>
+<p>A coin with unknown probability of heads of <em>&lambda;</em> can be turned into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that works with two sequences of polynomials:</p>
 
 <ul>
 <li>One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.</li>
@@ -1816,7 +1816,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as <em>&pi;</em> or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that <em>directly</em> contains the constant <em>&pi;</em> is not desired; however, a series expansion that converges to a fraction of <em>&pi;</em> is.</p></li>
 <li>Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section &quot;<a href="#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;.</li>
-<li>According to (Mossel and Peres 2005)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, a pushdown automaton can take a coin with unknown bias <em>&lambda;</em> and turn it into a coin with bias <em>f</em>(<em>&lambda;</em>) only if <em>f</em> is a factory function and can be a solution of a polynomial system with rational coefficients. (See &quot;<a href="#Certain_Algebraic_Functions"><strong>Certain Algebraic Functions</strong></a>&quot;.)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate <em>any</em> <em>f</em> of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which <em>probability generating functions</em> can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)</li>
+<li>According to (Mossel and Peres 2005)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, a pushdown automaton can take a coin with unknown probability of heads of <em>&lambda;</em> and turn it into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>) only if <em>f</em> is a factory function and can be a solution of a polynomial system with rational coefficients. (See &quot;<a href="#Certain_Algebraic_Functions"><strong>Certain Algebraic Functions</strong></a>&quot;.)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate <em>any</em> <em>f</em> of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which <em>probability generating functions</em> can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)</li>
 </ol>
 
 <p><a id=Correctness_and_Performance_Charts></a></p>
@@ -1910,12 +1910,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one bias (<em>&lambda;</em>) into a coin with another bias (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note54"><strong>(54)</strong></a></sup>, (Peres 1992)<sup><a href="#Note55"><strong>(55)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note54"><strong>(54)</strong></a></sup>, (Peres 1992)<sup><a href="#Note55"><strong>(55)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</p>
 
-<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the bias is <em>&lambda;</em>).  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
+<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the probability of heads is <em>&lambda;</em>).  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
 
 <p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note45"><strong>(45)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for any integer <em>n</em>.</p>
 
@@ -1948,7 +1948,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an estimator of <em>g</em>(<em>X</em>) that is <em>unbiased</em> and not merely <em>consistent</em> or <em>asymptotically unbiased</em>) in almost surely finite time.</li>
 </ul>
 
-<p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with bias <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
+<p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
 <p><a id=Convergence_of_Bernoulli_Factories></a></p>
 
@@ -2267,7 +2267,7 @@ def valid_perm(f, x, n):
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> All the functions possible for formulas 1 and 2 are nondecreasing functions.</p>
+<p><strong>Note:</strong> All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is even), respectively.</p>
 </blockquote>
 
 <p><strong>Open Question:</strong>  How can the tables above be filled for other permutation classes and different combinations of distributions <em>D</em> and <em>E</em>?</p>
