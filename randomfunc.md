@@ -1561,18 +1561,21 @@ Generating random data points based on how a list of data points is distributed 
 
 Many probability distributions can be defined in terms of any of the following:
 
-* The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; the probability is in the interval [0, 1].
-* The [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.  Technically, the area under the PDF equals 1.<sup>[**(72)**](#Note72)</sup>  Moreover, the term PDF applies only to continuous distributions.  In this document, the term "**PDF-like function**" means the PDF, the probability mass function, or a function that's proportional to either.
+* The [**_cumulative distribution function_**](https://en.wikipedia.org/wiki/Cumulative_distribution_function), or _CDF_, returns, for each number, the probability that a number equal to or greater than that number is randomly chosen; probabilities are in the interval [0, 1].
+* _Continuous distributions_ generally have a [**_probability density function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PDF_, is, roughly and intuitively, a curve of weights 0 or greater, where for each number, the greater its weight, the more likely a number close to that number is randomly chosen.<sup>[**(72)**](#Note72)</sup>  The area under the PDF is 1.
+* _Discrete distributions_<sup>[**(73)**](#Note73)</sup> generally have a [**_probability mass function_**](https://en.wikipedia.org/wiki/Probability_density_function), or _PMF_, which gives the probability that each number is randomly chosen.
 * The _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
+
+In this section, a **PDF-like function** is the PDF, the PMF, or either function times a (possibly unknown) constant.
 
 The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.
 
-> **Note:** Lists of PDFs, CDFs, or quantile functions are outside the scope of this page.
+> **Note:** Lists of CDFs, PDF-like functions, or quantile functions are outside the scope of this page.
 
 <a id=Sampling_for_Discrete_Distributions></a>
 #### Sampling for Discrete Distributions
 
-If the distribution **is discrete**<sup>[**(73)**](#Note73)</sup>, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
+If the distribution **is discrete**, numbers that closely follow it can be sampled by choosing points that cover all or almost all of the distribution, finding their weights or cumulative weights, and choosing a random point based on those weights.
 
 If&mdash;
 
@@ -1671,7 +1674,8 @@ The following method generates a random number from a distribution via inversion
 
 Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete, with known PDF-like function**: The most general method is sequential search (Devroye 1986, p. 85)<sup>[**(18)**](#Note18)</sup>, assuming the probabilities sum to 1 and the distribution covers only integers 0 or greater: `i = 0; p = PDF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast even though it's exact in theory.  If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead can introduce more error than with PDF-like functions (Walter 2019)<sup>[**(76)**](#Note76)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
+- Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(18)**](#Note18)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast even though it's exact in theory. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
+- Distribution is **discrete, with known PDF-like function**: If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(76)**](#Note76)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - Distribution is **continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(77)**](#Note77)</sup>, (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> in the Python sample code <sup>[**(78)**](#Note78)</sup>.
 - Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
 
@@ -1718,7 +1722,7 @@ Some applications need to convert a pregenerated uniform random number to a non-
 <a id=Rejection_Sampling_with_a_PDF_Like_Function></a>
 #### Rejection Sampling with a PDF-Like Function
 
-If the distribution **has a known PDF-like function**, and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with the latter distribution until a number (`n`) that satisfies `r <= PDF(n)`, where `r = RNDRANGEMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
+If the distribution **has a known PDF-like function** (`PDF`), and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random numbers with the latter distribution until a number (`n`) that satisfies `r <= PDF(n)`, where `r = RNDRANGEMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
 
 A variant of rejection sampling is the _squeeze principle_, in which a third PDF-like function (`PDF3`) is chosen that is "dominated" by the first one (`PDF`) and easier to sample than `PDF`.  Here, a number is accepted if `r <= PDF3(n)` or `r <= PDF(n)` (Devroye 1986, p. 53)<sup>[**(18)**](#Note18)</sup>.
 
@@ -1740,7 +1744,7 @@ If a PDF-like function for the target distribution is not known exactly, but can
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
 
-[**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a _Markov chain_ of random values that build on each other until they converge to the given distribution.  In general, however, a given chain's random values will have a statistical _dependence_ on each other, and it takes an unknown time for the chain to converge (which is why techniques such as "thinning" -- keeping only every Nth sample -- or "burn-in" -- skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution's sampling domain for other samplers, such as rejection sampling (above).
+[**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a _Markov chain_ of random values that build on each other until they converge to the given distribution.  In general, however, a given chain's random values will have a statistical _dependence_ on each other, and it takes an unknown time for the chain to converge (which is why techniques such as "thinning" &mdash; keeping only every Nth sample &mdash; or "burn-in" &mdash; skipping iterations before sampling -- are often employed). MCMC can also estimate the distribution's sampling domain for other samplers, such as rejection sampling (above).
 
 MCMC algorithms<sup>[**(81)**](#Note81)</sup> include _Metropolis&ndash;Hastings_, _slice sampling_, and _Gibbs sampling_ (see also the [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_), that converge to a _joint distribution_.
 
