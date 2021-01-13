@@ -50,7 +50,12 @@ Attention is drawn to the requests and open questions on that page:
 
 Among other things, they relate to finding polynomial sequences, probabilities, and other mathematical constructions needed to apply certain Bernoulli factories.  These questions are reproduced below.
 
-1. See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)" in the appendix. See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
+1. Let a permutation class and two probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of i.i.d. random numbers (where the first is distributed as D and the rest as E) until the sequence no longer follows a permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
+    1. What is the probability that _n_ is returned?
+    2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
+    3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
+
+    See also "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)" and my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
 2. I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.

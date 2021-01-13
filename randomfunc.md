@@ -1455,17 +1455,14 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its standard error.
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** of a function given a random process or sampling distribution.  The following pseudocode estimates the expected value from a list of random numbers generated the same way.  Here, `EFUNC` is the function, and `MeanAndVariance` is given in the [**appendix**](#Mean_and_Variance_Calculation).  `Expectation` returns a list of two numbers &mdash; the estimated expected value and its variance.
 
         METHOD Expectation(numbers)
           ret=[]
           for i in 0...size(numbers)
              AddItem(ret,EFUNC(numbers[i]))
           end
-          merr=MeanAndVariance(ret)
-          merr[1]=merr[1]*(size(ret)-1.0)/size(ret)
-          merr[1]=sqrt(merr[1]/size(ret))
-          return merr
+          return MeanAndVariance(ret)
         END METHOD
 
     Estimates of expected values include the following:
