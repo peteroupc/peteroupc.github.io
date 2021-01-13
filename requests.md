@@ -25,7 +25,7 @@ Here are my goals for both articles:
 <a id=Color_Topics_for_Programmers></a>
 ## Color Topics for Programmers
 
-[https://peteroupc.github.io/colorgen.html](https://peteroupc.github.io/colorgen.html)
+[**https://peteroupc.github.io/colorgen.html**](https://peteroupc.github.io/colorgen.html)
 
 Should this document cover the following topics, and if so, how?
 
@@ -40,13 +40,13 @@ Does any of the following exist?
 <a id=Bernoulli_Factory_Algorithms></a>
 ## Bernoulli Factory Algorithms
 
-[https://peteroupc.github.io/bernoulli.html](https://peteroupc.github.io/bernoulli.html)
+[**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
 This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1] and doesn't touch 0 or 1 except possibly at the endpoints.
 
 Attention is drawn to the requests and open questions on that page:
 
-- [https://peteroupc.github.io/bernoulli.html#Requests_and_Open_Questions](https://peteroupc.github.io/bernoulli.html#Requests_and_Open_Questions)
+- [**https://peteroupc.github.io/bernoulli.html#Requests_and_Open_Questions**](https://peteroupc.github.io/bernoulli.html#Requests_and_Open_Questions)
 
 Among other things, they relate to finding polynomial sequences, probabilities, and other mathematical constructions needed to apply certain Bernoulli factories.  These questions are reproduced below.
 
@@ -81,7 +81,7 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 <a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
 ## More Algorithms for Arbitrary-Precision Sampling
 
-[https://peteroupc.github.io/morealg.html](https://peteroupc.github.io/morealg.html)
+[**https://peteroupc.github.io/morealg.html**](https://peteroupc.github.io/morealg.html)
 
 We would like to see new implementations of the following:
 
@@ -93,7 +93,7 @@ The appendix contains implementation notes for **InShape**, which determines whe
 <a id=Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions></a>
 ## Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions
 
-[https://peteroupc.github.io/exporand.html](https://peteroupc.github.io/exporand.html)
+[**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
 
 A _partially-sampled random number_ (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.  There are some open questions on PSRNs.
 
