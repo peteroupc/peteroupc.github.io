@@ -22,27 +22,12 @@ Here are my goals for both articles:
 
 - Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?
 
-<a id=Color_Topics_for_Programmers></a>
-## Color Topics for Programmers
-
-[**https://peteroupc.github.io/colorgen.html**](https://peteroupc.github.io/colorgen.html)
-
-Should this document cover the following topics, and if so, how?
-
-- The CAM02 color appearance model.
-- Color rendering metrics for light sources, including color rendering index (CRI) and the metrics given in TM-30-15 by the Illuminating Engineering Society.
-
-Does any of the following exist?
-
-- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
-- Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
-
 <a id=Bernoulli_Factory_Algorithms></a>
 ## Bernoulli Factory Algorithms
 
 [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
-This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1] and doesn't touch 0 or 1 except possibly at the endpoints.
+This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1], is continuous, and doesn't touch 0 or 1 except possibly at the endpoints (Keane and O'Brien 1994)<sup>[**(6)**](#Note6)</sup>.
 
 Attention is drawn to the requests and open questions on that page:
 
@@ -50,7 +35,7 @@ Attention is drawn to the requests and open questions on that page:
 
 Among other things, they relate to finding polynomial sequences, probabilities, and other mathematical constructions needed to apply certain Bernoulli factories.  These questions are reproduced below.
 
-1. Let a permutation class and two probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of i.i.d. random numbers (where the first is distributed as D and the rest as E) until the sequence no longer follows a permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
+1. Let a permutation class (such as numbers in descending order) and two probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of i.i.d. random numbers (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
     1. What is the probability that _n_ is returned?
     2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
     3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
@@ -59,6 +44,7 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 2. I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
+    - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
     - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - To apply the algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.
 
@@ -101,6 +87,21 @@ A _partially-sampled random number_ (PSRN) is a data structure holding the initi
 2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
 3. Are the conjectures in the section "[**Setting Digits by Digit Probabilities**](https://peteroupc.github.io/exporand.html#Setting_Digits_by_Digit_Probabilities)" true?  See also my Stack Exchange question [**On random variables made up of independent random digits**](https://stats.stackexchange.com/questions/503096/on-random-variables-made-up-of-independent-random-digits).
 
+<a id=Color_Topics_for_Programmers></a>
+## Color Topics for Programmers
+
+[**https://peteroupc.github.io/colorgen.html**](https://peteroupc.github.io/colorgen.html)
+
+Should this document cover the following topics, and if so, how?
+
+- The CAM02 color appearance model.
+- Color rendering metrics for light sources, including color rendering index (CRI) and the metrics given in TM-30-15 by the Illuminating Engineering Society.
+
+Does any of the following exist?
+
+- A method for performing color calibration and color matching using a smartphone's camera and, possibly, a color calibration card and/or white balance card, provided that method is not covered by any active patents or pending patent applications.
+- Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.
+
 <a id=Notes></a>
 ## Notes
 
@@ -109,6 +110,7 @@ A _partially-sampled random number_ (PSRN) is a data structure holding the initi
 - <small><sup id=Note3>(3)</sup> Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
 - <small><sup id=Note4>(4)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
 - <small><sup id=Note5>(5)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
+- <small><sup id=Note6>(6)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
 
 <a id=License></a>
 ## License

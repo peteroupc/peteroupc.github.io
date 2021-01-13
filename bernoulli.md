@@ -1361,6 +1361,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 2. I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
+    - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
     - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.
 
