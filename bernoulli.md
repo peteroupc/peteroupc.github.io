@@ -1699,7 +1699,7 @@ For this algorithm, the probability that the generated _n_&mdash;
 This algorithm can also be used to produce continuous random numbers, which will depend on the EGF (permutation class), which return values of _n_ we care about, and so on.  Specifically, consider the following algorithm:
 
 1. Create an empty list.
-2. If the list is empty, generate a random number distributed as _D_, call it _&delta;_.  Otherwise, generate a random number distributed as _E_.  Either way, append the random number to the end of the list.
+2. If the list is empty, generate a random number distributed as _D_, call it _&delta;_.  Otherwise, generate a random number distributed as _E_.  Either way, append the random number to the end of the list. (In this step, _D_ and _E_ are both continuous distributions.)
 3. Let _n_ be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class's requirements, return _n_.  Otherwise, go to step 2.
 
 Then the algorithm's behavior is given in the tables below.

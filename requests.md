@@ -4,6 +4,18 @@
 
 This page lists questions and issues relating to my articles posted on this site.  Any answers to these questions will greatly improve those articles.  If you can answer any of them, post an issue in the [**GitHub issues page**](https://github.com/peteroupc/peteroupc.github.io/issues).
 
+<a id=Contents></a>
+## Contents
+
+- [**Contents**](#Contents)
+- [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
+- [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
+- [**More Algorithms for Arbitrary-Precision Sampling**](#More_Algorithms_for_Arbitrary_Precision_Sampling)
+- [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions)
+- [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
+- [**Notes**](#Notes)
+- [**License**](#License)
+
 <a id=Randomization_and_Sampling_Methods></a>
 ## Randomization and Sampling Methods
 
@@ -27,7 +39,7 @@ Here are my goals for both articles:
 
 [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
-This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1], is continuous, and doesn't touch 0 or 1 except possibly at the endpoints (Keane and O'Brien 1994)<sup>[**(6)**](#Note6)</sup>.
+This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1], is continuous, and doesn't touch 0 or 1 except possibly at the endpoints (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
 
 Attention is drawn to the requests and open questions on that page:
 
@@ -50,9 +62,9 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
         Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)
 
-        I have found [**several methods**](https://math.stackexchange.com/questions/3889382) to compute such sequences, but most of them have issues that I seek clarification on.  For example, the method of Holtz et al. (2011)<sup>[**(1)**](#Note1)</sup> requires knowing the function's smoothness class and requires the function to be bounded away from 0 and 1; moreover the method uses several constants, namely _s_, _θ<sub>α</sub>_, and _D_, with no easy lower bounds.  As another example, Gal's method (1989)<sup>[**(2)**](#Note2)</sup> produces polynomials that converge too slowly to be practical.
+        I have found [**several methods**](https://math.stackexchange.com/questions/3889382) to compute such sequences, but most of them have issues that I seek clarification on.  For example, the method of Holtz et al. (2011)<sup>[**(2)**](#Note2)</sup> requires knowing the function's smoothness class and requires the function to be bounded away from 0 and 1; moreover the method uses several constants, namely _s_, _θ<sub>α</sub>_, and _D_, with no easy lower bounds.  As another example, Gal's method (1989)<sup>[**(3)**](#Note3)</sup> produces polynomials that converge too slowly to be practical.
 
-        An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(3)**](#Note3)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
+        An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(4)**](#Note4)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
 
         See also my questions on _Mathematics Stack Exchange_:
 
@@ -62,7 +74,7 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)".
-4. According to (Mossel and Peres 2005)<sup>[**(4)**](#Note4)</sup>, a pushdown automaton can take a coin with unknown probability of heads of _&lambda;_ and turn it into a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(5)**](#Note5)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
+4. According to (Mossel and Peres 2005)<sup>[**(5)**](#Note5)</sup>, a pushdown automaton can take a coin with unknown probability of heads of _&lambda;_ and turn it into a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(6)**](#Note6)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
 <a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
 ## More Algorithms for Arbitrary-Precision Sampling
@@ -105,12 +117,12 @@ Does any of the following exist?
 <a id=Notes></a>
 ## Notes
 
-- <small><sup id=Note1>(1)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
-- <small><sup id=Note2>(2)</sup> Gal, S.G., "Constructive approximation by monotonous polynomial sequences in LipMα, with α ∈ (0, 1]", _Journal of Approximation Theory_ 59 (1989).</small>
-- <small><sup id=Note3>(3)</sup> Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
-- <small><sup id=Note4>(4)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
-- <small><sup id=Note5>(5)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
-- <small><sup id=Note6>(6)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
+- <small><sup id=Note1>(1)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
+- <small><sup id=Note2>(2)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
+- <small><sup id=Note3>(3)</sup> Gal, S.G., "Constructive approximation by monotonous polynomial sequences in LipMα, with α ∈ (0, 1]", _Journal of Approximation Theory_ 59 (1989).</small>
+- <small><sup id=Note4>(4)</sup> Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
+- <small><sup id=Note5>(5)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
+- <small><sup id=Note6>(6)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
 
 <a id=License></a>
 ## License

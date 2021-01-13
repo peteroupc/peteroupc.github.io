@@ -2188,7 +2188,7 @@ def valid_perm(f, x, n):
 
 <ol>
 <li>Create an empty list.</li>
-<li>If the list is empty, generate a random number distributed as <em>D</em>, call it <em>&delta;</em>.  Otherwise, generate a random number distributed as <em>E</em>.  Either way, append the random number to the end of the list.</li>
+<li>If the list is empty, generate a random number distributed as <em>D</em>, call it <em>&delta;</em>.  Otherwise, generate a random number distributed as <em>E</em>.  Either way, append the random number to the end of the list. (In this step, <em>D</em> and <em>E</em> are both continuous distributions.)</li>
 <li>Let <em>n</em> be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class&#39;s requirements, return <em>n</em>.  Otherwise, go to step 2.</li>
 </ol>
 
