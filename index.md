@@ -8,7 +8,7 @@ to see this site's source code.
 <a id=Articles></a>
 ### Articles
 
-Open-source articles on programming subjects.
+Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html).
 
 * Random Number Generators
     * [**Random Number Generator Recommendations for Applications**](./random.html)
@@ -33,7 +33,6 @@ Open-source articles on programming subjects.
     * [**File Name Support in Applications**](./filenames.html)
     * [**Color Topics for Programmers**](./colorgen.html)
     * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
-    * [**Chi-Squared Test**](./chisqtest.html)
     * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 
 <a id=PDF_Versions></a>
@@ -58,7 +57,6 @@ Open-source articles on programming subjects.
 * [**File Name Support in Applications**](./filenames.pdf)
 * [**Color Topics for Programmers**](./colorgen.pdf)
 * [**Supplemental Color Topics for Programmers**](./suppcolor.pdf)
-* [**Chi-Squared Test**](./chisqtest.pdf)
 * [**Essentials of SVG**](https://peteroupc.github.io/svg.pdf)
 
 <a id=HTML_JavaScript></a>
