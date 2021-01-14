@@ -262,6 +262,15 @@
 
 <p>It would be interesting to find general formulas to find the appropriate polynomials (degrees and <em>Y parameters</em>) given only the values for <em>mult</em> and <em>&epsilon;</em>, rather than find them &quot;the hard way&quot; via <code>calc_linear_func</code>.  For this procedure, the degrees and <em>Y parameters</em> can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.</p>
 
+<blockquote>
+<p><strong>Note:</strong> In Nacu and Peres (2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, the following polynomial sequences were suggested to simulate min(<em>&lambda;</em>*2, 1 &minus; 2*<em>&epsilon;</em>), provided <em>&epsilon;</em> &lt; 1/8.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.</p>
+
+<ul>
+<li><strong>fbelow(<em>n</em>, <em>k</em>)</strong> = min((<em>k</em>/<em>n</em>)*2, 1 &minus; 2*<em>&epsilon;</em>).</li>
+<li><strong>fabove(<em>n</em>, <em>k</em>)</strong> = min((<em>k</em>/<em>n</em>)*2, 1 &minus; 2*<em>&epsilon;</em>) +<br>(max(0, <em>k</em>/<em>n</em>+3*<em>&epsilon;&minus;_1/2)/(</em>&epsilon;<em>/(1&minus;sqrt(2)/2)))*sqrt(2/_n</em>) +<br>(72*max(0, <em>k</em>/<em>n</em>&minus;1/9)/(1&minus;exp(&minus;2*<em>&epsilon;</em>*<em>&epsilon;</em>)))*exp(&minus;2*<em>&epsilon;</em>*<em>&epsilon;</em>*<em>n</em>).</li>
+</ul>
+</blockquote>
+
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
 
 <h2>General Arbitrary-Precision Samplers</h2>
@@ -653,6 +662,7 @@
 <li><small><sup id=Note16>(16)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
 <li><small><sup id=Note17>(17)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
 <li><small><sup id=Note18>(18)</sup> I thank D. Eisenstat from the <em>Stack Overflow</em> community for leading me to this insight.</small></li>
+<li><small><sup id=Note19>(19)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
