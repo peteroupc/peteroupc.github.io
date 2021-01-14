@@ -180,23 +180,22 @@ The algorithm is then as follows:
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
 
-Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). (This is a piecewise linear function with two pieces: a rising linear part and a constant part.) This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(4)**](#Note4)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) via the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".
+Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). (This is a piecewise linear function with two pieces: a rising linear part and a constant part.) This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(4)**](#Note4)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) using the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".  In this section, **fbelow(_n_, _k_)** and **fabove(_n_, _k_)** are the _k_<sup>th</sup> Bernstein coefficients of the lower and upper polynomials, respectively, of degree _n_.
 
 The code in the [**appendix**](#Appendix) uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The method to do so is called `calc_linear_func(eps, mult, count)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `count` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
 
 1. Set _i_ to 1.
 2. Run `calc_linear_func(eps, mult, i)` and get the degree and _Y parameter_ for the last listed item, call them _n_ and _y_, respectively.
 3. Set _x_ to &minus;((_y_&minus;(1&minus;_&epsilon;_))/_&epsilon;_)<sup>5</sup>/_mult_ + _y_/_mult_.  (This exact formula doesn't appear in the Thomas and Blanchet paper; rather it comes from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.
-4. For the _i_<sup>th</sup> upper polynomial, the _k_<sup>th</sup> Bernstein coefficient (starting at 0) is min((_k_/_n_)*_y_/_x_,_y_).
-5. For the _i_<sup>th</sup> lower polynomial, the _k_<sup>th</sup> Bernstein coefficient (starting at 0) is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_).  (This matches _f_ because _f_ is _concave_ in the interval [0, 1], which roughly means that its rate of growth there never goes up.)
-6. Add 1 to _i_ and go to step 2.
+4. For degree _n_, **fbelow(_n_, _k_)** is min((_k_/_n_)\*_mult_, 1&minus;_&epsilon;_), and **fabove(_n_, _k_)** is min((_k_/_n_)*_y_/_x_,_y_).  (**fbelow** matches _f_ because _f_ is _concave_ in the interval [0, 1], which roughly means that its rate of growth there never goes up.)
+5. Add 1 to _i_ and go to step 2.
 
 It would be interesting to find general formulas to find the appropriate polynomials (degrees and _Y parameters_) given only the values for _mult_ and _&epsilon;_, rather than find them "the hard way" via `calc_linear_func`.  For this procedure, the degrees and _Y parameters_ can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.
 
 > **Note:** In Nacu and Peres (2005)<sup>[**(19)**](#Note19)</sup>, the following polynomial sequences were suggested to simulate min(_&lambda;_\*2, 1 &minus; 2\*_&epsilon;_), provided _&epsilon;_ &lt; 1/8.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
 >
 > - **fbelow(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_).
-> - **fabove(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_) +<br>(max(0, _k_/_n_+3\*_&epsilon;&minus;_1/2)/(_&epsilon;_/(1&minus;sqrt(2)/2)))\*sqrt(2/_n_) +<br>(72\*max(0, _k_/_n_&minus;1/9)/(1&minus;exp(&minus;2\*_&epsilon;_\*_&epsilon;_)))\*exp(&minus;2\*_&epsilon;_\*_&epsilon;_\*_n_).
+> - **fabove(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_) +<br>(max(0, _k_/_n_+3\*_&epsilon; &minus;_ 1/2)/(_&epsilon;_/(1&minus;sqrt(2)/2)))\*sqrt(2/_n_) +<br>(72\*max(0, _k_/_n_&minus;1/9)/(1&minus;exp(&minus;2\*_&epsilon;_\*_&epsilon;_)))\*exp(&minus;2\*_&epsilon;_\*_&epsilon;_\*_n_).
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
