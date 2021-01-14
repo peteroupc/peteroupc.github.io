@@ -99,7 +99,7 @@
 <li><a href="#Digit_Expansions"><strong>Digit Expansions</strong></a></li>
 <li><a href="#Continued_Fractions"><strong>Continued Fractions</strong></a></li>
 <li><a href="#Continued_Logarithms"><strong>Continued Logarithms</strong></a></li>
-<li><a href="#1_phi"><strong>1 / &phi;</strong></a></li>
+<li><a href="#1___phi___1_divided_by_the_golden_ratio"><strong>1 / <em>&phi;</em> (1 divided by the golden ratio)</strong></a></li>
 <li><a href="#sqrt_2_minus_1"><strong>sqrt(2) &minus; 1</strong></a></li>
 <li><a href="#1_sqrt_2"><strong>1/sqrt(2)</strong></a></li>
 <li><a href="#tanh_1_2_or_exp_1_minus_1_exp_1_1"><strong>tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)</strong></a></li>
@@ -145,7 +145,7 @@
 <li><a href="#Simulating_Probabilities_vs_Estimating_Probabilities"><strong>Simulating Probabilities vs. Estimating Probabilities</strong></a></li>
 <li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
 <li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
-<li><a href="#SymPy_Code_for_Parameters_to_Simulate_C2_Functions"><strong>SymPy Code for Parameters to Simulate C<sup>2</sup> Functions</strong></a></li>
+<li><a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>SymPy Code for Parameters to Simulate <em>C</em><sup>2</sup> Functions</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
@@ -877,7 +877,7 @@
 
 <ol>
 <li>Set <em>&beta;</em> to (1 &minus; <em>&#x03F5;</em> / 2) / (1 &minus; <em>&#x03F5;</em>).</li>
-<li>Run the <strong>algorithm for (1/<em>&beta;</em>)<sup><em>i</em></sup></strong> (described later).  If it returns 0, return 0.</li>
+<li>Run the <strong>algorithm for (1/<em>&beta;</em>)<sup><em>i</em></sup></strong> (the algorithm labeled <strong><em>x</em><sup><em>y</em></sup></strong> and given in the irrational constants section).  If it returns 0, return 0.</li>
 <li>Multiply <em>c</em> by <em>&beta;</em>, then divide <em>&#x03F5;</em> by 2.</li>
 </ol></li>
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
@@ -1153,9 +1153,9 @@
 
 <p>For a correctness proof, see the appendix.</p>
 
-<p><a id=1_phi></a></p>
+<p><a id=1___phi___1_divided_by_the_golden_ratio></a></p>
 
-<h4>1 / &phi;</h4>
+<h4>1 / <em>&phi;</em> (1 divided by the golden ratio)</h4>
 
 <p>This algorithm uses the algorithm described in the section on continued fractions to simulate 1 divided by the golden ratio, whose continued fraction&#39;s partial denominators are 1, 1, 1, 1, ....</p>
 
@@ -1675,7 +1675,7 @@
 <ul>
 <li>One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.</li>
 <li>For both sequences, there must be a way to calculate their polynomials&#39; Bernstein coefficients.</li>
-<li>For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree).</li>
+<li>For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is transformed to have the same degree as the other).</li>
 </ul>
 
 <p>This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:</p>
@@ -1748,7 +1748,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is <em>f</em>&#39;s &quot;slope-of-slope&quot; function.  Then:</p>
+<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*8) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
@@ -2009,9 +2009,9 @@ for i in range(iters):
 
 <p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
 
-<p><a id=SymPy_Code_for_Parameters_to_Simulate_C2_Functions></a></p>
+<p><a id=SymPy_Code_for_Parameters_to_Simulate__C_2_Functions></a></p>
 
-<h3>SymPy Code for Parameters to Simulate C<sup>2</sup> Functions</h3>
+<h3>SymPy Code for Parameters to Simulate <em>C</em><sup>2</sup> Functions</h3>
 
 <p>A note in the section &quot;<a href="#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot; gave a method to find polynomials that converge from above and below to a function with continuous slope and slope-of-slope functions, also known as a <em>C</em><sup>2</sup> continuous function. The following Python code uses the SymPy computer algebra library to calculate three needed parameters given a <em>C</em><sup>2</sup> continuous function <code>func</code> that uses the variable <code>x</code>: <em>m</em> (<code>m</code>) and the two bounds for <strong>fbound(<em>n</em>)</strong> (<code>bound1</code> and <code>bound2</code>, respectively).</p>
 

@@ -10,8 +10,8 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Contents**](#Contents)
 - [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
-- [**More Algorithms for Arbitrary-Precision Sampling**](#More_Algorithms_for_Arbitrary_Precision_Sampling)
 - [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions)
+- [**More Algorithms for Arbitrary-Precision Sampling**](#More_Algorithms_for_Arbitrary_Precision_Sampling)
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -21,7 +21,11 @@ This page lists questions and issues relating to my articles posted on this site
 
 **Size Reduction Sought:**
 
-Of the articles in this repository, [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html) and [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html) combined are very long (about 230 KB in size combined).  I would like to reduce their size while maintaining the most relevant algorithms for random variate generation.
+Of the articles in this repository, [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html) and [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html) combined are very long (about 230 KB in size combined).
+
+These articles describe numerous algorithms to generate random variates (from discrete and continuous distributions) as well as perform random sampling with and without replacement, shuffling, geometric sampling, and more, assuming a source of "truly" random numbers is available.
+
+I would like to reduce the size of these articles while maintaining the most relevant algorithms for random variate generation.
 
 Here are my goals for both articles:
 
@@ -39,7 +43,7 @@ Here are my goals for both articles:
 
 [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
-This is a page showing algorithms to turn coins with one probability of heads into coins with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1], is continuous, and doesn't touch 0 or 1 except possibly at the endpoints (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
+This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it maps the interval [0, 1] to the interval [0, 1], is continuous, and doesn't touch 0 or 1 except possibly at the endpoints (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
 
 Attention is drawn to the requests and open questions on that page:
 
@@ -76,18 +80,6 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)".
 4. According to (Mossel and Peres 2005)<sup>[**(5)**](#Note5)</sup>, a pushdown automaton can take a coin with unknown probability of heads of _&lambda;_ and turn it into a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(6)**](#Note6)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
-<a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
-## More Algorithms for Arbitrary-Precision Sampling
-
-[**https://peteroupc.github.io/morealg.html**](https://peteroupc.github.io/morealg.html)
-
-We would like to see new implementations of the following:
-
-- Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
-- Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
-
-The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?  See also my related Stack Exchange question: [**How can we check if an arbitrary shape covers a box (partially, fully, or not) if we can only evaluate the shape pointwise?**](https://stackoverflow.com/questions/64728693/how-can-we-check-if-an-arbitrary-shape-covers-a-box-partially-fully-or-not-i).
-
 <a id=Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions></a>
 ## Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions
 
@@ -98,6 +90,20 @@ A _partially-sampled random number_ (PSRN) is a data structure holding the initi
 1. Are there constructions for PSRNs other than for cases given earlier in this document?  (The constructions include uniform PSRNs, where the digits are generated uniformly at random; as well as exponential PSRNs or e-rands, where the PSRN follows an exponential distribution.)
 2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
 3. Are the conjectures in the section "[**Setting Digits by Digit Probabilities**](https://peteroupc.github.io/exporand.html#Setting_Digits_by_Digit_Probabilities)" true?  See also my Stack Exchange question [**On random variables made up of independent random digits**](https://stats.stackexchange.com/questions/503096/on-random-variables-made-up-of-independent-random-digits).
+
+<a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
+## More Algorithms for Arbitrary-Precision Sampling
+
+[**https://peteroupc.github.io/morealg.html**](https://peteroupc.github.io/morealg.html)
+
+This page has more algorithms for sampling using partially-sampled random numbers, as well as more Bernoulli factory algorithms.  The following are requests and open questions for this article.
+
+We would like to see new implementations of the following:
+
+- Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
+- Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
+
+The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?  See also my related Stack Exchange question: [**How can we check if an arbitrary shape covers a box (partially, fully, or not) if we can only evaluate the shape pointwise?**](https://stackoverflow.com/questions/64728693/how-can-we-check-if-an-arbitrary-shape-covers-a-box-partially-fully-or-not-i).
 
 <a id=Color_Topics_for_Programmers></a>
 ## Color Topics for Programmers

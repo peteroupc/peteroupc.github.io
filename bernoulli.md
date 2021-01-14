@@ -82,7 +82,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**Digit Expansions**](#Digit_Expansions)
         - [**Continued Fractions**](#Continued_Fractions)
         - [**Continued Logarithms**](#Continued_Logarithms)
-        - [**1 / &phi;**](#1_phi)
+        - [**1 / _&phi;_ (1 divided by the golden ratio)**](#1___phi___1_divided_by_the_golden_ratio)
         - [**sqrt(2) &minus; 1**](#sqrt_2_minus_1)
         - [**1/sqrt(2)**](#1_sqrt_2)
         - [**tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)**](#tanh_1_2_or_exp_1_minus_1_exp_1_1)
@@ -121,7 +121,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Simulating Probabilities vs. Estimating Probabilities**](#Simulating_Probabilities_vs_Estimating_Probabilities)
     - [**Convergence of Bernoulli Factories**](#Convergence_of_Bernoulli_Factories)
     - [**Alternative Implementation of Bernoulli Factories**](#Alternative_Implementation_of_Bernoulli_Factories)
-    - [**SymPy Code for Parameters to Simulate C<sup>2</sup> Functions**](#SymPy_Code_for_Parameters_to_Simulate_C2_Functions)
+    - [**SymPy Code for Parameters to Simulate _C_<sup>2</sup> Functions**](#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions)
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
@@ -678,7 +678,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 5. If _i_ is 0, return 1.
 6. While _i_ = _t_ / _&#x03F5;_:
     1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
-    2. Run the **algorithm for (1/_&beta;_)<sup>_i_</sup>** (described later).  If it returns 0, return 0.
+    2. Run the **algorithm for (1/_&beta;_)<sup>_i_</sup>** (the algorithm labeled **_x_<sup>_y_</sup>** and given in the irrational constants section).  If it returns 0, return 0.
     3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
 7. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2, then go to step 5.
 
@@ -882,8 +882,8 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 For a correctness proof, see the appendix.
 
-<a id=1_phi></a>
-#### 1 / &phi;
+<a id=1___phi___1_divided_by_the_golden_ratio></a>
+#### 1 / _&phi;_ (1 divided by the golden ratio)
 
 This algorithm uses the algorithm described in the section on continued fractions to simulate 1 divided by the golden ratio, whose continued fraction's partial denominators are 1, 1, 1, 1, ....
 
@@ -1279,7 +1279,7 @@ A coin with unknown probability of heads of _&lambda;_ can be turned into a coin
 
 - One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.
 - For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients.
-- For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the two polynomials are transformed to have the same degree).
+- For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is transformed to have the same degree as the other).
 
 This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
 
@@ -1331,7 +1331,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >         - is convex and has a minimum of greater than 0, or
 >         - is concave and has a maximum of less than 1.
 >
->     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is _f_'s "slope-of-slope" function.  Then:
+>     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is the "slope-of-slope" function of _f_.  Then:
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
@@ -1546,8 +1546,8 @@ Say we have a Bernoulli factory algorithm that takes a coin with probability of 
 
 However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.
 
-<a id=SymPy_Code_for_Parameters_to_Simulate_C2_Functions></a>
-### SymPy Code for Parameters to Simulate C<sup>2</sup> Functions
+<a id=SymPy_Code_for_Parameters_to_Simulate__C_2_Functions></a>
+### SymPy Code for Parameters to Simulate _C_<sup>2</sup> Functions
 
 A note in the section "[**General Factory Functions**](#General_Factory_Functions)" gave a method to find polynomials that converge from above and below to a function with continuous slope and slope-of-slope functions, also known as a _C_<sup>2</sup> continuous function. The following Python code uses the SymPy computer algebra library to calculate three needed parameters given a _C_<sup>2</sup> continuous function `func` that uses the variable `x`: _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).
 
