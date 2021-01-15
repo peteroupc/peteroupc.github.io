@@ -1727,7 +1727,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note24>(24)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 - <small><sup id=Note25>(25)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
 - <small><sup id=Note26>(26)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
-- <small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.</small>
+- <small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to _Lebesgue measure_, which, roughly speaking, measures sets of real numbers according to their "length".</small>
 
 <a id=Appendix></a>
 ## Appendix

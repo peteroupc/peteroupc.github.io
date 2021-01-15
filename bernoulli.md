@@ -1452,6 +1452,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note57>(57)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note58>(58)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note59>(59)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note60>(60)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1475,14 +1476,13 @@ For certain values of _&lambda;_, Kozen (2014)<sup>[**(45)**](#Note45)</sup> sho
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
 
-A Bernoulli factory or another algorithm that produces heads with a given probability acts as an unbiased estimator for that probability (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>. As a result&mdash;
+A Bernoulli factory or another algorithm that produces heads with a given probability acts as an unbiased estimator for that probability that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>. As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
 
-1. finding in some way an unbiased estimate of the input coin's probability of heads (_&lambda;_), such as by flipping the coin many times and averaging the results;
-2. calculating _v_ = _f_(_&lambda;_);
-3. generating a uniform random number in [0,1], call it _u_; and
-4. returning 1 if _u_ is less than _v_, or 0 otherwise,
+1. finding in some way an unbiased estimate of _f_(_&lambda;_), where _f_(.) is a factory function and _&lambda;_ is the input coin's probability of heads;<sup>[**(60)**](#Note60)</sup>
+2. generating a uniform random number in [0,1], call it _u_; and
+3. returning 1 if _u_ is less than _v_, or 0 otherwise.
 
-will simulate the probability _f_(_&lambda;_) in theory.  In practice, however, this method is prone to numerous errors, including estimation error in step 1, and errors due to the use of fixed precision in steps 2 and 3, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ (such as in step 1). As (Mossel and Peres 2005)<sup>[**(21)**](#Note21)</sup> says: "The difficulty here is that [_&lambda;_] is unknown.  It is easy to estimate [_&lambda;_], and therefore [_f_(_&lambda;_)].  However, to get a coin with an exact [probability of heads of _f_(_&lambda;_)] is harder", and that is what Bernoulli factory algorithms are designed to do.
+In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ or _f_(_&lambda;_). See also (Mossel and Peres 2005, section 4.3)<sup>[**(21)**](#Note21)</sup>.
 
 As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, however, if _f_(_&lambda;_) can't serve as a factory function, it's not possible to build an unbiased estimator of that function which produces estimates in \[0, 1\] almost surely, since simulating that function isn't possible.  For example, function A can't serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 
