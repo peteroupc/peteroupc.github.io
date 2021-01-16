@@ -649,7 +649,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <p>If the application can settle for &quot;random-looking&quot; unique integers:</p>
 
 <ul>
-<li>The application can produce a unique N-bit integer and pass that integer to a function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).  This includes using the unique integer as the seed for a &quot;full-period&quot; linear PRNG, namely a linear PRNG that cycles through all N-bit integers exactly once<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
+<li>The application can produce a unique N-bit integer and pass that integer to a function that maps N-bit integers to N-bit integers in a reversible way (also called a <em>mixing function</em> with reversible operations; see &quot;<a href="https://papa.bretmulvey.com/post/124027987928"><strong>Hash functions</strong></a>&quot; by B. Mulvey).  This includes using the unique integer as the seed for a &quot;full-period&quot; linear PRNG, that is, a linear PRNG that goes through all N-bit integers exactly once before repeating<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
 <li>The application can generate unique integers greater than 0 and less than <em>K</em> as follows:
 
 <ol>

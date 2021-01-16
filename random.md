@@ -431,7 +431,7 @@ Some applications may also care about "unique random" values.  Generally, howeve
 
 If the application can settle for "random-looking" unique integers:
 
-- The application can produce a unique N-bit integer and pass that integer to a function that maps N-bit integers to N-bit integers in a reversible way (also called a _mixing function_ with reversible operations; see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).  This includes using the unique integer as the seed for a "full-period" linear PRNG, namely a linear PRNG that cycles through all N-bit integers exactly once<sup>[**(35)**](#Note35)</sup>.
+- The application can produce a unique N-bit integer and pass that integer to a function that maps N-bit integers to N-bit integers in a reversible way (also called a _mixing function_ with reversible operations; see "[**Hash functions**](https://papa.bretmulvey.com/post/124027987928)" by B. Mulvey).  This includes using the unique integer as the seed for a "full-period" linear PRNG, that is, a linear PRNG that goes through all N-bit integers exactly once before repeating<sup>[**(35)**](#Note35)</sup>.
 - The application can generate unique integers greater than 0 and less than _K_ as follows:
     1. Set _U_ to 0, and choose _F_, an N-bit function described earlier, where N is the number of bits needed to store the number K-minus-1.
     2. Calculate _F_(_U_) then add 1 to _U_.  If the result of _F_ is less than _K_, output that result; otherwise, repeat this step.
