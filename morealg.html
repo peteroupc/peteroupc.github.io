@@ -890,21 +890,21 @@ calc_linear_func(count=8)
 <li><em>B</em> = (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))) = (1/2) * &Sigma;<sub><em>k</em> = 1, 2, ...</sub> <em>g</em>(<em>k</em>) *  <em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>),</li>
 </ul>
 
-<p>revealing that the function is a convex combination, and <em>B</em> is itself a convex combination where&mdash;</p>
+<p>revealing that the function is a <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a>, and <em>B</em> is itself a convex combination where&mdash;</p>
 
 <ul>
-<li><em>g</em>(<em>k</em>) = (2*<em>k</em>,k)/((2*<em>k</em>&minus;1)*2<sup>2*<em>k</em></sup>), and</li>
-<li><em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>) = (4*x*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> / 2 = (<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> * 4<sup><em>k</em></sup> / 2</li>
+<li><em>g</em>(<em>k</em>) = (2*<em>k</em>,<em>k</em>)/((2*<em>k</em>&minus;1)*2<sup>2*<em>k</em></sup>), and</li>
+<li><em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>) = (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> / 2 = (<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>k</em></sup> * 4<sup><em>k</em></sup> / 2</li>
 </ul>
 
-<p>(see also Wästlund (1999)<sup><a href="#Note21"><strong>(21)</strong></a></sup>; Dale et al. (2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>).  The right hand side of <em>h</em>, which is the polynomial built in step 3 of the algorithm), is a polynomial of degree <em>k</em>*2 with Bernstein coefficients&mdash;</p>
+<p>(see also Wästlund (1999)<sup><a href="#Note21"><strong>(21)</strong></a></sup>; Dale et al. (2015)<sup><a href="#Note22"><strong>(22)</strong></a></sup>).  The right-hand side of <em>h</em>, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree <em>k</em>*2 with Bernstein coefficients&mdash;</p>
 
 <ul>
 <li><em>z</em> = (4<sup><em>m</em></sup>/2) / choose(<em>m</em>*2,<em>m</em>) at <em>m</em>=<em>k</em>, and</li>
 <li>0 elsewhere.</li>
 </ul>
 
-<p>Unfortunately, <em>z</em> is generally greater than 1, so that the polynomial can&#39;t be simulated as is.  As a result, the polynomial&#39;s degree has to be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  But due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree <em>d</em> as well as <em>c</em>, the (<em>d</em>/2)<sup>th</sup> Bernstein coefficient <em>c</em> (starting at 0), the degree elevation is as follows:</p>
+<p>Unfortunately, <em>z</em> is generally greater than 1, so that the polynomial can&#39;t be simulated as is using the Bernoulli factory algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form"><strong>polynomials in Bernstein form</strong></a>.  Fortunately, the polynomial&#39;s degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree <em>d</em> as well as <em>z</em> (as defined above), the degree elevation is as follows:</p>
 
 <ol>
 <li>Set <em>r</em> to 5.</li>
@@ -912,7 +912,7 @@ calc_linear_func(count=8)
 <li>For each integer <em>i</em> in the interval [0, <em>d</em>+<em>r</em>]:
 
 <ul>
-<li>If <em>d</em>/2 is in the interval [max(0, <em>i</em>&minus;<em>r</em>), min(<em>d</em>,<em>i</em>)], set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>c</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)*choose(<em>d</em>,<em>d</em>/2) / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
+<li>If <em>d</em>/2 is in the interval [max(0, <em>i</em>&minus;<em>r</em>), min(<em>d</em>,<em>i</em>)], set the <em>i</em><sup>th</sup> Bernstein coefficient (starting at 0) to <em>z</em>*choose(<em>r</em>,<em>i</em>&minus;<em>d</em>/2)*choose(<em>d</em>,<em>d</em>/2) / choose(<em>d</em>+<em>r</em>, <em>i</em>).</li>
 </ul></li>
 <li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
 </ol>

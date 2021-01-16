@@ -687,22 +687,22 @@ The function min(_&lambda;_, 1/2) can be rewritten as _A_ + _B_ where&mdash;
 - _A_  = (1/2) \* _&lambda;_, and
 - _B_ = (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_))) = (1/2) \* &Sigma;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
 
-revealing that the function is a convex combination, and _B_ is itself a convex combination where&mdash;
+revealing that the function is a [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), and _B_ is itself a convex combination where&mdash;
 
-- _g_(_k_) = (2\*_k_,k)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
-- _h_<sub>_k_</sub>(_&lambda;_) = (4\*x\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
+- _g_(_k_) = (2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
+- _h_<sub>_k_</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
 
-(see also Wästlund (1999)<sup>[**(21)**](#Note21)</sup>; Dale et al. (2015)<sup>[**(22)**](#Note22)</sup>).  The right hand side of _h_, which is the polynomial built in step 3 of the algorithm), is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
+(see also Wästlund (1999)<sup>[**(21)**](#Note21)</sup>; Dale et al. (2015)<sup>[**(22)**](#Note22)</sup>).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
 
 - _z_ = (4<sup>_m_</sup>/2) / choose(_m_*2,_m_) at _m_=_k_, and
 - 0 elsewhere.
 
-Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated as is.  As a result, the polynomial's degree has to be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup>[**(5)**](#Note5)</sup>).  But due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _c_, the (_d_/2)<sup>th</sup> Bernstein coefficient _c_ (starting at 0), the degree elevation is as follows:
+Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated as is using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup>[**(5)**](#Note5)</sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
 
 1. Set _r_ to 5.
 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
 3. For each integer _i_ in the interval [0, _d_+_r_]:
-     - If _d_/2 is in the interval [max(0, _i_&minus;_r_), min(_d_,_i_)], set the _i_<sup>th</sup> Bernstein coefficient (starting at 0) to _c_\*choose(_r_,_i_&minus;_d_/2)\*choose(_d_,_d_/2) / choose(_d_+_r_, _i_).
+     - If _d_/2 is in the interval [max(0, _i_&minus;_r_), min(_d_,_i_)], set the _i_<sup>th</sup> Bernstein coefficient (starting at 0) to _z_\*choose(_r_,_i_&minus;_d_/2)\*choose(_d_,_d_/2) / choose(_d_+_r_, _i_).
 4. If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add _d_/2 to _r_ and go to step 2.
 
 <a id=License></a>
