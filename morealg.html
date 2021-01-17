@@ -640,14 +640,16 @@
 
 <h2>Requests and Open Questions</h2>
 
-<p>We would like to see new implementations of the following:</p>
+<ol>
+<li>We would like to see new implementations of the following:
 
 <ul>
 <li>Algorithms that implement <strong>InShape</strong> for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that <strong>InShape</strong> determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.</li>
 <li>Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section &quot;Building an Arbitrary-Precision Sampler&quot;.</li>
-</ul>
-
-<p>The appendix contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</p>
+</ul></li>
+<li>The appendix contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</li>
+<li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval [0, 1].  If we do the degree elevation, described in the appendix, enough times (at least <em>r</em> times), then then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: at least how many degree elevations are needed?  I conjecture that floor(<em>n</em>/3)+1 elevations are enough, since experiments show that <em>r</em>/<em>n</em> tends to 1/3 as <em>n</em> gets large.</li>
+</ol>
 
 <p><a id=Notes></a></p>
 
@@ -907,7 +909,7 @@ calc_linear_func(count=8)
 <p>Unfortunately, <em>z</em> is generally greater than 1, so that the polynomial can&#39;t be simulated, as is, using the Bernoulli factory algorithm for <a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form"><strong>polynomials in Bernstein form</strong></a>.  Fortunately, the polynomial&#39;s degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup><a href="#Note22"><strong>(22)</strong></a></sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree <em>d</em> as well as <em>z</em> (as defined above), the degree elevation is as follows:</p>
 
 <ol>
-<li>Set <em>r</em> to floor(<em>d</em>/3) + 1. (This starting value is because when this routine finishes, <em>d</em>/<em>r</em> appears to converge to 1/3 as <em>d</em> gets large, for the polynomial in question.)  Let <em>c</em> be choose(<em>d</em>,<em>d</em>/2).</li>
+<li>Set <em>r</em> to floor(<em>d</em>/3) + 1. (This starting value is because when this routine finishes, <em>r</em>/<em>d</em> appears to converge to 1/3 as <em>d</em> gets large, for the polynomial in question.)  Let <em>c</em> be choose(<em>d</em>,<em>d</em>/2).</li>
 <li>Create a list of <em>d</em>+<em>r</em>+1 Bernstein coefficients, all zeros.</li>
 <li>For each integer <em>i</em> in the interval [0, <em>d</em>+<em>r</em>]:
 

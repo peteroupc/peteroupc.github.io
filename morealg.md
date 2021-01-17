@@ -479,12 +479,11 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-We would like to see new implementations of the following:
-
-- Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
-- Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
-
-The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
+1. We would like to see new implementations of the following:
+    - Algorithms that implement **InShape** for specific closed curves, specific closed surfaces, and specific signed distance functions.  Recall that **InShape** determines whether a box lies inside, outside, or partly inside or outside a given curve or surface.
+    - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
+2. The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
+3. Take a polynomial _f_(_&lambda;_) of even degree _n_ of the form choose(_n_,_n_/2)\*_&lambda;_<sup>_n_/2</sup>(1&minus;_&lambda;_)<sup>_n_/2</sup>\*_k_, where _k_ is greater than 1 (thus all _f_'s Bernstein coefficients are 0 except for the middle one, which equals _k_).  Suppose _f_(1/2) lies in the interval \[0, 1\].  If we do the degree elevation, described in the appendix, enough times (at least _r_ times), then then _f_'s Bernstein coefficients will all lie in [0, 1].  The question is: at least how many degree elevations are needed?  I conjecture that floor(_n_/3)+1 elevations are enough, since experiments show that _r_/_n_ tends to 1/3 as _n_ gets large.
 
 <a id=Notes></a>
 ## Notes
@@ -699,7 +698,7 @@ revealing that the function is a [**convex combination**](https://peteroupc.gith
 
 Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup>[**(22)**](#Note22)</sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
 
-1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _d_/_r_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
+1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _r_/_d_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
 3. For each integer _i_ in the interval [0, _d_+_r_]:
      - If _d_/2 is in the interval [max(0, _i_&minus;_r_), min(_d_,_i_)], set the _i_<sup>th</sup> Bernstein coefficient (starting at 0) to _z_\*_c_\*choose(_r_,_i_&minus;_d_/2)\* / choose(_d_+_r_, _i_).
