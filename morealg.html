@@ -267,10 +267,16 @@
 <ol>
 <li>With probability 1/2, flip the input coin and return the result.</li>
 <li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
-<li>(Build a degree-<em>m</em>*2 polynomial.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
-<li>(Simulate the polynomial.) Flip the coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.</li>
-<li>Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
+<li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
+<li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
 </ol>
+
+<p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 3 and 4 of the algorithm can be described more efficiently as follows:</p>
+
+<ul>
+<li>(3.) Let <em>r</em> be floor(<em>m</em>*2/3)+1, and let <em>d</em> be <em>m</em>*2+<em>r</em>.</li>
+<li>(4.) (Simulate the polynomial, whose degree is <em>d</em>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be (1/2) * 2<sup><em>m</em>*2</sup>*choose(<em>r</em>,<em>h</em>)/choose(<em>d</em>, <em>m</em>+<em>h</em>) (the polynomial&#39;s <em>h</em><sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
+</ul>
 
 <blockquote>
 <p><strong>Note:</strong> In Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, the following polynomial sequences were suggested to simulate min(<em>&lambda;</em>*2, 1 &minus; 2*<em>&epsilon;</em>), provided <em>&epsilon;</em> &lt; 1/8.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.</p>
@@ -678,6 +684,7 @@
 <li><small><sup id=Note20>(20)</sup> Wästlund, J., &quot;<a href="http://www.math.chalmers.se/%7Ewastlund/coinFlip.pdf"><strong>Functions arising by coin flipping</strong></a>&quot;, 1999.</small></li>
 <li><small><sup id=Note21>(21)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</small></li>
 <li><small><sup id=Note22>(22)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note23>(23)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
