@@ -1967,7 +1967,7 @@ number in the sequence.</li>
 <li><strong>Kernel distributions</strong> are mixtures of sampling distributions, one for each data point. Estimating a kernel distribution is called <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation"><strong><em>kernel density estimation</em></strong></a>.  To sample from a kernel distribution:
 
 <ol>
-<li>Choose one of the numbers or points in the list at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
+<li>Choose one of the numbers or points in the list uniformly at random <a href="#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>with replacement</strong></a>.</li>
 <li>Add a randomized &quot;jitter&quot; to the chosen number or point; for example, add a separately generated <code>Normal(0, sigma)</code> to the chosen number or each component of the chosen point, where <code>sigma</code> is the <em>bandwidth</em><sup><a href="#Note71"><strong>(71)</strong></a></sup>.</li>
 </ol></li>
 <li><strong>Stochastic interpolation</strong> is described in (Saucier 2000)<sup><a href="#Note69"><strong>(69)</strong></a></sup>, sec. 5.3.4.</li>
