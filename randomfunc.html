@@ -321,7 +321,7 @@ METHOD RNDINT(maxInclusive)
 END METHOD
 </pre>
 
-<p>There are many algorithms for <code>RNDINT(maxInclusive)</code>, as shown in the table below, but in general, the algorithm can be <em>unbiased</em> only if it runs forever in the worst case.    (The column &quot;Unbiased?&quot; means whether the algorithm generates random integers without bias, even if <code>n = maxInclusive + 1</code> is not a power of 2.)</p>
+<p>There are many algorithms for <code>RNDINT(maxInclusive)</code>, as shown in the table below, but in general, the algorithm can be <em>unbiased</em> only if it runs forever in the worst case.  The algorithms listed take <code>n</code> as a parameter, where <code>n = maxInclusive + 1</code>, and thus sample from the interval [0, <code>n</code>). (The column &quot;Unbiased?&quot; means whether the algorithm generates random integers without bias, even if <code>n</code> is not a power of 2.)</p>
 
 <table><thead>
 <tr>
@@ -1107,7 +1107,7 @@ END METHOD
 </tr>
 <tr>
 <td>Han and Hoshi (1997)<sup><a href="#Note40"><strong>(40)</strong></a></sup></td>
-<td>Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> and comes within 3 bits, on average, of the optimal number of random bits per sample.</td>
+<td>Uses cumulative probabilities as input and comes within 3 bits, on average, of the optimal number of random bits per sample.  Also described in (Devroye and Gravel 2020)<sup><a href="#Note11"><strong>(11)</strong></a></sup> and comes</td>
 </tr>
 </tbody></table>
 

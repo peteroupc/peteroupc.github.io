@@ -153,7 +153,7 @@ The next section will show algorithms for a number of factory functions, allowin
 In the following algorithms:
 
 - _&lambda;_ is the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(6)**](#Note6)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_.
+-  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(6)**](#Note6)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).

@@ -228,7 +228,7 @@ Specifically:
       end
     END METHOD
 
-There are many algorithms for `RNDINT(maxInclusive)`, as shown in the table below, but in general, the algorithm can be _unbiased_ only if it runs forever in the worst case.    (The column "Unbiased?" means whether the algorithm generates random integers without bias, even if `n = maxInclusive + 1` is not a power of 2.)
+There are many algorithms for `RNDINT(maxInclusive)`, as shown in the table below, but in general, the algorithm can be _unbiased_ only if it runs forever in the worst case.  The algorithms listed take `n` as a parameter, where `n = maxInclusive + 1`, and thus sample from the interval [0, `n`). (The column "Unbiased?" means whether the algorithm generates random integers without bias, even if `n` is not a power of 2.)
 
 | Algorithm | Optimal? | Unbiased? | Time Complexity |
   --- | --- | --- | --- |
@@ -805,7 +805,7 @@ The following are various ways to implement `WeightedChoice`. (Many of them requ
 | (Tang 2019)<sup>[**(39)**](#Note39)</sup>. | Presents various algorithms, including two- and multi-level search, binary search (with cumulative weights), and a new "flat" method. |
 | "Loaded Die from Biased Coins" | Given a list of probabilities `probs` that must sum to 1 and should be rational numbers: (1) Set `cumu` to 1 and `i` to 0; (2) with probability `probs[i]/cumu`, return `i`; (3) subtract `probs[i]` from `cumu`, then add 1 to `i`, then go to step 2.  For a correctness proof, see "Darts, Dice, and Coins".  If each probability in `probs` is calculated "on the fly", this is also called sequential search; see chapter 10 of Devroye (1986)<sup>[**(18)**](#Note18)</sup> (but this generally won't be exact unless all the probabilities involved are rational numbers). |
 | Knuth and Yao (1976)<sup>[**(9)**](#Note9)</sup> | Generates a binary DDG tree from the binary expansions of the probabilities (that is, they have the base-2 form 0.bbbbbb... where b is 0 or 1). Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986)<sup>[**(18)**](#Note18)</sup>, implemented in _randomgen.py_ as the `discretegen` method, and also described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>.  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly". |
-| Han and Hoshi (1997)<sup>[**(40)**](#Note40)</sup> | Uses cumulative probabilities as input.  An error-bounded version is described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> and comes within 3 bits, on average, of the optimal number of random bits per sample. |
+| Han and Hoshi (1997)<sup>[**(40)**](#Note40)</sup> | Uses cumulative probabilities as input and comes within 3 bits, on average, of the optimal number of random bits per sample.  Also described in (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> and comes  |
 
 > **Notes:**
 >
