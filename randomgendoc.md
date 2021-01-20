@@ -35,6 +35,8 @@ CLASSES
         VoseAlias
 
     class AlmostRandom(builtins.object)
+     |  AlmostRandom(randgen, list)
+     |
      |  Methods defined here:
      |
      |  __init__(self, randgen, list)
@@ -52,6 +54,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class BinaryExpansion(builtins.object)
+     |  BinaryExpansion(arr, zerosAtEnd=False)
+     |
      |  Methods defined here:
      |
      |  __init__(self, arr, zerosAtEnd=False)
@@ -110,6 +114,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class BringmannLarsen(builtins.object)
+     |  BringmannLarsen(weights)
+     |
      |  Implements Bringmann and Larsen's sampler, which chooses a random number in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
@@ -138,6 +144,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class ConvexPolygonSampler(builtins.object)
+     |  ConvexPolygonSampler(randgen, points)
+     |
      |  A class for uniform random sampling of
      |  points from a convex polygon.  This
      |  class only supports convex polygons because
@@ -166,6 +174,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class DensityInversionSampler(builtins.object)
+     |  DensityInversionSampler(pdf, bl, br, ures=1e-08)
+     |
      |  A sampler that generates random samples from
      |    a continuous distribution for which
      |    only the probability density function (PDF) is known,
@@ -239,6 +249,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class DensityTiling(builtins.object)
+     |  DensityTiling(pdf, bl, br, cycles=8)
+     |
      |  Produces a tiling of a probability density function (PDF)
      |       for the purposes of random number generation.  The PDF is
      |       decomposed into tiles; these tiles will either cross the PDF
@@ -308,6 +320,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class FastLoadedDiceRoller(builtins.object)
+     |  FastLoadedDiceRoller(weights)
+     |
      |  Implements the Fast Loaded Dice Roller, which chooses a random number in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
@@ -344,6 +358,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class KVectorSampler(builtins.object)
+     |  KVectorSampler(cdf, xmin, xmax, pdf=None, nd=200)
+     |
      |  A K-Vector-like sampler of a continuous distribution
      |  with a known cumulative distribution function (CDF).
      |  Uses algorithms
@@ -407,6 +423,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class OptimalSampler(builtins.object)
+     |  OptimalSampler(m)
+     |
      |  Implements a sampler which chooses a random number in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
@@ -481,6 +499,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class PrefixDistributionSampler(builtins.object)
+     |  PrefixDistributionSampler(pdf)
+     |
      |  An arbitrary-precision sampler for probability distributions
      |  supported on [0, 1] and bounded from above.
      |  Note that this sampler currently relies on floating-point operations
@@ -512,6 +532,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class RandomGen(builtins.object)
+     |  RandomGen(rng=None)
+     |
      |  A class that implements many methods for
      |  random number generation and sampling.  It takes
      |  an underlying RNG as specified in the constructor.
@@ -1341,6 +1363,8 @@ CLASSES
      |  MINEXPONENT = -1074
 
     class RatioOfUniformsTiling(builtins.object)
+     |  RatioOfUniformsTiling(pdf, mode=0, y0=-10, y1=10, cycles=8)
+     |
      |  Produces a tiling for the purposes
      |       of fast sampling from a probability distribution via the
      |       ratio of uniforms method.
@@ -1411,6 +1435,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class SortedAliasMethod(builtins.object)
+     |  SortedAliasMethod(p)
+     |
      |  Implements a weighted sampling table
      |  where each weight must be in sorted
      |  order (ascending or descending).
@@ -1441,6 +1467,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class VoseAlias(builtins.object)
+     |  VoseAlias(weights)
+     |
      |  Implements Vose's version of the alias sampler, which chooses a random number in [0, n)
      |  where the probability that each number is chosen is weighted.  The 'weights' is the
      |  list of weights each 0 or greater; the higher the weight, the greater
@@ -1485,6 +1513,8 @@ CLASSES
         Fixed
 
     class Fixed(builtins.object)
+     |  Fixed(i)
+     |
      |  Fixed-point numbers, represented using integers that store multiples
      |  of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
      |  do they necessarily have the same precision or resolution of floating-point
@@ -2146,6 +2176,8 @@ CLASSES
         FInterval
 
     class FInterval(builtins.object)
+     |  FInterval(v, sup=None, prec=None)
+     |
      |  An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
      |  the lower bound.
      |
@@ -2303,6 +2335,8 @@ CLASSES
         MooreSampler
 
     class MooreSampler(builtins.object)
+     |  MooreSampler(pdf, mn, mx, numLabels=1, bitAccuracy=53)
+     |
      |  Moore rejection sampler, for generating independent samples
      |  from continuous distributions in a way that minimizes error,
      |  if the distribution's PDF (probability density function)
@@ -2395,6 +2429,8 @@ CLASSES
         ShapeSampler2
 
     class ShapeSampler(builtins.object)
+     |  ShapeSampler(inshape, dx=1, dy=1)
+     |
      |  Methods defined here:
      |
      |  __init__(self, inshape, dx=1, dy=1)
@@ -2417,6 +2453,8 @@ CLASSES
      |      list of weak references to the object (if defined)
 
     class ShapeSampler2(builtins.object)
+     |  ShapeSampler2(inshape, dx=1, dy=1)
+     |
      |  Methods defined here:
      |
      |  __init__(self, inshape, dx=1, dy=1)

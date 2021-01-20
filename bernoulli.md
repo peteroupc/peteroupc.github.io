@@ -1278,13 +1278,14 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 A coin with unknown probability of heads of _&lambda;_ can be turned into a coin with probability of heads of _f_(_&lambda;_), where _f_ is any factory function, via an algorithm that works with two sequences of polynomials:
 
 - One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.
-- For both sequences, there must be a way to calculate their polynomials' Bernstein coefficients.
-- For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is transformed to have the same degree as the other).
+- For both sequences, there must be a way to calculate their polynomials' _Bernstein coefficients_.
+- For each sequence, the polynomials must have increasing degree.
+- For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is elevated to the same degree as the other).
 
 This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
 
-- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 6 below.)
-- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 6.)
+- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 7 below.)
+- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 7.)
 
 The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(47)**](#Note47)</sup>, although an error in Algorithm I is noted below.  The first algorithm follows.
 
@@ -1324,20 +1325,23 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 > 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_.
 > 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
 > 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
-> 4. The following method (see Powell 1981)<sup>[**(48)**](#Note48)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_), in the interval \[0, 1\]&mdash;
->     - has continuous "slope" and "slope-of-slope" functions  \(in other words, _f_ is _C_<sup>2</sup> continuous there), and
->     - either&mdash;
+> 4. The following method (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
+>     - (a) has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, _f_ is _C_<sup>2</sup> continuous there), and
+>     - (b) in the interval \[0, 1\]&mdash;
 >         - has a minimum of greater than 0 and a maximum of less than 1, or
 >         - is convex and has a minimum of greater than 0, or
 >         - is concave and has a maximum of less than 1.
 >
->     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is the "slope-of-slope" function of _f_.  Then:
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
->     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*8) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
+>     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is the "slope-of-slope" function of _f_.  Then for all _n_ that are powers of 2:
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
+>     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
->     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate_C2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
-> 5. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
-> 6. If _f_(_k_/_n_) is not a rational number, then it should be calculated in **fabove** and **fbelow** with an accuracy that improves as _n_ (the polynomial degree) gets larger.  In that case, **fabove** should calculate an upper bound of _f_(_k_/_n_), and **fbelow** a lower bound.  Also, it's often convenient to implement **fabove** and **fbelow** with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup>[**(49)**](#Note49)</sup>), since both bounds would then be available at once.
+>     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate_C2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.  Perhaps this algorithm also works with the tighter approximation of (_n_\*8) rather than (_n_\*2) (see Powell 1981)<sup>[**(48)**](#Note48)</sup>.
+> 5. If _f_(_&lambda;_) is _Lipschitz continuous_ in (0, 1) and meets (b) in note 4, the following method implements **fabove** and **fbelow** (Nacu and Peres 2005, proposition 10(ii))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest value of abs(_f&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;_ is the "slope" function of _f_.  Then for all _n_ that are powers of 2:
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
+>     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
+> 6. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
+> 7. If _f_(_k_/_n_) is not a rational number, then it should be calculated in **fabove** and **fbelow** with an accuracy that improves as _n_ (the polynomial degree) gets larger.  In that case, **fabove** should calculate an upper bound of _f_(_k_/_n_), and **fbelow** a lower bound.  Also, it's often convenient to implement **fabove** and **fbelow** with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup>[**(49)**](#Note49)</sup>), since both bounds would then be available at once.
 >
 > **Examples:**
 >
@@ -1347,12 +1351,12 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
 > 2. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2, then note 4 suggests the following:
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
->     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*8).
->     - **fbound**(_n_) = [0, (1/2) + 1/(4\*_n_)].
+>     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*2).
+>     - **fbound**(_n_) = [0, (1/2) + 1/_n_].
 > 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then notes 4 suggests the following:
 >     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
->     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*8).
->     - **fbound**(_n_) = [0, (1/2) + 9/(16\*_n_)].
+>     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*2).
+>     - **fbound**(_n_) = [0, (1/2) + 9/(32\*_n_)].
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

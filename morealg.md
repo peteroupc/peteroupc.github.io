@@ -193,7 +193,7 @@ The code in the [**appendix**](#Appendix) uses the computer algebra library SymP
 
 It would be interesting to find general formulas to find the appropriate polynomials (degrees and _Y parameters_) given only the values for _mult_ and _&epsilon;_, rather than find them "the hard way" via `calc_linear_func`.  For this procedure, the degrees and _Y parameters_ can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.
 
-> **Note:** In Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, the following polynomial sequences were suggested to simulate min(_&lambda;_\*2, 1 &minus; 2\*_&epsilon;_), provided _&epsilon;_ &lt; 1/8.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
+> **Note:** In Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, the following polynomial sequences were suggested to simulate min(_&lambda;_\*2, 1 &minus; 2\*_&epsilon;_), provided _&epsilon;_ &lt; 1/8, where _n_ is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
 >
 > - **fbelow(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_).
 > - **fabove(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_) +<br>(max(0, _k_/_n_+3\*_&epsilon; &minus;_ 1/2)/(_&epsilon;_/(1&minus;sqrt(2)/2)))\*sqrt(2/_n_) +<br>(72\*max(0, _k_/_n_&minus;1/9)/(1&minus;exp(&minus;2\*_&epsilon;_\*_&epsilon;_)))\*exp(&minus;2\*_&epsilon;_\*_&epsilon;_\*_n_).
