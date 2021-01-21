@@ -749,6 +749,28 @@ The same paper also describes polynomials that are weighted sums of this kind of
 
 Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
 
+The following algorithm implements a special case of the "Dice Enterprise" algorithm of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>, restricted to polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier.
+
+First, define the following operation:
+
+- **Get the new state given _state_, _b_, _u_, and _n_**:
+    - If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).
+    - If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise (and is equivalent to choose(_n_,_state_+1)/max(choose(_n_,_state_), choose(_n_,_state_+1))).
+    - Return _state_.
+
+Then the algorithm is as follows:
+
+1. Create two empty lists: _blist_ and _ulist_.
+2. Set _state1_ to 0 and _state2_ to _n_.
+3. Flip the input coin and add the result (which is 0 or 1) to the end of _blist_.  Generate a uniform(0, 1) random number and add it to the end of _ulist_.
+4. (Monotonic coupling from the past (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>, (Propp and Wilson 1996)<sup>[**(61)**](#Note61)</sup>.)Set _i_ to the number of items in _blist_ minus 1, then while _i_ is 0 or greater:
+    1. Let _b_ be the item at position _i_ (starting at 0) in _blist_, and let _u_ be the item at that position in _ulist_.
+    2. **Get the new state given _state1_, _b_, _u_, and _n_**, and set _state1_ to the result.
+    3. **Get the new state given _state2_, _b_, _u_, and _n_**, and set _state2_ to the result.
+    4. Subtract 1 from _i_.
+5. If _state1_ and _state2_ are not equal, go to step 2.
+6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0.
+
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
 
@@ -1457,6 +1479,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note58>(58)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note59>(59)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note60>(60)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note61>(61)</sup> Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.</small>
 
 <a id=Appendix></a>
 ## Appendix

@@ -1188,6 +1188,7 @@ class Bernoulli:
 
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
+    # TODO: Implementation is wrong; find out what's wrong
     num = 1
     for i in range(x[0], n + 1):
         num *= i
@@ -1196,6 +1197,13 @@ def _multinom(n, x):
         for j in range(1, x[i] + 1):
             den *= j
     return Fraction(num) / den
+
+def _multinom(n, x):
+    num = math.factorial(n)
+    den = 1
+    for v in x:
+        den *= math.factorial(v)
+    return num / den
 
 def _neighbordist(ni, nj, b):
     ret = [av - bv for av, bv in zip(ni, nj)]
@@ -1546,10 +1554,15 @@ class DiceEnterprise:
         # coefficients are negative.  This is especially important
         # in the multivariate case in order for the Markov matrix
         # construction to succeed.
+
         dimension = len(st[1]) - 1  # Dimension of simplex
         newladder = []
+        #print("before make_positive")
+        #print(self.ladder)
         for res in range(maxresult + 1):
             self._make_positive(newladder, res, deg, dimension)
+        #print("after make_positive")
+        #print(newladder)
         self.ladder = newladder
 
     def _autoaugment(self):
@@ -1610,6 +1623,7 @@ class DiceEnterprise:
             return 0
         if self._dirty:
             self._dirty = False
+            self._autoaugment()
             self._compile_ladder()
         if len(self.ladder[0][1]) == 2:
             s = self._monotoniccftp(coin)
@@ -1642,9 +1656,9 @@ class DiceEnterprise:
             # Fraction class is greatly slow
             if univ:
                 # Precalculation for univariate ladders
-                if i > 0:
-                    la = self.ladder[i - 1][0]
-                    lcur = self.ladder[i][0]
+                if i > 0: # Calculate ladder[i-1]/max(ladder[i-1],ladder[i])
+                    la = self.ladder[i - 1][0] # Coefficient(s) for previous state
+                    lcur = self.ladder[i][0] # Coefficient(s) for current state
                     la = la[0] if len(la) == 1 else sum(la)
                     lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
                     lcur = max(la, lcur)
@@ -1655,6 +1669,7 @@ class DiceEnterprise:
                     )
                     fr1 = fr
                 if i < len(self.ladder) - 1:
+                    # Calculate ladder[i+1]/max(ladder[i+1],ladder[i])
                     la = self.ladder[i + 1][0]
                     lcur = self.ladder[i][0]
                     la = la[0] if len(la) == 1 else sum(la)
@@ -1675,6 +1690,7 @@ class DiceEnterprise:
                         n[b].append([v.numerator, v.denominator])
                 fr1 = n
             self.optladder[i] = [fr1, fr2, fr3]
+            print(self.optladder)
         return self
 
     def _monotonicladderupdate(self, i, b, u):

@@ -975,6 +975,38 @@
 
 <p>Let <em>C</em> be the sum of all <em>c</em>[<em>j</em>].  To simulate the probability <em>P</em>/<em>C</em>, choose one of the monomials with probability proportional to its weight (see &quot;<a href="https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms"><strong>A Note on Weighted Choice Algorithms</strong></a>&quot;), then run the algorithm above on that monomial (see also &quot;<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;, later).</p>
 
+<p>The following algorithm implements a special case of the &quot;Dice Enterprise&quot; algorithm of (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, restricted to polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier.</p>
+
+<p>First, define the following operation:</p>
+
+<ul>
+<li><strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>:
+
+<ul>
+<li>If <em>state</em> &gt; 0 and <em>b</em> is 0, return either <em>state&minus;1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is greater than floor(<em>n</em>/2), and <em>state</em>/(<em>n</em>+1&minus;<em>state</em>) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>&minus;1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>&minus;1))).</li>
+<li>If <em>state</em> &lt; <em>n</em> and <em>b</em> is 1, return either <em>state+1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is less than floor(<em>n</em>/2), and (<em>n</em>&minus;<em>state</em>)/(<em>state</em>+1) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>+1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>+1))).</li>
+<li>Return <em>state</em>.</li>
+</ul></li>
+</ul>
+
+<p>Then the algorithm is as follows:</p>
+
+<ol>
+<li>Create two empty lists: <em>blist</em> and <em>ulist</em>.</li>
+<li>Set <em>state1</em> to 0 and <em>state2</em> to <em>n</em>.</li>
+<li>Flip the input coin and add the result (which is 0 or 1) to the end of <em>blist</em>.  Generate a uniform(0, 1) random number and add it to the end of <em>ulist</em>.</li>
+<li>(Monotonic coupling from the past (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, (Propp and Wilson 1996)<sup><a href="#Note61"><strong>(61)</strong></a></sup>.)Set <em>i</em> to the number of items in <em>blist</em> minus 1, then while <em>i</em> is 0 or greater:
+
+<ol>
+<li>Let <em>b</em> be the item at position <em>i</em> (starting at 0) in <em>blist</em>, and let <em>u</em> be the item at that position in <em>ulist</em>.</li>
+<li><strong>Get the new state given <em>state1</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>, and set <em>state1</em> to the result.</li>
+<li><strong>Get the new state given <em>state2</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>, and set <em>state2</em> to the result.</li>
+<li>Subtract 1 from <em>i</em>.</li>
+</ol></li>
+<li>If <em>state1</em> and <em>state2</em> are not equal, go to step 2.</li>
+<li>With probability <em>a</em>[<em>state1</em>], return 1.  Otherwise, return 0.</li>
+</ol>
+
 <p><a id=Certain_Algebraic_Functions></a></p>
 
 <h4>Certain Algebraic Functions</h4>
@@ -1905,6 +1937,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note58>(58)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
 <li><small><sup id=Note59>(59)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note60>(60)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note61>(61)</sup> Propp, J.G., Wilson, D.B., &quot;Exact sampling with coupled Markov chains and applications to statistical mechanics&quot;, 1996.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
