@@ -724,12 +724,12 @@ The algorithm follows.
 
 ----
 
-The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)).  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>i</sub>(_&lambda;_) are in the form of polynomials such that&mdash;
+The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)).  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials such that&mdash;
 - the polynomials all have the same degree, namely _n_;
 - the polynomials' variable is _&lambda;_, the input coin's probability of heads; and
-- the sum of _j_th Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _j_.
+- the sum of _j_<sup>th</sup> Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _j_.
 
-Any rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup>[**(26)**](#Note26)</sup>  In this algorithm, let _R_\[_j_\] be the sum of _j_th Bernstein coefficients of the polynomials.  First, define the following operation:
+Any rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup>[**(26)**](#Note26)</sup>  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> Bernstein coefficients of the polynomials.  First, define the following operation:
 
 - **Get the new state given _state_, _b_, _u_, and _n_**:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is _R_\[_state_&minus;1]/max(_R_\[_state_\], _R_\[_state_&minus;1]).
@@ -782,7 +782,7 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 ----
 
-Another algorithm is a slight modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.
+Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.
 
 - Instead of the version of "**Get the new state given _state_, _b_, _u_, and _n_**" from the previous section, use the following version:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).

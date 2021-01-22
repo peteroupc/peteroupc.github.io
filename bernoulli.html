@@ -938,15 +938,15 @@
 
 <hr>
 
-<p>The following algorithm implements a special case of the &quot;Dice Enterprise&quot; method of (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>) + ... + <em>P</em><sub><em>m</em>&minus;1</sub>(<em>&lambda;</em>)).  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub>i</sub>(<em>&lambda;</em>) are in the form of polynomials such that&mdash;</p>
+<p>The following algorithm implements a special case of the &quot;Dice Enterprise&quot; method of (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>) + ... + <em>P</em><sub><em>m</em>&minus;1</sub>(<em>&lambda;</em>)).  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>i</em></sub>(<em>&lambda;</em>) are in the form of polynomials such that&mdash;</p>
 
 <ul>
 <li>the polynomials all have the same degree, namely <em>n</em>;</li>
 <li>the polynomials&#39; variable is <em>&lambda;</em>, the input coin&#39;s probability of heads; and</li>
-<li>the sum of <em>j_th Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _j</em>.</li>
+<li>the sum of <em>j</em><sup>th</sup> Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each <em>j</em>.</li>
 </ul>
 
-<p>Any rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup><a href="#Note26"><strong>(26)</strong></a></sup>  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of _j_th Bernstein coefficients of the polynomials.  First, define the following operation:</p>
+<p>Any rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup><a href="#Note26"><strong>(26)</strong></a></sup>  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> Bernstein coefficients of the polynomials.  First, define the following operation:</p>
 
 <ul>
 <li><strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>:
@@ -1023,7 +1023,7 @@
 
 <hr>
 
-<p>Another algorithm is a slight modification of the &quot;Dice Enterprise&quot; special case given in the <a href="#Certain_Rational_Functions"><strong>previous section</strong></a>.  It works with degree-<em>n</em> polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.</p>
+<p>Another algorithm is a modification of the &quot;Dice Enterprise&quot; special case given in the <a href="#Certain_Rational_Functions"><strong>previous section</strong></a>.  It works with degree-<em>n</em> polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.</p>
 
 <ul>
 <li>Instead of the version of &quot;<strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>&quot; from the previous section, use the following version:
