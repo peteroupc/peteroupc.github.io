@@ -2054,14 +2054,14 @@ CLASSES
 
     class DiceEnterprise(builtins.object)
      |  Implements the Dice Enterprise algorithm for
-     |  turning loaded dice with unknown bias into loaded dice
-     |  with a different bias.  Specifically, it supports specifying
+     |  turning loaded dice with unknown probability of heads into loaded dice
+     |  with a different probability of heads.  Specifically, it supports specifying
      |  the probability that the output die will land on a given
-     |  number, as a polynomial function of the input die's bias.
+     |  number, as a polynomial function of the input die's probability of heads.
      |  The case of biased coins to biased coins is also called
      |  the Bernoulli factory problem; this class allows the output
-     |  coin's bias to be specified as a polynomial function of the
-     |  input coin's bias.
+     |  coin's probability of heads to be specified as a polynomial function of the
+     |  input coin's probability of heads.
      |
      |  Reference: Morina, G., Łatuszyński, K., et al., "From the
      |  Bernoulli Factory to a Dice Enterprise via Perfect

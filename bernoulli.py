@@ -1281,14 +1281,14 @@ class _FastLoadedDiceRoller:
 class DiceEnterprise:
     """
     Implements the Dice Enterprise algorithm for
-    turning loaded dice with unknown bias into loaded dice
-    with a different bias.  Specifically, it supports specifying
+    turning loaded dice with unknown probability of heads into loaded dice
+    with a different probability of heads.  Specifically, it supports specifying
     the probability that the output die will land on a given
-    number, as a polynomial function of the input die's bias.
+    number, as a polynomial function of the input die's probability of heads.
     The case of biased coins to biased coins is also called
     the Bernoulli factory problem; this class allows the output
-    coin's bias to be specified as a polynomial function of the
-    input coin's bias.
+    coin's probability of heads to be specified as a polynomial function of the
+    input coin's probability of heads.
 
     Reference: Morina, G., Łatuszyński, K., et al., "From the
     Bernoulli Factory to a Dice Enterprise via Perfect
@@ -1786,21 +1786,48 @@ class DiceEnterprise:
 
     def _make_positive_onedim(self, newladder, result, degree):
         # One-dimensional case of make-positive
-        for nv in range(degree + 1):
-            n0 = nv
-            n1 = degree - nv
+        """
+        # For the polynomial with given result:
+        n is desired degree
+        For each _n0_ in [0, _n_]:
+           Set z to 0
+           For each term of the form x*p**j * (1-p)**i:
+           If n0 >= i and (n-n0) >= j and i+j <= n: Add x*choose(n-(i_j), n0-i) to z
+        Append term ret*p**(n-n0) * (1-p)**n0 to ladder
+        """
+        for n0 in range(degree + 1):
+            n1 = degree - n0
             ret = 0
             for state in self.ladder:
                 for j in range(
                     len(state[0])
                 ):  # The same state may have multiple "results"
                     if state[2][j] == result:
-                        ntilde = state[1]
-                        for i in range(degree + 1):
+                        ntilde = state[1]  # Monomial for this state
+                        if n0 >= ntilde[0] and n1 >= ntilde[1]:
                             d1 = n0 - ntilde[0]
                             d2 = n1 - ntilde[1]
-                            if d1 >= 0 and d2 >= 0 and d1 + d2 == degree - i:
-                                ret += Fraction(state[0][j]) * _binco(degree - i, d1)
+                            # print(["n0",n0,"d1",d1,"d2",d2,"ntilde",ntilde])
+                            # d1+d2 = (n0+n1) - (ntilde[0]+ntilde[1])
+                            # d1+d2 = degree - current_degree
+                            d1d2 = degree - (ntilde[0] + ntilde[1])
+                            # Same as: 0 <= d1 + d2 <= degree, since ntilde[x] must
+                            # be non-negative
+                            if ntilde[0] + ntilde[1] <= degree:
+                                print(
+                                    [
+                                        float(state[0][j]),
+                                        "n0",
+                                        n0,
+                                        "n",
+                                        d1d2,
+                                        "k",
+                                        d1,
+                                        "ntilde",
+                                        ntilde,
+                                    ]
+                                )
+                                ret += Fraction(state[0][j]) * _binco(d1d2, d1)
             if ret != 0:
                 newladder.append([[ret], [n0, n1], [result]])
 
@@ -1815,7 +1842,7 @@ class DiceEnterprise:
                     len(state[0])
                 ):  # The same state may have multiple "results"
                     if state[2][j] == result:
-                        ntilde = state[1]
+                        ntilde = state[1]  # Monomial for this state
                         for i in range(degree + 1):
                             for nprime in self._each_allowed_simplex(
                                 degree - i, dimension, ntilde, n
