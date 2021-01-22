@@ -3,24 +3,24 @@ import math
 
 class Fixed:
     """
-   Fixed-point numbers, represented using integers that store multiples
-   of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
-   do they necessarily have the same precision or resolution of floating-point
-   numbers.  The main benefit of fixed-point numbers is that they improve
-   determinism for applications that rely on non-integer real numbers (notably
-   simulations and machine learning applications), in the sense that the operations
-   given here deliver the same answer for the same input across computers,
-   whereas floating-point numbers have a host of problems that make repeatable
-   results difficult, including differences in their implementation, rounding
-   behavior, and order of operations, as well as nonassociativity of
-   floating-point numbers.
+    Fixed-point numbers, represented using integers that store multiples
+    of 2^-BITS.  They are not necessarily faster than floating-point numbers, nor
+    do they necessarily have the same precision or resolution of floating-point
+    numbers.  The main benefit of fixed-point numbers is that they improve
+    determinism for applications that rely on non-integer real numbers (notably
+    simulations and machine learning applications), in the sense that the operations
+    given here deliver the same answer for the same input across computers,
+    whereas floating-point numbers have a host of problems that make repeatable
+    results difficult, including differences in their implementation, rounding
+    behavior, and order of operations, as well as nonassociativity of
+    floating-point numbers.
 
-   The operations given here are not guaranteed to be "constant-time"
-   (non-data-dependent and branchless) for all relevant inputs.
+    The operations given here are not guaranteed to be "constant-time"
+    (non-data-dependent and branchless) for all relevant inputs.
 
-   Any copyright to this file is released to the Public Domain.  In case this is not
-   possible, this file is also licensed under Creative Commons Zero version 1.0.
-   """
+    Any copyright to this file is released to the Public Domain.  In case this is not
+    possible, this file is also licensed under Creative Commons Zero version 1.0.
+    """
 
     """ Number of bits in the fractional part of a fixed-point number. """
     BITS = 20
@@ -109,13 +109,13 @@ class Fixed:
     @staticmethod
     def v(i):
         """
-     Converts a string, integer, Decimal, or other number type into
-     a fixed-point number.  If the parameter is a Fixed, returns itself.
-     If the given number is a non-integer, returns the closest value to
-     a Fixed after rounding using the round-to-nearest-ties-to-even
-     rounding mode.  The parameter is recommended to be a string
-     or integer, and is not recommended to be a `float`.
-     """
+        Converts a string, integer, Decimal, or other number type into
+        a fixed-point number.  If the parameter is a Fixed, returns itself.
+        If the given number is a non-integer, returns the closest value to
+        a Fixed after rounding using the round-to-nearest-ties-to-even
+        rounding mode.  The parameter is recommended to be a string
+        or integer, and is not recommended to be a `float`.
+        """
         if i.__class__ == Fixed:
             return i
         b = 0
@@ -178,11 +178,11 @@ class Fixed:
     @staticmethod
     def _divbits(av, bv, outputFracBits):
         """
-     Divides two fixed point numbers and rounds the result
-     using round-to-nearest, ties to even.
-     av, bv - Fixed-point numbers with the same number of fractional bits
-     outputFracBits - Number of fractional bits in the result
-     """
+        Divides two fixed point numbers and rounds the result
+        using round-to-nearest, ties to even.
+        av, bv - Fixed-point numbers with the same number of fractional bits
+        outputFracBits - Number of fractional bits in the result
+        """
         ava = abs(av)
         bva = abs(bv)
         ret = ava << outputFracBits
@@ -297,8 +297,8 @@ class Fixed:
 
     def asin(a):
         """
-     Calculates an approximation of the inverse sine of the given number.
-     """
+        Calculates an approximation of the inverse sine of the given number.
+        """
         av = Fixed.v(a)
         if av < -1 or av > 1:
             raise ValueError
@@ -306,8 +306,8 @@ class Fixed:
 
     def acos(a):
         """
-     Calculates an approximation of the inverse cosine of the given number.
-     """
+        Calculates an approximation of the inverse cosine of the given number.
+        """
         av = Fixed.v(a)
         if av < -1 or av > 1:
             raise ValueError
@@ -315,8 +315,8 @@ class Fixed:
 
     def sqrt(a):
         """
-     Calculates an approximation of the square root of the given number.
-     """
+        Calculates an approximation of the square root of the given number.
+        """
         return Fixed.v(a).pow(Fixed(Fixed.HALF))
 
     def __int__(a):
@@ -485,12 +485,12 @@ class Fixed:
 
     def sin(a):
         """
-     Calculates the approximate sine of the given angle; the angle is in radians.
-     For the fraction size used by this class, this method is accurate to within
-     1 unit in the last place of the correctly rounded result for all inputs
-     in the range [-pi*2, pi*2].
-     This method's accuracy decreases beyond that range.
-     """
+        Calculates the approximate sine of the given angle; the angle is in radians.
+        For the fraction size used by this class, this method is accurate to within
+        1 unit in the last place of the correctly rounded result for all inputs
+        in the range [-pi*2, pi*2].
+        This method's accuracy decreases beyond that range.
+        """
         ra = Fixed.v(a).value
         if ra == 0:
             return Fixed.v(0)
@@ -499,12 +499,12 @@ class Fixed:
 
     def cos(a):
         """
-     Calculates the approximate cosine of the given angle; the angle is in radians.
-     For the fraction size used by this class, this method is accurate to within
-     1 unit in the last place of the correctly rounded result for all inputs
-     in the range [-pi*2, pi*2].
-     This method's accuracy decreases beyond that range.
-     """
+        Calculates the approximate cosine of the given angle; the angle is in radians.
+        For the fraction size used by this class, this method is accurate to within
+        1 unit in the last place of the correctly rounded result for all inputs
+        in the range [-pi*2, pi*2].
+        This method's accuracy decreases beyond that range.
+        """
         ra = Fixed.v(a).value
         if ra == 0:
             return Fixed.v(1)
@@ -528,12 +528,12 @@ class Fixed:
 
     def tan(a):
         """
-     Calculates the approximate tangent of the given angle; the angle is in radians.
-     For the fraction size used by this class, this method is accurate to within
-     2 units in the last place of the correctly rounded result for all inputs
-     in the range [-pi*2, pi*2].
-     This method's accuracy decreases beyond that range.
-     """
+        Calculates the approximate tangent of the given angle; the angle is in radians.
+        For the fraction size used by this class, this method is accurate to within
+        2 units in the last place of the correctly rounded result for all inputs
+        in the range [-pi*2, pi*2].
+        This method's accuracy decreases beyond that range.
+        """
         ra = Fixed.v(a).value
         if ra == 0:
             return Fixed.v(0)
@@ -542,10 +542,10 @@ class Fixed:
 
     def atan2(y, x):
         """
-     Calculates the approximate measure, in radians, of the angle formed by the
-     X axis and a line determined by the origin and the given coordinates of a 2D
-     point.  This is also known as the inverse tangent.
-     """
+        Calculates the approximate measure, in radians, of the angle formed by the
+        X axis and a line determined by the origin and the given coordinates of a 2D
+        point.  This is also known as the inverse tangent.
+        """
         rx = Fixed.v(x).value
         ry = Fixed.v(y).value
         if ry == 0 and rx == 0:
@@ -584,8 +584,8 @@ class Fixed:
 
     def pow(a, b):
         """
-     Calculates an approximation of this number raised to the power of another number.
-     """
+        Calculates an approximation of this number raised to the power of another number.
+        """
         av = Fixed.v(a)
         bv = Fixed.v(b)
         if bv == 0:
@@ -666,8 +666,8 @@ class Fixed:
 
     def log(a):
         """
-     Calculates an approximation of the natural logarithm of this number.
-     """
+        Calculates an approximation of the natural logarithm of this number.
+        """
         fa = Fixed.v(a)
         av = fa.value
         if av <= 0:
@@ -721,10 +721,10 @@ class Fixed:
 
     def exp(a):
         """
-     Calculates an approximation of e (base of natural logarithms) raised
-     to the power of this number.  May raise an error if this number
-     is extremely high.
-     """
+        Calculates an approximation of e (base of natural logarithms) raised
+        to the power of this number.  May raise an error if this number
+        is extremely high.
+        """
         fa = Fixed.v(a)
         av = fa.value
         if av == 0:

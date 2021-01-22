@@ -68,7 +68,7 @@ class TConcaveDiscreteSampler:
                 return ret
 
     def codegen(self, name, pdfcall=None):
-        """ Generates Python code that samples
+        """Generates Python code that samples
                 (approximately) from the distribution estimated
                 in this class.  Idea from Leydold, et al.,
                 "An Automatic Code Generator for
@@ -78,7 +78,7 @@ class TConcaveDiscreteSampler:
            random number).
         - pdfcall: Name of the method representing psi (for more information,
            see the __init__ method of this class).  Optional; if not given
-           the name is psi_X where X is the name given in the name parameter. """
+           the name is psi_X where X is the name given in the name parameter."""
         if pdfcall == None:
             pdfcall = "psi_" + name
         ret = "import random\nimport math\n\n"
@@ -571,7 +571,7 @@ class LogConcaveSamplerMonotone:
         return [self.sampleOne() for i in range(n)]
 
     def codegen(self, name, pdfcall=None):
-        """ Generates Python code that samples
+        """Generates Python code that samples
                 (approximately) from the distribution estimated
                 in this class.  Idea from Leydold, et al.,
                 "An Automatic Code Generator for
@@ -581,7 +581,7 @@ class LogConcaveSamplerMonotone:
            random number).
         - pdfcall: Name of the method representing psi (for more information,
            see the __init__ method of this class).   Optional; if not given
-           the name is psi_X where X is the name given in the name parameter. """
+           the name is psi_X where X is the name given in the name parameter."""
         if pdfcall == None:
             pdfcall = "psi_" + name
         retv = "ret*(random.randint(0,1)*2-1)" if self.symmetric else "ret"
@@ -795,7 +795,7 @@ if __name__ == "__main__":
         return 5 ** x * math.exp(-5) / xg
 
     def normalpdf(x):
-        return math.exp(-(x) ** 2 / 2)
+        return math.exp(-((x) ** 2) / 2)
 
     def normalcdf(x):
         return (1 + math.erf(x / math.sqrt(2))) / 2

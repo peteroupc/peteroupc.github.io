@@ -245,12 +245,12 @@ class MooreSampler:
 
     def sample(self):
         """
-       Samples a number or vector (depending on the number of dimensions)
-       from the distribution and returns that sample.
-       If the sampler is transdimensional (the number of labels is greater than 1),
-       instead returns a list containing the sample and a random label in the
-       interval [0, numLabels), in that order.
-       """
+        Samples a number or vector (depending on the number of dimensions)
+        from the distribution and returns that sample.
+        If the sampler is transdimensional (the number of labels is greater than 1),
+        instead returns a list containing the sample and a random label in the
+        interval [0, numLabels), in that order.
+        """
         trials = 50
         while True:
             s = self._sample(trials)
@@ -282,7 +282,7 @@ class MooreSampler:
         taken to produce the random number.  If the sampling failed, the first
         item is None.
         - trials: Number of times to attempt to generate a sample.  Default is 50.
-       """
+        """
         for i in range(trials):
             area = self.alias.next(self.rg)
             # kx ~ Kg, may be a scalar or vector
@@ -412,7 +412,7 @@ if __name__ == "__main__":
         """
         Reference: Loaiza-Ganem, G., Cunningham, J., "The
         continuous Bernoulli: fixing a pervasive error
-        in variational autoencoders", 2019. """
+        in variational autoencoders", 2019."""
         lamda = FInterval(lamda)  # Parameter in (0, 1)
         return lamda ** x * (1 - lamda) ** (1 - x)
 

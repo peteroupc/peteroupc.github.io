@@ -257,12 +257,12 @@ class FastLoadedDiceRoller:
             shift -= 1
 
     def codegen(self, name="sample_discrete"):
-        """ Generates standalone Python code that samples
+        """Generates standalone Python code that samples
                 from the distribution modeled by this class.
                 Idea from Leydold, et al.,
                 "An Automatic Code Generator for
                 Nonuniform Random Variate Generation", 2001.
-        - name: Method name. Default: 'sample_discrete'. """
+        - name: Method name. Default: 'sample_discrete'."""
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
         for i in range(len(self.leavesAndLabels)):
@@ -321,19 +321,19 @@ class FastLoadedDiceRoller:
                 y += 1
 
 class SortedAliasMethod:
-    """ Implements a weighted sampling table
-          where each weight must be in sorted
-          order (ascending or descending).
-          When many entries are in the table,
-          the initialization is faster than with
-          FastLoadedDiceRoller or VoseAlias.  Reference:
-          K. Bringmann and K. Panagiotou, "Efficient Sampling
-          Methods for Discrete Distributions." In: Proc. 39th
-          International Colloquium on Automata, Languages,
-          and Programming (ICALP'12), 2012.
-          -  p: List of weights, in sorted order (ascending or
-              descending).
-          """
+    """Implements a weighted sampling table
+    where each weight must be in sorted
+    order (ascending or descending).
+    When many entries are in the table,
+    the initialization is faster than with
+    FastLoadedDiceRoller or VoseAlias.  Reference:
+    K. Bringmann and K. Panagiotou, "Efficient Sampling
+    Methods for Discrete Distributions." In: Proc. 39th
+    International Colloquium on Automata, Languages,
+    and Programming (ICALP'12), 2012.
+    -  p: List of weights, in sorted order (ascending or
+        descending).
+    """
 
     def __init__(self, p):
         ps = sum(p)
@@ -452,12 +452,12 @@ class OptimalSampler:
             y = self.l if (y == self.k - 1) else (y + 1)
 
     def codegen(self, name="sample_discrete"):
-        """ Generates standalone Python code that samples
+        """Generates standalone Python code that samples
                 from the distribution modeled by this class.
                 Idea from Leydold, et al.,
                 "An Automatic Code Generator for
                 Nonuniform Random Variate Generation", 2001.
-        - name: Method name. Default: 'sample_discrete'. """
+        - name: Method name. Default: 'sample_discrete'."""
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
         for i in range(len(self.lin)):
@@ -688,16 +688,16 @@ class _BinomialAliasTable:
         raise ValueError("should not happen")
 
 class PascalTriangle:
-    """ Generates the rows of Pascal's triangle, or the
-      weight table for a binomial(n,1/2) distribution. """
+    """Generates the rows of Pascal's triangle, or the
+    weight table for a binomial(n,1/2) distribution."""
 
     def __init__(self):
         self.table = []
         self.rownumber = 0
 
     def row(self):
-        """ Gets the row number of the row that will be generated
-            the next time _next_ is called."""
+        """Gets the row number of the row that will be generated
+        the next time _next_ is called."""
         return self.rownumber
 
     def _bitcount(self, x):
@@ -842,9 +842,9 @@ class PascalTriangle:
         return self._buildAliasTable2(r[desiredRow // 2], desiredRow)
 
     def nextto(self, desiredRow):
-        """ Generates the row of Pascal's triangle with the given row number,
-            skipping all rows in between.  The return value is a list of
-            row-number-choose-k values. """
+        """Generates the row of Pascal's triangle with the given row number,
+        skipping all rows in between.  The return value is a list of
+        row-number-choose-k values."""
         if self.rownumber - 1 == desiredRow:
             # Already at desired row
             return [x for x in self.table]
@@ -855,9 +855,9 @@ class PascalTriangle:
         return [x for x in self.table]
 
     def next(self):
-        """ Generates the next row of Pascal's triangle, starting with
-            row 0. The return value is a list of row-number-choose-k
-            values. """
+        """Generates the next row of Pascal's triangle, starting with
+        row 0. The return value is a list of row-number-choose-k
+        values."""
         x = self.table
         xr = [
             1 if i == 0 or i == len(x) else x[i] + x[i - 1] for i in range(len(x) + 1)
@@ -929,22 +929,22 @@ class _FloatBinaryExpansion:
 class BinaryExpansion:
     def __init__(self, arr, zerosAtEnd=False):
         """
-  Binary expansion of a real number in [0, 1], initialized
-  from an array of zeros and ones expressing the binary
-  expansion.
-  The first binary digit is the half digit, the second
-  is the quarter digit, the third is the one-eighth digit,
-  and so on.  Note that the number 1 can be
-  expressed by passing an empty array and specifying
-  zerosAtEnd = False, and the number 0 can be
-  expressed by passing an empty array and specifying
-  zerosAtEnd = True.
-  arr - Array indicating the initial digits of the binary
-  expansion.
-  zerosAtEnd - Indicates whether the binary expansion
-  is expressed as 0.xxx0000... or 0.yyy1111... (e.g., 0.1010000...
-  vs. 0.1001111....  Default is the latter case (False).
-     """
+        Binary expansion of a real number in [0, 1], initialized
+        from an array of zeros and ones expressing the binary
+        expansion.
+        The first binary digit is the half digit, the second
+        is the quarter digit, the third is the one-eighth digit,
+        and so on.  Note that the number 1 can be
+        expressed by passing an empty array and specifying
+        zerosAtEnd = False, and the number 0 can be
+        expressed by passing an empty array and specifying
+        zerosAtEnd = True.
+        arr - Array indicating the initial digits of the binary
+        expansion.
+        zerosAtEnd - Indicates whether the binary expansion
+        is expressed as 0.xxx0000... or 0.yyy1111... (e.g., 0.1010000...
+        vs. 0.1001111....  Default is the latter case (False).
+        """
         self.arr = [x for x in arr]
         self.zerosAtEnd = zerosAtEnd
         if sum(self.arr) > 0 and not zerosAtEnd:
@@ -967,8 +967,8 @@ class BinaryExpansion:
         return v * math.log2(1.0 / v)
 
     def get(f):
-        """ Creates a binary expansion object from a fraction, 'int', or
-         'float' in the interval [0, 1]; returns 'f' unchanged, otherwise. """
+        """Creates a binary expansion object from a fraction, 'int', or
+        'float' in the interval [0, 1]; returns 'f' unchanged, otherwise."""
         if f == 0:
             return BinaryExpansion([], True)
         if f == 1:
@@ -981,8 +981,8 @@ class BinaryExpansion:
             return f
 
     def getOrReset(f):
-        """ Creates a binary expansion object from a fraction, 'int', or
-         'float' in the interval [0, 1]; resets 'f' (calls its reset method) otherwise. """
+        """Creates a binary expansion object from a fraction, 'int', or
+        'float' in the interval [0, 1]; resets 'f' (calls its reset method) otherwise."""
         if f == 0:
             return BinaryExpansion([], True)
         if f == 1:
@@ -996,8 +996,8 @@ class BinaryExpansion:
             return f
 
     def fromFraction(f):
-        """ Creates a binary expansion object from a fraction in the
-         interval [0, 1]. """
+        """Creates a binary expansion object from a fraction in the
+        interval [0, 1]."""
         if f == 0:
             return BinaryExpansion([], True)
         if f == 1:
@@ -1007,8 +1007,8 @@ class BinaryExpansion:
         return _FractionBinaryExpansion(f)
 
     def fromFloat(f):
-        """ Creates a binary expansion object from a 64-bit floating-point number in the
-         interval [0, 1]. """
+        """Creates a binary expansion object from a 64-bit floating-point number in the
+        interval [0, 1]."""
         if f == 0:
             return BinaryExpansion([], True)
         if f == 1:
@@ -1046,24 +1046,24 @@ class BinaryExpansion:
         self.index = 0
 
 class RandomGen:
-    """ A class that implements many methods for
-      random number generation and sampling.  It takes
-      an underlying RNG as specified in the constructor."""
+    """A class that implements many methods for
+    random number generation and sampling.  It takes
+    an underlying RNG as specified in the constructor."""
 
     def __init__(self, rng=None):
-        """ Initializes a new RandomGen instance.
-     NOTES:
+        """Initializes a new RandomGen instance.
+        NOTES:
 
-     1. Assumes that 'rng' implements
-     a 'randint(a, b)' method that returns a random
-     integer in the interval [a, b].  Currently, this
-     class assumes 'a' is always 0.
-     2. 'rndint' (and functions that ultimately call it) may be
-     slower than desirable if many random numbers are
-     needed at once.  Ways to improve the performance
-     of generating many random numbers at once include
-     vectorization (which is often PRNG specific) and multithreading
-     (which is too complicated to show here). """
+        1. Assumes that 'rng' implements
+        a 'randint(a, b)' method that returns a random
+        integer in the interval [a, b].  Currently, this
+        class assumes 'a' is always 0.
+        2. 'rndint' (and functions that ultimately call it) may be
+        slower than desirable if many random numbers are
+        needed at once.  Ways to improve the performance
+        of generating many random numbers at once include
+        vectorization (which is often PRNG specific) and multithreading
+        (which is too complicated to show here)."""
         if rng == None:
             self.rng = random.Random()
         else:
@@ -1200,8 +1200,8 @@ class RandomGen:
                 return ret
 
     def shuffle(self, list):
-        """ Puts the elements of 'list' in random order (does an
-               in-place shuffle).  Returns 'list'. """
+        """Puts the elements of 'list' in random order (does an
+        in-place shuffle).  Returns 'list'."""
         if len(list) >= 2:
             i = len(list) - 1
             while i > 0:
@@ -1213,9 +1213,9 @@ class RandomGen:
         return list
 
     def sattolo(self, list):
-        """ Puts the elements of 'list' in random order, choosing
-                from among all cyclic permutations (Sattolo's algorithm).
-                Returns 'list'. """
+        """Puts the elements of 'list' in random order, choosing
+        from among all cyclic permutations (Sattolo's algorithm).
+        Returns 'list'."""
         if len(list) >= 2:
             i = len(list) - 1
             while i > 0:
@@ -1228,18 +1228,18 @@ class RandomGen:
         return list
 
     def derangement_algorithm_s(self, list):
-        """ Returns a copy of 'list' with each of its elements
-                moved to a different position (a derangement),
-                but with the expected number of cycle lengths
-                in probability, even though the list
-                need not be a uniformly randomly
-                chosen derangement.  Uses importance sampling.
-                Reference:
-                J.R.G. Mendonça, "Efficient generation of
-                random derangements with the expected
-                distribution of cycle lengths", arXiv:1809.04571v4
-                [stat.CO], 2020.
-               """
+        """Returns a copy of 'list' with each of its elements
+        moved to a different position (a derangement),
+        but with the expected number of cycle lengths
+        in probability, even though the list
+        need not be a uniformly randomly
+        chosen derangement.  Uses importance sampling.
+        Reference:
+        J.R.G. Mendonça, "Efficient generation of
+        random derangements with the expected
+        distribution of cycle lengths", arXiv:1809.04571v4
+        [stat.CO], 2020.
+        """
         n = len(list)
         x = [0 for i in range(n)]
         while True:
@@ -1259,17 +1259,17 @@ class RandomGen:
                 return x
 
     def derangement_algorithm_t(self, list):
-        """ Returns a copy of 'list' with each of its elements
-                moved to a different position (a derangement),
-                but with the expected number of cycle lengths
-                in probability, even though the list
-                need not be a uniformly randomly
-                chosen derangement.  Reference:
-                J.R.G. Mendonça, "Efficient generation of
-                random derangements with the expected
-                distribution of cycle lengths", arXiv:1809.04571v4
-                [stat.CO], 2020.
-               """
+        """Returns a copy of 'list' with each of its elements
+        moved to a different position (a derangement),
+        but with the expected number of cycle lengths
+        in probability, even though the list
+        need not be a uniformly randomly
+        chosen derangement.  Reference:
+        J.R.G. Mendonça, "Efficient generation of
+        random derangements with the expected
+        distribution of cycle lengths", arXiv:1809.04571v4
+        [stat.CO], 2020.
+        """
         n = len(list)
         if n < 4:
             return self.derangement(list)
@@ -1291,8 +1291,8 @@ class RandomGen:
         return [list[i] for i in der]
 
     def derangement(self, list):
-        """ Returns a copy of list with each of its elements
-               moved to a different position. """
+        """Returns a copy of list with each of its elements
+        moved to a different position."""
         while True:
             ls = self._shufflemod([i for i in range(len(list))])
             if ls != None:
@@ -1312,11 +1312,11 @@ class RandomGen:
         return list
 
     def partialshuffle(self, list, k):
-        """ Does a partial shuffle of
-a list's items (stops when 'k' items
-are shuffled); the shuffled items
-will appear at the end of the list.
-Returns 'list'. """
+        """Does a partial shuffle of
+        a list's items (stops when 'k' items
+        are shuffled); the shuffled items
+        will appear at the end of the list.
+        Returns 'list'."""
         ki = 0
         if len(list) >= 2:
             i = len(list) - 1
@@ -1445,8 +1445,8 @@ Returns 'list'. """
 
     def weighted_choice_inclusion(self, weights, n):
         """
-  Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
-  """
+        Chooses a random sample of `n` indices from a list of items (whose weights are given as `weights`), such that the chance that index `k` is in the sample is given as `weights[k]*n/Sum(weights)`.  It implements the splitting method found in pp. 73-74 in "Algorithms of sampling with equal or unequal probabilities", www.eustat.eus/productosServicios/52.1_Unequal_prob_sampling.pdf .
+        """
         # Deville, J.-C. and Tillé, Y.  Unequal probability sampling
         # without replacement through a splitting method. Biometrika 85 (1998).
         if n > weights.length:
@@ -1584,10 +1584,10 @@ Returns 'list'. """
         return b * pow(self.exponential(), -1.0 / a) + mu
 
     def beta(self, a, b, nc=0):
-        """ Generates a beta-distributed random number.
-     `a` and `b` are the two parameters of the beta distribution,
-     and `nc` is a parameter such that `nc` other than 0
-     indicates a _noncentral_ distribution. """
+        """Generates a beta-distributed random number.
+        `a` and `b` are the two parameters of the beta distribution,
+        and `nc` is a parameter such that `nc` other than 0
+        indicates a _noncentral_ distribution."""
         avar = a + self.poisson(nc)
         if b == 1 and avar == 1:
             return self.rndu01()
@@ -1911,10 +1911,10 @@ Returns 'list'. """
         return self.stable(alpha, beta) * sigma + (mu - sigma * beta * x)
 
     def moyal(self, mu=0, sigma=1):
-        """ Sample from a Moyal distribution, using the
-         method given in C. Walck, "Handbook on
-         Statistical Distributions for Experimentalists",
-         pp. 93-94."""
+        """Sample from a Moyal distribution, using the
+        method given in C. Walck, "Handbook on
+        Statistical Distributions for Experimentalists",
+        pp. 93-94."""
         while True:
             tany = self.cauchy()
             hy = math.exp(-(tany + math.exp(-tany)) * 0.5)
@@ -1926,10 +1926,10 @@ Returns 'list'. """
         return self.negativebinomial(1, p)
 
     def zero_or_one_exp_minus(self, x, y):
-        """ Generates 1 with probability exp(-px/py); 0 otherwise.
-               Reference:
-               Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-               for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020. """
+        """Generates 1 with probability exp(-px/py); 0 otherwise.
+        Reference:
+        Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
+        for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020."""
         if y <= 0 or x < 0:
             raise ValueError
         if x == 0:
@@ -2026,10 +2026,10 @@ Returns 'list'. """
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def polya_int(self, sx, sy, px, py):
-        """ Generates a negative binomial (Polya) random number, defined
-           here as the number of failures before 'successes' many
-           successful trials (sx/sy), where the probability of success in
-           each trial is px/py. """
+        """Generates a negative binomial (Polya) random number, defined
+        here as the number of failures before 'successes' many
+        successful trials (sx/sy), where the probability of success in
+        each trial is px/py."""
         isinteger = sx % sy == 0
         sxceil = (sx // sy) if isinteger else (sx // sy) + 1
         while True:
@@ -2143,17 +2143,17 @@ Returns 'list'. """
             return -1
 
     def boundedGeometric(self, px, py, n):
-        """ Generates a bounded geometric random number, defined
-           here as the number of failures before the first success (but no more than n),
-           where the probability of success in
-           each trial is px/py.
+        """Generates a bounded geometric random number, defined
+        here as the number of failures before the first success (but no more than n),
+        where the probability of success in
+        each trial is px/py.
 
-           Reference:
-           Bringmann, K. and Friedrich, T., 2013, July. Exact and efficient generation
-           of geometric random variates and random graphs, in
-           _International Colloquium on Automata, Languages, and
-           Programming_ (pp. 267-278).
-           """
+        Reference:
+        Bringmann, K. and Friedrich, T., 2013, July. Exact and efficient generation
+        of geometric random variates and random graphs, in
+        _International Colloquium on Automata, Languages, and
+        Programming_ (pp. 267-278).
+        """
         if py == 0:
             raise ValueError
         if px >= py:
@@ -2192,10 +2192,10 @@ Returns 'list'. """
                 return min(n, (d << k) + m)
 
     def negativebinomialint(self, successes, px, py):
-        """ Generates a negative binomial random number, defined
-           here as the number of failures before 'successes' many
-           successful trials, where the probability of success in
-           each trial is px/py. """
+        """Generates a negative binomial random number, defined
+        here as the number of failures before 'successes' many
+        successful trials, where the probability of success in
+        each trial is px/py."""
         if successes < 0 or py == 0:
             raise ValueError
         if successes == 0 or px >= py:
@@ -2314,26 +2314,26 @@ Returns 'list'. """
                 return 1
 
     def exprandnew(self, lamdanum=1, lamdaden=1):
-        """ Returns an object to serve as a partially-sampled
-          exponential random number with the given
-          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
-          the first is a multiple of 1/(2^X), the second is X, the third is the integer
-          part (initially -1 to indicate the integer part wasn't sampled yet),
-          and the fourth and fifth are the lamda parameter's
-          numerator and denominator, respectively.  Default for 'lamdanum'
-          and 'lamdaden' is 1.
-          The number created by this method will be "empty"
-          (no bits sampled yet).
-          """
+        """Returns an object to serve as a partially-sampled
+        exponential random number with the given
+        rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers:
+        the first is a multiple of 1/(2^X), the second is X, the third is the integer
+        part (initially -1 to indicate the integer part wasn't sampled yet),
+        and the fourth and fifth are the lamda parameter's
+        numerator and denominator, respectively.  Default for 'lamdanum'
+        and 'lamdaden' is 1.
+        The number created by this method will be "empty"
+        (no bits sampled yet).
+        """
         return [0, 0, -1, lamdanum, lamdaden]
 
     def exprandfill(self, a, bits):
-        """ Fills the unsampled bits of the given exponential random number
-           'a' as necessary to make a number whose fractional part
-           has 'bits' many bits.  If the number's fractional part already has
-           that many bits or more, the number is rounded using the round-to-nearest,
-           ties to even rounding rule.  Returns the resulting number as a
-           multiple of 2^'bits'. """
+        """Fills the unsampled bits of the given exponential random number
+        'a' as necessary to make a number whose fractional part
+        has 'bits' many bits.  If the number's fractional part already has
+        that many bits or more, the number is rounded using the round-to-nearest,
+        ties to even rounding rule.  Returns the resulting number as a
+        multiple of 2^'bits'."""
         # Fill the integer if necessary.
         if a[2] == -1:
             a[2] = 0
@@ -2353,11 +2353,11 @@ Returns 'list'. """
         return a[0] | (a[2] << bits)
 
     def exprandless(self, a, b):
-        """ Determines whether one partially-sampled exponential number
-           is less than another; returns
-           True if so and False otherwise.  During
-           the comparison, additional bits will be sampled in both numbers
-           if necessary for the comparison. """
+        """Determines whether one partially-sampled exponential number
+        is less than another; returns
+        True if so and False otherwise.  During
+        the comparison, additional bits will be sampled in both numbers
+        if necessary for the comparison."""
         # Check integer part of exponentials
         if a[2] == -1:
             a[2] = 0
@@ -2394,18 +2394,18 @@ Returns 'list'. """
             index += 1
 
     def expoRatio(self, base, rx=1, ry=1):
-        """ Generates an exponential random number
-          (in the form of a ratio, or two-element list) given
-          the rate `rx`/`ry` and the base `base`.
-          The number will have the denominator `base*rx`. """
+        """Generates an exponential random number
+        (in the form of a ratio, or two-element list) given
+        the rate `rx`/`ry` and the base `base`.
+        The number will have the denominator `base*rx`."""
         return [self.expoNumerator(base * ry), base * rx]
 
     def expoNumerator(self, denom):
-        """ Generates the numerator of an exponential random
-           number with a given denominator,
-           using von Neumann's
-           algorithm ("Various techniques used in connection with
-           random digits", 1951). """
+        """Generates the numerator of an exponential random
+        number with a given denominator,
+        using von Neumann's
+        algorithm ("Various techniques used in connection with
+        random digits", 1951)."""
         count = 0
         while True:
             y1 = self.rndintexc(denom)
@@ -2452,16 +2452,16 @@ Returns 'list'. """
 
     def negativeMultinomial(self, succ, failures):
         """
-Negative multinomial distribution.
+        Negative multinomial distribution.
 
-Models the number of failures of one or more
-kinds before a given number of successes happens.
-succ: Number of successes.
-failures: Contains probabilities for each kind of failure.
-The sum of probabilities must be less than 1.
-Returns: A list containing a random number
-of failures of each kind of failure.
-    """
+        Models the number of failures of one or more
+        kinds before a given number of successes happens.
+        succ: Number of successes.
+        failures: Contains probabilities for each kind of failure.
+        The sum of probabilities must be less than 1.
+        Returns: A list containing a random number
+        of failures of each kind of failure.
+        """
         ret = [0 for _ in failures]
         i = 0
         while i < succ:
@@ -2507,9 +2507,9 @@ of failures of each kind of failure.
 
     def nonzeroIntegersWithSum(self, n, total):
         """
-Returns a list of 'n' integers greater than 0 that sum to 'total'.
-The combination is chosen uniformly at random among all
-possible combinations.
+        Returns a list of 'n' integers greater than 0 that sum to 'total'.
+        The combination is chosen uniformly at random among all
+        possible combinations.
         """
         if n <= 0 or total <= 0:
             raise ValueError
@@ -2533,9 +2533,9 @@ possible combinations.
 
     def integersWithSum(self, n, total):
         """
-Returns a list of 'n' integers 0 or greater that sum to 'total'.
-The combination is chosen uniformly at random among all
-possible combinations.
+        Returns a list of 'n' integers 0 or greater that sum to 'total'.
+        The combination is chosen uniformly at random among all
+        possible combinations.
         """
         if n <= 0 or total <= 0:
             raise ValueError
@@ -2603,20 +2603,20 @@ possible combinations.
         return ret
 
     def _icdfnormal(self, x):
-        """ Inverse cumulative distribution function of the
-       standard normal distribution.  """
+        """Inverse cumulative distribution function of the
+        standard normal distribution."""
         return self._ierf(2 * x - 1) * math.sqrt(2)
 
     def powerlognormal(self, p, sigma=1.0):
-        """ Power lognormal distribution, as described in NIST/SEMATECH
-     e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
-     accessed Jun. 9, 2018, sec. 1.3.6.6.14. """
+        """Power lognormal distribution, as described in NIST/SEMATECH
+        e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+        accessed Jun. 9, 2018, sec. 1.3.6.6.14."""
         return math.exp(self._icdfnormal(1 - (1 - self.rndu01()) ** (1.0 / p)) * sigma)
 
     def powernormal(self, p):
-        """ Power normal distribution, as described in NIST/SEMATECH
-     e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
-     accessed Jun. 9, 2018, sec. 1.3.6.6.13. """
+        """Power normal distribution, as described in NIST/SEMATECH
+        e-Handbook of Statistical Methods, http://www.itl.nist.gov/div898/handbook/,
+        accessed Jun. 9, 2018, sec. 1.3.6.6.13."""
         return self._icdfnormal(1 - (1 - self.rndu01()) ** (1.0 / p))
 
     def _mhc2(self, pdf, n, sigma=1.0):
@@ -2664,17 +2664,17 @@ possible combinations.
 
     def slicesample(self, pdf, n, xstart=0.1):
         """
-  Slice sampling of R. M. Neal.
-  Generates 'n' random numbers that follow
-  the probability density given in 'pdf' using
-  slice sampling.  The resulting random numbers
-  are not independent, but are often close to
-    being independent.  'pdf' takes one number as
-    a parameter and returns a number 0 or greater.
-    The area under the curve (integral) of 'pdf'
-    need not be equal to 1. 'xstart' should be
-  chosen such that `pdf(xstart)>0`.
-     """
+        Slice sampling of R. M. Neal.
+        Generates 'n' random numbers that follow
+        the probability density given in 'pdf' using
+        slice sampling.  The resulting random numbers
+        are not independent, but are often close to
+          being independent.  'pdf' takes one number as
+          a parameter and returns a number 0 or greater.
+          The area under the curve (integral) of 'pdf'
+          need not be equal to 1. 'xstart' should be
+        chosen such that `pdf(xstart)>0`.
+        """
         x = xstart
         w = 0.2
         while pdf(x) <= 0:
@@ -2705,31 +2705,31 @@ possible combinations.
         return ret
 
     def mcmc(self, pdf, n):
-        """ Generates 'n' random numbers that follow
-    the probability density given in 'pdf' using
-    a Markov-chain Monte Carlo algorithm, currently
-    Metropolis--Hastings.  The resulting random numbers
-    are not independent, but are often close to
-    being independent.  'pdf' takes one number as
-    a parameter and returns a number 0 or greater.
-    The area under the curve (integral) of 'pdf'
-    need not be equal to 1. """
+        """Generates 'n' random numbers that follow
+        the probability density given in 'pdf' using
+        a Markov-chain Monte Carlo algorithm, currently
+        Metropolis--Hastings.  The resulting random numbers
+        are not independent, but are often close to
+        being independent.  'pdf' takes one number as
+        a parameter and returns a number 0 or greater.
+        The area under the curve (integral) of 'pdf'
+        need not be equal to 1."""
         # Compute optimal sigma.  See
         # Gelman et al., 1997.
         s = _variance(self._mhc(pdf, 1000, 3.0)) * 5.6644
         return self._mhc(pdf, n, s)
 
     def mcmc2(self, pdf, n):
-        """ Generates 'n' pairs of random numbers that follow
-    the probability density given in 'pdf' using
-    a Markov-chain Monte Carlo algorithm, currently
-    Metropolis--Hastings.  The resulting random pairs
-    are not independent, but are often close to
-    being independent.  'pdf' takes one parameter,
-    namely, a list of two numbers giving a sampled
-    point and returns a number 0 or greater.
-    The volume under the surface (integral) of 'pdf'
-    need not be equal to 1. """
+        """Generates 'n' pairs of random numbers that follow
+        the probability density given in 'pdf' using
+        a Markov-chain Monte Carlo algorithm, currently
+        Metropolis--Hastings.  The resulting random pairs
+        are not independent, but are often close to
+        being independent.  'pdf' takes one parameter,
+        namely, a list of two numbers giving a sampled
+        point and returns a number 0 or greater.
+        The volume under the surface (integral) of 'pdf'
+        need not be equal to 1."""
         mhc = self._mhc2(pdf, 1000, 3.0)
         # Compute distances of random points
         # from the origin
@@ -2775,34 +2775,33 @@ possible combinations.
         self, func, guess, iterations=200, constrain=None, a=None, c=None, acap=None
     ):
         """Tries to find a choice of parameters that minimizes the value
-of a scoring function, also called the objective function or loss
-function, starting from an initial guess.  This method uses an
-algorithm called "simultaneous perturbation
-stochastic approximation", which is a randomized
-search for the minimum value of the objective function.
-func - Objective function, a function that calculates a score for the
- given array of parameters and returns that score.  The score is a
- single number; the lower the score, the better.
- The score can be negative.  (Note that the problem of maximizing
- the score is the same as minimizing it except
- that the score's sign is reversed at the end.)
-guess - Initial guess for the best choice of parameters.  This is an
- array of parameters, each of which is a number. This array has
- as many items as the array passed to 'func'.
-iterations - Maximum number of iterations in which to run the
- optimization process.  Default is 200.
-constrain - Optional. A function that takes the given array of
- parameters and constrains them to fit the bounds of a valid
- array of parameters. This function modifies the array in place.
-a - Optional.  A setting used in the optimization process; greater than 0.
-c - Optional.  A setting used in the optimization process; greater than 0. As a guideline,
-  'c' is about equal to the "standard deviation of the measurement noise"
-  for several measurements at the initial guess, and is a "small positive
-  number" if measurements are noise-free (Spall 1998).  Default
-  is 0.001.
-acap - Optional.  A setting used in the optimization process; an
-  integer greater than 0.
-"""
+        of a scoring function, also called the objective function or loss
+        function, starting from an initial guess.  This method uses an
+        algorithm called "simultaneous perturbation
+        stochastic approximation", which is a randomized
+        search for the minimum value of the objective function.
+        func - Objective function, a function that calculates a score for the
+         given array of parameters and returns that score.  The score is a
+         single number; the lower the score, the better.
+         The score can be negative.  (Note that the problem of maximizing
+         the score is the same as minimizing it except
+         that the score's sign is reversed at the end.)
+        guess - Initial guess for the best choice of parameters.  This is an
+         array of parameters, each of which is a number. This array has
+         as many items as the array passed to 'func'.
+        iterations - Maximum number of iterations in which to run the
+         optimization process.  Default is 200.
+        constrain - Optional. A function that takes the given array of
+         parameters and constrains them to fit the bounds of a valid
+         array of parameters. This function modifies the array in place.
+        a - Optional.  A setting used in the optimization process; greater than 0.
+        c - Optional.  A setting used in the optimization process; greater than 0. As a guideline,
+          'c' is about equal to the "standard deviation of the measurement noise"
+          for several measurements at the initial guess, and is a "small positive
+          number" if measurements are noise-free (Spall 1998).  Default
+          is 0.001.
+        acap - Optional.  A setting used in the optimization process; an
+          integer greater than 0."""
         # c>0; a>0; acap is an integer > 0
         if c == None:
             c = 0.001  # Guideline (Spall 1998)
@@ -2867,20 +2866,20 @@ acap - Optional.  A setting used in the optimization process; an
 
     def monte_carlo_integrate(self, func, bounds, samples=1000):
         """
-    Estimates the integral (volume) of a function within the
-    given bounds using Monte Carlo integration, which generates
-    an estimate using the help of randomization.
-    func - Function to integrate.  Takes the same number
-       of parameters as the length of bounds.
-    bounds - Bounds of integration at each dimension.
-       An N-length array of arrays.  Each array in turn
-       contains two items: the lower bound and upper bound
-       for that dimension.
-    samples - Number of times to sample the bounds of
-       integration randomly.  The default is 1000 samples.
-    Returns an array containing two items: the estimated
-    integral and the standard error.
-    """
+        Estimates the integral (volume) of a function within the
+        given bounds using Monte Carlo integration, which generates
+        an estimate using the help of randomization.
+        func - Function to integrate.  Takes the same number
+           of parameters as the length of bounds.
+        bounds - Bounds of integration at each dimension.
+           An N-length array of arrays.  Each array in turn
+           contains two items: the lower bound and upper bound
+           for that dimension.
+        samples - Number of times to sample the bounds of
+           integration randomly.  The default is 1000 samples.
+        Returns an array containing two items: the estimated
+        integral and the standard error.
+        """
         xm = func(*[self.rndrange(a[0], a[1]) for a in bounds])
         xs = 0
         i = 1
@@ -2898,8 +2897,8 @@ acap - Optional.  A setting used in the optimization process; an
         return [volume * xm, volume * math.sqrt(xs * 1.0 / (i * i))]
 
     def kth_smallest_of_n_u01(self, k, n):
-        """ Generates the kth smallest number among n random numbers
-         in the interval [0, 1]. """
+        """Generates the kth smallest number among n random numbers
+        in the interval [0, 1]."""
         if k > n or n < 1:
             raise ValueError
         if n < 20:
@@ -2957,8 +2956,8 @@ acap - Optional.  A setting used in the optimization process; an
         return mvn
 
     def multivariate_t(self, mu, cov, df):
-        """ Multivariate t-distribution, mu is the mean (can be None),
-           cov is the covariance matrix, and df is the degrees of freedom. """
+        """Multivariate t-distribution, mu is the mean (can be None),
+        cov is the covariance matrix, and df is the degrees of freedom."""
         mn = self.multinormal(None, cov)
         cd = self.gamma(df * 0.5, 2.0 / df)
         return [
@@ -3033,15 +3032,15 @@ acap - Optional.  A setting used in the optimization process; an
             return (self._betainc((x * x) / (x * x + nu), 0.5, nu * 0.5) + 1) * 0.5
 
     def t_copula(self, cov, df):
-        """ Multivariate t-copula. 'cov' is the covariance matrix
-       and 'df' is the degrees of freedom.  """
+        """Multivariate t-copula. 'cov' is the covariance matrix
+        and 'df' is the degrees of freedom."""
         mt = self.multivariate_t(None, cov, df)
         return [self._student_t_cdf(df, mt[i]) for i in range(len(mt))]
 
     def simplex_point(self, points):
-        """ Generates an independent and uniform random point on the surface of an N-dimensional
-           simplex (line segment, triangle, tetrahedron, etc.)
-           with the given coordinates. """
+        """Generates an independent and uniform random point on the surface of an N-dimensional
+        simplex (line segment, triangle, tetrahedron, etc.)
+        with the given coordinates."""
         ret = []
         if len(points) > len(points[0]) + 1:
             raise ValueError
@@ -3070,9 +3069,9 @@ acap - Optional.  A setting used in the optimization process; an
         return ret
 
     def hypercube_point(self, dims, sizeFromCenter=1):
-        """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
-           hypercube (square, cube, etc.)
-           centered at the origin. """
+        """Generates an independent and uniform random point on the surface of a 'dims'-dimensional
+        hypercube (square, cube, etc.)
+        centered at the origin."""
         return [self.rndrange(-sizeFromCenter, sizeFromCenter) for _ in range(dims)]
 
     def _norm(self, vec):
@@ -3104,24 +3103,24 @@ acap - Optional.  A setting used in the optimization process; an
         return math.sqrt(gx * gx + gy * gy + gz * gz)
 
     def surface_point(self, f, bounds, ngrad, gmax):
-        """ Generates a uniform random point on
-        a parametric surface, using a rejection
-        approach developed by Williamson, J.F.,
-        "Random selection of points distributed on
-         curved surfaces", Physics in Medicine & Biology 32(10), 1987.
-     - f: Takes two parameters (u and v) and returns
-       a 3-element array expressing
-       a 3-dimensional position at the given point.
-     - bounds: Two 2-element arrays expressing bounds
-       for u and v.  Of the form [[umin, umax], [vmin,
-       vmax]].
-     - ngrad: Takes two parameters (u and v) and returns
-       the norm of the gradient (stretch factor)
-       at the given point.  Can be None, in which
-       the norm-of-gradient is calculated numerically.
-     - gmax: Maximum norm-of-gradient
-       for entire surface.
-       """
+        """Generates a uniform random point on
+           a parametric surface, using a rejection
+           approach developed by Williamson, J.F.,
+           "Random selection of points distributed on
+            curved surfaces", Physics in Medicine & Biology 32(10), 1987.
+        - f: Takes two parameters (u and v) and returns
+          a 3-element array expressing
+          a 3-dimensional position at the given point.
+        - bounds: Two 2-element arrays expressing bounds
+          for u and v.  Of the form [[umin, umax], [vmin,
+          vmax]].
+        - ngrad: Takes two parameters (u and v) and returns
+          the norm of the gradient (stretch factor)
+          at the given point.  Can be None, in which
+          the norm-of-gradient is calculated numerically.
+        - gmax: Maximum norm-of-gradient
+          for entire surface.
+        """
         while True:
             u = self.rndrangemaxexc(bounds[0][0], bounds[0][1])
             v = self.rndrangemaxexc(bounds[1][0], bounds[1][1])
@@ -3131,15 +3130,15 @@ acap - Optional.  A setting used in the optimization process; an
                 return pt
 
     def geoellipsoid_point(self, a=6378.137, invf=298.2572236):
-        """ Generates an independent and uniform random
-      point on the surface of a geoellipsoid.  The
-      geoellipsoid uses the following parameters:
-      a - semimajor axis (distance from the center of
-         the geoellipsoid to the equator).  The default
-         is the WGS 84 ellipsoid's semimajor axis
-         in kilometers.
-      invf - inverse flattening.  The default is the
-         WGS 84 ellipsoid's inverse flattening. """
+        """Generates an independent and uniform random
+        point on the surface of a geoellipsoid.  The
+        geoellipsoid uses the following parameters:
+        a - semimajor axis (distance from the center of
+           the geoellipsoid to the equator).  The default
+           is the WGS 84 ellipsoid's semimajor axis
+           in kilometers.
+        invf - inverse flattening.  The default is the
+           WGS 84 ellipsoid's inverse flattening."""
         # b is the semiminor axis, the distance from the
         # center of the geoellipsoid to the north pole
         b = a - (a * 1.0 / invf)
@@ -3171,9 +3170,9 @@ acap - Optional.  A setting used in the optimization process; an
                 return [pt[0] * a, pt[1] * a, pt[2] * b]
 
     def hypersphere_point(self, dims, radius=1):
-        """ Generates an independent and uniform random point on the surface of a 'dims'-dimensional
-           hypersphere (circle, sphere, etc.)
-           centered at the origin. """
+        """Generates an independent and uniform random point on the surface of a 'dims'-dimensional
+        hypersphere (circle, sphere, etc.)
+        centered at the origin."""
         if dims == 2:
             # Use polar method mentioned in Devroye 1986, p. 235
             while True:
@@ -3192,8 +3191,8 @@ acap - Optional.  A setting used in the optimization process; an
         return [i * radius / x for i in ret]
 
     def ball_point(self, dims, radius=1):
-        """ Generates an independent and uniform random point inside a 'dims'-dimensional
-           ball (disc, solid sphere, etc.) centered at the origin. """
+        """Generates an independent and uniform random point inside a 'dims'-dimensional
+        ball (disc, solid sphere, etc.) centered at the origin."""
         x = 0
         while x == 0:
             ret = [self.normal() for _ in range(dims)]
@@ -3201,16 +3200,16 @@ acap - Optional.  A setting used in the optimization process; an
         return [i * radius / x for i in ret]
 
     def shell_point(self, dims, outerRadius=1, innerRadius=0.5):
-        """ Generates an independent and uniform random point inside a 'dims'-dimensional
-           spherical shell (donut, hollow sphere, etc.)
-           centered at the origin. """
+        """Generates an independent and uniform random point inside a 'dims'-dimensional
+        spherical shell (donut, hollow sphere, etc.)
+        centered at the origin."""
         r = self.rndrange(innerRadius ** dims, outerRadius ** dims) ** (1.0 / dims)
         return self.hypersphere_point(dims, r)
 
     def latlon(self):
-        """ Generates an independent and uniform random latitude and
-          longitude, in radians.  West and south coordinates
-          are negative. """
+        """Generates an independent and uniform random latitude and
+        longitude, in radians.  West and south coordinates
+        are negative."""
         lon = self.rndrangemaxexc(-math.pi, math.pi)
         latx = self.rndrange(-1, 1)
         while latx == -1 or latx == 1:
@@ -3220,31 +3219,31 @@ acap - Optional.  A setting used in the optimization process; an
 
     def gbas(self, coin, k=385):
         """Estimates the bias of a coin.  GBAS = Gamma Bernoulli approximation scheme.
-      The algorithm is simple to describe: "Flip a coin until it shows heads
-         _k_ times.  The estimated bias is then `(k-1)/GammaDist(r, 1)`,
-         where _r_ is the total number of coin flips."
-      The estimate is unbiased but has nonzero probability of being
-      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
-      Reference: Huber, M., 2017. A Bernoulli mean estimate with
-         known relative error distribution. Random Structures & Algorithms, 50(2),
-         pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
-      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
-      k: Number of times the coin must return 1 (heads) before the estimation
-          stops.
-          To ensure an estimate whose relative error's absolute value exceeds
-          epsilon with probability at most delta, calculate the smallest
-          integer k such that:
-             gammainc(k,(k-1)/(1+epsilon)) +
-                 (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
-          (where gammainc is the regularized lower incomplete gamma function,
-          implemented, e.g., as scipy.special.gammainc), and set this parameter
-          to the calculated k value or higher.
-          The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
-          probability at most 0.05 (delta).
-          A simpler suggestion is k>=ceiling(-6*ln(2/delta)/((epsilon**2)*(4*epsilon-3))).
-          For both suggestions, epsilon is in the interval (0, 3/4) and delta is in (0, 1).
-          Note: "14/3" in the paper should probably read "4/3".
-    """
+        The algorithm is simple to describe: "Flip a coin until it shows heads
+           _k_ times.  The estimated bias is then `(k-1)/GammaDist(r, 1)`,
+           where _r_ is the total number of coin flips."
+        The estimate is unbiased but has nonzero probability of being
+        greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
+        Reference: Huber, M., 2017. A Bernoulli mean estimate with
+           known relative error distribution. Random Structures & Algorithms, 50(2),
+           pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
+        coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+        k: Number of times the coin must return 1 (heads) before the estimation
+            stops.
+            To ensure an estimate whose relative error's absolute value exceeds
+            epsilon with probability at most delta, calculate the smallest
+            integer k such that:
+               gammainc(k,(k-1)/(1+epsilon)) +
+                   (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
+            (where gammainc is the regularized lower incomplete gamma function,
+            implemented, e.g., as scipy.special.gammainc), and set this parameter
+            to the calculated k value or higher.
+            The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
+            probability at most 0.05 (delta).
+            A simpler suggestion is k>=ceiling(-6*ln(2/delta)/((epsilon**2)*(4*epsilon-3))).
+            For both suggestions, epsilon is in the interval (0, 3/4) and delta is in (0, 1).
+            Note: "14/3" in the paper should probably read "4/3".
+        """
         r = 0
         h = 0
         while h < k:
@@ -3253,13 +3252,13 @@ acap - Optional.  A setting used in the optimization process; an
         return (k - 1) / self.gamma(r, 1)
 
     def gbas01(self, coin, k=385):
-        """ Estimates the mean of a random variable lying in [0, 1].
-      This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
-      number is less the result of the given function or 0 otherwise.
-      The estimate is unbiased but has nonzero probability of being
-      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
-      coin: A function that returns a number in [0, 1].
-      k: See gbas. """
+        """Estimates the mean of a random variable lying in [0, 1].
+        This is done using gbas and a "coin" that returns 1 if a random uniform [0, 1]
+        number is less the result of the given function or 0 otherwise.
+        The estimate is unbiased but has nonzero probability of being
+        greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
+        coin: A function that returns a number in [0, 1].
+        k: See gbas."""
         return gbas(lambda: (1 if self.rndu01() < coin() else 0), k)
 
     def _getSolTable(self, n, mn, mx, sum):
@@ -3289,24 +3288,24 @@ acap - Optional.  A setting used in the optimization process; an
         return t
 
     def intsInRangesWithSum(self, numSamples, ranges, total):
-        """ Generates one or more combinations of
-           'len(ranges)' numbers each, where each
-           combination's numbers sum to 'total', and each number
-           has its own valid range.  'ranges' is a list of valid ranges
-           for each number; the first item in each range is the minimum
-           value and the second is the maximum value.  For example,
-           'ranges' can be [[1,4],[3,5],[2,6]], which says that the first
-           number must be in the interval [1, 4], the second in [3, 5],
-           and the third in [2, 6].
-            The combinations are chosen uniformly at random.
-               Neither the integers in the 'ranges' list nor
-           'total' may be negative.  Returns an empty
-           list if 'numSamples' is zero.
-            This is a modification I made to an algorithm that
-              was contributed in a _Stack Overflow_
-          answer (`questions/61393463`) by John McClane.
-          Raises an error if there is no solution for the given
-          parameters.  """
+        """Generates one or more combinations of
+         'len(ranges)' numbers each, where each
+         combination's numbers sum to 'total', and each number
+         has its own valid range.  'ranges' is a list of valid ranges
+         for each number; the first item in each range is the minimum
+         value and the second is the maximum value.  For example,
+         'ranges' can be [[1,4],[3,5],[2,6]], which says that the first
+         number must be in the interval [1, 4], the second in [3, 5],
+         and the third in [2, 6].
+          The combinations are chosen uniformly at random.
+             Neither the integers in the 'ranges' list nor
+         'total' may be negative.  Returns an empty
+         list if 'numSamples' is zero.
+          This is a modification I made to an algorithm that
+            was contributed in a _Stack Overflow_
+        answer (`questions/61393463`) by John McClane.
+        Raises an error if there is no solution for the given
+        parameters."""
         mintotal = sum([x[0] for x in ranges])
         maxtotal = sum([x[1] for x in ranges])
         adjsum = total - mintotal
@@ -3346,19 +3345,19 @@ acap - Optional.  A setting used in the optimization process; an
         return samples
 
     def intsInRangeWithSum(self, numSamples, numPerSample, mn, mx, sum):
-        """ Generates one or more combinations of
-           'numPerSample' numbers each, where each
-           combination's numbers sum to 'sum' and are listed
-           in any order, and each
-           number is in the interval '[mn, mx]'.
-            The combinations are chosen uniformly at random.
-               'mn', 'mx', and
-           'sum' may not be negative.  Returns an empty
-           list if 'numSamples' is zero.
-            The algorithm is thanks to a _Stack Overflow_
-          answer (`questions/61393463`) by John McClane.
-          Raises an error if there is no solution for the given
-          parameters.  """
+        """Generates one or more combinations of
+         'numPerSample' numbers each, where each
+         combination's numbers sum to 'sum' and are listed
+         in any order, and each
+         number is in the interval '[mn, mx]'.
+          The combinations are chosen uniformly at random.
+             'mn', 'mx', and
+         'sum' may not be negative.  Returns an empty
+         list if 'numSamples' is zero.
+          The algorithm is thanks to a _Stack Overflow_
+        answer (`questions/61393463`) by John McClane.
+        Raises an error if there is no solution for the given
+        parameters."""
         adjsum = sum - numPerSample * mn
         # Min, max, sum negative
         if mn < 0 or mx < 0 or sum < 0:
@@ -3414,19 +3413,19 @@ acap - Optional.  A setting used in the optimization process; an
         return t
 
     def intsInRangeSortedWithSum(self, numSamples, numPerSample, mn, mx, sum):
-        """ Generates one or more combinations of
-           'numPerSample' numbers each, where each
-           combination's numbers sum to 'sum' and are listed
-           in sorted order, and each
-           number is in the interval '[mn, mx]'.
-            The combinations are chosen uniformly at random.
-               'mn', 'mx', and
-           'sum' may not be negative.  Returns an empty
-           list if 'numSamples' is zero.
-            The algorithm is thanks to a _Stack Overflow_
-          answer (`questions/61393463`) by John McClane.
-          Raises an error if there is no solution for the given
-          parameters.  """
+        """Generates one or more combinations of
+         'numPerSample' numbers each, where each
+         combination's numbers sum to 'sum' and are listed
+         in sorted order, and each
+         number is in the interval '[mn, mx]'.
+          The combinations are chosen uniformly at random.
+             'mn', 'mx', and
+         'sum' may not be negative.  Returns an empty
+         list if 'numSamples' is zero.
+          The algorithm is thanks to a _Stack Overflow_
+        answer (`questions/61393463`) by John McClane.
+        Raises an error if there is no solution for the given
+        parameters."""
         adjsum = sum - numPerSample * mn
         # Min, max, sum negative
         if mn < 0 or mx < 0 or sum < 0:
@@ -3510,16 +3509,16 @@ acap - Optional.  A setting used in the optimization process; an
         return [v // gc for v in ret]
 
     def integers_from_pdf(self, pdf, mn, mx, n=1):
-        """ Generates one or more random integers from a discrete probability
-         distribution expressed as a probability density
-         function (PDF), which is also called the probability mass
-         function for discrete distributions.  The random integers
-         will be in the interval [mn, mx].  `n` random integers will be
-         generated. `pdf` is the PDF; it takes one parameter and returns,
-         for that parameter, a weight indicating the relative likelihood
-         that a random integer will equal that parameter.
-         The area under the "curve" of the PDF need not be 1.
-         By default, `n` is 1.  """
+        """Generates one or more random integers from a discrete probability
+        distribution expressed as a probability density
+        function (PDF), which is also called the probability mass
+        function for discrete distributions.  The random integers
+        will be in the interval [mn, mx].  `n` random integers will be
+        generated. `pdf` is the PDF; it takes one parameter and returns,
+        for that parameter, a weight indicating the relative likelihood
+        that a random integer will equal that parameter.
+        The area under the "curve" of the PDF need not be 1.
+        By default, `n` is 1."""
         wt = self._toWeights([pdf(x) for x in range(mn, mx)])
         return r._weighted_choice_n(wt, n, mn)
 
@@ -3569,21 +3568,21 @@ acap - Optional.  A setting used in the optimization process; an
 
     def numbers_from_dist_inversion(self, icdf, n=1, digitplaces=53, base=2):
         """
-Generates 'n' random numbers that follow a continuous
-or discrete probability distribution, using the inversion method.
-Implements section 5 of Devroye and Gravel,
-"Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
-- 'n' is the number of random numbers to generate.  Default is 1.
-- 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
-   and returns a number within base^-digitplaces of the True inverse
-   CDF (inverse cumulative distribution function, or quantile function)
-   of u/base^ubits, and is monotonic for a given value of `digitplaces`.
-- 'digitplaces' is an accuracy expressed as a number of digits after the
-   point. Each random number will be a multiple of base^-digitplaces,
-   or have a smaller granularity. Default is 53.
-- base is the digit base in which the accuracy is expressed. Default is 2
-   (binary). (Note that 10 means decimal.)
-       """
+        Generates 'n' random numbers that follow a continuous
+        or discrete probability distribution, using the inversion method.
+        Implements section 5 of Devroye and Gravel,
+        "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
+        - 'n' is the number of random numbers to generate.  Default is 1.
+        - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
+           and returns a number within base^-digitplaces of the True inverse
+           CDF (inverse cumulative distribution function, or quantile function)
+           of u/base^ubits, and is monotonic for a given value of `digitplaces`.
+        - 'digitplaces' is an accuracy expressed as a number of digits after the
+           point. Each random number will be a multiple of base^-digitplaces,
+           or have a smaller granularity. Default is 53.
+        - base is the digit base in which the accuracy is expressed. Default is 2
+           (binary). (Note that 10 means decimal.)
+        """
         u = 0
         ubits = 0
         threshold = Fraction(1, base ** digitplaces) * 2
@@ -3608,24 +3607,24 @@ Implements section 5 of Devroye and Gravel,
 
     def numbers_from_dist(self, pdf, mn=0, mx=1, n=1, bitplaces=53):
         """
-Generates 'n' random numbers that follow a continuous
-distribution in an interval [mn, mx].  The distribution's
-PDF (probability density function) must be bounded from above
-(have a finite value) and be continuous almost everywhere
-in the interval.  Implements section 4 of Devroye and Gravel,
-"The expected bit complexity of the von Neumann rejection
-algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
-- 'n' is the number of random numbers to generate.  Default is 1.
-- 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
-   and returns an array of two items: the greatest lower bound of f(x) anywhere
-   in the interval [xmin, xmax] (where f(x) is the PDF), and the least upper
-   bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
-- 'bitplaces' is an accuracy expressed as a number of bits after the
-   binary point. The random number will be a multiple of 2^-bitplaces,
-   or have a smaller granularity. Default is 53.
-- 'mn' and 'mx' express the interval.  Both are optional and
-   are set to 0 and 1, respectively, by default.
-      """
+        Generates 'n' random numbers that follow a continuous
+        distribution in an interval [mn, mx].  The distribution's
+        PDF (probability density function) must be bounded from above
+        (have a finite value) and be continuous almost everywhere
+        in the interval.  Implements section 4 of Devroye and Gravel,
+        "The expected bit complexity of the von Neumann rejection
+        algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
+        - 'n' is the number of random numbers to generate.  Default is 1.
+        - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
+           and returns an array of two items: the greatest lower bound of f(x) anywhere
+           in the interval [xmin, xmax] (where f(x) is the PDF), and the least upper
+           bound of f(x) anywhere there.  Both bounds are multiples of 2^-bitplaces.
+        - 'bitplaces' is an accuracy expressed as a number of bits after the
+           binary point. The random number will be a multiple of 2^-bitplaces,
+           or have a smaller granularity. Default is 53.
+        - 'mn' and 'mx' express the interval.  Both are optional and
+           are set to 0 and 1, respectively, by default.
+        """
         if n < 0 or bitplaces < 0:
             raise ValueError
         r = [Fraction(mn), 0, Fraction(mx), 0]
@@ -3687,41 +3686,41 @@ algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
 
     def discretegen(self, probs):
         """
-Generates a random integer in [0, n), where the probability
-of drawing each integer is specified as a list
-of probabilities that sum to 1, where n is the
-number of probabilities.  This method is optimal,
-or at least nearly so, in terms of the number of random
-bits required to generate the number
-on average. This method implements
-a solution to exercise 3.4.2 of chapter 15 of Luc Devroye's
-_Non-Uniform Random Variate Generation_, 1986.
+        Generates a random integer in [0, n), where the probability
+        of drawing each integer is specified as a list
+        of probabilities that sum to 1, where n is the
+        number of probabilities.  This method is optimal,
+        or at least nearly so, in terms of the number of random
+        bits required to generate the number
+        on average. This method implements
+        a solution to exercise 3.4.2 of chapter 15 of Luc Devroye's
+        _Non-Uniform Random Variate Generation_, 1986.
 
-- probs.  List of probability objects, where for each item
-   in the probability list, the integer 'i' is chosen
-   with probability 'probs[i]'.
-   Each probability object provides access to a binary
-   expansion of the probability, which must be a real number in
-   the interval [0, 1]. The binary expansion is a sequence of zeros and ones
-   expressed as follows: The first binary digit is the half digit, the second
-   is the quarter digit, the third is the one-eighth digit,
-   and so on. Note that any probability with a terminating binary
-   expansion (except 0) can be implemented by "subtracting" 1
-   from the expansion and then appending an infinite sequence
-   of ones at the end. The probability object must implement the following
-   three methods:
-   - reset(): Resets the probability object to the first digit in
-      the binary expansion.
-   - nextbit(): Gets the next digit in the binary expansion.
-   - eof(): Gets whether the end of the binary expansion was reached
-      (True or False), meaning the rest of the digits in the expansion are
-      all zeros.
-   The probability object will have to be mutable for this method
-   to work.
-   The BinaryExpansion class is a convenient way to express numbers
-   as probability objects that meet these criteria.  Each probability object
-   can also be a float, int, or Fraction in the interval [0, 1].
-      """
+        - probs.  List of probability objects, where for each item
+           in the probability list, the integer 'i' is chosen
+           with probability 'probs[i]'.
+           Each probability object provides access to a binary
+           expansion of the probability, which must be a real number in
+           the interval [0, 1]. The binary expansion is a sequence of zeros and ones
+           expressed as follows: The first binary digit is the half digit, the second
+           is the quarter digit, the third is the one-eighth digit,
+           and so on. Note that any probability with a terminating binary
+           expansion (except 0) can be implemented by "subtracting" 1
+           from the expansion and then appending an infinite sequence
+           of ones at the end. The probability object must implement the following
+           three methods:
+           - reset(): Resets the probability object to the first digit in
+              the binary expansion.
+           - nextbit(): Gets the next digit in the binary expansion.
+           - eof(): Gets whether the end of the binary expansion was reached
+              (True or False), meaning the rest of the digits in the expansion are
+              all zeros.
+           The probability object will have to be mutable for this method
+           to work.
+           The BinaryExpansion class is a convenient way to express numbers
+           as probability objects that meet these criteria.  Each probability object
+           can also be a float, int, or Fraction in the interval [0, 1].
+        """
         # Degenerate case
         if len(probs) == 1:
             return 0
@@ -3768,65 +3767,65 @@ _Non-Uniform Random Variate Generation_, 1986.
             nodesInLevel = min(maxNodes, nodesInLevel)
 
     def numbers_from_pdf(self, pdf, mn, mx, n=1, steps=100):
-        """ Generates one or more random numbers from a continuous probability
-         distribution expressed as a probability density
-         function (PDF).  The random number
-         will be in the interval [mn, mx].  `n` random numbers will be
-         generated. `pdf` is the PDF; it takes one parameter and returns,
-         for that parameter, a weight indicating the relative likelihood
-          that a random number will be close to that parameter. `steps`
-         is the number of subintervals between sample points of the PDF.
-         The area under the curve of the PDF need not be 1.
-         By default, `n` is 1 and `steps` is 100.  """
+        """Generates one or more random numbers from a continuous probability
+        distribution expressed as a probability density
+        function (PDF).  The random number
+        will be in the interval [mn, mx].  `n` random numbers will be
+        generated. `pdf` is the PDF; it takes one parameter and returns,
+        for that parameter, a weight indicating the relative likelihood
+         that a random number will be close to that parameter. `steps`
+        is the number of subintervals between sample points of the PDF.
+        The area under the curve of the PDF need not be 1.
+        By default, `n` is 1 and `steps` is 100."""
         values = [mn + (mx - mn) * i * 1.0 / steps for i in range(steps + 1)]
         weights = [pdf(v) for v in values]
         return self.piecewise_linear_n(values, weights, n)
 
     def numbers_from_cdf(self, cdf, mn, mx, n=1):
-        """ Generates one or more random numbers from a continuous probability
-         distribution by numerically inverting its cumulative
-         distribution function (CDF).
+        """Generates one or more random numbers from a continuous probability
+        distribution by numerically inverting its cumulative
+        distribution function (CDF).
 
-         - cdf: The CDF; it takes one parameter and returns,
-         for that parameter, the probability that a random number will
-         be less than or equal to that parameter.
-         - mn, mx: Sampling domain.  The random number
-         will be in the interval [mn, mx].
-         - n: How many random numbers to generate. Default is 1. """
+        - cdf: The CDF; it takes one parameter and returns,
+        for that parameter, the probability that a random number will
+        be less than or equal to that parameter.
+        - mn, mx: Sampling domain.  The random number
+        will be in the interval [mn, mx].
+        - n: How many random numbers to generate. Default is 1."""
         return self.numbers_from_u01(
             [self.rndu01() for i in range(n)], None, cdf, mn, mx
         )
 
     def numbers_from_u01(self, u01, pdf, cdf, mn, mx, ures=None):
-        """ Transforms one or more random numbers into numbers
-         (called quantiles) that follow a continuous probability distribution, based on its PDF
-         (probability density function) and/or its CDF (cumulative distribution
-         function).
+        """Transforms one or more random numbers into numbers
+        (called quantiles) that follow a continuous probability distribution, based on its PDF
+        (probability density function) and/or its CDF (cumulative distribution
+        function).
 
-         - u01: List of uniform random numbers in [0, 1] that will be
-         transformed into numbers that follow the distribution.
-         - pdf: The PDF; it takes one parameter and returns,
-         for that parameter, the relative probability that a
-         random number close to that number is chosen.  The area under
-         the PDF need not be 1 (this method works even if the PDF
-         is only known up to a normalizing constant). Optional if a CDF is given.
-         - cdf: The CDF; it takes one parameter and returns,
-         for that parameter, the probability that a random number will
-         be less than or equal to that parameter. Optional if a PDF is given.
-         For best results, the CDF should be
-         monotonically increasing everywhere in the
-         interval [xmin, xmax] and must output values in [0, 1];
-         for best results, the CDF should
-         be increasing everywhere in [xmin, xmax].
-         - mn, mx: Sampling domain.  The random number
-         will be in the interval [mn, mx].  For best results,
-         the range given by mn and mx should cover all or
-         almost all of the distribution.
-         - ures - Maximum approximation error tolerable, or
-         "u-resolution".  Default is 10^-8. The underlying sampler's approximation
-         error will generally be less than this tolerance, but this is not guaranteed.
-         Currently used only if a
-         PDF is given.
+        - u01: List of uniform random numbers in [0, 1] that will be
+        transformed into numbers that follow the distribution.
+        - pdf: The PDF; it takes one parameter and returns,
+        for that parameter, the relative probability that a
+        random number close to that number is chosen.  The area under
+        the PDF need not be 1 (this method works even if the PDF
+        is only known up to a normalizing constant). Optional if a CDF is given.
+        - cdf: The CDF; it takes one parameter and returns,
+        for that parameter, the probability that a random number will
+        be less than or equal to that parameter. Optional if a PDF is given.
+        For best results, the CDF should be
+        monotonically increasing everywhere in the
+        interval [xmin, xmax] and must output values in [0, 1];
+        for best results, the CDF should
+        be increasing everywhere in [xmin, xmax].
+        - mn, mx: Sampling domain.  The random number
+        will be in the interval [mn, mx].  For best results,
+        the range given by mn and mx should cover all or
+        almost all of the distribution.
+        - ures - Maximum approximation error tolerable, or
+        "u-resolution".  Default is 10^-8. The underlying sampler's approximation
+        error will generally be less than this tolerance, but this is not guaranteed.
+        Currently used only if a
+        PDF is given.
         """
         if pdf != None and (cdf == None or ures != None):
             sampler = DensityInversionSampler(
@@ -3840,18 +3839,18 @@ _Non-Uniform Random Variate Generation_, 1986.
             raise ValueError
 
     def integers_from_u01(self, u01, pmf):
-        """ Transforms one or more random numbers into numbers
-         (called quantiles) that
-         follow a discrete distribution, assuming the distribution
-               produces only integers 0 or greater.
-               - `u01` is a list of uniform random numbers, in [0, 1].
-               - `pmf` is the probability mass function (PMF)
-               of the discrete distribution; it takes one parameter and returns,
-               for that parameter, the probability that a random number is
-               equal to that parameter (each probability is in the interval [0, 1]).
-               The area under the PMF must be 1; it
-               is not enough for the PMF to be correct up to a constant.
-               """
+        """Transforms one or more random numbers into numbers
+        (called quantiles) that
+        follow a discrete distribution, assuming the distribution
+              produces only integers 0 or greater.
+              - `u01` is a list of uniform random numbers, in [0, 1].
+              - `pmf` is the probability mass function (PMF)
+              of the discrete distribution; it takes one parameter and returns,
+              for that parameter, the probability that a random number is
+              equal to that parameter (each probability is in the interval [0, 1]).
+              The area under the PMF must be 1; it
+              is not enough for the PMF to be correct up to a constant.
+        """
         ret = [0 for i in range(len(u01))]
         pdftable = [pmf(i) for i in range(10)]
         for i in range(len(u01)):
@@ -3884,9 +3883,9 @@ _Non-Uniform Random Variate Generation_, 1986.
         return ret
 
     def wiener(self, st, en, step=1.0, mu=0.0, sigma=1.0):
-        """ Generates random numbers following a Wiener
-            process (Brownian motion). Each element of the return
-            value contains a timestamp and a random number in that order. """
+        """Generates random numbers following a Wiener
+        process (Brownian motion). Each element of the return
+        value contains a timestamp and a random number in that order."""
         if st == en:
             return [[st, self.normal(mu * st, sigma * math.sqrt(st))]]
         ret = []
@@ -3939,9 +3938,9 @@ _Non-Uniform Random Variate Generation_, 1986.
                 self._kthsmallest_internal(ret, index + leftcount, rightcount, k, compl)
 
     def kthsmallest_psrn(self, n, k):
-        """ Generates the 'k'th smallest 'b'-bit uniform random
-            number out of 'n' of them; returns the result in
-            the form of a uniform partially-sampled random number. """
+        """Generates the 'k'th smallest 'b'-bit uniform random
+        number out of 'n' of them; returns the result in
+        the form of a uniform partially-sampled random number."""
         if k <= 0 or k > n:
             raise ValueError
         ret = [psrn_new_01() for i in range(n)]
@@ -3955,24 +3954,24 @@ _Non-Uniform Random Variate Generation_, 1986.
             return ret[n - k]
 
     def kthsmallest(self, n, k, b):
-        """ Generates the 'k'th smallest 'b'-bit uniform random
-            number out of 'n' of them. """
+        """Generates the 'k'th smallest 'b'-bit uniform random
+        number out of 'n' of them."""
         if k <= 0 or k > n:
             raise ValueError
         return psrn_fill(self, self.kthsmallest_psrn(n, k), precision=b)
 
     def fromDyadicDecompCode(self, code, precision=53):
-        """ Generates a uniform random number contained in a box described
-          by the given universal dyadic decomposition code.
-          - code: A list returned by the getDyadicDecompCode
-            or getDyadicDecompCodePdf method.
-          - precision: Desired minimum precision in number of binary digits
-            after the point.  Default is 53.
+        """Generates a uniform random number contained in a box described
+            by the given universal dyadic decomposition code.
+            - code: A list returned by the getDyadicDecompCode
+              or getDyadicDecompCodePdf method.
+            - precision: Desired minimum precision in number of binary digits
+              after the point.  Default is 53.
 
-      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
-      Remote Generation of Continuous Random Variables",
-      arXiv:1603.05238v1  [cs.IT], 2016.
-      """
+        Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+        Remote Generation of Continuous Random Variables",
+        arXiv:1603.05238v1  [cs.IT], 2016.
+        """
         k = code[0]
         bitgen = max(0, precision - k)
         mult = 2.0 ** -(k + bitgen)  # To convert to a float
@@ -4002,44 +4001,44 @@ _Non-Uniform Random Variate Generation_, 1986.
 
     def getDyadicDecompCodePdf(self, point, pdf=None, pdfbounds=None, precision=53):
         """
-      Finds a code describing the position and size of a box that covers the given
-      point in the universal dyadic decomposition for random number generation,
-      based on a non-uniform probability density function.  It generates a
-      random number for this purpose, so the return value may differ from call to
-      call.
-      - point: A list of coordinates of a point in space.  This method assumes
-        the point was random generated and within the support of a continuous
-        distribution.  Let N be the number of coordinates of this parameter
-        (the number of dimensions).
-      - pdf: The probability density function (PDF) of the continuous distribution.
-        This method takes as input a list
-        containing N coordinates describing a point in space, and returns the probability
-        density of that point as a single number.  If this parameter is given, however:
-        - This method assumes the PDF is unimodal and monotone at all points
-          away from the mode, and may return incorrect results if that is not the case.
-        - If the given PDF outputs floating-point numbers, the resulting
-          dyadic decomposition code may be inaccurate due to rounding errors.
-      - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
-        at a box. This method takes as input a list containing N items, where each item
-        is a list containing the lowest and highest value of the box for the
-        corresponding dimension.  Returns a list
-        containing two items: the lower bound and the upper bound, respectively, of the
-        PDF anywhere in the given box.  If this parameter is
-        given, this method assumes the PDF is continuous almost everywhere and bounded
-        from above; the dyadic decomposition will generally work only if that is the case.
-      - precision: Precision of random numbers generated by this method, in binary digits
-        after the point.  Default is 53.
-      Returns a list containing two items. The first describes the size of the box
-      (as a negative power of 2). The second is a list of coordinates describing the
-      position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
-      ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
-      Raises an error if the point is determined to be outside the support of the PDF.
-      Either pdf or pdfbounds must be passed to this method, but not both.
+        Finds a code describing the position and size of a box that covers the given
+        point in the universal dyadic decomposition for random number generation,
+        based on a non-uniform probability density function.  It generates a
+        random number for this purpose, so the return value may differ from call to
+        call.
+        - point: A list of coordinates of a point in space.  This method assumes
+          the point was random generated and within the support of a continuous
+          distribution.  Let N be the number of coordinates of this parameter
+          (the number of dimensions).
+        - pdf: The probability density function (PDF) of the continuous distribution.
+          This method takes as input a list
+          containing N coordinates describing a point in space, and returns the probability
+          density of that point as a single number.  If this parameter is given, however:
+          - This method assumes the PDF is unimodal and monotone at all points
+            away from the mode, and may return incorrect results if that is not the case.
+          - If the given PDF outputs floating-point numbers, the resulting
+            dyadic decomposition code may be inaccurate due to rounding errors.
+        - pdfbounds: A function that returns the lower and upper bounds of the PDF's value
+          at a box. This method takes as input a list containing N items, where each item
+          is a list containing the lowest and highest value of the box for the
+          corresponding dimension.  Returns a list
+          containing two items: the lower bound and the upper bound, respectively, of the
+          PDF anywhere in the given box.  If this parameter is
+          given, this method assumes the PDF is continuous almost everywhere and bounded
+          from above; the dyadic decomposition will generally work only if that is the case.
+        - precision: Precision of random numbers generated by this method, in binary digits
+          after the point.  Default is 53.
+        Returns a list containing two items. The first describes the size of the box
+        (as a negative power of 2). The second is a list of coordinates describing the
+        position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
+        ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
+        Raises an error if the point is determined to be outside the support of the PDF.
+        Either pdf or pdfbounds must be passed to this method, but not both.
 
-      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
-      Remote Generation of Continuous Random Variables",
-      arXiv:1603.05238v1  [cs.IT], 2016.
-      """
+        Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+        Remote Generation of Continuous Random Variables",
+        arXiv:1603.05238v1  [cs.IT], 2016.
+        """
         if (pdf != None and pdfbounds != None) or (pdf == None and pdfbounds == None):
             raise ValueError("either pdf or pdfbounds must be given, but not both")
         if pdf != None:
@@ -4067,37 +4066,37 @@ _Non-Uniform Random Variate Generation_, 1986.
 
     def getDyadicDecompCode(self, point, f=None, fbox=None):
         """
-      Finds a code describing the position and size of a box that covers the given
-      point in the universal dyadic decomposition for random number generation.
-      - point: A list of coordinates of a point in space.  This method assumes
-        the point was a randomly generated member of a geometric set (such as a
-        sphere, ellipse, polygon, or any other volume).  Let N be the number
-        of coordinates of this parameter (the number of dimensions).
-      - f: A function that determines whether a point belongs in the geometric set.
-        Returns True if so, and False otherwise.  This method takes as input a list
-        containing N coordinates describing a point in space.  If this parameter is
-        given, this method assumes the geometric set is convex (and this method
-        may return incorrect results for concave sets), because the method checks
-        only the corners of each box to determine whether the box is entirely included
-        in the geometric set.
-      - fbox: A function that determines whether a box is included
-        in the geometric set. This method takes
-        as input a list containing N items, where each item is a list containing the
-        lowest and highest value of the box for the corresponding dimension.  Returns 0 if the
-        box is entirely outside the set, 1 if the box is partially inside the set (or if the
-        method is not certain whether the box is inside or outside the set), and 2
-        if the box is entirely inside the set.
-      Returns a list containing two items. The first describes the size of the box
-      (as a negative power of 2). The second is a list of coordinates describing the
-      position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
-      ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
-      Raises an error if the point was determined not to belong in the geometric set.
-      Either f or fset must be passed to this method, but not both.
+        Finds a code describing the position and size of a box that covers the given
+        point in the universal dyadic decomposition for random number generation.
+        - point: A list of coordinates of a point in space.  This method assumes
+          the point was a randomly generated member of a geometric set (such as a
+          sphere, ellipse, polygon, or any other volume).  Let N be the number
+          of coordinates of this parameter (the number of dimensions).
+        - f: A function that determines whether a point belongs in the geometric set.
+          Returns True if so, and False otherwise.  This method takes as input a list
+          containing N coordinates describing a point in space.  If this parameter is
+          given, this method assumes the geometric set is convex (and this method
+          may return incorrect results for concave sets), because the method checks
+          only the corners of each box to determine whether the box is entirely included
+          in the geometric set.
+        - fbox: A function that determines whether a box is included
+          in the geometric set. This method takes
+          as input a list containing N items, where each item is a list containing the
+          lowest and highest value of the box for the corresponding dimension.  Returns 0 if the
+          box is entirely outside the set, 1 if the box is partially inside the set (or if the
+          method is not certain whether the box is inside or outside the set), and 2
+          if the box is entirely inside the set.
+        Returns a list containing two items. The first describes the size of the box
+        (as a negative power of 2). The second is a list of coordinates describing the
+        position.  Let v be 2**-ret[0].  The box is then calculated as (ret[1][0]*v,
+        ret[1]*v+v), ..., (ret[1][n-1]*v, ret[1][n-1]*v+v).
+        Raises an error if the point was determined not to belong in the geometric set.
+        Either f or fset must be passed to this method, but not both.
 
-      Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
-      Remote Generation of Continuous Random Variables",
-      arXiv:1603.05238v1  [cs.IT], 2016.
-      """
+        Reference: C.T. Li, A. El Gamal, "A Universal Coding Scheme for
+        Remote Generation of Continuous Random Variables",
+        arXiv:1603.05238v1  [cs.IT], 2016.
+        """
         if (f != None and fbox != None) or (f == None and fbox == None):
             raise ValueError("either f or fbox must be given, but not both")
         pt = [self._floorint(v) for v in point]
@@ -4134,14 +4133,14 @@ _Non-Uniform Random Variate Generation_, 1986.
             k += 1
 
 class ConvexPolygonSampler:
-    """ A class for uniform random sampling of
-      points from a convex polygon.  This
-      class only supports convex polygons because
-      the random sampling process involves
-      triangulating a polygon, which is trivial
-      for convex polygons only. "randgen" is a RandomGen
-      object, and "points" is a list of points
-      (two-item lists) that make up the polygon.  """
+    """A class for uniform random sampling of
+    points from a convex polygon.  This
+    class only supports convex polygons because
+    the random sampling process involves
+    triangulating a polygon, which is trivial
+    for convex polygons only. "randgen" is a RandomGen
+    object, and "points" is a list of points
+    (two-item lists) that make up the polygon."""
 
     def __init__(self, randgen, points):
         if len(points) < 3:
@@ -4166,8 +4165,8 @@ class ConvexPolygonSampler:
         )
 
     def sample(self):
-        """ Choose a random point in the convex polygon
-        uniformly at random. """
+        """Choose a random point in the convex polygon
+        uniformly at random."""
         index = self.randgen.weighted_choice(self.areas)
         tri = self.triangles[index]
         return self.randgen.simplex_point(tri)
@@ -4406,38 +4405,38 @@ def _gaussKronrod(func, mn, mx, direction=1, depth=0):
         )
 
 class RatioOfUniformsTiling:
-    """ Produces a tiling for the purposes
-           of fast sampling from a probability distribution via the
-           ratio of uniforms method.
+    """Produces a tiling for the purposes
+         of fast sampling from a probability distribution via the
+         ratio of uniforms method.
 
-      - pdf: The probability density function (PDF); it takes one parameter and returns,
-         for that parameter, the relative probability that a
-         random number close to that number is chosen.  The area under
-         the PDF need not be 1; this method works even if the PDF
-         is only known up to a normalizing constant, and even if
-         the distribution has infinitely extending tails to the left and/or right.
-         However, for the ratio of uniforms method to work, both pdf(x) and
-         x*x*pdf(x) must be bounded from above (thus, if the distribution has
-         tails, they must drop off at a faster than quadratic rate).
-      - mode: X-coordinate of the PDF's highest peak or one of them,
-         or a location close to it.  Optional; default is 0.
-      - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
-         For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
-         y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
-      - cycles - Number of recursion cycles in which to split tiles
-         for the ratio-of-uniforms tiling.  Default is 8.
+    - pdf: The probability density function (PDF); it takes one parameter and returns,
+       for that parameter, the relative probability that a
+       random number close to that number is chosen.  The area under
+       the PDF need not be 1; this method works even if the PDF
+       is only known up to a normalizing constant, and even if
+       the distribution has infinitely extending tails to the left and/or right.
+       However, for the ratio of uniforms method to work, both pdf(x) and
+       x*x*pdf(x) must be bounded from above (thus, if the distribution has
+       tails, they must drop off at a faster than quadratic rate).
+    - mode: X-coordinate of the PDF's highest peak or one of them,
+       or a location close to it.  Optional; default is 0.
+    - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
+       For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
+       y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
+    - cycles - Number of recursion cycles in which to split tiles
+       for the ratio-of-uniforms tiling.  Default is 8.
 
-       Additional improvements not yet implemented:
-       Generalized ratio-of-uniforms in Hörmann et al., "Automatic
-       Nonuniform Random Variate Generation", 2004.
+     Additional improvements not yet implemented:
+     Generalized ratio-of-uniforms in Hörmann et al., "Automatic
+     Nonuniform Random Variate Generation", 2004.
 
-       References:
-       Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
-       Section 4.5 of Fulger, D., "From phenomenological modelling of anomalous
-       diffusion through continuous-time random walks and fractional
-       calculus to correlation analysis of complex systems", dissertation,
-       Philipps-Universität Marburg, 2009.
-           """
+     References:
+     Section IV.7 of Devroye, L., "Non-Uniform Random Variate Generation", 1986.
+     Section 4.5 of Fulger, D., "From phenomenological modelling of anomalous
+     diffusion through continuous-time random walks and fractional
+     calculus to correlation analysis of complex systems", dissertation,
+     Philipps-Universität Marburg, 2009.
+    """
 
     def __init__(self, pdf, mode=0, y0=-10, y1=10, cycles=8):
         self.pdf = pdf
@@ -4549,17 +4548,17 @@ class RatioOfUniformsTiling:
         return ret
 
     def sample(self, rg, n=1):
-        """ Generates random numbers that (approximately) follow the
-            distribution modeled by this class.
-      - n: The number of random numbers to generate.
-      Returns a list of 'n' random numbers.  """
+        """Generates random numbers that (approximately) follow the
+              distribution modeled by this class.
+        - n: The number of random numbers to generate.
+        Returns a list of 'n' random numbers."""
         # self.iters=0
         ret = [self._sampleOne(rg) for i in range(n)]
         # print(n*1.0/self.iters)
         return ret
 
     def codegen(self, name, pdfcall=None):
-        """ Generates Python code that samples
+        """Generates Python code that samples
                 (approximately) from the distribution estimated
                 in this class.  Idea from Leydold, et al.,
                 "An Automatic Code Generator for
@@ -4569,7 +4568,7 @@ class RatioOfUniformsTiling:
            random number).
         - pdfcall: Name of the method representing pdf (for more information,
            see the __init__ method of this class).  Optional; if not given
-           the name is pdf_X where X is the name given in the name parameter. """
+           the name is pdf_X where X is the name given in the name parameter."""
         if pdfcall == None:
             pdfcall = "pdf_" + name
         ret = "import random\n\n"
@@ -4608,39 +4607,39 @@ class RatioOfUniformsTiling:
                 return ret
 
 class DensityTiling:
-    """ Produces a tiling of a probability density function (PDF)
-           for the purposes of random number generation.  The PDF is
-           decomposed into tiles; these tiles will either cross the PDF
-           or go below the PDF.  In each recursion cycle, each tile is
-           split into four tiles, and tiles that end up above the PDF are
-           discarded.
+    """Produces a tiling of a probability density function (PDF)
+         for the purposes of random number generation.  The PDF is
+         decomposed into tiles; these tiles will either cross the PDF
+         or go below the PDF.  In each recursion cycle, each tile is
+         split into four tiles, and tiles that end up above the PDF are
+         discarded.
 
-      - pdf: A function that specifies the PDF. It takes a single
-        number and outputs a single number. The area under
-        the PDF need not equal 1 (this class tolerates the PDF even if
-        it is only known up to a normalizing constant).  For best results,
-        the PDF should be bounded from above (that is, it should be free of _poles_, or points
-        that approach infinity).  If the PDF does contain a pole, this class
-        may accommodate the pole by sampling from a modified version of the PDF,
-        so that points extremely close to the pole may be sampled
-        at a higher or lower probability than otherwise (but not in a way
-        that significantly affects the chance of sampling points
-        outside the pole region).
-      - bl, br - Specifies the sampling domain of the PDF.  Both
-         bl and br are numbers giving the domain,
-         which in this case is [bl, br].
-      - cycles - Number of recursion cycles in which to split tiles
-         that follow the PDF.  Default is 8.
+    - pdf: A function that specifies the PDF. It takes a single
+      number and outputs a single number. The area under
+      the PDF need not equal 1 (this class tolerates the PDF even if
+      it is only known up to a normalizing constant).  For best results,
+      the PDF should be bounded from above (that is, it should be free of _poles_, or points
+      that approach infinity).  If the PDF does contain a pole, this class
+      may accommodate the pole by sampling from a modified version of the PDF,
+      so that points extremely close to the pole may be sampled
+      at a higher or lower probability than otherwise (but not in a way
+      that significantly affects the chance of sampling points
+      outside the pole region).
+    - bl, br - Specifies the sampling domain of the PDF.  Both
+       bl and br are numbers giving the domain,
+       which in this case is [bl, br].
+    - cycles - Number of recursion cycles in which to split tiles
+       that follow the PDF.  Default is 8.
 
-       Additional improvements not yet implemented: Hörmann et al.,
-       "Inverse Transformed Density Rejection for Unbounded Monotone Densities", 2007.
+     Additional improvements not yet implemented: Hörmann et al.,
+     "Inverse Transformed Density Rejection for Unbounded Monotone Densities", 2007.
 
-       Reference:
-       Fulger, Daniel and Guido Germano. "Automatic generation of
-       non-uniform random variates for arbitrary pointwise computable
-       probability densities by tiling",
-       arXiv:0902.3088v1  [cs.MS], 2009.
-           """
+     Reference:
+     Fulger, Daniel and Guido Germano. "Automatic generation of
+     non-uniform random variates for arbitrary pointwise computable
+     probability densities by tiling",
+     arXiv:0902.3088v1  [cs.MS], 2009.
+    """
 
     def __init__(self, pdf, bl, br, cycles=8):
         self.pdf = pdf
@@ -4733,7 +4732,7 @@ class DensityTiling:
         return [min(m), retmax]
 
     def codegen(self, name, pdfcall=None):
-        """ Generates Python code that samples
+        """Generates Python code that samples
                 (approximately) from the distribution estimated
                 in this class.  Idea from Leydold, et al.,
                 "An Automatic Code Generator for
@@ -4743,7 +4742,7 @@ class DensityTiling:
            random number).
         - pdfcall: Name of the method representing pdf (for more information,
            see the __init__ method of this class).  Optional; if not given
-           the name is pdf_X where X is the name given in the name parameter. """
+           the name is pdf_X where X is the name given in the name parameter."""
         if pdfcall == None:
             pdfcall = "pdf_" + name
         ret = "import random\n\n"
@@ -4786,10 +4785,10 @@ class DensityTiling:
         return ret
 
     def sample(self, rg, n=1):
-        """ Generates random numbers that (approximately) follow the
-            distribution modeled by this class.
-      - n: The number of random numbers to generate.
-      Returns a list of 'n' random numbers.  """
+        """Generates random numbers that (approximately) follow the
+              distribution modeled by this class.
+        - n: The number of random numbers to generate.
+        Returns a list of 'n' random numbers."""
         return [self._sampleOne(rg) for i in range(n)]
 
     def _sampleOne(self, rg):
@@ -4803,38 +4802,38 @@ class DensityTiling:
                 return x
 
 class DensityInversionSampler:
-    """ A sampler that generates random samples from
-        a continuous distribution for which
-        only the probability density function (PDF) is known,
-        using the inversion method.  This sampler
-        allows quantiles for the distribution to be calculated
-        from pregenerated uniform random numbers in [0, 1].
+    """A sampler that generates random samples from
+      a continuous distribution for which
+      only the probability density function (PDF) is known,
+      using the inversion method.  This sampler
+      allows quantiles for the distribution to be calculated
+      from pregenerated uniform random numbers in [0, 1].
 
-      - pdf: A function that specifies the PDF. It takes a single
-        number and outputs a single number. The area under
-        the PDF need not equal 1 (this sampler works even if the
-        PDF is only known up to a normalizing constant).
-      - bl, br - Specifies the sampling domain of the PDF.  Both
-         bl and br are numbers giving the domain,
-         which in this case is [bl, br].  For best results, the
-         probabilities outside the sampling domain should be
-         negligible (the reference cited below uses cutoff points
-         such that the probabilities for each tail integrate to
-         about ures*0.05 or less).
-      - ures - Maximum approximation error tolerable, or
-        "u-resolution".  Default is 10^-8.  This error tolerance
-        "does not work for continuous distributions [whose PDFs
-        have] high and narrow peaks or poles".  This sampler's
-        approximation error will generally be less than this tolerance,
-        but this is not guaranteed, especially for PDFs of the kind
-        just mentioned.
+    - pdf: A function that specifies the PDF. It takes a single
+      number and outputs a single number. The area under
+      the PDF need not equal 1 (this sampler works even if the
+      PDF is only known up to a normalizing constant).
+    - bl, br - Specifies the sampling domain of the PDF.  Both
+       bl and br are numbers giving the domain,
+       which in this case is [bl, br].  For best results, the
+       probabilities outside the sampling domain should be
+       negligible (the reference cited below uses cutoff points
+       such that the probabilities for each tail integrate to
+       about ures*0.05 or less).
+    - ures - Maximum approximation error tolerable, or
+      "u-resolution".  Default is 10^-8.  This error tolerance
+      "does not work for continuous distributions [whose PDFs
+      have] high and narrow peaks or poles".  This sampler's
+      approximation error will generally be less than this tolerance,
+      but this is not guaranteed, especially for PDFs of the kind
+      just mentioned.
 
-        Reference:
-        Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
-        "Random variate generation by numerical inversion when
-        only the density is known", ACM Transactions on Modeling
-        and Computer Simulation 20(4) article 18, October 2010.
-      """
+      Reference:
+      Gerhard Derflinger, Wolfgang Hörmann, and Josef Leydold,
+      "Random variate generation by numerical inversion when
+      only the density is known", ACM Transactions on Modeling
+      and Computer Simulation 20(4) article 18, October 2010.
+    """
 
     def __init__(self, pdf, bl, br, ures=1e-8):
         if bl > br:
@@ -4941,16 +4940,16 @@ class DensityInversionSampler:
         return p
 
     def quantile(self, v):
-        """ Calculates quantiles from uniform random numbers
-            in the interval [0, 1].
-      - v: A list of uniform random numbers.
-      Returns a list of the quantiles corresponding to the
-      uniform random numbers.  The returned list will have
-      the same number of entries as 'v'.  """
+        """Calculates quantiles from uniform random numbers
+              in the interval [0, 1].
+        - v: A list of uniform random numbers.
+        Returns a list of the quantiles corresponding to the
+        uniform random numbers.  The returned list will have
+        the same number of entries as 'v'."""
         return [self._onequantile(x * self.integral) for x in v]
 
     def codegen(self, name="dist"):
-        """ Generates standalone Python code that samples
+        """Generates standalone Python code that samples
                 (approximately) from the distribution estimated
                 in this class.  Idea from Leydold, et al.,
                 "An Automatic Code Generator for
@@ -4959,7 +4958,7 @@ class DensityInversionSampler:
            sample_X (samples one random number), and quantile_X
            (finds the quantile
            for a uniform random number in [0, 1]),
-           where X is the name given here. """
+           where X is the name given here."""
         ret = "import random\n\n"
         ret += "TABLE_" + name + " = ["
         for i in range(len(self.table)):
@@ -4999,10 +4998,10 @@ class DensityInversionSampler:
         return ret
 
     def sample(self, rg, n=1):
-        """ Generates random numbers that (approximately) follow the
-            distribution modeled by this class.
-      - n: The number of random numbers to generate.
-      Returns a list of 'n' random numbers.  """
+        """Generates random numbers that (approximately) follow the
+              distribution modeled by this class.
+        - n: The number of random numbers to generate.
+        Returns a list of 'n' random numbers."""
         return [self._onequantile(rg.rndu01() * self.integral) for i in range(n)]
 
     def _onequantile(self, r):
@@ -5015,18 +5014,18 @@ class DensityInversionSampler:
         return 0
 
 class PrefixDistributionSampler:
-    """ An arbitrary-precision sampler for probability distributions
-        supported on [0, 1] and bounded from above.
-        Note that this sampler currently relies on floating-point operations
-        and thus the evaluations of the PDF (the distribution's probability
-        density function) could incur rounding errors.
-        - pdf: PDF, which takes a value in [0, 1] and returns a probability
-          density at that value (which is 0 or greater).  Currently,
-          the PDF must be monotone (either increasing or decreasing).
-        Reference: Oberhoff, Sebastian, "Exact Sampling and Prefix
-        Distributions", Theses and Dissertations, University of
-        Wisconsin Milwaukee, 2018.
-        """
+    """An arbitrary-precision sampler for probability distributions
+    supported on [0, 1] and bounded from above.
+    Note that this sampler currently relies on floating-point operations
+    and thus the evaluations of the PDF (the distribution's probability
+    density function) could incur rounding errors.
+    - pdf: PDF, which takes a value in [0, 1] and returns a probability
+      density at that value (which is 0 or greater).  Currently,
+      the PDF must be monotone (either increasing or decreasing).
+    Reference: Oberhoff, Sebastian, "Exact Sampling and Prefix
+    Distributions", Theses and Dissertations, University of
+    Wisconsin Milwaukee, 2018.
+    """
 
     def __init__(self, pdf):
         # NOTE: To ensure accuracy, pdfmax should be an upper bound
@@ -5071,36 +5070,36 @@ class PrefixDistributionSampler:
                     prefixLength += 1
 
 class KVectorSampler:
-    """ A K-Vector-like sampler of a continuous distribution
-      with a known cumulative distribution function (CDF).
-      Uses algorithms
-      described in Arnas, D., Leake, C., Mortari, D., "Random
-      Sampling using k-vector", Computing in Science &
-      Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
-      Neta, B., "k-Vector Range Searching Techniques".  """
+    """A K-Vector-like sampler of a continuous distribution
+    with a known cumulative distribution function (CDF).
+    Uses algorithms
+    described in Arnas, D., Leake, C., Mortari, D., "Random
+    Sampling using k-vector", Computing in Science &
+    Engineering 21(1) pp. 94-107, 2019, and Mortari, D.,
+    Neta, B., "k-Vector Range Searching Techniques"."""
 
     def _linspace(self, a, b, size):
         return [a + (b - a) * (x * 1.0 / size) for x in range(size + 1)]
 
     def __init__(self, cdf, xmin, xmax, pdf=None, nd=200):
-        """ Initializes the K-Vector-like sampler.
-         Parameters:
-         - cdf: Cumulative distribution function (CDF) of the
-            distribution.  The CDF must be
-            monotonically increasing everywhere in the
-            interval [xmin, xmax] and must output values in [0, 1];
-            for best results, the CDF should
-            be increasing everywhere in [xmin, xmax].
-         - xmin: Maximum x-value to generate.
-         - xmax: Maximum x-value to generate.  For best results,
-            the range given by xmin and xmax should cover all or
-            almost all of the distribution.
-         - pdf: Optional. Distribution's probability density
-            function (PDF), to improve accuracy in the root-finding
-            process.
-         - nd: Optional. Size of tables used in the sampler.
-            Default is 200.
-         """
+        """Initializes the K-Vector-like sampler.
+        Parameters:
+        - cdf: Cumulative distribution function (CDF) of the
+           distribution.  The CDF must be
+           monotonically increasing everywhere in the
+           interval [xmin, xmax] and must output values in [0, 1];
+           for best results, the CDF should
+           be increasing everywhere in [xmin, xmax].
+        - xmin: Maximum x-value to generate.
+        - xmax: Maximum x-value to generate.  For best results,
+           the range given by xmin and xmax should cover all or
+           almost all of the distribution.
+        - pdf: Optional. Distribution's probability density
+           function (PDF), to improve accuracy in the root-finding
+           process.
+        - nd: Optional. Size of tables used in the sampler.
+           Default is 200.
+        """
         eps = 2.22e-16
         ymin = cdf(xmin)
         ymax = cdf(xmax)
@@ -5160,29 +5159,29 @@ class KVectorSampler:
         return x0 + (a - y0) * (x1 - x0) / (y1 - y0)
 
     def quantile(self, uniforms):
-        """ Returns a list of 'n' numbers that correspond
-            to the given uniform random numbers and follow
-            the distribution represented by this sampler.  'uniforms'
-            is a list of uniform random values in the interval
-            [0, 1].  For best results, this sampler's range
-            (xmin and xmax in the constructor)
-            should cover all or almost all of the desired distribution and
-            the distribution's CDF should be monotonically
-            increasing everywhere (every number in the distribution's
-            range has nonzero probability of occurring), since
-            among other things,
-            this method maps each uniform value to the
-            range of CDFs covered by this distribution (that is,
-            [0, 1] is mapped to [minCDF, maxCDF]), and
-            uniform values in "empty" regions (regions with
-            constant CDF) are handled by replacing those
-            values with the minimum CDF value covered. """
+        """Returns a list of 'n' numbers that correspond
+        to the given uniform random numbers and follow
+        the distribution represented by this sampler.  'uniforms'
+        is a list of uniform random values in the interval
+        [0, 1].  For best results, this sampler's range
+        (xmin and xmax in the constructor)
+        should cover all or almost all of the desired distribution and
+        the distribution's CDF should be monotonically
+        increasing everywhere (every number in the distribution's
+        range has nonzero probability of occurring), since
+        among other things,
+        this method maps each uniform value to the
+        range of CDFs covered by this distribution (that is,
+        [0, 1] is mapped to [minCDF, maxCDF]), and
+        uniform values in "empty" regions (regions with
+        constant CDF) are handled by replacing those
+        values with the minimum CDF value covered."""
         return [self._invertone(u) for u in uniforms]
 
     def sample(self, rg, n):
-        """ Returns a list of 'n' random numbers of
-         the distribution represented by this sampler.
-         - rg: A random generator (RandGen) object. """
+        """Returns a list of 'n' random numbers of
+        the distribution represented by this sampler.
+        - rg: A random generator (RandGen) object."""
         return [self._sampleone(rg) for i in range(n)]
 
 class AlmostRandom:

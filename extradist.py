@@ -152,8 +152,8 @@ def exp_minus_xy(rg, f, y):
         y *= uy
 
 def sampleIntPlusBag(rg, psrn, k):
-    """ Return 1 with probability (x+k)/2^bitlength(k).
-         Ignores PSRN's integer part and sign. """
+    """Return 1 with probability (x+k)/2^bitlength(k).
+    Ignores PSRN's integer part and sign."""
     bitLength = k.bit_length()
     r = 0
     c = 0
@@ -205,8 +205,8 @@ def rayleighpsrn(rg, s=1):
             return bag
 
 def size_biased_poisson_ailamujia(rg, eta=1):
-    """ Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
-        Pak. J. Statistics 37(1), 19-38, 2021. """
+    """Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
+    Pak. J. Statistics 37(1), 19-38, 2021."""
     rndgen = randomgen.RandomGen(_RGConv(rg))
     z = 1
     eta = Fraction(eta)

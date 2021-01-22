@@ -31,9 +31,9 @@ class BinomialSampler:
         return r
 
     def _roughSqrt(x):
-        """ Returns a number m such that m is in the
+        """Returns a number m such that m is in the
         interval [sqrt(x), sqrt(x)+3].  This rough approximation
-        suffices for the binomial sampler. """
+        suffices for the binomial sampler."""
         u = 1 << ((x.bit_length() + 1) // 2)
         i = 0
         while True:
@@ -43,18 +43,18 @@ class BinomialSampler:
             u = v
 
     def sample(self, n):
-        """ Draws a binomial(n, 1/2) random variate.
-       Uses the rejection sampling approach from Bringmann et al.
-       2014, but uses log binomial coefficients and in general, upper
-       and lower bounds of logarithmic probabilities (to support very
-       large values of n) together with the alternating series method
-       and rational interval arithmetic (rather than floating-point arithmetic).
+        """Draws a binomial(n, 1/2) random variate.
+        Uses the rejection sampling approach from Bringmann et al.
+        2014, but uses log binomial coefficients and in general, upper
+        and lower bounds of logarithmic probabilities (to support very
+        large values of n) together with the alternating series method
+        and rational interval arithmetic (rather than floating-point arithmetic).
 
-       Reference:
-       K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of
-       a Physical Growth Model.” In: _Proc. 41st International
-       Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
-    """
+        Reference:
+        K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of
+        a Physical Growth Model.” In: _Proc. 41st International
+        Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.
+        """
         if n == 0:
             return 0
         if n % 2 == 1:

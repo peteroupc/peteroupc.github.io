@@ -18,8 +18,8 @@ from fractions import Fraction
 #
 
 class FInterval:
-    """ An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
-       the lower bound. """
+    """An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
+    the lower bound."""
 
     def __new__(cl, v, sup=None, prec=None):
         if isinstance(v, FInterval) and sup == None:
@@ -559,12 +559,12 @@ class FInterval:
             return FInterval(-at.sup, -at.inf)
 
     def truncate(self):
-        """ Truncates the numerator and denominator of this interval's
-            bounds if it's relatively wide.  This can help improve performance
-            in arithmetic operations involving this interval, since it reduces
-            the work that needs to be done (especially in reductions to lowest
-            terms) when generating new Fractions as a result of these operations.
-            In Python in particular, working with Fractions is very slow. """
+        """Truncates the numerator and denominator of this interval's
+        bounds if it's relatively wide.  This can help improve performance
+        in arithmetic operations involving this interval, since it reduces
+        the work that needs to be done (especially in reductions to lowest
+        terms) when generating new Fractions as a result of these operations.
+        In Python in particular, working with Fractions is very slow."""
         if (
             self.sup.numerator.bit_length() < 64
             and self.sup.denominator.bit_length() < 64

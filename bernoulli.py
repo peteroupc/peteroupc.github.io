@@ -3,48 +3,48 @@ import random
 from fractions import Fraction
 
 class Bernoulli:
-    """ This class contains methods that generate Bernoulli random numbers,
-         (either 1 or heads with a given probability, or 0 or tails otherwise).
-         This class also includes implementations of so-called "Bernoulli factories", algorithms
-      that turn coins biased one way into coins biased another way.
-      Written by Peter O.
+    """This class contains methods that generate Bernoulli random numbers,
+       (either 1 or heads with a given probability, or 0 or tails otherwise).
+       This class also includes implementations of so-called "Bernoulli factories", algorithms
+    that turn coins biased one way into coins biased another way.
+    Written by Peter O.
 
-      References:
-      - Flajolet, P., Pelletier, M., Soria, M., "On Buffon machines and numbers",
-      arXiv:0906.5560v2 [math.PR], 2010.
-      - Huber, M., "Designing perfect simulation algorithms using local correctness",
-      arXiv:1907.06748v1 [cs.DS], 2019.
-      - Huber, M., "Nearly optimal Bernoulli factories for linear functions",
-      arXiv:1308.1562v2  [math.PR], 2014.
-      - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
-      arXiv:1507.00843v2 [math.PR], 2016.
-      - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
-      events of unknown probabilities via reverse time martingales", arXiv:0907.4018v2
-      [stat.CO], 2009/2011.
-      - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
-      polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
-      Article 12 (March 2012), 5 pages.
-      - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
-      Enterprise via Perfect Sampling of Markov Chains",
-      arXiv:1912.09229v1 [math.PR], 2019.
-      - Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh.
-      2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design.
-      In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory
-      of Computing_, Montreal, Canada, June 2017 (STOC’17).
-      - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
-      Carlo likelihood-based inference for jump-diffusion processes.
-      - Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient
-      Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1
-      [stat.CO], 2020.
-      - Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain
-      functions that can be expressed as power series." Stochastic Processes and their
-      Applications 129, no. 11 (2019): 4366-4384.
-      - Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-      for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
-      - Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using
-      atomic regeneration with application to Sequential Monte Carlo,
-      arXiv:1407.5770v1  [stat.CO]
-     """
+    References:
+    - Flajolet, P., Pelletier, M., Soria, M., "On Buffon machines and numbers",
+    arXiv:0906.5560v2 [math.PR], 2010.
+    - Huber, M., "Designing perfect simulation algorithms using local correctness",
+    arXiv:1907.06748v1 [cs.DS], 2019.
+    - Huber, M., "Nearly optimal Bernoulli factories for linear functions",
+    arXiv:1308.1562v2  [math.PR], 2014.
+    - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
+    arXiv:1507.00843v2 [math.PR], 2016.
+    - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
+    events of unknown probabilities via reverse time martingales", arXiv:0907.4018v2
+    [stat.CO], 2009/2011.
+    - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
+    polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
+    Article 12 (March 2012), 5 pages.
+    - Morina, G., Łatuszyński, K., et al., "From the Bernoulli Factory to a Dice
+    Enterprise via Perfect Sampling of Markov Chains",
+    arXiv:1912.09229v1 [math.PR], 2019.
+    - Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh.
+    2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design.
+    In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory
+    of Computing_, Montreal, Canada, June 2017 (STOC’17).
+    - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
+    Carlo likelihood-based inference for jump-diffusion processes.
+    - Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient
+    Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1
+    [stat.CO], 2020.
+    - Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain
+    functions that can be expressed as power series." Stochastic Processes and their
+    Applications 129, no. 11 (2019): 4366-4384.
+    - Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
+    for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
+    - Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using
+    atomic regeneration with application to Sequential Monte Carlo,
+    arXiv:1407.5770v1  [stat.CO]
+    """
 
     def __init__(self):
         """ Creates a new instance of the Bernoulli class."""
@@ -169,13 +169,13 @@ class Bernoulli:
         return ret / (1 << precision)
 
     def geometric_bag(self, u):
-        """ Bernoulli factory for a uniformly-distributed random number in (0, 1)
-         (Flajolet et al. 2010).
-         - u: List that holds the binary expansion, from left to right, of the uniformly-
-           distributed random number.  Each element of the list is 0, 1, or None (meaning
-           the digit is not yet known).  The list may be expanded as necessary to put
-           a new digit in the appropriate place in the binary expansion.
-     """
+        """Bernoulli factory for a uniformly-distributed random number in (0, 1)
+        (Flajolet et al. 2010).
+        - u: List that holds the binary expansion, from left to right, of the uniformly-
+          distributed random number.  Each element of the list is 0, 1, or None (meaning
+          the digit is not yet known).  The list may be expanded as necessary to put
+          a new digit in the appropriate place in the binary expansion.
+        """
         r = 0
         c = 0
         while self.randbit() == 0:
@@ -187,10 +187,10 @@ class Bernoulli:
         return u[r]
 
     def zero_or_one_log1p(self, x, y=1):
-        """ Generates 1 with probability log(1+x/y); 0 otherwise.
-         Reference: Flajolet et al. 2010.  Uses a uniformly-fast special case of
-         the two-coin Bernoulli factory, rather than the even-parity construction in
-         Flajolet's paper, which is not uniformly fast. """
+        """Generates 1 with probability log(1+x/y); 0 otherwise.
+        Reference: Flajolet et al. 2010.  Uses a uniformly-fast special case of
+        the two-coin Bernoulli factory, rather than the even-parity construction in
+        Flajolet's paper, which is not uniformly fast."""
         bag = []
         while True:
             if self.randbit() == 0:
@@ -199,11 +199,11 @@ class Bernoulli:
                 return 0
 
     def zero_or_one_arctan_n_div_n(self, x, y=1):
-        """ Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
-            x/y must be in [0, 1]. Uses a uniformly-fast special case of
-         the two-coin Bernoulli factory, rather than the even-parity construction in
-         Flajolet's paper, which is not uniformly fast.
-         Reference: Flajolet et al. 2010. """
+        """Generates 1 with probability arctan(x/y)*y/x; 0 otherwise.
+           x/y must be in [0, 1]. Uses a uniformly-fast special case of
+        the two-coin Bernoulli factory, rather than the even-parity construction in
+        Flajolet's paper, which is not uniformly fast.
+        Reference: Flajolet et al. 2010."""
         bag = []
         xsq = x * x
         ysq = y * y
@@ -218,12 +218,12 @@ class Bernoulli:
                 return 0
 
     def arctan_n_div_n(self, f):
-        """ Arctan div N: B(p) -> B(arctan(p)/p). Uses a uniformly-fast special case of
-         the two-coin Bernoulli factory, rather than the even-parity construction in
-         Flajolet's paper, which is not uniformly fast.
-         Reference: Flajolet et al. 2010.
-          - f: Function that returns 1 if heads and 0 if tails.
-         """
+        """Arctan div N: B(p) -> B(arctan(p)/p). Uses a uniformly-fast special case of
+        the two-coin Bernoulli factory, rather than the even-parity construction in
+        Flajolet's paper, which is not uniformly fast.
+        Reference: Flajolet et al. 2010.
+         - f: Function that returns 1 if heads and 0 if tails.
+        """
         bag = []
         while True:
             if self.randbit() == 0:
@@ -237,9 +237,9 @@ class Bernoulli:
                 return 0
 
     def zero_or_one_pi_div_4(self):
-        """ Generates 1 with probability pi/4.
-         Reference: Flajolet et al. 2010.
-         """
+        """Generates 1 with probability pi/4.
+        Reference: Flajolet et al. 2010.
+        """
         r = self.rndintexc(6)
         if r < 3:
             return self.zero_or_one_arctan_n_div_n(1, 2)
@@ -247,7 +247,7 @@ class Bernoulli:
             return 1 if r < 5 and self.zero_or_one_arctan_n_div_n(1, 3) == 1 else 0
 
     def one_div_pi(self):
-        """ Generates 1 with probability 1/pi.
+        """Generates 1 with probability 1/pi.
         Reference: Flajolet et al. 2010.
         """
         t = 0
@@ -266,10 +266,10 @@ class Bernoulli:
         return 1
 
     def _uniform_less_nd(self, bag, num, den):
-        """ Determines whether a uniformly-distributed random number
-             (given as an incomplete binary expansion that is built up
-              as necessary) is less than the given fraction (in the interval [0, 1])
-              expressed as a numerator and denominator. """
+        """Determines whether a uniformly-distributed random number
+        (given as an incomplete binary expansion that is built up
+         as necessary) is less than the given fraction (in the interval [0, 1])
+         expressed as a numerator and denominator."""
         a = num
         if num == 0:
             return 0
@@ -304,20 +304,20 @@ class Bernoulli:
         return 0
 
     def _uniform_less(self, bag, frac):
-        """ Determines whether a uniformly-distributed random number
-             (given as an incomplete binary expansion that is built up
-              as necessary) is less than the given Fraction (in the interval [0, 1]). """
+        """Determines whether a uniformly-distributed random number
+        (given as an incomplete binary expansion that is built up
+         as necessary) is less than the given Fraction (in the interval [0, 1])."""
         frac = frac if isinstance(frac, Fraction) else Fraction(frac)
         # NOTE: Fractions are not compared and subtracted directly because
         # doing so is very costly in Python
         return self._uniform_less_nd(bag, frac.numerator, frac.denominator)
 
     def bernoulli_x(self, f, x):
-        """ Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
-         Mendo calls Bernoulli factories "non-randomized" if their randomness
-         is based entirely on the underlying coin.
-     - f: Function that returns 1 if heads and 0 if tails.
-     - x: Desired probability, in [0, 1].  """
+        """Bernoulli factory with a given probability: B(p) => B(x) (Mendo 2019).
+            Mendo calls Bernoulli factories "non-randomized" if their randomness
+            is based entirely on the underlying coin.
+        - f: Function that returns 1 if heads and 0 if tails.
+        - x: Desired probability, in [0, 1]."""
         pw = Fraction(x)
         if pw == 0:
             return 0
@@ -335,9 +335,9 @@ class Bernoulli:
                 pt /= 2
 
     def coin(self, c):
-        """ Convenience method to generate a function that returns
-         1 (heads) with the given probability c (which must be in [0, 1])
-         and 0 (tails) otherwise. """
+        """Convenience method to generate a function that returns
+        1 (heads) with the given probability c (which must be in [0, 1])
+        and 0 (tails) otherwise."""
         if c == 0:
             return lambda: 0
         if c == 1:
@@ -346,46 +346,46 @@ class Bernoulli:
         return lambda: self.zero_or_one(c.numerator, c.denominator)
 
     def complement(self, f):
-        """ Complement (NOT): B(p) => B(1-p) (Flajolet et al. 2010)
-     - f: Function that returns 1 if heads and 0 if tails.
-     """
+        """Complement (NOT): B(p) => B(1-p) (Flajolet et al. 2010)
+        - f: Function that returns 1 if heads and 0 if tails.
+        """
         return f() ^ 1
 
     def square(self, f1, f2):
-        """ Square: B(p) => B(1-p). (Flajolet et al. 2010)
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     """
+        """Square: B(p) => B(1-p). (Flajolet et al. 2010)
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        """
         return 1 if f1() == 1 and f1() == 1 else 0
 
     def product(self, f1, f2):
-        """ Product (conjunction; AND): B(p), B(q) => B(p*q)  (Flajolet et al. 2010)
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     """
+        """Product (conjunction; AND): B(p), B(q) => B(p*q)  (Flajolet et al. 2010)
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        """
         return 1 if f1() == 1 and f2() == 1 else 0
 
     def disjunction(self, f1, f2):
-        """ Disjunction (OR): B(p), B(q) => B(p+q-p*q) (Flajolet et al. 2010)
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     """
+        """Disjunction (OR): B(p), B(q) => B(p+q-p*q) (Flajolet et al. 2010)
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        """
         return 1 if f1() == 1 or f2() == 1 else 0
 
     def mean(self, f1, f2):
-        """ Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     """
+        """Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        """
         return f1() if self.randbit() == 0 else f2()
 
     def conditional(self, f1, f2, f3):
-        """ Conditional: B(p), B(q), B(r) => B((1-r)*q+r*p)  (Flajolet et al. 2010)
-     - f1, f2, f3: Functions that return 1 if heads and 0 if tails.
-     """
+        """Conditional: B(p), B(q), B(r) => B((1-r)*q+r*p)  (Flajolet et al. 2010)
+        - f1, f2, f3: Functions that return 1 if heads and 0 if tails.
+        """
         return f1() if f3() == 1 else f2()
 
     def evenparity(self, f):
-        """ Even parity: B(p) => B(1/(1+p)) (Flajolet et al. 2010)
-     - f: Function that returns 1 if heads and 0 if tails.
-     Note that this function is slow as the probability of heads approaches 1.
-     """
+        """Even parity: B(p) => B(1/(1+p)) (Flajolet et al. 2010)
+        - f: Function that returns 1 if heads and 0 if tails.
+        Note that this function is slow as the probability of heads approaches 1.
+        """
         while True:
             if f() == 0:
                 return 1
@@ -393,12 +393,12 @@ class Bernoulli:
                 return 0
 
     def divoneplus(self, f):
-        """ Divided by one plus p: B(p) => B(1/(1+p)), implemented
-             as a special case of the two-coin construction.  Prefer over even-parity
-             for being uniformly fast.
-     - f: Function that returns 1 if heads and 0 if tails.
-     Note that this function is slow as the probability of heads approaches 1.
-     """
+        """Divided by one plus p: B(p) => B(1/(1+p)), implemented
+                as a special case of the two-coin construction.  Prefer over even-parity
+                for being uniformly fast.
+        - f: Function that returns 1 if heads and 0 if tails.
+        Note that this function is slow as the probability of heads approaches 1.
+        """
         while True:
             if self.randbit() == 0:
                 return 1
@@ -406,13 +406,13 @@ class Bernoulli:
                 return 0
 
     def logistic(self, f, cx=1, cy=1):
-        """ Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
-         B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
-     - f: Function that returns 1 if heads and 0 if tails.  Note that this function can
-       be slow as the probability of heads approaches 0.
-     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be in (0, 1).
-     """
+        """Logistic Bernoulli factory: B(p) -> B(cx*p/(cy+cx*p)) or
+            B(p) -> B((cx/cy)*p/(1+(cx/cy)*p)) (Morina et al. 2019)
+        - f: Function that returns 1 if heads and 0 if tails.  Note that this function can
+          be slow as the probability of heads approaches 0.
+        - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+          by c. c must be in (0, 1).
+        """
         c = Fraction(cx, cy)
         while True:
             if self.zero_or_one(c.denominator, c.numerator + c.denominator) == 1:
@@ -438,10 +438,10 @@ class Bernoulli:
         return 0
 
     def eps_div(self, f, eps):
-        """ Bernoulli factory as follows: B(p) -> B(eps/p) (Lee et al. 2014).
-       - f: Function that returns 1 if heads and 0 if tails.
-       - eps: Fraction in (0, 1), must be chosen so that eps < p, where p is
-         the probability of heads. """
+        """Bernoulli factory as follows: B(p) -> B(eps/p) (Lee et al. 2014).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - eps: Fraction in (0, 1), must be chosen so that eps < p, where p is
+          the probability of heads."""
         if eps == 0:
             return 0
         if eps < 0:
@@ -467,8 +467,8 @@ class Bernoulli:
                 return 0
 
     def zero_or_one_exp_minus(self, x, y):
-        """ Generates 1 with probability exp(-x/y); 0 otherwise.
-               Reference: Canonne et al. 2020. """
+        """Generates 1 with probability exp(-x/y); 0 otherwise.
+        Reference: Canonne et al. 2020."""
         if y <= 0 or x < 0:
             raise ValueError
         if x == 0:
@@ -509,7 +509,7 @@ class Bernoulli:
                 y = y - maxinc - 1
 
     def probgenfunc(self, f, rng):
-        """ Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
+        """Probability generating function Bernoulli factory: B(p) => B(E[p^x]), where x is rng()
          (Dughmi et al. 2017). E[p^x] is the expected value of p^x and is also known
          as the probability generating function.
         - f: Function that returns 1 if heads and 0 if tails.
@@ -517,7 +517,7 @@ class Bernoulli:
           Example (Dughmi et al. 2017): if 'rng' is Poisson(lamda) we have
           an "exponentiation" Bernoulli factory as follows:
           B(p) => B(exp(p*lamda-lamda))
-     """
+        """
         n = rng()
         for i in range(n):
             if f() == 0:
@@ -525,7 +525,7 @@ class Bernoulli:
         return 1
 
     def powerseries(self, f):
-        """ Power series Bernoulli factory: B(p) => B(1 - c(0)*(1-p) + c(1)*(1-p)^2 +
+        """Power series Bernoulli factory: B(p) => B(1 - c(0)*(1-p) + c(1)*(1-p)^2 +
           c(2)*(1-p)^3 + ...), where c(i) = `c[i]/sum(c)`) (Mendo 2019).
         - f: Function that returns 1 if heads and 0 if tails.
         - c: List of coefficients in the power series, all of which must be
@@ -545,11 +545,11 @@ class Bernoulli:
             i += 1
 
     def power(self, f, ax, ay=1):
-        """ Power Bernoulli factory: B(p) => B(p^(ax/ay)). (case of (0, 1) provided by
+        """Power Bernoulli factory: B(p) => B(p^(ax/ay)). (case of (0, 1) provided by
          Mendo 2019).
         - f: Function that returns 1 if heads and 0 if tails.
         - ax, ay: numerator and denominator of the desired power to raise the probability
-         of heads to. This power must be 0 or greater. """
+         of heads to. This power must be 0 or greater."""
         a = None
         if ay == 1 and isinstance(ax, Fraction):
             a = ax
@@ -633,8 +633,8 @@ class Bernoulli:
             i = i + 1
 
     def zero_or_one_power_ratio(self, px, py, nx, ny):
-        """ Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be
-           positive, negative, or zero); 0 otherwise. """
+        """Generates 1 with probability (px/py)^(nx/ny) (where nx/ny can be
+        positive, negative, or zero); 0 otherwise."""
         if py <= 0 or px < 0:
             raise ValueError
         n = Fraction(nx, ny)
@@ -691,20 +691,20 @@ class Bernoulli:
         return self._zero_or_one_power_frac(px, py, nx, ny)
 
     def zero_or_one_power(self, px, py, n):
-        """ Generates 1 with probability (px/py)^n (where n can be
-            positive, negative, or zero); 0 otherwise. """
+        """Generates 1 with probability (px/py)^n (where n can be
+        positive, negative, or zero); 0 otherwise."""
         return self.zero_or_one_power_ratio(px, py, n, 1)
 
     def twocoin(self, f1, f2, c1=1, c2=1, beta=1):
-        """ Two-coin Bernoulli factory: B(p), B(q) =>
-               B(c1*p*beta / (beta * (c1*p+c2*q) - (beta - 1)*(c1+c2)))
-         (Gonçalves et al. 2017, Vats et al. 2020; in Vats et al.,
-          C1,p1 corresponds to cy and C2,p2 corresponds to cx).
-         Logistic Bernoulli factory is a special case with q=1, c2=1, beta=1.
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     - c1, c2: Factors to multiply the probabilities of heads for f1 and f2, respectively.
-     - beta: Early rejection parameter ("portkey" two-coin factory).
-       When beta = 1, the formula simplifies to B(c1*p/(c1*p+c2*q)).
+        """Two-coin Bernoulli factory: B(p), B(q) =>
+                  B(c1*p*beta / (beta * (c1*p+c2*q) - (beta - 1)*(c1+c2)))
+            (Gonçalves et al. 2017, Vats et al. 2020; in Vats et al.,
+             C1,p1 corresponds to cy and C2,p2 corresponds to cx).
+            Logistic Bernoulli factory is a special case with q=1, c2=1, beta=1.
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        - c1, c2: Factors to multiply the probabilities of heads for f1 and f2, respectively.
+        - beta: Early rejection parameter ("portkey" two-coin factory).
+          When beta = 1, the formula simplifies to B(c1*p/(c1*p+c2*q)).
         """
         cx = Fraction(c1) / (Fraction(c1) + Fraction(c2))
         beta = Fraction(beta)
@@ -720,8 +720,8 @@ class Bernoulli:
                     return 0
 
     def sin(self, f):
-        """ Sine Bernoulli factory: B(p) => B(sin(p)).  Special
-          case of Algorithm3 of reverse-time martingale paper.
+        """Sine Bernoulli factory: B(p) => B(sin(p)).  Special
+        case of Algorithm3 of reverse-time martingale paper.
         """
         if f() == 0:
             return 0
@@ -751,8 +751,8 @@ class Bernoulli:
             fac *= (n * 2) * (n * 2 + 1)
 
     def cos(self, f):
-        """ Cosine Bernoulli factory: B(p) => B(cos(p)).  Special
-          case of Algorithm3 of reverse-time martingale paper.
+        """Cosine Bernoulli factory: B(p) => B(cos(p)).  Special
+        case of Algorithm3 of reverse-time martingale paper.
         """
         u = Fraction(1)
         l = Fraction(0)
@@ -780,21 +780,21 @@ class Bernoulli:
             fac *= (n * 2 - 1) * (n * 2)
 
     def add(self, f1, f2, eps=Fraction(5, 100)):
-        """ Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2017)
-     - f1, f2: Functions that return 1 if heads and 0 if tails.
-     - eps: A Fraction in (0, 1). eps must be chosen so that p+q <= 1 - eps,
-       where p and q are the probability of heads for f1 and f2, respectively.
-     """
+        """Addition Bernoulli factory: B(p), B(q) => B(p+q) (Dughmi et al. 2017)
+        - f1, f2: Functions that return 1 if heads and 0 if tails.
+        - eps: A Fraction in (0, 1). eps must be chosen so that p+q <= 1 - eps,
+          where p and q are the probability of heads for f1 and f2, respectively.
+        """
         fv = lambda: self.mean(f1, f2)
         return self.linear(fv, 2, 1)
 
     def old_linear(self, f, cx, cy=1, eps=Fraction(5, 100)):
-        """ Linear Bernoulli factory: B(p) => B((cx/cy)*p). Older algorithm given in (Huber 2014).
-     - f: Function that returns 1 if heads and 0 if tails.
-     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p < 1 - eps.
-     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p < 1 - eps.
-     """
+        """Linear Bernoulli factory: B(p) => B((cx/cy)*p). Older algorithm given in (Huber 2014).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+          by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p < 1 - eps.
+        - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p < 1 - eps.
+        """
         if cy == 1:
             c = Fraction(cx)
         else:
@@ -856,12 +856,12 @@ class Bernoulli:
                 return 1
 
     def linear(self, f, cx, cy=1, eps=Fraction(5, 100)):
-        """ Linear Bernoulli factory: B(p) => B((cx/cy)*p) (Huber 2016).
-     - f: Function that returns 1 if heads and 0 if tails.
-     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
-     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
-     """
+        """Linear Bernoulli factory: B(p) => B((cx/cy)*p) (Huber 2016).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+          by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
+        - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
+        """
         if cy == 1:
             c = Fraction(cx)
         else:
@@ -916,13 +916,13 @@ class Bernoulli:
             m -= 1
 
     def bernstein(self, f, alpha):
-        """ Polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
-               (Goyal and Sigman 2012).
-          - f: Function that returns 1 if heads and 0 if tails.
-          - alpha: List of Bernstein coefficients for the polynomial (when written
-             in Bernstein form),
-             whose degree is this list's length minus 1.
-             For this to work, each coefficient must be in [0, 1]. """
+        """Polynomial Bernoulli factory: B(p) => B(Bernstein(alpha))
+             (Goyal and Sigman 2012).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - alpha: List of Bernstein coefficients for the polynomial (when written
+           in Bernstein form),
+           whose degree is this list's length minus 1.
+           For this to work, each coefficient must be in [0, 1]."""
         for a in alpha:
             if a < 0 or a > 1:
                 raise ValueError
@@ -1000,17 +1000,17 @@ class Bernoulli:
             fac *= n
 
     def twofacpower(self, fbase, fexponent):
-        """ Bernoulli factory B(p, q) => B(p^q).
-               Based on algorithm from (Mendo 2019),
-               but changed to accept a Bernoulli factory
-               rather than a fixed value for the exponent.
-               To the best of my knowledge, I am not aware
-               of any article or paper that presents this particular
-               Bernoulli factory (before my articles presenting
-               accurate beta and exponential generators).
-               - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
-                 The first is the base, the second is the exponent.
-                 """
+        """Bernoulli factory B(p, q) => B(p^q).
+        Based on algorithm from (Mendo 2019),
+        but changed to accept a Bernoulli factory
+        rather than a fixed value for the exponent.
+        To the best of my knowledge, I am not aware
+        of any article or paper that presents this particular
+        Bernoulli factory (before my articles presenting
+        accurate beta and exponential generators).
+        - fbase, fexponent: Functions that return 1 if heads and 0 if tails.
+          The first is the base, the second is the exponent.
+        """
         i = 1
         while True:
             if fbase() == 1:
@@ -1020,13 +1020,13 @@ class Bernoulli:
             i = i + 1
 
     def linear_power(self, f, cx, cy=1, i=1, eps=Fraction(5, 100)):
-        """ Linear-and-power Bernoulli factory: B(p) => B((p*cx/cy)^i) (Huber 2019).
-     - f: Function that returns 1 if heads and 0 if tails.
-     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
-     - i: The exponent.  Must be an integer and 0 or greater.
-     - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
-     """
+        """Linear-and-power Bernoulli factory: B(p) => B((p*cx/cy)^i) (Huber 2019).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+          by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= 1 - eps.
+        - i: The exponent.  Must be an integer and 0 or greater.
+        - eps: A Fraction in (0, 1). If c > 1, eps must be chosen so that c*p <= 1 - eps.
+        """
         if i == 0:
             return 1
         if i < 0:
@@ -1075,13 +1075,13 @@ class Bernoulli:
                 return math.nan
 
     def linear_lowprob(self, f, cx, cy=1, m=Fraction(249, 500)):
-        """ Linear Bernoulli factory which is faster if the probability of heads is known
-         to be less than half: B(p) => B((cx/cy)*p) (Huber 2016).
-     - f: Function that returns 1 if heads and 0 if tails.
-     - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
-       by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= m < 1/2.
-     - m: A Fraction in (0, 1/2). If c > 1, m must be chosen so that c*p <= m < 1/2.
-     """
+        """Linear Bernoulli factory which is faster if the probability of heads is known
+            to be less than half: B(p) => B((cx/cy)*p) (Huber 2016).
+        - f: Function that returns 1 if heads and 0 if tails.
+        - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
+          by c. c must be 0 or greater. If c > 1, c must be chosen so that c*p <= m < 1/2.
+        - m: A Fraction in (0, 1/2). If c > 1, m must be chosen so that c*p <= m < 1/2.
+        """
         if cy == 1:
             c = Fraction(cx)
         else:
@@ -1123,15 +1123,15 @@ class Bernoulli:
         return int(ret)
 
     def simulate(self, coin, fbelow, fabove, fbound):
-        """ Simulates a general factory function defined by two
-       sequences of polynomials that converge from above and below.
-       - coin(): Function that returns 1 or 0 with a fixed probability.
-       - fbelow(n, k): Calculates the Bernstein coordinate (not the value),
-         or a lower bound, of the degree-n lower polynomial at the point k/n.
-       - fabove(n, k): Calculates the Bernstein coordinate (not the value),
-         or an upper bound, of the degree-n upper polynomial at the point k/n.
-       - fbound(n): Returns a tuple or list specifying the highest value of
-          fbelow and fabove, respectively, for the given n. """
+        """Simulates a general factory function defined by two
+        sequences of polynomials that converge from above and below.
+        - coin(): Function that returns 1 or 0 with a fixed probability.
+        - fbelow(n, k): Calculates the Bernstein coordinate (not the value),
+          or a lower bound, of the degree-n lower polynomial at the point k/n.
+        - fabove(n, k): Calculates the Bernstein coordinate (not the value),
+          or an upper bound, of the degree-n upper polynomial at the point k/n.
+        - fbound(n): Returns a tuple or list specifying the highest value of
+           fbelow and fabove, respectively, for the given n."""
         ones = 0
         lastdegree = 0
         degree = 1
@@ -1188,22 +1188,14 @@ class Bernoulli:
 
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
-    # TODO: Implementation is wrong; find out what's wrong
     num = 1
-    for i in range(x[0], n + 1):
+    for i in range(x[0] + 1, n + 1):
         num *= i
     den = 1
     for i in range(1, len(x)):
         for j in range(1, x[i] + 1):
             den *= j
     return Fraction(num) / den
-
-def _multinom(n, x):
-    num = math.factorial(n)
-    den = 1
-    for v in x:
-        den *= math.factorial(v)
-    return num / den
 
 def _neighbordist(ni, nj, b):
     ret = [av - bv for av, bv in zip(ni, nj)]
@@ -1281,28 +1273,28 @@ class _FastLoadedDiceRoller:
 
 class DiceEnterprise:
     """
-   Implements the Dice Enterprise algorithm for
-   turning loaded dice with unknown bias into loaded dice
-   with a different bias.  Specifically, it supports specifying
-   the probability that the output die will land on a given
-   number, as a polynomial function of the input die's bias.
-   The case of biased coins to biased coins is also called
-   the Bernoulli factory problem; this class allows the output
-   coin's bias to be specified as a polynomial function of the
-   input coin's bias.
+    Implements the Dice Enterprise algorithm for
+    turning loaded dice with unknown bias into loaded dice
+    with a different bias.  Specifically, it supports specifying
+    the probability that the output die will land on a given
+    number, as a polynomial function of the input die's bias.
+    The case of biased coins to biased coins is also called
+    the Bernoulli factory problem; this class allows the output
+    coin's bias to be specified as a polynomial function of the
+    input coin's bias.
 
-   Reference: Morina, G., Łatuszyński, K., et al., "From the
-   Bernoulli Factory to a Dice Enterprise via Perfect
-   Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
+    Reference: Morina, G., Łatuszyński, K., et al., "From the
+    Bernoulli Factory to a Dice Enterprise via Perfect
+    Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
 
-   Example:
+    Example:
 
-   >>> ent=DiceEnterprise()
-   >>> # Example 3 from the paper
-   >>> ent.append_poly(1,[[math.sqrt(2),3]])
-   >>> ent.append_poly(0,[[-5,3],[11,2],[-9,1],[3,0]])
-   >>> coin=lambda: 1 if random.random() < 0.60 else 0
-   >>> print([ent.next(coin) for i in range(100)])
+    >>> ent=DiceEnterprise()
+    >>> # Example 3 from the paper
+    >>> ent.append_poly(1,[[math.sqrt(2),3]])
+    >>> ent.append_poly(0,[[-5,3],[11,2],[-9,1],[3,0]])
+    >>> coin=lambda: 1 if random.random() < 0.60 else 0
+    >>> print([ent.next(coin) for i in range(100)])
 
     """
 
@@ -1315,48 +1307,48 @@ class DiceEnterprise:
 
     def append_poly(self, result, poly):
         """
-      Appends a probability that the output die will land on
-      a given number, in the form of a polynomial.
-      result - A number indicating the result (die roll or coin
-        flip) that will be returned by the _output_ coin or _output_
-        die with the probability represented by this polynomial.
-        Must be an integer 0 or greater.  In the case of dice-to-coins
-        or coins-to-coins, must be either 0 or 1, where 1 means
-        heads and 0 means tails.
-      poly - Polynomial expressed as a list of terms as follows:
-        Each term is a list of two or more items that each express one of
-        the polynomial's terms; the first item is the coefficient, and
-        the remaining items are the powers of the input die's
-        probabilities.  The number of remaining items in each term
-        is the number of faces the _input_ die has. Specifically, the
-        term has the following form:
+        Appends a probability that the output die will land on
+        a given number, in the form of a polynomial.
+        result - A number indicating the result (die roll or coin
+          flip) that will be returned by the _output_ coin or _output_
+          die with the probability represented by this polynomial.
+          Must be an integer 0 or greater.  In the case of dice-to-coins
+          or coins-to-coins, must be either 0 or 1, where 1 means
+          heads and 0 means tails.
+        poly - Polynomial expressed as a list of terms as follows:
+          Each term is a list of two or more items that each express one of
+          the polynomial's terms; the first item is the coefficient, and
+          the remaining items are the powers of the input die's
+          probabilities.  The number of remaining items in each term
+          is the number of faces the _input_ die has. Specifically, the
+          term has the following form:
 
-        In the case of coins-to-dice or coins-to-coins (so the probabilities are 1-p and p,
-        where the [unknown] probability that the _input_ coin returns 0
-        is 1 - p, or returns 1 is p):
-                 term[0] * p**term[1] * (1-p)**term[2].
-        In the case of dice-to-dice or dice-to-coins (so the probabilities are p1, p2, etc.,
-        where the [unknown] probability that the _input_ die returns
-        0 is p1, returns 1 is p2, etc.):
-                 term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
+          In the case of coins-to-dice or coins-to-coins (so the probabilities are 1-p and p,
+          where the [unknown] probability that the _input_ coin returns 0
+          is 1 - p, or returns 1 is p):
+                   term[0] * p**term[1] * (1-p)**term[2].
+          In the case of dice-to-dice or dice-to-coins (so the probabilities are p1, p2, etc.,
+          where the [unknown] probability that the _input_ die returns
+          0 is p1, returns 1 is p2, etc.):
+                   term[0] * p1**term[1] * p2**term[2] * ... * pn**term[n].
 
-        For example, [3, 4, 5] becomes:
-                 3 * p**4 * (1-p)**5
-        As a special case, the term can contain two items and a zero is
-        squeezed between the first and second item.
-        For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
-                 3 * p**4 * (1-p)**0 = 3 * p **4
+          For example, [3, 4, 5] becomes:
+                   3 * p**4 * (1-p)**5
+          As a special case, the term can contain two items and a zero is
+          squeezed between the first and second item.
+          For example, [3, 4] is the same as [3, 0, 4], which in turn becomes:
+                   3 * p**4 * (1-p)**0 = 3 * p **4
 
-        For best results, the coefficient should be a rational number
-        (such as int or Python's Fraction).
+          For best results, the coefficient should be a rational number
+          (such as int or Python's Fraction).
 
-        Each term in the polynomial must have the same number of items (except
-        for the special case given above).  For example, the following is not a valid
-        way to express this parameter:
-                 [[1, 1, 0], [1, 3, 4, 5], [1, 1, 2], [2, 3, 4]]
-        Here, the second term has four items, not three like the rest.
-      Returns this object.
-      """
+          Each term in the polynomial must have the same number of items (except
+          for the special case given above).  For example, the following is not a valid
+          way to express this parameter:
+                   [[1, 1, 0], [1, 3, 4, 5], [1, 1, 2], [2, 3, 4]]
+          Here, the second term has four items, not three like the rest.
+        Returns this object.
+        """
         if result < 0 or int(result) != result:
             raise ValueError
         oldrlen = -1
@@ -1461,7 +1453,9 @@ class DiceEnterprise:
             for k in range(len(self.ladder[0][1])):
                 # Copy coefficients, powers, and results
                 nl = [[x for x in v[0]], [x for x in v[1]], [x for x in v[2]]]
-                nl[1][k] += 1 # Add 1 to the degree (power) corresponding to the variable k
+                nl[1][
+                    k
+                ] += 1  # Add 1 to the degree (power) corresponding to the variable k
                 newladder.append(nl)
         self.ladder = newladder
         return self
@@ -1560,12 +1554,12 @@ class DiceEnterprise:
 
         dimension = len(st[1]) - 1  # Dimension of simplex
         newladder = []
-        #print("before make_positive")
-        #print(self.ladder)
+        # print("before make_positive")
+        # print(self.ladder)
         for res in range(maxresult + 1):
             self._make_positive(newladder, res, deg, dimension)
-        #print("after make_positive")
-        #print(newladder)
+        # print("after make_positive")
+        # print(newladder)
         self.ladder = newladder
 
     def _autoaugment(self):
@@ -1581,12 +1575,12 @@ class DiceEnterprise:
         return self._compile_ladder()
 
     def augment(self, count=1):
-        """ Augments the degree of the function represented
-           by this object, which can improve performance in some cases
-           (for details, see the paper).
-           - count: Number of times to augment the ladder.
-           Returns this object.
-      """
+        """Augments the degree of the function represented
+        by this object, which can improve performance in some cases
+        (for details, see the paper).
+        - count: Number of times to augment the ladder.
+        Returns this object.
+        """
         if self._dirty:
             self._dirty = False
             self._rebuild()
@@ -1613,15 +1607,15 @@ class DiceEnterprise:
         return float(ret / rtot)
 
     def next(self, coin):
-        """ Returns the next result of the flip from a coin or die
-          that is transformed from the given input coin or die by the function
-          represented by this Dice Enterprise object.
-          coin - In the case of coins-to-dice or coins-to-coins (see the "append_poly" method),
-             this specifies the _input coin_, which must be a function that
-             returns either 1 (heads) or 0 (tails).  In the case of dice-to-dice or dice-to-coins,
-             this specifies an _input die_ with _m_ faces, which must be a
-             function that returns an integer in the interval [0, m), which
-             specifies which face the input die lands on. """
+        """Returns the next result of the flip from a coin or die
+        that is transformed from the given input coin or die by the function
+        represented by this Dice Enterprise object.
+        coin - In the case of coins-to-dice or coins-to-coins (see the "append_poly" method),
+           this specifies the _input coin_, which must be a function that
+           returns either 1 (heads) or 0 (tails).  In the case of dice-to-dice or dice-to-coins,
+           this specifies an _input die_ with _m_ faces, which must be a
+           function that returns an integer in the interval [0, m), which
+           specifies which face the input die lands on."""
         if len(self.ladder) == 0:
             return 0
         if self._dirty:
@@ -1659,9 +1653,9 @@ class DiceEnterprise:
             # Fraction class is greatly slow
             if univ:
                 # Precalculation for univariate ladders
-                if i > 0: # Calculate ladder[i-1]/max(ladder[i-1],ladder[i])
-                    la = self.ladder[i - 1][0] # Coefficient(s) for previous state
-                    lcur = self.ladder[i][0] # Coefficient(s) for current state
+                if i > 0:  # Calculate ladder[i-1]/max(ladder[i-1],ladder[i])
+                    la = self.ladder[i - 1][0]  # Coefficient(s) for previous state
+                    lcur = self.ladder[i][0]  # Coefficient(s) for current state
                     la = la[0] if len(la) == 1 else sum(la)
                     lcur = lcur[0] if len(lcur) == 1 else sum(lcur)
                     lcur = max(la, lcur)

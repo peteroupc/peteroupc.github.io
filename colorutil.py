@@ -54,8 +54,8 @@ def matCopy(mat):
     return [[matGet(mat, x, y) for y in range(shape[1])] for x in range(shape[0])]
 
 def matScale(mat, scale):
-    """ Creates a copy of a matrix with each element multiplied
-           by 'scale'. """
+    """Creates a copy of a matrix with each element multiplied
+    by 'scale'."""
     shape = matShape(mat)
     return [
         [matGet(mat, x, y) * scale for y in range(shape[1])] for x in range(shape[0])
@@ -66,13 +66,13 @@ def matShape(mat):
     return (len(mat), len(mat[0]))
 
 def matZeros(shape):
-    """ Creates a 0-filled matrix of the given height and width,
-           in that order. """
+    """Creates a 0-filled matrix of the given height and width,
+    in that order."""
     return [[0 for y in range(shape[1])] for x in range(shape[0])]
 
 def matOnes(shape):
-    """ Creates a 1-filled matrix of the given height and width,
-           in that order. """
+    """Creates a 1-filled matrix of the given height and width,
+    in that order."""
     return [[1 for y in range(shape[1])] for x in range(shape[0])]
 
 def matAdd(a, b):
@@ -170,13 +170,13 @@ def matGet(mat, r, c):
     return mat[r][c]
 
 def matPart(mat, rs, re, cs, ce):
-    """ Gets part of a matrix with rows indexed rs inclusive to re exclusive
-         and columns indexed cs inclusive to ce exclusive. """
+    """Gets part of a matrix with rows indexed rs inclusive to re exclusive
+    and columns indexed cs inclusive to ce exclusive."""
     return [[matGet(mat, x, y) for y in range(cs, ce)] for x in range(rs, re)]
 
 def matBlock(a, b, c, d):
-    """ Concatenates the topleft, topright, bottomleft, and bottomright
-           matrices into one. """
+    """Concatenates the topleft, topright, bottomleft, and bottomright
+    matrices into one."""
     arows = matShape(a)[0]
     acols = matShape(a)[1]
     shape1 = arows + matShape(c)[0]
@@ -1067,13 +1067,13 @@ def _generateLSSData():
     return [b11, b12]
 
 class SPD:
-    """ Spectral power distribution class.
+    """Spectral power distribution class.
 
-     values - List of spectral values.
-     interval - Wavelength interval between spectral values, in nanometers.
-     minWavelength - Wavelength of the first spectral value, in nanometers.
-     maxWavelength - Maximum wavelength.  Optional; if omitted, this
-        value is inferred from the other parameters.  """
+    values - List of spectral values.
+    interval - Wavelength interval between spectral values, in nanometers.
+    minWavelength - Wavelength of the first spectral value, in nanometers.
+    maxWavelength - Maximum wavelength.  Optional; if omitted, this
+       value is inferred from the other parameters."""
 
     def __init__(self, values, interval, minWavelength, maxWavelength=None):
         self.values = values
@@ -1091,10 +1091,10 @@ class SPD:
         return self.values[index]
 
     def calc(self, wavelength):
-        """ Calculates the spectral value at the given wavelength.
-           Values beyond the wavelength range are set to 0.
-           Currently, this class linearly interpolates between
-           spectral values. `wavelength` is in nanometers. """
+        """Calculates the spectral value at the given wavelength.
+        Values beyond the wavelength range are set to 0.
+        Currently, this class linearly interpolates between
+        spectral values. `wavelength` is in nanometers."""
         if wavelength < self.minWavelength or wavelength > self.maxWavelength:
             return 0
         mm = wavelength % self.interval
@@ -1110,8 +1110,8 @@ class SPD:
 #
 
 def planckian(temp, wavelength):
-    """ Spectral distribution for blackbody (Planckian) radiation.
-          `temp` is in kelvins, and `wavelength` is in nanometers.  """
+    """Spectral distribution for blackbody (Planckian) radiation.
+    `temp` is in kelvins, and `wavelength` is in nanometers."""
     if wavelength == 560:
         return 100.0
     if temp < 60:
@@ -1131,16 +1131,16 @@ def planckian(temp, wavelength):
     return v * 100.0 / v2
 
 def cie1931cmf(wavelength):
-    """ CIE 1931 (2-degree) standard observer.
-          `wavelength` is in nanometers. """
+    """CIE 1931 (2-degree) standard observer.
+    `wavelength` is in nanometers."""
     if wavelength < 380 or wavelength > 780:
         return [0, 0, 0]
     index = int(round((wavelength - 380) / 5.0)) * 3
     return [_CIE1931[index + i] for i in range(3)]
 
 def cie1964cmf(wavelength):
-    """ CIE 1964 (10-degree) standard observer.
-          `wavelength` is in nanometers. """
+    """CIE 1964 (10-degree) standard observer.
+    `wavelength` is in nanometers."""
     if wavelength < 380 or wavelength > 780:
         return [0, 0, 0]
     index = int(round((wavelength - 380) / 5.0)) * 3
@@ -1193,9 +1193,9 @@ def dseries(temp, wavelength):
 
 def referenceIllum(temp, wavelength):
     """
-  Reference illuminant for a given color temperature.
-  `temp` is in kelvins, and `wavelength` is in nanometers.
-  """
+    Reference illuminant for a given color temperature.
+    `temp` is in kelvins, and `wavelength` is in nanometers.
+    """
     ct = temp
     if ct <= 0:
         return 0
@@ -1240,11 +1240,11 @@ def d65Illum(wavelength):
     return _d65Illum.calc(wavelength)
 
 def spectrumToTristim(refl, light=None, cmf=None):
-    """ Generates tristimulus values based on a spectrum determined
-        by a reflectance curve function (refl),
-        light spectrum function (light), and color matching functions method (cmf).
-        Default `light` if unspecified is D65; default `cmf` if unspecified
-        is CIE 1931 color matching functions.  """
+    """Generates tristimulus values based on a spectrum determined
+    by a reflectance curve function (refl),
+    light spectrum function (light), and color matching functions method (cmf).
+    Default `light` if unspecified is D65; default `cmf` if unspecified
+    is CIE 1931 color matching functions."""
     # NOTE: Use None, rather than functions, as default parameters
     # of this method, to avoid nondeterministic renderings
     # of this method by pydoc3
@@ -1273,12 +1273,12 @@ def spectrumToTristim(refl, light=None, cmf=None):
 
 def bandpasscorrect(data):
     """
-   Rectifies bandpass differences in a list
-   of raw spectral data using the Stearns &
-   Stearns algorithm.  The spectral data should
-   indicate values at a constant wavelength interval
-   (bandwidth).
-   """
+    Rectifies bandpass differences in a list
+    of raw spectral data using the Stearns &
+    Stearns algorithm.  The spectral data should
+    indicate values at a constant wavelength interval
+    (bandwidth).
+    """
     ret = [x for x in data]
     n = len(ret)
     ret[0] = 1.083 * ret[0] - 0.083 * ret[1]
@@ -1288,12 +1288,12 @@ def bandpasscorrect(data):
     return ret
 
 def sRGBToSPD(rgb):
-    """ Generates a representative reflectance curve from an encoded
-     sRGB color.  Currently implements the iterative least slope squared
-     method by S. A. Burns, and ensures the values in the reflectance
-     curve are greater than 0, and 1 or less.  `rgb` is a 3-element
-      list giving an encoded sRGB color to convert to a reflectance curve
-     (in the SPD class). """
+    """Generates a representative reflectance curve from an encoded
+    sRGB color.  Currently implements the iterative least slope squared
+    method by S. A. Burns, and ensures the values in the reflectance
+    curve are greater than 0, and 1 or less.  `rgb` is a 3-element
+     list giving an encoded sRGB color to convert to a reflectance curve
+    (in the SPD class)."""
     global _LSSDATA
     rdata = _LSSDATA
     if rdata == None:
@@ -1363,8 +1363,8 @@ def lerp3(c1, c2, factor):
 
 def linearTosRGB(c):
     """
-Converts a color component from linear to encoded sRGB.
-  """
+    Converts a color component from linear to encoded sRGB.
+    """
     if c <= 0.0031308:
         return 12.92 * c
     return math.pow(c, 1.0 / 2.4) * 1.055 - 0.055
@@ -1693,9 +1693,9 @@ def xyzToCCT(xyz):
     return ((449 * c + 3525) * c + 6823.3) * c + 5520.33
 
 def blackbodyUV(temp):
-    """ Calculates the uv coordinates of the Planckian
-          locus at the given color temperature.
-          `wavelength` is in nanometers. """
+    """Calculates the uv coordinates of the Planckian
+    locus at the given color temperature.
+    `wavelength` is in nanometers."""
     lam = lambda wl: planckian(temp, wl)
     xyz = spectrumToTristim(perfectrefl, lam)
     uvy = xyzTouvY(xyz)
@@ -1775,29 +1775,29 @@ def ciede2000(lab1, lab2):
 
 def sRGBLuminance(x):
     """
-  Finds the relative color of an encoded sRGB color, where
-  white is the D65/2 white point.
-  `x` -> 3-item list or tuple of an encoded sRGB color.
-  """
+    Finds the relative color of an encoded sRGB color, where
+    white is the D65/2 white point.
+    `x` -> 3-item list or tuple of an encoded sRGB color.
+    """
     lin = linearFromsRGB3(x)
     return lin[0] * 0.2126 + lin[1] * 0.7152 + lin[2] * 0.0722
 
 def sRGBGrayscale(x):
     """
-  Finds the grayscale version of an encoded sRGB color, where
-  white is the D65/2 white point.
-  `x` -> 3-item list or tuple of an encoded sRGB color.
-  """
+    Finds the grayscale version of an encoded sRGB color, where
+    white is the D65/2 white point.
+    `x` -> 3-item list or tuple of an encoded sRGB color.
+    """
     rellum = sRGBLuminance(x)
     return [rellum, rellum, rellum]
 
 def sRGBContrastRatio(color1, color2):
     """
-  Finds the contrast ratio for two encoded sRGB colors.
-  NOTE: This calculation is not strict because the notes
-  for relative luminance in WCAG 2.0 define sRGB relative
-  luminance slightly differently.
-  """
+    Finds the contrast ratio for two encoded sRGB colors.
+    NOTE: This calculation is not strict because the notes
+    for relative luminance in WCAG 2.0 define sRGB relative
+    luminance slightly differently.
+    """
     l1 = srgbLuminance(color1)
     l2 = srgbLuminance(color2)
     return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
@@ -1809,23 +1809,23 @@ def d65_2xyz():
     return [0.9504559270516716, 1, 1.0890577507598784]
 
 def sRGBToLab(rgb):
-    """ Converts an encoded sRGB color to CIELAB,
-           with white being the D65/2 white point.  """
+    """Converts an encoded sRGB color to CIELAB,
+    with white being the D65/2 white point."""
     return xyzToLab(xyzFromsRGB(rgb), d65_2xyz())
 
 def sRGBFromLab(lab):
-    """ Converts a CIELAB color to encoded sRGB,
-           with white being the D65/2 white point.  """
+    """Converts a CIELAB color to encoded sRGB,
+    with white being the D65/2 white point."""
     return xyzTosRGB(labToXYZ(lab, d65_2xyz()))
 
 def sRGBToLabD50(rgb):
-    """ Converts an encoded sRGB color to CIELAB,
-           with white being the D50/2 white point.  """
+    """Converts an encoded sRGB color to CIELAB,
+    with white being the D50/2 white point."""
     return xyzToLab(xyzFromsRGBD50(rgb), d50_2xyz())
 
 def sRGBFromLabD50(lab):
-    """ Converts a CIELAB color to encoded sRGB,
-           with white being the D50/2 white point.  """
+    """Converts a CIELAB color to encoded sRGB,
+    with white being the D50/2 white point."""
     return xyzTosRGBD50(labToXYZ(lab, d50_2xyz()))
 
 ###############

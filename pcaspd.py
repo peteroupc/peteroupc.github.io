@@ -705,8 +705,8 @@ _leaves[7] = [
 ]
 
 def sRGBToSPDOtsu(srgb):
-    """ Implements Otsu and others, "Reproducing Spectral Reflectances
-      from Tristimulus Colors", 2018. """
+    """Implements Otsu and others, "Reproducing Spectral Reflectances
+    from Tristimulus Colors", 2018."""
     global _kdtree, _leaves
     xyz = xyzFromsRGB(srgb)
     xyy = xyzToxyY(xyz)

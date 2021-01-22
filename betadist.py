@@ -284,11 +284,11 @@ def psrn_less_than_fraction(rg, psrn, rat, digits=2):
         index += 1
 
 def psrn_reciprocal(rg, psrn1, digits=2):
-    """ Generates the reciprocal of a partially-sampled random number.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    """Generates the reciprocal of a partially-sampled random number.
+    psrn1: List containing the sign, integer part, and fractional part
+        of the first PSRN.  Fractional part is a list of digits
+        after the point, starting with the first.
+    digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     if psrn1[0] == None or psrn1[1] == None:
         raise ValueError
     for i in range(len(psrn1[2])):
@@ -353,13 +353,13 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             dc *= digits
 
 def psrn_multiply(rg, psrn1, psrn2, digits=2):
-    """ Multiplies two uniform partially-sampled random numbers.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        psrn2: List containing the sign, integer part, and fractional part
-            of the second PSRN.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    """Multiplies two uniform partially-sampled random numbers.
+    psrn1: List containing the sign, integer part, and fractional part
+        of the first PSRN.  Fractional part is a list of digits
+        after the point, starting with the first.
+    psrn2: List containing the sign, integer part, and fractional part
+        of the second PSRN.
+    digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
     for i in range(len(psrn1[2])):
@@ -460,12 +460,12 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
             return cpsrn
 
 def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
-    """ Multiplies a partially-sampled random number by a fraction.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        fraction: Fraction to multiply by.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    """Multiplies a partially-sampled random number by a fraction.
+    psrn1: List containing the sign, integer part, and fractional part
+        of the first PSRN.  Fractional part is a list of digits
+        after the point, starting with the first.
+    fraction: Fraction to multiply by.
+    digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     if psrn1[0] == None or psrn1[1] == None:
         raise ValueError
     fraction = Fraction(fraction)
@@ -506,13 +506,13 @@ def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
                 ddc *= digits
 
 def psrn_add(rg, psrn1, psrn2, digits=2):
-    """ Adds two uniform partially-sampled random numbers.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        psrn2: List containing the sign, integer part, and fractional part
-            of the second PSRN.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
+    """Adds two uniform partially-sampled random numbers.
+    psrn1: List containing the sign, integer part, and fractional part
+        of the first PSRN.  Fractional part is a list of digits
+        after the point, starting with the first.
+    psrn2: List containing the sign, integer part, and fractional part
+        of the second PSRN.
+    digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
     for i in range(len(psrn1[2])):
@@ -735,24 +735,24 @@ def psrnexpo(rg):
 ###################
 
 def geobagcompare(bag, f):
-    """ Returns 1 with probability f(U), where U is the value that
-       the given geometric bag turns out to hold, or 0 otherwise.
-       This method samples bits from the geometric bag as necessary.
-     - b: Geometric bag, that is, an ordinary Python list
-        that holds a list of bits from left to
-        right starting with the bit immediately after the binary point.
-        An item can contain the value None, which indicates an
-        unsampled bit.
-     - f: Function to run, which takes one parameter, namely a 'float'.
-       Currently, this method assumes f is monotonic.
-       Note that this may suffer rounding and other approximation
-       errors as a result.  A more robust implementation would require
-       the method to return an interval (as in interval arithmetic)
-       or would pass the desired level of accuracy to the function given
-       here, and would probably have the function use arbitrary-precision
-       rational or floating-point numbers rather than the fixed-precision
-       'float' type of Python, which usually has 53 bits of precision.
-   """
+    """Returns 1 with probability f(U), where U is the value that
+      the given geometric bag turns out to hold, or 0 otherwise.
+      This method samples bits from the geometric bag as necessary.
+    - b: Geometric bag, that is, an ordinary Python list
+       that holds a list of bits from left to
+       right starting with the bit immediately after the binary point.
+       An item can contain the value None, which indicates an
+       unsampled bit.
+    - f: Function to run, which takes one parameter, namely a 'float'.
+      Currently, this method assumes f is monotonic.
+      Note that this may suffer rounding and other approximation
+      errors as a result.  A more robust implementation would require
+      the method to return an interval (as in interval arithmetic)
+      or would pass the desired level of accuracy to the function given
+      here, and would probably have the function use arbitrary-precision
+      rational or floating-point numbers rather than the fixed-precision
+      'float' type of Python, which usually has 53 bits of precision.
+    """
     k = 1
     v = 0
     prec = 1 << k
@@ -859,11 +859,11 @@ def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
             return psrn_complement(bag) if complement else bag
 
 def powerOfUniform(b, px, py, precision=53):
-    """ Generates a power of a uniform random number.
-         - px, py - Numerator and denominator of desired exponent for the uniform
-           random number.
-         - precision: Number of bits after the point that the result will contain.
-        """
+    """Generates a power of a uniform random number.
+    - px, py - Numerator and denominator of desired exponent for the uniform
+      random number.
+    - precision: Number of bits after the point that the result will contain.
+    """
     # Special case of beta, returning power of px/py
     # of a uniform random number, provided px/py
     # is in (0, 1].
@@ -873,15 +873,15 @@ def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
     return psrn_fill(betadist_geobag(b, ax, ay, bx, by), precision=precision)
 
 def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
-    """ Generates a beta-distributed random number with arbitrary
-          (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
-          (bx/by) are both 1 or greater, or if one of these parameters is
-         1 and the other is less than 1.
-         - b: Bernoulli object (from the "bernoulli" module).
-         - ax, ay: Numerator and denominator of first shape parameter.
-         - bx, by: Numerator and denominator of second shape parameter.
-         - precision: Number of bits after the point that the result will contain.
-        """
+    """Generates a beta-distributed random number with arbitrary
+     (user-defined) precision.  Currently, this sampler only works if (ax/ay) and
+     (bx/by) are both 1 or greater, or if one of these parameters is
+    1 and the other is less than 1.
+    - b: Bernoulli object (from the "bernoulli" module).
+    - ax, ay: Numerator and denominator of first shape parameter.
+    - bx, by: Numerator and denominator of second shape parameter.
+    - precision: Number of bits after the point that the result will contain.
+    """
     # Beta distribution for alpha>=1 and beta>=1
     bag = psrn_new_01()
     afrac = Fraction(ax) if ay == 1 else Fraction(ax, ay)
@@ -948,10 +948,10 @@ class _RGConv:
 #####################
 
 def genshape(rg, inshape):
-    """ Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
-         inshape is a function that takes three parameters (x, y, s) and
-         returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
-         -1 if not; and 0 if partially. """
+    """Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
+    inshape is a function that takes three parameters (x, y, s) and
+    returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
+    -1 if not; and 0 if partially."""
     psrnx = psrn_new_01()
     psrny = psrn_new_01()
     base = 2
@@ -1023,12 +1023,12 @@ class ShapeSampler2:
     MAYBE = 0
 
     def __init__(self, inshape, dx=1, dy=1):
-        """ Builds a sampler for random numbers on or inside a 2-dimensional shape.
-       inshape is a function that takes a box described as [[min1, max1], ..., [minN, maxN]]
-       and returns 1 if the box is fully in the shape;
-       -1 if not; and 0 if partially.
-       dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
-       """
+        """Builds a sampler for random numbers on or inside a 2-dimensional shape.
+        inshape is a function that takes a box described as [[min1, max1], ..., [minN, maxN]]
+        and returns 1 if the box is fully in the shape;
+        -1 if not; and 0 if partially.
+        dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
+        """
         self.inshape = inshape
         self.root = _PavingNode(
             [[Fraction(0), Fraction(dx)], [Fraction(0), Fraction(dy)]]
@@ -1108,12 +1108,12 @@ class ShapeSampler2:
 
 class ShapeSampler:
     def __init__(self, inshape, dx=1, dy=1):
-        """ Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
-       inshape is a function that takes three parameters (x, y, s) and
-       returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
-       -1 if not; and 0 if partially.
-       dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
-       """
+        """Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
+        inshape is a function that takes three parameters (x, y, s) and
+        returns 1 if the box (x/s,y/s,(x+1)/s,(y+1)/s) is fully in the shape;
+        -1 if not; and 0 if partially.
+        dx and dy are the size of the bounding box and must be integers.  Default is 1 each.
+        """
         self.yeses = []
         self.maybes = []
         self.dx = dx
