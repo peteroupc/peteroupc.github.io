@@ -2069,6 +2069,10 @@ CLASSES
      |
      |  Example:
      |
+     |  >>> from bernoulli import DiceEnterprise
+     |  >>> import math
+     |  >>> import random
+     |  >>>
      |  >>> ent=DiceEnterprise()
      |  >>> # Example 3 from the paper
      |  >>> ent.append_poly(1,[[math.sqrt(2),3]])

@@ -1186,6 +1186,13 @@ class Bernoulli:
             lastdegree = degree
             degree *= 2
 
+def _binco(n, k):
+    # Binomial coefficient
+    ret = 1
+    for i in range(n - k + 1, n + 1):
+        ret *= Fraction(i, (n - i + 1))
+    return int(ret)
+
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
     num = 1
@@ -1289,6 +1296,10 @@ class DiceEnterprise:
 
     Example:
 
+    >>> from bernoulli import DiceEnterprise
+    >>> import math
+    >>> import random
+    >>>
     >>> ent=DiceEnterprise()
     >>> # Example 3 from the paper
     >>> ent.append_poly(1,[[math.sqrt(2),3]])
@@ -1363,18 +1374,6 @@ class DiceEnterprise:
             self.ladder.append([[Fraction(poly[j][0])], r, [result]])
         self._dirty = True
         return self
-
-    def _simplex(self, d, m):
-        # Enumerates the points of a d-scaled m-dimensional simplex
-        if m <= 0:
-            raise ValueError
-        if m == 1:  # One-dimensional case, or base case
-            for nv in range(d + 1):
-                yield [nv, d - nv]  # p**nv * (1-p)**(d-nv)
-        else:
-            for nv in range(d + 1):
-                for nvs in self._simplex(d - nv, m - 1):
-                    yield [nv] + nvs
 
     def _is_definitely_connected(self):
         # Determine whether the ladder is connected.
@@ -1552,7 +1551,7 @@ class DiceEnterprise:
         # in the multivariate case in order for the Markov matrix
         # construction to succeed.
 
-        dimension = len(st[1]) - 1  # Dimension of simplex
+        dimension = len(self.ladder[0][1]) - 1  # Dimension of simplex
         newladder = []
         # print("before make_positive")
         # print(self.ladder)
@@ -1687,7 +1686,7 @@ class DiceEnterprise:
                         n[b].append([v.numerator, v.denominator])
                 fr1 = n
             self.optladder[i] = [fr1, fr2, fr3]
-            print(self.optladder)
+            # print(self.optladder)
         return self
 
     def _monotonicladderupdate(self, i, b, u):
@@ -1756,27 +1755,74 @@ class DiceEnterprise:
                 i += 1
         return [self.optladder[state1][2], self.ladder[state1][2]]
 
+    def _simplex(self, d, m):
+        # Enumerates the points of a d-scaled m-dimensional simplex
+        if m <= 0:
+            raise ValueError
+        if m == 1:  # One-dimensional case, or base case
+            for nv in range(d + 1):
+                yield [nv, d - nv]  # p**nv * (1-p)**(d-nv)
+        else:
+            for nv in range(d + 1):
+                for nvs in self._simplex(d - nv, m - 1):
+                    yield [nv] + nvs
+
     def _simplex_allowed(self, nt, np, n):
         for t, p, nn in zip(nt, np, n):
             if t + p != nn:
                 return False
         return True
 
+    def _each_allowed_simplex(self, degree, dimension, ntilde, n):
+        if dimension == 1:  # One-dimensional case is simple
+            d1 = n[0] - ntilde[0]
+            d2 = n[1] - ntilde[1]
+            if d1 >= 0 and d2 >= 0 and d1 + d2 == degree:
+                yield [d1, d2]
+        else:  # Multi-dimensional case
+            for nprime in self._simplex(degree, dimension):
+                if self._simplex_allowed(ntilde, nprime, n):
+                    yield nprime
+
+    def _make_positive_onedim(self, newladder, result, degree):
+        # One-dimensional case of make-positive
+        for nv in range(degree + 1):
+            n0 = nv
+            n1 = degree - nv
+            ret = 0
+            for state in self.ladder:
+                for j in range(
+                    len(state[0])
+                ):  # The same state may have multiple "results"
+                    if state[2][j] == result:
+                        ntilde = state[1]
+                        for i in range(degree + 1):
+                            d1 = n0 - ntilde[0]
+                            d2 = n1 - ntilde[1]
+                            if d1 >= 0 and d2 >= 0 and d1 + d2 == degree - i:
+                                ret += Fraction(state[0][j]) * _binco(degree - i, d1)
+            if ret != 0:
+                newladder.append([[ret], [n0, n1], [result]])
+
     def _make_positive(self, newladder, result, degree, dimension):
+        if dimension == 1:
+            self._make_positive_onedim(newladder, result, degree)
+            return
         for n in self._simplex(degree, dimension):
             ret = 0
-            for i in range(degree + 1):
-                for ntilde in self._simplex(i, dimension):
-                    for nprime in self._simplex(degree - i, dimension):
-                        if self._simplex_allowed(ntilde, nprime, n):
-                            for state in self.ladder:
-                                if state[1] == ntilde:
-                                    for j in range(len(state[0])):
-                                        if state[2][j] == result:
-                                            mnom = _multinom(degree - i, nprime)
-                                            ret += Fraction(state[0][j]) * Fraction(
-                                                mnom
-                                            )
+            for state in self.ladder:
+                for j in range(
+                    len(state[0])
+                ):  # The same state may have multiple "results"
+                    if state[2][j] == result:
+                        ntilde = state[1]
+                        for i in range(degree + 1):
+                            for nprime in self._each_allowed_simplex(
+                                degree - i, dimension, ntilde, n
+                            ):
+                                # print(["ntilde",ntilde,"nprime",nprime,"n",n])
+                                mnom = _multinom(degree - i, nprime)
+                                ret += Fraction(state[0][j]) * Fraction(mnom)
             if ret != 0:
                 newladder.append([[ret], n, [result]])
 

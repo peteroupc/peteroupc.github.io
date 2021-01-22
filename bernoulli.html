@@ -941,12 +941,13 @@
 <p>The following algorithm implements a special case of the &quot;Dice Enterprise&quot; method of (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>) + ... + <em>P</em><sub><em>m</em>&minus;1</sub>(<em>&lambda;</em>)).  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>i</em></sub>(<em>&lambda;</em>) are in the form of polynomials such that&mdash;</p>
 
 <ul>
+<li>the polynomials are positive,</li>
 <li>the polynomials all have the same degree, namely <em>n</em>;</li>
 <li>the polynomials&#39; variable is <em>&lambda;</em>, the input coin&#39;s probability of heads; and</li>
 <li>the sum of <em>j</em><sup>th</sup> Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each <em>j</em>.</li>
 </ul>
 
-<p>Any rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup><a href="#Note26"><strong>(26)</strong></a></sup>  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> Bernstein coefficients of the polynomials.  First, define the following operation:</p>
+<p>Any factory function that is a rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup><a href="#Note26"><strong>(26)</strong></a></sup>  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> Bernstein coefficients of the polynomials.  First, define the following operation:</p>
 
 <ul>
 <li><strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>:
@@ -973,7 +974,7 @@
 <li>Subtract 1 from <em>i</em>.</li>
 </ol></li>
 <li>If <em>state1</em> and <em>state2</em> are not equal, go to step 2.</li>
-<li>Let <em>b</em>[<em>i</em>][<em>j</em>] be the <em>j</em><sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for <em>i</em>.  Call <strong>WeightedChoice</strong>([<em>b</em>[0][<em>state1</em>], ..., <em>b</em>[<em>m</em>&minus;1][<em>state1</em>]]), where <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;, and return the result.</li>
+<li>Let <em>b</em>[<em>i</em>][<em>j</em>] be the <em>j</em><sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for <em>i</em>.  Call <strong>WeightedChoice</strong>(<strong>NormalizeRatios</strong>([<em>b</em>[0][<em>state1</em>], ..., <em>b</em>[<em>m</em>&minus;1][<em>state1</em>]])), where <strong>WeightedChoice</strong> and <strong>NormalizeRatios</strong> are given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;, and return the result.</li>
 </ol>
 
 <blockquote>
