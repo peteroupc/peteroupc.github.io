@@ -1395,8 +1395,11 @@ class DiceEnterprise:
             # connected ladder, and we know how often it should
             # be augmented.
             return False
+        # For each state...
         for i in range(len(self.ladder) - 1):
             j = i + 1
+            # Calculate 1-norm over all degrees (powers) in the
+            # two states to check their closeness
             one_norm = 0
             for k in range(len(self.ladder[j][1])):
                 one_norm += abs(self.ladder[j][1][k] - self.ladder[i][1][k])
@@ -1458,7 +1461,7 @@ class DiceEnterprise:
             for k in range(len(self.ladder[0][1])):
                 # Copy coefficients, powers, and results
                 nl = [[x for x in v[0]], [x for x in v[1]], [x for x in v[2]]]
-                nl[1][k] += 1
+                nl[1][k] += 1 # Add 1 to the degree (power) corresponding to the variable k
                 newladder.append(nl)
         self.ladder = newladder
         return self
