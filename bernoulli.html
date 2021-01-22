@@ -916,7 +916,7 @@
 <p>The algorithm follows.</p>
 
 <ol>
-<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
+<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way. (Alternatively, the &quot;heads-counter&quot; based on (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup> and described in &quot;<a href="#Certain_Polynomials_in_Bernstein_Form"><strong>Certain Polynomials in Bernstein Form</strong></a>&quot; can be used.)</li>
 <li>Call <strong>WeightedChoice</strong>(<strong>NormalizeRatios</strong>([<em>e</em>[<em>j</em>] &minus; <em>d</em>[<em>j</em>], <em>d</em>[<em>j</em>], choose(<em>n</em>, <em>j</em>) &minus; <em>e</em>[<em>j</em>]])), where <strong>WeightedChoice</strong> and <strong>NormalizeRatios</strong> are given in &quot;<a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a>&quot;.  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.</li>
 </ol>
 
@@ -1024,19 +1024,19 @@
 
 <hr>
 
-<p>Another algorithm is a modification of the &quot;Dice Enterprise&quot; special case given in the <a href="#Certain_Rational_Functions"><strong>previous section</strong></a>.  It works with degree-<em>n</em> polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.</p>
+<p>Another algorithm is a modification of the &quot;Dice Enterprise&quot; special case given in the <a href="#Certain_Rational_Functions"><strong>previous section</strong></a>.  It works with degree-<em>n</em> polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:</p>
 
 <ul>
-<li>Instead of the version of &quot;<strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>&quot; from the previous section, use the following version:
+<li><p>The first part is a &quot;heads-counter&quot;, which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section&#39;s algorithm, except the following version of &quot;<strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>&quot; is used:</p>
 
 <ol>
 <li>If <em>state</em> &gt; 0 and <em>b</em> is 0, return either <em>state&minus;1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is greater than floor(<em>n</em>/2), and <em>state</em>/(<em>n</em>+1&minus;<em>state</em>) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>&minus;1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>&minus;1))).</li>
 <li>If <em>state</em> &lt; <em>n</em> and <em>b</em> is 1, return either <em>state+1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is less than floor(<em>n</em>/2), and (<em>n</em>&minus;<em>state</em>)/(<em>state</em>+1) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>+1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>+1))).</li>
 <li>Return <em>state</em>.</li>
 </ol></li>
-<li><p>Then modify step 6 of the previous section&#39;s algorithm to read: &quot;6. With probability <em>a</em>[<em>state1</em>], return 1.  Otherwise, return 0.&quot;</p>
+<li><p>Then, a modified version of step 6 of the previous&#39;s section algorithm is used, namely: &quot;6. With probability <em>a</em>[<em>state1</em>], return 1.  Otherwise, return 0.&quot;</p>
 
-<p>Alternatively, step 6 is left unchanged.  In that case, the algorithm works with <em>m</em> polynomials, and will return one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)), with probability equal to the polynomial for <em>X</em>.  For this to work, though, the polynomials must have the same degree, and the <em>j</em><sup>th</sup> Bernstein coefficients of the <em>m</em> polynomials must be 0 or greater and sum to 1, for each <em>j</em>.</p></li>
+<p>Alternatively, step 6 is used unchanged.  In that case, the algorithm works with <em>m</em> polynomials, and will return one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)), with probability equal to the polynomial for <em>X</em>.  For this to work, though, the polynomials must have the same degree, and the <em>j</em><sup>th</sup> Bernstein coefficients of the <em>m</em> polynomials must be 0 or greater and sum to 1, for each <em>j</em>.</p></li>
 </ul>
 
 <p><a id=Certain_Algebraic_Functions></a></p>
@@ -1757,7 +1757,7 @@
 <li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
+<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>. (Alternatively, the &quot;heads-counter&quot; based on (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup> and described in &quot;<a href="#Certain_Polynomials_in_Bernstein_Form"><strong>Certain Polynomials in Bernstein Form</strong></a>&quot; can be used.)</li>
 <li>Set <em>&#x2113;</em> to <strong>fbelow</strong>(<em>degree</em>, <em>ones</em>), set <em>u</em> to <strong>fabove</strong>(<em>degree</em>, <em>ones</em>), and set <em>lastdegree</em> to <em>degree</em>.</li>
 <li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
@@ -1772,7 +1772,7 @@
 <li>Set <em>ones</em> to 0, and set <em>lastdegree</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
+<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>. (Alternatively, the &quot;heads-counter&quot; based on (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup> and described in &quot;<a href="#Certain_Polynomials_in_Bernstein_Form"><strong>Certain Polynomials in Bernstein Form</strong></a>&quot; can be used.)</li>
 <li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).</li>
 <li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>) and set <em>acount</em> to it, then calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>) and set <em>bcount</em> to it, then subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>, then:

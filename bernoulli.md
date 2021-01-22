@@ -708,7 +708,7 @@ Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones,
 
 The algorithm follows.
 
-1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
 2. Call **WeightedChoice**(**NormalizeRatios**(\[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\])), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.
 
 > **Notes:**
@@ -783,15 +783,16 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 ----
 
-Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  This algorithm is often more efficient (in terms of number of input coin flips needed) than the Goyal and Sigman algorithm given earlier in this section.
+Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
 
-- Instead of the version of "**Get the new state given _state_, _b_, _u_, and _n_**" from the previous section, use the following version:
+- The first part is a "heads-counter", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, except the following version of "**Get the new state given _state_, _b_, _u_, and _n_**" is used:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).
     2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise (and is equivalent to choose(_n_,_state_+1)/max(choose(_n_,_state_), choose(_n_,_state_+1))).
     3. Return _state_.
-- Then modify step 6 of the previous section's algorithm to read: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
 
-    Alternatively, step 6 is left unchanged.  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
+- Then, a modified version of step 6 of the previous's section algorithm is used, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
+
+    Alternatively, step 6 is used unchanged.  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -1337,7 +1338,7 @@ The first algorithm implements the reverse-time martingale framework (Algorithm 
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
-5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
 6. Set _&#x2113;_ to **fbelow**(_degree_, _ones_), set _u_ to **fabove**(_degree_, _ones_), and set _lastdegree_ to _degree_.
 7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
 8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _od_ be _degree_/2.  Set _&#x2113;s_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fbelow**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_, and set _us_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fabove**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_.
@@ -1350,7 +1351,7 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(24)**](#Not
 1. Set _ones_ to 0, and set _lastdegree_ to 0.
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
-4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
 5. Set _c_ to choose(_degree_, _ones_).
 6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
 7. If _degree_ is greater than _startdegree_, then:
