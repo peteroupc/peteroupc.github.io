@@ -1027,14 +1027,16 @@
 <p>Another algorithm is a modification of the &quot;Dice Enterprise&quot; special case given in the <a href="#Certain_Rational_Functions"><strong>previous section</strong></a>.  It works with degree-<em>n</em> polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:</p>
 
 <ul>
-<li><p>The first part is a &quot;heads-counter&quot;, which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section&#39;s algorithm, except the following version of &quot;<strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>&quot; is used:</p>
+<li><p>The first part is a &quot;<strong><em>heads-counter</em></strong>&quot;, which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section&#39;s algorithm, except the following version of &quot;<strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>&quot; is used:</p>
 
 <ol>
 <li>If <em>state</em> &gt; 0 and <em>b</em> is 0, return either <em>state&minus;1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is greater than floor(<em>n</em>/2), and <em>state</em>/(<em>n</em>+1&minus;<em>state</em>) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>&minus;1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>&minus;1))).</li>
 <li>If <em>state</em> &lt; <em>n</em> and <em>b</em> is 1, return either <em>state+1</em> if <em>u</em> is less than (or equal to) the following probability, or <em>state</em> otherwise.  The probability is 1 if <em>state</em> is less than floor(<em>n</em>/2), and (<em>n</em>&minus;<em>state</em>)/(<em>state</em>+1) otherwise (and is equivalent to choose(<em>n</em>,<em>state</em>+1)/max(choose(<em>n</em>,<em>state</em>), choose(<em>n</em>,<em>state</em>+1))).</li>
 <li>Return <em>state</em>.</li>
-</ol></li>
-<li><p>Then, a modified version of step 6 of the previous&#39;s section algorithm is used, namely: &quot;6. With probability <em>a</em>[<em>state1</em>], return 1.  Otherwise, return 0.&quot;</p>
+</ol>
+
+<p>At the end of this part of the algorithm, <em>state1</em> effectively stores the number of &quot;heads&quot; from flipping the input coin.</p></li>
+<li><p>The second part is a modified version of step 6 of the previous&#39;s section algorithm, namely: &quot;6. With probability <em>a</em>[<em>state1</em>], return 1.  Otherwise, return 0.&quot;</p>
 
 <p>Alternatively, step 6 is used unchanged.  In that case, the algorithm works with <em>m</em> polynomials, and will return one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)), with probability equal to the polynomial for <em>X</em>.  For this to work, though, the polynomials must have the same degree, and the <em>j</em><sup>th</sup> Bernstein coefficients of the <em>m</em> polynomials must be 0 or greater and sum to 1, for each <em>j</em>.</p></li>
 </ul>

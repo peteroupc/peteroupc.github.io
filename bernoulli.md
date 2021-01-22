@@ -785,12 +785,14 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
 
-- The first part is a "heads-counter", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, except the following version of "**Get the new state given _state_, _b_, _u_, and _n_**" is used:
+- The first part is a "**_heads-counter_**", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, except the following version of "**Get the new state given _state_, _b_, _u_, and _n_**" is used:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).
     2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise (and is equivalent to choose(_n_,_state_+1)/max(choose(_n_,_state_), choose(_n_,_state_+1))).
     3. Return _state_.
 
-- Then, a modified version of step 6 of the previous's section algorithm is used, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
+    At the end of this part of the algorithm, _state1_ effectively stores the number of "heads" from flipping the input coin.
+
+- The second part is a modified version of step 6 of the previous's section algorithm, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
 
     Alternatively, step 6 is used unchanged.  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
 
