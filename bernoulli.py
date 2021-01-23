@@ -1814,19 +1814,7 @@ class DiceEnterprise:
                             # Same as: 0 <= d1 + d2 <= degree, since ntilde[x] must
                             # be non-negative
                             if ntilde[0] + ntilde[1] <= degree:
-                                print(
-                                    [
-                                        float(state[0][j]),
-                                        "n0",
-                                        n0,
-                                        "n",
-                                        d1d2,
-                                        "k",
-                                        d1,
-                                        "ntilde",
-                                        ntilde,
-                                    ]
-                                )
+                                # print([float(state[0][j]),"n0",n0,"n",d1d2,"k",d1,"ntilde",ntilde])
                                 ret += Fraction(state[0][j]) * _binco(d1d2, d1)
             if ret != 0:
                 newladder.append([[ret], [n0, n1], [result]])

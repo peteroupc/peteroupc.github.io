@@ -128,6 +128,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
     - [**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)
     - [**Sketch of Derivation of the Algorithm for 1 / _&pi;_**](#Sketch_of_Derivation_of_the_Algorithm_for_1___pi)
     - [**Calculating Bounds for exp(1)**](#Calculating_Bounds_for_exp_1)
+    - [**Making Homogeneous Polynomials**](#Making_Homogeneous_Polynomials)
 - [**License**](#License)
 
 <a id=About_Bernoulli_Factories></a>
@@ -161,6 +162,8 @@ In the following algorithms:
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
     - by generating `-ln(1/RNDRANGEMinExc(0, 1))` (less accurate).
+- The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented&mdash;
+    - by taking the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform(0, 1) random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
@@ -709,7 +712,7 @@ Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones,
 The algorithm follows.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
-2. Call **WeightedChoice**(**NormalizeRatios**(\[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\])), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)".  If the call returns 0 or 1, return that result.  Otherwise, go to step 1.
+2. Choose 0, 1, or 2 with probability proportional to these weights: \[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.
 
 > **Notes:**
 >
@@ -722,15 +725,12 @@ The algorithm follows.
 >
 > 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup>_n_</sup> is relatively small).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Holtz et al. 2011)<sup>[**(25)**](#Note25)</sup>, but this, of course, suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012)<sup>[**(24)**](#Note24)</sup>.
 
-----
+**"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials such that&mdash;
+- the polynomials are _homogeneous_, that is, they are written as &Sigma;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient;
+- the polynomials have the same degree (namely _n_) and all _a_\[_i_\] are 0 or greater; and
+- the sum of _i_<sup>th</sup> coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _i_.
 
-The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)).  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials such that&mdash;
-- the polynomials are positive,
-- the polynomials all have the same degree, namely _n_;
-- the polynomials' variable is _&lambda;_, the input coin's probability of heads; and
-- the sum of _j_<sup>th</sup> Bernstein coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _j_.
-
-Any factory function that is a rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup>[**(26)**](#Note26)</sup>  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> Bernstein coefficients of the polynomials.  First, define the following operation:
+Any factory function that is a rational function can be brought into this form, but the steps to do so are not simple enough to describe here.<sup>[**(26)**](#Note26)</sup>  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> coefficients of the polynomials.  First, define the following operation:
 
 - **Get the new state given _state_, _b_, _u_, and _n_**:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is _R_\[_state_&minus;1]/max(_R_\[_state_\], _R_\[_state_&minus;1]).
@@ -748,7 +748,7 @@ Then the algorithm is as follows:
     3. **Get the new state given _state2_, _b_, _u_, and _n_**, and set _state2_ to the new state.
     4. Subtract 1 from _i_.
 5. If _state1_ and _state2_ are not equal, go to step 2.
-6. Let _b_\[_i_]\[_j_] be the _j_<sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for _i_.  Call **WeightedChoice**(**NormalizeRatios**(\[_b_\[0\]\[_state1_\], ..., _b_\[_m_&minus;1\]\[_state1_\]])), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)", and return the result.
+6. Let  _b_(_j_) be coefficient _a_\[_state1_\] of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer.
 
 > **Note:** If there are only two outcomes, then this is the special Bernoulli factory case; the algorithm would then return 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)).
 
@@ -770,7 +770,7 @@ A polynomial can be written in _Bernstein form_ as &Sigma;<sub>_i_ = 0, ..., _n_
 
 ----
 
-Niazadeh et al. (2020)<sup>[**(34)**](#Note34)</sup> describes monomials (involving one or more coins) of the form _&Pi;_<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] >= 0 and _b_\[_i_\] >= 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
+**Multiple coins.** Niazadeh et al. (2020)<sup>[**(34)**](#Note34)</sup> describes monomials (involving one or more coins) of the form _&Pi;_<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] >= 0 and _b_\[_i_\] >= 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
 
 1. For each _i_ in \[1, _n_\]:
      1. Flip the _&lambda;_\[_i_] input coin _a_\[_i_\] times.  If any of the flips returns 0, return 0.
@@ -779,11 +779,11 @@ Niazadeh et al. (2020)<sup>[**(34)**](#Note34)</sup> describes monomials (involv
 
 The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
 
-Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**A Note on Weighted Choice Algorithms**](https://peteroupc.github.io/randomnotes.html#A_Note_on_Weighted_Choice_Algorithms)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
+Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
 
 ----
 
-Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
+**"Dice Enterprise" special case.** Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
 
 - The first part is a "**_heads-counter_**", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, except the following version of "**Get the new state given _state_, _b_, _u_, and _n_**" is used:
     1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).
@@ -794,7 +794,7 @@ Another algorithm is a modification of the "Dice Enterprise" special case given 
 
 - The second part is a modified version of step 6 of the previous's section algorithm, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
 
-    Alternatively, step 6 is used unchanged.  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
+    Alternatively, step 6 is written as follows: "6. Let  _b_(_j_) be the _state_<sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer."  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -1363,8 +1363,8 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
         1. Set _d_ to choose(_diff_, _k_).
         2. Subtract (_a_\[_lastdegree_, _ones_&minus;_k_\]\*_d_) from _acount_.  Here, _a_\[_s_,_t_\] is calculated as floor(**fbelow**(_s_, _t_)\*choose(_s_, _t_)), and may be stored for later use.
         3. Subtract (_b_\[_lastdegree_, _ones_&minus;_k_\]\*_d_) from _bcount_.  Here, _b_\[_s_,_t_\] is calculated as floor((1&minus;**fabove**(_s_, _t_))\*choose(_s_, _t_)), and may be stored for later use.
-8. Call **WeightedChoice**([_acount_, _bcount_, _c_]), where **WeightedChoice** is given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)". (This generates a number that is 0, 1, or 2 with probability proportional to each of the given weights.)
-9. If the number generated by the previous step is 0, return 1.  If the number generated by that step is 1, return 0.
+8. Choose 0, 1, or 2 with probability proportional to the following weights: [_acount_, _bcount_, _c_].
+9. If the number chosen by the previous step is 0, return 1.  If the number chosen by that step is 1, return 0.
 10. (Find the next pair of polynomials and restart the loop.) Set _lastdegree_ to _degree_, then increase _degree_ so that the next pair of polynomials has degree equal to a higher value of _degree_ and gets closer to the target function (for example, multiply _degree_ by 2).  Then, go to step 4.
 
 > **Notes:**
@@ -1820,6 +1820,35 @@ Then the algorithm to calculate lower and upper bounds for exp(1), given _d_, is
 2. **Get the numerator for convergent _i_**, call it _c_. If _c_ is less than 10<sup>_d_</sup>, add 1 to _i_ and repeat this step.  Otherwise, go to the next step.
 3. **Get convergent _i_ &minus; 1** and **get semiconvergent _i_ &minus; 1 given _d_**, call them _conv_ and _semi_, respectively.
 4. If (_i_ &minus; 1) is odd, return _semi_ as the lower bound and _conv_ as the upper bound.  Otherwise, return _conv_ as the lower bound and _semi_ as the upper bound.
+
+<a id=Making_Homogeneous_Polynomials></a>
+### Making Homogeneous Polynomials
+
+This section describes how to make certain polynomials homogeneous (so that all their terms have the same degree).
+
+Suppose a polynomial&mdash;
+
+- is 0 or greater for all _&lambda;_ in the interval [0, 1], and
+- is written as a sum of terms of the following form: _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>, where _z_ is a real number (a _coefficient_), and _i_ >=0 and _j_ >=0 are integers.
+
+Then the polynomial can be turned into a degree-_n_ _homogeneous polynomial_ (where _n_ is not less than the old polynomial's degree) as follows.  This procedure gets the _n_+1 coefficients of the new polynomial.
+
+- For each integer _n0_ in [0, _n_]:
+    1. Set _r_ to 0.
+    2. For each term (in the old polynomial) of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>:
+        - If _n0_ >= _i_, and (_n_&minus;_n0_) >= _j_, and _i_ + _j_ <= _n_, add _z_\*choose(_n_&minus;(_i_+_j_), (_n_&minus;_n0_)&minus;_j_) to _r_.
+    3. The _n0_<sup>th</sup> coefficient of the new homogeneous polynomial becomes _r_ (which corresponds to the term _r_\* _&lambda;_<sup>_n0_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_n0_</sup>).
+
+> **Example:** We have the following polynomial: 3\*_&lambda;_<sup>2</sup> + 10\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.  This is a degree-3 polynomial, and we seek to turn it into a degree-5 homogeneous polynomial.  The result becomes the sum of the terms&mdash;
+>
+> - 3\*choose(3, 0) \* _&lambda;_<sup>5</sup>\*(1&minus;_&lambda;_)<sup>0</sup> = 3\* _&lambda;_<sup>5</sup>\*(1&minus;_&lambda;_)<sup>0</sup>;
+> - 3\*choose(3, 1) \* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup> = 9\* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup>;
+> - (3\*choose(3, 2) + 10\*choose(2, 0)) \* _&lambda;_<sup>3</sup>\*(1&minus;_&lambda;_)<sup>2</sup> = 19\* _&lambda;_<sup>3</sup>\*(1&minus;_&lambda;_)<sup>2</sup>;
+> - (3\*choose(3, 3) + 10\*choose(2, 1)) \* _&lambda;_<sup>2</sup>\*(1&minus;_&lambda;_)<sup>3</sup> = 23\* _&lambda;_<sup>2</sup>\*(1&minus;_&lambda;_)<sup>3</sup>;
+> - 10\*choose(2, 2) \* _&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>4</sup> = 10\* _&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>4</sup>; and
+> - 0 \* _&lambda;_<sup>0</sup>\*(1&minus;_&lambda;_)<sup>5</sup>,
+>
+> resulting in the coefficients (0, 10, 23, 19, 9, 3) for the new homogeneous polynomial.
 
 <a id=License></a>
 ## License
