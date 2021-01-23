@@ -750,7 +750,12 @@ Then the algorithm is as follows:
 5. If _state1_ and _state2_ are not equal, go to step 2.
 6. Let  _b_(_j_) be coefficient _a_\[_state1_\] of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer.
 
-> **Note:** If there are only two outcomes, then this is the special Bernoulli factory case; the algorithm would then return 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)).
+> **Notes:**
+>
+> 1. If there are only two outcomes, then this is the special Bernoulli factory case; the algorithm would then return 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)).
+> 2. This algorithm doesn't work if all the polynomials are 0 at the point 0 or 1.  This is because in that case, the sum of 0<sup>th</sup> or _n_<sup>th</sup> coefficients, respectively, of the polynomials would be 0.  However, this can easily be worked around by including an additional polynomial equal to a small constant, together with rejection sampling.  See the example below.
+>
+> **Example:** Let _P_<sub>0</sub>(_&lambda;_) = 2\*_x_\*(1&minus;_x_) and _P_<sub>1</sub>(_&lambda;_) = (4\*_x_\*(1&minus;_x_))<sup>2</sup>/2.  The goal is to produce 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)). After [**preparing this function**](#Preparing_Rational_Functions) (and noting that the maximum degree is _n_ = 4), we get the coefficient sums (0, 10, 12, 2, 0). Since the first and last coefficients are 0 (and both polynomials equal 0 at 0 and 1), this algorithm can't be used as is.  However, we can include a third polynomial, namely the constant _P_<sub>2</sub>(_&lambda;_) = 0.001, so that the new coefficient sums are (0.001, 10.004, 12.006, 2.006, 0.001) (formed by adding the coefficient 0.001\*choose(_n_, _i_) to the sum at _i_, starting at _i_ = 0).  Now we run the algorithm with these coefficients, and if it returns 2 (meaning that the constant polynomial was chosen), we try again until the algorithm no longer returns 2.
 
 <a id=Certain_Polynomials_in_Bernstein_Form></a>
 #### Certain Polynomials in Bernstein Form
@@ -785,16 +790,16 @@ Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choo
 
 **"Dice Enterprise" special case.** Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
 
-- The first part is a "**_heads-counter_**", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, except the following version of "**Get the new state given _state_, _b_, _u_, and _n_**" is used:
-    1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise (and is equivalent to choose(_n_,_state_&minus;1)/max(choose(_n_,_state_), choose(_n_,_state_&minus;1))).
-    2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise (and is equivalent to choose(_n_,_state_+1)/max(choose(_n_,_state_), choose(_n_,_state_+1))).
+- The first part is a "**_heads-counter_**", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, with _R_\[_j_\] = choose(_n_, _j_).  In effect, the heads-counter can be implemented with the following version of "**Get the new state given _state_, _b_, _u_, and _n_**":
+    1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise.
+    2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise.
     3. Return _state_.
 
     At the end of this part of the algorithm, _state1_ effectively stores the number of "heads" from flipping the input coin.
 
 - The second part is a modified version of step 6 of the previous's section algorithm, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
 
-    Alternatively, step 6 is written as follows: "6. Let  _b_(_j_) be the _state_<sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer."  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
+    Alternatively, step 6 is written as follows: "6. Let  _b_(_j_) be the _state1_<sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer."  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -871,7 +876,7 @@ In the algorithm (see also (Brassard et al., 2019)<sup>[**(37)**](#Note37)</sup>
 
 The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
 
-Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is positive, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -1052,7 +1057,7 @@ This algorithm is similar to the previous algorithm, except that the exponent, _
 
 More specifically:
 
-1. Decompose _z_ into _n_ > 0 positive components that sum to _z_.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = _&pi;_, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
+1. Decompose _z_ into _n_ > 0 components that sum to _z_, all of which are greater than 0.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = _&pi;_, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
 2. For each component _LC_\[_i_\] found this way, let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
 
 The algorithm is then as follows:
@@ -1281,7 +1286,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 
 The algorithm for Euler's constant is one example of a general algorithm given by Mendo (2020)<sup>[**(43)**](#Note43)</sup> for simulating any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
 
-- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all positive rational numbers, and
+- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0, and
 - for which a sequence _err_\[0\], _err_\[1\], ..., is available that is nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
 
 The algorithm follows.
@@ -1505,6 +1510,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note59>(59)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note60>(60)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note61>(61)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note62>(62)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1823,13 +1829,13 @@ Then the algorithm to calculate lower and upper bounds for exp(1), given _d_, is
 <a id=Preparing_Rational_Functions></a>
 ### Preparing Rational Functions
 
-This section describes how to turn a single-variable rational function (ratio of polynomials) into an array of polynomials needed to apply the **"Dice Enterprise" special case** described in "[**Certain Rational Functions**](#Certain_Rational Functions)".  In short, the steps to do so can be described as _separating_, _homogenizing_, and _augmenting_.
+This section describes how to turn a single-variable rational function (ratio of polynomials) into an array of polynomials needed to apply the **"Dice Enterprise" special case** described in "[**Certain Rational Functions**](#Certain_Rational_Functions)".  In short, the steps to do so can be described as _separating_, _homogenizing_, and _augmenting_.
 
 **Separating.** If a rational function's numerator (_D_) and denominator (_E_) are written&mdash;
 
 -  as a sum of terms of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>, where _z_ is a real number and _i_ >=0 and _j_ >=0 are integers (called _form 1_ in this section),
 
-then it can be separated into two polynomials that sum to the denominator.  (Here, _i_+_j_ is the term's _degree_, and the polynomial's degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (_G_) such that _D_ + _G_ = _E_.  Similarly, if we have multiple rational functions with a common denominator, namely (_D1_/_E_), ..., (_DN_/_E_), where _D1_, ..., _DN_ and _E_ are written in form 1, then they can be separated into _N_ + 1 polynomials by subtracting the numerators from the denominator, so that _G_ = _E_ &minus; _D1_ &minus; ... &minus; _DN_.  To use them in the algorithm, however, they need to be _homogenized_, then _augmented_, as described next.
+then the function can be separated into two polynomials that sum to the denominator.  (Here, _i_+_j_ is the term's _degree_, and the polynomial's degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (_G_) such that _D_ + _G_ = _E_.  Similarly, if we have multiple rational functions with a common denominator, namely (_D1_/_E_), ..., (_DN_/_E_), where _D1_, ..., _DN_ and _E_ are written in form 1, then they can be separated into _N_ + 1 polynomials by subtracting the numerators from the denominator, so that _G_ = _E_ &minus; _D1_ &minus; ... &minus; _DN_.  To use them in the algorithm, however, they need to be _homogenized_, then _augmented_, as described next.
 
 > **Example:** We have the rational function  (4\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>) /  (7 &minus; 5\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.
 
@@ -1837,16 +1843,17 @@ then it can be separated into two polynomials that sum to the denominator.  (Her
 
 Suppose a polynomial&mdash;
 
-- is 0 or greater for all _&lambda;_ in the interval [0, 1], and
+- is 0 or greater for all _&lambda;_ in the interval [0, 1],
+- has degree _n_ or less, and
 - is written in form 1 as given above.
 
-Then the polynomial can be turned into a degree-_n_ _homogeneous polynomial_ (where _n_ is not less than the old polynomial's degree) as follows.  This procedure gets the _n_+1 coefficients of the new polynomial (called _homogeneous-basis coefficients_ in this section).
+Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ as follows.
 
-- For each integer _n0_ in [0, _n_]:
+- For each integer _n0_ in [0, _n_], the new polynomial's homogeneous-basis coefficient _k_ is found as follows:
     1. Set _r_ to 0.
     2. For each term (in the old polynomial) of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>:
         - If _n0_ >= _i_, and (_n_&minus;_n0_) >= _j_, and _i_ + _j_ <= _n_, add _z_\*choose(_n_&minus;(_i_+_j_), (_n_&minus;_n0_)&minus;_j_) to _r_.
-    3. The _n0_<sup>th</sup> homogeneous-basis coefficient becomes _r_ (which corresponds to the term _r_\* _&lambda;_<sup>_n0_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_n0_</sup>).
+    3. Now, _r_ is the new coefficient (corresponding to the term _r_\* _&lambda;_<sup>_n0_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_n0_</sup>).
 
 > **Example:** We have the following polynomial: 3\*_&lambda;_<sup>2</sup> + 10\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.  This is a degree-3 polynomial, and we seek to turn it into a degree-5 homogeneous polynomial.  The result becomes the sum of the terms&mdash;
 >
@@ -1865,12 +1872,12 @@ Then the polynomial can be turned into a degree-_n_ _homogeneous polynomial_ (wh
 - their homogeneous-basis coefficients are all 0 or greater, and
 - the sum of _j_<sup>th</sup> homogeneous-basis coefficients is greater than 0, for each _j_.
 
-If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form.  It is implemented as follows:
+If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki (2001)<sup>[**(62)**](#Note62)</sup>.  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's homogeneous-basis coefficient _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> homogeneous-basis coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each _j_ in the interval \[max(0, _k_&minus;1), min(_n_, _k_)\], then add them together.  The sum is the new homogeneous-basis coefficient.
 
-According to the Morina paper, it suffices to do _n_ augmentations on each polynomial for the whole array to meet the conditions above (although fewer than _n_ will often suffice).
+According to the Morina paper, it's enough to do _n_ augmentations on each polynomial for the whole array to meet the conditions above (although fewer than _n_ will often suffice).
 
 > **Note**.  For best results, the input polynomials' coefficients should be rational numbers.  If they are not, then special methods are needed to ensure exact results, such as interval arithmetic that calculates lower and upper bounds.
 
