@@ -711,7 +711,7 @@ Here, _d_\[_i_\] is akin to the number of "passing" _n_-bit words with _i_ ones,
 
 The algorithm follows.
 
-1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. Choose 0, 1, or 2 with probability proportional to these weights: \[_e_\[_j_\] &minus; _d_\[_j_\], _d_\[_j_\], choose(_n_, _j_) &minus; _e_\[_j_\]\].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.
 
 > **Notes:**
@@ -725,22 +725,22 @@ The algorithm follows.
 >
 > 2. This algorithm could be modified to avoid additional randomness besides the input coin flips by packing the coin flips into an _n_-bit word and looking up whether that word is "passing", "failing", or neither, among all _n_-bit words with _j_ ones, but this is not so trivial to do (especially because in general, a lookup table first has to be built in a setup step, which can be impractical unless 2<sup>_n_</sup> is relatively small).  Moreover, this approach works only if _d_\[_i_\] and _e_\[_i_\] are integers (or if _d_\[_i_\] is replaced with floor(_d_\[_i_\]) and _e_\[_i_\] with ceil(_e_\[_i_\]) (Holtz et al. 2011)<sup>[**(25)**](#Note25)</sup>, but this, of course, suffers from rounding error when done in this algorithm).  See also (Thomas and Blanchet 2012)<sup>[**(24)**](#Note24)</sup>.
 
-**"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials such that&mdash;
-- the polynomials are _homogeneous_, that is, they are written as &Sigma;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient;
-- the polynomials have the same degree (namely _n_) and all _a_\[_i_\] are 0 or greater; and
-- the sum of _i_<sup>th</sup> coefficients of all the polynomials is greater than 0 (and can be greater than 1), for each _i_.
+**"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials as follows:
+- The polynomials are _homogeneous_, that is, they are written as &Sigma;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient.
+- The polynomials have the same degree (namely _n_) and all _a_\[_i_\] are 0 or greater.
+- The sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.  Call this list _R_.  For example, this condition holds true if _R_ is (2, 4, 4, 2) or (0, 2, 4, 0), but not if _R_ is (2, 0, 4, 3).
 
-Any factory function that is a rational function can be brought into this form, as described in the appendix under "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> coefficients of the polynomials.  First, define the following operation:
+Any factory function that is a rational function can be brought into the form just described, as detailed in the appendix under "[**Preparing Rational Functions**](#Preparing_Rational_Functions)".  In this algorithm, let _R_\[_j_\] be the sum of _j_<sup>th</sup> coefficients of the polynomials.  First, define the following operation:
 
 - **Get the new state given _state_, _b_, _u_, and _n_**:
-    1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is _R_\[_state_&minus;1]/max(_R_\[_state_\], _R_\[_state_&minus;1]).
-    2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is _R_\[_state_+1]/max(_R_\[_state_\], _R_\[_state_+1]).
+    1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) _PA_, or _state_ otherwise, where _PA_ is _R_\[_state_&minus;1]/max(_R_\[_state_\], _R_\[_state_&minus;1]).
+    2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) _PB_, or _state_ otherwise, where _PB_ is _R_\[_state_+1]/max(_R_\[_state_\], _R_\[_state_+1]).
     3. Return _state_.
 
 Then the algorithm is as follows:
 
 1. Create two empty lists: _blist_ and _ulist_.
-2. Set _state1_ to 0 and _state2_ to _n_.
+2. Set _state1_ to the position of the first non-zero item in _R_.  Set _state2_ to the position of the last non-zero item in _R_.  In both cases, positions start at 0.  If all the items in _R_ are zeros, return 0.
 3. Flip the input coin and append the result (which is 0 or 1) to the end of _blist_.  Generate a uniform(0, 1) random number and append it to the end of _ulist_.
 4. (Monotonic coupling from the past (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>, (Propp and Wilson 1996)<sup>[**(26)**](#Note26)</sup>.)Set _i_ to the number of items in _blist_ minus 1, then while _i_ is 0 or greater:
     1. Let _b_ be the item at position _i_ (starting at 0) in _blist_, and let _u_ be the item at that position in _ulist_.
@@ -753,9 +753,9 @@ Then the algorithm is as follows:
 > **Notes:**
 >
 > 1. If there are only two outcomes, then this is the special Bernoulli factory case; the algorithm would then return 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)).
-> 2. This algorithm doesn't work if all the polynomials are 0 at the point 0 or 1.  This is because in that case, the sum of 0<sup>th</sup> or _n_<sup>th</sup> coefficients, respectively, of the polynomials would be 0.  However, this can easily be worked around by including an additional polynomial equal to a small constant, together with "rejection sampling".  See the example below.
+> 2. If _R_\[_j_\] = choose(_n_, _j_), steps 1 through 5 have the same effect as counting the number of ones from _n_ input coin flips (which would be stored in _state1_ in this case); unfortunately, these steps wouldn't be more efficient.  In this case, _PA_ is equivalent to "1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise", and _PB_ is equivalent to "1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise".
 >
-> **Example:** Let _P_<sub>0</sub>(_&lambda;_) = 2\*_&lambda;_\*(1&minus;_&lambda;_) and _P_<sub>1</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>2</sup>/2.  The goal is to produce 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)). After [**preparing this function**](#Preparing_Rational_Functions) (and noting that the maximum degree is _n_ = 4), we get the coefficient sums (0, 10, 12, 2, 0). Since the first and last coefficients are 0 (and both polynomials equal 0 at 0 and 1), this algorithm can't be used as is.  However, we can include a third polynomial, namely the constant _P_<sub>2</sub>(_&lambda;_) = 0.001, so that the new coefficient sums are (0.001, 10.004, 12.006, 2.006, 0.001) (formed by adding the coefficient 0.001\*choose(_n_, _i_) to the sum at _i_, starting at _i_ = 0).  Now we run the algorithm with these coefficients, and if it returns 2 (meaning that the constant polynomial was chosen), we try again until the algorithm no longer returns 2.
+> **Example:** Let _P_<sub>0</sub>(_&lambda;_) = 2\*_&lambda;_\*(1&minus;_&lambda;_) and _P_<sub>1</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>2</sup>/2.  The goal is to produce 1 with probability _P_<sub>1</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_)). After [**preparing this function**](#Preparing_Rational_Functions) (and noting that the maximum degree is _n_ = 4), we get the coefficient sums _R_ = (0, 10, 12, 2, 0).  Since _R_ begins and ends with 0, step 2 of the algorithm sets _state1_ and _state2_, respectively, to the first or last nonzero position, namely 1 or 3.  (Alternatively, because _R_ begins and ends with 0, we could include a third polynomial, namely the constant _P_<sub>2</sub>(_&lambda;_) = 0.001, so that the new coefficient sums would be _R&prime;_ (0.001, 10.004, 12.006, 2.006, 0.001) \[formed by adding the coefficient 0.001\*choose(_n_, _i_) to the sum at _i_, starting at _i_ = 0].  Now we would run the algorithm using _R&prime;_, and if it returns 2 \[meaning that the constant polynomial was chosen], we would try again until the algorithm no longer returns 2.)
 
 <a id=Certain_Polynomials_in_Bernstein_Form></a>
 #### Certain Polynomials in Bernstein Form
@@ -785,21 +785,6 @@ A polynomial can be written in _Bernstein form_ as &Sigma;<sub>_i_ = 0, ..., _n_
 The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form _P_ = &Sigma;<sub>_j_ = 1, ..., _k_</sub> _c_\[_j_\]\*_M_\[_j_\](**_&lambda;_**), where there are _k_ monomials, _M_\[_j_\](.) identifies monomial _j_, **_&lambda;_** identifies the coins' probabilities of heads, and _c_\[_j_\] >= 0 is the weight for monomial _j_.  (If there is only one coin, these polynomials are in Bernstein form if _c_\[_j_\] is _&alpha;_\[_j_\]\*choose(_k_&minus;1, _j_&minus;1) where _&alpha;_\[_j_\] is a Bernstein coefficient in the interval [0, 1], and if _a_\[1\] = _j_&minus;1 and _b_\[1\] = _k_&minus;_j_ for each monomial _j_.)
 
 Let _C_ be the sum of all _c_\[_j_\].  To simulate the probability _P_/_C_, choose one of the monomials with probability proportional to its weight (see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)"), then run the algorithm above on that monomial (see also "[**Convex Combinations**](#Convex_Combinations)", later).
-
-----
-
-**"Dice Enterprise" special case.** Another algorithm is a modification of the "Dice Enterprise" special case given in the [**previous section**](#Certain_Rational_Functions).  It works with degree-_n_ polynomials in Bernstein form of the kind described at the top of this section.  In fact there are two parts of this algorithm:
-
-- The first part is a "**_heads-counter_**", which often uses fewer input coin flips on average than the naïve heads-counting in step 1 of the Goyal and Sigman algorithm.   This new heads-counter is the same as steps 1 through 5 of the previous section's algorithm, with _R_\[_j_\] = choose(_n_, _j_).  In effect, the heads-counter can be implemented with the following version of "**Get the new state given _state_, _b_, _u_, and _n_**":
-    1. If _state_ > 0 and _b_ is 0, return either _state&minus;1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is greater than floor(_n_/2), and _state_/(_n_+1&minus;_state_) otherwise.
-    2. If _state_ < _n_ and _b_ is 1, return either _state+1_ if _u_ is less than (or equal to) the following probability, or _state_ otherwise.  The probability is 1 if _state_ is less than floor(_n_/2), and (_n_&minus;_state_)/(_state_+1) otherwise.
-    3. Return _state_.
-
-    At the end of this part of the algorithm, _state1_ effectively stores the number of "heads" from flipping the input coin.
-
-- The second part is a modified version of step 6 of the previous's section algorithm, namely: "6. With probability _a_\[_state1_\], return 1.  Otherwise, return 0."
-
-    Alternatively, step 6 is written as follows: "6. Let  _b_(_j_) be the _state1_<sup>th</sup> Bernstein coefficient (starting at 0) of the polynomial for _j_. Choose an integer in [0, _m_) with probability proportional to these weights: \[_b_(0), _b_(1), ..., _b_(_m_&minus;1)].  Then return the chosen integer."  In that case, the algorithm works with _m_ polynomials, and will return one of _m_ outcomes (namely _X_, an integer in \[0, _m_)), with probability equal to the polynomial for _X_.  For this to work, though, the polynomials must have the same degree, and the _j_<sup>th</sup> Bernstein coefficients of the _m_ polynomials must be 0 or greater and sum to 1, for each _j_.
 
 <a id=Certain_Algebraic_Functions></a>
 #### Certain Algebraic Functions
@@ -1346,7 +1331,7 @@ The first algorithm implements the reverse-time martingale framework (Algorithm 
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
-5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
+5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 6. Set _&#x2113;_ to **fbelow**(_degree_, _ones_), set _u_ to **fabove**(_degree_, _ones_), and set _lastdegree_ to _degree_.
 7. (This step and the next find the expected values of the previous _&#x2113;_ and _u_ given the current coin flips.) If _degree_ equals _startdegree_, set _&#x2113;s_ to 0 and _us_ to 1. (Algorithm I of Flegal and Herbei 2012 doesn't take this into account.)
 8. If _degree_ is greater than _startdegree_: Let _nh_ be choose(_degree_, _ones_), and let _od_ be _degree_/2.  Set _&#x2113;s_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fbelow**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_, and set _us_ to &Sigma;<sub>_j_=0,...,_ones_</sub> **fabove**(_od_,_j_)\*choose(_degree_&minus;_od_, _ones_&minus;_j_)\*choose(_od_,_j_)/_nh_.
@@ -1359,7 +1344,7 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(24)**](#Not
 1. Set _ones_ to 0, and set _lastdegree_ to 0.
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
-4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_. (Alternatively, the "heads-counter" based on (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup> and described in "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)" can be used.)
+4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 5. Set _c_ to choose(_degree_, _ones_).
 6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
 7. If _degree_ is greater than _startdegree_, then:
@@ -1869,9 +1854,9 @@ Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ 
 
 **Augmenting.** If we have an array of homogeneous single-variable polynomials of the same degree, they are ready for use in the **Dice Enterprise special case** if&mdash;
 
-- the polynomials have the same degree,
+- the polynomials have the same degree, namely _n_,
 - their homogeneous-basis coefficients are all 0 or greater, and
-- the sum of _j_<sup>th</sup> homogeneous-basis coefficients is greater than 0, for each _j_.
+- the sum of _j_<sup>th</sup> homogeneous-basis coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
 
 If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki (2001)<sup>[**(62)**](#Note62)</sup>.  It is implemented as follows:
 
