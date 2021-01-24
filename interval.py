@@ -589,20 +589,6 @@ class FInterval:
     def __repr__(self):
         return "[%s, %s]" % (float(self.inf), float(self.sup))
 
-# Yannis Manolopoulos. 2002. "Binomial coefficient computation:
-# recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002),
-# 65–67. DOI: https://doi.org/10.1145/820127.820168
-# NOTE: A logarithmic version of this formula is trivial to derive
-# from this one, but it's rather slow compared to log gamma:
-# instead of the product, take the sum of logarithms.
-def binco(n, k):
-    vnum = 1
-    vden = 1
-    for i in range(n - k + 1, n + 1):
-        vnum *= i
-        vden *= n - i + 1
-    return vnum // vden
-
 _BERNNUMBERS = [
     Fraction(1),
     Fraction(-1, 2),
@@ -633,7 +619,7 @@ def bernoullinum(n):
     v += Fraction(-(n + 1), 2)
     i = 2
     while i < n:
-        v += binco(n + 1, i) * bernoullinum(i)
+        v += math.comb(n + 1, i) * bernoullinum(i)
         i += 2
     ret = -v / (n + 1)
     _extrabernnumbers[n] = ret

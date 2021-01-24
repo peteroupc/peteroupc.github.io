@@ -1115,13 +1115,6 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
-    def _binco(self, n, k):
-        # Binomial coefficient
-        ret = 1
-        for i in range(n - k + 1, n + 1):
-            ret *= Fraction(i, (n - i + 1))
-        return int(ret)
-
     def simulate(self, coin, fbelow, fabove, fbound):
         """Simulates a general factory function defined by two
         sequences of polynomials that converge from above and below.
@@ -1147,7 +1140,7 @@ class Bernoulli:
             for i in range(degree - lastdegree):
                 if coin() == 1:
                     ones += 1
-            c = int(self._binco(degree, ones))
+            c = int(math.comb(degree, ones))
             a[(degree, ones)] = int(fbelow(degree, ones) * c)
             b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
             # print([degree,ones,float(fbelow(degree,ones)),float(fabove(degree,ones))])
@@ -1164,14 +1157,13 @@ class Bernoulli:
                     o = ones - k
                     if not (lastdegree, o) in a:
                         a[(lastdegree, o)] = int(
-                            fbelow(lastdegree, o) * int(self._binco(lastdegree, o))
+                            fbelow(lastdegree, o) * int(math.comb(lastdegree, o))
                         )
                     if not (lastdegree, o) in b:
                         b[(lastdegree, o)] = int(
-                            (1 - fabove(lastdegree, o))
-                            * int(self._binco(lastdegree, o))
+                            (1 - fabove(lastdegree, o)) * int(math.comb(lastdegree, o))
                         )
-                    st = int(self._binco(diff, k))
+                    st = int(math.comb(diff, k))
                     alpha += a[(lastdegree, o)] * st
                     beta += b[(lastdegree, o)] * st
                 acount -= alpha
@@ -1185,13 +1177,6 @@ class Bernoulli:
                 return 0
             lastdegree = degree
             degree *= 2
-
-def _binco(n, k):
-    # Binomial coefficient
-    ret = 1
-    for i in range(n - k + 1, n + 1):
-        ret *= Fraction(i, (n - i + 1))
-    return int(ret)
 
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
@@ -1815,7 +1800,7 @@ class DiceEnterprise:
                             # be non-negative
                             if ntilde[0] + ntilde[1] <= degree:
                                 # print([float(state[0][j]),"n0",n0,"n",d1d2,"k",d1,"ntilde",ntilde])
-                                ret += Fraction(state[0][j]) * _binco(d1d2, d1)
+                                ret += Fraction(state[0][j]) * math.comb(d1d2, d1)
             if ret != 0:
                 newladder.append([[ret], [n0, n1], [result]])
 
