@@ -946,6 +946,7 @@
 
 <ul>
 <li>The polynomials are <em>homogeneous</em>, that is, they are written as &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] is a coefficient.</li>
+<li>The polynomials are relatively prime.</li>
 <li>The polynomials have the same degree (namely <em>n</em>) and all <em>a</em>[<em>i</em>] are 0 or greater.</li>
 <li>The sum of <em>j</em><sup>th</sup> coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.  Call this list <em>R</em>.  For example, this condition holds true if <em>R</em> is (2, 4, 4, 2) or (0, 2, 4, 0), but not if <em>R</em> is (2, 0, 4, 3).</li>
 </ul>
@@ -2418,7 +2419,11 @@ def valid_perm(f, x, n):
 <li> as a sum of terms of the form <em>z</em>*<em>&lambda;</em><sup><em>i</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>j</em></sup>, where <em>z</em> is a real number and <em>i</em> &gt;=0 and <em>j</em> &gt;=0 are integers (called <em>form 1</em> in this section),</li>
 </ul>
 
-<p>then the function can be separated into two polynomials that sum to the denominator.  (Here, <em>i</em>+<em>j</em> is the term&#39;s <em>degree</em>, and the polynomial&#39;s degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (<em>G</em>) such that <em>D</em> + <em>G</em> = <em>E</em>.  Similarly, if we have multiple rational functions with a common denominator, namely (<em>D1</em>/<em>E</em>), ..., (<em>DN</em>/<em>E</em>), where <em>D1</em>, ..., <em>DN</em> and <em>E</em> are written in form 1, then they can be separated into <em>N</em> + 1 polynomials by subtracting the numerators from the denominator, so that <em>G</em> = <em>E</em> &minus; <em>D1</em> &minus; ... &minus; <em>DN</em>.  To use them in the algorithm, however, they need to be <em>homogenized</em>, then <em>augmented</em>, as described next.</p>
+<p>then the function can be separated into two polynomials that sum to the denominator.  (Here, <em>i</em>+<em>j</em> is the term&#39;s <em>degree</em>, and the polynomial&#39;s degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (<em>G</em>) such that <em>D</em> + <em>G</em> = <em>E</em>.  Then, divide <em>D</em> by gcd(<em>D</em>, <em>E</em>) and divide <em>G</em> by gcd(<em>G</em>, <em>E</em>) to make <em>D</em> and <em>G</em> relatively prime to <em>E</em>, where gcd(., .) is the greatest common divisor.</p>
+
+<p>Similarly, if we have multiple rational functions with a common denominator, namely (<em>D1</em>/<em>E</em>), ..., (<em>DN</em>/<em>E</em>), where <em>D1</em>, ..., <em>DN</em> and <em>E</em> are written in form 1, then they can be separated into <em>N</em> + 1 polynomials by subtracting the numerators from the denominator, so that <em>G</em> = <em>E</em> &minus; <em>D1</em> &minus; ... &minus; <em>DN</em>.  Finally, for each polynomial <em>P</em> in <em>G</em>, <em>D1</em>, ..., <em>DN</em>,  divide <em>P</em> by gcd(<em>P</em>, <em>E</em>).</p>
+
+<p>Now, however, to use the polynomials in the algorithm they need to be <em>homogenized</em>, then <em>augmented</em>, as described next.</p>
 
 <blockquote>
 <p><strong>Example:</strong> We have the rational function  (4*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>) /  (7 &minus; 5*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>.</p>

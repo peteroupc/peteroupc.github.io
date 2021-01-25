@@ -727,6 +727,7 @@ The algorithm follows.
 
 **"Dice Enterprise" special case.** The following algorithm implements a special case of the "Dice Enterprise" method of (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  The algorithm returns one of _m_ outcomes (namely _X_, an integer in [0, _m_)) with probability _P_<sub>_X_</sub>(_&lambda;_) / (_P_<sub>0</sub>(_&lambda;_) + _P_<sub>1</sub>(_&lambda;_) + ... + _P_<sub>_m_&minus;1</sub>(_&lambda;_)), where _&lambda;_ is the input coin's probability of heads and _m_ is 2 or greater.  Specifically, the probability is a _rational function_, or ratio of polynomials.  Here, all the _P_<sub>_i_</sub>(_&lambda;_) are in the form of polynomials as follows:
 - The polynomials are _homogeneous_, that is, they are written as &Sigma;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's degree and _a_\[_i_\] is a coefficient.
+- The polynomials are relatively prime.
 - The polynomials have the same degree (namely _n_) and all _a_\[_i_\] are 0 or greater.
 - The sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.  Call this list _R_.  For example, this condition holds true if _R_ is (2, 4, 4, 2) or (0, 2, 4, 0), but not if _R_ is (2, 0, 4, 3).
 
@@ -1821,7 +1822,11 @@ This section describes how to turn a single-variable rational function (ratio of
 
 -  as a sum of terms of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>, where _z_ is a real number and _i_ >=0 and _j_ >=0 are integers (called _form 1_ in this section),
 
-then the function can be separated into two polynomials that sum to the denominator.  (Here, _i_+_j_ is the term's _degree_, and the polynomial's degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (_G_) such that _D_ + _G_ = _E_.  Similarly, if we have multiple rational functions with a common denominator, namely (_D1_/_E_), ..., (_DN_/_E_), where _D1_, ..., _DN_ and _E_ are written in form 1, then they can be separated into _N_ + 1 polynomials by subtracting the numerators from the denominator, so that _G_ = _E_ &minus; _D1_ &minus; ... &minus; _DN_.  To use them in the algorithm, however, they need to be _homogenized_, then _augmented_, as described next.
+then the function can be separated into two polynomials that sum to the denominator.  (Here, _i_+_j_ is the term's _degree_, and the polynomial's degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (_G_) such that _D_ + _G_ = _E_.  Then, divide _D_ by gcd(_D_, _E_) and divide _G_ by gcd(_G_, _E_) to make _D_ and _G_ relatively prime to _E_, where gcd(., .) is the greatest common divisor.
+
+Similarly, if we have multiple rational functions with a common denominator, namely (_D1_/_E_), ..., (_DN_/_E_), where _D1_, ..., _DN_ and _E_ are written in form 1, then they can be separated into _N_ + 1 polynomials by subtracting the numerators from the denominator, so that _G_ = _E_ &minus; _D1_ &minus; ... &minus; _DN_.  Finally, for each polynomial _P_ in _G_, _D1_, ..., _DN_,  divide _P_ by gcd(_P_, _E_).
+
+Now, however, to use the polynomials in the algorithm they need to be _homogenized_, then _augmented_, as described next.
 
 > **Example:** We have the rational function  (4\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>) /  (7 &minus; 5\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.
 
