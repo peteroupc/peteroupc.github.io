@@ -68,6 +68,7 @@
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
+<li><a href="#lambda___1__c___d____lambda"><strong>(<em>&lambda;</em>) / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
 <li><a href="#1__c____lambda_2"><strong>1/(<em>c</em> + <em>&lambda;</em>)</strong></a></li>
@@ -185,7 +186,7 @@
 
 <ul>
 <li><em>&lambda;</em> is the unknown probability of heads of the input coin.</li>
-<li> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
+<li> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a binomial coefficient.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Manolopoulos 2002)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  Note that for all <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</li>
 <li>The instruction to &quot;generate a uniform(0, 1) random number&quot; can be implemented&mdash;
 
 <ul>
@@ -602,6 +603,30 @@
 <li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
+<p><a id=lambda___1__c___d____lambda></a></p>
+
+<h4>(<em>&lambda;</em>) / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
+
+<p>In this algorithm, <em>c</em>/<em>d</em> must be 0 or greater.</p>
+
+<ol>
+<li>If <em>c</em> is 0, flip the input coin and return the result.</li>
+<li>If <em>c</em> is less than <em>d</em>, do the following:
+
+<ol>
+<li>With probability 1/2, flip the input coin and return the result.</li>
+<li>With probability <em>c</em>/<em>d</em>, flip the input coin.  If the flip returns 1, return 0.</li>
+<li>Go to the first substep.</li>
+</ol></li>
+<li>If <em>c</em> is greater than or equal to <em>d</em>, do the following:
+
+<ol>
+<li>With probability <em>d</em>/(<em>c</em>+<em>d</em>), return 0.</li>
+<li>Flip the input coin.  If the flip returns 1, return a number that is 1 with probability <em>d</em>/<em>c</em> or 0 otherwise.</li>
+<li>Go to the first substep.</li>
+</ol></li>
+</ol>
+
 <p><a id=lambda_____mu></a></p>
 
 <h4><em>&lambda;</em> + <em>&mu;</em></h4>
@@ -911,8 +936,8 @@
 <p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
 <ul>
-<li><em>D</em>(<em>&lambda;</em>) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
-<li><em>E</em>(<em>&lambda;</em>) = &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>e</em>[<em>i</em>],</li>
+<li><em>D</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
+<li><em>E</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>e</em>[<em>i</em>],</li>
 <li>every <em>d</em>[<em>i</em>] is less than or equal to the corresponding <em>e</em>[<em>i</em>], and</li>
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is an integer or rational number in the interval [0, choose(<em>n</em>, <em>i</em>)], where the upper bound is the total number of <em>n</em>-bit words with <em>i</em> ones.</li>
 </ul>
@@ -942,15 +967,15 @@
 </ol>
 </blockquote>
 
-<p><strong>&quot;Dice Enterprise&quot; special case.</strong> The following algorithm implements a special case of the &quot;Dice Enterprise&quot; method of (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>) + ... + <em>P</em><sub><em>m</em>&minus;1</sub>(<em>&lambda;</em>)), where <em>&lambda;</em> is the input coin&#39;s probability of heads and <em>m</em> is 2 or greater.  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>i</em></sub>(<em>&lambda;</em>) are in the form of polynomials as follows:</p>
+<p><strong>&quot;Dice Enterprise&quot; special case.</strong> The following algorithm implements a special case of the &quot;Dice Enterprise&quot; method of Morina et al. (2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  The algorithm returns one of <em>m</em> outcomes (namely <em>X</em>, an integer in [0, <em>m</em>)) with probability <em>P</em><sub><em>X</em></sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>) + ... + <em>P</em><sub><em>m</em>&minus;1</sub>(<em>&lambda;</em>)), where <em>&lambda;</em> is the input coin&#39;s probability of heads and <em>m</em> is 2 or greater.  Specifically, the probability is a <em>rational function</em>, or ratio of polynomials.  Here, all the <em>P</em><sub><em>k</em></sub>(<em>&lambda;</em>) are in the form of polynomials as follows:</p>
 
 <ul>
-<li>The polynomials are <em>homogeneous</em>, that is, they are written as &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] is a coefficient.</li>
+<li>The polynomials are <em>homogeneous</em>, that is, they are written as &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] is a coefficient.</li>
 <li>The polynomials have the same degree (namely <em>n</em>) and all <em>a</em>[<em>i</em>] are 0 or greater.</li>
 <li>The sum of <em>j</em><sup>th</sup> coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.  Call this list <em>R</em>.  For example, this condition holds true if <em>R</em> is (2, 4, 4, 2) or (0, 2, 4, 0), but not if <em>R</em> is (2, 0, 4, 3).</li>
 </ul>
 
-<p>Any factory function that is a rational function can be brought into the form just described, as detailed in the appendix under &quot;<a href="#Preparing_Rational_Functions"><strong>Preparing Rational Functions</strong></a>&quot;.  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> coefficients of the polynomials.  First, define the following operation:</p>
+<p>Any factory function that is a rational function can be brought into the form just described, as detailed in the appendix under &quot;<a href="#Preparing_Rational_Functions"><strong>Preparing Rational Functions</strong></a>&quot;.  In this algorithm, let <em>R</em>[<em>j</em>] be the sum of <em>j</em><sup>th</sup> coefficients of the polynomials (with <em>j</em> starting at 0).  First, define the following operation:</p>
 
 <ul>
 <li><strong>Get the new state given <em>state</em>, <em>b</em>, <em>u</em>, and <em>n</em></strong>:
@@ -988,14 +1013,14 @@
 <li>If <em>R</em>[<em>j</em>] = choose(<em>n</em>, <em>j</em>), steps 1 through 5 have the same effect as counting the number of ones from <em>n</em> input coin flips (which would be stored in <em>state1</em> in this case), but unfortunately, these steps wouldn&#39;t be more efficient.  In this case, <em>PA</em> is equivalent to &quot;1 if <em>state</em> is greater than floor(<em>n</em>/2), and <em>state</em>/(<em>n</em>+1&minus;<em>state</em>) otherwise&quot;, and <em>PB</em> is equivalent to &quot;1 if <em>state</em> is less than floor(<em>n</em>/2), and (<em>n</em>&minus;<em>state</em>)/(<em>state</em>+1) otherwise&quot;.</li>
 </ol>
 
-<p><strong>Example:</strong> Let <em>P</em><sub>0</sub>(<em>&lambda;</em>) = 2*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>) and <em>P</em><sub>1</sub>(<em>&lambda;</em>) = (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup>2</sup>/2.  The goal is to produce 1 with probability <em>P</em><sub>1</sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>)). After <a href="#Preparing_Rational_Functions"><strong>preparing this function</strong></a> (and noting that the maximum degree is <em>n</em> = 4), we get the coefficient sums <em>R</em> = (0, 2, 12, 2, 0).  Since <em>R</em> begins and ends with 0, step 2 of the algorithm sets <em>state1</em> and <em>state2</em>, respectively, to the first or last nonzero position, namely 1 or 3.  (Alternatively, because <em>R</em> begins and ends with 0, we could include a third polynomial, namely the constant <em>P</em><sub>2</sub>(<em>&lambda;</em>) = 0.001, so that the new coefficient sums would be <em>R&prime;</em> (0.001, 10.004, 12.006, 2.006, 0.001) [formed by adding the coefficient 0.001*choose(<em>n</em>, <em>i</em>) to the sum at <em>i</em>, starting at <em>i</em> = 0].  Now we would run the algorithm using <em>R&prime;</em>, and if it returns 2 [meaning that the constant polynomial was chosen], we would try again until the algorithm no longer returns 2.)</p>
+<p><strong>Example:</strong> Let <em>P</em><sub>0</sub>(<em>&lambda;</em>) = 2*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>) and <em>P</em><sub>1</sub>(<em>&lambda;</em>) = (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup>2</sup>/2.  The goal is to produce 1 with probability <em>P</em><sub>1</sub>(<em>&lambda;</em>) / (<em>P</em><sub>0</sub>(<em>&lambda;</em>) + <em>P</em><sub>1</sub>(<em>&lambda;</em>)). After <a href="#Preparing_Rational_Functions"><strong>preparing this function</strong></a> (and noting that the maximum degree is <em>n</em> = 4), we get the coefficient sums <em>R</em> = (0, 2, 12, 2, 0).  Since <em>R</em> begins and ends with 0, step 2 of the algorithm sets <em>state1</em> and <em>state2</em>, respectively, to the position of the first or last nonzero item, namely 1 or 3.  (Alternatively, because <em>R</em> begins and ends with 0, we could include a third polynomial, namely the constant <em>P</em><sub>2</sub>(<em>&lambda;</em>) = 0.001, so that the new coefficient sums would be <em>R&prime;</em> (0.001, 10.004, 12.006, 2.006, 0.001) [formed by adding the coefficient 0.001*choose(<em>n</em>, <em>i</em>) to the sum at <em>i</em>, starting at <em>i</em> = 0].  Now we would run the algorithm using <em>R&prime;</em>, and if it returns 2 [meaning that the constant polynomial was chosen], we would try again until the algorithm no longer returns 2.)</p>
 </blockquote>
 
 <p><a id=Certain_Polynomials_in_Bernstein_Form></a></p>
 
 <h4>Certain Polynomials in Bernstein Form</h4>
 
-<p>A polynomial can be written in <em>Bernstein form</em> as &Sigma;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em>.  According to (Goyal and Sigman 2012)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if the function is a polynomial that has Bernstein coefficients all in the interval [0, 1] (see also (Wästlund 1999, section 4)<sup><a href="#Note28"><strong>(28)</strong></a></sup>; (Qian and Riedel 2008)<sup><a href="#Note29"><strong>(29)</strong></a></sup>).  They also give an algorithm for simulating these polynomials, which is given below.</p>
+<p>A polynomial can be written in <em>Bernstein form</em> as &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>], where <em>n</em> is the polynomial&#39;s degree and <em>a</em>[<em>i</em>] are its <em>n</em> plus one <em>Bernstein coefficients</em>.  According to (Goyal and Sigman 2012)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, a function can be simulated with a fixed number of input coin flips if and only if the function is a polynomial that has Bernstein coefficients all in the interval [0, 1] (see also (Wästlund 1999, section 4)<sup><a href="#Note28"><strong>(28)</strong></a></sup>; (Qian and Riedel 2008)<sup><a href="#Note29"><strong>(29)</strong></a></sup>).  They also give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -1016,7 +1041,7 @@
 
 <hr>
 
-<p><strong>Multiple coins.</strong> Niazadeh et al. (2020)<sup><a href="#Note33"><strong>(33)</strong></a></sup> describes monomials (involving one or more coins) of the form <em>&Pi;</em><sub><em>i</em> = 1, ..., <em>n</em></sub> <em>&lambda;</em>[<em>i</em>]<sup><em>a</em>[<em>i</em>]</sup> * (1&minus;<em>&lambda;</em>[<em>i</em>])<sup><em>b</em>[<em>i</em>]</sup>, where there are <em>n</em> coins, <em>&lambda;</em>[<em>i</em>] is the probability of heads of coin <em>i</em>, and <em>a</em>[<em>i</em>] &ge; 0 and <em>b</em>[<em>i</em>] &ge; 0 are parameters for coin <em>i</em> (specifically, of <em>a</em>+<em>b</em> flips, the first <em>a</em> flips must return heads and the rest must return tails to succeed).</p>
+<p><strong>Multiple coins.</strong> Niazadeh et al. (2020)<sup><a href="#Note33"><strong>(33)</strong></a></sup> describes monomials (involving one or more coins) of the form <em>&prod;</em><sub><em>i</em> = 1, ..., <em>n</em></sub> <em>&lambda;</em>[<em>i</em>]<sup><em>a</em>[<em>i</em>]</sup> * (1&minus;<em>&lambda;</em>[<em>i</em>])<sup><em>b</em>[<em>i</em>]</sup>, where there are <em>n</em> coins, <em>&lambda;</em>[<em>i</em>] is the probability of heads of coin <em>i</em>, and <em>a</em>[<em>i</em>] &ge; 0 and <em>b</em>[<em>i</em>] &ge; 0 are parameters for coin <em>i</em> (specifically, of <em>a</em>+<em>b</em> flips, the first <em>a</em> flips must return heads and the rest must return tails to succeed).</p>
 
 <ol>
 <li>For each <em>i</em> in [1, <em>n</em>]:
@@ -1028,7 +1053,7 @@
 <li>Return 1.</li>
 </ol>
 
-<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = &Sigma;<sub><em>j</em> = 1, ..., <em>k</em></sub> <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<strong><em>&lambda;</em></strong>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, <strong><em>&lambda;</em></strong> identifies the coins&#39; probabilities of heads, and <em>c</em>[<em>j</em>] &ge; 0 is the weight for monomial <em>j</em>.  (If there is only one coin, these polynomials are in Bernstein form if <em>c</em>[<em>j</em>] is <em>&alpha;</em>[<em>j</em>]*choose(<em>k</em>&minus;1, <em>j</em>&minus;1) where <em>&alpha;</em>[<em>j</em>] is a Bernstein coefficient in the interval [0, 1], and if <em>a</em>[1] = <em>j</em>&minus;1 and <em>b</em>[1] = <em>k</em>&minus;<em>j</em> for each monomial <em>j</em>.)</p>
+<p>The same paper also describes polynomials that are weighted sums of this kind of monomials, namely polynomials of the form <em>P</em> = &sum;<sub><em>j</em> = 1, ..., <em>k</em></sub> <em>c</em>[<em>j</em>]*<em>M</em>[<em>j</em>](<strong><em>&lambda;</em></strong>), where there are <em>k</em> monomials, <em>M</em>[<em>j</em>](.) identifies monomial <em>j</em>, <strong><em>&lambda;</em></strong> identifies the coins&#39; probabilities of heads, and <em>c</em>[<em>j</em>] &ge; 0 is the weight for monomial <em>j</em>.  (If there is only one coin, these polynomials are in Bernstein form if <em>c</em>[<em>j</em>] is <em>&alpha;</em>[<em>j</em>]*choose(<em>k</em>&minus;1, <em>j</em>&minus;1) where <em>&alpha;</em>[<em>j</em>] is a Bernstein coefficient in the interval [0, 1], and if <em>a</em>[1] = <em>j</em>&minus;1 and <em>b</em>[1] = <em>k</em>&minus;<em>j</em> for each monomial <em>j</em>.)</p>
 
 <p>Let <em>C</em> be the sum of all <em>c</em>[<em>j</em>].  To simulate the probability <em>P</em>/<em>C</em>, choose one of the monomials with probability proportional to its weight (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;), then run the algorithm above on that monomial (see also &quot;<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;, later).</p>
 
@@ -1043,7 +1068,7 @@
 <p>The following algorithm simulates the following algebraic function:</p>
 
 <ul>
-<li>&Sigma;<sub><em>k</em> = 0, 1, 2, ...</sub> (<em>&lambda;</em><sup><em>k</em></sup> * (1 &minus; <em>&lambda;</em>) * W(<em>k</em>) / <em>&beta;</em><sup><em>k</em></sup>), or alternatively,</li>
+<li>&sum;<sub><em>k</em> = 0, 1, 2, ...</sub> (<em>&lambda;</em><sup><em>k</em></sup> * (1 &minus; <em>&lambda;</em>) * W(<em>k</em>) / <em>&beta;</em><sup><em>k</em></sup>), or alternatively,</li>
 <li>(1 &minus; <em>&lambda;</em>) * OGF(<em>&lambda;</em>/<em>&beta;</em>),</li>
 </ul>
 
@@ -1424,7 +1449,7 @@
 <ol>
 <li>For each component <em>LC</em>[<em>i</em>], create an input coin that does the following: &quot;(a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the input coin that simulates <em>LF</em>[<em>i</em>] returns 1; (b) Return 0&quot;.</li>
 <li>Return 0 with probability 1/2.</li>
-<li>Call the <strong>algorithm for exp(&minus; <em>x</em>/<em>y</em>)</strong> with <em>x</em> = &Sigma;<sub><em>i</em></sub> <em>LI</em>[<em>i</em>] and <em>y</em> = 2<sup><em>prec</em></sup>.  If this call returns 0, go to step 2.</li>
+<li>Call the <strong>algorithm for exp(&minus; <em>x</em>/<em>y</em>)</strong> with <em>x</em> = &sum;<sub><em>i</em></sub> <em>LI</em>[<em>i</em>] and <em>y</em> = 2<sup><em>prec</em></sup>.  If this call returns 0, go to step 2.</li>
 <li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>, using the corresponding input coin for  <em>LC</em>[<em>i</em>] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.</li>
 </ol>
 
@@ -1754,7 +1779,7 @@
 <li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
 <li>Set <em>&#x2113;</em> to <strong>fbelow</strong>(<em>degree</em>, <em>ones</em>), set <em>u</em> to <strong>fabove</strong>(<em>degree</em>, <em>ones</em>), and set <em>lastdegree</em> to <em>degree</em>.</li>
 <li>(This step and the next find the expected values of the previous <em>&#x2113;</em> and <em>u</em> given the current coin flips.) If <em>degree</em> equals <em>startdegree</em>, set <em>&#x2113;s</em> to 0 and <em>us</em> to 1. (Algorithm I of Flegal and Herbei 2012 doesn&#39;t take this into account.)</li>
-<li>If <em>degree</em> is greater than <em>startdegree</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &Sigma;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
+<li>If <em>degree</em> is greater than <em>startdegree</em>: Let <em>nh</em> be choose(<em>degree</em>, <em>ones</em>), and let <em>od</em> be <em>degree</em>/2.  Set <em>&#x2113;s</em> to &sum;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fbelow</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>, and set <em>us</em> to &sum;<sub><em>j</em>=0,...,<em>ones</em></sub> <strong>fabove</strong>(<em>od</em>,<em>j</em>)*choose(<em>degree</em>&minus;<em>od</em>, <em>ones</em>&minus;<em>j</em>)*choose(<em>od</em>,<em>j</em>)/<em>nh</em>.</li>
 <li>Let <em>m</em> be (<em>ut</em>&minus;<em>&#x2113;t</em>)/(<em>us</em>&minus;<em>&#x2113;s</em>).  Set <em>&#x2113;t</em> to <em>&#x2113;t</em>+(<em>&#x2113;</em>&minus;<em>&#x2113;s</em>)*<em>m</em>, and set <em>ut</em> to <em>ut</em>&minus;(<em>us</em>&minus;<em>u</em>)*<em>m</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;t</em>, return 1.  If <em>ret</em> is less than <em>ut</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>(Find the next pair of polynomials and restart the loop.) Increase <em>degree</em> so that the next pair of polynomials has degree equal to a higher value of <em>degree</em> and gets closer to the target function (for example, multiply <em>degree</em> by 2).  Then, go to step 5.</li>
@@ -1865,7 +1890,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.</li>
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
-<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.</p>
+<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the second polynomial is converted to have the same degree as the first (see Holtz et al. 2011<sup><a href="#Note25"><strong>(25)</strong></a></sup>).</p>
 
 <p>Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)</p>
 
@@ -1937,7 +1962,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note32>(32)</sup> And this shows that the polynomial couldn&#39;t be simulated if <em>c</em> were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see &quot;About Bernoulli Factories&quot;, earlier).</small></li>
 <li><small><sup id=Note33>(33)</sup> Niazadeh, R., Leme, R.P., Schneider, J., &quot;<a href="https://arxiv.org/abs/2011.03865v1"><strong>Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes</strong></a>&quot;, arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small></li>
 <li><small><sup id=Note34>(34)</sup> A <em>pushdown automaton</em>, as used here, is defined in Mossel and Peres 2005 and is described as a machine that maintains a stack of symbols and transitions from one state to another based on the current state, the symbol at the top of the stack, and the outcome of a biased coin flip.  With each state transition, the machine adds symbols to the stack or removes symbols from it.  When the stack is empty, the machine halts, and the result is 0 or 1 depending on the machine&#39;s state at that time.</small></li>
-<li><small><sup id=Note35>(35)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just &quot;&Sigma; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) * (<em>&lambda;</em>/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
+<li><small><sup id=Note35>(35)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just &quot;&sum; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) * (<em>&lambda;</em>/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
 <li><small><sup id=Note36>(36)</sup> Here, &quot;choose(<em>g</em>, <em>g</em>/<em>t</em>)&quot; means that out of <em>g</em> letters, <em>g</em>/<em>t</em> of them must be A&#39;s, and &quot;(<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup>&quot; is the number of words that have <em>g</em>&minus;<em>g</em>/<em>t</em> letters other than A, given that the remaining letters were A&#39;s.</small></li>
 <li><small><sup id=Note37>(37)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092"><strong>https://doi.org/10.3390/e21010092</strong></a> .</small></li>
 <li><small><sup id=Note38>(38)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></li>
@@ -2139,7 +2164,7 @@ bound2=rmaximum(func,x)+m/(n*8)
 <p>where&mdash;</p>
 
 <ul>
-<li>EGF(<em>&lambda;</em>) = &Sigma;<sub><em>k</em> = 0, 1, ...</sub> (<em>&lambda;</em><sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!) (the <em>exponential generating function</em> or EGF, which completely determines a permutation class), and</li>
+<li>EGF(<em>&lambda;</em>) = &sum;<sub><em>k</em> = 0, 1, ...</sub> (<em>&lambda;</em><sup><em>k</em></sup> * V(<em>k</em>) / <em>k</em>!) (the <em>exponential generating function</em> or EGF, which completely determines a permutation class), and</li>
 <li>V(<em>n</em>) is a number in the interval [0, <em>n</em>!] and is the number of permutations of size <em>n</em> that meet the requirements of the permutation class in question.</li>
 </ul>
 
@@ -2216,7 +2241,7 @@ def valid_perm(f, x, n):
 <li>(<em>&kappa;</em>(<em>n</em>; <em>&lambda;</em>)*V(<em>n</em>)/(<em>n</em>!)) / <em>p</em>,</li>
 </ul>
 
-<p>where <em>p</em> = ( &Sigma;<sub><em>k</em>=0,1,...</sub> (<em>&kappa;</em>(<em>k</em>; <em>&lambda;</em>)*V(<em>k</em>)/(<em>k</em>!)) ), and where <em>&kappa;</em>(<em>n</em>; <em>&lambda;</em>) is the probability that <em>G</em> is <em>n</em>, with parameter <em>&lambda;</em> or the input coin&#39;s probability of heads.  Also, the probability that <em>r</em> random numbers are rejected by the modified algorithm is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>.</p>
+<p>where <em>p</em> = ( &sum;<sub><em>k</em>=0,1,...</sub> (<em>&kappa;</em>(<em>k</em>; <em>&lambda;</em>)*V(<em>k</em>)/(<em>k</em>!)) ), and where <em>&kappa;</em>(<em>n</em>; <em>&lambda;</em>) is the probability that <em>G</em> is <em>n</em>, with parameter <em>&lambda;</em> or the input coin&#39;s probability of heads.  Also, the probability that <em>r</em> random numbers are rejected by the modified algorithm is <em>p</em>*(1 &minus; <em>p</em>)<sup><em>r</em></sup>.</p>
 
 <blockquote>
 <p><strong>Example:</strong>  If <em>G</em> is a Poisson(<em>z</em><sup>2</sup>/4) random number and the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</p>
@@ -2238,7 +2263,7 @@ def valid_perm(f, x, n):
 
 <p>This algorithm returns the number <em>n</em> with the following probability:</p>
 
-<p><em>G</em>(<em>n</em>) = (1 &minus; <em>V</em>(<em>n</em> + 1)/(<em>V</em>(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &Sigma;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>G</em>(<em>j</em>) )<br/>
+<p><em>G</em>(<em>n</em>) = (1 &minus; <em>V</em>(<em>n</em> + 1)/(<em>V</em>(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &sum;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>G</em>(<em>j</em>) )<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;= (<em>V</em>(<em>n</em>) * (<em>n</em> + 1) &minus; <em>V</em>(<em>n</em> + 1)) / (<em>V</em>(0) * (<em>n</em> + 1)!),</p>
 
 <p>where <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
@@ -2434,7 +2459,7 @@ def valid_perm(f, x, n):
 <li>is written in form 1 as given above.</li>
 </ul>
 
-<p>Then the polynomial can be turned into a <em>homogeneous polynomial</em> of degree <em>n</em> as follows.</p>
+<p>Then the polynomial can be turned into a <em>homogeneous polynomial</em> of degree <em>n</em> (all its terms have degree <em>n</em>) as follows.</p>
 
 <ul>
 <li>For each integer <em>n0</em> in [0, <em>n</em>], the new polynomial&#39;s homogeneous-basis coefficient <em>k</em> is found as follows:
@@ -2473,7 +2498,7 @@ def valid_perm(f, x, n):
 <li>the sum of <em>j</em><sup>th</sup> homogeneous-basis coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki (2001)<sup><a href="#Note62"><strong>(62)</strong></a></sup>.  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note62"><strong>(62)</strong></a></sup>).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s homogeneous-basis coefficient <em>k</em> is found as follows:

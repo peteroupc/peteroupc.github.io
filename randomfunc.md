@@ -9,7 +9,7 @@ Discusses many ways applications can do randomization and sampling from an under
 
 This page discusses many ways applications can sample random content by transforming the numbers produced by an underlying source of random numbers (such as a pseudorandom number generator \[PRNG\] or another kind of random number generator \[RNG\]), and offers pseudocode for many of these methods. Those methods include&mdash;
 
-- ways to derive uniform random numbers (such as the [**core method, `RNDINT(N)`**](#Core_Random_Generation_Method)),
+- ways to derive uniform random numbers (such as the [**core method, `RNDINT(N)`**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)),
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - generating non-uniform random numbers, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
 
