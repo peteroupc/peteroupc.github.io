@@ -54,6 +54,7 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
+        - [**1 / (1 + (_c_/_d_)\*_&lambda;_)**](#1_1__c___d____lambda)
         - [**(_&lambda;_) / (1 + (_c_/_d_)\*_&lambda;_)**](#lambda___1__c___d____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -95,8 +96,8 @@ This page is focused on sampling methods that _exactly_ simulate the probability
         - [**exp(&minus;_x_/_y_)**](#exp_minus__x___y)
         - [**exp(&minus;_z_)**](#exp_minus__z)
         - [**(_a_/_b_)<sup>_z_</sup>**](#a___b___z)
-        - [**1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__x___y__2_prec__LogisticExp)
-        - [**1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
+        - [**1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__x___y__2_prec__LogisticExp)
+        - [**1 / (1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)**](#1_1_exp__z__2_prec__LogisticExp)
         - [**Polylogarithmic Constants**](#Polylogarithmic_Constants)
         - [**_&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants**](#zeta___3_3_4_and_Other_Zeta_Related_Constants)
         - [**erf(_x_)/erf(1)**](#erf__x__erf_1)
@@ -467,20 +468,23 @@ In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c
     2. Return 0.
 4. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
+<a id=1_1__c___d____lambda></a>
+#### 1 / (1 + (_c_/_d_)\*_&lambda;_)
+
+A special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must be 0 or greater.
+
+1. If _c_ is 0, return 1.
+2. With probability _d_/(_c_+_d_), return 1.
+3. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
+
 <a id=lambda___1__c___d____lambda></a>
 #### (_&lambda;_) / (1 + (_c_/_d_)\*_&lambda;_)
 
-In this algorithm, _c_/_d_ must be 0 or greater.
+Can be derived from the previous algorithm.  In this algorithm, _c_/_d_ must be 0 or greater.
 
 1. If _c_ is 0, flip the input coin and return the result.
-2. If _c_ is less than _d_, do the following:
-    1. With probability 1/2, flip the input coin and return the result.
-    2. With probability _c_/_d_, flip the input coin.  If the flip returns 1, return 0.
-    3. Go to the first substep.
-3. If _c_ is greater than or equal to _d_, do the following:
-    1. With probability _d_/(_c_+_d_), return 0.
-    2. Flip the input coin.  If the flip returns 1, return a number that is 1 with probability _d_/_c_ or 0 otherwise.
-    3. Go to the first substep.
+2. With probability _d_/(_c_+_d_), flip the input coin and return the result.
+3. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
 <a id=lambda_____mu></a>
 #### _&lambda;_ + _&mu;_
@@ -1080,7 +1084,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
     5. Add 1 to _j_ and go to substep 2.
 
 <a id=1_1_exp__x___y__2_prec__LogisticExp></a>
-#### 1 / 1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)
+#### 1 / (1 + exp(_x_ / (_y_ * 2<sup>_prec_</sup>)) (LogisticExp)
 
 This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit after the point) is set for an exponential random number with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
 
@@ -1088,7 +1092,7 @@ This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit afte
 2. Call the **algorithm for exp(&minus; _x_/(_y_ * 2<sup>_prec_</sup>))**.  If the call returns 1, return 1.  Otherwise, go to step 1.
 
 <a id=1_1_exp__z__2_prec__LogisticExp></a>
-#### 1 / 1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)
+#### 1 / (1 + exp(_z_ / 2<sup>_prec_</sup>)) (LogisticExp)
 
 This is similar to the previous algorithm, except that _z_ can be any real number described in the **algorithm for exp(&minus;_z_)**.
 
@@ -1420,8 +1424,9 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
     - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
-    - Upper and lower bound approximations that converge to a given constant or function.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
-    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively, and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the second polynomial is converted to have the same degree as the first (see Holtz et al. 2011<sup>[**(25)**](#Note25)</sup>).
+    - Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
+    - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
+    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the second polynomial is converted to have the same degree as the first (see Holtz et al. 2011<sup>[**(25)**](#Note25)</sup>).
 
         Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)
 
