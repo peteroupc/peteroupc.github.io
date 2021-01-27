@@ -1394,7 +1394,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
->     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate_C2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.  Perhaps this algorithm also works with the tighter approximation of (_n_\*8) rather than (_n_\*2) (see Powell 1981)<sup>[**(49)**](#Note49)</sup>.
+>     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.  Perhaps this algorithm also works with the tighter approximation of (_n_\*8) rather than (_n_\*2) (see Powell 1981)<sup>[**(49)**](#Note49)</sup>.
 > 5. If _f_(_&lambda;_) is _Lipschitz continuous_ in (0, 1) and meets (b) in note 4, the following method implements **fabove** and **fbelow** (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest value of abs(_f&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;_ is the "slope" function of _f_.  Then for all _n_ that are powers of 2:
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
@@ -1411,7 +1411,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*2).
 >     - **fbound**(_n_) = [0, (1/2) + 1/_n_].
-> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then notes 4 suggests the following:
+> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then note 4 suggests the following:
 >     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*2).
 >     - **fbound**(_n_) = [0, (1/2) + 9/(32\*_n_)].
@@ -1426,7 +1426,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
     - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
     - Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
-    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the second polynomial is converted to have the same degree as the first (see Holtz et al. 2011<sup>[**(25)**](#Note25)</sup>).
+    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in \[0, 1\], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the latter polynomial is converted to have the same degree as the other (see Holtz et al. 2011<sup>[**(25)**](#Note25)</sup>).
 
         Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(_&lambda;_, _c_) where _c_ is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function's piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)
 
@@ -1625,12 +1625,28 @@ def rmaximum(f,x): # Try maximum, and fall back if it fails
      return maximum(f,x,Interval(0, 1))
   except:
      # 0.1 is added below as a bias
-     return (f).subs(x, nsolve(diff(f), (0,1)))+0.1
+      try:
+         ns=nsolve(diff(f),x,(a,b), solver='bisect')
+         mm=(f).subs(x, ns)+Rational(1,10)
+         mm=S(mm, rational=True)
+         return Max(va,vb,mm)
+      except:
+         pass
+      ns=nsolve(diff(f),x,(a+b)/2)
+      va=f.subs(x,a)
+      if va==zoo: va=f.subs(x,a+(b-a)*1/1000)
+      vb=f.subs(x,b)
+      if ns>=a and ns<=b:
+         mm=(f).subs(x, ns)+Rational(1,10)
+         mm=S(mm, rational=True)
+         return Max(va,vb,mm)
+      else:
+         return Max(va,vb)
 
 d=diff(diff(func))
 m=Max(rmaximum(-d,x),rmaximum(d,x))
-bound1=rminimum(func,x)-m/(n*8)
-bound2=rmaximum(func,x)+m/(n*8)
+bound1=rminimum(func,x)-m/(n*2)
+bound2=rmaximum(func,x)+m/(n*2)
 ```
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>

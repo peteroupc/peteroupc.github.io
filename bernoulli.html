@@ -1840,7 +1840,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*2) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
 </ul>
 
-<p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate_C2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.  Perhaps this algorithm also works with the tighter approximation of (<em>n</em>*8) rather than (<em>n</em>*2) (see Powell 1981)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</p></li>
+<p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.  Perhaps this algorithm also works with the tighter approximation of (<em>n</em>*8) rather than (<em>n</em>*2) (see Powell 1981)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</p></li>
 <li>If <em>f</em>(<em>&lambda;</em>) is <em>Lipschitz continuous</em> in (0, 1) and meets (b) in note 4, the following method implements <strong>fabove</strong> and <strong>fbelow</strong> (Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest value of abs(<em>f&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;</em> is the &quot;slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:
 
 <ul>
@@ -1868,7 +1868,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*2).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/<em>n</em>].</li>
 </ul></li>
-<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then notes 4 suggests the following:
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then note 4 suggests the following:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
@@ -1892,7 +1892,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
 <li>Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).</li>
-<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the second polynomial is converted to have the same degree as the first (see Holtz et al. 2011<sup><a href="#Note25"><strong>(25)</strong></a></sup>).</p>
+<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the latter polynomial is converted to have the same degree as the other (see Holtz et al. 2011<sup><a href="#Note25"><strong>(25)</strong></a></sup>).</p>
 
 <p>Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)</p>
 
@@ -2117,12 +2117,28 @@ def rmaximum(f,x): # Try maximum, and fall back if it fails
      return maximum(f,x,Interval(0, 1))
   except:
      # 0.1 is added below as a bias
-     return (f).subs(x, nsolve(diff(f), (0,1)))+0.1
+      try:
+         ns=nsolve(diff(f),x,(a,b), solver=&#39;bisect&#39;)
+         mm=(f).subs(x, ns)+Rational(1,10)
+         mm=S(mm, rational=True)
+         return Max(va,vb,mm)
+      except:
+         pass
+      ns=nsolve(diff(f),x,(a+b)/2)
+      va=f.subs(x,a)
+      if va==zoo: va=f.subs(x,a+(b-a)*1/1000)
+      vb=f.subs(x,b)
+      if ns&gt;=a and ns&lt;=b:
+         mm=(f).subs(x, ns)+Rational(1,10)
+         mm=S(mm, rational=True)
+         return Max(va,vb,mm)
+      else:
+         return Max(va,vb)
 
 d=diff(diff(func))
 m=Max(rmaximum(-d,x),rmaximum(d,x))
-bound1=rminimum(func,x)-m/(n*8)
-bound2=rmaximum(func,x)+m/(n*8)
+bound1=rminimum(func,x)-m/(n*2)
+bound2=rmaximum(func,x)+m/(n*2)
 </pre>
 
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
