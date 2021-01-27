@@ -48,6 +48,8 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
     - [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
     - [**SymPy Code for Piecewise Linear Factory Functions**](#SymPy_Code_for_Piecewise_Linear_Factory_Functions)
+    - [**SymPy Code for Building Approximation Schemes**](#SymPy_Code_for_Building_Approximation_Schemes)
+            - [**Helper methods**](#Helper_methods)
     - [**Derivation of My Algorithm for min(_&lambda;_, 1/2)**](#Derivation_of_My_Algorithm_for_min___lambda___1_2)
 - [**License**](#License)
 
@@ -605,8 +607,8 @@ def bernstein_n(func, x, n, pt=None):
   v=[binomial(n,j) for j in range(n//2+1)]
   for i in range(0, n+1):
     oldret=ret
-    bin=v[i] if i<len(v) else v[n-i]
-    ret+=func.subs(x,S(i)/n)*bin*pt**i*(1-pt)**(n-i)
+    bino=v[i] if i<len(v) else v[n-i]
+    ret+=func.subs(x,S(i)/n)*bino*pt**i*(1-pt)**(n-i)
     if pt!=x and ret==oldret and ret>0: break
   return ret
 
@@ -679,6 +681,250 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    return polys
 
 calc_linear_func(count=8)
+```
+
+<a id=SymPy_Code_for_Building_Approximation_Schemes></a>
+### SymPy Code for Building Approximation Schemes
+
+The following is code for the SymPy computer algebra library.  It contains a method, named `approxscheme`, that builds a scheme for approximating a continuous function _f_(_&lambda;_) whose domain is \[0, 1\], with the help of polynomials that converge from above and below to that function.  The scheme is built using the proof of Theorem 26 in Nacu and Peres (2005).<sup>[**(5)**](#Note5)</sup>.  Note that due to heuristics and possible rounding errors (noted in the code below), the approximation scheme is not guaranteed to be correct in all cases.
+
+The `approxscheme` method takes these parameters:
+
+- `func`: SymPy expression of the desired function.
+- `x`: Variable used by `func`.
+- `fromAbove`: Build an approximation from above. Default is `True`; can be set to `False` if `func` is such that the approximation is trivial.  If `True`, `func` must be bounded away from 1.
+- `fromBelow`: Build an approximation from below. Default is `True`; can be set to `False` if `func` is such that the approximation is trivial.  If `True`, `func` must be bounded away from 0.
+- `lastdeg`: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.
+
+The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_).  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
+
+```
+def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
+    if (not fromBelow) and (not fromAbove):
+        raise ValueError
+    # NOTE: rmaximum and rminimum currently use numerical min-/maximization
+    # which is not always accurate.  Unfortunately, SymPy appears
+    # not to have a convenient numerical optimizer.
+    rmn = Abs(rminimum(func, x))
+    rmx = Abs(rmaximum(func, x))
+    epsilon = Min(rmn, 1 - rmx)
+    if fromAbove and not fromBelow:
+        epsilon = 1 - rmx
+        if epsilon == 0:
+            raise ValueError("Not bounded away from 1")
+    if fromBelow and not fromAbove:
+        epsilon = rmn
+        if epsilon == 0:
+            raise ValueError("Not bounded away from 0")
+    if fromAbove and fromBelow and epsilon == 0:
+        raise ValueError("Not bounded away from 0 and 1: min=%s, max=%s" % (rmn, rmx))
+    deg = 1
+    i = 2
+    while Rational(1, 2 ** i) >= epsilon / 4:
+        i += 1
+    prevdegree = -1
+    oldabove = None
+    oldbelow = None
+    preverror = 1
+    values = []
+    firstErrorTol = -1
+    errorProportion = -1
+    errTargetProportion = -1
+    lastFailCount = -1
+    errorData = []
+    targetData = []
+    errTargetData = []
+    err = -1
+    failCount = 0
+    while True:
+        if deg > lastdeg:
+            break
+        while True:
+            ofuncpoly = [func.subs(x, Rational(j, deg)) for j in range(deg + 1)]
+            offset = 3 * Rational(1, 2 ** i)
+            ofuncabove = [v + offset for v in ofuncpoly] if fromAbove else None
+            ofuncbelow = [v - offset for v in ofuncpoly] if fromBelow else None
+            bpabove = bernpoly(ofuncabove, x) if fromAbove else None
+            bpbelow = bernpoly(ofuncbelow, x) if fromBelow else None
+            # NOTE: rerror currently uses numerical min-/maximization
+            # which is not always accurate.  Unfortunately, SymPy appears
+            # not to have a convenient numerical optimizer.
+            errabove = rerror(bpabove, func + offset, x) if fromAbove else 999
+            errbelow = rerror(bpbelow, func - offset, x) if fromBelow else 999
+            err = errabove
+            if err == 999 or (errbelow > errabove and fromBelow):
+                err = errbelow
+            # maxErrorTol is the maximum error tolerance for this value of i
+            # NOTE: Can be reduced for better correctness, but may
+            # not be greater than 1/(2^i).
+            maxErrorTol = Rational(1, 2 ** i)
+            errTargetProportion = err / maxErrorTol
+            if err < maxErrorTol:
+                # Consistency check: Find out whether the previous
+                # and current polynomials have a difference that has
+                # non-negative Bernstein coefficients
+                consistent = True
+                if prevdegree >= 0:
+                    if fromBelow:
+                        # NOTE: .n() can introduce rounding error
+                        bernconew = [a.n() for a in ofuncbelow]
+                        berncoold = degelev([b.n() for b in oldbelow], deg - prevdegree)
+                        for oldv, newv in zip(berncoold, bernconew):
+                            if newv < oldv:
+                                # print([i, deg, "Inconsistent approx. from below"])
+                                consistent = False
+                                break
+                    if fromAbove and consistent:
+                        # NOTE: .n() can introduce rounding error
+                        bernconew = [a.n() for a in ofuncabove]
+                        berncoold = degelev([b.n() for b in oldabove], deg - prevdegree)
+                        for oldv, newv in zip(berncoold, bernconew):
+                            if oldv < newv:
+                                # print([i, deg, "Inconsistent approx. from above"])
+                                consistent = False
+                                break
+                if consistent:
+                    newErrorProportion = -1 if preverror == 1 else err / preverror
+                    errorProportion = newErrorProportion
+                    degreeProportion = deg / prevdegree
+                    errorData.append(err)
+                    errTargetData.append(errTargetProportion)
+                    values.append([i, deg])
+                    preverror = err
+                    prevdegree = deg
+                    oldbelow = ofuncbelow
+                    oldabove = ofuncabove
+                    deg = deg * 2
+                    lastFailCount = failCount
+                    failCount = 0
+                    break
+            deg = deg * 2
+            failCount += 1
+        i += 1
+    # Print the results of the approximation scheme in Markdown format
+    data = "* Let _f_(_&lambda;_) = %s.  Then:\n" % (str(func))
+    data += "    * **fbelow**(_n_, _k_) = _f_(_k_/_n_)"
+    if fromBelow:
+        data += (
+            " &minus; 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
+        )
+    data += ".\n"
+    data += "    * **fabove**(_n_, _k_) = _f_(_k_/_n_)"
+    if fromAbove:
+        data += " + 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
+    data += ".\n"
+    data += (
+        "    * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
+        % (values[0][1])
+    )
+    data += "    * For the following values of _n_, the value of _i_ is: "
+    lasti = 0
+    for value in values:
+        data += "_n_=%d &rarr; _i_=%d; " % (value[1], value[0])
+        lasti = value[0]
+    # HEURISTIC: If last error/target ratio is less than 0.6 there is a good chance
+    # that the error/target ratio is shrinking or stabilizing to less than 1
+    if lastFailCount == 0 and errTargetProportion < 0.6:
+        data += (
+            "and if _n_&ge;%d is a power of 2, then _n_=%d\*2<sup>%d+_k_</sup> "
+            + "&rarr; _i_=%d+_k_, for all _k_&ge;0."
+        ) % (lastdeg * 2, lastdeg * 2, lasti, lasti + 1)
+    elif lastFailCount == 0 and errTargetProportion < 0.98 and lastdeg >= 256:
+        data += (
+            "and it is very likely that if _n_&ge;%d is a power of 2, then _n_=%d\*2<sup>%d+_k_</sup> "
+            + "&rarr; _i_=%d+_k_, for all _k_&ge;0."
+        ) % (lastdeg * 2, lastdeg * 2, lasti, lasti + 1)
+    else:
+        data += ("and for _n_&ge;%d, the value of _i_ has not been established.") % (
+            lastdeg * 2
+        )
+    data += "\n"
+    print(data)
+
+<a id=Helper_methods></a>
+##### Helper methods
+
+def rminimum(f, x):
+    return -rmaximum(-f, x)
+
+def rmaximum(f, x, a=0, b=1, depth=0):
+    if depth >= 4:
+        va = f.subs(x, a)
+        if va == zoo:
+            va = f.subs(x, a + (b - a) * 1 / 1000)
+        vb = f.subs(x, b)
+        try:
+            return Max(va, vb)
+        except:
+            # Failed to compare; return 0
+            return 0
+    try:
+        try:
+            ns = nsolve(diff(f), x, (a, b), solver="bisect")
+            mm = (f).subs(x, ns)
+            mm = S(mm, rational=True)
+            return Max(va, vb, mm)
+        except:
+            pass
+        ns = nsolve(diff(f), x, (a + b) / 2)
+        va = f.subs(x, a)
+        if va == zoo:
+            va = f.subs(x, a + (b - a) * 1 / 1000)
+        vb = f.subs(x, b)
+        if ns >= a and ns <= b:
+            mm = (f).subs(x, ns)
+            mm = S(mm, rational=True)
+            return Max(va, vb, mm)
+        else:
+            return Max(va, vb)
+    except:
+        pass
+    mm1 = rmaximum(f, x, a, a + Rational(b - a, 2), depth=depth + 1)
+    mm2 = rmaximum(f, x, a + Rational(b - a, 2), b, depth=depth + 1)
+    return Max(mm1, mm2)
+
+def rerror(f, f2, x):
+    # Approximate the maximum difference between two functions in [0, 1]
+    rmn = Abs(rminimum(f2 - f, x))
+    rmx = Abs(rmaximum(f2 - f, x))
+    return Max(rmn.n(), rmx.n())
+
+def bernpoly(a, x):
+    # Create a Bernstein polynomial using the given
+    # array of coefficients and the symbol x.  The polynomial's
+    # degree is the length of 'a' minus 1.
+    pt = x
+    n = len(a) - 1
+    ret = 0
+    v = [binomial(n, j) for j in range(n // 2 + 1)]
+    for i in range(0, n + 1):
+        oldret = ret
+        bino = v[i] if i < len(v) else v[n - i]
+        ret += a[i] * bino * pt ** i * (1 - pt) ** (n - i)
+    return ret
+
+def degelev(poly, degs):
+    # Degree elevation of Bernstein polynomials.
+    # See also Tsai and Farouki 2001.
+    n = len(poly) - 1
+    ret = []
+    nchoose = [math.comb(n, j) for j in range(n // 2 + 1)]
+    degschoose = (
+        nchoose if degs == n else [math.comb(degs, j) for j in range(degs // 2 + 1)]
+    )
+    for k in range(0, n + degs + 1):
+        ndk = math.comb(n + degs, k)
+        c = 0
+        for j in range(max(0, k - degs), min(n, k) + 1):
+            degs_choose_kj = (
+                degschoose[k - j]
+                if k - j < len(degschoose)
+                else degschoose[degs - (k - j)]
+            )
+            n_choose_j = nchoose[j] if j < len(nchoose) else nchoose[n - j]
+            c += poly[j] * degs_choose_kj * n_choose_j / ndk
+        ret.append(c)
+    return ret
 ```
 
 <a id=Derivation_of_My_Algorithm_for_min___lambda___1_2></a>
