@@ -49,7 +49,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
     - [**SymPy Code for Piecewise Linear Factory Functions**](#SymPy_Code_for_Piecewise_Linear_Factory_Functions)
     - [**SymPy Code for Building Approximation Schemes**](#SymPy_Code_for_Building_Approximation_Schemes)
-            - [**Helper methods**](#Helper_methods)
     - [**Derivation of My Algorithm for min(_&lambda;_, 1/2)**](#Derivation_of_My_Algorithm_for_min___lambda___1_2)
 - [**License**](#License)
 
@@ -696,7 +695,7 @@ The `approxscheme` method takes these parameters:
 - `fromBelow`: Build an approximation from below. Default is `True`; can be set to `False` if `func` is such that the approximation is trivial.  If `True`, `func` must be bounded away from 0.
 - `lastdeg`: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.
 
-The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_).  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
+The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
 
 ```
 def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
@@ -841,9 +840,7 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
     data += "\n"
     print(data)
 
-<a id=Helper_methods></a>
-##### Helper methods
-
+"""  Helper methods """
 def rminimum(f, x):
     return -rmaximum(-f, x)
 

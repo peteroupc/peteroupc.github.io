@@ -67,8 +67,7 @@
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 <li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
-<li><a href="#SymPy_Code_for_Building_Approximation_Schemes"><strong>SymPy Code for Building Approximation Schemes</strong></a>
-    - <a href="#Helper_methods"><strong>Helper methods</strong></a></li>
+<li><a href="#SymPy_Code_for_Building_Approximation_Schemes"><strong>SymPy Code for Building Approximation Schemes</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -904,7 +903,7 @@ calc_linear_func(count=8)
 <li><code>lastdeg</code>: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.</li>
 </ul>
 
-<p>The method prints out text describing the approximation scheme, which can then be used in either of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> to simulate <em>f</em>(<em>&lambda;</em>).  It refers to the functions <strong>fbelow</strong>, <strong>fabove</strong>, and <strong>fbound</strong>, which have the meanings given in those algorithms.</p>
+<p>The method prints out text describing the approximation scheme, which can then be used in either of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> to simulate <em>f</em>(<em>&lambda;</em>) given a black-box way to sample the probability <em>&lambda;</em>.  It refers to the functions <strong>fbelow</strong>, <strong>fabove</strong>, and <strong>fbound</strong>, which have the meanings given in those algorithms.</p>
 
 <pre>def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
     if (not fromBelow) and (not fromAbove):
@@ -1048,9 +1047,7 @@ calc_linear_func(count=8)
     data += &quot;\n&quot;
     print(data)
 
-&lt;a id=Helper_methods&gt;&lt;/a&gt;
-##### Helper methods
-
+&quot;&quot;&quot;  Helper methods &quot;&quot;&quot;
 def rminimum(f, x):
     return -rmaximum(-f, x)
 
