@@ -1563,7 +1563,7 @@ Many probability distributions can be defined in terms of any of the following:
 * _Discrete distributions_<sup>[**(73)**](#Note73)</sup> generally have a _probability mass function_, or _PMF_, which gives the probability that each number is randomly chosen.
 * The _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is the inverse of the CDF and maps numbers in the interval [0, 1\) to numbers in the distribution, from low to high.
 
-In this section, a **PDF-like function** is the PDF, the PMF, or either function times a (possibly unknown) constant.
+In this section, a **PDF-like function** is the PDF, the PMF, or either function times a (possibly unknown) positive constant.
 
 The following sections show different ways to generate random numbers based on a distribution, depending on what is known about that distribution.
 
@@ -1671,7 +1671,7 @@ The following method generates a random number from a distribution via inversion
 
 Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  For these cases, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(18)**](#Note18)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PDF(i); end; return p`, but this is not always fast even though it's exact in theory. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
+- Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(18)**](#Note18)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast even though it's exact in theory. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 - Distribution is **discrete, with known PDF-like function**: If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(76)**](#Note76)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - Distribution is **continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(77)**](#Note77)</sup>, (Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup> in the Python sample code <sup>[**(78)**](#Note78)</sup>.
 - Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.

@@ -13,7 +13,7 @@ Randomness extraction for information security is discussed in NIST SP 800-90B s
 
 - Unkeyed hash functions and other unkeyed extraction functions should not be used by themselves in randomness extraction.
 - Lossless compression should not be used as a randomness extractor.
-- Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction.
+- Where possible, there should be two or more independent nondeterministic sources from which to apply randomness extraction (McInnes and Pinkas 1990)<sup>[**(18)**](#Note18)</sup>.
 
 Some papers also refer to two-source extractors and resilient functions (especially the works by E. Chattopadhyay and D. Zuckerman), but there are few if any real implementations of these extraction techniques.
 
@@ -89,6 +89,7 @@ Devroye and Gravel (2020)<sup>[**(14)**](#Note14)</sup> suggest a special random
 - <small><sup id=Note15>(15)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>
 - <small><sup id=Note16>(16)</sup> De Schuymer, Bart, Hans De Meyer, and Bernard De Baets. "A fuzzy approach to stochastic dominance of random variables", in _International Fuzzy Systems Association World Congress_ 2003.</small>
 - <small><sup id=Note17>(17)</sup> Camion, Paul, "Unbiased die rolling with a biased die", North Carolina State University. Dept. of Statistics, 1974.</small>
+- <small><sup id=Note18>(18)</sup> McInnes, J. L., & Pinkas, B. (1990, August). On the impossibility of private key cryptography with weakly random keys. In Conference on the Theory and Application of Cryptography (pp. 421-435).</small>
 
 <a id=Appendix></a>
 ## Appendix

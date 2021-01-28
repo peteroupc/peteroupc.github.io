@@ -742,7 +742,8 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
             break
         while True:
             ofuncpoly = [func.subs(x, Rational(j, deg)) for j in range(deg + 1)]
-            offset = 3 * Rational(1, 2 ** i)
+            # Offset of Bernstein polynomial from the function
+            offset = Rational(3, 2 ** i)
             ofuncabove = [v + offset for v in ofuncpoly] if fromAbove else None
             ofuncbelow = [v - offset for v in ofuncpoly] if fromBelow else None
             bpabove = bernpoly(ofuncabove, x) if fromAbove else None
@@ -757,8 +758,8 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
                 err = errbelow
             # maxErrorTol is the maximum error tolerance for this value of i
             # NOTE: Can be reduced for better correctness, but may
-            # not be greater than 1/(2^i).
-            maxErrorTol = Rational(1, 2 ** i)
+            # not be greater than offset/3.
+            maxErrorTol = offset/3
             errTargetProportion = err / maxErrorTol
             if err < maxErrorTol:
                 # Consistency check: Find out whether the previous
