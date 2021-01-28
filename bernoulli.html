@@ -1868,12 +1868,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*2).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/<em>n</em>].</li>
 </ul></li>
-<li>If <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2, then note 4 suggests the following:
+<li>Let <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2.  Then my <a href="https://peteroupc.github.io/morealg.html#SymPy_Code_for_Building_Approximation_Schemes"><strong>SymPy code for building approximation schemes</strong></a>, which implements Theorem 26 in Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, suggests the following:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(3*<em>k</em>/<em>n</em>)/2 + (9/16) / (<em>n</em>*2).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 9/(32*<em>n</em>)].</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 3 / 2<sup><em>i</em></sup>, where <em>i</em> depends on <em>n</em> as described below.</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1] if <em>n</em>&ge;16, or [&minus;1, 2] otherwise.</li>
+<li>For the following values of <em>n</em>, the value of <em>i</em> is: <em>n</em>=16 &rarr; <em>i</em>=4; <em>n</em>=32 &rarr; <em>i</em>=5; <em>n</em>=64 &rarr; <em>i</em>=6; <em>n</em>=128 &rarr; <em>i</em>=7; <em>n</em>=256 &rarr; <em>i</em>=8; <em>n</em>=512 &rarr; <em>i</em>=9; <em>n</em>=1024 &rarr; <em>i</em>=10; and if <em>n</em>&ge;2048 is a power of 2, then <em>n</em>=2048*2<sup>10+<em>k</em></sup> &rarr; <em>i</em>=11+<em>k</em>, for all <em>k</em>&ge;0.</li>
 </ul></li>
 </ol>
 </blockquote>

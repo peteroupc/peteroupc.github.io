@@ -691,13 +691,15 @@ The `approxscheme` method takes these parameters:
 
 - `func`: SymPy expression of the desired function.
 - `x`: Variable used by `func`.
-- `fromAbove`: Build an approximation from above. Default is `True`; can be set to `False` if `func` is such that the approximation is trivial.  If `True`, `func` must be bounded away from 1.
-- `fromBelow`: Build an approximation from below. Default is `True`; can be set to `False` if `func` is such that the approximation is trivial.  If `True`, `func` must be bounded away from 0.
+- `fromAbove`: Build an approximation from above. Default is `True`; can be set to `False` if `func` is convex.  If `True`, `func` must be bounded away from 1.
+- `fromBelow`: Build an approximation from below. Default is `True`; can be set to `False` if `func` is concave.  If `True`, `func` must be bounded away from 0.
 - `lastdeg`: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.
 
 The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
 
 ```
+import math
+
 def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
     if (not fromBelow) and (not fromAbove):
         raise ValueError
@@ -765,18 +767,20 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
                 consistent = True
                 if prevdegree >= 0:
                     if fromBelow:
-                        # NOTE: .n() can introduce rounding error
-                        bernconew = [a.n() for a in ofuncbelow]
-                        berncoold = degelev([b.n() for b in oldbelow], deg - prevdegree)
+                        # NOTE: Bounds ensure that in case of doubt,
+                        # the approximation is judged to be inconsistent
+                        bernconew = [lowerbound(a) for a in ofuncbelow]
+                        berncoold = degelev([upperbound(b) for b in oldbelow], deg - prevdegree)
                         for oldv, newv in zip(berncoold, bernconew):
                             if newv < oldv:
                                 # print([i, deg, "Inconsistent approx. from below"])
                                 consistent = False
                                 break
                     if fromAbove and consistent:
-                        # NOTE: .n() can introduce rounding error
-                        bernconew = [a.n() for a in ofuncabove]
-                        berncoold = degelev([b.n() for b in oldabove], deg - prevdegree)
+                        # NOTE: Bounds ensure that in case of doubt,
+                        # the approximation is judged to be inconsistent
+                        bernconew = [upperbound(a) for a in ofuncabove]
+                        berncoold = degelev([lowerbound(b) for b in oldabove], deg - prevdegree)
                         for oldv, newv in zip(berncoold, bernconew):
                             if oldv < newv:
                                 # print([i, deg, "Inconsistent approx. from above"])
@@ -802,21 +806,21 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
         i += 1
     # Print the results of the approximation scheme in Markdown format
     data = "* Let _f_(_&lambda;_) = %s.  Then:\n" % (str(func))
-    data += "    * **fbelow**(_n_, _k_) = _f_(_k_/_n_)"
+    data += "    - **fbelow**(_n_, _k_) = _f_(_k_/_n_)"
     if fromBelow:
         data += (
             " &minus; 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
         )
     data += ".\n"
-    data += "    * **fabove**(_n_, _k_) = _f_(_k_/_n_)"
+    data += "    - **fabove**(_n_, _k_) = _f_(_k_/_n_)"
     if fromAbove:
         data += " + 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
     data += ".\n"
     data += (
-        "    * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
+        "    - **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
         % (values[0][1])
     )
-    data += "    * For the following values of _n_, the value of _i_ is: "
+    data += "    - For the following values of _n_, the value of _i_ is: "
     lasti = 0
     for value in values:
         data += "_n_=%d &rarr; _i_=%d; " % (value[1], value[0])
@@ -843,6 +847,16 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
 """  Helper methods """
 def rminimum(f, x):
     return -rmaximum(-f, x)
+
+def upperbound(x):
+   # Calculates a limited-precision upper bound of x.
+   boundmult = S(1000000000000000)
+   return ceiling(x*boundmult)/boundmult
+
+def lowerbound(x):
+   # Calculates a limited-precision lower bound of x.
+   boundmult = S(1000000000000000)
+   return floor(x*boundmult)/boundmult
 
 def rmaximum(f, x, a=0, b=1, depth=0):
     if depth >= 4:

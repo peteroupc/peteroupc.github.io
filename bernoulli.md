@@ -1411,10 +1411,11 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*2).
 >     - **fbound**(_n_) = [0, (1/2) + 1/_n_].
-> 3. If _f_(_&lambda;_) = sin(3\*_&lambda;_)/2, then note 4 suggests the following:
->     - **fbelow**(_n_, _k_) = sin(3\*_k_/_n_)/2.  This is possible because _f_ is concave.
->     - **fabove**(_n_, _k_) = sin(3\*_k_/_n_)/2 + (9/16) / (_n_\*2).
->     - **fbound**(_n_) = [0, (1/2) + 9/(32\*_n_)].
+> 3. Let _f_(_&lambda;_) = sin(3\*_&lambda;_)/2.  Then my [**SymPy code for building approximation schemes**](https://peteroupc.github.io/morealg.html#SymPy_Code_for_Building_Approximation_Schemes), which implements Theorem 26 in Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, suggests the following:
+>     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
+>     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below.
+>     - **fbound**(_n_) = [0, 1] if _n_&ge;16, or [&minus;1, 2] otherwise.
+>     - For the following values of _n_, the value of _i_ is: _n_=16 &rarr; _i_=4; _n_=32 &rarr; _i_=5; _n_=64 &rarr; _i_=6; _n_=128 &rarr; _i_=7; _n_=256 &rarr; _i_=8; _n_=512 &rarr; _i_=9; _n_=1024 &rarr; _i_=10; and if _n_&ge;2048 is a power of 2, then _n_=2048\*2<sup>10+_k_</sup> &rarr; _i_=11+_k_, for all _k_&ge;0.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

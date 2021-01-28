@@ -898,14 +898,16 @@ calc_linear_func(count=8)
 <ul>
 <li><code>func</code>: SymPy expression of the desired function.</li>
 <li><code>x</code>: Variable used by <code>func</code>.</li>
-<li><code>fromAbove</code>: Build an approximation from above. Default is <code>True</code>; can be set to <code>False</code> if <code>func</code> is such that the approximation is trivial.  If <code>True</code>, <code>func</code> must be bounded away from 1.</li>
-<li><code>fromBelow</code>: Build an approximation from below. Default is <code>True</code>; can be set to <code>False</code> if <code>func</code> is such that the approximation is trivial.  If <code>True</code>, <code>func</code> must be bounded away from 0.</li>
+<li><code>fromAbove</code>: Build an approximation from above. Default is <code>True</code>; can be set to <code>False</code> if <code>func</code> is convex.  If <code>True</code>, <code>func</code> must be bounded away from 1.</li>
+<li><code>fromBelow</code>: Build an approximation from below. Default is <code>True</code>; can be set to <code>False</code> if <code>func</code> is concave.  If <code>True</code>, <code>func</code> must be bounded away from 0.</li>
 <li><code>lastdeg</code>: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.</li>
 </ul>
 
 <p>The method prints out text describing the approximation scheme, which can then be used in either of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> to simulate <em>f</em>(<em>&lambda;</em>) given a black-box way to sample the probability <em>&lambda;</em>.  It refers to the functions <strong>fbelow</strong>, <strong>fabove</strong>, and <strong>fbound</strong>, which have the meanings given in those algorithms.</p>
 
-<pre>def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
+<pre>import math
+
+def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
     if (not fromBelow) and (not fromAbove):
         raise ValueError
     # NOTE: rmaximum and rminimum currently use numerical min-/maximization
@@ -972,18 +974,20 @@ calc_linear_func(count=8)
                 consistent = True
                 if prevdegree &gt;= 0:
                     if fromBelow:
-                        # NOTE: .n() can introduce rounding error
-                        bernconew = [a.n() for a in ofuncbelow]
-                        berncoold = degelev([b.n() for b in oldbelow], deg - prevdegree)
+                        # NOTE: Bounds ensure that in case of doubt,
+                        # the approximation is judged to be inconsistent
+                        bernconew = [lowerbound(a) for a in ofuncbelow]
+                        berncoold = degelev([upperbound(b) for b in oldbelow], deg - prevdegree)
                         for oldv, newv in zip(berncoold, bernconew):
                             if newv &lt; oldv:
                                 # print([i, deg, &quot;Inconsistent approx. from below&quot;])
                                 consistent = False
                                 break
                     if fromAbove and consistent:
-                        # NOTE: .n() can introduce rounding error
-                        bernconew = [a.n() for a in ofuncabove]
-                        berncoold = degelev([b.n() for b in oldabove], deg - prevdegree)
+                        # NOTE: Bounds ensure that in case of doubt,
+                        # the approximation is judged to be inconsistent
+                        bernconew = [upperbound(a) for a in ofuncabove]
+                        berncoold = degelev([lowerbound(b) for b in oldabove], deg - prevdegree)
                         for oldv, newv in zip(berncoold, bernconew):
                             if oldv &lt; newv:
                                 # print([i, deg, &quot;Inconsistent approx. from above&quot;])
@@ -1009,21 +1013,21 @@ calc_linear_func(count=8)
         i += 1
     # Print the results of the approximation scheme in Markdown format
     data = &quot;* Let _f_(_&amp;lambda;_) = %s.  Then:\n&quot; % (str(func))
-    data += &quot;    * **fbelow**(_n_, _k_) = _f_(_k_/_n_)&quot;
+    data += &quot;    - **fbelow**(_n_, _k_) = _f_(_k_/_n_)&quot;
     if fromBelow:
         data += (
             &quot; &amp;minus; 3 / 2&lt;sup&gt;_i_&lt;/sup&gt;, where _i_ depends on _n_ as described below&quot;
         )
     data += &quot;.\n&quot;
-    data += &quot;    * **fabove**(_n_, _k_) = _f_(_k_/_n_)&quot;
+    data += &quot;    - **fabove**(_n_, _k_) = _f_(_k_/_n_)&quot;
     if fromAbove:
         data += &quot; + 3 / 2&lt;sup&gt;_i_&lt;/sup&gt;, where _i_ depends on _n_ as described below&quot;
     data += &quot;.\n&quot;
     data += (
-        &quot;    * **fbound**(_n_) = [0, 1] if _n_&amp;ge;%d, or [&amp;minus;1, 2] otherwise.\n&quot;
+        &quot;    - **fbound**(_n_) = [0, 1] if _n_&amp;ge;%d, or [&amp;minus;1, 2] otherwise.\n&quot;
         % (values[0][1])
     )
-    data += &quot;    * For the following values of _n_, the value of _i_ is: &quot;
+    data += &quot;    - For the following values of _n_, the value of _i_ is: &quot;
     lasti = 0
     for value in values:
         data += &quot;_n_=%d &amp;rarr; _i_=%d; &quot; % (value[1], value[0])
@@ -1050,6 +1054,16 @@ calc_linear_func(count=8)
 &quot;&quot;&quot;  Helper methods &quot;&quot;&quot;
 def rminimum(f, x):
     return -rmaximum(-f, x)
+
+def upperbound(x):
+   # Calculates a limited-precision upper bound of x.
+   boundmult = S(1000000000000000)
+   return ceiling(x*boundmult)/boundmult
+
+def lowerbound(x):
+   # Calculates a limited-precision lower bound of x.
+   boundmult = S(1000000000000000)
+   return floor(x*boundmult)/boundmult
 
 def rmaximum(f, x, a=0, b=1, depth=0):
     if depth &gt;= 4:
