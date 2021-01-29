@@ -694,18 +694,20 @@ The `approxscheme` method takes these parameters:
 - `fromAbove`: Build an approximation from above. Default is `True`; can be set to `False` if `func` is convex.  If `True`, `func` must be bounded away from 1.
 - `fromBelow`: Build an approximation from below. Default is `True`; can be set to `False` if `func` is concave.  If `True`, `func` must be bounded away from 0.
 - `lastdeg`: Last polynomial degree to generate.  Must be a power of 2.  Default is 1024.
+- `ratio`: Ratio in which to tighten the generated polynomials against `func`.  Must be 1 or less.
 
 The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
 
 ```
 import math
 
-def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
+def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024, ratio=1):
     if (not fromBelow) and (not fromAbove):
         raise ValueError
     # NOTE: rmaximum and rminimum currently use numerical min-/maximization
     # which is not always accurate.  Unfortunately, SymPy appears
     # not to have a convenient numerical optimizer.
+    ratio = S(ratio)
     rmn = Abs(rminimum(func, x))
     rmx = Abs(rmaximum(func, x))
     epsilon = Min(rmn, 1 - rmx)
@@ -737,13 +739,17 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
     errTargetData = []
     err = -1
     failCount = 0
+    easyMin = 0
+    easyMax = 1
     while True:
         if deg > lastdeg:
             break
         while True:
             ofuncpoly = [func.subs(x, Rational(j, deg)) for j in range(deg + 1)]
-            # Offset of Bernstein polynomial from the function
-            offset = Rational(3, 2 ** i)
+            # Offset of Bernstein polynomial from the function.
+            # NOTE: Can be reduced without affecting correctness,
+            # but may not be greater than 3/(2^i).
+            offset = Rational(3, 2 ** i) * ratio
             ofuncabove = [v + offset for v in ofuncpoly] if fromAbove else None
             ofuncbelow = [v - offset for v in ofuncpoly] if fromBelow else None
             bpabove = bernpoly(ofuncabove, x) if fromAbove else None
@@ -757,8 +763,8 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
             if err == 999 or (errbelow > errabove and fromBelow):
                 err = errbelow
             # maxErrorTol is the maximum error tolerance for this value of i
-            # NOTE: Can be reduced for better correctness, but may
-            # not be greater than offset/3.
+            # NOTE: Can be reduced without affecting correctness,
+            # but may not be greater than offset/3.
             maxErrorTol = offset/3
             errTargetProportion = err / maxErrorTol
             if err < maxErrorTol:
@@ -792,6 +798,10 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
                     errorProportion = newErrorProportion
                     degreeProportion = deg / prevdegree
                     errorData.append(err)
+                    if deg>1 and len(values)==0:
+                        # Add constant functions for degree 1 if we went past degree 1
+                        easyMin = lowerbound(rmn-offset-err,1000)
+                        easyMax = upperbound(rmx+offset+err,1000)
                     errTargetData.append(errTargetProportion)
                     values.append([i, deg])
                     preverror = err
@@ -807,21 +817,29 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
         i += 1
     # Print the results of the approximation scheme in Markdown format
     data = "* Let _f_(_&lambda;_) = %s.  Then:\n" % (str(func))
-    data += "    - **fbelow**(_n_, _k_) = _f_(_k_/_n_)"
+    addit = "3 / 2<sup>_i_</sup>"
+    if ratio != 1:
+        addit = "(%s) \* 3 / 2<sup>_i_</sup>" % (ratio)
+    data += "    * **fbelow**(_n_, _k_) = "
+    if easyMin > 0:
+        data += "%s if _n_ is 1; otherwise, " % (easyMin)
+    data += "_f_(_k_/_n_)"
     if fromBelow:
-        data += (
-            " &minus; 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
-        )
+        data += " &minus; %s, where _i_ depends on _n_ as described below" % (addit)
     data += ".\n"
-    data += "    - **fabove**(_n_, _k_) = _f_(_k_/_n_)"
+    data += "    - **fabove**(_n_, _k_) = "
+    if easyMax < 1:
+        data += "%s if _n_ is 1; otherwise, " % (easyMax)
+    data += "_f_(_k_/_n_)"
     if fromAbove:
-        data += " + 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below"
+        data += " + %s, where _i_ depends on _n_ as described below" % (addit)
     data += ".\n"
+    firstDegree = 1 if easyMin > 0 or easyMax < 1 else values[0][1]
     data += (
-        "    - **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
-        % (values[0][1])
+        "    * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
+        % (firstDegree)
     )
-    data += "    - For the following values of _n_, the value of _i_ is: "
+    data += "    * For the following values of _n_, the value of _i_ is: "
     lasti = 0
     for value in values:
         data += "_n_=%d &rarr; _i_=%d; " % (value[1], value[0])
@@ -849,14 +867,14 @@ def approxscheme(func, x, fromBelow=True, fromAbove=True, lastdeg=1024):
 def rminimum(f, x):
     return -rmaximum(-f, x)
 
-def upperbound(x):
+def upperbound(x, boundmult=1000000000000000):
    # Calculates a limited-precision upper bound of x.
-   boundmult = S(1000000000000000)
+   boundmult = S(boundmult)
    return ceiling(x*boundmult)/boundmult
 
-def lowerbound(x):
+def lowerbound(x, boundmult=1000000000000000):
    # Calculates a limited-precision lower bound of x.
-   boundmult = S(1000000000000000)
+   boundmult = S(boundmult)
    return floor(x*boundmult)/boundmult
 
 def rmaximum(f, x, a=0, b=1, depth=0):
