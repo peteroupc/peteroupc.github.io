@@ -2020,17 +2020,24 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h3>Simulating Probabilities vs. Estimating Probabilities</h3>
 
-<p>A Bernoulli factory or another algorithm that produces heads with a given probability acts as an unbiased estimator for that probability that produces estimates in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>. As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
+<p>If an algorithm&mdash;</p>
+
+<ul>
+<li>takes flips of a coin with a given probability of heads (<em>&lambda;</em>), and</li>
+<li>produces heads with a probability that depends on <em>&lambda;</em> (<em>f</em>(<em>&lambda;</em>)),</li>
+</ul>
+
+<p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
 
 <ol>
-<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>), where <em>f</em>(.) is a factory function and <em>&lambda;</em> is the input coin&#39;s probability of heads;<sup><a href="#Note57"><strong>(57)</strong></a></sup></li>
+<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note57"><strong>(57)</strong></a></sup></li>
 <li>generating a uniform random number in [0,1], call it <em>u</em>; and</li>
 <li>returning 1 if <em>u</em> is less than <em>v</em>, or 0 otherwise.</li>
 </ol>
 
 <p>In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because &quot;exact sampling&quot; is the focus of this page, this page does not cover algorithms that directly estimate <em>&lambda;</em> or <em>f</em>(<em>&lambda;</em>). See also (Mossel and Peres 2005, section 4.3)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</p>
 
-<p>As also shown in (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, however, if <em>f</em>(<em>&lambda;</em>) can&#39;t serve as a factory function, it&#39;s not possible to build an unbiased estimator of that function which produces estimates in [0, 1] almost surely, since simulating that function isn&#39;t possible.  For example, function A can&#39;t serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This <em>is</em> possible for function B, however (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p>
+<p>Only <em>factory functions</em> can have unbiased estimation algorithms whose estimates lie in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>  For example, function A can&#39;t serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This <em>is</em> possible for function B, however (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p>
 
 <ul>
 <li>Function A: 2 * <em>&lambda;</em>, when <em>&lambda;</em> lies in (0, 1/2).</li>

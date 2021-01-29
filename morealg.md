@@ -27,6 +27,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
+    - [**Non-Negative Factories**](#Non_Negative_Factories)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
@@ -210,6 +211,40 @@ I suspected that the required degree _d_ would be floor(_m_\*2/3)+1, as describe
 
 - (3.) Let _r_ be floor(_m_\*2/3)+1, and let _d_ be _m_\*2+_r_.
 - (4.) (Simulate the polynomial, whose degree is _d_.) Flip the input coin _d_ times and set _h_ to the number of ones generated this way.  Let _a_ be (1/2) \* 2<sup>_m_\*2</sup>\*choose(_r_,_h_&minus;_m_)/choose(_d_, _h_) (the polynomial's _h_<sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability _a_, return 1.  Otherwise, return 0.
+
+<a id=Non_Negative_Factories></a>
+### Non-Negative Factories
+
+The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].
+
+**Algorithm 1.** Say we have an _oracle_ that produces random numbers in the interval \[_a_, _b_\], and the mean of these numbers is _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
+
+- is continuous everywhere,
+- is bounded from below,
+- does not go to 0 exponentially fast in value, and
+- returns 0 everywhere or returns a value 0 or greater at each of the points _a_ and _b_ and a value greater than 0 at each other point
+
+(Jacob and Thiery 2015)<sup>[**(24)**](#Note24)</sup>. (Here, _a_ and _b_ are both real numbers and may be less than 0.)
+
+1. Let _g_(_&lambda;_) = _f_(_a_\*(1&minus;_&lambda;_)+_b_\*_&lambda;_)/_&kappa;_, where _&kappa;_ is greater than the maximum value of _f_ in the interval [_a_, _b_].
+2. Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_), return 1.  Otherwise, return 0."
+3. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&nu;_ input coin.  Then return _&kappa;_ times the result.
+
+> **Example:** Suppose an oracle produces random numbers in the interval [3, 13] with mean _&mu;_, and we seek to use the oracle to produce non-negative random numbers with mean _f_(_&mu;_) = &minus;319/100 + _&mu;_\*103/50 &minus; _&mu;_<sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of _f_ in that interval, _g_(_&lambda;_) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  _g_ can't be simulated as is, though, but by increasing _g_'s degree to 3 we get the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so we can proceed with the following algorithm (see "[**Certain Polynomials in Bernstein Form**](#Certain_Polynomials_in_Bernstein_Form)"):
+>
+> 1. Set _heads_ to 0.
+> 2. Generate three random numbers from the oracle (which must produce random numbers in the interval [3, 13]).  For each number _x_: With probability (_x_&minus;3)/(10&minus;3), add 1 to _heads_.
+> 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
+
+**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is known to be greater than 0 and greater than or equal to a number _&delta;_.  (Note that averaging to the mean of _f_(_X_) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers.)  The algorithm to do so follows (Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
+
+1. Generate a random number from the oracle, call it _&xi;_.
+2. Let _m_ be an upper bound of the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
+3. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_, using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, return abs(_f_(_&xi;_)).
+
+> **Example:** An example from Lee et al. (2014)<sup>[**(26)**](#Note26)</sup>.  Say the oracle produces uniform random numbers in [0, 3\*_&pi;_], and let _f_(_&mu;_) = sin(_&mu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random numbers that average to that mean.
+>
+> **Note:** (Lee et al. 2014, Corollary 4)<sup>[**(27)**](#Note27)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_] and the mean of _f_(_X_) is known to be greater than _b_, then Algorithm 2 can be modified as follows: (i) Use _f_(_&mu;_) = _f_(_&mu;_) &minus; _b_; (ii) _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_); (iii) when the algorithm returns a number, add _b_ to it.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
@@ -516,6 +551,10 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note21>(21)</sup> Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.</small>
 - <small><sup id=Note22>(22)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
 - <small><sup id=Note23>(23)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note24>(24)</sup> Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.</small>
+- <small><sup id=Note25>(25)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note26>(26)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note27>(27)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
 
 <a id=Appendix></a>
 ## Appendix

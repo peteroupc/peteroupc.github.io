@@ -1542,15 +1542,20 @@ For certain values of _&lambda;_, Kozen (2014)<sup>[**(46)**](#Note46)</sup> sho
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
 
-A Bernoulli factory or another algorithm that produces heads with a given probability acts as an unbiased estimator for that probability that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>. As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
+If an algorithm&mdash;
 
-1. finding in some way an unbiased estimate of _f_(_&lambda;_), where _f_(.) is a factory function and _&lambda;_ is the input coin's probability of heads;<sup>[**(57)**](#Note57)</sup>
+- takes flips of a coin with a given probability of heads (_&lambda;_), and
+- produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)),
+
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
+
+1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(57)**](#Note57)</sup>
 2. generating a uniform random number in [0,1], call it _u_; and
 3. returning 1 if _u_ is less than _v_, or 0 otherwise.
 
 In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ or _f_(_&lambda;_). See also (Mossel and Peres 2005, section 4.3)<sup>[**(21)**](#Note21)</sup>.
 
-As also shown in (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>, however, if _f_(_&lambda;_) can't serve as a factory function, it's not possible to build an unbiased estimator of that function which produces estimates in \[0, 1\] almost surely, since simulating that function isn't possible.  For example, function A can't serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
+Only _factory functions_ can have unbiased estimation algorithms whose estimates lie in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>  For example, function A can't serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
 
 - Function A: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2).
 - Function B: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2).
