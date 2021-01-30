@@ -307,7 +307,7 @@
 
 <p>(Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
 
-<p>In the algorithm below, let <em>&kappa;</em> be greater than the maximum value of <em>f</em> in the interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em>*(1&minus;<em>&lambda;</em>)+<em>b</em>*<em>&lambda;</em>)/<em>&kappa;</em>.</p>
+<p>In the algorithm below, let <em>&kappa;</em> be greater than the maximum value of <em>f</em> in the interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>&kappa;</em>.</p>
 
 <ol>
 <li>Create a <em>&lambda;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>) (see note below), return 1.  Otherwise, return 0.&quot;</li>
@@ -1250,7 +1250,7 @@ def degelev(poly, degs):
 
 <h3>Algorithm 2 for Non-Negative Factories</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known number greater than 0.  (Note that averaging to the mean of <em>f</em>(<em>X</em>) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers.)  The algorithm to do so follows (Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
+<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
 
 <ol>
 <li>Let <em>m</em> be an upper bound of the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -1260,7 +1260,12 @@ def degelev(poly, degs):
 <blockquote>
 <p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  Say the oracle produces uniform random numbers in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&mu;</em>) = sin(<em>&mu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random numbers that average to that mean.</p>
 
-<p><strong>Note:</strong> (Lee et al. 2014, Corollary 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
+<li><p>(Lee et al. 2014, Corollary 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p></li>
+</ol>
 
 <ul>
 <li>Use <em>f</em>(<em>&mu;</em>) = <em>f</em>(<em>&mu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>

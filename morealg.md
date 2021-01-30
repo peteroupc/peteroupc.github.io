@@ -227,7 +227,7 @@ The Bernoulli factory approach can be extended in two ways to produce random num
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
-In the algorithm below, let _&kappa;_ be greater than the maximum value of _f_ in the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_\*(1&minus;_&lambda;_)+_b_\*_&lambda;_)/_&kappa;_.
+In the algorithm below, let _&kappa;_ be greater than the maximum value of _f_ in the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_&kappa;_.
 
 1. Create a _&lambda;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_) (see note below), return 1.  Otherwise, return 0."
 2. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&lambda;_ input coin.  Then return _&kappa;_ times the result.
@@ -1021,14 +1021,17 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 <a id=Algorithm_2_for_Non_Negative_Factories></a>
 ### Algorithm 2 for Non-Negative Factories
 
-**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known number greater than 0.  (Note that averaging to the mean of _f_(_X_) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers.)  The algorithm to do so follows (Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
+**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
 
 1. Let _m_ be an upper bound of the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
 > **Example:** An example from Lee et al. (2014)<sup>[**(25)**](#Note25)</sup>.  Say the oracle produces uniform random numbers in [0, 3\*_&pi;_], and let _f_(_&mu;_) = sin(_&mu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random numbers that average to that mean.
 >
-> **Note:** (Lee et al. 2014, Corollary 4)<sup>[**(25)**](#Note25)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> **Notes:**
+>
+> 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected or average value) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&lambda;_) = exp(&minus;_&lambda;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
+> 2. (Lee et al. 2014, Corollary 4)<sup>[**(25)**](#Note25)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 > - Use _f_(_&mu;_) = _f_(_&mu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 > - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
