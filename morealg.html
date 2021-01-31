@@ -1264,14 +1264,14 @@ def degelev(poly, degs):
 
 <ol>
 <li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
-<li><p>(Lee et al. 2014, Corollary 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p></li>
-</ol>
+<li><p>(Lee et al. 2014, Corollary 4)<sup><a href="#Note25"><strong>(25)</strong></a></sup>: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
 <ul>
 <li>Use <em>f</em>(<em>&mu;</em>) = <em>f</em>(<em>&mu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
 <li><em>m</em> is taken as max(<em>b</em>&minus;<em>a</em>, <em>c</em>&minus;<em>b</em>).</li>
 <li>When Algorithm 2 finishes, add <em>b</em> to its return value.</li>
-</ul>
+</ul></li>
+</ol>
 </blockquote>
 
 <p><a id=License></a></p>

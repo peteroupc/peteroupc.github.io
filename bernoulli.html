@@ -1840,7 +1840,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*2) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
 </ul>
 
-<p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.  The tighter approximation of (<em>n</em>*8) rather than (<em>n</em>*2) (see Powell 1981)<sup><a href="#Note49"><strong>(49)</strong></a></sup> won&#39;t work since it doesn&#39;t ensure the <em>consistency requirement</em>; an example of where it fails is the function <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2.</p></li>
+<p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.  The tighter approximation of (<em>n</em>*8) rather than (<em>n</em>*2) (see Powell 1981)<sup><a href="#Note49"><strong>(49)</strong></a></sup> won&#39;t work since it doesn&#39;t ensure the <em>consistency requirement</em>; an example of where it fails is the function <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2.</p></li>
 <li>If <em>f</em>(<em>&lambda;</em>) is <em>Lipschitz continuous</em> in (0, 1) and meets (b) in note 4, the following method implements <strong>fabove</strong> and <strong>fbelow</strong> (Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest value of abs(<em>f&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;</em> is the &quot;slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:
 
 <ul>
@@ -1893,11 +1893,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
 <li>Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).</li>
-<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form, one of which converges from above to a given function, the other from below.  These sequences must be nonincreasing or nondecreasing, respectively (but the polynomials themselves need not be), and the polynomials must be of increasing degree and have Bernstein coefficients that are all rational numbers lying in [0, 1], but the polynomials in each sequence may start closer to the function at some points than at others.  There is also a technical requirement: For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients, once the latter polynomial is converted to have the same degree as the other (see Holtz et al. 2011<sup><a href="#Note25"><strong>(25)</strong></a></sup>).</p>
+<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form that converge from above and below to a function as follows: (a) Each sequence&#39;s polynomials must have Bernstein coefficients lying in [0, 1], and be of increasing degree; (b) the upper polynomial must lie at or above the corresponding lower polynomial of the same degree; (c) for each sequence, the difference between one polynomial and the previous one (once it&#39;s elevated to the same degree) must have non-negative Bernstein coefficients.  (These requirements ensure the two sequences are nonincreasing or nondecreasing.  The polynomials in each sequence may start closer to the function at some points than at others.)</p>
 
-<p>Especially helpful would be an automated procedure to compute such sequences, in terms of their Bernstein coefficients, for a large class of factory functions (such as min(<em>&lambda;</em>, <em>c</em>) where <em>c</em> is a constant in (0, 1)).  (This is in the sense that when given only information about the desired function, such as the coordinates of the function&#39;s piecewise linear graph, the procedure can automatically compute the appropriate sequences without further user intervention.)</p>
+<p>The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following classes of functions (or subsets of them)?</p>
 
-<p>I have found <a href="https://math.stackexchange.com/questions/3889382"><strong>several methods</strong></a> to compute such sequences, but most of them have issues that I seek clarification on.  For example, the method of Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup> requires knowing the function&#39;s smoothness class and requires the function to be bounded away from 0 and 1; moreover the method uses several constants, namely <em>s</em>, <em>θ<sub>α</sub></em>, and <em>D</em>, with no easy lower bounds.  As another example, Gal&#39;s method (1989)<sup><a href="#Note53"><strong>(53)</strong></a></sup> produces polynomials that converge too slowly to be practical.</p>
+<ul>
+<li>Non-concave functions with a minimum of 0.</li>
+<li>Non-convex functions with a maximum of 1.</li>
+<li>Functions that are neither C<sup>2</sup> continuous nor Lipschitz continuous.</li>
+</ul>
 
 <p>See also my questions on <em>Mathematics Stack Exchange</em>:</p>
 
@@ -1983,16 +1987,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note50>(50)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
 <li><small><sup id=Note51>(51)</sup> Lorentz, G.G., <em>Bernstein Polynomials</em>, 1953.</small></li>
 <li><small><sup id=Note52>(52)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
-<li><small><sup id=Note53>(53)</sup> Gal, S.G., &quot;Constructive approximation by monotonous polynomial sequences in LipMα, with α ∈ (0, 1]&quot;, <em>Journal of Approximation Theory</em> 59 (1989).</small></li>
-<li><small><sup id=Note54>(54)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note55>(55)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note56>(56)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note57>(57)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
-<li><small><sup id=Note58>(58)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note59>(59)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note60>(60)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note61>(61)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note62>(62)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note53>(53)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note54>(54)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note55>(55)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note56>(56)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
+<li><small><sup id=Note57>(57)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
+<li><small><sup id=Note58>(58)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
+<li><small><sup id=Note59>(59)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note60>(60)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note61>(61)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2005,9 +2008,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note55"><strong>(55)</strong></a></sup>, (Peres 1992)<sup><a href="#Note56"><strong>(56)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note54"><strong>(54)</strong></a></sup>, (Peres 1992)<sup><a href="#Note55"><strong>(55)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</p>
@@ -2030,7 +2033,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
 
 <ol>
-<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note57"><strong>(57)</strong></a></sup></li>
+<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note56"><strong>(56)</strong></a></sup></li>
 <li>generating a uniform random number in [0,1], call it <em>u</em>; and</li>
 <li>returning 1 if <em>u</em> is less than <em>v</em>, or 0 otherwise.</li>
 </ol>
@@ -2044,7 +2047,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Function B: 2 * <em>&lambda;</em>, when <em>&lambda;</em> lies in (0, 1/2 &minus; <em>&#x03F5;</em>), where <em>&#x03F5;</em> is in (0, 1/2).</li>
 </ul>
 
-<p>Glynn (2016)<sup><a href="#Note58"><strong>(58)</strong></a></sup> distinguishes between&mdash;</p>
+<p>Glynn (2016)<sup><a href="#Note57"><strong>(57)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
@@ -2093,7 +2096,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note59"><strong>(59)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note58"><strong>(58)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
@@ -2206,7 +2209,7 @@ bound2=rmaximum(func,x)+m/(n*2)
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note60"><strong>(60)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note59"><strong>(59)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
@@ -2369,13 +2372,13 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Any</td>
 <td>Any</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note61"><strong>(61)</strong></a></sup>).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note60"><strong>(60)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.</td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note53"><strong>(53)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2524,7 +2527,7 @@ def valid_perm(f, x, n):
 <li>the sum of <em>j</em><sup>th</sup> homogeneous-basis coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note62"><strong>(62)</strong></a></sup>).  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note61"><strong>(61)</strong></a></sup>).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s homogeneous-basis coefficient <em>k</em> is found as follows:

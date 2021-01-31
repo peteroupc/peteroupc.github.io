@@ -1141,8 +1141,12 @@ class Bernoulli:
                 if coin() == 1:
                     ones += 1
             c = int(math.comb(degree, ones))
-            a[(degree, ones)] = int(fbelow(degree, ones) * c)
-            b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
+            try:
+                a[(degree, ones)] = int(fbelow(degree, ones) * c)
+                b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
+            except:
+                a[(degree, ones)] = int(Fraction(fbelow(degree, ones)) * c)
+                b[(degree, ones)] = int((1 - Fraction(fabove(degree, ones))) * c)
             # print([degree,ones,float(fbelow(degree,ones)),float(fabove(degree,ones))])
             acount = a[(degree, ones)]
             bcount = b[(degree, ones)]
@@ -1157,11 +1161,13 @@ class Bernoulli:
                     o = ones - k
                     if not (lastdegree, o) in a:
                         a[(lastdegree, o)] = int(
-                            fbelow(lastdegree, o) * int(math.comb(lastdegree, o))
+                            Fraction(fbelow(lastdegree, o))
+                            * int(math.comb(lastdegree, o))
                         )
                     if not (lastdegree, o) in b:
                         b[(lastdegree, o)] = int(
-                            (1 - fabove(lastdegree, o)) * int(math.comb(lastdegree, o))
+                            (1 - Fraction(fabove(lastdegree, o)))
+                            * int(math.comb(lastdegree, o))
                         )
                     st = int(math.comb(diff, k))
                     alpha += a[(lastdegree, o)] * st

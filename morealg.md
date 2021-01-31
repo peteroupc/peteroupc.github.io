@@ -1033,9 +1033,9 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected or average value) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&lambda;_) = exp(&minus;_&lambda;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
 > 2. (Lee et al. 2014, Corollary 4)<sup>[**(25)**](#Note25)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
-> - Use _f_(_&mu;_) = _f_(_&mu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
-> - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
-> - When Algorithm 2 finishes, add _b_ to its return value.
+>     - Use _f_(_&mu;_) = _f_(_&mu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
+>     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
+>     - When Algorithm 2 finishes, add _b_ to its return value.
 
 <a id=License></a>
 ## License
