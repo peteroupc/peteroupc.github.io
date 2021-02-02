@@ -1757,7 +1757,7 @@
 <p>A coin with unknown probability of heads of <em>&lambda;</em> can be turned into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that works with two sequences of polynomials:</p>
 
 <ul>
-<li>One sequence of polynomials must be non-decreasing and converge from below to <em>f</em>, and the other sequence must be non-increasing and converge from above to <em>f</em>.</li>
+<li>One sequence of polynomials converges from above to <em>f</em>, the other from below.</li>
 <li>For both sequences, there must be a way to calculate their polynomials&#39; <em>Bernstein coefficients</em>.</li>
 <li>For each sequence, the polynomials must have increasing degree.</li>
 <li>For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is elevated to the same degree as the other).  This is also called the <em>consistency requirement</em>.</li>
@@ -1841,24 +1841,27 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ul>
 
 <p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.<sup><a href="#Note49"><strong>(49)</strong></a></sup></p></li>
-<li><p>The following method implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p></li>
-</ol>
+<li><p>The following method implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
 <li>is <em>Lipschitz continuous</em> in (0, 1), meaning its slope doesn&#39;t tend to a vertical slope anywhere there, and</li>
 <li>meets (b) in note 4</li>
 </ul>
 
-<p>(Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest value of abs(<em>f&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;</em> is the &quot;slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:
-    - <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).
-    - <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).
-6. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.
-7. If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note50"><strong>(50)</strong></a></sup>), since both bounds would then be available at once.</p>
+<p>(Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest value of abs(<em>f&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;</em> is the &quot;slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
+</ul></li>
+<li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
+<li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note50"><strong>(50)</strong></a></sup>), since both bounds would then be available at once.</li>
+</ol>
 
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup><a href="#Note51"><strong>(51)</strong></a></sup>:
+<li>If <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, <em>c</em>) with <em>c</em> in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup><a href="#Note51"><strong>(51)</strong></a></sup>, for all <em>n</em> that are powers of 2:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
@@ -1925,7 +1928,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Compute the (<em>n</em>&minus;1)<sup>th</sup> upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L&prime;</em> and <em>U&prime;</em>.  (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [<em>L&prime;</em>, <em>U&prime;</em>] must equal or entirely contain the interval [<em>L</em>, <em>U</em>].)</li>
 </ol>
 
-<p>These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to <em>f</em>, where <em>L</em> or <em>L&prime;</em> and <em>U</em> or <em>U&prime;</em> are their lower and upper bound approximations.  The section on general factory functions show how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to <em>f</em>) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?</p></li>
+<p>These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to <em>f</em>, where <em>L</em> or <em>L&prime;</em> and <em>U</em> or <em>U&prime;</em> are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to <em>f</em>) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?</p></li>
 <li>According to (Mossel and Peres 2005)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, a pushdown automaton can take a coin with unknown probability of heads of <em>&lambda;</em> and turn it into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>) only if <em>f</em> is a factory function and can be a solution of a polynomial system with rational coefficients. (See &quot;<a href="#Certain_Algebraic_Functions"><strong>Certain Algebraic Functions</strong></a>&quot;.)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate <em>any</em> <em>f</em> of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which <em>probability generating functions</em> can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)</li>
 </ol>
 

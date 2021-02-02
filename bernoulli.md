@@ -1335,7 +1335,7 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 
 A coin with unknown probability of heads of _&lambda;_ can be turned into a coin with probability of heads of _f_(_&lambda;_), where _f_ is any factory function, via an algorithm that works with two sequences of polynomials:
 
-- One sequence of polynomials must be non-decreasing and converge from below to _f_, and the other sequence must be non-increasing and converge from above to _f_.
+- One sequence of polynomials converges from above to _f_, the other from below.
 - For both sequences, there must be a way to calculate their polynomials' _Bernstein coefficients_.
 - For each sequence, the polynomials must have increasing degree.
 - For each sequence, the difference between one polynomial and its previous one must have non-negative Bernstein coefficients (once the previous polynomial is elevated to the same degree as the other).  This is also called the _consistency requirement_.
@@ -1397,10 +1397,11 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.<sup>[**(49)**](#Note49)</sup>
 > 5. The following method implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 >
-> - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
-> - meets (b) in note 4
+>     - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
+>     - meets (b) in note 4
 >
-> (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest value of abs(_f&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;_ is the "slope" function of _f_.  Then for all _n_ that are powers of 2:
+>     (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest value of abs(_f&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;_ is the "slope" function of _f_.  Then for all _n_ that are powers of 2:
+>
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 > 6. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
@@ -1408,7 +1409,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >
 > **Examples:**
 >
-> 1. If _f_(_&lambda;_) = min(_&lambda;_, _c_) with _c_ in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup>[**(51)**](#Note51)</sup>:
+> 1. If _f_(_&lambda;_) = min(_&lambda;_, _c_) with _c_ in the interval (0, 1), then the following implementations can be used (Lorentz 1953)<sup>[**(51)**](#Note51)</sup>, for all _n_ that are powers of 2:
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _S_/sqrt(_n_), where _S_ = (4306+837\*sqrt(6))/5832 is Sikkema's constant (Sikkema 1961)<sup>[**(52)**](#Note52)</sup> and has an upper bound of 1.08989.
 >     - **fbound**(_n_) = [0, **fabove**(_n_, _n_)].
@@ -1452,7 +1453,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
     1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
     2. Compute the (_n_&minus;1)<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L&prime;_ and _U&prime;_.  (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L&prime;_, _U&prime;_] must equal or entirely contain the interval [_L_, _U_].)
 
-    These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions show how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?
+    These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?
 5. According to (Mossel and Peres 2005)<sup>[**(21)**](#Note21)</sup>, a pushdown automaton can take a coin with unknown probability of heads of _&lambda;_ and turn it into a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(23)**](#Note23)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
 
 <a id=Correctness_and_Performance_Charts></a>
