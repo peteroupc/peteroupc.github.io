@@ -16,7 +16,7 @@ In this scheme (Powell 1981), let _f_ be a twice differentiable function (that i
 
 - _b_(_n_, _k_) = _f_(_k_/_n_) + M / (8*_n_),
 
-where M is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative).
+where M is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
 And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
 
@@ -31,7 +31,7 @@ In this scheme, let _f_ be a Lipschitz continuous function in [0, 1] (that is, a
 
 - b(n, k) = f(k/n) + (5/4) / sqrt(n),
 
-where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant.
+where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval [0, _n_].
 
 And the lower polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;1:
 
