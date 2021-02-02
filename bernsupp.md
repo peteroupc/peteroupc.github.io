@@ -5,7 +5,7 @@
 
 The algorithms for general factory functions work with two sequences of polynomials: one converges from above to a function _f_(_&lambda;_), the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
 
-- The difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
+- For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
 The consistency requirement ensures that the polynomials converge monotonically to the target function.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.
 
@@ -73,3 +73,200 @@ As we can see, the elevated polynomial's coefficient 0.7590... is less than the 
 A similar counterexample can be built when _g_ = sin(4\*_&pi;_\*_&lambda;_)/4 + 1/2, a "smooth" function with Lipschitz constant _&pi;_.  In this case, the counterexample is present between the degree-3 and degree-4 lower polynomials.
 
 Thus, we have shown that this approximation scheme is not guaranteed to meet the consistency requirement for all Lipschitz continuous functions.
+
+<a id=SymPy_Code_for_Checking_Consistency></a>
+## SymPy Code for Checking Consistency
+
+This SymPy code calculates parameters for an approximation scheme of polynomials that converge to a target function.
+
+```
+def upperbound(x, boundmult=1000000000000000):
+    # Calculates a limited-precision upper bound of x.
+    boundmult = S(boundmult)
+    return ceiling(x * boundmult) / boundmult
+
+def lowerbound(x, boundmult=1000000000000000):
+    # Calculates a limited-precision lower bound of x.
+    boundmult = S(boundmult)
+    return floor(x * boundmult) / boundmult
+
+def degelev(poly, degs):
+    # Degree elevation of Bernstein polynomials.
+    # See also Tsai and Farouki 2001.
+    n = len(poly) - 1
+    ret = []
+    nchoose = [math.comb(n, j) for j in range(n // 2 + 1)]
+    degschoose = (
+        nchoose if degs == n else [math.comb(degs, j) for j in range(degs // 2 + 1)]
+    )
+    for k in range(0, n + degs + 1):
+        ndk = math.comb(n + degs, k)
+        c = 0
+        for j in range(max(0, k - degs), min(n, k) + 1):
+            degs_choose_kj = (
+                degschoose[k - j]
+                if k - j < len(degschoose)
+                else degschoose[degs - (k - j)]
+            )
+            n_choose_j = nchoose[j] if j < len(nchoose) else nchoose[n - j]
+            c += poly[j] * degs_choose_kj * n_choose_j / ndk
+        ret.append(c)
+    return ret
+
+<a id=def_buildOffset_kind_dd_n></a>
+################# def buildOffset(kind, dd, n):
+    if kind=="c2":
+       # Use the theoretical offset for twice
+       # differentiable functions. dd=max. abs. second derivative
+       return dd / (n * 2)
+    elif kind=="lipschitz":
+       # Use the theoretical offset for Lipschitz
+       # continuous functions. dd=max. abs. "slope"
+       return dd * (1+sqrt(2)) / sqrt(n)
+    elif kind=="sikkema":
+       # Use the theoretical offset for C0
+       # Lipschitz continuous functions involving Sikkema's constant.
+       # (If the function is not Lipschitz continuous the formula
+       # is sikkema*W(1/sqrt(n)), where W(h) is the function's
+       # modulus of continuity.)
+       sikkema=S(4306+837*sqrt(6))/5832
+       return sikkema * dd / sqrt(n)
+    elif kind=="c1":
+       # Use the theoretical offset for C1
+       # functions with a Lipschitz continuous slope.
+       # dd=max. abs. "slope-of-slope" (Lipschitz constant
+       # of first derivative). (G. G. Lorentz. Bernstein polynomials.
+       # Chelsea Publishing Co., New York,second edition, 1986.)
+       # (If the slope is not Lipschitz continuous the formula
+       # is (3/4)*(1/sqrt(n))*W(1/sqrt(n)), where W(h)
+       # is the _modulus of continuity_ of the slope function, that is,
+       # the maximum difference between the highest and lowest
+       # values of that function in any window of size h inside
+       # the interval [0, 1]).
+       return (S(3)/4) * dd / n
+    elif kind=="c0":
+       # Use the theoretical offset for C0
+       # Lipschitz continuous functions involving a more trivial bound
+       # (by Popoviciu)
+       return (S(5)/4) * dd / sqrt(n)
+    else:
+       raise ValueError
+
+def buildParam(kind, func, x, lip=None):
+   if kind=="c2" or kind=="c1":
+      try:
+        # Maximum of second derivative.
+        dd = maximum(diff(diff(func)), x, Interval(0,1))
+        dd2 = minimum(diff(diff(func)), x, Interval(0,1))
+        dd=Max(Abs(dd),Abs(dd2)).simplify()
+      except:
+        # Unfortunately, SymPy's maximum and minimum are
+        # not powerful enough to handle many common cases
+        # of functions (notably piecewise functions), and
+        # also has no convenient way to
+        # minimize or maximize functions numerically.
+        if lip==None: raise ValueError
+        dd=S(lip)
+   elif kind=="lipschitz" or kind=="sikkema" or kind=="c0":
+      try:
+        # Maximum of first derivative (Lipschitz constant)
+        ff=func.rewrite(Piecewise)
+        dd = maximum(diff(ff), x, Interval(0,1))
+        dd2 = minimum(diff(ff), x, Interval(0,1))
+        dd=Max(Abs(dd),Abs(dd2)).simplify()
+      except:
+        if lip==None: raise ValueError
+        dd=S(lip)
+   else:
+      raise ValueError
+   return dd
+
+def consistencyCheckInner(prevcurve, newcurve, ratio, diagnose=False):
+    n, prevcurve, prevoffset = prevcurve
+    n2, newcurve, newoffset = newcurve
+    degs = n2-n
+    prevoffset*=ratio
+    newoffset*=ratio
+    #print("newoffset=%s " % (newoffset.n()))
+    # NOTE: For the above and below cases, bounds ensure that in case of doubt,
+    # the approximation is judged to be inconsistent
+    # Below
+    belowbernconew = [lowerbound(a - newoffset) for a in newcurve]
+    maxbernconew=max(belowbernconew)
+    if maxbernconew < 0:
+       # Fully below 0
+       pass # return "offcurve"
+    belowberncoold = degelev([upperbound(b - prevoffset) for b in prevcurve], degs)
+    for oldv, newv in zip(belowberncoold, belowbernconew):
+        if newv < oldv:
+            # Inconsistent approximation from below
+            if diagnose:
+                print("Inconsistent from below")
+                print(["n, n2, prevoffset, newoffset",n,n2,prevoffset,newoffset])
+                print([S(c).n() for c in belowberncoold])
+                print([S(c).n() for c in belowbernconew])
+            return "incons"
+    # Above
+    bernconew = [upperbound(a + newoffset) for a in newcurve]
+    minbernconew=min(bernconew)
+    if minbernconew > 1:
+       # Fully above 1
+       pass # return "offcurve"
+    berncoold = degelev([lowerbound(b + prevoffset) for b in prevcurve], degs)
+    for oldv, newv in zip(berncoold, bernconew):
+        if oldv < newv:
+            # Inconsistent approximation from above
+            if diagnose:
+                print("Inconsistent from above")
+                print(["n, n2, prevoffset, newoffset",n,n2,prevoffset,newoffset])
+                print([S(c).n() for c in berncoold])
+                print([S(c).n() for c in bernconew])
+            return "incons"
+    return True
+
+def consistencyCheckCore(curvedata, ratio, diagnose=False):
+   for i in range(len(curvedata)-1):
+        cons=consistencyCheckInner(
+             curvedata[i], curvedata[i+1], ratio=ratio, diagnose=diagnose)
+        if cons=="incons":
+            return False
+   return True
+
+def consistencyCheck(func, x, kind="c2", lip=None):
+    # Find a near-optimal ratio that ensures an approximation
+    # scheme is consistent while being close to the function.
+    # 'func' - SymPy expression for the target function.
+    # x - SymPy symbol used by 'func'.
+    # 'kind' is a string specifying the approximation scheme,
+    # such as c2 (see code for buildParam).  lip is a manually
+    # determined parameter that depends on the 'kind', in case
+    # the parameter can't be found automatically.
+    print(func)
+    curvedata=[]
+    deg=1
+    dd=buildParam(kind, func, x, lip)
+    for i in range(1, 9+1):
+        offset=buildOffset(kind, dd, deg)
+        curvedata.append( (deg, [func.subs(x,S(j)/deg) for j in range(deg+1)], offset) )
+        deg+=1
+        #deg*=2
+    offset=buildOffset(kind, dd, 1)
+    if not consistencyCheckCore(curvedata, Rational(1)):
+       print("INCONSISTENT --> offset=%s [dd=%s, kind=%s]" % (\
+          S(offset).n(), upperbound(dd.n()).n(),kind))
+       consistencyCheckCore(curvedata, Rational(1),diagnose=True)
+       return
+    for cdlen in range(3, len(curvedata)+1):
+      left=Rational(0,1)
+      right=Rational(1,1)
+      for i in range(0,6):
+        mid=(left+right)/2
+        if consistencyCheckCore(curvedata[0:cdlen], mid):
+            right=mid
+        else:
+            left=mid
+      print("consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]" % (\
+          cdlen, S(offset*right).n(), right.n(), upperbound(dd.n()).n(),kind))
+    return
+
+```
