@@ -1147,7 +1147,6 @@ class Bernoulli:
             except:
                 a[(degree, ones)] = int(Fraction(fbelow(degree, ones)) * c)
                 b[(degree, ones)] = int((1 - Fraction(fabove(degree, ones))) * c)
-            # print([degree,ones,float(fbelow(degree,ones)),float(fabove(degree,ones))])
             acount = a[(degree, ones)]
             bcount = b[(degree, ones)]
             c -= acount + bcount
@@ -1159,15 +1158,18 @@ class Bernoulli:
                 beta = 0
                 for k in range(u, v + 1):
                     o = ones - k
+                    comb_lastdegree_o = -1
                     if not (lastdegree, o) in a:
+                        if comb_lastdegree_o < 0:
+                            comb_lastdegree_o = int(math.comb(lastdegree, o))
                         a[(lastdegree, o)] = int(
-                            Fraction(fbelow(lastdegree, o))
-                            * int(math.comb(lastdegree, o))
+                            Fraction(fbelow(lastdegree, o)) * comb_lastdegree_o
                         )
                     if not (lastdegree, o) in b:
+                        if comb_lastdegree_o < 0:
+                            comb_lastdegree_o = int(math.comb(lastdegree, o))
                         b[(lastdegree, o)] = int(
-                            (1 - Fraction(fabove(lastdegree, o)))
-                            * int(math.comb(lastdegree, o))
+                            (1 - Fraction(fabove(lastdegree, o))) * comb_lastdegree_o
                         )
                     st = int(math.comb(diff, k))
                     alpha += a[(lastdegree, o)] * st

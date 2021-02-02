@@ -113,126 +113,158 @@ def degelev(poly, degs):
         ret.append(c)
     return ret
 
-<a id=def_buildOffset_kind_dd_n></a>
-################# def buildOffset(kind, dd, n):
-    if kind=="c2":
-       # Use the theoretical offset for twice
-       # differentiable functions. dd=max. abs. second derivative
-       return dd / (n * 2)
-    elif kind=="lipschitz":
-       # Use the theoretical offset for Lipschitz
-       # continuous functions. dd=max. abs. "slope"
-       return dd * (1+sqrt(2)) / sqrt(n)
-    elif kind=="sikkema":
-       # Use the theoretical offset for C0
-       # Lipschitz continuous functions involving Sikkema's constant.
-       # (If the function is not Lipschitz continuous the formula
-       # is sikkema*W(1/sqrt(n)), where W(h) is the function's
-       # modulus of continuity.)
-       sikkema=S(4306+837*sqrt(6))/5832
-       return sikkema * dd / sqrt(n)
-    elif kind=="c1":
-       # Use the theoretical offset for C1
-       # functions with a Lipschitz continuous slope.
-       # dd=max. abs. "slope-of-slope" (Lipschitz constant
-       # of first derivative). (G. G. Lorentz. Bernstein polynomials.
-       # Chelsea Publishing Co., New York,second edition, 1986.)
-       # (If the slope is not Lipschitz continuous the formula
-       # is (3/4)*(1/sqrt(n))*W(1/sqrt(n)), where W(h)
-       # is the _modulus of continuity_ of the slope function, that is,
-       # the maximum difference between the highest and lowest
-       # values of that function in any window of size h inside
-       # the interval [0, 1]).
-       return (S(3)/4) * dd / n
-    elif kind=="c0":
-       # Use the theoretical offset for C0
-       # Lipschitz continuous functions involving a more trivial bound
-       # (by Popoviciu)
-       return (S(5)/4) * dd / sqrt(n)
+def buildOffset(kind, dd, n):
+    if kind == "c2":
+        # Use the theoretical offset for twice
+        # differentiable functions. dd=max. abs. second derivative
+        return dd / (n * 2)
+    elif kind == "lipschitz":
+        # Use the theoretical offset for Lipschitz
+        # continuous functions. dd=max. abs. "slope"
+        return dd * (1 + sqrt(2)) / sqrt(n)
+    elif kind == "sikkema":
+        # Use the theoretical offset for C0
+        # Lipschitz continuous functions involving Sikkema's constant.
+        # (If the function is not Lipschitz continuous the formula
+        # is sikkema*W(1/sqrt(n)), where W(h) is the function's
+        # modulus of continuity.)
+        sikkema = S(4306 + 837 * sqrt(6)) / 5832
+        return sikkema * dd / sqrt(n)
+    elif kind == "c1":
+        # Use the theoretical offset for C1
+        # functions with a Lipschitz continuous slope.
+        # dd=max. abs. "slope-of-slope" (Lipschitz constant
+        # of first derivative). (G. G. Lorentz. Bernstein polynomials.
+        # Chelsea Publishing Co., New York,second edition, 1986.)
+        # (If the slope is not Lipschitz continuous the formula
+        # is (3/4)*(1/sqrt(n))*W(1/sqrt(n)), where W(h)
+        # is the _modulus of continuity_ of the slope function, that is,
+        # the maximum difference between the highest and lowest
+        # values of that function in any window of size h inside
+        # the interval [0, 1]).
+        return (S(3) / 4) * dd / n
+    elif kind == "c0":
+        # Use the theoretical offset for C0
+        # Lipschitz continuous functions involving a more trivial bound
+        # (by Popoviciu)
+        return (S(5) / 4) * dd / sqrt(n)
     else:
-       raise ValueError
+        raise ValueError
+
+def nminmax(func, x):
+    # Find minimum and maximum at [0,1].
+    try:
+        return [minimum(func, x, Interval(0, 1)), maximum(func, x, Interval(0, 1))]
+    except:
+        print("WARNING: Resorting to numerical optimization")
+    cv = [0, 1]
+    df = diff(func)
+    for i in range(20):
+        try:
+            ns = nsolve(df, x, (S(i) / 20, S(i + 1) / 20), solver="bisect")
+            cv.append(ns)
+        except:
+            pass
+    # Evaluate at critical points
+    cv = [func.subs(x, c) for c in cv]
+    return [Min(*cv).simplify(), Max(*cv).simplify()]
 
 def buildParam(kind, func, x, lip=None):
-   if kind=="c2" or kind=="c1":
-      try:
-        # Maximum of second derivative.
-        dd = maximum(diff(diff(func)), x, Interval(0,1))
-        dd2 = minimum(diff(diff(func)), x, Interval(0,1))
-        dd=Max(Abs(dd),Abs(dd2)).simplify()
-      except:
-        # Unfortunately, SymPy's maximum and minimum are
-        # not powerful enough to handle many common cases
-        # of functions (notably piecewise functions), and
-        # also has no convenient way to
-        # minimize or maximize functions numerically.
-        if lip==None: raise ValueError
-        dd=S(lip)
-   elif kind=="lipschitz" or kind=="sikkema" or kind=="c0":
-      try:
-        # Maximum of first derivative (Lipschitz constant)
-        ff=func.rewrite(Piecewise)
-        dd = maximum(diff(ff), x, Interval(0,1))
-        dd2 = minimum(diff(ff), x, Interval(0,1))
-        dd=Max(Abs(dd),Abs(dd2)).simplify()
-      except:
-        if lip==None: raise ValueError
-        dd=S(lip)
-   else:
-      raise ValueError
-   return dd
+    if kind == "c2" or kind == "c1":
+        try:
+            # Maximum of second derivative.
+            dd = nminmax(diff(diff(func)), x)
+            dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
+        except:
+            # Unfortunately, SymPy's maximum and minimum are
+            # not powerful enough to handle many common cases
+            # of functions (notably piecewise functions), and
+            # also has no convenient way to
+            # minimize or maximize functions numerically.
+            if lip == None:
+                raise ValueError
+            dd = S(lip)
+    elif kind == "lipschitz" or kind == "sikkema" or kind == "c0":
+        try:
+            # Maximum of first derivative (Lipschitz constant)
+            ff = func.rewrite(Piecewise)
+            dd = nminmax(diff(diff(func)), x)
+            dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
+        except:
+            if lip == None:
+                raise ValueError
+            dd = S(lip)
+    else:
+        raise ValueError
+    return dd
 
-def consistencyCheckInner(prevcurve, newcurve, ratio, diagnose=False):
+def consistencyCheckInner(prevcurve, newcurve, ratio=1, diagnose=False):
     n, prevcurve, prevoffset = prevcurve
     n2, newcurve, newoffset = newcurve
-    degs = n2-n
-    prevoffset*=ratio
-    newoffset*=ratio
-    #print("newoffset=%s " % (newoffset.n()))
-    # NOTE: For the above and below cases, bounds ensure that in case of doubt,
+    degs = n2 - n
+    prevoffset *= ratio
+    newoffset *= ratio
+    # NOTE: For the 'above' and 'below' cases, bounds ensure that in case of doubt,
     # the approximation is judged to be inconsistent
     # Below
     belowbernconew = [lowerbound(a - newoffset) for a in newcurve]
-    maxbernconew=max(belowbernconew)
+    maxbernconew = max(belowbernconew)
     if maxbernconew < 0:
-       # Fully below 0
-       pass # return "offcurve"
+        # Fully below 0
+        pass  # return "offcurve"
     belowberncoold = degelev([upperbound(b - prevoffset) for b in prevcurve], degs)
     for oldv, newv in zip(belowberncoold, belowbernconew):
         if newv < oldv:
             # Inconsistent approximation from below
             if diagnose:
                 print("Inconsistent from below")
-                print(["n, n2, prevoffset, newoffset",n,n2,prevoffset,newoffset])
+                print(["n, n2, prevoffset, newoffset", n, n2, prevoffset, newoffset])
                 print([S(c).n() for c in belowberncoold])
                 print([S(c).n() for c in belowbernconew])
             return "incons"
     # Above
     bernconew = [upperbound(a + newoffset) for a in newcurve]
-    minbernconew=min(bernconew)
+    minbernconew = min(bernconew)
     if minbernconew > 1:
-       # Fully above 1
-       pass # return "offcurve"
+        # Fully above 1
+        pass  # return "offcurve"
     berncoold = degelev([lowerbound(b + prevoffset) for b in prevcurve], degs)
     for oldv, newv in zip(berncoold, bernconew):
         if oldv < newv:
             # Inconsistent approximation from above
             if diagnose:
                 print("Inconsistent from above")
-                print(["n, n2, prevoffset, newoffset",n,n2,prevoffset,newoffset])
+                print(["n, n2, prevoffset, newoffset", n, n2, prevoffset, newoffset])
                 print([S(c).n() for c in berncoold])
                 print([S(c).n() for c in bernconew])
             return "incons"
     return True
 
-def consistencyCheckCore(curvedata, ratio, diagnose=False):
-   for i in range(len(curvedata)-1):
-        cons=consistencyCheckInner(
-             curvedata[i], curvedata[i+1], ratio=ratio, diagnose=diagnose)
-        if cons=="incons":
-            return False
-   return True
+def isinrange(curve, ratio):
+    n, curve, offset = curve
+    offset *= ratio
+    for c in curve:
+       lb=lowerbound(c-offset)
+       ub=upperbound(c+offset)
+       if lb<0 or ub>1: return False
+    return True
 
-def consistencyCheck(func, x, kind="c2", lip=None):
+def concavity(func,x):
+   nm=nminmax(diff(diff(func)),x)
+   if nm[0]>=0: return "convex"
+   if nm[1]<=0: return "concave"
+   return None
+
+def consistencyCheckCore(curvedata, ratio, diagnose=False):
+    for i in range(len(curvedata) - 1):
+        cons = consistencyCheckInner(
+            curvedata[i], curvedata[i + 1], ratio=ratio, diagnose=diagnose
+        )
+        if cons == "incons":
+            return False
+    return True
+
+def consistencyCheck(func, x, kind="c2", lip=None, double=True):
     # Find a near-optimal ratio that ensures an approximation
     # scheme is consistent while being close to the function.
     # 'func' - SymPy expression for the target function.
@@ -242,31 +274,77 @@ def consistencyCheck(func, x, kind="c2", lip=None):
     # determined parameter that depends on the 'kind', in case
     # the parameter can't be found automatically.
     print(func)
-    curvedata=[]
-    deg=1
-    dd=buildParam(kind, func, x, lip)
-    for i in range(1, 9+1):
-        offset=buildOffset(kind, dd, deg)
-        curvedata.append( (deg, [func.subs(x,S(j)/deg) for j in range(deg+1)], offset) )
-        deg+=1
-        #deg*=2
-    offset=buildOffset(kind, dd, 1)
-    if not consistencyCheckCore(curvedata, Rational(1)):
-       print("INCONSISTENT --> offset=%s [dd=%s, kind=%s]" % (\
-          S(offset).n(), upperbound(dd.n()).n(),kind))
-       consistencyCheckCore(curvedata, Rational(1),diagnose=True)
-       return
-    for cdlen in range(3, len(curvedata)+1):
-      left=Rational(0,1)
-      right=Rational(1,1)
-      for i in range(0,6):
-        mid=(left+right)/2
-        if consistencyCheckCore(curvedata[0:cdlen], mid):
-            right=mid
+    curvedata = []
+    deg = 1
+    dd = buildParam(kind, func, x, lip)
+    for i in range(1, 9 + 1):
+        offset = buildOffset(kind, dd, deg)
+        curvedata.append(
+            (deg, [func.subs(x, S(j) / deg) for j in range(deg + 1)], offset)
+        )
+        if double:
+            deg *= 2
         else:
-            left=mid
-      print("consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]" % (\
-          cdlen, S(offset*right).n(), right.n(), upperbound(dd.n()).n(),kind))
+            deg += 1
+    offset = buildOffset(kind, dd, 1)
+    if not consistencyCheckCore(curvedata, Rational(1)):
+        print(
+            "INCONSISTENT --> offset=%s [dd=%s, kind=%s]"
+            % (S(offset).n(), upperbound(dd.n()).n(), kind)
+        )
+        consistencyCheckCore(curvedata, Rational(1), diagnose=True)
+        return
+    for cdlen in range(3, len(curvedata) + 1):
+        left = Rational(0, 1)
+        right = Rational(1, 1)
+        for i in range(0, 6):
+            mid = (left + right) / 2
+            if consistencyCheckCore(curvedata[0:cdlen], mid):
+                right = mid
+            else:
+                left = mid
+        print(
+            "consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]"
+            % (cdlen, S(offset * right).n(), right.n(), upperbound(dd.n()).n(), kind)
+        )
+    inrangedeg = -1
+    for cd in curvedata:
+        if isinrange(cd, right):
+            inrangedeg=cd[0]
+            break
+    offsetn = buildOffset(kind, dd, symbols('n'))
+    offsetn *= right
+    conc = concavity(func, x)
+    data = "* Let _f_(_&lambda;_) = %s.  " % (
+        str(func.subs(x,symbols('lambda'))).replace("*","\*"))
+    if double:
+        data += "Then, for all _n_ that are powers of 2, starting from 1:\n"
+    else:
+        data += "Then:\n"
+    data += "    * **fbelow**(_n_, _k_) = "
+    if conc == "convex" and inrangedeg>=0:
+        data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+    data += "_f_(_k_/_n_)"
+    if conc != "concave":
+       data += " &minus; `%s`" % (str(offsetn.subs(x,symbols('lambda'))).replace("*","\*"))
+    data += ".\n"
+    data += "    * **fabove**(_n_, _k_) = "
+    if conc == "concave" and inrangedeg>=0:
+        data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+    data += "_f_(_k_/_n_)"
+    if conc != "convex":
+       data += " + `%s`" % (str(offsetn.subs(x,symbols('lambda'))).replace("*","\*"))
+    data += ".\n"
+    if inrangedeg>=0:
+       if conc == "concave" or conc == "convex":
+         data += (
+           "    * **fbound**(_n_) = [0, 1].\n"
+         )
+       else:
+         data += (
+           "    * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n" % (inrangedeg)
+         )
+    print(data)
     return
 
 ```
