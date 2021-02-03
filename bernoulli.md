@@ -1399,7 +1399,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
 >     - meets (b) in note 4
 >
->     (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest value of abs(_f&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;_ is the "slope" function of _f_.  Then for all _n_ that are powers of 2:
+>     (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest absolute "slope" of _f_ anywhere in [0, 1].  Then for all _n_ that are powers of 2:
 >
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
@@ -1412,11 +1412,10 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*2).
 >     - **fbound**(_n_) = [0, (1/2) + 1/_n_].
-> 2. Let _f_(_&lambda;_) = sin(3\*_&lambda;_)/2.  Then my [**SymPy code for building approximation schemes**](https://peteroupc.github.io/morealg.html#SymPy_Code_for_Building_Approximation_Schemes), which implements Theorem 26 in Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, suggests the following:
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_).  This is possible because _f_ is concave.
->     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + 3 / 2<sup>_i_</sup>, where _i_ depends on _n_ as described below.
->     - **fbound**(_n_) = [0, 1] if _n_&ge;16, or [&minus;1, 2] otherwise.
->     - For the following values of _n_, the value of _i_ is: _n_=16 &rarr; _i_=4; _n_=32 &rarr; _i_=5; _n_=64 &rarr; _i_=6; _n_=128 &rarr; _i_=7; _n_=256 &rarr; _i_=8; _n_=512 &rarr; _i_=9; _n_=1024 &rarr; _i_=10; and if _n_&ge;2048 is a power of 2, then _n_=2048\*2<sup>10+_k_</sup> &rarr; _i_=11+_k_, for all _k_&ge;0.
+> 2. My [**supplemental page**](https://peteroupc.github.io/bernsupp.html) includes SymPy code for building polynomials for certain functions.  As one example, the code there suggests the following. Let _f_(_&lambda;_) = sin(3\*lambda)/2.  Then, for all _n_ that are powers of 2, starting from 1:
+>     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+>     * **fabove**(_n_, _k_) = 1 if _n_&lt;2; otherwise, _f_(_k_/_n_) + 243/(256\*n).
+>     * **fbound**(_n_) = [0, 1].
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -1428,7 +1427,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substep removes outcomes fro
     - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
     - Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
-    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form that converge from above and below to a function as follows: (a) Each sequence's polynomials must have Bernstein coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ upper polynomial's Bernstein coefficients must lie at or above those of the degree-_n_ lower polynomial; (c) for each sequence, the difference between one polynomial and the previous one (once it's elevated to the same degree) must have non-negative Bernstein coefficients.  (These requirements ensure the two sequences are nonincreasing or nondecreasing.  The polynomials in each sequence may start closer to the function at some points than at others.)
+    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials in Bernstein form that converge from above and below to a function as follows: (a) Each sequence's polynomials must have Bernstein coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ upper polynomial's Bernstein coefficients must lie at or above those of the degree-_n_ lower polynomial; (c) for each sequence, the difference between one polynomial and the previous one (once it's elevated to the same degree) must have non-negative Bernstein coefficients.  (These requirements ensure the upper polynomials "decrease" and the lower ones "increase".  The polynomials in each sequence may start closer to the function at some points than at others.)
 
         The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following classes of functions (or subsets of them)?
 

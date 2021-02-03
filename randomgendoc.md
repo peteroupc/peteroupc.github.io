@@ -1,3 +1,4 @@
+<a id=Documentation></a>
 ## Documentation
 
 ```
@@ -8,13 +9,13 @@ NAME
 
 DESCRIPTION
     Sample code for the article "Randomization and Sampling Methods"
-    [https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods)
+    [**https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods**](https://www.codeproject.com/Articles/1190459/Random-Number-Generation-Methods)
 
     Written by Peter O.
     Any copyright to this work is released to the Public Domain.
     In case this is not possible, this work is also
     licensed under Creative Commons Zero (CC0):
-    [https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
+    [**https://creativecommons.org/publicdomain/zero/1.0/**](https://creativecommons.org/publicdomain/zero/1.0/)
 
 CLASSES
     builtins.object
@@ -600,9 +601,9 @@ CLASSES
      |      need not be a uniformly randomly
      |      chosen derangement.  Uses importance sampling.
      |      Reference:
-     |      J.R.G. Mendonça, "Efficient generation of
+     |      J.R.G. Mendonça, "[Efficient generation of
      |      random derangements with the expected
-     |      distribution of cycle lengths", arXiv:1809.04571v4
+     |      distribution of cycle lengths](https://arxiv.org/abs/1809.04571v4)", arXiv:1809.04571v4
      |      [stat.CO], 2020.
      |
      |  derangement_algorithm_t(self, list)
@@ -612,9 +613,9 @@ CLASSES
      |      in probability, even though the list
      |      need not be a uniformly randomly
      |      chosen derangement.  Reference:
-     |      J.R.G. Mendonça, "Efficient generation of
+     |      J.R.G. Mendonça, "[Efficient generation of
      |      random derangements with the expected
-     |      distribution of cycle lengths", arXiv:1809.04571v4
+     |      distribution of cycle lengths](https://arxiv.org/abs/1809.04571v4)", arXiv:1809.04571v4
      |      [stat.CO], 2020.
      |
      |  diceRoll(self, dice, sides=6, bonus=0)
@@ -1058,8 +1059,8 @@ CLASSES
      |      PDF (probability density function) must be bounded from above
      |      (have a finite value) and be continuous almost everywhere
      |      in the interval.  Implements section 4 of Devroye and Gravel,
-     |      "The expected bit complexity of the von Neumann rejection
-     |      algorithm", arXiv:1511.02273v2  [cs.IT], 2016.
+     |      "[The expected bit complexity of the von Neumann rejection
+     |      algorithm](https://arxiv.org/abs/1511.02273v2)", arXiv:1511.02273v2  [cs.IT], 2016.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'pdf' is a procedure that takes three arguments: xmin, xmax, bitplaces,
      |         and returns an array of two items: the greatest lower bound of f(x) anywhere
@@ -1075,7 +1076,7 @@ CLASSES
      |      Generates 'n' random numbers that follow a continuous
      |      or discrete probability distribution, using the inversion method.
      |      Implements section 5 of Devroye and Gravel,
-     |      "Sampling with arbitrary precision", arXiv:1502.02539v5 [cs.IT], 2015.
+     |      "[Sampling with arbitrary precision](https://arxiv.org/abs/1502.02539v5)", arXiv:1502.02539v5 [cs.IT], 2015.
      |      - 'n' is the number of random numbers to generate.  Default is 1.
      |      - 'icdf' is a procedure that takes three arguments: u, ubits, digitplaces,
      |         and returns a number within base^-digitplaces of the True inverse
@@ -1157,12 +1158,12 @@ CLASSES
      |
      |  powerlognormal(self, p, sigma=1.0)
      |      Power lognormal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
+     |      e-Handbook of Statistical Methods, [**http://www.itl.nist.gov/div898/handbook/,**](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.14.
      |
      |  powernormal(self, p)
      |      Power normal distribution, as described in NIST/SEMATECH
-     |      e-Handbook of Statistical Methods, [http://www.itl.nist.gov/div898/handbook/,](http://www.itl.nist.gov/div898/handbook/,)
+     |      e-Handbook of Statistical Methods, [**http://www.itl.nist.gov/div898/handbook/,**](http://www.itl.nist.gov/div898/handbook/,)
      |      accessed Jun. 9, 2018, sec. 1.3.6.6.13.
      |
      |  product_copula(self, n=2)
@@ -1335,8 +1336,8 @@ CLASSES
      |  zero_or_one_exp_minus(self, x, y)
      |      Generates 1 with probability exp(-px/py); 0 otherwise.
      |      Reference:
-     |      Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-     |      for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
+     |      Canonne, C., Kamath, G., Steinke, T., "[The Discrete Gaussian
+     |      for Differential Privacy](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
      |
      |  zero_or_one_power(self, px, py, n)
      |      Generates 1 with probability (px/py)^n (where n can be positive, negative, or zero); 0 otherwise.
@@ -1747,8 +1748,8 @@ CLASSES
      |  arXiv:1308.1562v2  [math.PR], 2014.
      |  - Huber, M., "Optimal linear Bernoulli factories for small mean problems",
      |  arXiv:1507.00843v2 [math.PR], 2016.
-     |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "Simulating
-     |  events of unknown probabilities via reverse time martingales", arXiv:0907.4018v2
+     |  - Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[Simulating
+     |  events of unknown probabilities via reverse time martingales](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2
      |  [stat.CO], 2009/2011.
      |  - Goyal, V. and Sigman, K. 2012. On simulating a class of Bernstein
      |  polynomials. ACM Transactions on Modeling and Computer Simulation 22(2),
@@ -1768,8 +1769,8 @@ CLASSES
      |  - Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain
      |  functions that can be expressed as power series." Stochastic Processes and their
      |  Applications 129, no. 11 (2019): 4366-4384.
-     |  - Canonne, C., Kamath, G., Steinke, T., "The Discrete Gaussian
-     |  for Differential Privacy", arXiv:2004.00010 [cs.DS], 2020.
+     |  - Canonne, C., Kamath, G., Steinke, T., "[The Discrete Gaussian
+     |  for Differential Privacy](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
      |  - Lee, A., Doucet, A. and Łatuszyński, K., 2014. Perfect simulation using
      |  atomic regeneration with application to Sequential Monte Carlo,
      |  arXiv:1407.5770v1  [stat.CO]
@@ -2063,9 +2064,9 @@ CLASSES
      |  coin's probability of heads to be specified as a polynomial function of the
      |  input coin's probability of heads.
      |
-     |  Reference: Morina, G., Łatuszyński, K., et al., "From the
+     |  Reference: Morina, G., Łatuszyński, K., et al., "[From the
      |  Bernoulli Factory to a Dice Enterprise via Perfect
-     |  Sampling of Markov Chains", arXiv:1912.09229v1 [math.PR], 2019.
+     |  Sampling of Markov Chains](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.
      |
      |  Example:
      |

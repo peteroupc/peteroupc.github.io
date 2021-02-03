@@ -2,6 +2,7 @@ import math
 import random
 from fractions import Fraction
 
+
 class Bernoulli:
     """This class contains methods that generate Bernoulli random numbers,
        (either 1 or heads with a given probability, or 0 or tails otherwise).
@@ -1186,6 +1187,7 @@ class Bernoulli:
             lastdegree = degree
             degree *= 2
 
+
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff
     num = 1
@@ -1197,10 +1199,12 @@ def _multinom(n, x):
             den *= j
     return Fraction(num) / den
 
+
 def _neighbordist(ni, nj, b):
     ret = [av - bv for av, bv in zip(ni, nj)]
     ret[b] += 1
     return sum(abs(x) for x in ret)
+
 
 class _FastLoadedDiceRoller:
     """
@@ -1270,6 +1274,7 @@ class _FastLoadedDiceRoller:
             else:
                 x -= leaves
                 y += 1
+
 
 class DiceEnterprise:
     """
@@ -1833,6 +1838,7 @@ class DiceEnterprise:
                                 ret += Fraction(state[0][j]) * Fraction(mnom)
             if ret != 0:
                 newladder.append([[ret], n, [result]])
+
 
 # Examples of use
 if __name__ == "__main__":

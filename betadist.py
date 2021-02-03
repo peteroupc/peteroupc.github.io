@@ -6,6 +6,7 @@ from fractions import Fraction
 
 ###################
 
+
 def psrn_complement(x):
     # NOTE: Assumes digits is 2
     for i in range(len(x[2])):
@@ -13,8 +14,10 @@ def psrn_complement(x):
             x[2][i] = 1 - x[2][i]
     return x
 
+
 def psrn_new_01():
     return [1, 0, []]
+
 
 def psrn_fill(rg, psrn, precision=53, digits=2):
     af = 0
@@ -42,6 +45,7 @@ def psrn_fill(rg, psrn, precision=53, digits=2):
             * ((af // digits) + (aint * digits ** precision))
             / (digits ** precision)
         )
+
 
 def psrn_in_range(rg, bmin, bmax, digits=2):
     if bmin >= bmax:
@@ -81,6 +85,7 @@ def psrn_in_range(rg, bmin, bmax, digits=2):
             if psrn_less_than_fraction(rg, a, bmax, digits) == 1:
                 a[0] = 1
                 return a
+
 
 def psrn_in_range_positive(rg, bmin, bmax, digits=2):
     if bmin >= bmax or bmin < 0 or bmax <= 0:
@@ -181,6 +186,7 @@ def psrn_in_range_positive(rg, bmin, bmax, digits=2):
                 continue
         return a
 
+
 def psrn_less(rg, psrn1, psrn2, digits=2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
@@ -219,6 +225,7 @@ def psrn_less(rg, psrn1, psrn2, digits=2):
         if aa > bb:
             return 0
         index += 1
+
 
 def psrn_less_than_fraction(rg, psrn, rat, digits=2):
     if (psrn[0] != -1 and psrn[0] != 1) or psrn[1] == None:
@@ -282,6 +289,7 @@ def psrn_less_than_fraction(rg, psrn, rat, digits=2):
             return 0 if psrn[0] > 0 else 1
         pt *= digits
         index += 1
+
 
 def psrn_reciprocal(rg, psrn1, digits=2):
     """Generates the reciprocal of a partially-sampled random number.
@@ -351,6 +359,7 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             dcount += 1
             ddc *= digits
             dc *= digits
+
 
 def psrn_multiply(rg, psrn1, psrn2, digits=2):
     """Multiplies two uniform partially-sampled random numbers.
@@ -459,6 +468,7 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
             cpsrn[1] = sret
             return cpsrn
 
+
 def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
     """Multiplies a partially-sampled random number by a fraction.
     psrn1: List containing the sign, integer part, and fractional part
@@ -504,6 +514,7 @@ def psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2):
                 rv = rv * digits + rg.rndint(digits - 1)
                 dcount += 1
                 ddc *= digits
+
 
 def psrn_add(rg, psrn1, psrn2, digits=2):
     """Adds two uniform partially-sampled random numbers.
@@ -606,6 +617,7 @@ def psrn_add(rg, psrn1, psrn2, digits=2):
             y = y * digits + rg.rndint(digits - 1)
             b *= digits
             newdigits += 1
+
 
 def psrn_add_fraction(rg, psrn, fraction, digits=2):
     if psrn[0] == None or psrn[1] == None:
@@ -715,6 +727,7 @@ def psrn_add_fraction(rg, psrn, fraction, digits=2):
                     rv = rv * digits + rg.rndint(digits - 1)
                     rvs = rv + rvstart
 
+
 def psrnexpo(rg):
     count = 0
     while True:
@@ -732,7 +745,9 @@ def psrnexpo(rg):
             return [1, count, y1[2]]
         count += 1
 
+
 ###################
+
 
 def geobagcompare(bag, f):
     """Returns 1 with probability f(U), where U is the value that
@@ -800,6 +815,7 @@ def geobagcompare(bag, f):
             i += 1
             iprec = 1 << i
 
+
 def _bern_power(bern, bag, num, den, bagfactory):
     if len(bag) >= 4 and bag[0] == 0 and bag[1] == 0 and bag[2] == 0 and bag[3] == 0:
         # If the geometric bag is known to hold a very small number, use
@@ -813,11 +829,13 @@ def _bern_power(bern, bag, num, den, bagfactory):
     else:
         return bern.power(bagfactory, num, den)
 
+
 def _power_of_uniform_greaterthan1(bern, power, complement=False, precision=53):
     return psrn_fill(
         _power_of_uniform_greaterthan1_geobag(bern, power, complement),
         precision=precision,
     )
+
 
 def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
     if power < 1:
@@ -858,6 +876,7 @@ def _power_of_uniform_greaterthan1_geobag(bern, power, complement=False):
             # Flip all bits if complement is true
             return psrn_complement(bag) if complement else bag
 
+
 def powerOfUniform(b, px, py, precision=53):
     """Generates a power of a uniform random number.
     - px, py - Numerator and denominator of desired exponent for the uniform
@@ -869,8 +888,10 @@ def powerOfUniform(b, px, py, precision=53):
     # is in (0, 1].
     return betadist(b, py, px, 1, 1, precision)
 
+
 def betadist(b, ax=1, ay=1, bx=1, by=1, precision=53):
     return psrn_fill(betadist_geobag(b, ax, ay, bx, by), precision=precision)
+
 
 def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
     """Generates a beta-distributed random number with arbitrary
@@ -934,7 +955,9 @@ def betadist_geobag(b, ax=1, ay=1, bx=1, by=1):
             # Accepted
             return bag
 
+
 #####################
+
 
 class _RGConv:
     # Wrapper that takes an object that implements
@@ -945,7 +968,9 @@ class _RGConv:
     def randint(self, a, b):
         return a + self.rg.rndint(b - a)
 
+
 #####################
+
 
 def genshape(rg, inshape):
     """Generates a random point inside a 2-dimensional shape, in the form of a uniform PSRN.
@@ -980,6 +1005,7 @@ def genshape(rg, inshape):
             else:
                 s *= base
                 d += 1
+
 
 class _PavingNode:
     def __init__(self, coords):
@@ -1016,6 +1042,7 @@ class _PavingNode:
             raise ValueError
         self.left, self.right = self.getBisection()
         return self.left, self.right
+
 
 class ShapeSampler2:
     YES = 1
@@ -1106,6 +1133,7 @@ class ShapeSampler2:
                 box = left if child == 0 else right
                 box.mark = self.inshape(box.coords)
 
+
 class ShapeSampler:
     def __init__(self, inshape, dx=1, dy=1):
         """Builds a sampler for random numbers (in the form of PSRNs) on or inside a 2-dimensional shape.
@@ -1178,6 +1206,7 @@ class ShapeSampler:
         psrny[0] = -1 if rg.randbit() == 0 else 1
         return [psrnx, psrny]
 
+
 def _peres(bits, output):
     u = []
     v = []
@@ -1202,6 +1231,7 @@ def _peres(bits, output):
     # Recursion on "discarded" bits
     _peres(u, output)
     _peres(v, output)
+
 
 class _BitFetchingRandomGen:
     def __init__(self, *args):
@@ -1280,6 +1310,7 @@ class _BitFetchingRandomGen:
             x >>= 1
         self.fetchedbits = 0
 
+
 def _test_rand_extraction(func, digits=2, nofill=False):
 
     import scipy.stats as st
@@ -1315,6 +1346,7 @@ def _test_rand_extraction(func, digits=2, nofill=False):
         except:
             pass
 
+
 def addto1(rg):
     # Simulates the number of random numbers
     # in [0,1] needed to produce a sum greater than 1.
@@ -1326,6 +1358,7 @@ def addto1(rg):
         if pa[1] > 0:
             break
     return i
+
 
 if __name__ == "__main__":
     # The following code tests some of the methods in this module.

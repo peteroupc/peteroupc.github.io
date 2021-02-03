@@ -1848,7 +1848,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>meets (b) in note 4</li>
 </ul>
 
-<p>(Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest value of abs(<em>f&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;</em> is the &quot;slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
+<p>(Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest absolute &quot;slope&quot; of <em>f</em> anywhere in [0, 1].  Then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
@@ -1868,13 +1868,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*2).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/<em>n</em>].</li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = sin(3*<em>&lambda;</em>)/2.  Then my <a href="https://peteroupc.github.io/morealg.html#SymPy_Code_for_Building_Approximation_Schemes"><strong>SymPy code for building approximation schemes</strong></a>, which implements Theorem 26 in Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, suggests the following:
+<li>My <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental page</strong></a> includes SymPy code for building polynomials for certain functions.  As one example, the code there suggests the following. Let <em>f</em>(<em>&lambda;</em>) = sin(3*lambda)/2.  Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).  This is possible because <em>f</em> is concave.</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 3 / 2<sup><em>i</em></sup>, where <em>i</em> depends on <em>n</em> as described below.</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1] if <em>n</em>&ge;16, or [&minus;1, 2] otherwise.</li>
-<li>For the following values of <em>n</em>, the value of <em>i</em> is: <em>n</em>=16 &rarr; <em>i</em>=4; <em>n</em>=32 &rarr; <em>i</em>=5; <em>n</em>=64 &rarr; <em>i</em>=6; <em>n</em>=128 &rarr; <em>i</em>=7; <em>n</em>=256 &rarr; <em>i</em>=8; <em>n</em>=512 &rarr; <em>i</em>=9; <em>n</em>=1024 &rarr; <em>i</em>=10; and if <em>n</em>&ge;2048 is a power of 2, then <em>n</em>=2048*2<sup>10+<em>k</em></sup> &rarr; <em>i</em>=11+<em>k</em>, for all <em>k</em>&ge;0.</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1 if <em>n</em>&lt;2; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 243/(256*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ol>
 </blockquote>
@@ -1893,7 +1892,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
 <li>Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).</li>
-<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form that converge from above and below to a function as follows: (a) Each sequence&#39;s polynomials must have Bernstein coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> upper polynomial&#39;s Bernstein coefficients must lie at or above those of the degree-<em>n</em> lower polynomial; (c) for each sequence, the difference between one polynomial and the previous one (once it&#39;s elevated to the same degree) must have non-negative Bernstein coefficients.  (These requirements ensure the two sequences are nonincreasing or nondecreasing.  The polynomials in each sequence may start closer to the function at some points than at others.)</p>
+<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials in Bernstein form that converge from above and below to a function as follows: (a) Each sequence&#39;s polynomials must have Bernstein coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> upper polynomial&#39;s Bernstein coefficients must lie at or above those of the degree-<em>n</em> lower polynomial; (c) for each sequence, the difference between one polynomial and the previous one (once it&#39;s elevated to the same degree) must have non-negative Bernstein coefficients.  (These requirements ensure the upper polynomials &quot;decrease&quot; and the lower ones &quot;increase&quot;.  The polynomials in each sequence may start closer to the function at some points than at others.)</p>
 
 <p>The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following classes of functions (or subsets of them)?</p>
 
