@@ -1,7 +1,6 @@
 import random
 import interval
 
-
 class BinomialSampler:
     def __init__(self, rg=None):
         self.rg = rg

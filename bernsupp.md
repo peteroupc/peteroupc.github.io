@@ -1,35 +1,38 @@
 # Supplemental Notes for Bernoulli Factory Algorithms
 
+<a id=General_Factory_Functions></a>
 ## General Factory Functions
 
-The algorithms for [general factory functions](https://peteroupc.github.io/bernoulli.html) work with two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
+The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html) work with two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
 The consistency requirement ensures that the polynomials converge monotonically to the target function.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.
 
+<a id=First_Scheme></a>
 ### First Scheme
 
-In this scheme <<Powell 1981|Powell, M.J.D., _Approximation Theory and Methods_, 1981>>, let _f_ be a twice differentiable function (that is, a C2 continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
+In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C2 continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
 
 - _b_(_n_, _k_) = _f_(_k_/_n_) + M / (8*_n_),
 
 where M is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
-    
+
 And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
 
 - a(n, k) = f(k/n) + M / (8*n).
 
-The counterexample is given at: https://math.stackexchange.com/a/3945261/721857 
+The counterexample is given at: [https://math.stackexchange.com/a/3945261/721857](https://math.stackexchange.com/a/3945261/721857)
 
+<a id=Second_Scheme></a>
 ### Second Scheme
 
 In this scheme, let _f_ be a Lipschitz continuous function in [0, 1] (that is, a function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
 
 - b(n, k) = f(k/n) + (5/4) / sqrt(n),
 
-where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval [0, _n_] <<Lorentz 1986|G. G. Lorentz. Bernstein polynomials. 1986.>>, <<Popoviciu 1935|Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.>>.
-    
+where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval [0, _n_] (Lorentz 1986)<sup>[**(2)**](#Note2)</sup>, (Popoviciu 1935)<sup>[**(3)**](#Note3)</sup>.
+
 And the lower polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;1:
 
 - a(n, k) = f(k/n) + (5/4) / sqrt(n).
@@ -57,9 +60,10 @@ Thus, we have shown that this approximation scheme is not guaranteed to meet the
 
 It is yet to be seen whether a counterexample exists for this scheme when _n_ is restricted to powers of 2.
 
+<a id=Third_Scheme></a>
 ### Third Scheme
 
-Same as above, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 <<Lorentz 1986|G. G. Lorentz. Bernstein polynomials. 1986.>>, <<Sikkema 1961|Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).>>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
+Same as above, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Sikkema 1961)<sup>[**(5)**](#Note5)</sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
 
 For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;
 
@@ -70,6 +74,7 @@ And once elevated to degree 6, the degree-5 polynomial's coefficients are [0.559
 
 As we can see, the elevated polynomial's coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.
 
+<a id=SymPy_Code_for_Checking_Consistency></a>
 ## SymPy Code for Checking Consistency
 
 The following Python code uses the SymPy computer algebra library. It contains a method, named `approxscheme2`, that builds a scheme for approximating a continuous function _f_(_&lambda;_) whose domain is \[0, 1\], with the help of polynomials that converge from above and below to that function.  Not all functions that admit a Bernoulli factory are supported yet.  One example of the output follows.
@@ -160,7 +165,6 @@ def buildOffset(kind, dd, n):
     else:
         raise ValueError
 
-
 def nminmax(func, x):
     # Find minimum and maximum at [0,1].
     try:
@@ -176,7 +180,7 @@ def nminmax(func, x):
         except:
             cv.append(S(i)/20)
             cv.append(S(i+1)/20)
-    # Evaluate at critical points, and 
+    # Evaluate at critical points, and
     # remove incomparable values
     cv2 = []
     for c in cv:
@@ -270,7 +274,7 @@ def isinrange(curve, ratio):
        ub=upperbound(c+offset)
        if lb<0 or ub>1: return False
     return True
-    
+
 def concavity(func,x):
    nm=nminmax(diff(diff(func)),x)
    if nm[0]>=0: return "convex"
@@ -300,10 +304,10 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     conc = concavity(func, x)
     if conc != "concave" and nmm[0]<=0:
        print("Non-concave functions with minimum of 0 not yet supported")
-       return    
+       return
     if conc != "convex" and nmm[1]>=1:
        print("Non-convex functions with maximum of 1 not yet supported")
-       return    
+       return
     dd = buildParam(kind, func, x, lip)
     if dd==oo or dd==zoo:
        print("Function not supported for the scheme %s" % (kind))
@@ -340,7 +344,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
                 right = mid
             else:
                 left = mid
-        # NOTE: If 'ratio' appears to stabilize to much less than 0, then the 
+        # NOTE: If 'ratio' appears to stabilize to much less than 0, then the
         # approximation scheme is highly likely to be correct.
         print(
             "consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]"
@@ -391,17 +395,13 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
 <a id=Notes></a>
 ## Notes
 
-- <small><sup id=Note1>(1)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
+- <small><sup id=Note1>(1)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
+- <small><sup id=Note2>(2)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
+- <small><sup id=Note3>(3)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
+- <small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
+- <small><sup id=Note5>(5)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 
 <a id=License></a>
 ## License
 
 Any copyright to this page is released to the Public Domain.  In case this is not possible, this page is also licensed under [**Creative Commons Zero**](https://creativecommons.org/publicdomain/zero/1.0/).
-
-
-
-
-
-
-
-
