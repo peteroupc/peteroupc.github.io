@@ -13,7 +13,7 @@
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials converge monotonically to the target function.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.</p>
+<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.</p>
 
 <p><a id=First_Scheme></a></p>
 
@@ -33,7 +33,7 @@
 <li>a(n, k) = f(k/n) + M / (8*n).</li>
 </ul>
 
-<p>The counterexample is given at: <a href="https://math.stackexchange.com/a/3945261/721857">https://math.stackexchange.com/a/3945261/721857</a></p>
+<p>The counterexample is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a></p>
 
 <p><a id=Second_Scheme></a></p>
 
@@ -86,7 +86,7 @@
 
 <h3>Third Scheme</h3>
 
-<p>Same as above, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
+<p>Same as above, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
 
 <p>For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;</p>
 
@@ -115,8 +115,7 @@
 <li><code>double</code>: Whether to double the degree with each additional level (<code>True</code>, the default) or to increase that degree by 1 with each level (<code>False</code>).</li>
 <li><code>kind</code>: a string specifying the approximation scheme, such as &quot;c2&quot; (see code for <code>buildParam</code>).</li>
 <li><code>lip</code>: A manually determined parameter that depends on the &#39;kind&#39;, in case the parameter can&#39;t be found automatically.</li>
-<li><code>levels</code>: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds &quot;c1&quot; or &quot;sikkema&quot;, and degree 1 otherwise.  Default is 9.</li>
-<li><code>ratio</code>: Ratio in which to tighten the generated polynomials against <code>func</code>.  Must be 1 or less.</li>
+<li><code>levels</code>: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds &quot;c1&quot;, &quot;c0&quot;, or &quot;sikkema&quot;, and degree 1 otherwise.  Default is 9.</li>
 </ul>
 
 <p>The method prints out text describing the approximation scheme, which can then be used in either of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> to simulate <em>f</em>(<em>&lambda;</em>) given a black-box way to sample the probability <em>&lambda;</em>.  It refers to the functions <strong>fbelow</strong>, <strong>fabove</strong>, and <strong>fbound</strong>, which have the meanings given in those algorithms.</p>
@@ -320,7 +319,7 @@ def consistencyCheckCore(curvedata, ratio, diagnose=False):
 def approxscheme2(func, x, kind=&quot;c2&quot;, lip=None, double=True, levels=9):
     print(func)
     curvedata = []
-    if kind==&quot;c1&quot; or kind==&quot;sikkema&quot;:
+    if kind==&quot;c1&quot; or kind==&quot;c0&quot; or kind==&quot;sikkema&quot;:
        deg = 2
     else:
        deg = 1
@@ -427,8 +426,7 @@ def approxscheme2(func, x, kind=&quot;c2&quot;, lip=None, double=True, levels=9)
 <li><small><sup id=Note1>(1)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
 <li><small><sup id=Note2>(2)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
 <li><small><sup id=Note3>(3)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
-<li><small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
-<li><small><sup id=Note5>(5)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note4>(4)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
 </ul>
 
 <p><a id=License></a></p>

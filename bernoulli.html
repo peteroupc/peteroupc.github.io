@@ -1793,19 +1793,23 @@
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
 <li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
-<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).</li>
+<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 8 below).</li>
 <li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>) and set <em>acount</em> to it, then calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>) and set <em>bcount</em> to it, then subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>, then:
 
 <ol>
 <li>Let <em>diff</em> be <em>degree</em>&minus;<em>lastdegree</em>, let <em>u</em> be max(0, <em>ones</em>&minus;<em>lastdegree</em>),
-and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep removes outcomes from <em>acount</em> and <em>bcount</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
+and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substeps remove outcomes from <em>acount</em> and <em>bcount</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
+<li>Set <em>g</em> to choose(<em>lastdegree</em>, <em>ones</em>&minus;<em>u</em>).  Set <em>h</em> to 1.  If <em>c</em> was multiplied as in step 5, multiply <em>h</em> by 2<sup><em>lastdegree</em></sup> (see note 8 below).</li>
 <li>For each integer <em>k</em> in the interval [<em>u</em>, <em>v</em>]:
 
 <ol>
-<li>Set <em>d</em> to choose(<em>diff</em>, <em>k</em>).  Let <em>g</em> be choose(<em>s</em>, <em>t</em>).</li>
-<li>Subtract (<em>a</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*<em>d</em>) from <em>acount</em>.  Here, <em>a</em>[<em>s</em>,<em>t</em>] is calculated as floor(<strong>fbelow</strong>(<em>s</em>, <em>t</em>)*<em>g</em>), and may be stored for later use.</li>
-<li>Subtract (<em>b</em>[<em>lastdegree</em>, <em>ones</em>&minus;<em>k</em>]*<em>d</em>) from <em>bcount</em>.  Here, <em>b</em>[<em>s</em>,<em>t</em>] is calculated as floor((1&minus;<strong>fabove</strong>(<em>s</em>, <em>t</em>))*<em>g</em>), and may be stored for later use.</li>
+<li>Set <em>d</em> to choose(<em>diff</em>, <em>k</em>).  Let <em>&omega;</em> be <em>ones</em>&minus;<em>k</em>.</li>
+<li>Calculate <em>a</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor(*<em>fbelow(<em>lastdegree</em>, <em>&omega;</em>)\</em><em>g</em>*<em>h</em>), if not already calculated.</li>
+<li>Calculate <em>b</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor((1&minus;*<em>fabove(<em>lastdegree</em>, <em>&omega;</em>))\</em><em>g</em>*<em>h</em>), if not already calculated.</li>
+<li>Subtract (<em>a</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>acount</em>.</li>
+<li>Subtract (<em>b</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>bcount</em>.</li>
+<li>Multiply <em>g</em> by <em>&omega;</em>, then divide <em>g</em> by (<em>lastdegree</em>+1&minus;<em>&omega;</em>). (Sets <em>g</em> to choose(<em>lastdegree</em>, (<em>ones</em>&minus;<em>k</em>)&minus;1).)</li>
 </ol></li>
 </ol></li>
 <li>Choose 0, 1, or 2 with probability proportional to the following weights: [<em>acount</em>, <em>bcount</em>, <em>c</em>].</li>
@@ -1856,6 +1860,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ul></li>
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
 <li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note50"><strong>(50)</strong></a></sup>), since both bounds would then be available at once.</li>
+<li>The second algorithm, as presented in Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, was based on the one from Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  In both papers, the algorithm works only if <em>&lambda;</em> is in the interval (0, 1).  If <em>&lambda;</em> can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, the <em>c</em> in step 5 can be multiplied by 2<sup><em>degree</em></sup> and the <em>h</em> in step 7, substep 2, multiplied by 2<sup><em>lastdegree</em></sup> to ensure correctness for all values of <em>&lambda;</em>.</li>
 </ol>
 
 <p><strong>Examples:</strong></p>

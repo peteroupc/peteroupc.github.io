@@ -1141,6 +1141,7 @@ class Bernoulli:
                 if coin() == 1:
                     ones += 1
             c = int(math.comb(degree, ones))
+            c *= 2 ** degree
             try:
                 a[(degree, ones)] = int(fbelow(degree, ones) * c)
                 b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
@@ -1156,24 +1157,24 @@ class Bernoulli:
                 v = min(ones, diff)
                 alpha = 0
                 beta = 0
+                g = math.comb(lastdegree, ones - u)
                 for k in range(u, v + 1):
                     o = ones - k
-                    comb_lastdegree_o = -1
+                    comb_lastdegree_o = g
+                    comb_lastdegree_o *= 2 ** lastdegree
                     if not (lastdegree, o) in a:
-                        if comb_lastdegree_o < 0:
-                            comb_lastdegree_o = int(math.comb(lastdegree, o))
                         a[(lastdegree, o)] = int(
                             Fraction(fbelow(lastdegree, o)) * comb_lastdegree_o
                         )
                     if not (lastdegree, o) in b:
-                        if comb_lastdegree_o < 0:
-                            comb_lastdegree_o = int(math.comb(lastdegree, o))
                         b[(lastdegree, o)] = int(
                             (1 - Fraction(fabove(lastdegree, o))) * comb_lastdegree_o
                         )
                     st = int(math.comb(diff, k))
                     alpha += a[(lastdegree, o)] * st
                     beta += b[(lastdegree, o)] * st
+                    g *= ones - k
+                    g //= lastdegree + 1 - (ones - k)
                 acount -= alpha
                 bcount -= beta
                 if acount + bcount + c <= 0:
