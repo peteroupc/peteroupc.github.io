@@ -35,13 +35,13 @@
 
 <p>The counterexample is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a></p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in <a href="that%20is,%20a%20function%20whose%20slope%20does%20not%20tend%20to%20a%20vertical%20slope%20anywhere%20in%20%5B0,%201%5D">0, 1</a>.  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
 
 <ul>
 <li>b(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
 </ul>
 
-<p>where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval <a href="Lorentz%201986">0, <em>n</em></a><sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
+<p>where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
 
 <p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;1:</p>
 
@@ -97,7 +97,7 @@
 
 <p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope (the parameters &alpha; and <em>M</em> mean that the function is at least as &quot;steep&quot; as <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0). As a special case, Lipschitz continuous functions have &alpha; = 1 and <em>M</em> equal to their Lipschitz constant.</p>
 
-<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  Then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;*/2</sup>. (<strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.)</em></p>
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  Then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>. (<strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.)</em></p>
 
 <p><em>Proof.</em> abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) &le; <strong>E</strong>[abs(f(X/n) &minus; f(k/(2*n))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>&alpha;</sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup>&alpha;/2<sup> = &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup>&alpha;/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup>&alpha;/2</sup>.  &#x25a1;</p>
 
@@ -108,14 +108,15 @@
 <li><em>b(n, k) = f(k/n) + &delta;(n); (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
 </ul>
 
-<p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;*/2</sup>.</em></p>
+<p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
 
 <p><em>Proof.</em> Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  &#x25a1;</p>
 
-<p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&amp;alpha</em>.  However, the following examples show solutions that lead to approximation schemes that work for any Hölder continuous function with certain values of <em>&alpha;</em>.</p>
+<p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&amp;alpha</em>.  However, the following examples show solutions that lead to approximation schemes that work for any <em>&alpha;</em>-Hölder continuous function with certain values of <em>&alpha;</em>.</p>
 
 <ul>
-<li><em>&alpha;</em> = 1/2: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
+<li>If <em>&alpha;</em> is 1/2 or greater: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
+<li>If <em>&alpha;</em> is 2/3 or greater: <em>&delta;</em>(<em>n</em>) = 2<sup>2/3</sup>*<em>M</em>*(2</sup>1/3</sup> + 2</sup>2/3</sup> + 2)/(2*<em>n</em><sup>1/3</sup>).</li>
 </ul>
 
 <p><a id=SymPy_Code_for_Checking_Consistency></a></p>
