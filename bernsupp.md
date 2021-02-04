@@ -9,7 +9,7 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 
 The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.
 
-<a id=First_Scheme></a>
+<a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
 
 **First scheme.** In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C2 continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
@@ -22,7 +22,7 @@ And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
 
 - a(n, k) = f(k/n) + M / (8*n).
 
-The counterexample is given at: [https://math.stackexchange.com/a/3945261/721857](https://math.stackexchange.com/a/3945261/721857)
+The counterexample is given at: [**https://math.stackexchange.com/a/3945261/721857**](https://math.stackexchange.com/a/3945261/721857)
 
 **Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
 
@@ -57,7 +57,7 @@ Thus, we have shown that this approximation scheme is not guaranteed to meet the
 
 It is yet to be seen whether a counterexample exists for this scheme when _n_ is restricted to powers of 2.
 
-**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Sikkema 1961)<sup>[**(5)**](#Note5)</sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
+**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(2)**](#Note2)</sup>, (Sikkema 1961)<sup>[**(4)**](#Note4)</sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
 
 For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;
 
@@ -68,29 +68,30 @@ And once elevated to degree 6, the degree-5 polynomial's coefficients are [0.559
 
 As we can see, the elevated polynomial's coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.
 
+<a id=Other_Schemes></a>
 ### Other Schemes
 
-There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope (the parameters &alpha; and _M_ mean that the function is at least as "steep" as _M_\*_x_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0). As a special case, Lipschitz continuous functions have &alpha; = 1 and _M_ equal to their Lipschitz constant.
+There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope (the parameters _&alpha;_ and _M_ mean that the function is no "steeper" than _M_\*_x_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0). As a special case, Lipschitz continuous functions have _&alpha;_ = 1 and _M_ equal to their Lipschitz constant.
 
 **Lemma 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable.  Then abs(**E**[f(X/n)] &minus; f(k/(2\*n))) is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>. (**E**[.] means expected or average value, and **Var**[.] means variance.)_
 
-_Proof._ abs(**E**[f(X/n)] &minus; f(k/(2\*n))) &le; **E**[abs(f(X/n) &minus; f(k/(2\*n))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>&alpha;</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>&alpha;/2<sup> = &le; _M_\***Var**[_X_/_n_]<sup>&alpha;/2</sup> &le; _M_\*(1/(2\*_n_))<sup>&alpha;/2</sup>.  &#x25a1;
+_Proof._ abs(**E**[f(X/n)] &minus; f(k/(2\*n))) &le; **E**[abs(f(X/n) &minus; f(k/(2\*n))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.  &#x25a1;
 
-**Theorem 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials, for all n&ge;1 that are powers of 2) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this article:_
+**Theorem 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials, for all n&ge;1 that are powers of 2) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this article:_
 
 - _a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial)._
 - _b(n, k) = f(k/n) + &delta;(n); (kth Bernstein coefficient of upper nth degree polynomial)._
 
 _Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2\*n) + M\*(1/(2\*n))<sup>&alpha;/2</sup>._
 
-_Proof._ Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  &#x25a1;
+_Proof._ Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>.  &#x25a1;
 
-Unfortunately, there is no easy way to solve the functional equation above in a way that works for all _&alpha_.  However, the following examples show solutions that lead to approximation schemes that work for any _&alpha;_-Hölder continuous function with certain values of _&alpha;_.
+Unfortunately, there is no easy way to solve the functional equation above in a way that works for all _&alpha;_.  However, the following examples show solutions that lead to approximation schemes that work for any _&alpha;_-Hölder continuous function with certain values of _&alpha;_.
 
 - If _&alpha;_ is 1/2 or greater: _&delta;_(_n_) = (_M_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup>. (Solved via SymPy: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()`.)
-- If _&alpha;_ is 2/3 or greater: _&delta;_(_n_) = 2<sup>2/3</sup>\*_M_\*(2</sup>1/3</sup> + 2</sup>2/3</sup> + 2)/(2\*_n_<sup>1/3</sup>).
+- If _&alpha;_ is 2/3 or greater: _&delta;_(_n_) = 2<sup>2/3</sup>\*_M_\*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2\*_n_<sup>1/3</sup>).
 
-<a id=SymPy_Code_for_Checking_Consistency></a>
+<a id=SymPy_Code_for_Building_Approximation_Schemes></a>
 ## SymPy Code for Building Approximation Schemes
 
 The following Python code uses the SymPy computer algebra library. It contains a method, named `approxscheme2`, that builds a scheme for approximating a continuous function _f_(_&lambda;_) whose domain is \[0, 1\], with the help of polynomials that converge from above and below to that function.  Not all functions that admit a Bernoulli factory are supported yet.  One example of the output follows.
@@ -413,8 +414,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
 - <small><sup id=Note1>(1)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
 - <small><sup id=Note2>(2)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
 - <small><sup id=Note3>(3)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
-- <small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
-- <small><sup id=Note5>(5)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
+- <small><sup id=Note4>(4)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 
 <a id=License></a>
 ## License
