@@ -1805,8 +1805,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Set <em>d</em> to choose(<em>diff</em>, <em>k</em>).  Let <em>&omega;</em> be <em>ones</em>&minus;<em>k</em>.</li>
-<li>Calculate <em>a</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor(*<em>fbelow(<em>lastdegree</em>, <em>&omega;</em>)\</em><em>g</em>*<em>h</em>), if not already calculated.</li>
-<li>Calculate <em>b</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor((1&minus;*<em>fabove(<em>lastdegree</em>, <em>&omega;</em>))\</em><em>g</em>*<em>h</em>), if not already calculated.</li>
+<li>Calculate <em>a</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor(<strong>fbelow</strong>(<em>lastdegree</em>, <em>&omega;</em>)*<em>g</em>*<em>h</em>), if not already calculated.</li>
+<li>Calculate <em>b</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor((1&minus;<strong>fabove</strong>(<em>lastdegree</em>, <em>&omega;</em>))*<em>g</em>*<em>h</em>), if not already calculated.</li>
 <li>Subtract (<em>a</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>acount</em>.</li>
 <li>Subtract (<em>b</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>bcount</em>.</li>
 <li>Multiply <em>g</em> by <em>&omega;</em>, then divide <em>g</em> by (<em>lastdegree</em>+1&minus;<em>&omega;</em>). (Sets <em>g</em> to choose(<em>lastdegree</em>, (<em>ones</em>&minus;<em>k</em>)&minus;1).)</li>
@@ -1845,14 +1845,14 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ul>
 
 <p>The SymPy code in the <a href="#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions"><strong>appendix</strong></a> can calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.<sup><a href="#Note49"><strong>(49)</strong></a></sup></p></li>
-<li><p>The following method implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
+<li><p>The following method (Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup> implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
 <li>is <em>Lipschitz continuous</em> in (0, 1), meaning its slope doesn&#39;t tend to a vertical slope anywhere there, and</li>
-<li>meets (b) in note 4</li>
+<li>meets (b) in note 4.</li>
 </ul>
 
-<p>(Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest absolute &quot;slope&quot; of <em>f</em> anywhere in [0, 1].  Then for all <em>n</em> that are powers of 2:</p>
+<p>Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest absolute &quot;slope&quot; of <em>f</em> anywhere in [0, 1].  Then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>

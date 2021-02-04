@@ -15,11 +15,11 @@
 
 <p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.</p>
 
-<p><a id=First_Scheme></a></p>
+<p><a id=Schemes_That_Don_t_Work></a></p>
 
-<h3>First Scheme</h3>
+<h3>Schemes That Don&#39;t Work</h3>
 
-<p>In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C2 continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C2 continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
 
 <ul>
 <li><em>b</em>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + M / (8*<em>n</em>),</li>
@@ -35,11 +35,7 @@
 
 <p>The counterexample is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a></p>
 
-<p><a id=Second_Scheme></a></p>
-
-<h3>Second Scheme</h3>
-
-<p>In this scheme, let <em>f</em> be a Lipschitz continuous function in <a href="that%20is,%20a%20function%20whose%20slope%20does%20not%20tend%20to%20a%20vertical%20slope%20anywhere%20in%20%5B0,%201%5D">0, 1</a>.  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in <a href="that%20is,%20a%20function%20whose%20slope%20does%20not%20tend%20to%20a%20vertical%20slope%20anywhere%20in%20%5B0,%201%5D">0, 1</a>.  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
 
 <ul>
 <li>b(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
@@ -82,11 +78,7 @@
 
 <p>It is yet to be seen whether a counterexample exists for this scheme when <em>n</em> is restricted to powers of 2.</p>
 
-<p><a id=Third_Scheme></a></p>
-
-<h3>Third Scheme</h3>
-
-<p>Same as above, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
+<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
 
 <p>For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;</p>
 
@@ -98,6 +90,33 @@
 <p>And once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.5590..., 0.6423..., 0.7257..., 0.7590..., 0.7257..., 0.6423..., 0.5590...].</p>
 
 <p>As we can see, the elevated polynomial&#39;s coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.</p>
+
+<p><a id=Other_Schemes></a></p>
+
+<h3>Other Schemes</h3>
+
+<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope (the parameters &alpha; and <em>M</em> mean that the function is at least as &quot;steep&quot; as <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0). As a special case, Lipschitz continuous functions have &alpha; = 1 and <em>M</em> equal to their Lipschitz constant.</p>
+
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  Then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;*/2</sup>. (<strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.)</em></p>
+
+<p><em>Proof.</em> abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) &le; <strong>E</strong>[abs(f(X/n) &minus; f(k/(2*n))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>&alpha;</sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup>&alpha;/2<sup> = &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup>&alpha;/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup>&alpha;/2</sup>.  &#x25a1;</p>
+
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials, for all n&ge;1 that are powers of 2) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this article:</em></p>
+
+<ul>
+<li><em>a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
+<li><em>b(n, k) = f(k/n) + &delta;(n); (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
+</ul>
+
+<p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;*/2</sup>.</em></p>
+
+<p><em>Proof.</em> Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  &#x25a1;</p>
+
+<p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&amp;alpha</em>.  However, the following examples show solutions that lead to approximation schemes that work for any Hölder continuous function with certain values of <em>&alpha;</em>.</p>
+
+<ul>
+<li><em>&alpha;</em> = 1/2: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
+</ul>
 
 <p><a id=SymPy_Code_for_Checking_Consistency></a></p>
 

@@ -1373,8 +1373,8 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
     2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.  If _c_ was multiplied as in step 5, multiply _h_ by 2<sup>_lastdegree_</sup> (see note 8 below).
     3. For each integer _k_ in the interval [_u_, _v_]:
         1. Set _d_ to choose(_diff_, _k_).  Let _&omega;_ be _ones_&minus;_k_.
-        2. Calculate _a_\[_lastdegree_, _&omega;_\] = floor(**fbelow(_lastdegree_, _&omega;_)\*_g_\*_h_), if not already calculated.
-        3. Calculate _b_\[_lastdegree_, _&omega;_\] = floor((1&minus;**fabove(_lastdegree_, _&omega;_))\*_g_\*_h_), if not already calculated.
+        2. Calculate _a_\[_lastdegree_, _&omega;_\] = floor(**fbelow**(_lastdegree_, _&omega;_)\*_g_\*_h_), if not already calculated.
+        3. Calculate _b_\[_lastdegree_, _&omega;_\] = floor((1&minus;**fabove**(_lastdegree_, _&omega;_))\*_g_\*_h_), if not already calculated.
         4. Subtract (_a_\[_lastdegree_, _&omega;_\]\*_d_) from _acount_.
         5. Subtract (_b_\[_lastdegree_, _&omega;_\]\*_d_) from _bcount_.
         6. Multiply _g_ by _&omega;_, then divide _g_ by (_lastdegree_+1&minus;_&omega;_). (Sets _g_ to choose(_lastdegree_, (_ones_&minus;_k_)&minus;1).)
@@ -1399,11 +1399,11 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
 >     The SymPy code in the [**appendix**](#SymPy_Code_for_Parameters_to_Simulate__C_2_Functions) can calculate the necessary values for **fbound(_n_)** and _m_, given _f_.<sup>[**(49)**](#Note49)</sup>
-> 5. The following method implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
+> 5. The following method (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 >     - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
->     - meets (b) in note 4
+>     - meets (b) in note 4.
 >
->     (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup>.  Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest absolute "slope" of _f_ anywhere in [0, 1].  Then for all _n_ that are powers of 2:
+>     Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest absolute "slope" of _f_ anywhere in [0, 1].  Then for all _n_ that are powers of 2:
 >
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
