@@ -23,10 +23,12 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
+<p>In this section and the next, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
+
 <p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
 
 <ul>
-<li><em>b</em>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>),</li>
+<li> <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>),</li>
 </ul>
 
 <p>where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
@@ -34,7 +36,7 @@
 <p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows:</p>
 
 <ul>
-<li>a(n, k) = f(k/n) + M / (8*n).</li>
+<li><strong>fbelow</strong>(n, k) = f(k/n) + M / (8*n).</li>
 </ul>
 
 <p>The counterexample involves the function <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2 and is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a>.</p>
@@ -42,7 +44,7 @@
 <p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
 
 <ul>
-<li>b(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
+<li><strong>fabove</strong>(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
 </ul>
 
 <p>where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
@@ -50,7 +52,7 @@
 <p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;1:</p>
 
 <ul>
-<li>a(n, k) = f(k/n) + (5/4) / sqrt(n).</li>
+<li><strong>fbelow</strong>(n, k) = f(k/n) + (5/4) / sqrt(n).</li>
 </ul>
 
 <p>The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions).</p>
@@ -99,39 +101,30 @@
 
 <h3>Other Schemes</h3>
 
-<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.  The parameters <em>&alpha;</em> and <em>M</em>, in the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0).</p>
+<p>I have found how to extend the results of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Moreover, the polynomials satisfy the consistency requirement unlike with the schemes from the previous section.</p>
 
-<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  If f is &alpha;-Hölder continuous with Hölder constant M, then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
-
-<p><em>Proof.</em> abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.  &#x25a1;</p>
-
-<blockquote>
-<p><strong>Notes:</strong></p>
-
-<ol>
-<li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.</li>
-<li>A <em>Lipschitz-continuous</em> function has no slope that tends to a vertical slope, making it a 1-Hölder continuous function with <em>M</em> equal to its Lipschitz constant.</li>
-<li>An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
-</ol>
-</blockquote>
-
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+<p>For example, take a factory function <em>f</em>(<em>&lambda;</em>), the function to simulate using flips of a coin with unknown probability of heads of <em>&lambda;</em>.  The following scheme to build upper and lower polynomials can be used if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li><em>a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
-<li><em>b(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
-</ul>
-
-<p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
-
-<p><em>Proof.</em> Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  &#x25a1;</p>
-
-<p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&alpha;</em>.  However, the following examples show solutions that lead to approximation schemes that work for any <em>&alpha;</em>-Hölder continuous function with certain values of <em>&alpha;</em>.</p>
+<li>is (1/2)-<em>Hölder continuous</em>, meaning its vertical slopes, if any, are no &quot;steeper&quot; than <em>m</em>*sqrt(<em>&lambda;</em>), for some number <em>m</em> greater than 0, and</li>
+<li>in the interval [0, 1]&mdash;
 
 <ul>
-<li>If <em>&alpha;</em> is 1/2 or greater: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
-<li>If <em>&alpha;</em> is 2/3 or greater: <em>&delta;</em>(<em>n</em>) = 2<sup>2/3</sup>*<em>M</em>*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2*<em>n</em><sup>1/3</sup>).</li>
+<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
+<li>is <em>convex</em> (the rate of growth of its &quot;slope&quot; never decreases) and has a minimum of greater than 0, or</li>
+<li>is <em>concave</em> (the rate of growth of its &quot;slope&quot; never increases) and has a maxim
+um of less than 1.</li>
+</ul></li>
 </ul>
+
+<p>Finding the <em>Hölder constant</em> <em>m</em> is non-trivial and it requires knowing whether <em>f</em> has a vertical slope and where, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> is known, then for <em>n</em> that are powers of 2:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex).</li>
+</ul>
+
+<p>Proofs are in the appendix.</p>
 
 <p><a id=SymPy_Code_for_Building_Approximation_Schemes></a></p>
 
@@ -479,6 +472,57 @@ def approxscheme2(func, x, kind=&quot;c2&quot;, lip=None, double=True, levels=9)
 <li><small><sup id=Note2>(2)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
 <li><small><sup id=Note3>(3)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
 <li><small><sup id=Note4>(4)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note5>(5)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
+<li><small><sup id=Note6>(6)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/sqrt(abs(<em>x</em>&minus;<em>y</em>)) for all <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
+<li><small><sup id=Note7>(7)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
+<li><small><sup id=Note8>(8)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
+<li><small><sup id=Note9>(9)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
+</ul>
+
+<p><a id=Appendix></a></p>
+
+<h2>Appendix</h2>
+
+<p>&mdash;</p>
+
+<p><a id=Proofs_for_H_lder_Function_Approximation_Scheme></a></p>
+
+<h3>Proofs for Hölder Function Approximation Scheme</h3>
+
+<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note7"><strong>(7)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
+
+<p>The parameters <em>&alpha;</em> and <em>M</em>, in the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0).</p>
+
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  If f is &alpha;-Hölder continuous with Hölder constant M, then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
+
+<p><em>Proof.</em> abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.  &#x25a1;</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.</li>
+<li>A <em>Lipschitz-continuous</em> function has no slope that tends to a vertical slope, making it a 1-Hölder continuous function with <em>M</em> equal to its Lipschitz constant.</li>
+<li>An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
+</ol>
+</blockquote>
+
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+
+<ul>
+<li><em>a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
+<li><em>b(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
+</ul>
+
+<p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
+
+<p><em>Proof.</em> Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  &#x25a1;</p>
+
+<p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&alpha;</em>.  However, the following examples show solutions that lead to approximation schemes that work for any <em>&alpha;</em>-Hölder continuous function with certain values of <em>&alpha;</em>.</p>
+
+<ul>
+<li>If <em>&alpha;</em> is 1/2 or greater: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
+<li>If <em>&alpha;</em> is 2/3 or greater: <em>&delta;</em>(<em>n</em>) = 2<sup>2/3</sup>*<em>M</em>*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2*<em>n</em><sup>1/3</sup>).</li>
 </ul>
 
 <p><a id=License></a></p>
