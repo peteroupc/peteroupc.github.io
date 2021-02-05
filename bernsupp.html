@@ -112,15 +112,14 @@
 <ul>
 <li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
 <li>is <em>convex</em> (the rate of growth of its &quot;slope&quot; never decreases) and has a minimum of greater than 0, or</li>
-<li>is <em>concave</em> (the rate of growth of its &quot;slope&quot; never increases) and has a maxim
-um of less than 1.</li>
+<li>is <em>concave</em> (the rate of growth of its &quot;slope&quot; never increases) and has a maximum of less than 1.</li>
 </ul></li>
 </ul>
 
 <p>Finding the <em>Hölder constant</em> <em>m</em> is non-trivial and it requires knowing whether <em>f</em> has a vertical slope and where, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> is known, then for <em>n</em> that are powers of 2:</p>
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex).</li>
 </ul>
 
@@ -474,24 +473,21 @@ def approxscheme2(func, x, kind=&quot;c2&quot;, lip=None, double=True, levels=9)
 <li><small><sup id=Note4>(4)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
 <li><small><sup id=Note5>(5)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 <li><small><sup id=Note6>(6)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/sqrt(abs(<em>x</em>&minus;<em>y</em>)) for all <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
-<li><small><sup id=Note7>(7)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
-<li><small><sup id=Note8>(8)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
-<li><small><sup id=Note9>(9)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
 
-<p>&mdash;</p>
+<p>&nbsp;</p>
 
 <p><a id=Proofs_for_H_lder_Function_Approximation_Scheme></a></p>
 
 <h3>Proofs for Hölder Function Approximation Scheme</h3>
 
-<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note7"><strong>(7)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
+<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
 
-<p>The parameters <em>&alpha;</em> and <em>M</em>, in the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0).</p>
+<p>The parameters <em>&alpha;</em> and <em>M</em>, in the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.</p>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  If f is &alpha;-Hölder continuous with Hölder constant M, then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
 
@@ -507,16 +503,16 @@ def approxscheme2(func, x, kind=&quot;c2&quot;, lip=None, double=True, levels=9)
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to (0, 1). The following Bernstein coefficients (<strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
 
 <ul>
-<li><em>a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
-<li><em>b(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
+<li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
+<li><em><strong>fabove</strong>(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
 </ul>
 
 <p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
 
-<p><em>Proof.</em> Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  &#x25a1;</p>
+<p><em>Proof.</em> Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  &#x25a1;</p>
 
 <p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&alpha;</em>.  However, the following examples show solutions that lead to approximation schemes that work for any <em>&alpha;</em>-Hölder continuous function with certain values of <em>&alpha;</em>.</p>
 
