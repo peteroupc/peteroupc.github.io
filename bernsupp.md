@@ -7,24 +7,28 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
-The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.
+The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.
 
 <a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
 
-**First scheme.** In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C2 continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
+In the academic literature (papers and books), there are many approximation schemes that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function _f_ in the Bernoulli Factory setting, because they don't ensure the consistency requirement described earlier.
 
-- _b_(_n_, _k_) = _f_(_k_/_n_) + M / (8*_n_),
+The following are approximation schemes with counterexamples to consistency.
 
-where M is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
+**First scheme.** In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
+
+- _b_(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_),
+
+where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
 And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
 
 - a(n, k) = f(k/n) + M / (8*n).
 
-The counterexample is given at: [**https://math.stackexchange.com/a/3945261/721857**](https://math.stackexchange.com/a/3945261/721857)
+The counterexample involves the function _f_(_&lambda;_) = sin(2\*_&lambda;_)/2 and is given at: [**https://math.stackexchange.com/a/3945261/721857**](https://math.stackexchange.com/a/3945261/721857).
 
-**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
+**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
 
 - b(n, k) = f(k/n) + (5/4) / sqrt(n),
 
@@ -71,20 +75,26 @@ As we can see, the elevated polynomial's coefficient 0.7590... is less than the 
 <a id=Other_Schemes></a>
 ### Other Schemes
 
-There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope (the parameters _&alpha;_ and _M_ mean that the function is no "steeper" than _M_\*_x_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0). As a special case, Lipschitz continuous functions have _&alpha;_ = 1 and _M_ equal to their Lipschitz constant.
+There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope.  The parameters _&alpha;_ and _M_, in the lemma below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0).
 
-**Lemma 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable.  Then abs(**E**[f(X/n)] &minus; f(k/(2\*n))) is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>. (**E**[.] means expected or average value, and **Var**[.] means variance.)_
+**Lemma 1.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable.  If f is &alpha;-Hölder continuous with Hölder constant M, then abs(**E**[f(X/n)] &minus; f(k/(2\*n))) is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>._
 
-_Proof._ abs(**E**[f(X/n)] &minus; f(k/(2\*n))) &le; **E**[abs(f(X/n) &minus; f(k/(2\*n))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.  &#x25a1;
+_Proof._ abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.  &#x25a1;
 
-**Theorem 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials, for all n&ge;1 that are powers of 2) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this article:_
+> **Notes:**
+>
+> 1. **E**[.] means expected or average value, and **Var**[.] means variance.
+> 2. A _Lipschitz-continuous_ function has no slope that tends to a vertical slope, making it a 1-Hölder continuous function with _M_ equal to its Lipschitz constant.
+> 2. An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
+
+**Theorem 1.** _Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
 
 - _a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial)._
-- _b(n, k) = f(k/n) + &delta;(n); (kth Bernstein coefficient of upper nth degree polynomial)._
+- _b(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial)._
 
 _Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2\*n) + M\*(1/(2\*n))<sup>&alpha;/2</sup>._
 
-_Proof._ Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>.  &#x25a1;
+_Proof._ Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(4)**](#Note4)</sup>.  &#x25a1;
 
 Unfortunately, there is no easy way to solve the functional equation above in a way that works for all _&alpha;_.  However, the following examples show solutions that lead to approximation schemes that work for any _&alpha;_-Hölder continuous function with certain values of _&alpha;_.
 
@@ -98,16 +108,24 @@ The following Python code uses the SymPy computer algebra library. It contains a
 
 Note that because numerical methods may be used in some cases, and because only a finite number of polynomials are generated and checked by the code, the approximation scheme is not guaranteed to be correct in all cases.
 
-The `approxscheme2` method takes these parameters:
+The `approxscheme2(func,x,kind,lip,double,levels)` method takes these parameters:
 
 - `func`: SymPy expression of the desired function.
 - `x`: Variable used by `func`.
-- `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
 - `kind`: a string specifying the approximation scheme, such as "c2" (see code for `buildParam`).
 - `lip`: A manually determined parameter that depends on the 'kind', in case the parameter can't be found automatically.
+- `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
 - `levels`: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds "c1", "c0", or "sikkema", and degree 1 otherwise.  Default is 9.
 
 The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**, which have the meanings given in those algorithms.
+
+Also in the code below, the `c2params(func,x,n)` method returns symbolic expressions for parameters needed to apply the approximation scheme for C<sup>2</sup> continuous functions.  It takes these parameters:
+
+- `func`: SymPy expression of the desired function.
+- `x`: Variable used by `func`.
+- `n`: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.
+
+The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).  See the notes in the section on general factory algorithms for more information.
 
 ```
 def upperbound(x, boundmult=1000000000000000):
@@ -143,6 +161,14 @@ def degelev(poly, degs):
         ret.append(c)
     return ret
 
+def c2params(func, x, n):
+  dd=buildParam("c2",func,x)
+  offset=buildOffset("c2", dd, n)
+  nm=nminmax(func, x);
+  bound1=nm[0]-offset
+  bound2=nm[1]+offset
+  return (dd, bound1, bound2)
+
 def buildOffset(kind, dd, n):
     if kind == "c2":
         # Use the theoretical offset for twice
@@ -165,7 +191,7 @@ def buildOffset(kind, dd, n):
         # functions with a Lipschitz continuous slope.
         # dd=max. abs. "slope-of-slope" (Lipschitz constant
         # of first derivative). (G. G. Lorentz. Bernstein polynomials.
-        # Chelsea Publishing Co., New York,second edition, 1986.)
+        # Chelsea Publishing Co., New York, second edition, 1986.)
         # (If the slope is not Lipschitz continuous the formula
         # is (3/4)*(1/sqrt(n))*W(1/sqrt(n)), where W(h)
         # is the _modulus of continuity_ of the slope function, that is,

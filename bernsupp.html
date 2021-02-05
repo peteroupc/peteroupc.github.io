@@ -13,19 +13,23 @@
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  And indeed this is the case for many approximation schemes given in the literature.  The following are schemes with counterexamples to the consistency requirement.</p>
+<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.</p>
 
 <p><a id=Schemes_That_Don_t_Work></a></p>
 
 <h3>Schemes That Don&#39;t Work</h3>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C2 continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
+<p>In the academic literature (papers and books), there are many approximation schemes that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function <em>f</em> in the Bernoulli Factory setting, because they don&#39;t ensure the consistency requirement described earlier.</p>
+
+<p>The following are approximation schemes with counterexamples to consistency.</p>
+
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
 
 <ul>
-<li><em>b</em>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + M / (8*<em>n</em>),</li>
+<li><em>b</em>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>),</li>
 </ul>
 
-<p>where M is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
+<p>where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
 <p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows:</p>
 
@@ -33,9 +37,9 @@
 <li>a(n, k) = f(k/n) + M / (8*n).</li>
 </ul>
 
-<p>The counterexample is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a></p>
+<p>The counterexample involves the function <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2 and is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a>.</p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
 
 <ul>
 <li>b(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
@@ -95,22 +99,32 @@
 
 <h3>Other Schemes</h3>
 
-<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope (the parameters <em>&alpha;</em> and <em>M</em> mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0). As a special case, Lipschitz continuous functions have <em>&alpha;</em> = 1 and <em>M</em> equal to their Lipschitz constant.</p>
+<p>There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.  The parameters <em>&alpha;</em> and <em>M</em>, in the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0).</p>
 
-<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  Then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>. (<strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.)</em></p>
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.  If f is &alpha;-Hölder continuous with Hölder constant M, then abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
 
-<p><em>Proof.</em> abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))) &le; <strong>E</strong>[abs(f(X/n) &minus; f(k/(2*n))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.  &#x25a1;</p>
+<p><em>Proof.</em> abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.  &#x25a1;</p>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials, for all n&ge;1 that are powers of 2) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this article:</em></p>
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.</li>
+<li>A <em>Lipschitz-continuous</em> function has no slope that tends to a vertical slope, making it a 1-Hölder continuous function with <em>M</em> equal to its Lipschitz constant.</li>
+<li>An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
+</ol>
+</blockquote>
+
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) be an &alpha;-Hölder continuous function with Hölder constant M that maps (0, 1) to (0, 1). The following Bernstein coefficients (a(n, k) for the upper polynomials, and b(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
 
 <ul>
 <li><em>a(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial).</em></li>
-<li><em>b(n, k) = f(k/n) + &delta;(n); (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
+<li><em>b(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial).</em></li>
 </ul>
 
 <p><em>Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2*n) + M*(1/(2*n))<sup>&alpha;/2</sup>.</em></p>
 
-<p><em>Proof.</em> Follows from Lemma 1 above as well as Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  &#x25a1;</p>
+<p><em>Proof.</em> Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  &#x25a1;</p>
 
 <p>Unfortunately, there is no easy way to solve the functional equation above in a way that works for all <em>&alpha;</em>.  However, the following examples show solutions that lead to approximation schemes that work for any <em>&alpha;</em>-Hölder continuous function with certain values of <em>&alpha;</em>.</p>
 
@@ -127,18 +141,28 @@
 
 <p>Note that because numerical methods may be used in some cases, and because only a finite number of polynomials are generated and checked by the code, the approximation scheme is not guaranteed to be correct in all cases.</p>
 
-<p>The <code>approxscheme2</code> method takes these parameters:</p>
+<p>The <code>approxscheme2(func,x,kind,lip,double,levels)</code> method takes these parameters:</p>
 
 <ul>
 <li><code>func</code>: SymPy expression of the desired function.</li>
 <li><code>x</code>: Variable used by <code>func</code>.</li>
-<li><code>double</code>: Whether to double the degree with each additional level (<code>True</code>, the default) or to increase that degree by 1 with each level (<code>False</code>).</li>
 <li><code>kind</code>: a string specifying the approximation scheme, such as &quot;c2&quot; (see code for <code>buildParam</code>).</li>
 <li><code>lip</code>: A manually determined parameter that depends on the &#39;kind&#39;, in case the parameter can&#39;t be found automatically.</li>
+<li><code>double</code>: Whether to double the degree with each additional level (<code>True</code>, the default) or to increase that degree by 1 with each level (<code>False</code>).</li>
 <li><code>levels</code>: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds &quot;c1&quot;, &quot;c0&quot;, or &quot;sikkema&quot;, and degree 1 otherwise.  Default is 9.</li>
 </ul>
 
 <p>The method prints out text describing the approximation scheme, which can then be used in either of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> to simulate <em>f</em>(<em>&lambda;</em>) given a black-box way to sample the probability <em>&lambda;</em>.  It refers to the functions <strong>fbelow</strong>, <strong>fabove</strong>, and <strong>fbound</strong>, which have the meanings given in those algorithms.</p>
+
+<p>Also in the code below, the <code>c2params(func,x,n)</code> method returns symbolic expressions for parameters needed to apply the approximation scheme for C<sup>2</sup> continuous functions.  It takes these parameters:</p>
+
+<ul>
+<li><code>func</code>: SymPy expression of the desired function.</li>
+<li><code>x</code>: Variable used by <code>func</code>.</li>
+<li><code>n</code>: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.</li>
+</ul>
+
+<p>The method returns a tuple containing three expressions in the following order: the absolute maximum &quot;slope-of-slope&quot; <em>m</em> (<code>m</code>) and the two bounds for <strong>fbound(<em>n</em>)</strong> (<code>bound1</code> and <code>bound2</code>, respectively).  See the notes in the section on general factory algorithms for more information.</p>
 
 <pre>def upperbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision upper bound of x.
@@ -173,6 +197,14 @@ def degelev(poly, degs):
         ret.append(c)
     return ret
 
+def c2params(func, x, n):
+  dd=buildParam(&quot;c2&quot;,func,x)
+  offset=buildOffset(&quot;c2&quot;, dd, n)
+  nm=nminmax(func, x);
+  bound1=nm[0]-offset
+  bound2=nm[1]+offset
+  return (dd, bound1, bound2)
+
 def buildOffset(kind, dd, n):
     if kind == &quot;c2&quot;:
         # Use the theoretical offset for twice
@@ -195,7 +227,7 @@ def buildOffset(kind, dd, n):
         # functions with a Lipschitz continuous slope.
         # dd=max. abs. &quot;slope-of-slope&quot; (Lipschitz constant
         # of first derivative). (G. G. Lorentz. Bernstein polynomials.
-        # Chelsea Publishing Co., New York,second edition, 1986.)
+        # Chelsea Publishing Co., New York, second edition, 1986.)
         # (If the slope is not Lipschitz continuous the formula
         # is (3/4)*(1/sqrt(n))*W(1/sqrt(n)), where W(h)
         # is the _modulus of continuity_ of the slope function, that is,
