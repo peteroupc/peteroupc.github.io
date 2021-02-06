@@ -291,11 +291,11 @@
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;<em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> &minus; ...,</p>
 
-<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes two parameters <em>t</em> and <em>&epsilon;</em>, where <em>t</em> must be chosen such that <em>t</em> is in (0, 1], <em>f</em>(<em>t</em>) &lt; 1, and <em>&lambda;</em> &lt; <em>t</em> &minus; 2*<em>&epsilon;</em>.</p>
+<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes two parameters <em>t</em> and <em>&#x03F5;</em>, where <em>t</em> must be chosen such that <em>t</em> is in (0, 1], <em>f</em>(<em>t</em>) &lt; 1, and <em>&lambda;</em> &lt; <em>t</em> &minus; 2*<em>&#x03F5;</em>.</p>
 
 <ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&epsilon;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&epsilon;), _i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&epsilon;</em>.  If any of these calls returns 0, return 0.  Otherwise, return 1.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&epsilon;, _i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&epsilon;</em>, and return the result.</li>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&epsilon;), _i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these calls returns 0, return 0.  Otherwise, return 1.&quot;</li>
+<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&epsilon;, _i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
 </ol>
 
 <p><a id=exp_minus___lambda></a></p>

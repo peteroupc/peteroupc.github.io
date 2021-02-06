@@ -236,10 +236,10 @@ then modify the general martingale algorithm by adding the following after step 
 
 &nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
 
-where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&epsilon;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&epsilon;_.
+where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&#x03F5;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&#x03F5;_.
 
-1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&epsilon;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&epsilon;), _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&epsilon;_.  If any of these calls returns 0, return 0.  Otherwise, return 1."
-2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm** once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&epsilon;, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&epsilon;_, and return the result.
+1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&epsilon;), _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_.  If any of these calls returns 0, return 0.  Otherwise, return 1."
+2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm** once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&epsilon;, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)

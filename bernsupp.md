@@ -39,7 +39,7 @@ The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].
 
 - Once elevated to degree 4, the degree-2 polynomial's coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].
 
-As we can see, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-6 polynomial.
+As we can see, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
 
 **Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
 
@@ -143,7 +143,7 @@ def lowerbound(x, boundmult=1000000000000000):
     return floor(x * boundmult) / boundmult
 
 def degelev(poly, degs):
-    # Degree elevation of Bernstein polynomials.
+    # Degree elevation of Bernstein-form polynomials.
     # See also Tsai and Farouki 2001.
     n = len(poly) - 1
     ret = []
@@ -478,6 +478,13 @@ _Proof._ abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_
 _Where &delta;(n) is a solution to the functional equation &delta;(n) = &delta;(2\*n) + M\*(1/(2\*n))<sup>&alpha;/2</sup>._
 
 _Proof._ Follows from Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  &#x25a1;
+
+**Proposition 1.**
+
+1. _Let f be as given in Theorem 1, except f is concave and may have a minimum of 0.  The approximation scheme remains valid if **fbelow**(n, k) = f(k/n), rather than as given in Theorem 1._
+2. _Let f be as given in Theorem 1, except f is convex and may have a maximum of 1.  The approximation scheme remains valid if **fabove**(n, k) = f(k/n), rather than as given in Theorem 1._
+
+_Proof._ Follows from Theorem 1 and Jensen's inequality.  &#x25a1;
 
 Unfortunately, there is no easy way to solve the functional equation above in a way that works for all _&alpha;_.  However, the following examples show solutions that lead to approximation schemes that work for any _&alpha;_-Hölder continuous function with certain values of _&alpha;_.
 
