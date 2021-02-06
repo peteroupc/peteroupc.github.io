@@ -15,6 +15,8 @@ This page also contains algorithms to exactly simulate probabilities that are ir
 
 This page is focused on sampling methods that _exactly_ simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers, that is, random numbers that are independent and identically distributed).
 
+Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
+
 <a id=About_This_Document></a>
 ### About This Document
 
@@ -1397,7 +1399,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 >     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
 >     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
 >
->     My [**supplemental page**](https://peteroupc.github.io/bernsupp.html) includes SymPy code to calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
+>     My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code to calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
 > 5. The following method (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 >     - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
 >     - meets (b) in note 4.

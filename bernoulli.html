@@ -19,6 +19,8 @@
 
 <p>This page is focused on sampling methods that <em>exactly</em> simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of &quot;truly&quot; random numbers, that is, random numbers that are independent and identically distributed).</p>
 
+<p>Supplemental notes are found in: <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a></p>
+
 <p><a id=About_This_Document></a></p>
 
 <h3>About This Document</h3>
@@ -1843,7 +1845,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*2) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
 </ul>
 
-<p>My <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental page</strong></a> includes SymPy code to calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.</p></li>
+<p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code to calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.</p></li>
 <li><p>The following method (Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup> implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
