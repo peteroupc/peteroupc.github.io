@@ -7,7 +7,7 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
-The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.
+The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.
 
 <a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
@@ -28,7 +28,18 @@ And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
 
 - **fbelow**(n, k) = f(k/n) + M / (8*n).
 
-The counterexample involves the function _f_(_&lambda;_) = sin(2\*_&lambda;_)/2 and is given at: [**https://math.stackexchange.com/a/3945261/721857**](https://math.stackexchange.com/a/3945261/721857).
+The counterexample involves the twice differentiable function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
+
+For _g_, the Bernstein coefficients for&mdash;
+
+- the degree-2 upper polynomial (b(5, k)) are [0.6542..., 0.9042..., 0.6542...], and
+- the degree-4 upper polynomial (b(6, k)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].
+
+The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4, must have Bernstein coefficients that are greater than or equal to those of the degree-4 polynomial.
+
+- Once elevated to degree 4, the degree-2 polynomial's coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].
+
+As we can see, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-6 polynomial.
 
 **Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
 
@@ -87,7 +98,7 @@ For example, take a factory function _f_(_&lambda;_), the function to simulate u
       - is _convex_ (the rate of growth of its "slope" never decreases) and has a minimum of greater than 0, or
       - is _concave_ (the rate of growth of its "slope" never increases) and has a maximum of less than 1.
 
-Finding the _Hölder constant_ _m_ is non-trivial and it requires knowing whether _f_ has a vertical slope and where, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ is known, then for _n_ that are powers of 2:
+Finding the _Hölder constant_ _m_ is non-trivial and it requires knowing whether _f_ has a vertical slope and where, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ is known, then for all _n_ that are powers of 2:
 
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; (_m_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup> (or _f_(_k_/_n_) if _f_ is concave).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (_m_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup> (or _f_(_k_/_n_) if _f_ is convex).

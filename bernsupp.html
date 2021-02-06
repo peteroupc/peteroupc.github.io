@@ -13,7 +13,7 @@
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is generally not true; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.</p>
+<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.</p>
 
 <p><a id=Schemes_That_Don_t_Work></a></p>
 
@@ -39,7 +39,22 @@
 <li><strong>fbelow</strong>(n, k) = f(k/n) + M / (8*n).</li>
 </ul>
 
-<p>The counterexample involves the function <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2 and is given at: <a href="https://math.stackexchange.com/a/3945261/721857"><strong>https://math.stackexchange.com/a/3945261/721857</strong></a>.</p>
+<p>The counterexample involves the twice differentiable function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
+
+<p>For <em>g</em>, the Bernstein coefficients for&mdash;</p>
+
+<ul>
+<li>the degree-2 upper polynomial (b(5, k)) are [0.6542..., 0.9042..., 0.6542...], and</li>
+<li>the degree-4 upper polynomial (b(6, k)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
+</ul>
+
+<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4, must have Bernstein coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
+
+<ul>
+<li>Once elevated to degree 4, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
+</ul>
+
+<p>As we can see, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-6 polynomial.</p>
 
 <p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
 
@@ -116,7 +131,7 @@
 </ul></li>
 </ul>
 
-<p>Finding the <em>Hölder constant</em> <em>m</em> is non-trivial and it requires knowing whether <em>f</em> has a vertical slope and where, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> is known, then for <em>n</em> that are powers of 2:</p>
+<p>Finding the <em>Hölder constant</em> <em>m</em> is non-trivial and it requires knowing whether <em>f</em> has a vertical slope and where, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> is known, then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; (<em>m</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup> (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
