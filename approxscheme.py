@@ -33,6 +33,79 @@ def degelev(poly, degs):
         ret.append(c)
     return ret
 
+def estimatehoelder(func, x, alpha, discontpoints=None):
+    # Estimate the alpha-Hölder constant for the given
+    # function in the interval [0, 1], assuming it's continuous.
+    npoints = 60
+    points = []
+    hh = {}
+    for i in range(npoints + 1):
+        pt = i / npoints
+        if pt in hh:
+            continue
+        hh[pt] = True
+        points.append((pt, func.subs(x, pt)))
+    dp = [0, 1] if discontpoints == None else discontpoints
+    # Sample around the discontinuous points
+    for discont in dp:
+        if not (discont in hh):
+            hh[discont] = True
+            points.append((discont, func.subs(x, discont)))
+        for i in range(6):
+            pt = discont + Rational(1, 10 ** (i + 8))
+            if (not (pt in hh)) and pt >= 0 and pt <= 1:
+                hh[pt] = True
+                points.append((pt, func.subs(x, pt)))
+            pt = discont - Rational(1, 10 ** (i + 8))
+            if (not (pt in hh)) and pt >= 0 and pt <= 1:
+                hh[pt] = True
+                points.append((pt, func.subs(x, pt)))
+    points.sort()  # Sort by position in func
+    res = []
+    for i in range(len(points)):
+        for j in range(i + 1, len(points)):
+            rn = (
+                Abs(points[i][1] - points[j][1])
+                / Abs(points[i][0] - points[j][0]) ** alpha
+            ).n()
+            if rn != nan:
+                res.append(rn)
+    return Max(*res)
+
+def hoelderconst(func, x, alpha):
+    # Find the Hölder constant of a continuous function in the interval
+    # [0, 1] for a given Hölder exponent, alpha.
+    # NOTE: Ensure func is real valued, since otherwise
+    # it may enter complex-number territory, which is undesirable
+    if alpha >= 1 or alpha <= 0:
+        # Allow only exponents in (0, 1); also exclude exponent
+        # 1 (the Lipschitz case), since that means the function
+        # must have no vertical slope.
+        raise ValueError
+    xz = symbols("xz", real=True)
+    func = func.subs(x, xz)
+    # Get the points where poles in the derivative could be.
+    # NOTE: Getting the discontinuous points is a bit of a hack;
+    # a better choice would be continuous_domain ... if it worked.
+    pw = piecewise_fold(Abs(diff(func)).rewrite(Piecewise))
+    points = []
+    points.append(0)
+    points.append(1)
+    if isinstance(pw, Piecewise):
+        for v in pw.as_expr_set_pairs(Interval(0, 1)):
+            points.append(v[1].start)
+            points.append(v[1].end)
+    else:
+        points.append(0)
+        points.append(1)
+    # Estimate the constant given the discontinuous points.
+    # Add a small value to the
+    # numerical estimate, since for our purposes, we can do with an
+    # upper bound on the Hölder constant, and also to reduce
+    # the chance of underestimating that constant.
+    print("WARNING: Resorting to numerical computation")
+    return estimatehoelder(func, xz, alpha, points) + Rational(1, 10000)
+
 def c2params(func, x, n):
     """
       This method returns symbolic expressions for parameters needed to apply the approximation scheme for C<sup>2</sup> continuous functions (namely: fbelow(n, k) = f(k/n) - m/(2 * n); fabove(n, k) = f(k/n) + m / (2 * n)).  It takes these parameters:

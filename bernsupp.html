@@ -206,6 +206,7 @@
 <ul>
 <li>If <em>&alpha;</em> is 1/2 or greater: <em>&delta;</em>(<em>n</em>) = (<em>M</em>*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/<em>n</em><sup>1/4</sup>. (Solved via SymPy: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.)</li>
 <li>If <em>&alpha;</em> is 2/3 or greater: <em>&delta;</em>(<em>n</em>) = 2<sup>2/3</sup>*<em>M</em>*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2*<em>n</em><sup>1/3</sup>).</li>
+<li>If <em>&alpha;</em> is 1/<em>j</em> or greater: <em>&delta;</em>(<em>n</em>) = (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup>.</li>
 </ul>
 
 <p><a id=License></a></p>

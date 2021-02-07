@@ -208,4 +208,3 @@ Dir.glob("*.md"){|fn|
 }
 end
 
-preparePdfs()

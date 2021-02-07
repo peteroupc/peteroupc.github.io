@@ -157,6 +157,7 @@ Unfortunately, there is no easy way to solve the functional equation above in a 
 
 - If _&alpha;_ is 1/2 or greater: _&delta;_(_n_) = (_M_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup>. (Solved via SymPy: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()`.)
 - If _&alpha;_ is 2/3 or greater: _&delta;_(_n_) = 2<sup>2/3</sup>\*_M_\*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2\*_n_<sup>1/3</sup>).
+- If _&alpha;_ is 1/_j_ or greater: _&delta;_(_n_) = (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup>.
 
 <a id=License></a>
 ## License
