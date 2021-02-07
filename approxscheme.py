@@ -129,6 +129,10 @@ def buildOffset(kind, dd, n):
         # Use the theoretical offset for twice
         # differentiable functions. dd=max. abs. second derivative
         return dd / (n * 2)
+    elif kind == "myc2":
+        # Use my theoretical offset for twice
+        # differentiable functions, valid if n>=4. dd=max. abs. second derivative
+        return dd / (n * 7)
     elif kind == "lipschitz":
         # Use the theoretical offset for Lipschitz
         # continuous functions. dd=max. abs. "slope"
@@ -198,7 +202,7 @@ def nminmax(func, x):
     return [Min(*cv).simplify(), Max(*cv).simplify()]
 
 def buildParam(kind, func, x, lip=None):
-    if kind == "c2" or kind == "c1":
+    if kind == "c2" or kind == "c1" or kind == "myc2":
         try:
             # Maximum of second derivative.
             dd = nminmax(diff(diff(func)), x)
@@ -355,7 +359,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     curvedata = []
     if kind == "c1" or kind == "c0" or kind == "sikkema":
         deg = 2
-    elif kind == "mylipschitz":
+    elif kind == "mylipschitz" or kind == "myc2":
         deg = 4
     else:
         deg = 1
@@ -419,7 +423,6 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
             break
     offsetn = buildOffset(kind, dd, symbols("n"))
     offsetn *= right
-    conc = concavity(func, x)
     data = "* Let _f_(_&lambda;_) = %s.  " % (
         str(func.subs(x, symbols("lambda"))).replace("*", "\*")
     )
