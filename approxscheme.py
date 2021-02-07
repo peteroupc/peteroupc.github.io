@@ -1,4 +1,5 @@
 from sympy import *
+import math
 
 def upperbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision upper bound of x.
@@ -132,6 +133,10 @@ def buildOffset(kind, dd, n):
         # Use the theoretical offset for Lipschitz
         # continuous functions. dd=max. abs. "slope"
         return dd * (1 + sqrt(2)) / sqrt(n)
+    elif kind == "mylipschitz":
+        # Use my theoretical offset for Lipschitz
+        # continuous functions, valid if n>=4. dd=max. abs. "slope"
+        return dd * (sqrt(7) * (sqrt(2) + 2)) / (7 * sqrt(n))
     elif kind == "sikkema":
         # Use the theoretical offset for C0
         # Lipschitz continuous functions involving Sikkema's constant.
@@ -207,7 +212,12 @@ def buildParam(kind, func, x, lip=None):
             if lip == None:
                 raise ValueError
             dd = S(lip)
-    elif kind == "lipschitz" or kind == "sikkema" or kind == "c0":
+    elif (
+        kind == "lipschitz"
+        or kind == "mylipschitz"
+        or kind == "sikkema"
+        or kind == "c0"
+    ):
         try:
             # Maximum of first derivative (Lipschitz constant)
             ff = func.rewrite(Piecewise)
@@ -274,11 +284,45 @@ def isinrange(curve, ratio):
     return True
 
 def concavity(func, x):
-    nm = nminmax(diff(diff(func)), x)
-    if nm[0] >= 0:
-        return "convex"
-    if nm[1] <= 0:
-        return "concave"
+    try:
+        if is_convex(func, x):
+            return "convex"
+        if is_convex(-func, x):
+            return "concave"
+    except:
+        print(
+            "WARNING: Can't determine whether function is concave or convex symbolically, "
+            + "so resorting to numerical computation"
+        )
+        d = diff(func, x)
+        c = 100
+        diffs = []
+        for i in range(c + 1):
+            v = d.subs(x, i / c).n()
+            try:
+                Min(v)
+                diffs.append(v)
+            except:
+                # Not comparable, so take limits instead
+                diffs.append(limit(d, x, i / c, "-"))
+                diffs.append(limit(d, x, i / c, "+"))
+        isconcave = True
+        isconvex = True
+        for i in range(len(diffs) - 1):
+            try:
+                if diffs[i] < diffs[i + 1]:
+                    isconcave = False
+                if diffs[i] > diffs[i + 1]:
+                    isconvex = False
+            except:
+                print("WARNING: Can't determine whether function is concave or convex")
+                return None
+            if (not isconvex) and (not isconcave):
+                break
+        if isconcave:
+            return "concave"
+        if isconvex:
+            return "convex"
     return None
 
 def consistencyCheckCore(curvedata, ratio, diagnose=False):
@@ -311,6 +355,8 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     curvedata = []
     if kind == "c1" or kind == "c0" or kind == "sikkema":
         deg = 2
+    elif kind == "mylipschitz":
+        deg = 4
     else:
         deg = 1
     nmm = nminmax(func, x)
