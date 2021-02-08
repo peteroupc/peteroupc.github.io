@@ -1,5 +1,7 @@
 # Supplemental Notes for Bernoulli Factory Algorithms
 
+[**Peter Occil**](mailto:poccil14@gmail.com)
+
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
 
@@ -57,8 +59,8 @@ For the first counterexample, the function _g_(_&lambda;_) = min(_&lambda;_, 1&m
 
 For _g_, the Bernstein coefficients for&mdash;
 
-- the degree-5 upper polynomial (b(5, k)) are [0.4874..., 0.5874..., 0.6874..., 0.6874..., 0.5874..., 0.4874...], and
-- the degree-6 upper polynomial (b(6, k)) are [0.4449..., 0.5283..., 0.6116..., 0.6949..., 0.6116..., 0.5283..., 0.4449...].
+- the degree-5 upper polynomial are [0.4874..., 0.5874..., 0.6874..., 0.6874..., 0.5874..., 0.4874...], and
+- the degree-6 upper polynomial are [0.4449..., 0.5283..., 0.6116..., 0.6949..., 0.6116..., 0.5283..., 0.4449...].
 
 The degree-5 polynomial lies above the degree-6 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-5 polynomial, once elevated to degree 6, must have Bernstein coefficients that are greater than or equal to those of the degree-6 polynomial.
 
@@ -98,9 +100,9 @@ For example, take a factory function _f_(_&lambda;_), the function to simulate u
       - is _convex_ (the rate of growth of its "slope" never decreases) and has a minimum of greater than 0, or
       - is _concave_ (the rate of growth of its "slope" never increases) and has a maximum of less than 1.
 
-If _f_ has no slope that tends to a vertical slope anywhere in \[0, 1\], then _f_ is Lipschitz continuous so that _&alpha;_ is 1 and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
+If _f_ has no slope that tends to a vertical slope anywhere in \[0, 1\], then _f_ is Lipschitz continuous, _&alpha;_ is 1, and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
 
-- _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_</sup>/((2<sup>_&alpha;_</sup>&minus;1)\*_n_<sup>_&alpha;_</sup>).
+- _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = min(**fbelow**(4,0), **fbelow**(4,1), **fbelow**(4,2), **fbelow**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
 - **fabove**(_n_, _k_) = max(**fabove**(4,0), **fabove**(4,1), **fabove**(4,2), **fabove**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
 
@@ -154,7 +156,7 @@ _Proof._
 **Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to (0, 1). The following Bernstein coefficients (**fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial)._
-- _**fabove**(n, k) = f(k/n) + M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup> &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial)._
+- _**fabove**(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial)._
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
@@ -174,7 +176,7 @@ _Otherwise:_
 - _**fbelow**(n, k) = Lower bound of **fbelow**(4, k) for all k in [0, 4]._
 - _**fabove**(n, k) = Upper bound of **fabove**(4, k) for all k in [0, 4]._
 
-_Where &eta;(n) = _M_\*(2/7)<sup>&alpha;</sup>/((2<sup>&alpha;</sup>&minus;1)\*_n_<sup>&alpha;</sup>)._
+_Where &eta;(n) = M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
 _Proof._  Follows from part 2 of Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres, as well as from the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  The term _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2\*_n_) + _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.  &#x25a1;
 
