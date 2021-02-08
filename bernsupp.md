@@ -92,16 +92,17 @@ I have found how to extend the results of Nacu and Peres (2005)<sup>[**(5)**](#N
 
 For example, take a factory function _f_(_&lambda;_), the function to simulate using flips of a coin with unknown probability of heads of _&lambda;_.  The following scheme to build upper and lower polynomials can be used if _f_(_&lambda;_)&mdash;
 
-- is (1/2)-_Hölder continuous_, meaning its vertical slopes, if any, are no "steeper" than _m_\*sqrt(_&lambda;_), for some number _m_ greater than 0, and
+- is _&alpha;_-_Hölder continuous_, meaning its vertical slopes, if any, are no "steeper" than _m_\*_&lambda;_<sup>1/2</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
 - in the interval \[0, 1\]&mdash;
       - has a minimum of greater than 0 and a maximum of less than 1, or
       - is _convex_ (the rate of growth of its "slope" never decreases) and has a minimum of greater than 0, or
       - is _concave_ (the rate of growth of its "slope" never increases) and has a maximum of less than 1.
 
-Finding the _Hölder constant_ _m_ is non-trivial and it requires knowing whether _f_ has a vertical slope and where, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ is known, then for all _n_ that are powers of 2:
+If _f_ has no slope that tends to a vertical slope anywhere in \[0, 1\], then _f_ is Lipschitz continuous so that _&alpha;_ is 1 and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
 
-- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; (_m_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup> (or _f_(_k_/_n_) if _f_ is concave).
-- **fabove**(_n_, _k_) = _f_(_k_/_n_) + (_m_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup> (or _f_(_k_/_n_) if _f_ is convex).
+- _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_</sup>/((2<sup>_&alpha;_</sup>&minus;1)\*_n_<sup>_&alpha;_</sup>).
+- **fbelow**(_n_, _k_) = min(**fbelow**(4,0), **fbelow**(4,1), **fbelow**(4,2), **fbelow**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
+- **fabove**(_n_, _k_) = max(**fabove**(4,0), **fabove**(4,1), **fabove**(4,2), **fabove**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
 
 Proofs are in the appendix.
 
@@ -113,7 +114,7 @@ Proofs are in the appendix.
 - <small><sup id=Note3>(3)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note4>(4)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 - <small><sup id=Note5>(5)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
-- <small><sup id=Note6>(6)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/sqrt(abs(_x_&minus;_y_)) for all _x_, _y_ pairs, where _x_ and _y_ are each in \[0, 1\] and _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
+- <small><sup id=Note6>(6)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for all _x_, _y_ pairs, where _x_ and _y_ are each in \[0, 1\] and _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -123,9 +124,9 @@ Proofs are in the appendix.
 <a id=Proofs_for_H_lder_Function_Approximation_Scheme></a>
 ### Proofs for Hölder Function Approximation Scheme
 
-There is an easy extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope.
+There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope.
 
-The parameters _&alpha;_ and _M_, in the lemma below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.
+The parameters _&alpha;_ and _M_, in parts 1 and 2 of the lemma below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.
 
 **Lemma 1.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
@@ -133,7 +134,7 @@ The parameters _&alpha;_ and _M_, in the lemma below, mean that the function is 
 
     abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))),&nbsp;&nbsp;&nbsp;(1)
 
-    _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>._
+    _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all integers n&ge;1._
 2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all integers n&ge;4._
 3. _If f is twice differentiable, and its second derivative's absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)\*(1/(7\*n)), for all integers n&ge;4._
 
@@ -150,14 +151,16 @@ _Proof._
 > 3. An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 4. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.
 
-**Theorem 1.** _Let f(&lambda;) and M be as described in part 1 of Lemma 1, except f maps [0, 1] to (0, 1). The following Bernstein coefficients (**fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
+**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to (0, 1). The following Bernstein coefficients (**fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n) (kth Bernstein coefficient of lower nth degree polynomial)._
-- _**fabove**(n, k) = f(k/n) + &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial)._
+- _**fabove**(n, k) = f(k/n) + M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup> &delta;(n) (kth Bernstein coefficient of upper nth degree polynomial)._
 
-_Where &delta;(n) is a solution to the functional equation _&delta;(n) = &delta;(2\*n) + M\*(1/(2\*n))<sup>&alpha;/2</sup>._
+_Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from part 1 of Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.&#x25a1;
+_Proof._ Follows from part 1 of Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. &#x25a1;
+
+> **Note:** For specific values of _&alpha;_, the functional equation given in the proof can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
 **Theorem 2.** _Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to (0, 1).  The following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1:_
 
@@ -171,9 +174,11 @@ _Otherwise:_
 - _**fbelow**(n, k) = Lower bound of **fbelow**(4, k) for all k in [0, 4]._
 - _**fabove**(n, k) = Upper bound of **fabove**(4, k) for all k in [0, 4]._
 
-_Where &eta;(n) is a solution to the functional equation &eta;(n) = &eta;(2\*n) + M\*(1/(7\*n))<sup>&alpha;/2</sup>._
+_Where &eta;(n) = _M_\*(2/7)<sup>&alpha;</sup>/((2<sup>&alpha;</sup>&minus;1)\*_n_<sup>&alpha;</sup>)._
 
-_Proof._  Follows from part 2 of Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres, as well as from the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  &#x25a1;
+_Proof._  Follows from part 2 of Lemma 1 above as well as the proof of Proposition 10 of Nacu and Peres, as well as from the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  The term _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2\*_n_) + _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.  &#x25a1;
+
+> **Note:** The term _&eta;_(_n_) was found in a similar way as the term _&delta;_(_n_) in Theorem 1.
 
 **Theorem 3.** _Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to (0, 1).  Then the following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1:_
 
@@ -195,14 +200,6 @@ _Proof._  Follows from part 3 of Lemma 3 above as well as the proof of Propositi
 2. _Let f be as given in Theorem 1, 2, or 3, except f is convex and may have a maximum of 1.  The approximation scheme of that theorem remains valid if **fabove**(n, k) = f(k/n), rather than as given in that theorem._
 
 _Proof._ Follows from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  &#x25a1;
-
-Unfortunately, there is no easy way to solve the functional equations above in a way that works for all _&alpha;_.  However, the following examples show solutions that lead to approximation schemes that work for any _&alpha;_-Hölder continuous function with certain values of _&alpha;_.
-
-- If _&alpha;_ is 1/2 or greater: _&delta;_(_n_) = (_M_\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 1))/_n_<sup>1/4</sup>. (Solved via SymPy: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()`.)
-- If _&alpha;_ is 2/3 or greater: _&delta;_(_n_) = 2<sup>2/3</sup>\*_M_\*(2<sup>1/3</sup> + 2<sup>2/3</sup> + 2)/(2\*_n_<sup>1/3</sup>).
-- If _&alpha;_ is 1/_j_ or greater: _&delta;_(_n_) = (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup>.
-- If _&alpha;_ is 1 (_f_ is Lipschitz continuous): _&eta;_(_n_) = _M_\*sqrt(7)\*(sqrt(2)+2)/(7\*sqrt(_n_)). (Solved via SymPy: `rsolve(Eq(f(n),f(n+1)+z*(1/(7*2**n))**((S(1))/2)),f(n)).subs(n,log(n,2)).simplify()`.)
-- If _&alpha;_ is 1/2 or greater: _&eta;_(_n_) = (_M_\*7<sup>3/4</sup>\*(2<sup>1/4</sup> + 2<sup>2/4</sup> + 2<sup>3/4</sup> + 2))/(7\*_n_<sup>1/4</sup>).
 
 <a id=License></a>
 ## License

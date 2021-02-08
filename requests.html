@@ -89,7 +89,7 @@
 <ul>
 <li>Non-concave functions with a minimum of 0.</li>
 <li>Non-convex functions with a maximum of 1.</li>
-<li>Functions that are neither C<sup>2</sup> continuous nor Lipschitz continuous.</li>
+<li>Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous &quot;slope-of-slope&quot;, and a Hölder continuous function does not go exponentially fast to a vertical slope.)</li>
 </ul>
 
 <p>An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and simulate <em>f</em>(<em>&lambda;</em>) using the chosen polynomials.  The paper gives the example of min(<em>&lambda;</em>, 8/10).  Are there formulas for computing these sequences efficiently, unlike the paper&#39;s approach that requires computing an intersection of a curve with an approximating polynomial, which gets very inefficient as the polynomial&#39;s degree gets large?</p>

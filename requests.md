@@ -68,7 +68,7 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
         - Non-concave functions with a minimum of 0.
         - Non-convex functions with a maximum of 1.
-        - Functions that are neither C<sup>2</sup> continuous nor Lipschitz continuous.
+        - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
 
         An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(2)**](#Note2)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and simulate _f_(_&lambda;_) using the chosen polynomials.  The paper gives the example of min(_&lambda;_, 8/10).  Are there formulas for computing these sequences efficiently, unlike the paper's approach that requires computing an intersection of a curve with an approximating polynomial, which gets very inefficient as the polynomial's degree gets large?
 

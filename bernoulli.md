@@ -1439,7 +1439,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 
         - Non-concave functions with a minimum of 0.
         - Non-convex functions with a maximum of 1.
-        - Functions that are neither C<sup>2</sup> continuous nor Lipschitz continuous.
+        - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
 
         See also my questions on _Mathematics Stack Exchange_:
 
