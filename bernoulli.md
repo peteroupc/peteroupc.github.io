@@ -1401,7 +1401,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 >
 >     My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code to calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
 > 5. The following method (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
->     - is _Lipschitz continuous_ in (0, 1), meaning its slope doesn't tend to a vertical slope anywhere there, and
+>     - is _Lipschitz continuous_ in (0, 1), meaning that in (0, 1) it has a defined slope almost everywhere and the slope doesn't tend to a vertical slope anywhere, and
 >     - meets (b) in note 4.
 >
 >     Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest absolute "slope" of _f_ anywhere in [0, 1].  Then for all _n_ that are powers of 2:

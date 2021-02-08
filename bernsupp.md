@@ -20,15 +20,12 @@ The following are approximation schemes with counterexamples to consistency.
 
 In this section, **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\].
 
-**First scheme.** In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all _n_&ge;1:
+**First scheme.** In this scheme (Powell 1981)<sup>[**(1)**](#Note1)</sup>, let _f_ be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then for all _n_&ge;1, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows:
 
--  **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_),
+-  **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 
-where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
-
-And the lower polynomial of degree _n_ has Bernstein coefficients as follows:
-
-- **fbelow**(n, k) = f(k/n) + M / (8*n).
+Where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
 The counterexample involves the twice differentiable function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
 
@@ -43,15 +40,12 @@ The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].
 
 As we can see, the elevated polynomial's coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.
 
-**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;2:
+**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function in [0, 1] that has a defined slope almost everywhere and does not tend to a vertical slope anywhere).  Then for all _n_&ge;2, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows:
 
-- **fabove**(n, k) = f(k/n) + (5/4) / sqrt(n),
+- **fabove**(_n_, _k_) = _f_(_k_/_n_) + (5/4) / sqrt(_n_).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (5/4) / sqrt(_n_).
 
-where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(2)**](#Note2)</sup>, (Popoviciu 1935)<sup>[**(3)**](#Note3)</sup>.
-
-And the lower polynomial of degree _n_ has Bernstein coefficients as follows, for all n&ge;1:
-
-- **fbelow**(n, k) = f(k/n) + (5/4) / sqrt(n).
+Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(2)**](#Note2)</sup>, (Popoviciu 1935)<sup>[**(3)**](#Note3)</sup>.
 
 The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to "smooth" functions (not just Lipschitz continuous functions).
 
@@ -94,13 +88,13 @@ I have found how to extend the results of Nacu and Peres (2005)<sup>[**(5)**](#N
 
 For example, take a factory function _f_(_&lambda;_), the function to simulate using flips of a coin with unknown probability of heads of _&lambda;_.  The following scheme to build upper and lower polynomials can be used if _f_(_&lambda;_)&mdash;
 
-- is _&alpha;_-_Hölder continuous_, meaning its vertical slopes, if any, are no "steeper" than _m_\*_&lambda;_<sup>1/2</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
+- is _&alpha;_-_Hölder continuous_, meaning its vertical slopes, if any, are no "steeper" than _m_\*_&lambda;_<sup>_&alpha;_</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
 - in the interval \[0, 1\]&mdash;
       - has a minimum of greater than 0 and a maximum of less than 1, or
       - is _convex_ (the rate of growth of its "slope" never decreases) and has a minimum of greater than 0, or
       - is _concave_ (the rate of growth of its "slope" never increases) and has a maximum of less than 1.
 
-If _f_ has no slope that tends to a vertical slope anywhere in \[0, 1\], then _f_ is Lipschitz continuous, _&alpha;_ is 1, and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
+If _f_ in \[0, 1] has a defined slope almost everywhere and does not tend to a vertical slope anywhere, then _f_ is Lipschitz continuous, _&alpha;_ is 1, and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
 
 - _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).

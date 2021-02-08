@@ -223,7 +223,9 @@ def buildParam(kind, func, x, lip=None):
         or kind == "c0"
     ):
         try:
-            # Maximum of first derivative (Lipschitz constant)
+            # Maximum of first derivative (Lipschitz constant).
+            # Notice that Lipschitz functions are differentiable almost
+            # everywhere, due to a result by Rademacher.
             ff = func.rewrite(Piecewise)
             dd = nminmax(diff(diff(func)), x)
             dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()

@@ -27,19 +27,14 @@
 
 <p>In this section, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
 
 <ul>
-<li> <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>),</li>
+<li> <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
 </ul>
 
-<p>where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
-
-<p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows:</p>
-
-<ul>
-<li><strong>fbelow</strong>(n, k) = f(k/n) + M / (8*n).</li>
-</ul>
+<p>Where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
 <p>The counterexample involves the twice differentiable function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
 
@@ -58,19 +53,14 @@
 
 <p>As we can see, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function whose slope does not tend to a vertical slope anywhere in [0, 1]).  Then the upper polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope almost everywhere and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
 
 <ul>
-<li><strong>fabove</strong>(n, k) = f(k/n) + (5/4) / sqrt(n),</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (5/4) / sqrt(<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (5/4) / sqrt(<em>n</em>).</li>
 </ul>
 
-<p>where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
-
-<p>And the lower polynomial of degree <em>n</em> has Bernstein coefficients as follows, for all n&ge;1:</p>
-
-<ul>
-<li><strong>fbelow</strong>(n, k) = f(k/n) + (5/4) / sqrt(n).</li>
-</ul>
+<p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
 
 <p>The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions).</p>
 
@@ -123,7 +113,7 @@
 <p>For example, take a factory function <em>f</em>(<em>&lambda;</em>), the function to simulate using flips of a coin with unknown probability of heads of <em>&lambda;</em>.  The following scheme to build upper and lower polynomials can be used if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>is <em>&alpha;</em>-<em>Hölder continuous</em>, meaning its vertical slopes, if any, are no &quot;steeper&quot; than <em>m</em>*<em>&lambda;</em><sup>1/2</sup>, for some number <em>m</em> greater than 0 (the Hölder constant) and for some <em>&alpha;</em> in the interval (0, 1], and</li>
+<li>is <em>&alpha;</em>-<em>Hölder continuous</em>, meaning its vertical slopes, if any, are no &quot;steeper&quot; than <em>m</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>, for some number <em>m</em> greater than 0 (the Hölder constant) and for some <em>&alpha;</em> in the interval (0, 1], and</li>
 <li>in the interval [0, 1]&mdash;
 
 <ul>
@@ -133,7 +123,7 @@
 </ul></li>
 </ul>
 
-<p>If <em>f</em> has no slope that tends to a vertical slope anywhere in [0, 1], then <em>f</em> is Lipschitz continuous, <em>&alpha;</em> is 1, and <em>m</em> is the function&#39;s highest absolute &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for all <em>n</em> that are powers of 2:</p>
+<p>If <em>f</em> in [0, 1] has a defined slope almost everywhere and does not tend to a vertical slope anywhere, then <em>f</em> is Lipschitz continuous, <em>&alpha;</em> is 1, and <em>m</em> is the function&#39;s highest absolute &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note6"><strong>(6)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
 <li><em>&delta;</em>(<em>n</em>) = <em>m</em>*(2/7)<sup><em>&alpha;</em>/2</sup>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</li>
