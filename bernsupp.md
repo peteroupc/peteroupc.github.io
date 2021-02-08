@@ -103,8 +103,8 @@ For example, take a factory function _f_(_&lambda;_), the function to simulate u
 If _f_ has no slope that tends to a vertical slope anywhere in \[0, 1\], then _f_ is Lipschitz continuous, _&alpha;_ is 1, and _m_ is the function's highest absolute "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(6)**](#Note6)</sup>  But assuming _m_ and _&alpha;_ are known, then for all _n_ that are powers of 2:
 
 - _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
-- **fbelow**(_n_, _k_) = min(**fbelow**(4,0), **fbelow**(4,1), **fbelow**(4,2), **fbelow**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
-- **fabove**(_n_, _k_) = max(**fabove**(4,0), **fabove**(4,1), **fabove**(4,2), **fabove**(4,3)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
+- **fbelow**(_n_, _k_) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
+- **fabove**(_n_, _k_) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_) (or _f_(_k_/_n_) if _f_ is concave).
 
 Proofs are in the appendix.
 
@@ -166,15 +166,8 @@ _Proof._ Follows from part 1 of Lemma 1 above as well as the proof of Propositio
 
 **Theorem 2.** _Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to (0, 1).  The following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1:_
 
-_If n is 4 or greater:_
-
-- _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
-- _**fabove**(n, k) = f(k/n) + &eta;(n)._
-
-_Otherwise:_
-
-- _**fbelow**(n, k) = Lower bound of **fbelow**(4, k) for all k in [0, 4]._
-- _**fabove**(n, k) = Upper bound of **fabove**(4, k) for all k in [0, 4]._
+- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
+- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
 
 _Where &eta;(n) = M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
@@ -184,15 +177,8 @@ _Proof._  Follows from part 2 of Lemma 1 above as well as the proof of Propositi
 
 **Theorem 3.** _Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to (0, 1).  Then the following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, for all n&ge;1:_
 
-_If n is 4 or greater:_
-
-- _**fbelow**(n, k) = f(k/n) &minus; M/(7\*n)._
-- _**fabove**(n, k) = f(k/n) + M/(7\*n)._
-
-_Otherwise:_
-
-- _**fbelow**(n, k) = Lower bound of **fbelow**(4, k) for all k in [0, 4]._
-- _**fabove**(n, k) = Upper bound of **fabove**(4, k) for all k in [0, 4]._
+- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M/(7\*n)._
+- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M/(7\*n)._
 
 _Proof._  Follows from part 3 of Lemma 3 above as well as the proof of Proposition 10 of Nacu and Peres, noting that the solution to the functional equation _&kappa;_(n) = _&kappa;_(2\*n) + (_M_/2)\*(1/(7\*_n_)) is _M_/(7\*_n_).  Also follows from the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  &#x25a1;
 
