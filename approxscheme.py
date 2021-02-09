@@ -109,16 +109,23 @@ def hoelderconst(func, x, alpha):
 
 def c2params(func, x, n):
     """
-      This method returns symbolic expressions for parameters needed to apply the approximation scheme for C<sup>2</sup> continuous functions (namely: fbelow(n, k) = f(k/n) - m/(2 * n); fabove(n, k) = f(k/n) + m / (2 * n)).  It takes these parameters:
+      This method returns symbolic expressions for parameters needed to apply my approximation scheme for C<sup>2</sup> continuous functions (namely: fbelow(n, k) = f(k/n) - m/(7 * n); fabove(n, k) = f(k/n) + m / (7 * n)).  It takes these parameters:
 
     - `func`: SymPy expression of the desired function.
     - `x`: Variable used by `func`.
-    - `n`: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.
+    - `n`: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.  Must be a power of 2 and must be 4 or greater.
 
     The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).  See the notes in the section on [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for more information.
     """
-    dd = buildParam("c2", func, x)
-    offset = buildOffset("c2", dd, n)
+    if n < 4:
+        raise ValueError
+    n2 = n
+    while n2 % 2 == 0:
+        n2 = n2 // 2
+    if n2 != 1:
+        raise ValueError
+    dd = buildParam("myc2", func, x)
+    offset = buildOffset("myc2", dd, n)
     nm = nminmax(func, x)
     bound1 = nm[0] - offset
     bound2 = nm[1] + offset

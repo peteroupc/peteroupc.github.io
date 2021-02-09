@@ -1767,8 +1767,8 @@
 <p>This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:</p>
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from below, where <em>k</em> is in the interval [0, <em>n</em>].  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>. (See note 7 below.)</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>. (See note 7.)</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) is a lower bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from below, where <em>k</em> is in the interval [0, <em>n</em>].  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) minus a constant that depends on <em>n</em>. (See note 3 below.)</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) is an upper bound of the <em>k</em><sup>th</sup> Bernstein coefficient for a degree-<em>n</em> polynomial that approximates <em>f</em> from above.  For example, this can be <em>f</em>(<em>k</em>/<em>n</em>) plus a constant that depends on <em>n</em>. (See note 3.)</li>
 </ul>
 
 <p>The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup><a href="#Note48"><strong>(48)</strong></a></sup>, although an error in Algorithm I is noted below.  The first algorithm follows.</p>
@@ -1794,14 +1794,14 @@
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
 <li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
-<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 8 below).</li>
+<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 4 below).</li>
 <li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>) and set <em>acount</em> to it, then calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>) and set <em>bcount</em> to it, then subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>, then:
 
 <ol>
 <li>Let <em>diff</em> be <em>degree</em>&minus;<em>lastdegree</em>, let <em>u</em> be max(0, <em>ones</em>&minus;<em>lastdegree</em>),
 and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substeps remove outcomes from <em>acount</em> and <em>bcount</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
-<li>Set <em>g</em> to choose(<em>lastdegree</em>, <em>ones</em>&minus;<em>u</em>).  Set <em>h</em> to 1.  If <em>c</em> was multiplied as in step 5, multiply <em>h</em> by 2<sup><em>lastdegree</em></sup> (see note 8 below).</li>
+<li>Set <em>g</em> to choose(<em>lastdegree</em>, <em>ones</em>&minus;<em>u</em>).  Set <em>h</em> to 1.  If <em>c</em> was multiplied as in step 5, multiply <em>h</em> by 2<sup><em>lastdegree</em></sup> (see note 4 below).</li>
 <li>For each integer <em>k</em> in the interval [<em>u</em>, <em>v</em>]:
 
 <ol>
@@ -1822,43 +1822,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>.</li>
-<li>If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</li>
-<li>If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</li>
-<li><p>The following method (Nacu and Peres 2005, proposition 10(ii))<sup><a href="#Note5"><strong>(5)</strong></a></sup> implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
-
-<ul>
-<li>(a) has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
-<li>(b) in the interval [0, 1]&mdash;
-
-<ul>
-<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
-<li>is convex and has a minimum of greater than 0, or</li>
-<li>is concave and has a maximum of less than 1.</li>
-</ul></li>
-</ul>
-
-<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*2) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(<em>n</em>*2) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
-</ul>
-
-<p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code to calculate the necessary values for <strong>fbound(<em>n</em>)</strong> and <em>m</em>, given <em>f</em>.</p></li>
-<li><p>The following method (Nacu and Peres 2005, proposition 10(i))<sup><a href="#Note5"><strong>(5)</strong></a></sup> implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
-
-<ul>
-<li>is <em>Lipschitz continuous</em> in (0, 1), meaning that in (0, 1) it has a defined slope almost everywhere and the slope doesn&#39;t tend to a vertical slope anywhere, and</li>
-<li>meets (b) in note 4.</li>
-</ul>
-
-<p>Let <em>m</em> be the <em>Lipschitz constant</em>, namely an upper bound of the highest absolute &quot;slope&quot; of <em>f</em> anywhere in [0, 1].  Then for all <em>n</em> that are powers of 2:</p>
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; see note 2).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (1+sqrt(2))*<em>m</em>/sqrt(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; see note 3).</li>
-</ul></li>
+<li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>.  For various ways to find polynomials to use for a given function <em>f</em>, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
 <li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
 <li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note49"><strong>(49)</strong></a></sup>), since both bounds would then be available at once.</li>
 <li>The second algorithm, as presented in Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, was based on the one from Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  In both papers, the algorithm works only if <em>&lambda;</em> is in the interval (0, 1).  If <em>&lambda;</em> can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, the <em>c</em> in step 5 can be multiplied by 2<sup><em>degree</em></sup> and the <em>h</em> in step 7, substep 2, multiplied by 2<sup><em>lastdegree</em></sup> to ensure correctness for all values of <em>&lambda;</em>.</li>
@@ -2060,11 +2024,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Glynn (2016)<sup><a href="#Note54"><strong>(54)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
-<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>, and</li>
-<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (that is, building an estimator of <em>g</em>(<em>X</em>) that is <em>unbiased</em> and not merely <em>consistent</em> or <em>asymptotically unbiased</em>) in almost surely finite time.</li>
+<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, and</li>
+<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (<em>unbiased</em> estimator, not merely a <em>consistent</em> or <em>asymptotically unbiased</em> estimator) in almost surely finite time,</li>
 </ul>
 
-<p>Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
+<p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
 <p><a id=Convergence_of_Bernoulli_Factories></a></p>
 
@@ -2512,7 +2476,7 @@ def valid_perm(f, x, n):
 <p>According to the Morina paper, it&#39;s enough to do <em>n</em> augmentations on each polynomial for the whole array to meet the conditions above (although fewer than <em>n</em> will often suffice).</p>
 
 <blockquote>
-<p><strong>Note</strong>.  For best results, the input polynomials&#39; coefficients should be rational numbers.  If they are not, then special methods are needed to ensure exact results, such as interval arithmetic that calculates lower and upper bounds.</p>
+<p><strong>Note</strong>: For best results, the input polynomials&#39; coefficients should be rational numbers.  If they are not, then special methods are needed to ensure exact results, such as interval arithmetic that calculates lower and upper bounds.</p>
 </blockquote>
 
 <p><a id=License></a></p>

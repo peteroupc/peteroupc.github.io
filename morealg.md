@@ -41,6 +41,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Arc-Cosine Distribution**](#Arc_Cosine_Distribution)
     - [**Logistic Distribution**](#Logistic_Distribution)
     - [**Cauchy Distribution**](#Cauchy_Distribution)
+    - [Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1\]](#Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
@@ -220,7 +221,7 @@ The Bernoulli factory approach can be extended in two ways to produce random num
 **Algorithm 1.** Say we have an oracle that produces random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
 
 - is continuous everywhere,
-- is bounded from below,
+- is bounded away from 0,
 - does not go to 0 exponentially fast in value, and
 - returns 0 everywhere or returns a value 0 or greater at each of the points _a_ and _b_ and a value greater than 0 at each other point
 
@@ -420,7 +421,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 <a id=Arc_Cosine_Distribution></a>
 ### Arc-Cosine Distribution
 
-Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(10)**](#Note10)</sup></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
+Here we reimplement an example from Devroye's book _Non-Uniform Random Variate Generation_ (Devroye 1986, pp. 128&ndash;129)<sup>[**(10)**](#Note10)</sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): `1 - cos(pi*x/2).`  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(_U_)*2/&pi;, where _U_ is a uniform \[0, 1\] random number, as pointed out by Devroye.  The algorithm follows.
 
 1. Call the **kthsmallest** algorithm with `n = 2` and `k = 2`, but without filling it with digits at the last step.  Let _ret_ be the result.
 2. Set _m_ to 1.
@@ -475,6 +476,17 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
     2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
 5. If (_c1_<sup>2</sup> + _c2_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
 6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+
+<a id=Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1></a>
+### Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1]
+
+Exponential random numbers can be generated using an input coin of unknown probability of heads of _&lambda;_ (which can be in the interval (0, 1]), by generating arrival times in a _Poisson process_ of rate 1, then _thinning_ the process using the coin.  The arrival times that result will be exponentially distributed with rate _&lambda;_.  This is shown, for example, in a [**Mathematics Stack Exchange question**](https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform), and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)<sup>[**(10)**](#Note10)</sup>.  The algorithm follows:
+
+1. Generate an exponential(1) random number using the **ExpRand** or **ExpRand2** algorithm (with _&lambda;_ = 1), call it _ex_.
+2. (Thinning step.) Flip the input coin.  If it returns 1, return _ex_.
+3. Generate another exponential(1) random number using the **ExpRand** or **ExpRand2** algorithm (with _&lambda;_ = 1), call it _ex2_.  Then run **UniformAdd** on _ex_ and _ex2_ and set _ex_ to the result.  Then go to step 2.
+
+Notice that the algorithm's average running time increases as _&lambda;_ decreases.
 
 <a id=Exponential_Distribution_with_Rate_ln__x></a>
 ### Exponential Distribution with Rate ln(_x_)

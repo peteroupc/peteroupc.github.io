@@ -57,6 +57,7 @@
 <li><a href="#Arc_Cosine_Distribution"><strong>Arc-Cosine Distribution</strong></a></li>
 <li><a href="#Logistic_Distribution"><strong>Logistic Distribution</strong></a></li>
 <li><a href="#Cauchy_Distribution"><strong>Cauchy Distribution</strong></a></li>
+<li><a href="#Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1">Exponential Distribution with Unknown Rate <em>&lambda;</em>, Lying in (0, 1]</a></li>
 <li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
 </ul></li>
@@ -299,7 +300,7 @@
 
 <ul>
 <li>is continuous everywhere,</li>
-<li>is bounded from below,</li>
+<li>is bounded away from 0,</li>
 <li>does not go to 0 exponentially fast in value, and</li>
 <li>returns 0 everywhere or returns a value 0 or greater at each of the points <em>a</em> and <em>b</em> and a value greater than 0 at each other point</li>
 </ul>
@@ -571,7 +572,7 @@
 
 <h3>Arc-Cosine Distribution</h3>
 
-<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note10"><strong>(10)</strong></a></sup></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -636,6 +637,20 @@
 <li>If (<em>c1</em><sup>2</sup> + <em>c2</em><sup>2</sup>) &gt; <em>S</em><sup>2</sup>, then go to step 2.</li>
 <li>Multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
 </ol>
+
+<p><a id=Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1></a></p>
+
+<h3>Exponential Distribution with Unknown Rate <em>&lambda;</em>, Lying in (0, 1]</h3>
+
+<p>Exponential random numbers can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can be in the interval (0, 1]), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  This is shown, for example, in a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  The algorithm follows:</p>
+
+<ol>
+<li>Generate an exponential(1) random number using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
+<li>(Thinning step.) Flip the input coin.  If it returns 1, return <em>ex</em>.</li>
+<li>Generate another exponential(1) random number using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex2</em>.  Then run <strong>UniformAdd</strong> on <em>ex</em> and <em>ex2</em> and set <em>ex</em> to the result.  Then go to step 2.</li>
+</ol>
+
+<p>Notice that the algorithm&#39;s average running time increases as <em>&lambda;</em> decreases.</p>
 
 <p><a id=Exponential_Distribution_with_Rate_ln__x></a></p>
 

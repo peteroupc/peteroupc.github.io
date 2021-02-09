@@ -1343,8 +1343,8 @@ A coin with unknown probability of heads of _&lambda;_ can be turned into a coin
 
 This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
 
-- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 7 below.)
-- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 7.)
+- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 3 below.)
+- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 3.)
 
 The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(8)**](#Note8)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(48)**](#Note48)</sup>, although an error in Algorithm I is noted below.  The first algorithm follows.
 
@@ -1366,12 +1366,12 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(24)**](#Not
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
 4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
-5. Set _c_ to choose(_degree_, _ones_).  Optionally, multiply _c_ by 2<sup>_degree_</sup> (see note 8 below).
+5. Set _c_ to choose(_degree_, _ones_).  Optionally, multiply _c_ by 2<sup>_degree_</sup> (see note 4 below).
 6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
 7. If _degree_ is greater than _startdegree_, then:
     1. Let _diff_ be _degree_&minus;_lastdegree_, let _u_ be max(0, _ones_&minus;_lastdegree_),
 and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes from _acount_ and _bcount_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
-    2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.  If _c_ was multiplied as in step 5, multiply _h_ by 2<sup>_lastdegree_</sup> (see note 8 below).
+    2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.  If _c_ was multiplied as in step 5, multiply _h_ by 2<sup>_lastdegree_</sup> (see note 4 below).
     3. For each integer _k_ in the interval [_u_, _v_]:
         1. Set _d_ to choose(_diff_, _k_).  Let _&omega;_ be _ones_&minus;_k_.
         2. Calculate _a_\[_lastdegree_, _&omega;_\] = floor(**fbelow**(_lastdegree_, _&omega;_)\*_g_\*_h_), if not already calculated.
@@ -1385,32 +1385,10 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 
 > **Notes:**
 >
-> 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_.
-> 2. If _f_ is known to be _concave_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes up), then **fbelow**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.
-> 3. If _f_ is known to be _convex_ in the interval [0, 1\] (which roughly means that its rate of growth there never goes down), then **fabove**(_n_, _k_) can equal _f_(_k_/_n_), thanks to Jensen's inequality.  One example is _f_(_&lambda;_) = exp(&minus;_&lambda;_/4).
-> 4. The following method (Nacu and Peres 2005, proposition 10(ii))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
->     - (a) has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, _f_ is _C_<sup>2</sup> continuous there), and
->     - (b) in the interval \[0, 1\]&mdash;
->         - has a minimum of greater than 0 and a maximum of less than 1, or
->         - is convex and has a minimum of greater than 0, or
->         - is concave and has a maximum of less than 1.
->
->     Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) for any _x_ in [0, 1], where _f&prime;&prime;_ is the "slope-of-slope" function of _f_.  Then for all _n_ that are powers of 2:
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
->     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _m_/(_n_\*2) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
->
->     My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code to calculate the necessary values for **fbound(_n_)** and _m_, given _f_.
-> 5. The following method (Nacu and Peres 2005, proposition 10(i))<sup>[**(5)**](#Note5)</sup> implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
->     - is _Lipschitz continuous_ in (0, 1), meaning that in (0, 1) it has a defined slope almost everywhere and the slope doesn't tend to a vertical slope anywhere, and
->     - meets (b) in note 4.
->
->     Let _m_ be the _Lipschitz constant_, namely an upper bound of the highest absolute "slope" of _f_ anywhere in [0, 1].  Then for all _n_ that are powers of 2:
->
->     - **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is concave; see note 2).
->     - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (1+sqrt(2))\*_m_/sqrt(_n_) (or _f_(_k_/_n_) if _f_ is convex; see note 3).
-> 6. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
-> 7. If _f_(_k_/_n_) is not a rational number, then it should be calculated in **fabove** and **fbelow** with an accuracy that improves as _n_ (the polynomial degree) gets larger.  In that case, **fabove** should calculate an upper bound of _f_(_k_/_n_), and **fbelow** a lower bound.  Also, it's often convenient to implement **fabove** and **fbelow** with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup>[**(49)**](#Note49)</sup>), since both bounds would then be available at once.
-> 8. The second algorithm, as presented in Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup>, was based on the one from Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  In both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1).  If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup>[**(25)**](#Note25)</sup>, the _c_ in step 5 can be multiplied by 2<sup>_degree_</sup> and the _h_ in step 7, substep 2, multiplied by 2<sup>_lastdegree_</sup> to ensure correctness for all values of _&lambda;_.
+> 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_.  For various ways to find polynomials to use for a given function _f_, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
+> 3. If _f_(_k_/_n_) is not a rational number, then it should be calculated in **fabove** and **fbelow** with an accuracy that improves as _n_ (the polynomial degree) gets larger.  In that case, **fabove** should calculate an upper bound of _f_(_k_/_n_), and **fbelow** a lower bound.  Also, it's often convenient to implement **fabove** and **fbelow** with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup>[**(49)**](#Note49)</sup>), since both bounds would then be available at once.
+> 4. The second algorithm, as presented in Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup>, was based on the one from Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  In both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1).  If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup>[**(25)**](#Note25)</sup>, the _c_ in step 5 can be multiplied by 2<sup>_degree_</sup> and the _h_ in step 7, substep 2, multiplied by 2<sup>_lastdegree_</sup> to ensure correctness for all values of _&lambda;_.
 >
 > **Examples:**
 >
@@ -1571,10 +1549,10 @@ Only _factory functions_ can have unbiased estimation algorithms whose estimates
 
 Glynn (2016)<sup>[**(54)**](#Note54)</sup> distinguishes between&mdash;
 
-- _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities) in almost surely finite time, where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_, and
-- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (that is, building an estimator of _g_(_X_) that is _unbiased_ and not merely _consistent_ or _asymptotically unbiased_) in almost surely finite time.
+- _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities) in almost surely finite time, and
+- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) in almost surely finite time,
 
-Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
+where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
 
 <a id=Convergence_of_Bernoulli_Factories></a>
 ### Convergence of Bernoulli Factories
@@ -1879,7 +1857,7 @@ If those conditions are not met, then each polynomial can be _augmented_ as ofte
 
 According to the Morina paper, it's enough to do _n_ augmentations on each polynomial for the whole array to meet the conditions above (although fewer than _n_ will often suffice).
 
-> **Note**.  For best results, the input polynomials' coefficients should be rational numbers.  If they are not, then special methods are needed to ensure exact results, such as interval arithmetic that calculates lower and upper bounds.
+> **Note**: For best results, the input polynomials' coefficients should be rational numbers.  If they are not, then special methods are needed to ensure exact results, such as interval arithmetic that calculates lower and upper bounds.
 
 <a id=License></a>
 ## License
