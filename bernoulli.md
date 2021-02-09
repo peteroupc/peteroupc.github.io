@@ -1392,11 +1392,11 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 >
 > **Examples:**
 >
-> 1. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2, then note 4 suggests the following:
+> 1. If _f_(_&lambda;_) = sin(2\*_&lambda;_)/2:
 >     - **fbelow**(_n_, _k_) = sin(2\*_k_/_n_)/2.  This is possible because _f_ is concave.
 >     - **fabove**(_n_, _k_) = sin(2\*_k_/_n_)/2 + 2 / (_n_\*2).
 >     - **fbound**(_n_) = [0, (1/2) + 1/_n_].
-> 2. My [**supplemental page**](https://peteroupc.github.io/bernsupp.html) includes SymPy code for building polynomials for certain functions.  As one example, the code there suggests the following. Let _f_(_&lambda;_) = sin(3\*lambda)/2.  Then, for all _n_ that are powers of 2, starting from 1:
+> 2. Let _f_(_&lambda;_) = sin(3\*lambda)/2.  Then, for all _n_ that are powers of 2, starting from 1:
 >     * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
 >     * **fabove**(_n_, _k_) = 1 if _n_&lt;2; otherwise, _f_(_k_/_n_) + 243/(256\*n).
 >     * **fbound**(_n_) = [0, 1].

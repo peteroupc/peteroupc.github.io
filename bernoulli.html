@@ -1831,14 +1831,14 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Examples:</strong></p>
 
 <ol>
-<li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2, then note 4 suggests the following:
+<li>If <em>f</em>(<em>&lambda;</em>) = sin(2*<em>&lambda;</em>)/2:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2.  This is possible because <em>f</em> is concave.</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = sin(2*<em>k</em>/<em>n</em>)/2 + 2 / (<em>n</em>*2).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, (1/2) + 1/<em>n</em>].</li>
 </ul></li>
-<li>My <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental page</strong></a> includes SymPy code for building polynomials for certain functions.  As one example, the code there suggests the following. Let <em>f</em>(<em>&lambda;</em>) = sin(3*lambda)/2.  Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = sin(3*lambda)/2.  Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>

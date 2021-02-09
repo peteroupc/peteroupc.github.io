@@ -15,13 +15,13 @@
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;Schemes That Don&#39;t Work&quot; later in this section.</p>
+<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this section.</p>
 
 <p><a id=Approximation_Schemes></a></p>
 
 <h3>Approximation Schemes</h3>
 
-<p>Take a factory function <em>f</em>(<em>&lambda;</em>), the function to simulate using flips of a coin with unknown probability of heads of <em>&lambda;</em>. The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.</p>
+<p>Take a factory function <em>f</em>(<em>&lambda;</em>), the function to simulate using flips of a coin with unknown probability of heads of <em>&lambda;</em>. The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
 
 <p>In this section, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
@@ -29,14 +29,17 @@
 
 <p><strong>Convex functions.</strong> If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</p>
 
-<p><strong>C<sup>2</sup> continuous functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
+<p><strong><em>C</em><sup>2</sup> continuous functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>(a) has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
-<li>(b) in the interval [0, 1]&mdash;
-    - has a minimum of greater than 0 and a maximum of less than 1, or
-    - is convex and has a minimum of greater than 0, or
-    - is concave and has a maximum of less than 1.</li>
+<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
+<li>in the interval [0, 1]&mdash;
+
+<ul>
+<li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
+<li>is convex and has a minimum of greater than 0, or</li>
+<li>is concave and has a maximum of less than 1.</li>
+</ul></li>
 </ul>
 
 <p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
@@ -56,17 +59,17 @@
 
 <ul>
 <li>has a minimum of greater than 0 and a maximum of less than 1, or</li>
-<li>is <em>convex</em> and has a minimum of greater than 0, or</li>
-<li>is <em>concave</em> and has a maximum of less than 1.</li>
+<li>is convex and has a minimum of greater than 0, or</li>
+<li>is concave and has a maximum of less than 1.</li>
 </ul></li>
 </ul>
 
-<p>If <em>f</em> in [0, 1] has a defined slope almost everywhere and does not tend to a vertical slope anywhere, then <em>f</em> is <em>Lipschitz continuous</em>, <em>&alpha;</em> is 1, and <em>m</em> is the function&#39;s highest absolute &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for all <em>n</em> that are powers of 2:</p>
+<p>If <em>f</em> in [0, 1] has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere, then <em>f</em> is <em>Lipschitz continuous</em>, <em>&alpha;</em> is 1, and <em>m</em> is the highest absolute value of the function&#39;s &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
 <li><em>&delta;</em>(<em>n</em>) = <em>m</em>*(2/7)<sup><em>&alpha;</em>/2</sup>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</li>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>&delta;</em>(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>&delta;</em>(<em>n</em>) (or <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>&delta;</em>(<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>&delta;</em>(<em>n</em>).</li>
 </ul>
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
@@ -107,7 +110,7 @@
 
 <p>As we can see, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope almost everywhere and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (5/4) / sqrt(<em>n</em>).</li>
@@ -216,7 +219,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for _&epsilon; in (0, 1/2). The following Bernstein coefficients (<strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon;in (0, 1/2). The following Bernstein coefficients (<strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -231,7 +234,7 @@
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the functional equation given in the proof can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for _&epsilon; in (0, 1/2).  The following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2:</em></p>
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon;in (0, 1/2).  The following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -246,7 +249,7 @@
 <p><strong>Note:</strong> The term <em>&eta;</em>(<em>n</em>) was found in a similar way as the term <em>&delta;</em>(<em>n</em>) in Theorem 1.</p>
 </blockquote>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for _&epsilon; in (0, 1/2).  Then the following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon;in (0, 1/2).  Then the following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
