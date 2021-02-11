@@ -221,8 +221,7 @@ The Bernoulli factory approach can be extended in two ways to produce random num
 **Algorithm 1.** Say we have an oracle that produces random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
 
 - is continuous everywhere,
-- is bounded away from 0,
-- does not go to 0 exponentially fast in value, and
+- is bounded from above, and
 - returns 0 everywhere or returns a value 0 or greater at each of the points _a_ and _b_ and a value greater than 0 at each other point
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
@@ -689,7 +688,6 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    tfn=tfunc.subs(x,(1-eps)/mult).n()
    xpt=xfunc(ypt,x,eps=eps,mult=mult)
    bits=5
-   #oldbx=None
    i=0
    lastbxn = 1
    diffs=[]

@@ -300,8 +300,7 @@
 
 <ul>
 <li>is continuous everywhere,</li>
-<li>is bounded away from 0,</li>
-<li>does not go to 0 exponentially fast in value, and</li>
+<li>is bounded from above, and</li>
 <li>returns 0 everywhere or returns a value 0 or greater at each of the points <em>a</em> and <em>b</em> and a value greater than 0 at each other point</li>
 </ul>
 
@@ -906,7 +905,6 @@ def calc_linear_func(eps=S(5)/10, mult=1, count=10):
    tfn=tfunc.subs(x,(1-eps)/mult).n()
    xpt=xfunc(ypt,x,eps=eps,mult=mult)
    bits=5
-   #oldbx=None
    i=0
    lastbxn = 1
    diffs=[]
