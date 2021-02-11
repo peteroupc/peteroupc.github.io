@@ -755,9 +755,9 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 <a id=Algorithm_2_for_Non_Negative_Factories></a>
 ### Algorithm 2 for Non-Negative Factories
 
-**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
+**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
 
-1. Let _m_ be an upper bound of the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
+1. Let _m_ be a rational number that is an upper bound of the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
 > **Example:** An example from Lee et al. (2014)<sup>[**(25)**](#Note25)</sup>.  Say the oracle produces uniform random numbers in [0, 3\*_&pi;_], and let _f_(_&mu;_) = sin(_&mu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random numbers that average to that mean.
@@ -770,6 +770,7 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 >     - Use _f_(_&mu;_) = _f_(_&mu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).
 >     - When Algorithm 2 finishes, add _b_ to its return value.
+> 3. The check "With probability abs(_f_(_x_))/_m_" is exact if the oracle produces only rational numbers _and_ if _f_(_x_) outputs only rational numbers.  If the oracle or _f_ can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then this check should be implemented using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).
 
 <a id=License></a>
 ## License

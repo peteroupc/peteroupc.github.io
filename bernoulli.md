@@ -137,7 +137,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 <a id=About_Bernoulli_Factories></a>
 ## About Bernoulli Factories
 
-A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
+A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  The unknown probability of heads is called _&lambda;_ in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
 
 A _factory function_ is a function that relates the old probability to the new one.  Its domain is [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_, within its domain&mdash;
 
@@ -159,11 +159,11 @@ In the following algorithms:
 -  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(6)**](#Note6)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
-    - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)` (less accurate).
+    - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)" (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
-    - by generating `-ln(1/RNDRANGEMinExc(0, 1))` (less accurate).
+    - by generating `-ln(1/RNDRANGEMinExc(0, 1))`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)" (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented&mdash;
     - by taking the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.

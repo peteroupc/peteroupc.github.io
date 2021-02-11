@@ -164,7 +164,7 @@
 
 <h2>About Bernoulli Factories</h2>
 
-<p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability <em>&lambda;</em> and produce a coin that returns heads with probability exp(&minus;<em>&lambda;</em>).</p>
+<p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  The unknown probability of heads is called <em>&lambda;</em> in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability <em>&lambda;</em> and produce a coin that returns heads with probability exp(&minus;<em>&lambda;</em>).</p>
 
 <p>A <em>factory function</em> is a function that relates the old probability to the new one.  Its domain is [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O&#39;Brien (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, a function <em>f</em>(<em>&lambda;</em>) can serve as a factory function if and only if <em>f</em>, within its domain&mdash;</p>
 
@@ -192,14 +192,14 @@
 
 <ul>
 <li>by creating a <a href="https://peteroupc.github.io/exporand.html"><strong>uniform partially-sampled random number (PSRN)</strong></a> with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or</li>
-<li>by generating <code>RNDRANGEMaxExc(0, 1)</code> or <code>RNDINT(1000)</code> (less accurate).</li>
+<li>by generating <code>RNDRANGEMaxExc(0, 1)</code> or <code>RNDINT(1000)</code>, as described in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot; (less accurate).</li>
 </ul></li>
 <li>The instruction to &quot;generate an exponential random number&quot; can be implemented&mdash;
 
 <ul>
 <li>by creating an empty <a href="https://peteroupc.github.io/exporand.html"><strong>exponential PSRN</strong></a> (most accurate), or</li>
 <li>by getting the result of the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (described in my article on PSRNs) with a rate of 1, or</li>
-<li>by generating <code>-ln(1/RNDRANGEMinExc(0, 1))</code> (less accurate).</li>
+<li>by generating <code>-ln(1/RNDRANGEMinExc(0, 1))</code>, as described in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot; (less accurate).</li>
 </ul></li>
 <li>The instruction to &quot;choose [integers] with probability proportional to [<em>weights</em>]&quot; can be implemented&mdash;
 

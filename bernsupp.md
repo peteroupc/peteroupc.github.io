@@ -9,7 +9,7 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
-The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section "[**Schemes That Don't Work**](#Schemes_That_Don_t_Work)" later in this section.
+The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section "[**Schemes That Don't Work**](#Schemes_That_Don_t_Work)" later in this document.
 
 <a id=Approximation_Schemes></a>
 ### Approximation Schemes
@@ -65,7 +65,7 @@ In this section, **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein c
 **First scheme.** In this scheme (Powell 1981)<sup>[**(3)**](#Note3)</sup>, let _f_ be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then for all _n_&ge;1, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows:
 
 -  **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
-- **fbelow**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
 
 Where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
@@ -85,7 +85,7 @@ As we can see, the elevated polynomial's coefficient 0.8208... is less than the 
 **Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all _n_&ge;2, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + (5/4) / sqrt(_n_).
-- **fbelow**(_n_, _k_) = _f_(_k_/_n_) + (5/4) / sqrt(_n_).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; (5/4) / sqrt(_n_).
 
 Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Popoviciu 1935)<sup>[**(5)**](#Note5)</sup>.
 

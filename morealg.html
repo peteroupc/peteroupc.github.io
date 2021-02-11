@@ -985,10 +985,10 @@ calc_linear_func(count=8)
 
 <h3>Algorithm 2 for Non-Negative Factories</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
+<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
 
 <ol>
-<li>Let <em>m</em> be an upper bound of the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
+<li>Let <em>m</em> be a rational number that is an upper bound of the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
 <li>Use one of the <a href="https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories"><strong>linear Bernoulli factories</strong></a> to simulate 2*<em>&nu;</em> (2 times the <em>&nu;</em> coin&#39;s probability of heads), using the <em>&nu;</em> input coin, with <em>&#x03F5;</em> = <em>&delta;</em>/<em>m</em>.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it <em>&xi;</em>, and return abs(<em>f</em>(<em>&xi;</em>)).</li>
 </ol>
 
@@ -1006,6 +1006,7 @@ calc_linear_func(count=8)
 <li><em>m</em> is taken as max(<em>b</em>&minus;<em>a</em>, <em>c</em>&minus;<em>b</em>).</li>
 <li>When Algorithm 2 finishes, add <em>b</em> to its return value.</li>
 </ul></li>
+<li>The check &quot;With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>&quot; is exact if the oracle produces only rational numbers <em>and</em> if <em>f</em>(<em>x</em>) outputs only rational numbers.  If the oracle or <em>f</em> can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then this check should be implemented using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 </ol>
 </blockquote>
 
