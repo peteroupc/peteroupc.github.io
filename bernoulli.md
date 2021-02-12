@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on sampling methods that _exactly_ simulate a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
+**Abstract:** This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
 
 **2020 Mathematics Subject Classification:** 60-08, 60-04.
 
@@ -15,9 +15,9 @@ And this page catalogs algorithms to solve this problem for a wide variety of fu
 
 Many of these algorithms were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>, but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.
 
-This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 
-This page is focused on sampling methods that _exactly_ simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers, that is, random numbers that are independent and identically distributed).
+This page is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers, that is, random numbers that are independent and identically distributed).
 
 Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)
 
@@ -152,7 +152,7 @@ As one example, the function _f_ = 2*_&lambda;_ cannot serve as a factory functi
 
 If a function's graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*_&lambda;_ might become _f_ = min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) where _&#x03F5;_ is in (0, 1/2) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>), or by somehow ensuring that _&lambda;_ does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(5)**](#Note5)</sup>.
 
-The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.
+The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
 <a id=Algorithms></a>
 ## Algorithms
@@ -183,7 +183,7 @@ The algorithms as described here do not always lead to the best performance.  An
 
 The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
 
-Bernoulli factory algorithms that simulate _f_(_&lambda;_) are equivalent to unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
+Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) are equivalent to unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
 
 <a id=Algorithms_for_Functions_of___lambda></a>
 ### Algorithms for Functions of _&lambda;_
@@ -1337,7 +1337,7 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
 
-A coin with unknown probability of heads of _&lambda;_ can be turned into a coin with probability of heads of _f_(_&lambda;_), where _f_ is any factory function, via an algorithm that works with two sequences of polynomials:
+A coin with unknown probability of heads of _&lambda;_ can be turned into a coin with probability of heads of _f_(_&lambda;_), where _f_ is any factory function, via an algorithm that builds randomized bounds on _f_(_&lambda;_) based on the outcomes of the coin flips.  These randomized bounds come from two sequences of polynomials:
 
 - One sequence of polynomials converges from above to _f_, the other from below.
 - For both sequences, there must be a way to calculate their polynomials' _Bernstein coefficients_.
@@ -1369,16 +1369,19 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(24)**](#Not
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
 4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
-5. Set _c_ to choose(_degree_, _ones_).  Optionally, multiply _c_ by 2<sup>_degree_</sup> (see note 4 below).
-6. Calculate _a_\[_degree_,_ones_\] = floor(**fbelow**(_degree_, _ones_)\*_c_) and set _acount_ to it, then calculate _b_\[_degree_,_ones_\] = floor((1&minus;**fabove**(_degree_, _ones_))\*_c_) and set _bcount_ to it, then subtract (_acount_ + _bcount_) from _c_.
+5. Set _c_ to choose(_degree_, _ones_).  Optionally, multiply _c_ by 2<sup>_degree_</sup> (see note 3 below).
+6. Find _acount_ and _bcount_ as follows:
+    1. Calculate **fbelow**(_degree_, _ones_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_).  Then set _a_\[_degree_,_ones_\] and _acount_ to floor(_LB_\*_c_).
+    2. Calculate 1&minus;**fabove**(_degree_, _ones_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_).  Then set _b_\[_degree_,_ones_\] and _bcount_ to floor(_LB_\*_c_).
+    3. Subtract (_acount_ + _bcount_) from _c_.
 7. If _degree_ is greater than _startdegree_, then:
     1. Let _diff_ be _degree_&minus;_lastdegree_, let _u_ be max(0, _ones_&minus;_lastdegree_),
 and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes from _acount_ and _bcount_ that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the [**supplemental source code**](https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R) uploaded by A. C. Thomas at my request.)
-    2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.  If _c_ was multiplied as in step 5, multiply _h_ by 2<sup>_lastdegree_</sup> (see note 4 below).
+    2. Set _g_ to choose(_lastdegree_, _ones_&minus;_u_).  Set _h_ to 1.  If _c_ was multiplied as in step 5, multiply _h_ by 2<sup>_lastdegree_</sup> (see note 3 below).
     3. For each integer _k_ in the interval [_u_, _v_]:
         1. Set _d_ to choose(_diff_, _k_).  Let _&omega;_ be _ones_&minus;_k_.
-        2. Calculate _a_\[_lastdegree_, _&omega;_\] = floor(**fbelow**(_lastdegree_, _&omega;_)\*_g_\*_h_), if not already calculated.
-        3. Calculate _b_\[_lastdegree_, _&omega;_\] = floor((1&minus;**fabove**(_lastdegree_, _&omega;_))\*_g_\*_h_), if not already calculated.
+        2. If not already calculated: Calculate **fbelow**(_lastdegree_, _&omega;_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_g_\*_h_) = floor(_UB_\*_g_\*_h_).  Then set _a_\[_lastdegree_, _&omega;_\] to floor(_LB_\*_g_\*_h_).
+        3. If not already calculated: Calculate 1&minus;**fabove**(_lastdegree_, _&omega;_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_g_\*_h_) = floor(_UB_\*_g_\*_h_).  Then set _b_\[_lastdegree_, _&omega;_\] to floor(_LB_\*_g_\*_h_).
         4. Subtract (_a_\[_lastdegree_, _&omega;_\]\*_d_) from _acount_.
         5. Subtract (_b_\[_lastdegree_, _&omega;_\]\*_d_) from _bcount_.
         6. Multiply _g_ by _&omega;_, then divide _g_ by (_lastdegree_+1&minus;_&omega;_). (Sets _g_ to choose(_lastdegree_, (_ones_&minus;_k_)&minus;1).)
@@ -1388,10 +1391,9 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 
 > **Notes:**
 >
-> 1. The efficiency of these two algorithms depends, among other things, on how "smooth" _f_ is, and on how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** will require a deep mathematical analysis of _f_.  For various ways to find polynomials to use for a given function _f_, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
-> 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not _C_<sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
-> 3. If _f_(_k_/_n_) is not a rational number, then it should be calculated in **fabove** and **fbelow** with an accuracy that improves as _n_ (the polynomial degree) gets larger.  In that case, **fabove** should calculate an upper bound of _f_(_k_/_n_), and **fbelow** a lower bound.  Also, it's often convenient to implement **fabove** and **fbelow** with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup>[**(49)**](#Note49)</sup>), since both bounds would then be available at once.
-> 4. The second algorithm, as presented in Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup>, was based on the one from Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  In both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1).  If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup>[**(25)**](#Note25)</sup>, the _c_ in step 5 can be multiplied by 2<sup>_degree_</sup> and the _h_ in step 7, substep 2, multiplied by 2<sup>_lastdegree_</sup> to ensure correctness for all values of _&lambda;_.
+> 1. The efficiency of these two algorithms depends on many things, including how "smooth" _f_ is and how easy it is to calculate the appropriate values for **fbelow** and **fabove**.  The best way to implement **fbelow** and **fabove** for a given function _f_ will require a deep mathematical analysis of that function.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 2. In some cases, a single pair of polynomial sequences may not converge quickly to the desired function _f_, especially when _f_ is not "smooth" enough.  An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and run either algorithm in this section on that pair.
+> 3. The second algorithm, as presented in Thomas and Blanchet (2012)<sup>[**(24)**](#Note24)</sup>, was based on the one from Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>.  In both papers, the algorithm works only if _&lambda;_ is in the interval (0, 1).  If _&lambda;_ can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup>[**(25)**](#Note25)</sup>, the _c_ in step 5 can be multiplied by 2<sup>_degree_</sup> and the _h_ in step 7, substep 2, multiplied by 2<sup>_lastdegree_</sup> to ensure correctness for all values of _&lambda;_.
 >
 > **Examples:**
 >
@@ -1499,16 +1501,15 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note46>(46)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note47>(47)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
 - <small><sup id=Note48>(48)</sup> Flegal, J.M., Herbei, R., "Exact sampling from intractible probability distributions via a Bernoulli factory", _Electronic Journal of Statistics_ 6, 10-37, 2012.</small>
-- <small><sup id=Note49>(49)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
-- <small><sup id=Note50>(50)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note51>(51)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
-- <small><sup id=Note52>(52)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note53>(53)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small>
-- <small><sup id=Note54>(54)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
-- <small><sup id=Note55>(55)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
-- <small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
-- <small><sup id=Note57>(57)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note49>(49)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note50>(50)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
+- <small><sup id=Note51>(51)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note52>(52)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small>
+- <small><sup id=Note53>(53)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
+- <small><sup id=Note54>(54)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
+- <small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note56>(56)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1518,9 +1519,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(50)**](#Note50)</sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(7)**](#Note7)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).
 
-In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(51)**](#Note51)</sup>, (Peres 1992)<sup>[**(52)**](#Note52)</sup>) and is calculated as&mdash;
+In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(50)**](#Note50)</sup>, (Peres 1992)<sup>[**(51)**](#Note51)</sup>) and is calculated as&mdash;
 
 &nbsp;&nbsp;&nbsp;&nbsp;((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
@@ -1539,7 +1540,7 @@ If an algorithm&mdash;
 
 the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(8)**](#Note8)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
 
-1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(53)**](#Note53)</sup>
+1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(52)**](#Note52)</sup>
 2. generating a uniform random number in [0,1], call it _u_; and
 3. returning 1 if _u_ is less than _v_, or 0 otherwise.
 
@@ -1550,7 +1551,7 @@ Only _factory functions_ can have unbiased estimation algorithms whose estimates
 - Function A: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2).
 - Function B: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2).
 
-Glynn (2016)<sup>[**(54)**](#Note54)</sup> distinguishes between&mdash;
+Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 
 - _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities) in almost surely finite time, and
 - _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) in almost surely finite time,
@@ -1594,7 +1595,7 @@ Thus, a practical implementation of this algorithm may have to switch to an alte
 <a id=Alternative_Implementation_of_Bernoulli_Factories></a>
 ### Alternative Implementation of Bernoulli Factories
 
-Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(37)**](#Note37)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2020)<sup>[**(55)**](#Note55)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
+Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of _p_ and outputs 1 with probability _f_(_p_).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)), the algorithm could instead be implemented as follows in order to return 1 with probability _f_(_U_), where _U_ is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(37)**](#Note37)</sup>, (Devroye 1986, p. 769)<sup>[**(9)**](#Note9)</sup>, (Devroye and Gravel 2020)<sup>[**(54)**](#Note54)</sup>.  This algorithm assumes the uniform PSRN's sign is positive and its integer part is 0.
 
 1. Set _v_ to 0 and _k_ to 1.
 2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
@@ -1651,7 +1652,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(56)**](#Note56)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(55)**](#Note55)</sup>.
 
 The following algorithm generates a random number that follows the von Neumann schema.
 
@@ -1753,8 +1754,8 @@ Then the algorithm's behavior is given in the tables below.
 | Permutation Class | Distribution _D_ | Distribution _E_ | The probability that _&delta;_ is less than _x_ given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Any | Any | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(9)**](#Note9)</sup>; see also Forsythe 1972<sup>[**(41)**](#Note41)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
-| Numbers sorted in descending order | Any | Any | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(57)**](#Note57)</sup>).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of _&delta;_ is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(50)**](#Note50)</sup>. |
+| Numbers sorted in descending order | Any | Any | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(56)**](#Note56)</sup>).  DPDF and ECDF are as above. |
+| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of _&delta;_ is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>. |
 | Numbers sorted in descending order | Uniform(0,1) | Max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Note:** All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function _F_<sub>_D_</sub>(_x_ | _n_ is odd) or _F_<sub>_D_</sub>(_x_ | _n_ is even), respectively.
@@ -1853,7 +1854,7 @@ Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ 
 - their homogeneous-basis coefficients are all 0 or greater, and
 - the sum of _j_<sup>th</sup> homogeneous-basis coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
 
-If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(58)**](#Note58)</sup>).  It is implemented as follows:
+If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(17)**](#Note17)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(57)**](#Note57)</sup>).  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's homogeneous-basis coefficient _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> homogeneous-basis coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each _j_ in the interval \[max(0, _k_&minus;1), min(_n_, _k_)\], then add them together.  The sum is the new homogeneous-basis coefficient.

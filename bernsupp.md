@@ -7,13 +7,13 @@
 
 As a reminder, the _Bernoulli factory problem_ is: Given a coin with unknown probability of heads of _&lambda;_, sample the probability _f_(_&lambda;_).
 
-The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html), described in my main article on Bernoulli factory algorithms, work by building randomized lower and upper bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:
+The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html), described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:
 
 1. Generate a uniform(0, 1) random number, _U_.
-2. Flip the input coin, then build a lower and upper bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
+2. Flip the input coin, then build an upper and lower bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
 3. If _U_ is less than or equal to the lower bound, return 1. If _U_ is greater than the upper bound, return 0.  Otherwise, go to step 2.
 
-These randomized lower and upper bounds come from two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
+These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
@@ -149,6 +149,8 @@ As we can see, the elevated polynomial's coefficient 0.7590... is less than the 
 <a id=Proofs_for_H_lder_Function_Approximation_Scheme></a>
 ### Proofs for Hölder Function Approximation Scheme
 
+This section shows mathematical proofs for some of the approximation schemes of this page.
+
 There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope.
 
 The parameters _&alpha;_ and _M_, in parts 1 and 2 of the lemma below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.
@@ -161,7 +163,7 @@ The parameters _&alpha;_ and _M_, in parts 1 and 2 of the lemma below, mean that
 
     _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all integers n&ge;1._
 2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all integers n&ge;4._
-3. _If f is twice differentiable, and its second derivative's absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)\*(1/(7\*n)), for all integers n&ge;4._
+3. _If f is C<sup>2</sup> continuous, and its second derivative's absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)\*(1/(7\*n)), for all integers n&ge;4._
 
 _Proof._
 
@@ -171,7 +173,7 @@ _Proof._
 
 > **Notes:**
 >
-> 1. **E**[.] means expected or average value, and **Var**[.] means variance.
+> 1. **E**[.] means expected or average value, and **Var**[.] means variance.  A hypergeometric(2\*_n_, _k_, _n_) random variable is the number of "good" balls out of _n_ balls taken uniformly at random, all at once, from a bag containing 2\*_n_ balls, _k_ of which are "good".
 > 2. An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 3. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.
 

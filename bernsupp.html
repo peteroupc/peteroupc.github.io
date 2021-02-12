@@ -11,15 +11,15 @@
 
 <p>As a reminder, the <em>Bernoulli factory problem</em> is: Given a coin with unknown probability of heads of <em>&lambda;</em>, sample the probability <em>f</em>(<em>&lambda;</em>).</p>
 
-<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized lower and upper bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
+<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random number, <em>U</em>.</li>
-<li>Flip the input coin, then build a lower and upper bound for <em>f</em>(<em>&lambda;</em>), based on the outcomes of the flips so far.</li>
+<li>Flip the input coin, then build an upper and lower bound for <em>f</em>(<em>&lambda;</em>), based on the outcomes of the flips so far.</li>
 <li>If <em>U</em> is less than or equal to the lower bound, return 1. If <em>U</em> is greater than the upper bound, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p>These randomized lower and upper bounds come from two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
+<p>These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
 
 <ul>
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
@@ -194,6 +194,8 @@
 
 <h3>Proofs for Hölder Function Approximation Scheme</h3>
 
+<p>This section shows mathematical proofs for some of the approximation schemes of this page.</p>
+
 <p>There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
 
 <p>The parameters <em>&alpha;</em> and <em>M</em>, in parts 1 and 2 of the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.</p>
@@ -207,7 +209,7 @@
 
 <p><em>is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>, for all integers n&ge;1.</em></p></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M*(1/(7*n))<sup>&alpha;/2</sup>, for all integers n&ge;4.</em></li>
-<li><em>If f is twice differentiable, and its second derivative&#39;s absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all integers n&ge;4.</em></li>
+<li><em>If f is C<sup>2</sup> continuous, and its second derivative&#39;s absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all integers n&ge;4.</em></li>
 </ol>
 
 <p><em>Proof.</em></p>
@@ -222,7 +224,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.</li>
+<li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.  A hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2*<em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
 <li>An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
 <li>Parts 2 and 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.</li>
 </ol>

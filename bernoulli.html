@@ -5,7 +5,7 @@
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><strong>Abstract:</strong> This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as <em>Bernoulli factories</em>.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on sampling methods that <em>exactly</em> simulate a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories.</p>
+<p><strong>Abstract:</strong> This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as <em>Bernoulli factories</em>.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that <em>exactly</em> sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories.</p>
 
 <p><strong>2020 Mathematics Subject Classification:</strong> 60-08, 60-04.</p>
 
@@ -19,9 +19,9 @@
 
 <p>Many of these algorithms were suggested in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module <a href="https://peteroupc.github.io/bernoulli.py"><strong><em>bernoulli.py</em></strong></a> includes implementations of several Bernoulli factories.</p>
 
-<p>This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
+<p>This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
 
-<p>This page is focused on sampling methods that <em>exactly</em> simulate the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of &quot;truly&quot; random numbers, that is, random numbers that are independent and identically distributed).</p>
+<p>This page is focused on methods that <em>exactly</em> sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of &quot;truly&quot; random numbers, that is, random numbers that are independent and identically distributed).</p>
 
 <p>Supplemental notes are found in: <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes for Bernoulli Factory Algorithms</strong></a></p>
 
@@ -181,7 +181,7 @@
 
 <p>If a function&#39;s graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, <em>f</em> = 2*<em>&lambda;</em> might become <em>f</em> = min(2 * <em>&lambda;</em>, 1 &minus; <em>&#x03F5;</em>) where <em>&#x03F5;</em> is in (0, 1/2) (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, (Huber 2014, introduction)<sup><a href="#Note4"><strong>(4)</strong></a></sup>), or by somehow ensuring that <em>&lambda;</em> does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
 
-<p>The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be simulated from input coins.</p>
+<p>The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.</p>
 
 <p><a id=Algorithms></a></p>
 
@@ -230,7 +230,7 @@
 
 <p>The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it&#39;s possible to implement these algorithms using nothing but those coins as a source of randomness.  See the <a href="#Randomized_vs_Non_Randomized_Algorithms"><strong>appendix</strong></a> for details.</p>
 
-<p>Bernoulli factory algorithms that simulate <em>f</em>(<em>&lambda;</em>) are equivalent to unbiased estimators of <em>f</em>(<em>&lambda;</em>). See the <a href="#Simulating_Probabilities_vs_Estimating_Probabilities"><strong>appendix</strong></a> for details.</p>
+<p>Bernoulli factory algorithms that sample the probability <em>f</em>(<em>&lambda;</em>) are equivalent to unbiased estimators of <em>f</em>(<em>&lambda;</em>). See the <a href="#Simulating_Probabilities_vs_Estimating_Probabilities"><strong>appendix</strong></a> for details.</p>
 
 <p><a id=Algorithms_for_Functions_of___lambda></a></p>
 
@@ -1758,7 +1758,7 @@
 
 <h4>General Factory Functions</h4>
 
-<p>A coin with unknown probability of heads of <em>&lambda;</em> can be turned into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that works with two sequences of polynomials:</p>
+<p>A coin with unknown probability of heads of <em>&lambda;</em> can be turned into a coin with probability of heads of <em>f</em>(<em>&lambda;</em>), where <em>f</em> is any factory function, via an algorithm that builds randomized bounds on <em>f</em>(<em>&lambda;</em>) based on the outcomes of the coin flips.  These randomized bounds come from two sequences of polynomials:</p>
 
 <ul>
 <li>One sequence of polynomials converges from above to <em>f</em>, the other from below.</li>
@@ -1797,20 +1797,26 @@
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has Bernstein coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
 <li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
-<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 4 below).</li>
-<li>Calculate <em>a</em>[<em>degree</em>,<em>ones</em>] = floor(<strong>fbelow</strong>(<em>degree</em>, <em>ones</em>)*<em>c</em>) and set <em>acount</em> to it, then calculate <em>b</em>[<em>degree</em>,<em>ones</em>] = floor((1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>))*<em>c</em>) and set <em>bcount</em> to it, then subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
+<li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 3 below).</li>
+<li>Find <em>acount</em> and <em>bcount</em> as follows:
+
+<ol>
+<li>Calculate <strong>fbelow</strong>(<em>degree</em>, <em>ones</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that floor(<em>LB</em>*<em>c</em>) = floor(<em>UB</em>*<em>c</em>).  Then set <em>a</em>[<em>degree</em>,<em>ones</em>] and <em>acount</em> to floor(<em>LB</em>*<em>c</em>).</li>
+<li>Calculate 1&minus;<strong>fabove</strong>(<em>degree</em>, <em>ones</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that floor(<em>LB</em>*<em>c</em>) = floor(<em>UB</em>*<em>c</em>).  Then set <em>b</em>[<em>degree</em>,<em>ones</em>] and <em>bcount</em> to floor(<em>LB</em>*<em>c</em>).</li>
+<li>Subtract (<em>acount</em> + <em>bcount</em>) from <em>c</em>.</li>
+</ol></li>
 <li>If <em>degree</em> is greater than <em>startdegree</em>, then:
 
 <ol>
 <li>Let <em>diff</em> be <em>degree</em>&minus;<em>lastdegree</em>, let <em>u</em> be max(0, <em>ones</em>&minus;<em>lastdegree</em>),
 and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substeps remove outcomes from <em>acount</em> and <em>bcount</em> that would have terminated the algorithm earlier.  The procedure differs from step (f) of section 3 of the paper, which appears to be incorrect, and the procedure was derived from the <a href="https://github.com/acthomasca/rberfac/blob/main/rberfac-public-2.R"><strong>supplemental source code</strong></a> uploaded by A. C. Thomas at my request.)</li>
-<li>Set <em>g</em> to choose(<em>lastdegree</em>, <em>ones</em>&minus;<em>u</em>).  Set <em>h</em> to 1.  If <em>c</em> was multiplied as in step 5, multiply <em>h</em> by 2<sup><em>lastdegree</em></sup> (see note 4 below).</li>
+<li>Set <em>g</em> to choose(<em>lastdegree</em>, <em>ones</em>&minus;<em>u</em>).  Set <em>h</em> to 1.  If <em>c</em> was multiplied as in step 5, multiply <em>h</em> by 2<sup><em>lastdegree</em></sup> (see note 3 below).</li>
 <li>For each integer <em>k</em> in the interval [<em>u</em>, <em>v</em>]:
 
 <ol>
 <li>Set <em>d</em> to choose(<em>diff</em>, <em>k</em>).  Let <em>&omega;</em> be <em>ones</em>&minus;<em>k</em>.</li>
-<li>Calculate <em>a</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor(<strong>fbelow</strong>(<em>lastdegree</em>, <em>&omega;</em>)*<em>g</em>*<em>h</em>), if not already calculated.</li>
-<li>Calculate <em>b</em>[<em>lastdegree</em>, <em>&omega;</em>] = floor((1&minus;<strong>fabove</strong>(<em>lastdegree</em>, <em>&omega;</em>))*<em>g</em>*<em>h</em>), if not already calculated.</li>
+<li>If not already calculated: Calculate <strong>fbelow</strong>(<em>lastdegree</em>, <em>&omega;</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that floor(<em>LB</em>*<em>g</em>*<em>h</em>) = floor(<em>UB</em>*<em>g</em>*<em>h</em>).  Then set <em>a</em>[<em>lastdegree</em>, <em>&omega;</em>] to floor(<em>LB</em>*<em>g</em>*<em>h</em>).</li>
+<li>If not already calculated: Calculate 1&minus;<strong>fabove</strong>(<em>lastdegree</em>, <em>&omega;</em>) as lower and upper bounds <em>LB</em> and <em>UB</em> that are accurate enough that floor(<em>LB</em>*<em>g</em>*<em>h</em>) = floor(<em>UB</em>*<em>g</em>*<em>h</em>).  Then set <em>b</em>[<em>lastdegree</em>, <em>&omega;</em>] to floor(<em>LB</em>*<em>g</em>*<em>h</em>).</li>
 <li>Subtract (<em>a</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>acount</em>.</li>
 <li>Subtract (<em>b</em>[<em>lastdegree</em>, <em>&omega;</em>]*<em>d</em>) from <em>bcount</em>.</li>
 <li>Multiply <em>g</em> by <em>&omega;</em>, then divide <em>g</em> by (<em>lastdegree</em>+1&minus;<em>&omega;</em>). (Sets <em>g</em> to choose(<em>lastdegree</em>, (<em>ones</em>&minus;<em>k</em>)&minus;1).)</li>
@@ -1825,9 +1831,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>The efficiency of these two algorithms depends, among other things, on how &quot;smooth&quot; <em>f</em> is, and on how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> will require a deep mathematical analysis of <em>f</em>.  For various ways to find polynomials to use for a given function <em>f</em>, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
-<li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not <em>C</em><sup>2</sup> continuous.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
-<li>If <em>f</em>(<em>k</em>/<em>n</em>) is not a rational number, then it should be calculated in <strong>fabove</strong> and <strong>fbelow</strong> with an accuracy that improves as <em>n</em> (the polynomial degree) gets larger.  In that case, <strong>fabove</strong> should calculate an upper bound of <em>f</em>(<em>k</em>/<em>n</em>), and <strong>fbelow</strong> a lower bound.  Also, it&#39;s often convenient to implement <strong>fabove</strong> and <strong>fbelow</strong> with the same code routine and with rational interval arithmetic (such as the one described in Daumas et al. (2007)<sup><a href="#Note49"><strong>(49)</strong></a></sup>), since both bounds would then be available at once.</li>
+<li>The efficiency of these two algorithms depends on many things, including how &quot;smooth&quot; <em>f</em> is and how easy it is to calculate the appropriate values for <strong>fbelow</strong> and <strong>fabove</strong>.  The best way to implement <strong>fbelow</strong> and <strong>fabove</strong> for a given function <em>f</em> will require a deep mathematical analysis of that function.  For more information, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
+<li>In some cases, a single pair of polynomial sequences may not converge quickly to the desired function <em>f</em>, especially when <em>f</em> is not &quot;smooth&quot; enough.  An intriguing suggestion from Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup> is to use multiple pairs of polynomial sequences that converge to <em>f</em>, where each pair is optimized for particular ranges of <em>&lambda;</em>: first flip the input coin several times to get a rough estimate of <em>&lambda;</em>, then choose the pair that&#39;s optimized for the estimated <em>&lambda;</em>, and run either algorithm in this section on that pair.</li>
 <li>The second algorithm, as presented in Thomas and Blanchet (2012)<sup><a href="#Note24"><strong>(24)</strong></a></sup>, was based on the one from Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  In both papers, the algorithm works only if <em>&lambda;</em> is in the interval (0, 1).  If <em>&lambda;</em> can be 0 or 1 (meaning the input coin is allowed to return 1 every time or 0 every time), then based on a suggestion in Holtz et al. (2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, the <em>c</em> in step 5 can be multiplied by 2<sup><em>degree</em></sup> and the <em>h</em> in step 7, substep 2, multiplied by 2<sup><em>lastdegree</em></sup> to ensure correctness for all values of <em>&lambda;</em>.</li>
 </ol>
 
@@ -1963,16 +1968,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note46>(46)</sup> Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</small></li>
 <li><small><sup id=Note47>(47)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
 <li><small><sup id=Note48>(48)</sup> Flegal, J.M., Herbei, R., &quot;Exact sampling from intractible probability distributions via a Bernoulli factory&quot;, <em>Electronic Journal of Statistics</em> 6, 10-37, 2012.</small></li>
-<li><small><sup id=Note49>(49)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
-<li><small><sup id=Note50>(50)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note51>(51)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note52>(52)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note53>(53)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
-<li><small><sup id=Note54>(54)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note55>(55)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note57>(57)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note49>(49)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note50>(50)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note51>(51)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note52>(52)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
+<li><small><sup id=Note53>(53)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
+<li><small><sup id=Note54>(54)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
+<li><small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note56>(56)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1985,9 +1989,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note50"><strong>(50)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note51"><strong>(51)</strong></a></sup>, (Peres 1992)<sup><a href="#Note52"><strong>(52)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note50"><strong>(50)</strong></a></sup>, (Peres 1992)<sup><a href="#Note51"><strong>(51)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) /<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</p>
@@ -2010,7 +2014,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
 
 <ol>
-<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note53"><strong>(53)</strong></a></sup></li>
+<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note52"><strong>(52)</strong></a></sup></li>
 <li>generating a uniform random number in [0,1], call it <em>u</em>; and</li>
 <li>returning 1 if <em>u</em> is less than <em>v</em>, or 0 otherwise.</li>
 </ol>
@@ -2024,7 +2028,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Function B: 2 * <em>&lambda;</em>, when <em>&lambda;</em> lies in (0, 1/2 &minus; <em>&#x03F5;</em>), where <em>&#x03F5;</em> is in (0, 1/2).</li>
 </ul>
 
-<p>Glynn (2016)<sup><a href="#Note54"><strong>(54)</strong></a></sup> distinguishes between&mdash;</p>
+<p>Glynn (2016)<sup><a href="#Note53"><strong>(53)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
 <li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, and</li>
@@ -2073,7 +2077,7 @@ for i in range(iters):
 
 <h3>Alternative Implementation of Bernoulli Factories</h3>
 
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
+<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
@@ -2148,7 +2152,7 @@ for i in range(iters):
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note56"><strong>(56)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
@@ -2311,13 +2315,13 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Any</td>
 <td>Any</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note56"><strong>(56)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note50"><strong>(50)</strong></a></sup>.</td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2466,7 +2470,7 @@ def valid_perm(f, x, n):
 <li>the sum of <em>j</em><sup>th</sup> homogeneous-basis coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s homogeneous-basis coefficient <em>k</em> is found as follows:
