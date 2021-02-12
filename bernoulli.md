@@ -9,7 +9,11 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  Many of them were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>, but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.
+Given a coin with unknown probability of heads of _&lambda;_, sample the probability _f_(_&lambda;_).  In other words, turn a coin biased one way (_&lambda;_) into a coin biased another way (_f_(_&lambda;_)).  This is the _Bernoulli factory problem_.
+
+And this page catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.
+
+Many of these algorithms were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>, but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.
 
 This page also contains algorithms to exactly simulate probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 

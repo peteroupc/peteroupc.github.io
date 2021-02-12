@@ -5,7 +5,15 @@
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
 
-The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html) work with two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
+As a reminder, the _Bernoulli factory problem_ is: Given a coin with unknown probability of heads of _&lambda;_, sample the probability _f_(_&lambda;_).
+
+The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html), described in my main article on Bernoulli factory algorithms, work by building randomized lower and upper bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:
+
+1. Generate a uniform(0, 1) random number, _U_.
+2. Flip the input coin, then build a lower and upper bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
+3. If _U_ is less than or equal to the lower bound, return 1. If _U_ is greater than the upper bound, return 0.  Otherwise, go to step 2.
+
+These randomized lower and upper bounds come from two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
 
 - For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
 
@@ -14,7 +22,7 @@ The consistency requirement ensures that the polynomials approach the target fun
 <a id=Approximation_Schemes></a>
 ### Approximation Schemes
 
-Take a factory function _f_(_&lambda;_), the function to simulate using flips of a coin with unknown probability of heads of _&lambda;_. The following are approximation schemes for _f_ if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function _f_ using a computer algebra system to see if it belongs to any of the classes of functions described below.
+A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli factory problem can be solved (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)"). The following are approximation schemes for _f_ if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function _f_ using a computer algebra system to see if it belongs to any of the classes of functions described below.
 
 In this section, **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\].
 

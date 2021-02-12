@@ -9,19 +9,29 @@
 
 <h2>General Factory Functions</h2>
 
-<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html"><strong>general factory functions</strong></a> work with two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
+<p>As a reminder, the <em>Bernoulli factory problem</em> is: Given a coin with unknown probability of heads of <em>&lambda;</em>, sample the probability <em>f</em>(<em>&lambda;</em>).</p>
+
+<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized lower and upper bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
+
+<ol>
+<li>Generate a uniform(0, 1) random number, <em>U</em>.</li>
+<li>Flip the input coin, then build a lower and upper bound for <em>f</em>(<em>&lambda;</em>), based on the outcomes of the flips so far.</li>
+<li>If <em>U</em> is less than or equal to the lower bound, return 1. If <em>U</em> is greater than the upper bound, return 0.  Otherwise, go to step 2.</li>
+</ol>
+
+<p>These randomized lower and upper bounds come from two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
 
 <ul>
 <li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this section.</p>
+<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
 
 <p><a id=Approximation_Schemes></a></p>
 
 <h3>Approximation Schemes</h3>
 
-<p>Take a factory function <em>f</em>(<em>&lambda;</em>), the function to simulate using flips of a coin with unknown probability of heads of <em>&lambda;</em>. The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
+<p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
 
 <p>In this section, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
