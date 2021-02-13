@@ -115,7 +115,7 @@ def c2params(func, x, n):
     - `x`: Variable used by `func`.
     - `n`: A Sympy variable used in the symbolic expressions for the two bounds.  It indicates the degree of the polynomial for which the method should find upper and lower bounds.  Must be a power of 2 and must be 4 or greater.
 
-    The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).  See the notes in the section on [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for more information.
+    The method returns a tuple containing three expressions in the following order: the absolute maximum "slope-of-slope" _m_ (`m`) and the two bounds for **fbound(_n_)** (`bound1` and `bound2`, respectively).  See the notes in the section on [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for more information.  This method will use symbolic computations whenever possible.  If it has to resort to numerical methods, it will print warnings, since in that case, the parameters found by this method are not guaranteed to be correct.
     """
     if n < 4:
         raise ValueError
@@ -292,15 +292,15 @@ def isinrange(curve, ratio, conc=None):
     for c in curve:
         lb = lowerbound(c - offset)
         ub = upperbound(c + offset)
-        if (lb < 0 and conc!="concave") or (ub > 1 and conc!="convex"):
+        if (lb < 0 and conc != "concave") or (ub > 1 and conc != "convex"):
             return False
     return True
 
 def concavity(func, x):
     try:
-        if is_convex(func, x,domain=Interval(0,1)):
+        if is_convex(func, x, domain=Interval(0, 1)):
             return "convex"
-        if is_convex(-func, x,domain=Interval(0,1)):
+        if is_convex(-func, x, domain=Interval(0, 1)):
             return "concave"
     except:
         print(
@@ -351,7 +351,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     """
         This method builds a scheme for approximating a continuous function _f_(_&lambda;_) that maps the interval \[0, 1\] to (0, 1), with the help of polynomials that converge from above and below to that function.  The function is approximated in a way that allows simulating the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_; this is also known as the Bernoulli Factory problem.  Not all functions of this kind are supported yet.
 
-    Note that because numerical methods may be used in some cases, and because only a finite number of polynomials are generated and checked by the code, the approximation scheme is not guaranteed to be correct in all cases.
+    Note that because numerical methods may be used in some cases, and because only a finite number of polynomials are generated and checked by the code, the approximation scheme is not guaranteed to be correct in all cases.  The method will print warnings if it has to resort to numerical methods.
 
     The `approxscheme2(func,x,kind,lip,double,levels)` method takes these parameters:
 
@@ -436,39 +436,46 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
     data = "* Let _f_(_&lambda;_) = "
-    pwfunc=func.subs(x, symbols("lambda")).rewrite(Piecewise)
-    pwfunc=piecewise_fold(pwfunc)
-    if isinstance(pwfunc,Piecewise):
-       sep=False
-       for a,b in pwfunc.args:
-          if sep: data+="; "
-          if b==True:
-              data+=(("%s otherwise" % (str(a).replace("*", "\*"))).replace("lambda","_&lambda;_"))
-          else:
-              data+=(("%s if %s" % (str(a).replace("*", "\*"), str(b).replace("*", "\*"))).replace("lambda","_&lambda;_"))
-          sep=True
-       data+="."
+    pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
+    pwfunc = piecewise_fold(pwfunc)
+    if isinstance(pwfunc, Piecewise):
+        sep = False
+        for a, b in pwfunc.args:
+            if sep:
+                data += "; "
+            if b == True:
+                data += ("%s otherwise" % (str(a).replace("*", "\*"))).replace(
+                    "lambda", "_&lambda;_"
+                )
+            else:
+                data += (
+                    "%s if %s" % (str(a).replace("*", "\*"), str(b).replace("*", "\*"))
+                ).replace("lambda", "_&lambda;_")
+            sep = True
+        data += "."
     else:
-       data+="%s." % (str(pwfunc).replace("*", "\*").replace("lambda","_&lambda;_"))
+        data += "%s." % (str(pwfunc).replace("*", "\*").replace("lambda", "_&lambda;_"))
     if double:
         data += " Then, for all _n_ that are powers of 2, starting from 1:\n"
     else:
         data += " Then:\n"
     data += "    * **fbelow**(_n_, _k_) = "
-    upperbounded=False
-    lowerbounded=False
+    upperbounded = False
+    lowerbounded = False
     if inrangedeg >= 0:
-        offsetinrangedeg=lowerbound(Min(*inrangedata[1])-inrangedata[2]*right,10000)
+        offsetinrangedeg = lowerbound(
+            Min(*inrangedata[1]) - inrangedata[2] * right, 10000
+        )
         if conc == "concave":
-           # Automatically lower-bounded
-           lowerbounded=True
-        elif offsetinrangedeg>=0:
-           data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
-           lowerbounded=True
+            # Automatically lower-bounded
+            lowerbounded = True
+        elif offsetinrangedeg >= 0:
+            data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
+            lowerbounded = True
         else:
-           #print(["conc",conc,"loweroffset",offsetinrangedeg])
-           data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
-           lowerbounded=True
+            # print(["conc",conc,"loweroffset",offsetinrangedeg])
+            data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
+            lowerbounded = True
     data += "_f_(_k_/_n_)"
     if conc != "concave":
         data += " &minus; `%s`" % (
@@ -478,17 +485,19 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     data += "    * **fabove**(_n_, _k_) = "
     if inrangedeg >= 0:
         bound = S(0)
-        offsetinrangedeg=upperbound(Max(*inrangedata[1])+inrangedata[2]*right,10000)
+        offsetinrangedeg = upperbound(
+            Max(*inrangedata[1]) + inrangedata[2] * right, 10000
+        )
         if conc == "convex":
-           # Automatically upper-bounded
-           upperbounded=True
-        elif offsetinrangedeg<=1:
-           data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
-           upperbounded=True
+            # Automatically upper-bounded
+            upperbounded = True
+        elif offsetinrangedeg <= 1:
+            data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
+            upperbounded = True
         else:
-           #print(["conc",conc,"upperoffset",offsetinrangedeg])
-           data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
-           upperbounded=True
+            # print(["conc",conc,"upperoffset",offsetinrangedeg])
+            data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+            upperbounded = True
     data += "_f_(_k_/_n_)"
     if conc != "convex":
         data += " + `%s`" % (str(offsetn.subs(x, symbols("lambda"))).replace("*", "\*"))
