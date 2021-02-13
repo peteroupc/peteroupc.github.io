@@ -435,13 +435,25 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     nsymbol = symbols("n")
     offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
-    data = "* Let _f_(_&lambda;_) = %s.  " % (
-        str(func.subs(x, symbols("lambda"))).replace("*", "\*")
-    )
-    if double:
-        data += "Then, for all _n_ that are powers of 2, starting from 1:\n"
+    data = "* Let _f_(_&lambda;_) = "
+    pwfunc=func.subs(x, symbols("lambda")).rewrite(Piecewise)
+    pwfunc=piecewise_fold(pwfunc)
+    if isinstance(pwfunc,Piecewise):
+       sep=False
+       for a,b in pwfunc.args:
+          if sep: data+="; "
+          if b==True:
+              data+=(("%s otherwise" % (str(a).replace("*", "\*"))).replace("lambda","_&lambda;_"))
+          else:
+              data+=(("%s if %s" % (str(a).replace("*", "\*"), str(b).replace("*", "\*"))).replace("lambda","_&lambda;_"))
+          sep=True
+       data+="."
     else:
-        data += "Then:\n"
+       data+="%s." % (str(pwfunc).replace("*", "\*").replace("lambda","_&lambda;_"))
+    if double:
+        data += " Then, for all _n_ that are powers of 2, starting from 1:\n"
+    else:
+        data += " Then:\n"
     data += "    * **fbelow**(_n_, _k_) = "
     upperbounded=False
     lowerbounded=False
@@ -453,7 +465,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
         elif offsetinrangedeg>=0:
            data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
            lowerbounded=True
-        elif conc=="convex":
+        else:
            #print(["conc",conc,"loweroffset",offsetinrangedeg])
            data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
            lowerbounded=True
@@ -473,7 +485,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
         elif offsetinrangedeg<=1:
            data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
            upperbounded=True
-        elif conc=="concave":
+        else:
            #print(["conc",conc,"upperoffset",offsetinrangedeg])
            data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
            upperbounded=True
