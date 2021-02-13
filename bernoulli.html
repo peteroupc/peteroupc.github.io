@@ -1174,7 +1174,7 @@
 
 <p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.</p>
 
-<p>Algorithm 2. This algorithm works only if each <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
+<p>Algorithm 2. This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent simple continued fraction.)</li>
@@ -1185,7 +1185,7 @@
 <li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1 and <em>r</em> = <em>r</em>.  If the result is <em>s</em>, return 0.  Otherwise, go to step 5.</li>
 </ol>
 
-<p>Algorithm 3. This algorithm works only if each <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p>Algorithm 3. This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
@@ -2455,7 +2455,7 @@ def valid_perm(f, x, n):
 <li>10*choose(2, 2) * <em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>4</sup> = 10* <em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>4</sup>;</li>
 <li>(3*choose(3, 3) + 10*choose(2, 1)) * <em>&lambda;</em><sup>2</sup>*(1&minus;<em>&lambda;</em>)<sup>3</sup> = 23* <em>&lambda;</em><sup>2</sup>*(1&minus;<em>&lambda;</em>)<sup>3</sup>;</li>
 <li>(3*choose(3, 2) + 10*choose(2, 0)) * <em>&lambda;</em><sup>3</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup> = 19* <em>&lambda;</em><sup>3</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>;</li>
-<li>3*choose(3, 1) * <em>&lambda;</em><sup>4</sup>*(1&minus;<em>&lambda;</em>)<sup>1</sup> = 9* <em>&lambda;</em><sup>4</sup>*(1&minus;<em>&lambda;</em>)<sup>1</sup>;and</li>
+<li>3*choose(3, 1) * <em>&lambda;</em><sup>4</sup>*(1&minus;<em>&lambda;</em>)<sup>1</sup> = 9* <em>&lambda;</em><sup>4</sup>*(1&minus;<em>&lambda;</em>)<sup>1</sup>; and</li>
 <li>3*choose(3, 0) * <em>&lambda;</em><sup>5</sup>*(1&minus;<em>&lambda;</em>)<sup>0</sup> = 3* <em>&lambda;</em><sup>5</sup>*(1&minus;<em>&lambda;</em>)<sup>0</sup>,</li>
 </ul>
 

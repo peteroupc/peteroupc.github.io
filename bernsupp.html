@@ -11,7 +11,7 @@
 
 <p>As a reminder, the <em>Bernoulli factory problem</em> is: Given a coin with unknown probability of heads of <em>&lambda;</em>, sample the probability <em>f</em>(<em>&lambda;</em>).</p>
 
-<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
+<p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random number, <em>U</em>.</li>
@@ -42,7 +42,7 @@
 <p><strong><em>C</em><sup>2</sup> continuous functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
+<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous or <em>twice differentiable</em> there), and</li>
 <li>in the interval [0, 1]&mdash;
 
 <ul>
@@ -97,7 +97,7 @@
 <p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
 
 <ul>
-<li> <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>M</em> / (8*<em>n</em>).</li>
 </ul>
 

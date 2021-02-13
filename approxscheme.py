@@ -286,21 +286,21 @@ def consistencyCheckInner(prevcurve, newcurve, ratio=1, diagnose=False, conc=Non
             return "incons"
     return True
 
-def isinrange(curve, ratio):
+def isinrange(curve, ratio, conc=None):
     n, curve, offset = curve
     offset *= ratio
     for c in curve:
         lb = lowerbound(c - offset)
         ub = upperbound(c + offset)
-        if lb < 0 or ub > 1:
+        if (lb < 0 and conc!="concave") or (ub > 1 and conc!="convex"):
             return False
     return True
 
 def concavity(func, x):
     try:
-        if is_convex(func, x):
+        if is_convex(func, x,domain=Interval(0,1)):
             return "convex"
-        if is_convex(-func, x):
+        if is_convex(-func, x,domain=Interval(0,1)):
             return "concave"
     except:
         print(
@@ -426,11 +426,14 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
             % (cdlen, S(offset * right).n(), right.n(), upperbound(dd.n()).n(), kind)
         )
     inrangedeg = -1
+    inrangedata = None
     for cd in curvedata:
-        if isinrange(cd, right):
+        if isinrange(cd, right, conc):
             inrangedeg = cd[0]
+            inrangedata = cd
             break
-    offsetn = buildOffset(kind, dd, symbols("n"))
+    nsymbol = symbols("n")
+    offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
     data = "* Let _f_(_&lambda;_) = %s.  " % (
         str(func.subs(x, symbols("lambda"))).replace("*", "\*")
@@ -440,8 +443,20 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     else:
         data += "Then:\n"
     data += "    * **fbelow**(_n_, _k_) = "
-    if conc == "convex" and inrangedeg >= 0:
-        data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+    upperbounded=False
+    lowerbounded=False
+    if inrangedeg >= 0:
+        offsetinrangedeg=lowerbound(Min(*inrangedata[1])-inrangedata[2]*right,10000)
+        if conc == "concave":
+           # Automatically lower-bounded
+           lowerbounded=True
+        elif offsetinrangedeg>=0:
+           data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
+           lowerbounded=True
+        elif conc=="convex":
+           #print(["conc",conc,"loweroffset",offsetinrangedeg])
+           data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
+           lowerbounded=True
     data += "_f_(_k_/_n_)"
     if conc != "concave":
         data += " &minus; `%s`" % (
@@ -449,14 +464,25 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
         )
     data += ".\n"
     data += "    * **fabove**(_n_, _k_) = "
-    if conc == "concave" and inrangedeg >= 0:
-        data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+    if inrangedeg >= 0:
+        bound = S(0)
+        offsetinrangedeg=upperbound(Max(*inrangedata[1])+inrangedata[2]*right,10000)
+        if conc == "convex":
+           # Automatically upper-bounded
+           upperbounded=True
+        elif offsetinrangedeg<=1:
+           data += "%s if _n_&lt;%d; otherwise, " % (offsetinrangedeg, inrangedeg)
+           upperbounded=True
+        elif conc=="concave":
+           #print(["conc",conc,"upperoffset",offsetinrangedeg])
+           data += "1 if _n_&lt;%d; otherwise, " % (inrangedeg)
+           upperbounded=True
     data += "_f_(_k_/_n_)"
     if conc != "convex":
         data += " + `%s`" % (str(offsetn.subs(x, symbols("lambda"))).replace("*", "\*"))
     data += ".\n"
-    if inrangedeg >= 0:
-        if conc == "concave" or conc == "convex":
+    if inrangedeg >= 0 or (upperbounded and lowerbounded):
+        if conc == "concave" or conc == "convex" or (upperbounded and lowerbounded):
             data += "    * **fbound**(_n_) = [0, 1].\n"
         else:
             data += (

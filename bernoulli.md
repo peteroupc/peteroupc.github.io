@@ -895,7 +895,7 @@ Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 
 
 A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
-Algorithm 2. This algorithm works only if each _b_\[_i_\]/_a_\[_i_\] is 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+Algorithm 2. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
@@ -904,7 +904,7 @@ Algorithm 2. This algorithm works only if each _b_\[_i_\]/_a_\[_i_\] is 1 or les
 5. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
 6. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is _s_, return 0.  Otherwise, go to step 5.
 
-Algorithm 3. This algorithm works only if each _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+Algorithm 3. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
 2. With probability _a_\[_pos_\]/(1 + _a_\[_pos_\]), return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
@@ -1843,7 +1843,7 @@ Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ 
 > - 10\*choose(2, 2) \* _&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>4</sup> = 10\* _&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>4</sup>;
 > - (3\*choose(3, 3) + 10\*choose(2, 1)) \* _&lambda;_<sup>2</sup>\*(1&minus;_&lambda;_)<sup>3</sup> = 23\* _&lambda;_<sup>2</sup>\*(1&minus;_&lambda;_)<sup>3</sup>;
 > - (3\*choose(3, 2) + 10\*choose(2, 0)) \* _&lambda;_<sup>3</sup>\*(1&minus;_&lambda;_)<sup>2</sup> = 19\* _&lambda;_<sup>3</sup>\*(1&minus;_&lambda;_)<sup>2</sup>;
-> - 3\*choose(3, 1) \* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup> = 9\* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup>;and
+> - 3\*choose(3, 1) \* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup> = 9\* _&lambda;_<sup>4</sup>\*(1&minus;_&lambda;_)<sup>1</sup>; and
 > - 3\*choose(3, 0) \* _&lambda;_<sup>5</sup>\*(1&minus;_&lambda;_)<sup>0</sup> = 3\* _&lambda;_<sup>5</sup>\*(1&minus;_&lambda;_)<sup>0</sup>,
 >
 > resulting in the coefficients (0, 10, 23, 19, 9, 3) for the new homogeneous polynomial.
