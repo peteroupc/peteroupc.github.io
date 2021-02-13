@@ -78,10 +78,8 @@ def hoelderconst(func, x, alpha):
     # [0, 1] for a given Hölder exponent, alpha.
     # NOTE: Ensure func is real valued, since otherwise
     # it may enter complex-number territory, which is undesirable
-    if alpha >= 1 or alpha <= 0:
-        # Allow only exponents in (0, 1); also exclude exponent
-        # 1 (the Lipschitz case), since that means the function
-        # must have no vertical slope.
+    if alpha > 1 or alpha <= 0:
+        # Allow only exponents in (0, 1]
         raise ValueError
     xz = symbols("xz", real=True)
     func = func.subs(x, xz)
@@ -94,18 +92,22 @@ def hoelderconst(func, x, alpha):
     points.append(1)
     if isinstance(pw, Piecewise):
         for v in pw.as_expr_set_pairs(Interval(0, 1)):
-            points.append(v[1].start)
-            points.append(v[1].end)
+            if isinstance(v[1], FiniteSet):
+                for item in v[1].args:
+                    points.append(item)
+            else:
+                points.append(v[1].start)
+                points.append(v[1].end)
     else:
         points.append(0)
         points.append(1)
     # Estimate the constant given the discontinuous points.
-    # Add a small value to the
-    # numerical estimate, since for our purposes, we can do with an
+    # Use an upper bound on the numerical estimate, since for
+    # our purposes, we can do with an
     # upper bound on the Hölder constant, and also to reduce
     # the chance of underestimating that constant.
     print("WARNING: Resorting to numerical computation")
-    return estimatehoelder(func, xz, alpha, points) + Rational(1, 10000)
+    return upperbound(estimatehoelder(func, xz, alpha, points), 10000)
 
 def c2params(func, x, n):
     """
@@ -236,10 +238,12 @@ def buildParam(kind, func, x, lip=None):
             ff = func.rewrite(Piecewise)
             dd = nminmax(diff(diff(func)), x)
             dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
+            if dd == 0:
+                # Erroneous parameter, so fall back to estimation
+                dd = hoelderconst(func, x, 1)
         except:
-            if lip == None:
-                raise ValueError
-            dd = S(lip)
+            # Estimate the Lipschitz constant
+            dd = hoelderconst(func, x, 1)
     else:
         raise ValueError
     return dd
