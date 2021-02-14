@@ -55,11 +55,15 @@
 <p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>m</em>/(7*<em>n</em>).</li>
 </ul>
 
 <p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given <em>f</em>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> &quot;Clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily ensure a consistent approximation scheme, which is required for the Bernoulli factory algorithms to work.  Here is a counterexample.  Let <em>g</em> be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let <em>h</em> be a degree-6 polynomial lower than <em>g</em> with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s Bernstein coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.  However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.</p>
+</blockquote>
 
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
@@ -277,8 +281,8 @@
 <li><p><em>Theorems 1, 2, and 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
 
 <ul>
-<li><em><strong>fbelow</strong>(n, k) = (k/n)*<strong>fbelow</strong>(n&minus;1, k&minus;1) + ((n&minus;k)/n)*<strong>fbelow</strong>(n&minus;1, k), and</em></li>
-<li><em><strong>fabove</strong>(n, k) = (k/n)*<strong>fabove</strong>(n&minus;1, k&minus;1) + ((n&minus;k)/n)*<strong>fabove</strong>(n&minus;1, k),</em></li>
+<li><em><strong>fbelow</strong>(n, k) = (k/n)*<strong>fbelow</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fbelow</strong>(n&minus;1, min(n&minus;1, k)), and</em></li>
+<li><em><strong>fabove</strong>(n, k) = (k/n)*<strong>fabove</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fabove</strong>(n&minus;1, min(n&minus;1, k)),</em></li>
 </ul>
 
 <p><em>for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>

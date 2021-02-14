@@ -91,13 +91,18 @@ def hoelderconst(func, x, alpha):
     points.append(0)
     points.append(1)
     if isinstance(pw, Piecewise):
-        for v in pw.as_expr_set_pairs(Interval(0, 1)):
-            if isinstance(v[1], FiniteSet):
-                for item in v[1].args:
-                    points.append(item)
-            else:
-                points.append(v[1].start)
-                points.append(v[1].end)
+        try:
+            for v in pw.as_expr_set_pairs(Interval(0, 1)):
+                if isinstance(v[1], FiniteSet):
+                    for item in v[1].args:
+                        points.append(item)
+                else:
+                    points.append(v[1].start)
+                    points.append(v[1].end)
+        except:
+            # Failed somehow
+            points.append(0)
+            points.append(1)
     else:
         points.append(0)
         points.append(1)
