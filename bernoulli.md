@@ -197,7 +197,7 @@ functions, or functions in general.
 
 Any polynomial can be written in _Bernstein form_ as &sum;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _a_\[_i_\], where _n_ is the polynomial's _degree_ and _a_\[_i_\] are its _n_ plus one _Bernstein coefficients_.
 
-But the only polynomials that admit a Bernoulli factory are those whose Bernstein coefficients are all in the interval \[0, 1\], and only these polynomials can be simulated with a fixed number of coin flips (Goyal and Sigman 2012<sup>[**(7)**](#Note7)</sup>; Qian and Riedel 2008<sup>[**(8)**](#Note8)</sup>; see also Wästlund 1999, section 4<sup>[**(9)**](#Note9)</sup>).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
+But the only polynomials that admit a Bernoulli factory are those whose Bernstein coefficients are all in the interval \[0, 1\], and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012<sup>[**(7)**](#Note7)</sup>; Qian and Riedel 2008<sup>[**(8)**](#Note8)</sup>; see also Wästlund 1999, section 4<sup>[**(9)**](#Note9)</sup>).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. With probability _a_\[_j_\], return 1.  Otherwise, return 0.
@@ -475,8 +475,6 @@ This algorithm converges quickly everywhere in (0, 1).  (In other words, the alg
 4. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
-
-See the appendix for other algorithms.
 
 <a id=exp_minus___lambda___k___x></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))
