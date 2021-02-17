@@ -15,9 +15,14 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 
 These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
 
-- For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).
+_The difference&mdash;_
 
-The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section "[**Schemes That Don't Work**](#Schemes_That_Don_t_Work)" later in this document.
+- _between the degree-(n&minus;1) upper polynomial and the degree-n upper polynomial, and_
+- _between the degree-n lower polynomial and the degree-(n&minus;1) lower polynomial,_
+
+_must have non-negative coefficients, once the polynomials are elevated to degree n and rewritten in Bernstein form._
+
+The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section "[**Schemes That Don't Work**](#Schemes_That_Don_t_Work)" later in this document.
 
 <a id=Approximation_Schemes></a>
 ### Approximation Schemes
@@ -44,8 +49,6 @@ Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) fo
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _m_/(7\*_n_).
 
 My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given _f_.
-
-> **Note:** "Clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily ensure a consistent approximation scheme, which is required for the Bernoulli factory algorithms to work.  Here is a counterexample.  Let _g_ be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let _h_ be a degree-6 polynomial lower than _g_ with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating _g_'s degree, _g_'s Bernstein coefficients are no less than _h_'s, as required by the consistency property.  However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -132,6 +135,14 @@ For example, the first counterexample for this scheme is almost the same as the 
 And once elevated to degree 6, the degree-5 polynomial's coefficients are [0.5590..., 0.6423..., 0.7257..., 0.7590..., 0.7257..., 0.6423..., 0.5590...].
 
 As we can see, the elevated polynomial's coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.
+
+**Note on "clamping".** For any approximation scheme, "clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.
+
+Here is a counterexample that applies to any approximation scheme.
+
+Let _g_ be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let _h_ be a degree-6 polynomial lower than _g_ with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating _g_'s degree, _g_'s Bernstein coefficients are no less than _h_'s, as required by the consistency property.
+
+However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.
 
 <a id=Notes></a>
 ## Notes

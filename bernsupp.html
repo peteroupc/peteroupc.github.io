@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/15"><meta name="citation_online_date" content="2021/02/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/17"><meta name="citation_online_date" content="2021/02/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -21,11 +21,16 @@
 
 <p>These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a continuous function that maps the interval (0, 1) to (0, 1).  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
 
+<p><em>The difference&mdash;</em></p>
+
 <ul>
-<li>For each sequence, the difference between one polynomial and the previous one must have non-negative Bernstein coefficients (once the latter polynomial is elevated to the same degree as the other).</li>
+<li><em>between the degree-(n&minus;1) upper polynomial and the degree-n upper polynomial, and</em></li>
+<li><em>between the degree-n lower polynomial and the degree-(n&minus;1) lower polynomial,</em></li>
 </ul>
 
-<p>The consistency requirement ensures that the polynomials approach the target function without crossing each other.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
+<p><em>must have non-negative coefficients, once the polynomials are elevated to degree n and rewritten in Bernstein form.</em></p>
+
+<p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
 
 <p><a id=Approximation_Schemes></a></p>
 
@@ -60,10 +65,6 @@
 </ul>
 
 <p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given <em>f</em>.</p>
-
-<blockquote>
-<p><strong>Note:</strong> &quot;Clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily ensure a consistent approximation scheme, which is required for the Bernoulli factory algorithms to work.  Here is a counterexample.  Let <em>g</em> be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let <em>h</em> be a degree-6 polynomial lower than <em>g</em> with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s Bernstein coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.  However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.</p>
-</blockquote>
 
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
@@ -174,6 +175,14 @@
 <p>And once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.5590..., 0.6423..., 0.7257..., 0.7590..., 0.7257..., 0.6423..., 0.5590...].</p>
 
 <p>As we can see, the elevated polynomial&#39;s coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.</p>
+
+<p><strong>Note on &quot;clamping&quot;.</strong> For any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.</p>
+
+<p>Here is a counterexample that applies to any approximation scheme.</p>
+
+<p>Let <em>g</em> be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let <em>h</em> be a degree-6 polynomial lower than <em>g</em> with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s Bernstein coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
+
+<p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.</p>
 
 <p><a id=Notes></a></p>
 
