@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/17"><meta name="citation_online_date" content="2021/02/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/18"><meta name="citation_online_date" content="2021/02/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -128,30 +128,30 @@
 <p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
 
 <ul>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + (5/4) / sqrt(<em>n</em>).</li>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; (5/4) / sqrt(<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus;  <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
 </ul>
 
 <p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
 
 <p>The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions).</p>
 
-<p>For the first counterexample, the function <em>g</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)/2 is Lipschitz continuous with Lipschitz constant 1.  (In addition, <em>g</em> has a kink at 1/2, so that it&#39;s not differentiable, but this is not essential for the counterexample.)</p>
+<p>For the first counterexample, the function <em>g</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, <em>g</em> has a kink at 1/2, so that it&#39;s not differentiable, but this is not essential for the counterexample.)</p>
 
 <p>For <em>g</em>, the Bernstein coefficients for&mdash;</p>
 
 <ul>
-<li>the degree-5 upper polynomial are [0.4874..., 0.5874..., 0.6874..., 0.6874..., 0.5874..., 0.4874...], and</li>
-<li>the degree-6 upper polynomial are [0.4449..., 0.5283..., 0.6116..., 0.6949..., 0.6116..., 0.5283..., 0.4449...].</li>
+<li>the degree-5 upper polynomial are [0.559016994374947, 0.659016994374947, 0.759016994374947, 0.759016994374947, 0.659016994374947, 0.559016994374947], and</li>
+<li>the degree-6 upper polynomial are [0.510310363079829, 0.593643696413162, 0.676977029746495, 0.760310363079829, 0.676977029746495, 0.593643696413162, 0.510310363079829].</li>
 </ul>
 
 <p>The degree-5 polynomial lies above the degree-6 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-5 polynomial, once elevated to degree 6, must have Bernstein coefficients that are greater than or equal to those of the degree-6 polynomial.</p>
 
 <ul>
-<li>Once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.4874..., 0.5707..., 0.6541..., 0.6874..., 0.6541..., 0.5707..., 0.4874...].</li>
+<li>Once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.559016994374947, 0.642350327708281, 0.725683661041614, 0.759016994374947, 0.725683661041614, 0.642350327708281, 0.559016994374947].</li>
 </ul>
 
-<p>As we can see, the elevated polynomial&#39;s coefficient 0.6874... is less than the corresponding coefficient 0.6949... for the degree-6 polynomial.</p>
+<p>As we can see, the elevated polynomial&#39;s coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.</p>
 
 <p>There is a similar counterexample that can be built:</p>
 
@@ -163,18 +163,16 @@
 
 <p>It is yet to be seen whether a counterexample exists for this scheme when <em>n</em> is restricted to powers of 2.</p>
 
-<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
+<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
 
-<p>For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;</p>
+<p><strong>Fourth scheme.</strong>  In this scheme, which relates to a result from (Kopotun et al. 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, let <em>f</em> be a nondecreasing and Lipschitz continuous function in [0, 1].  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows, where <em>L</em> is the Lipschitz constant for <em>f</em>:</p>
 
 <ul>
-<li>the degree-5 upper polynomial are [0.5590..., 0.6590..., 0.7590..., 0.7590..., 0.6590..., 0.5590...], and</li>
-<li>the degree-6 upper polynomial are [0.5103..., 0.5936..., 0.6770..., 0.7603..., 0.6770..., 0.5936..., 0.5103...].</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + sqrt(1&minus;(2*<em>k</em>*<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; sqrt(1&minus;(2*<em>k</em>*<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
 </ul>
 
-<p>And once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.5590..., 0.6423..., 0.7257..., 0.7590..., 0.7257..., 0.6423..., 0.5590...].</p>
-
-<p>As we can see, the elevated polynomial&#39;s coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.</p>
+<p>This counterexample has <em>f</em> be a degree-12 polynomial with Bernstein coefficients [0, 61/625, 1273/10000, 697/5000, 1573/10000, 2411/5000, 271/500, 5903/10000, 374/625, 6013/10000, 6017/10000, 1107/1250, 8983/10000]. This polynomial is nondecreasing and Lipschitz continuous with Lipschitz constant (<em>L</em>) slightly less than 1.37277.  And the counterexample involves the upper polynomials of degree 16 and 32 generated by <strong>fabove</strong>(16, <em>k</em>) and <strong>fabove</strong>(32, <em>k</em>), respectively.</p>
 
 <p><strong>Note on &quot;clamping&quot;.</strong> For any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.</p>
 
@@ -195,6 +193,7 @@
 <li><small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
 <li><small><sup id=Note5>(5)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
 <li><small><sup id=Note6>(6)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., &quot;<a href="https://arxiv.org/abs/1711.07083">Interpolatory pointwise estimates for monotone polynomial approximation</a>&quot;, arXiv:1711.07083 [math.CA], 2017.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

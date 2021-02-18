@@ -4,12 +4,12 @@ import math
 def upperbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision upper bound of x.
     boundmult = S(boundmult)
-    return ceiling(x * boundmult) / boundmult
+    return S(int(ceiling(x * boundmult).n())) / boundmult
 
 def lowerbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision lower bound of x.
     boundmult = S(boundmult)
-    return floor(x * boundmult) / boundmult
+    return S(int(floor(x * boundmult).n())) / boundmult
 
 def degelev(poly, degs):
     # Degree elevation of Bernstein-form polynomials.
@@ -241,7 +241,7 @@ def buildParam(kind, func, x, lip=None):
             # Notice that Lipschitz functions are differentiable almost
             # everywhere, due to a result by Rademacher.
             ff = func.rewrite(Piecewise)
-            dd = nminmax(diff(diff(func)), x)
+            dd = nminmax(diff(func), x)
             dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
             if dd == 0:
                 # Erroneous parameter, so fall back to estimation

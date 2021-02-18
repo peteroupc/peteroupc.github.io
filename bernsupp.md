@@ -97,25 +97,25 @@ As we can see, the elevated polynomial's coefficient 0.8208... is less than the 
 
 **Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all _n_&ge;2, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows:
 
-- **fabove**(_n_, _k_) = _f_(_k_/_n_) + (5/4) / sqrt(_n_).
-- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; (5/4) / sqrt(_n_).
+- **fabove**(_n_, _k_) = _f_(_k_/_n_) + _L_\*(5/4) / sqrt(_n_).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus;  _L_\*(5/4) / sqrt(_n_).
 
 Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Popoviciu 1935)<sup>[**(5)**](#Note5)</sup>.
 
 The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to "smooth" functions (not just Lipschitz continuous functions).
 
-For the first counterexample, the function _g_(_&lambda;_) = min(_&lambda;_, 1&minus;_&lambda;_)/2 is Lipschitz continuous with Lipschitz constant 1.  (In addition, _g_ has a kink at 1/2, so that it's not differentiable, but this is not essential for the counterexample.)
+For the first counterexample, the function _g_(_&lambda;_) = min(_&lambda;_, 1&minus;_&lambda;_)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, _g_ has a kink at 1/2, so that it's not differentiable, but this is not essential for the counterexample.)
 
 For _g_, the Bernstein coefficients for&mdash;
 
-- the degree-5 upper polynomial are [0.4874..., 0.5874..., 0.6874..., 0.6874..., 0.5874..., 0.4874...], and
-- the degree-6 upper polynomial are [0.4449..., 0.5283..., 0.6116..., 0.6949..., 0.6116..., 0.5283..., 0.4449...].
+- the degree-5 upper polynomial are [0.559016994374947, 0.659016994374947, 0.759016994374947, 0.759016994374947, 0.659016994374947, 0.559016994374947], and
+- the degree-6 upper polynomial are [0.510310363079829, 0.593643696413162, 0.676977029746495, 0.760310363079829, 0.676977029746495, 0.593643696413162, 0.510310363079829].
 
 The degree-5 polynomial lies above the degree-6 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-5 polynomial, once elevated to degree 6, must have Bernstein coefficients that are greater than or equal to those of the degree-6 polynomial.
 
-- Once elevated to degree 6, the degree-5 polynomial's coefficients are [0.4874..., 0.5707..., 0.6541..., 0.6874..., 0.6541..., 0.5707..., 0.4874...].
+- Once elevated to degree 6, the degree-5 polynomial's coefficients are [0.559016994374947, 0.642350327708281, 0.725683661041614, 0.759016994374947, 0.725683661041614, 0.642350327708281, 0.559016994374947].
 
-As we can see, the elevated polynomial's coefficient 0.6874... is less than the corresponding coefficient 0.6949... for the degree-6 polynomial.
+As we can see, the elevated polynomial's coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.
 
 There is a similar counterexample that can be built:
 
@@ -125,16 +125,14 @@ Thus, we have shown that this approximation scheme is not guaranteed to meet the
 
 It is yet to be seen whether a counterexample exists for this scheme when _n_ is restricted to powers of 2.
 
-**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Sikkema 1961)<sup>[**(6)**](#Note6)</sup>.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
+**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Sikkema 1961)<sup>[**(6)**](#Note6)</sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
 
-For example, the first counterexample for this scheme is almost the same as the first one for the second scheme, except the coefficients for&mdash;
+**Fourth scheme.**  In this scheme, which relates to a result from (Kopotun et al. 2017)<sup>[**(7)**](#Note7)</sup>, let _f_ be a nondecreasing and Lipschitz continuous function in \[0, 1\].  Then for all _n_&ge;2, the upper and lower polynomials of degree _n_ have Bernstein coefficients as follows, where _L_ is the Lipschitz constant for _f_:
 
-- the degree-5 upper polynomial are [0.5590..., 0.6590..., 0.7590..., 0.7590..., 0.6590..., 0.5590...], and
-- the degree-6 upper polynomial are [0.5103..., 0.5936..., 0.6770..., 0.7603..., 0.6770..., 0.5936..., 0.5103...].
+- **fabove**(_n_, _k_) = _f_(_k_/_n_) + sqrt(1&minus;(2\*_k_\*_n_&minus;1)<sup>2</sup>)\*_L_/_n_.
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; sqrt(1&minus;(2\*_k_\*_n_&minus;1)<sup>2</sup>)\*_L_/_n_.
 
-And once elevated to degree 6, the degree-5 polynomial's coefficients are [0.5590..., 0.6423..., 0.7257..., 0.7590..., 0.7257..., 0.6423..., 0.5590...].
-
-As we can see, the elevated polynomial's coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.
+This counterexample has _f_ be a degree-12 polynomial with Bernstein coefficients [0, 61/625, 1273/10000, 697/5000, 1573/10000, 2411/5000, 271/500, 5903/10000, 374/625, 6013/10000, 6017/10000, 1107/1250, 8983/10000]. This polynomial is nondecreasing and Lipschitz continuous with Lipschitz constant (_L_) slightly less than 1.37277.  And the counterexample involves the upper polynomials of degree 16 and 32 generated by **fabove**(16, _k_) and **fabove**(32, _k_), respectively.
 
 **Note on "clamping".** For any approximation scheme, "clamping" the values of **fbelow** and **fabove** to fit the interval [0, 1] won't necessarily preserve the consistency requirement, even if the original scheme met that requirement.
 
@@ -153,6 +151,7 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 - <small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
 - <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
+- <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[Interpolatory pointwise estimates for monotone polynomial approximation](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
 
 <a id=Appendix></a>
 ## Appendix
