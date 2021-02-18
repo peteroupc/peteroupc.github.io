@@ -399,8 +399,8 @@ A coin with unknown probability of heads of _&lambda;_ can be turned into a coin
 
 This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:
 
-- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 3 below.)
-- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> Bernstein coefficient for a degree-_n_ polynomial that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 3.)
+- **fbelow**(_n_, _k_) is a lower bound of the _k_<sup>th</sup> coefficient for a degree-_n_ polynomial in Bernstein form that approximates _f_ from below, where _k_ is in the interval [0, _n_].  For example, this can be _f_(_k_/_n_) minus a constant that depends on _n_. (See note 3 below.)
+- **fabove**(_n_, _k_) is an upper bound of the _k_<sup>th</sup> coefficient for a degree-_n_ polynomial in Bernstein form  that approximates _f_ from above.  For example, this can be _f_(_k_/_n_) plus a constant that depends on _n_. (See note 3.)
 
 The first algorithm implements the reverse-time martingale framework (Algorithm 4) in Łatuszyński et al. (2009/2011)<sup>[**(25)**](#Note25)</sup> and the degree-doubling suggestion in Algorithm I of Flegal and Herbei (2012)<sup>[**(26)**](#Note26)</sup>, although an error in Algorithm I is noted below.  The first algorithm follows.
 

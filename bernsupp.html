@@ -32,13 +32,13 @@
 
 <p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
 
+<p>In this document, <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and <strong>fabove</strong>(<em>n</em>, <em>k</em>) mean the <em>k</em><sup>th</sup> coefficient for the lower or upper degree-<em>n</em> polynomial in Bernstein form, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
+
 <p><a id=Approximation_Schemes></a></p>
 
 <h3>Approximation Schemes</h3>
 
 <p>A <em>factory function</em> <em>f</em>(<em>&lambda;</em>) is a function for which the Bernoulli factory problem can be solved (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>&quot;). The following are approximation schemes for <em>f</em> if it belongs to one of certain classes of factory functions.  It would be helpful to plot the desired function <em>f</em> using a computer algebra system to see if it belongs to any of the classes of functions described below.</p>
-
-<p>In this section, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
 <p><strong>Concave functions.</strong> If <em>f</em> is known to be <em>concave</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes up), then <strong>fbelow</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.</p>
 
@@ -97,9 +97,7 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
-<p>In this section, <strong>fbelow</strong> and <strong>fabove</strong> mean the <em>k</em><sup>th</sup> Bernstein coefficient for the lower or upper degree-<em>n</em> polynomial, respectively, where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
-
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
@@ -110,14 +108,14 @@
 
 <p>The counterexample involves the twice differentiable function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
 
-<p>For <em>g</em>, the Bernstein coefficients for&mdash;</p>
+<p>For <em>g</em>, the coefficients for&mdash;</p>
 
 <ul>
-<li>the degree-2 upper polynomial (b(5, k)) are [0.6542..., 0.9042..., 0.6542...], and</li>
-<li>the degree-4 upper polynomial (b(6, k)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
+<li>the degree-2 upper polynomial in Bernstein form (<strong>fabove</strong>(5, <em>k</em>)) are [0.6542..., 0.9042..., 0.6542...], and</li>
+<li>the degree-4 upper polynomial in Bernstein form (<strong>fabove</strong>(6, <em>k</em>)) are [0.5771..., 0.7538..., 0.8271..., 0.7538..., 0.5771...].</li>
 </ul>
 
-<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4, must have Bernstein coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
+<p>The degree-2 polynomial lies above the degree-4 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-2 polynomial, once elevated to degree 4 and rewritten in Bernstein form, must have coefficients that are greater than or equal to those of the degree-4 polynomial.</p>
 
 <ul>
 <li>Once elevated to degree 4, the degree-2 polynomial&#39;s coefficients are [0.6542..., 0.7792..., 0.8208..., 0.7792..., 0.6542...].</li>
@@ -125,7 +123,9 @@
 
 <p>As we can see, the elevated polynomial&#39;s coefficient 0.8208... is less than the corresponding coefficient 0.8271... for the degree-4 polynomial.</p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows:</p>
+<p><em>The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail.</em></p>
+
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
@@ -134,53 +134,42 @@
 
 <p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
 
-<p>The following counterexamples show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions).</p>
+<p>There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions):</p>
 
-<p>For the first counterexample, the function <em>g</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, <em>g</em> has a kink at 1/2, so that it&#39;s not differentiable, but this is not essential for the counterexample.)</p>
-
-<p>For <em>g</em>, the Bernstein coefficients for&mdash;</p>
-
-<ul>
-<li>the degree-5 upper polynomial are [0.559016994374947, 0.659016994374947, 0.759016994374947, 0.759016994374947, 0.659016994374947, 0.559016994374947], and</li>
-<li>the degree-6 upper polynomial are [0.510310363079829, 0.593643696413162, 0.676977029746495, 0.760310363079829, 0.676977029746495, 0.593643696413162, 0.510310363079829].</li>
-</ul>
-
-<p>The degree-5 polynomial lies above the degree-6 polynomial everywhere in [0, 1].  However, to ensure consistency, the degree-5 polynomial, once elevated to degree 6, must have Bernstein coefficients that are greater than or equal to those of the degree-6 polynomial.</p>
-
-<ul>
-<li>Once elevated to degree 6, the degree-5 polynomial&#39;s coefficients are [0.559016994374947, 0.642350327708281, 0.725683661041614, 0.759016994374947, 0.725683661041614, 0.642350327708281, 0.559016994374947].</li>
-</ul>
-
-<p>As we can see, the elevated polynomial&#39;s coefficient 0.7590... is less than the corresponding coefficient 0.7603... for the degree-6 polynomial.</p>
-
-<p>There is a similar counterexample that can be built:</p>
-
-<ul>
-<li>When <em>g</em> = sin(4*<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, a &quot;smooth&quot; function with Lipschitz constant <em>&pi;</em>, the counterexample is present between the degree-3 and degree-4 lower polynomials.</li>
-</ul>
-
-<p>Thus, we have shown that this approximation scheme is not guaranteed to meet the consistency requirement for all Lipschitz continuous functions.</p>
+<ol>
+<li>The function <em>f</em>(<em>&lambda;</em>) = min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, <em>f</em> has a kink at 1/2, so that it&#39;s not differentiable, but this is not essential for the counterexample.)  The counterexample involves the degree-5 and degree-6 upper polynomials (<strong>fabove</strong>(5, <em>k</em>) and <strong>fabove</strong>(6, <em>k</em>).</li>
+<li>The function <em>f</em> = sin(4*<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2, a &quot;smooth&quot; function with Lipschitz constant <em>&pi;</em>.  The counterexample is present between the degree-3 and degree-4 lower polynomials.</li>
+</ol>
 
 <p>It is yet to be seen whether a counterexample exists for this scheme when <em>n</em> is restricted to powers of 2.</p>
 
 <p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
 
-<p><strong>Fourth scheme.</strong>  In this scheme, which relates to a result from (Kopotun et al. 2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, let <em>f</em> be a nondecreasing and Lipschitz continuous function in [0, 1].  Then for all <em>n</em>&ge;2, the upper and lower polynomials of degree <em>n</em> have Bernstein coefficients as follows, where <em>L</em> is the Lipschitz constant for <em>f</em>:</p>
+<p><strong>Fourth scheme.</strong>  In this scheme, which relates to a result from Kopotun et al. (2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, let <em>f</em> be a nondecreasing and Lipschitz continuous function in [0, 1].  Then for all <em>n</em>&ge;2:</p>
 
 <ul>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + sqrt(1&minus;(2*<em>k</em>*<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; sqrt(1&minus;(2*<em>k</em>*<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + sqrt(1&minus;(2*<em>k</em>/<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; sqrt(1&minus;(2*<em>k</em>/<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
 </ul>
 
-<p>This counterexample has <em>f</em> be a degree-12 polynomial with Bernstein coefficients [0, 61/625, 1273/10000, 697/5000, 1573/10000, 2411/5000, 271/500, 5903/10000, 374/625, 6013/10000, 6017/10000, 1107/1250, 8983/10000]. This polynomial is nondecreasing and Lipschitz continuous with Lipschitz constant (<em>L</em>) slightly less than 1.37277.  And the counterexample involves the upper polynomials of degree 16 and 32 generated by <strong>fabove</strong>(16, <em>k</em>) and <strong>fabove</strong>(32, <em>k</em>), respectively.</p>
+<p>Where <em>L</em> is the Lipschitz constant for <em>f</em>.</p>
+
+<p>This counterexample has <em>f</em> be a degree-12 polynomial in Bernstein form with coefficients [0, 61/625, 1273/10000, 697/5000, 1573/10000, 2411/5000, 271/500, 5903/10000, 374/625, 6013/10000, 6017/10000, 1107/1250, 8983/10000]. This polynomial is nondecreasing and Lipschitz continuous with Lipschitz constant (<em>L</em>) slightly less than 1.37277.  And the counterexample involves the upper polynomials of degree 16 and 32 generated by <strong>fabove</strong>(16, <em>k</em>) and <strong>fabove</strong>(32, <em>k</em>), respectively.</p>
 
 <p><strong>Note on &quot;clamping&quot;.</strong> For any approximation scheme, &quot;clamping&quot; the values of <strong>fbelow</strong> and <strong>fabove</strong> to fit the interval [0, 1] won&#39;t necessarily preserve the consistency requirement, even if the original scheme met that requirement.</p>
 
 <p>Here is a counterexample that applies to any approximation scheme.</p>
 
-<p>Let <em>g</em> be a degree-5 polynomial with Bernstein coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000], and let <em>h</em> be a degree-6 polynomial lower than <em>g</em> with Bernstein coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].  After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s Bernstein coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
+<p>Let <em>g</em> and <em>h</em> be two polynomials in Bernstein form as follows:</p>
 
-<p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the Bernstein coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the Bernstein coefficients will destroy the consistent approximation property.</p>
+<ul>
+<li><em>g</em> has degree 5 and coefficients [10179/10000, 2653/2500, 9387/10000, 5049/5000, 499/500, 9339/10000].</li>
+<li><em>h</em> has degree 6 and coefficients [10083/10000, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000].</li>
+</ul>
+
+<p>After elevating <em>g</em>&#39;s degree, <em>g</em>&#39;s coefficients are no less than <em>h</em>&#39;s, as required by the consistency property.</p>
+
+<p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
 
 <p><a id=Notes></a></p>
 
@@ -242,7 +231,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). The following Bernstein coefficients (<strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials) form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -257,7 +246,7 @@
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the functional equation given in the proof can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  The following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -266,20 +255,20 @@
 
 <p><em>Where &eta;(n) = M*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</em></p>
 
-<p><em>Proof.</em>  Follows from part 2 of Lemma 1 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  The term <em>&eta;</em>(<em>n</em>) is found as a solution to the functional equation <em>&eta;</em>(<em>n</em>) = <em>&eta;</em>(2*<em>n</em>) + <em>M</em>*(1/(7*<em>n</em>))<sup><em>&alpha;</em>/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.  &#x25a1;</p>
+<p><em>Proof.</em>  Follows from part 2 of Lemma 1 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  The term <em>&eta;</em>(<em>n</em>) is found as a solution to the functional equation <em>&eta;</em>(<em>n</em>) = <em>&eta;</em>(2*<em>n</em>) + <em>M</em>*(1/(7*<em>n</em>))<sup><em>&alpha;</em>/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.  &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> The term <em>&eta;</em>(<em>n</em>) was found in a similar way as the term <em>&delta;</em>(<em>n</em>) in Theorem 1.</p>
 </blockquote>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following Bernstein coefficients form an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M/(7*n).</em></li>
 </ul>
 
-<p><em>Proof.</em>  Follows from part 3 of Lemma 3 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, noting that the solution to the functional equation <em>&kappa;</em>(n) = <em>&kappa;</em>(2*<em>n</em>) + (<em>M</em>/2)*(1/(7*<em>n</em>)) is <em>M</em>/(7*<em>n</em>).  Notably, this exploits the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions whose Bernstein coefficients are all the same.  &#x25a1;</p>
+<p><em>Proof.</em>  Follows from part 3 of Lemma 3 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, noting that the solution to the functional equation <em>&kappa;</em>(n) = <em>&kappa;</em>(2*<em>n</em>) + (<em>M</em>/2)*(1/(7*<em>n</em>)) is <em>M</em>/(7*<em>n</em>).  Notably, this exploits the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  &#x25a1;</p>
 
 <p><strong>Proposition 1.</strong></p>
 
