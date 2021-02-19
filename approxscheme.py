@@ -251,6 +251,11 @@ def buildParam(kind, func, x, lip=None):
             dd = hoelderconst(func, x, 1)
     else:
         raise ValueError
+    ss = str(dd)
+    if len(ss) > 50:
+        # Get upper bound for complicated constants;
+        # this won't affect correctness
+        dd = upperbound(dd, 100000)
     return dd
 
 def consistencyCheckInner(prevcurve, newcurve, ratio=1, diagnose=False, conc=None):

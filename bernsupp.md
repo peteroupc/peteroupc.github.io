@@ -142,7 +142,7 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 - <small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
 - <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
-- <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[Interpolatory pointwise estimates for monotone polynomial approximation](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
+- <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
 
 <a id=Appendix></a>
 ## Appendix
