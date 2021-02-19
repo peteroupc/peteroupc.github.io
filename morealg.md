@@ -218,7 +218,7 @@ I suspected that the required degree _d_ would be floor(_m_\*2/3)+1, as describe
 
 The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different _oracle_ (black box) from coins that output heads or tails.
 
-**Algorithm 1.** Say we have an oracle that produces random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
+**Algorithm 1.** Say we have an oracle that produces independent random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
 
 - is continuous everywhere,
 - is bounded from above, and
@@ -226,7 +226,7 @@ The Bernoulli factory approach can be extended in two ways to produce random num
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
-In the algorithm below, let _&kappa;_ be greater than the maximum value of _f_ in the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_&kappa;_.
+In the algorithm below, let _&kappa;_ be a rational number greater than the maximum value of _f_ in the interval [_a_, _b_], and let _g_(_&lambda;_) = _f_(_a_ + (_b_&minus;_a_)\*_&lambda;_)/_&kappa;_.
 
 1. Create a _&lambda;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability (_x_&minus;_a_)/(_b_&minus;_a_) (see note below), return 1.  Otherwise, return 0."
 2. Run a Bernoulli factory algorithm for _g_(_&lambda;_), using the _&lambda;_ input coin.  Then return _&kappa;_ times the result.
@@ -755,7 +755,7 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 <a id=Algorithm_2_for_Non_Negative_Factories></a>
 ### Algorithm 2 for Non-Negative Factories
 
-**Algorithm 2.** Say we have an _oracle_ that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
+**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(25)**](#Note25)</sup>:
 
 1. Let _m_ be a rational number that is an upper bound of the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).

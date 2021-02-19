@@ -296,7 +296,7 @@
 
 <p>The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) from coins that output heads or tails.</p>
 
-<p><strong>Algorithm 1.</strong> Say we have an oracle that produces random numbers in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random numbers that average to <em>f</em>(<em>&mu;</em>).  This is possible if and only if <em>f</em>, in the interval [<em>a</em>, <em>b</em>]&mdash;</p>
+<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random numbers in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random numbers that average to <em>f</em>(<em>&mu;</em>).  This is possible if and only if <em>f</em>, in the interval [<em>a</em>, <em>b</em>]&mdash;</p>
 
 <ul>
 <li>is continuous everywhere,</li>
@@ -306,7 +306,7 @@
 
 <p>(Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
 
-<p>In the algorithm below, let <em>&kappa;</em> be greater than the maximum value of <em>f</em> in the interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>&kappa;</em>.</p>
+<p>In the algorithm below, let <em>&kappa;</em> be a rational number greater than the maximum value of <em>f</em> in the interval [<em>a</em>, <em>b</em>], and let <em>g</em>(<em>&lambda;</em>) = <em>f</em>(<em>a</em> + (<em>b</em>&minus;<em>a</em>)*<em>&lambda;</em>)/<em>&kappa;</em>.</p>
 
 <ol>
 <li>Create a <em>&lambda;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>) (see note below), return 1.  Otherwise, return 0.&quot;</li>
@@ -985,7 +985,7 @@ calc_linear_func(count=8)
 
 <h3>Algorithm 2 for Non-Negative Factories</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
+<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note25"><strong>(25)</strong></a></sup>:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number that is an upper bound of the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Generate a random number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>

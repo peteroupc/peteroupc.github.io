@@ -104,8 +104,8 @@ Where L is the maximum absolute "slope", also known as the Lipschitz constant, a
 
 There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to "smooth" functions (not just Lipschitz continuous functions):
 
-1. The function _f_(_&lambda;_) = min(_&lambda;_, 1&minus;_&lambda;_)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, _f_ has a kink at 1/2, so that it's not differentiable, but this is not essential for the counterexample.)  The counterexample involves the degree-5 and degree-6 upper polynomials (**fabove**(5, _k_) and **fabove**(6, _k_).
-2. The function _f_ = sin(4\*_&pi;_\*_&lambda;_)/4 + 1/2, a "smooth" function with Lipschitz constant _&pi;_.  The counterexample is present between the degree-3 and degree-4 lower polynomials.
+1. The function _f_(_&lambda;_) = min(_&lambda;_, 1&minus;_&lambda;_)/2 is Lipschitz continuous with Lipschitz constant 1/2.  (In addition, _f_ has a kink at 1/2, so that it's not differentiable, but this is not essential for the counterexample.)  The counterexample involves the degree-5 and degree-6 upper polynomials (**fabove**(5, _k_) and **fabove**(6, _k_)).
+2. The function _f_ = sin(4\*_&pi;_\*_&lambda;_)/4 + 1/2, a "smooth" function with Lipschitz constant _&pi;_.  The counterexample involves the degree-3 and degree-4 lower polynomials (**fbelow**(3, _k_) and **fbelow**(4, _k_)).
 
 It is yet to be seen whether a counterexample exists for this scheme when _n_ is restricted to powers of 2.
 
