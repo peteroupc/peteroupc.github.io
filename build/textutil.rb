@@ -161,7 +161,7 @@ require 'tmpdir'
 require 'fileutils'
 
 def preparePdfs()
-Dir.glob("*.md"){|fn|
+Dir.glob("*.md").sort.each{|fn|
   next if fn=="README.md"
   next if fn=="index.md"
   file=File.basename(fn).gsub(/\.md$/,"")
@@ -205,5 +205,6 @@ Dir.glob("*.md"){|fn|
     end
     i+=1
   end
+  #sleep(8)
 }
 end
