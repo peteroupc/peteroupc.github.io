@@ -143,6 +143,7 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 - <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 - <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
+- <small><sup id=Note8>(8)</sup> Levy, H., _Stochastic dominance_, 1998</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -221,6 +222,14 @@ _Proof._  Follows from part 3 of Lemma 3 above as well as Remark B and the proof
     _for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
+
+**Statement 1.** _Let f be as given in Lemma 1, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable.  If f is increasing, then **E*[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
+
+_Remark._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(8)**](#Note8)</sup>.   This means that the distribution function of _X_<sub>_m_+1</sub> (called _F_<sub>_m_+1</sub>) is less than or equal to that of _X_<sub>_m_</sub> (called _F_<sub>_m_</sub>) throughout the interval [0, _n_].  Unfortunately, proving this is quite tedious, as the distribution functions have a non-trivial form.  It's not enough to say that **E**[_X_/_n_] = _k_/(2\*_n_) is increasing with _k_, since this does not imply Statement 1 as stochastic dominance does.
+
+**Statement 2.** _If f is convex, increasing, and bounded from below by 0, then the expression (1) from Lemma 1 is bounded from above by E[f(Y/n)] for all integers n&ge;1, where Y is a hypergeometric(2*n, n, n) random variable._
+
+_Remark._ If Statement 1 is proved, the proof would be as follows: Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Statement 1, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_]) (by Jensen's inequality, because f is convex and bounded by 0) = **E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**[_f_(_X_/_n_)] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)].
 
 <a id=License></a>
 ## License
