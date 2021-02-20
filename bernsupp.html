@@ -183,7 +183,8 @@
 <li><small><sup id=Note5>(5)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
 <li><small><sup id=Note6>(6)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
 <li><small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., &quot;<a href="https://arxiv.org/abs/1711.07083"><strong>Interpolatory pointwise estimates for monotone polynomial approximation</strong></a>&quot;, arXiv:1711.07083 [math.CA], 2017.</small></li>
-<li><small><sup id=Note8>(8)</sup> Levy, H., <em>Stochastic dominance</em>, 1998</small></li>
+<li><small><sup id=Note8>(8)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
+<li><small><sup id=Note9>(9)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573">https://math.stackexchange.com/q/4033573</a></small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -200,9 +201,13 @@
 
 <p>There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
 
-<p>The parameters <em>&alpha;</em> and <em>M</em>, in parts 1 and 2 of the lemma below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.</p>
+<p>The parameters <em>&alpha;</em> and <em>M</em>, in parts 1 and 2 of Lemma 2 below, mean that the function is no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>; <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.</p>
 
-<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer.  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
+
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.   This means that the probability that <em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that of <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
+
+<p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
 
 <ol>
 <li><p><em>If f is &alpha;-Hölder continuous with Hölder constant M, then&mdash;</em></p>
@@ -212,6 +217,7 @@
 <p><em>is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>, for all integers n&ge;1.</em></p></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M*(1/(7*n))<sup>&alpha;/2</sup>, for all integers n&ge;4.</em></li>
 <li><em>If f is C<sup>2</sup> continuous, and its second derivative&#39;s absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all integers n&ge;4.</em></li>
+<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all integers n&ge;1, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
 <p><em>Proof.</em></p>
@@ -220,6 +226,7 @@
 <li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</li>
 <li>For all integers <em>n</em>&ge;4, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(1/(8*<em>n</em>&minus;4))<sup><em>&alpha;</em>/2</sup> &le;  <em>M</em>*(1/(7*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</li>
 <li>For all integers <em>n</em>&ge;4, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> = (<em>M</em>/2)*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)). &#x25a1;</li>
+<li>Let <em>X</em><sub><em>k</em></sub> be a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because f is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)) &le; <strong>E</strong><a href="because%20_f_%20is%20bounded%20by%200"><em>f</em>(<em>X</em>/<em>n</em>)</a> &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)].</li>
 </ol>
 
 <blockquote>
@@ -232,7 +239,7 @@
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
+<p><strong>Theorem 1.</strong> <em>Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -247,7 +254,7 @@
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the functional equation given in the proof can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and M be as described in part 2 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -262,7 +269,7 @@
 <p><strong>Note:</strong> The term <em>&eta;</em>(<em>n</em>) was found in a similar way as the term <em>&delta;</em>(<em>n</em>) in Theorem 1.</p>
 </blockquote>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) and M be as described in part 3 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
@@ -287,14 +294,6 @@
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
-
-<p><strong>Statement 1.</strong> <em>Let f be as given in Lemma 1, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable.  If f is increasing, then *<em>E</em>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
-
-<p><em>Remark.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.   This means that the distribution function of <em>X</em><sub><em>m</em>+1</sub> (called <em>F</em><sub><em>m</em>+1</sub>) is less than or equal to that of <em>X</em><sub><em>m</em></sub> (called <em>F</em><sub><em>m</em></sub>) throughout the interval [0, <em>n</em>].  Unfortunately, proving this is quite tedious, as the distribution functions have a non-trivial form.  It&#39;s not enough to say that <strong>E</strong>[<em>X</em>/<em>n</em>] = <em>k</em>/(2*<em>n</em>) is increasing with <em>k</em>, since this does not imply Statement 1 as stochastic dominance does.</p>
-
-<p><strong>Statement 2.</strong> <em>If f is convex, increasing, and bounded from below by 0, then the expression (1) from Lemma 1 is bounded from above by E[f(Y/n)] for all integers n&ge;1, where Y is a hypergeometric(2*n, n, n) random variable.</em></p>
-
-<p><em>Remark.</em> If Statement 1 is proved, the proof would be as follows: Let <em>X</em><sub><em>k</em></sub> be a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable.  By Statement 1, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because f is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)) &le; <strong>E</strong><a href="because%20_f_%20is%20bounded%20by%200"><em>f</em>(<em>X</em>/<em>n</em>)</a> &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)].</p>
 
 <p><a id=License></a></p>
 

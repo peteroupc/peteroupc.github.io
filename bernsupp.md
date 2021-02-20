@@ -143,7 +143,8 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 - <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 - <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
-- <small><sup id=Note8>(8)</sup> Levy, H., _Stochastic dominance_, 1998</small>
+- <small><sup id=Note8>(8)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
+- <small><sup id=Note9>(9)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [https://math.stackexchange.com/q/4033573</small>](https://math.stackexchange.com/q/4033573</small>)
 
 <a id=Appendix></a>
 ## Appendix
@@ -157,9 +158,13 @@ This section shows mathematical proofs for some of the approximation schemes of 
 
 There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any _Hölder continuous_ function, which means a continuous function whose slope doesn't go exponentially fast to a vertical slope.
 
-The parameters _&alpha;_ and _M_, in parts 1 and 2 of the lemma below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.
+The parameters _&alpha;_ and _M_, in parts 1 and 2 of Lemma 2 below, mean that the function is no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>; _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.
 
-**Lemma 1.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
+**Lemma 1.** _Let f(&lambda;) be a nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer.  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
+
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(8)**](#Note8)</sup>.   This means that the probability that _X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that of _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(9)**](#Note9)</sup>.
+
+**Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
 1. _If f is &alpha;-Hölder continuous with Hölder constant M, then&mdash;_
 
@@ -168,12 +173,14 @@ The parameters _&alpha;_ and _M_, in parts 1 and 2 of the lemma below, mean that
     _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all integers n&ge;1._
 2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all integers n&ge;4._
 3. _If f is C<sup>2</sup> continuous, and its second derivative's absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)\*(1/(7\*n)), for all integers n&ge;4._
+4. _If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all integers n&ge;1, where Y is a hypergeometric(2*n, n, n) random variable._
 
 _Proof._
 
 1. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.
 2. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = _M_\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> &le; _M_\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> = _M_\*(1/(8\*_n_&minus;4))<sup>_&alpha;_/2</sup> &le;  _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>.
 3. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) &le;  (_M_/2)\*(1/(7\*_n_)). &#x25a1;
+4. Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_]) (by Jensen's inequality, because f is convex and bounded by 0) = **E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**[_f_(_X_/_n_)] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)].
 
 > **Notes:**
 >
@@ -181,7 +188,7 @@ _Proof._
 > 2. An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 3. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.
 
-**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
+**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
 - _**fabove**(n, k) = f(k/n) + &delta;(n)._
@@ -192,7 +199,7 @@ _Proof._ Follows from part 1 of Lemma 1 above as well as Remark B and the proof 
 
 > **Note:** For specific values of _&alpha;_, the functional equation given in the proof can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,log(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
-**Theorem 2.** _Let f(&lambda;) and M be as described in part 2 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Theorem 2.** _Let f(&lambda;) and M be as described in part 2 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
@@ -203,7 +210,7 @@ _Proof._  Follows from part 2 of Lemma 1 above as well as Remark B and the proof
 
 > **Note:** The term _&eta;_(_n_) was found in a similar way as the term _&delta;_(_n_) in Theorem 1.
 
-**Theorem 3.** _Let f(&lambda;) and M be as described in part 3 of Lemma 1, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Theorem 3.** _Let f(&lambda;) and M be as described in part 3 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M/(7\*n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M/(7\*n)._
@@ -222,14 +229,6 @@ _Proof._  Follows from part 3 of Lemma 3 above as well as Remark B and the proof
     _for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
-
-**Statement 1.** _Let f be as given in Lemma 1, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable.  If f is increasing, then **E*[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
-
-_Remark._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(8)**](#Note8)</sup>.   This means that the distribution function of _X_<sub>_m_+1</sub> (called _F_<sub>_m_+1</sub>) is less than or equal to that of _X_<sub>_m_</sub> (called _F_<sub>_m_</sub>) throughout the interval [0, _n_].  Unfortunately, proving this is quite tedious, as the distribution functions have a non-trivial form.  It's not enough to say that **E**[_X_/_n_] = _k_/(2\*_n_) is increasing with _k_, since this does not imply Statement 1 as stochastic dominance does.
-
-**Statement 2.** _If f is convex, increasing, and bounded from below by 0, then the expression (1) from Lemma 1 is bounded from above by E[f(Y/n)] for all integers n&ge;1, where Y is a hypergeometric(2*n, n, n) random variable._
-
-_Remark._ If Statement 1 is proved, the proof would be as follows: Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Statement 1, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_]) (by Jensen's inequality, because f is convex and bounded by 0) = **E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**[_f_(_X_/_n_)] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)].
 
 <a id=License></a>
 ## License
