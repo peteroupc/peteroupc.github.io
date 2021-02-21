@@ -1416,7 +1416,12 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-1. See the open questions found in the section "[**Probabilities Arising from Certain Permutations**](#Probabilities_Arising_from_Certain_Permutations)" in the appendix.
+1. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random numbers (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
+    1. What is the probability that _n_ is returned?
+    2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
+    3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
+
+    Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
 2. I request expressions of mathematical functions that can be expressed in any of the following ways:
     - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
     - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
@@ -1722,32 +1727,9 @@ where _p_ = ( &sum;<sub>_k_=0,1,...</sub> (_&kappa;_(_k_; _&lambda;_)\*V(_k_)/(_
 <a id=Probabilities_Arising_from_Certain_Permutations></a>
 ### Probabilities Arising from Certain Permutations
 
-Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.
+Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.  Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can describe the following algorithm:
 
-Inspired by the [**von Neumann schema**](#The_von_Neumann_schema) given earlier in this appendix, we can describe an algorithm that produces a random number given a permutation class as follows:
-
-1. Create an empty list.
-2. Generate a uniform(0, 1) random number _u_, and append _u_ to the end of the list.
-3. Let _n_ be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class's requirements, return _n_.  Otherwise, go to step 2.
-
-This algorithm returns the number _n_ with the following probability:
-
-_G_(_n_) = (1 &minus; _V_(_n_ + 1)/(_V_(_n_) * (_n_ + 1)) ) * (1 &minus; &sum;<sub>_j_ = 0, ..., _n_ &minus; 1</sub> _G_(_j_) )<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;= (_V_(_n_) * (_n_ + 1) &minus; _V_(_n_ + 1)) / (_V_(0) * (_n_ + 1)!),
-
-where _V_(_n_) is the number of permutations of size _n_ that meet the permutation class's requirements. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\] (thus, for example, this formula won't work if there are 0 permutations of odd size). _V_(_n_) can be a sequence associated with an _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).
-
-For this algorithm, the probability that the generated _n_&mdash;
-
-- is odd is 1 &minus; 1 / EGF(1), or
-- is even is 1 / EGF(1), or
-- is less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0).
-
-This algorithm can also be used to produce continuous random numbers, which will depend on the EGF (permutation class), which return values of _n_ we care about, and so on.  Specifically, consider the following algorithm:
-
-1. Create an empty list.
-2. If the list is empty, generate a random number distributed as _D_, call it _&delta;_.  Otherwise, generate a random number distributed as _E_.  Either way, append the random number to the end of the list. (In this step, _D_ and _E_ are both continuous distributions.)
-3. Let _n_ be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class's requirements, return _n_.  Otherwise, go to step 2.
+Let a _permutation class_ (such as numbers in descending order) and two continuous probability distributions _D_ and _E_ be given.  Consider the following algorithm: Generate a sequence of independent random numbers (where the first is distributed as _D_ and the rest as _E_) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.
 
 Then the algorithm's behavior is given in the tables below.
 
@@ -1756,16 +1738,19 @@ Then the algorithm's behavior is given in the tables below.
 | Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | _n_ / ((_n_ + 1)!). | Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1). |
 | Numbers sorted in descending order | Any | Any | (&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(_z_) \* (ECDF(_z_)<sup>_n_&minus;1</sup>/((_n_&minus;1)!) &minus; ECDF(_z_)<sup>_n_</sup>/(_n_!)) _dz_), for all _n_ > 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV)<sup>[**(27)**](#Note27)</sup>. DPDF and ECDF are defined later. | Odd is denominator of formula 1 below. |
 | Alternating numbers | Uniform(0,1) | Uniform(0,1) | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1).<br/>Even is cos(1)/(sin(1)+1). |
-| Any | Uniform(0,1) | Uniform(0,1) | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for all _n_ > 0. | Odd is 1 &minus; 1 / EGF(1). |
+| Any | Uniform(0,1) | Uniform(0,1) | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for all _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that meet the permutation class's requirements. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\]; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1).<br/>Even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0). |
 
-| Permutation Class | Distribution _D_ | Distribution _E_ | The probability that _&delta;_ is less than _x_ given that _n_ is ... |
+| Permutation Class | Distribution _D_ | Distribution _E_ | The probability that the first number in the sequence is less than _x_ given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Any | Any | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(27)**](#Note27)</sup>; see also Forsythe 1972<sup>[**(42)**](#Note42)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Any | Any | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(56)**](#Note56)</sup>).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of _&delta;_ is exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>. |
+| Numbers sorted in descending order | Uniform(0,1) | Uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>. |
 | Numbers sorted in descending order | Uniform(0,1) | Max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
-> **Note:** All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function _F_<sub>_D_</sub>(_x_ | _n_ is odd) or _F_<sub>_D_</sub>(_x_ | _n_ is even), respectively.
+> **Notes:**
+>
+> 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function _F_<sub>_D_</sub>(_x_ | _n_ is odd) or _F_<sub>_D_</sub>(_x_ | _n_ is even), respectively.
+> 2. `EGF(_z_)` is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 
 **Open Question:**  How can the tables above be filled for other permutation classes and different combinations of distributions _D_ and _E_?
 

@@ -34,7 +34,7 @@ def degelev(poly, degs):
         ret.append(c)
     return ret
 
-def estimatehoelder(func, x, alpha, discontpoints=None):
+def estimatehoelder(func, x, alpha=S(1), discontpoints=None):
     # Estimate the alpha-Hölder constant for the given
     # function in the interval [0, 1], assuming it's continuous.
     npoints = 60

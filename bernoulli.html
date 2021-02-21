@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/02/18"><meta name="citation_online_date" content="2021/02/18"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/02/21"><meta name="citation_online_date" content="2021/02/21"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -1872,7 +1872,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <h2>Requests and Open Questions</h2>
 
 <ol>
-<li>See the open questions found in the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix.</li>
+<li><p>Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random numbers (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way, minus 1.  In this case:</p>
+
+<ol>
+<li>What is the probability that <em>n</em> is returned?</li>
+<li>What is the probability that <em>n</em> is odd or even or belongs to a certain class of numbers?</li>
+<li>What is the distribution function (CDF) of the first generated number given that <em>n</em> is odd, or that <em>n</em> is even?</li>
+</ol>
+
+<p>Obviously, these answers depend on the specific permutation class and/or distributions <em>D</em> and <em>E</em>.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question <a href="https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations"><strong>Probabilities arising from permutations</strong></a>.</p></li>
 <li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
 
 <ul>
@@ -2234,38 +2242,9 @@ def valid_perm(f, x, n):
 
 <h3>Probabilities Arising from Certain Permutations</h3>
 
-<p>Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.</p>
+<p>Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.  Inspired by the <a href="#The_von_Neumann_schema"><strong>von Neumann schema</strong></a> given earlier in this appendix, we can describe the following algorithm:</p>
 
-<p>Inspired by the <a href="#The_von_Neumann_schema"><strong>von Neumann schema</strong></a> given earlier in this appendix, we can describe an algorithm that produces a random number given a permutation class as follows:</p>
-
-<ol>
-<li>Create an empty list.</li>
-<li>Generate a uniform(0, 1) random number <em>u</em>, and append <em>u</em> to the end of the list.</li>
-<li>Let <em>n</em> be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class&#39;s requirements, return <em>n</em>.  Otherwise, go to step 2.</li>
-</ol>
-
-<p>This algorithm returns the number <em>n</em> with the following probability:</p>
-
-<p><em>G</em>(<em>n</em>) = (1 &minus; <em>V</em>(<em>n</em> + 1)/(<em>V</em>(<em>n</em>) * (<em>n</em> + 1)) ) * (1 &minus; &sum;<sub><em>j</em> = 0, ..., <em>n</em> &minus; 1</sub> <em>G</em>(<em>j</em>) )<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;= (<em>V</em>(<em>n</em>) * (<em>n</em> + 1) &minus; <em>V</em>(<em>n</em> + 1)) / (<em>V</em>(0) * (<em>n</em> + 1)!),</p>
-
-<p>where <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!] (thus, for example, this formula won&#39;t work if there are 0 permutations of odd size). <em>V</em>(<em>n</em>) can be a sequence associated with an <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm, and examples of EGFs were given in the section on the von Neumann schema.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).</p>
-
-<p>For this algorithm, the probability that the generated <em>n</em>&mdash;</p>
-
-<ul>
-<li>is odd is 1 &minus; 1 / EGF(1), or</li>
-<li>is even is 1 / EGF(1), or</li>
-<li>is less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</li>
-</ul>
-
-<p>This algorithm can also be used to produce continuous random numbers, which will depend on the EGF (permutation class), which return values of <em>n</em> we care about, and so on.  Specifically, consider the following algorithm:</p>
-
-<ol>
-<li>Create an empty list.</li>
-<li>If the list is empty, generate a random number distributed as <em>D</em>, call it <em>&delta;</em>.  Otherwise, generate a random number distributed as <em>E</em>.  Either way, append the random number to the end of the list. (In this step, <em>D</em> and <em>E</em> are both continuous distributions.)</li>
-<li>Let <em>n</em> be the number of items in the list minus 1.  If the items in the list do not form a permutation that meets the permutation class&#39;s requirements, return <em>n</em>.  Otherwise, go to step 2.</li>
-</ol>
+<p>Let a <em>permutation class</em> (such as numbers in descending order) and two continuous probability distributions <em>D</em> and <em>E</em> be given.  Consider the following algorithm: Generate a sequence of independent random numbers (where the first is distributed as <em>D</em> and the rest as <em>E</em>) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way, minus 1.</p>
 
 <p>Then the algorithm&#39;s behavior is given in the tables below.</p>
 
@@ -2303,8 +2282,8 @@ def valid_perm(f, x, n):
 <td>Any</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>(&int;<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>&minus;1</sup>*V(<em>n</em>)/((<em>n</em>&minus;1)!) &minus; <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for all <em>n</em> &gt; 0.</td>
-<td>Odd is 1 &minus; 1 / EGF(1).</td>
+<td>(&int;<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>&minus;1</sup>*V(<em>n</em>)/((<em>n</em>&minus;1)!) &minus; <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for all <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!]; this algorithm won&#39;t work, for example, if there are 0 permutations of odd size.</td>
+<td>Odd is 1 &minus; 1 / EGF(1).<br/>Even is 1/EGF(1).<br/>Less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</td>
 </tr>
 </tbody></table>
 
@@ -2313,7 +2292,7 @@ def valid_perm(f, x, n):
 <th>Permutation Class</th>
 <th>Distribution <em>D</em></th>
 <th>Distribution <em>E</em></th>
-<th>The probability that <em>&delta;</em> is less than <em>x</em> given that <em>n</em> is ...</th>
+<th>The probability that the first number in the sequence is less than <em>x</em> given that <em>n</em> is ...</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -2332,7 +2311,7 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Uniform(0,1)</td>
 <td>Uniform(0,1)</td>
-<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the distribution of <em>&delta;</em> is exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2343,7 +2322,12 @@ def valid_perm(f, x, n):
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is even), respectively.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is even), respectively.</li>
+<li><code>EGF(_z_)</code> is the <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
+</ol>
 </blockquote>
 
 <p><strong>Open Question:</strong>  How can the tables above be filled for other permutation classes and different combinations of distributions <em>D</em> and <em>E</em>?</p>
