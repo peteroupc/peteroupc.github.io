@@ -64,18 +64,17 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
     - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
     - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials written in Bernstein form that converge from above and below to a function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  (These requirements ensure the upper polynomials "decrease" and the lower ones "increase".  The polynomials in each sequence may start closer to the function at some points than at others.)
 
-        The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following classes of functions (or subsets of them)?
+        The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?
 
-        - Functions that equal 0 at 0.
-        - Functions that equal 0 at 0 and 1 at 1.
         - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
+        - Functions that equal 0 at 0.  (Or a subset of these functions, such as functions that equal 1 at 1, and/or functions meeting certain regularity conditions, such as being C<sup>2</sup> continuous, Lipschitz, Hölder, unimodal, convex, concave, and/or nondecreasing).
 
         An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(2)**](#Note2)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and simulate _f_(_&lambda;_) using the chosen polynomials.  The paper gives the example of min(_&lambda;_, 8/10).  Are there formulas for computing these sequences efficiently, unlike the paper's approach that requires computing an intersection of a curve with an approximating polynomial, which gets very inefficient as the polynomial's degree gets large?
 
         See also my questions on _Mathematics Stack Exchange_:
 
         - [**Computing converging polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).
-        - [**Bounds of Bernstein coefficients**](https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst).
+        - [**Bounds of coefficients for polynomials in Bernstein form**](https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst).
 
     - Simple [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) that express useful constants.
 
