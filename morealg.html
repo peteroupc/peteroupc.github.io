@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/02/19"><meta name="citation_online_date" content="2021/02/19"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/02/22"><meta name="citation_online_date" content="2021/02/22"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -68,6 +68,10 @@
 <ul>
 <li><a href="#Ratio_of_Uniforms"><strong>Ratio of Uniforms</strong></a></li>
 <li><a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>Implementation Notes for Box/Shape Intersection</strong></a></li>
+</ul></li>
+<li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a>
+
+<ul>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#Algorithm_2_for_Non_Negative_Factories"><strong>Algorithm 2 for Non-Negative Factories</strong></a></li>
@@ -741,6 +745,8 @@
 <li><small><sup id=Note23>(23)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</small></li>
 <li><small><sup id=Note24>(24)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 <li><small><sup id=Note25>(25)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
+<li><small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., &quot;Remote Sampling with Applications to General Entanglement Simulation&quot;, <em>Entropy</em> 2019(21)(92), <a href="https://doi.org/10.3390/e21010092">https://doi.org/10.3390/e21010092</a> .</small></li>
+<li><small><sup id=Note27>(27)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6">Random variate generation using only finitely many unbiased, independently and identically distributed random bits</a>&quot;, arXiv:1502.02539v6 [cs.IT], 2020.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -851,6 +857,35 @@
 <li>For the exclusive OR of two shapes, the final result is <em>YES</em> if one shape returns <em>YES</em> and the other returns <em>NO</em>; <em>NO</em> if both shapes return <em>NO</em> or both return <em>YES</em>; and <em>MAYBE</em> otherwise.</li>
 </ul></li>
 </ol>
+
+<p><a id=Probability_Transformations></a></p>
+
+<h2>Probability Transformations</h2>
+
+<p>The following algorithm takes a uniform partially-sampled random number (PSRN) as a &quot;coin&quot; and flips that &quot;coin&quot; using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>).  Given that &quot;coin&quot; and a function <em>f</em> as described below, the algorithm returns 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number built up by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note26"><strong>(26)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note10"><strong>(10)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.  In the algorithm:</p>
+
+<ul>
+<li> The uniform PSRN&#39;s sign must be positive and its integer part must be 0.</li>
+<li>The function <em>f</em>(<em>U</em>) must be identically 0 or identically 1, or be a continuous function that maps the interval [0, 1] to [0, 1] and doesn&#39;t touch 0 or 1 except possibly at the points 0 and/or 1.  These conditions are necessary for the algorithm to be unbiased (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>).</li>
+</ul>
+
+<p>The algorithm follows.</p>
+
+<ol>
+<li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
+<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
+
+<ol>
+<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the uniform PSRN&#39;s fractional part.</li>
+<li>Of the first <em>n</em> digits (sampled and unsampled) in the PSRN&#39;s fractional part, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the PSRN&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
+<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &le; 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
+</ol></li>
+<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is <em>&pi;</em>, <em>b</em> is 10, and <em>k</em> is 2, <em>pk</em> is 314.</li>
+<li>If <em>pk</em> + 1 &le; <em>v</em>, return 0. If <em>pk</em> &minus; 2 &ge; <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
+</ol>
+
+<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.  Also, this algorithm doesn&#39;t exactly solve the Bernoulli Factory problem, since here, the input probability is not totally unknown.</p>
 
 <p><a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a></p>
 

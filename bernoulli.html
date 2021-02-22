@@ -155,8 +155,6 @@
 <ul>
 <li><a href="#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a></li>
 <li><a href="#Simulating_Probabilities_vs_Estimating_Probabilities"><strong>Simulating Probabilities vs. Estimating Probabilities</strong></a></li>
-<li><a href="#Convergence_of_Bernoulli_Factories"><strong>Convergence of Bernoulli Factories</strong></a></li>
-<li><a href="#Alternative_Implementation_of_Bernoulli_Factories"><strong>Alternative Implementation of Bernoulli Factories</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
@@ -1991,10 +1989,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note51>(51)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
 <li><small><sup id=Note52>(52)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
 <li><small><sup id=Note53>(53)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note54>(54)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note56>(56)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note55>(55)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2055,64 +2052,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
-<p><a id=Convergence_of_Bernoulli_Factories></a></p>
-
-<h3>Convergence of Bernoulli Factories</h3>
-
-<p>The following Python code illustrates how to test a Bernoulli factory algorithm for convergence to the correct probability, as well as the speed of this convergence.  In this case, we are testing the Bernoulli factory algorithm of <em>x</em><sup><em>y</em>/<em>z</em></sup>, where <em>x</em> is in the interval (0, 1) and <em>y</em>/<em>z</em> is greater than 0.  Depending on the parameters <em>x</em>, <em>y</em>, and <em>z</em>, this Bernoulli factory converges faster or slower.</p>
-
-<pre># Parameters for the Bernoulli factory x**(y/z)
-x=0.005 # x is the input coin&#39;s probability of heads
-y=2
-z=3
-# Print the desired probability
-print(x**(y/z))
-passp = 0
-failp = 0
-# Set cumulative probability to 1
-cumu = 1
-iters=4000
-for i in range(iters):
-  # With probability x, the algorithm returns 1 (heads)
-  prob=(x);prob*=cumu; passp+=prob; cumu-=prob
-  # With probability (y/(z*(i+1))), the algorithm returns 0 (tails)
-  prob=(y/(z*(i+1)));prob*=cumu; failp+=prob; cumu-=prob
-  # Output the current probability in this iteration,
-  # but only for the first 30 and last 30 iterations
-  if i&lt;30 or i&gt;=iters-30: print(passp)
-</pre>
-
-<p>As this code shows, as <em>x</em> (the probability of heads of the input coin) approaches 0, the convergence rate gets slower and slower, even though the probability will eventually converge to the correct one. In fact, when <em>y</em>/<em>z</em> is less than 1:</p>
-
-<ul>
-<li>The average number of coin flips needed by this algorithm will grow without bound as <em>x</em> approaches 0, and Mendo (2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup> showed that this is a lower bound; that is, no Bernoulli factory algorithm can do much better without knowing more information on <em>x</em>.</li>
-<li><em>x</em><sup><em>y</em>/<em>z</em></sup> has a slope that tends to a vertical slope near 0, so that the so-called <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz condition</em></strong></a> is not met at 0.  And (Nacu and Peres 2005, propositions 10 and 23)<sup><a href="#Note5"><strong>(5)</strong></a></sup> showed that the Lipschitz condition is necessary for a Bernoulli factory to have an upper bound on the average running time.</li>
-</ul>
-
-<p>Thus, a practical implementation of this algorithm may have to switch to an alternative implementation (such as the one described in the next section) when it detects that the first few digits (after the point) of the uniform random number&#39;s fractional part are zeros.</p>
-
-<p><a id=Alternative_Implementation_of_Bernoulli_Factories></a></p>
-
-<h3>Alternative Implementation of Bernoulli Factories</h3>
-
-<p>Say we have a Bernoulli factory algorithm that takes a coin with probability of heads of <em>p</em> and outputs 1 with probability <em>f</em>(<em>p</em>).  If this algorithm takes a uniform partially-sampled random number (PSRN) as the input coin and flips that coin using <strong>SampleGeometricBag</strong> (a method described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>), the algorithm could instead be implemented as follows in order to return 1 with probability <em>f</em>(<em>U</em>), where <em>U</em> is the number represented by the uniform PSRN (see also (Brassard et al., 2019)<sup><a href="#Note38"><strong>(38)</strong></a></sup>, (Devroye 1986, p. 769)<sup><a href="#Note27"><strong>(27)</strong></a></sup>, (Devroye and Gravel 2020)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.  This algorithm assumes the uniform PSRN&#39;s sign is positive and its integer part is 0.</p>
-
-<ol>
-<li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
-<li>Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
-<li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
-
-<ol>
-<li>Set <em>n</em> to the number of items (sampled and unsampled digits) in the uniform PSRN&#39;s fractional part.</li>
-<li>Of the first <em>n</em> digits (sampled and unsampled) in the PSRN&#39;s fractional part, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the PSRN&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
-<li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &le; 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
-</ol></li>
-<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is <em>&pi;</em>, <em>b</em> is 10, and <em>k</em> is 2, <em>pk</em> is 314.</li>
-<li>If <em>pk</em> + 1 &le; <em>v</em>, return 0. If <em>pk</em> &minus; 2 &ge; <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
-</ol>
-
-<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
-
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
 
 <h3>Correctness Proof for the Continued Logarithm Simulation Algorithm</h3>
@@ -2170,7 +2109,7 @@ for i in range(iters):
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note54"><strong>(54)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random number that follows the von Neumann schema.</p>
 
@@ -2304,7 +2243,7 @@ def valid_perm(f, x, n):
 <td>Numbers sorted in descending order</td>
 <td>Any</td>
 <td>Any</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note56"><strong>(56)</strong></a></sup>).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note55"><strong>(55)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2324,7 +2263,7 @@ def valid_perm(f, x, n):
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> | <em>n</em> is even), respectively.</li>
+<li>All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is even), respectively.</li>
 <li>EGF(<em>z</em>) is the <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
 </ol>
 </blockquote>
@@ -2464,7 +2403,7 @@ def valid_perm(f, x, n):
 <li>the sum of <em>j</em><sup>th</sup> coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note56"><strong>(56)</strong></a></sup>).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s coefficient <em>k</em> is found as follows:

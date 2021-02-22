@@ -49,6 +49,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Appendix**](#Appendix)
     - [**Ratio of Uniforms**](#Ratio_of_Uniforms)
     - [**Implementation Notes for Box/Shape Intersection**](#Implementation_Notes_for_Box_Shape_Intersection)
+- [**Probability Transformations**](#Probability_Transformations)
     - [**SymPy Code for Piecewise Linear Factory Functions**](#SymPy_Code_for_Piecewise_Linear_Factory_Functions)
     - [**Derivation of My Algorithm for min(_&lambda;_, 1/2)**](#Derivation_of_My_Algorithm_for_min___lambda___1_2)
     - [**Algorithm 2 for Non-Negative Factories**](#Algorithm_2_for_Non_Negative_Factories)
@@ -559,6 +560,8 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note23>(23)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
 - <small><sup id=Note24>(24)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 - <small><sup id=Note25>(25)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note26>(26)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [https://doi.org/10.3390/e21010092](https://doi.org/10.3390/e21010092) .</small>
+- <small><sup id=Note27>(27)</sup> Devroye, L., Gravel, C., "[Random variate generation using only finitely many unbiased, independently and identically distributed random bits](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -634,6 +637,27 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - For intersections, the final result is _YES_ if all components return _YES_; _NO_ if any component returns _NO_; and _MAYBE_ otherwise.
     - For differences between two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_; _NO_ if the first shape returns _NO_ or if both shapes return _YES_; and _MAYBE_ otherwise.
     - For the exclusive OR of two shapes, the final result is _YES_ if one shape returns _YES_ and the other returns _NO_; _NO_ if both shapes return _NO_ or both return _YES_; and _MAYBE_ otherwise.
+
+<a id=Probability_Transformations></a>
+## Probability Transformations
+
+The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(10)**](#Note10)</sup>, (Devroye and Gravel 2020)<sup>[**(27)**](#Note27)</sup>.  In the algorithm:
+
+-  The uniform PSRN's sign must be positive and its integer part must be 0.
+- The function _f_(_U_) must be identically 0 or identically 1, or be a continuous function that maps the interval \[0, 1] to \[0, 1] and doesn't touch 0 or 1 except possibly at the points 0 and/or 1.  These conditions are necessary for the algorithm to be unbiased (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)).
+
+The algorithm follows.
+
+1. Set _v_ to 0 and _k_ to 1.
+2. Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
+3. Calculate an approximation of _f_(_U_) as follows:
+    1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
+    2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
+    3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ &minus; _fmax_) &le; 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
+4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is _&pi;_, _b_ is 10, and _k_ is 2, _pk_ is 314.
+5. If _pk_ + 1 &le; _v_, return 0. If _pk_ &minus; 2 &ge; _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
+
+However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.  Also, this algorithm doesn't exactly solve the Bernoulli Factory problem, since here, the input probability is not totally unknown.
 
 <a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a>
 ### SymPy Code for Piecewise Linear Factory Functions
