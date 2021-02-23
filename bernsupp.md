@@ -136,16 +136,17 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
 
-In general, the number of coin flips needed by any Bernoulli factory algorithm for _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
+In general, the number of input coin flips needed by any Bernoulli factory algorithm for _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
 
-The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _&lambda;_ = 0 or 1, and a slower _O_((1/_n_)<sup>_r_</sup>) elsewhere.
+The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _&lambda;_ = 0 or 1, and _O_((1/_n_)<sup>_r_</sup>) elsewhere.
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires more than _n_ input coin flips with probability _&Delta;_(_n_, _r_&minus;1, _&lambda;_), for integer _r_ &ge; 0. (The greater _r_ is, the faster the simulation.) | Only if _f_ has _r_ continuous derivatives ("slope" functions) and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has _r_ continuous derivatives and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
+| Requires no more than _n_ coin flips. | If and only if _f_ is a constant 0 or 1 or can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(12)**](#Note12)</sup> |
 | Requires a finite number of flips on average. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Number of flips required, raised to power of _k_, is finite on average and drops off uniformly for all _&lambda;_.  | Only if _f_ has _k_ continuous derivatives (is _C_<sup>_k_</sup> continuous) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Number of input coin flips required, raised to power of _r_, is finite on average and drops off uniformly for all _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
 | "Fast simulation" (number of flips required drops off exponentially).  | If and only if _f_ is real analytic (is "smooth", or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
 | Number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(9)**](#Note9)</sup>. |
 
@@ -163,6 +164,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 - <small><sup id=Note9>(9)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note10>(10)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
 - <small><sup id=Note11>(11)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note12>(12)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 
 <a id=Appendix></a>
 ## Appendix
