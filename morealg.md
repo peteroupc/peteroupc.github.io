@@ -644,7 +644,11 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
 The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(22)**](#Note22)</sup>, (Devroye 1986, p. 769)<sup>[**(10)**](#Note10)</sup>, (Devroye and Gravel 2020)<sup>[**(23)**](#Note23)</sup>.  In the algorithm:
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
-- For correctness, the function _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere in \[0, 1] except at a countable number of points. Although not required for correctness, _f_ should be identically 0 or identically 1, or be a continuous function that maps the interval \[0, 1] to \[0, 1] and doesn't touch 0 or 1 except possibly at the points 0 and/or 1; these are the conditions for factory functions in the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)). Notice that because this algorithm can access the input probability's value to some extent, it doesn't exactly solve the Bernoulli factory problem.
+- For correctness, _f_(_U_) must meet the following conditions:
+    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be a continuous function that maps the interval \[0, 1] to \[0, 1] and doesn't touch 0 or 1 except possibly at the points 0 and/or 1.
+    - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere except at a countable number of points.
+
+    The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)<sup>[**(2)**](#Note2)</sup>.
 
 The algorithm follows.
 
@@ -654,10 +658,13 @@ The algorithm follows.
     1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
     2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
     3. Calculate the lowest and highest values of _f_ in the interval \[_uk_, _uk_ + _b_<sup>&minus;_n_</sup>\], call them _fmin_ and _fmax_. If abs(_fmin_ &minus; _fmax_) &le; 2 * _b_<sup>&minus;_k_</sup>, calculate (_fmax_ + _fmin_) / 2 as the approximation.  Otherwise, add 1 to _n_ and go to the previous substep.
-4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is _&pi;_, _b_ is 10, and _k_ is 2, _pk_ is 314.
+4. Let _pk_ be the approximation's digit expansion up to the _k_ digits after the point.  For example, if _f_(_U_) is _&pi;_/5, _b_ is 10, and _k_ is 3, _pk_ is 628.
 5. If _pk_ + 1 &le; _v_, return 0. If _pk_ &minus; 2 &ge; _v_, return 1.  If neither is the case, add 1 to _k_ and go to step 2.
 
-However, the focus of this article is on algorithms that don't rely on calculations of irrational numbers, which is why this section is in the appendix.
+> **Notes:**
+>
+> 1. This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn't exactly solve that problem because it has access to the input probability's value to some extent.
+> 2. This section appears in the appendix because this article is focused on algorithms that don't rely on calculations of irrational numbers.
 
 <a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a>
 ### SymPy Code for Piecewise Linear Factory Functions

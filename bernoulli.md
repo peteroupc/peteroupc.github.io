@@ -1543,7 +1543,7 @@ For certain values of _&lambda;_, Kozen (2014)<sup>[**(47)**](#Note47)</sup> sho
 
 If an algorithm&mdash;
 
-- takes flips of a coin with a given probability of heads (_&lambda;_), and
+- takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)),
 
 the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;

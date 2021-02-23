@@ -863,7 +863,14 @@
 
 <ul>
 <li> The uniform PSRN&#39;s sign must be positive and its integer part must be 0.</li>
-<li>For correctness, the function <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere in [0, 1] except at a countable number of points. Although not required for correctness, <em>f</em> should be identically 0 or identically 1, or be a continuous function that maps the interval [0, 1] to [0, 1] and doesn&#39;t touch 0 or 1 except possibly at the points 0 and/or 1; these are the conditions for factory functions in the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>). Notice that because this algorithm can access the input probability&#39;s value to some extent, it doesn&#39;t exactly solve the Bernoulli factory problem.</li>
+<li><p>For correctness, <em>f</em>(<em>U</em>) must meet the following conditions:</p>
+
+<ul>
+<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be a continuous function that maps the interval [0, 1] to [0, 1] and doesn&#39;t touch 0 or 1 except possibly at the points 0 and/or 1.</li>
+<li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere except at a countable number of points.</li>
+</ul>
+
+<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p></li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -878,11 +885,18 @@
 <li>Of the first <em>n</em> digits (sampled and unsampled) in the PSRN&#39;s fractional part, sample each of the unsampled digits uniformly at random.  Then let <em>uk</em> be the PSRN&#39;s digit expansion up to the first <em>n</em> digits after the point.</li>
 <li>Calculate the lowest and highest values of <em>f</em> in the interval [<em>uk</em>, <em>uk</em> + <em>b</em><sup>&minus;<em>n</em></sup>], call them <em>fmin</em> and <em>fmax</em>. If abs(<em>fmin</em> &minus; <em>fmax</em>) &le; 2 * <em>b</em><sup>&minus;<em>k</em></sup>, calculate (<em>fmax</em> + <em>fmin</em>) / 2 as the approximation.  Otherwise, add 1 to <em>n</em> and go to the previous substep.</li>
 </ol></li>
-<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is <em>&pi;</em>, <em>b</em> is 10, and <em>k</em> is 2, <em>pk</em> is 314.</li>
+<li>Let <em>pk</em> be the approximation&#39;s digit expansion up to the <em>k</em> digits after the point.  For example, if <em>f</em>(<em>U</em>) is <em>&pi;</em>/5, <em>b</em> is 10, and <em>k</em> is 3, <em>pk</em> is 628.</li>
 <li>If <em>pk</em> + 1 &le; <em>v</em>, return 0. If <em>pk</em> &minus; 2 &ge; <em>v</em>, return 1.  If neither is the case, add 1 to <em>k</em> and go to step 2.</li>
 </ol>
 
-<p>However, the focus of this article is on algorithms that don&#39;t rely on calculations of irrational numbers, which is why this section is in the appendix.</p>
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>This algorithm is related to the Bernoulli factory problem, where the input probability is unknown.  However, the algorithm doesn&#39;t exactly solve that problem because it has access to the input probability&#39;s value to some extent.</li>
+<li>This section appears in the appendix because this article is focused on algorithms that don&#39;t rely on calculations of irrational numbers.</li>
+</ol>
+</blockquote>
 
 <p><a id=SymPy_Code_for_Piecewise_Linear_Factory_Functions></a></p>
 

@@ -133,6 +133,22 @@ After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as requ
 
 However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
 
+<a id=Achievable_Simulation_Rates></a>
+## Achievable Simulation Rates
+
+In general, the number of coin flips needed by any Bernoulli factory algorithm for _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
+
+The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _x_) = _O_(max(sqrt(_x_\*(1&minus;_x_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _x_ = 0 or 1, and _O_((1/_n_)<sup>_r_</sup>) elsewhere.
+
+|   Property of simulation   |   Property of _f_
+  ------------- |  ------------------------
+| Requires more than _n_ input coin flips with probability _&Delta;_(_n_, _r_&minus;1, _&lambda;_), for integer _r_ &ge; 0. | Only if _f_ has _r_ continuous derivatives ("slope" functions) and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. | If and only if _f_ has _r_ continuous derivatives and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous (Holtz et al. 2011)<sup>[**(11)**](#Note11)</sup>. |
+| Requires a finite number of flips on average. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Number of flips required, raised to power of _k_, is finite on average and drops off uniformly.  | Only if _f_ has _k_ continuous derivatives (is C<sup>_k_</sup> continuous) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| "Fast simulation" (number of flips required drops off exponentially).  | If and only if _f_ is real analytic ("smooth", or has _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Number of flips bounded from below by (_f&prime;_(_&lambda;))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(12)**](#Note12)</sup>. |
+
 <a id=Notes></a>
 ## Notes
 
@@ -145,6 +161,9 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 - <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
 - <small><sup id=Note8>(8)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
 - <small><sup id=Note9>(9)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note10>(10)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
+- <small><sup id=Note11>(11)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
+- <small><sup id=Note12>(12)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 
 <a id=Appendix></a>
 ## Appendix
