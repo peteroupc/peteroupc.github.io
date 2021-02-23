@@ -177,7 +177,7 @@
 
 <p>In general, the number of coin flips needed by any Bernoulli factory algorithm for <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>x</em>) = <em>O</em>(max(sqrt(<em>x</em>*(1&minus;<em>x</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup>2*<em>r</em></sup>) near <em>x</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) elsewhere.</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup>2*<em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and a slower <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) elsewhere.</p>
 
 <table><thead>
 <tr>
@@ -186,28 +186,28 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Requires more than <em>n</em> input coin flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em>&minus;1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0.</td>
-<td>Only if <em>f</em> has <em>r</em> continuous derivatives (&quot;slope&quot; functions) and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</td>
+<td>Requires more than <em>n</em> input coin flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em>&minus;1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0. (The greater <em>r</em> is, the faster the simulation.)</td>
+<td>Only if <em>f</em> has <em>r</em> continuous derivatives (&quot;slope&quot; functions) and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0.</td>
-<td>If and only if <em>f</em> has <em>r</em> continuous derivatives and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous (Holtz et al. 2011)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</td>
+<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
+<td>If and only if <em>f</em> has <em>r</em> continuous derivatives and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Requires a finite number of flips on average.</td>
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips required, raised to power of <em>k</em>, is finite on average and drops off uniformly.</td>
-<td>Only if <em>f</em> has <em>k</em> continuous derivatives (is C<sup><em>k</em></sup> continuous) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
+<td>Number of flips required, raised to power of <em>k</em>, is finite on average and drops off uniformly for all <em>&lambda;</em>.</td>
+<td>Only if <em>f</em> has <em>k</em> continuous derivatives (is <em>C</em><sup><em>k</em></sup> continuous) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (number of flips required drops off exponentially).</td>
-<td>If and only if <em>f</em> is real analytic (&quot;smooth&quot;, or has <em>k</em><sup>th</sup> derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> is real analytic (is &quot;smooth&quot;, or has <em>k</em><sup>th</sup> continuous derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;))<sup>2</sup>*</em>&lambda;<em>*(1&minus;</em>&lambda;<em>)/(_f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
-<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</td>
+<td>Number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
+<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
 </tr>
 </tbody></table>
 
@@ -223,11 +223,10 @@
 <li><small><sup id=Note5>(5)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
 <li><small><sup id=Note6>(6)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
 <li><small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., &quot;<a href="https://arxiv.org/abs/1711.07083"><strong>Interpolatory pointwise estimates for monotone polynomial approximation</strong></a>&quot;, arXiv:1711.07083 [math.CA], 2017.</small></li>
-<li><small><sup id=Note8>(8)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
-<li><small><sup id=Note9>(9)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
-<li><small><sup id=Note10>(10)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
-<li><small><sup id=Note11>(11)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
-<li><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
+<li><small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
+<li><small><sup id=Note9>(9)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
+<li><small><sup id=Note10>(10)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
+<li><small><sup id=Note11>(11)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -246,7 +245,7 @@
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer.  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
 
-<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.   This means that the probability that <em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note9"><strong>(9)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.   This means that the probability that <em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note11"><strong>(11)</strong></a></sup>. &#x25a1;</p>
 
 <p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
 

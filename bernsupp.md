@@ -138,16 +138,16 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 
 In general, the number of coin flips needed by any Bernoulli factory algorithm for _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
 
-The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _x_) = _O_(max(sqrt(_x_\*(1&minus;_x_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _x_ = 0 or 1, and _O_((1/_n_)<sup>_r_</sup>) elsewhere.
+The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _&lambda;_ = 0 or 1, and a slower _O_((1/_n_)<sup>_r_</sup>) elsewhere.
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires more than _n_ input coin flips with probability _&Delta;_(_n_, _r_&minus;1, _&lambda;_), for integer _r_ &ge; 0. | Only if _f_ has _r_ continuous derivatives ("slope" functions) and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. | If and only if _f_ has _r_ continuous derivatives and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous (Holtz et al. 2011)<sup>[**(11)**](#Note11)</sup>. |
+| Requires more than _n_ input coin flips with probability _&Delta;_(_n_, _r_&minus;1, _&lambda;_), for integer _r_ &ge; 0. (The greater _r_ is, the faster the simulation.) | Only if _f_ has _r_ continuous derivatives ("slope" functions) and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ has _r_ continuous derivatives and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>. |
 | Requires a finite number of flips on average. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Number of flips required, raised to power of _k_, is finite on average and drops off uniformly.  | Only if _f_ has _k_ continuous derivatives (is C<sup>_k_</sup> continuous) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| "Fast simulation" (number of flips required drops off exponentially).  | If and only if _f_ is real analytic ("smooth", or has _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Number of flips bounded from below by (_f&prime;_(_&lambda;))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(12)**](#Note12)</sup>. |
+| Number of flips required, raised to power of _k_, is finite on average and drops off uniformly for all _&lambda;_.  | Only if _f_ has _k_ continuous derivatives (is _C_<sup>_k_</sup> continuous) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| "Fast simulation" (number of flips required drops off exponentially).  | If and only if _f_ is real analytic (is "smooth", or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(9)**](#Note9)</sup>. |
 
 <a id=Notes></a>
 ## Notes
@@ -159,11 +159,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 - <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
 - <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
-- <small><sup id=Note8>(8)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
-- <small><sup id=Note9>(9)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
-- <small><sup id=Note10>(10)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
-- <small><sup id=Note11>(11)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
-- <small><sup id=Note12>(12)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+- <small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
+- <small><sup id=Note9>(9)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+- <small><sup id=Note10>(10)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
+- <small><sup id=Note11>(11)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -179,7 +178,7 @@ There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup>
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer.  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(8)**](#Note8)</sup>.   This means that the probability that _X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(9)**](#Note9)</sup>. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(10)**](#Note10)</sup>.   This means that the probability that _X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(11)**](#Note11)</sup>. &#x25a1;
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
