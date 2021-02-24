@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/23"><meta name="citation_online_date" content="2021/02/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/24"><meta name="citation_online_date" content="2021/02/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -175,9 +175,9 @@
 
 <h2>Achievable Simulation Rates</h2>
 
-<p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
+<p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup>2*<em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) elsewhere.</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup>2*<em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) elsewhere.</p>
 
 <table><thead>
 <tr>
@@ -186,15 +186,15 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Requires no more than <em>n</em> coin flips.</td>
-<td>If and only if <em>f</em> is a constant 0 or 1 or can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note12"><strong>(12)</strong></a></sup></td>
+<td>Requires no more than <em>n</em> input coin flips.</td>
+<td>If and only if <em>f</em> is a constant 0 or 1 or can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Requires a finite number of flips on average.</td>
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of input coin flips required, raised to power of <em>r</em>, is finite on average and drops off uniformly for all <em>&lambda;</em>.</td>
+<td>Number of flips required, raised to power of <em>r</em>, is finite on average and drops off uniformly for all <em>&lambda;</em>.</td>
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (has <em>r</em> or more continuous derivatives, or &quot;slope&quot; functions) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -207,10 +207,10 @@
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (number of flips required drops off exponentially).</td>
-<td>If and only if <em>f</em> is real analytic (is &quot;smooth&quot;, or has continuous <em>k</em><sup>th</sup> derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> is real analytic (is <em>C</em><sup>&infin;</sup> continuous, or has continuous <em>k</em><sup>th</sup> derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
+<td>Average number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
 <td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
 </tr>
 </tbody></table>
@@ -248,7 +248,7 @@
 
 <p>There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  Specifically, it applies to any <em>Hölder continuous</em> function, which means a continuous function whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
 
-<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer.  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
+<p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
 
 <p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.   This means that the probability that <em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note11"><strong>(11)</strong></a></sup>. &#x25a1;</p>
 

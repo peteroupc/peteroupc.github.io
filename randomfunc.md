@@ -788,7 +788,7 @@ The first kind is called weighted choice _with replacement_ (which can be though
       return weights
     END METHOD
 
-The following are various ways to implement `WeightedChoice`. (Many of them require using a special data structure.) For best results, weights passed to these algorithms should first be converted to integers (e.g., using `NormalizeRatios` in the pseudocode above), or rational numbers when indicated.  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.
+The following are various ways to implement `WeightedChoice`. Many of them require using a special data structure.
 
 | Algorithm | Notes |
   --- | --- |
@@ -810,7 +810,8 @@ The following are various ways to implement `WeightedChoice`. (Many of them requ
 > **Notes:**
 >
 > 1. **Weighted choice algorithms as binary tree walkers.** Just like `RNDINT` algorithms (see the [**`RNDINT` section**](#RNDINT_Random_Integers_in_0_N)), weighted choice algorithms can all be described as random walks on a binary DDG tree.  In this case, though, the probabilities are not necessarily uniform, and on average, the algorithm needs at least as many random bits as the sum of _binary entropies_ of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights add up to 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `(3/21) * log2(21/3) = 0.4010...`, and so on for the other weights).  Thus, any weighted sampler will require at least 1.2800... bits on average to generate a random number with these weights.<sup>[**(10)**](#Note10)</sup>  The note "Reducing 'bit waste'" from the `RNDINT` section also applies here.
-> 2. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of the `WeightedChoice` pseudocode for generating multiple random points in one call.
+> 2. For best results, weights passed to the algorithms in the table above should first be **converted to integers** (e.g., using `NormalizeRatios` in the pseudocode above), **or rational numbers** when indicated. (Obviously, if the weights were originally irrational numbers, this conversion will be lossy and the algorithm won't be exact, unless noted otherwise in the table.)  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.
+> 3. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of the `WeightedChoice` pseudocode for generating multiple random points in one call.
 >
 > **Examples:**
 >
@@ -1541,7 +1542,7 @@ Generating random data points based on how a list of data points is distributed 
 
 2. **Regression models.** A _regression model_ is a model that summarizes data as a formula and an error term.  If an application has data in the form of inputs and outputs (e.g., monthly sales figures) and wants to sample a random but plausible output given a known input point (e.g., sales for a future month), then the application can fit and sample a regression model for that data.  For example, a _linear regression model_, which simulates the value of `y` given known inputs `a` and `b`, can be sampled as follows: `y = c1 * a + c2 * b + c3 + Normal(0, sqrt(mse))`, where `mse` is the mean squared error and `c1`, `c2`, and `c3` are the coefficients of the model.  (Here, `Normal(0, sqrt(mse))` is the error term.)
 
-3. **Generative models.** These are machine learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  [**_Generative adversarial networks_**](https://en.wikipedia.org/wiki/Generative_adversarial_network) are one kind of generative model.
+3. **Generative and discriminative models.** These are machine learning models that take random numbers as input and generate outputs (such as images or sounds) that are similar to examples they have already seen.  One example, [**_generative adversarial networks_**](https://en.wikipedia.org/wiki/Generative_adversarial_network), employs both kinds of model.
 
 > **Notes:**
 >
@@ -1635,6 +1636,8 @@ METHOD FPRatio(fp)
   return MakeRatio(sig, pow(radix, abs(expo)))
 END METHOD
 ```
+
+> **Note:** In addition, some discrete (and continuous) distributions are known only through an _oracle_ (or "black box") that produces random numbers that follow that distribution.  Algorithms can use this oracle to produce new random numbers that follow a different distribution.  When these algorithms have no systematic bias, they are called _unbiased estimators_ (because in a way, they "estimate" some aspect of the oracle's numbers).  One example is the Bernoulli factory (see my article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)"), which takes flips of a biased "coin" and produces the flip of a new "coin" biased a different way.  Another example is the "Bernoulli race" described in [**Weighted Choice**](#Weighted_Choice).
 
 <a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
@@ -2232,7 +2235,7 @@ There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More gene
 ### Implementation Considerations
 
 1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
-2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior, and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
+2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a random number is generated.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
 5. **Fixed number of random bits.** Random numbers that follow a distribution (e.g., `Poisson`, `Normal`) can be generated with a fixed number (`n`) of unbiased random bits either by [**inverse transform sampling**](#Inverse_Transform_Sampling) or by treating the bits as a seed for a local PRNG and using the PRNG to generate the random number.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>`n`</sup> different outcomes this way.
