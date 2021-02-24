@@ -1569,7 +1569,7 @@ Only _factory functions_ can have unbiased estimation algorithms whose estimates
 Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 
 - _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities) in almost surely finite time, and
-- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) in almost surely finite time,
+- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) in almost surely finite time (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator),
 
 where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
 
