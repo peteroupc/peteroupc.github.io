@@ -962,7 +962,7 @@ In the algorithm (see also (Brassard et al., 2019)<sup>[**(38)**](#Note38)</sup>
 
 1. Set `u` to 0 and `k` to 1.
 2. Set `u` to `(u * BASE) + v`, where `v` is a random integer in the interval [0, `BASE`) (such as `RNDINTEXC(BASE)`, or simply an unbiased random bit if `BASE` is 2).  Calculate `pa`, which is an approximation to `p` such that abs(`p`&minus;`pa`) &le; `BASE`<sup>&minus;`k`</sup>.  Set `pk` to `pa`'s digit expansion up to the `k` digits after the point.  Example: If `p` is _&pi;_/4, `BASE` is 10, and `k` is 5, then `pk = 78539`.
-3. If `pk + 1 &le; u`, return 0.  If `pk - 2 &ge; u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
+3. If `pk + 1 <= u`, return 0.  If `pk - 2 >= u`, return 1.  If neither is the case, add 1 to `k` and go to step 2.
 
 <a id=Continued_Fractions></a>
 #### Continued Fractions
@@ -1776,11 +1776,11 @@ Suppose a polynomial&mdash;
 
 Then the polynomial can be turned into a _homogeneous polynomial_ of degree _n_ (all its terms have degree _n_) as follows.
 
-- For each integer _n0_ in [0, _n_], the new homogeneous polynomial's coefficient _k_ is found as follows:
+- For each integer _m_ in [0, _n_], the new homogeneous polynomial's coefficient _k_ is found as follows:
     1. Set _r_ to 0.
     2. For each term (in the old polynomial) of the form _z_\*_&lambda;_<sup>_i_</sup>\*(1&minus;_&lambda;_)<sup>_j_</sup>:
-        - If _n0_ &ge; _i_, and (_n_&minus;_n0_) &ge; _j_, and _i_ + _j_ &le; _n_, add _z_\*choose(_n_&minus;(_i_+_j_), (_n_&minus;_n0_)&minus;_j_) to _r_.
-    3. Now, _r_ is the new coefficient (corresponding to the term _r_\* _&lambda;_<sup>_n0_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_n0_</sup>).
+        - If _m_ &ge; _i_, and (_n_&minus;_m_) &ge; _j_, and _i_ + _j_ &le; _n_, add _z_\*choose(_n_&minus;(_i_+_j_), (_n_&minus;_m_)&minus;_j_) to _r_.
+    3. Now, _r_ is the new coefficient (corresponding to the term _r_\* _&lambda;_<sup>_m_</sup>\*(1&minus;_&lambda;_)<sup>_n_&minus;_m_</sup>).
 
 > **Example:** We have the following polynomial: 3\*_&lambda;_<sup>2</sup> + 10\*_&lambda;_<sup>1</sup>\*(1&minus;_&lambda;_)<sup>2</sup>.  This is a degree-3 polynomial, and we seek to turn it into a degree-5 homogeneous polynomial.  The result becomes the sum of the terms&mdash;
 >
