@@ -61,12 +61,10 @@
 
 <ul>
 <li><a href="#exp_minus___lambda"><strong>exp(&minus;<em>&lambda;</em>)</strong></a></li>
-<li><a href="#exp_minus___lambda___k___x"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong></a></li>
+<li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
 <li><a href="#exp_minus___lambda___k___x___m"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * (<em>x</em> + <em>m</em>)))</strong></a></li>
 <li><a href="#exp_minus___lambda____m___k"><strong>exp(&minus;(<em>&lambda;</em> + <em>m</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
-<li><a href="#exp___lambda____c__minus__c"><strong>exp(<em>&lambda;</em> * <em>c</em> &minus; <em>c</em>)</strong></a></li>
-<li><a href="#exp_minus___lambda___minus__c"><strong>exp(&minus;<em>&lambda;</em> &minus; <em>c</em>)</strong></a></li>
 <li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a></li>
 <li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)*(<em>k</em> + <em>&lambda;</em>)) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
@@ -75,10 +73,9 @@
 <li><a href="#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda"><strong><em>c</em> * <em>&lambda;</em> / (<em>c</em> * <em>&lambda;</em> + <em>d</em>) or (<em>c</em>/<em>d</em>) * <em>&lambda;</em> / (1 + (<em>c</em>/<em>d</em>) * <em>&lambda;</em>))</strong></a></li>
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
-<li><a href="#d___c____lambda_2"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
-<li><a href="#mu___1__c___d____lambda"><strong>(<em>&mu;</em>) / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
+<li><a href="#mu___1__c___d____lambda"><strong><em>&mu;</em> / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_1__c___d____lambda"><strong>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
@@ -659,17 +656,33 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
-<p><a id=exp_minus___lambda___k___x></a></p>
+<p><a id=exp_minus___lambda___k___c></a></p>
 
-<h4>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</h4>
+<h4>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</h4>
 
-<p>In the following algorithm, which applies the general martingale algorithm, <em>k</em> is an integer 0 or greater, and <em>x</em> is a rational number in the interval [0, 1].  It represents the series 1 &minus; <em>&lambda;</em><sup><em>k</em></sup>*<em>x</em> + <em>&lambda;</em><sup>2*<em>k</em></sup>*<em>x</em>/2! &minus; <em>&lambda;</em><sup>3*<em>k</em></sup>*<em>x</em>/3!, ..., and the coefficients are 1, <em>x</em>, <em>x</em>/(2!), <em>x</em>/(3!), ....</p>
+<p>In these two algorithms, <em>k</em> is an integer 0 or greater, and <em>c</em> is a real number.</p>
+
+<p>The first algorithm was based on the one from (Dughmi et al. 2017)<sup><a href="#Note31"><strong>(31)</strong></a></sup>, which, in the special case <strong>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</strong>, applied an exponential weight (here, <em>c</em>) to an input coin.  The algorithm works when <strong><em>c</em> is 0 or greater</strong>.</p>
 
 <ol>
-<li>Special cases: If <em>x</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>x</em>, and return the result.</li>
+<li>Special case: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
+<li>Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.</li>
+<li>Set <em>i</em> to 0, then while <em>i</em> &lt; <em>N</em>:
+
+<ol>
+<li>Flip the input coin until the flip returns 0 or the coin is flipped <em>k</em> times, whichever comes first.  Return 0 if all of the coin flips (including the last) return 1.</li>
+<li>Add 1 to <em>i</em>.</li>
+</ol></li>
+<li>Return 1.</li>
+</ol>
+
+<p>The second algorithm applies the general martingale algorithm, but works only when <strong><em>c</em> is a rational number in the interval [0, 1]</strong>.  The target function is represented as a series 1 &minus; <em>&lambda;</em><sup><em>k</em></sup>*<em>c</em> + <em>&lambda;</em><sup>2*<em>k</em></sup>*<em>c</em>/2! &minus; <em>&lambda;</em><sup>3*<em>k</em></sup>*<em>x</em>/3!, ..., and the coefficients are 1, <em>c</em>, <em>c</em>/(2!), <em>c</em>/(3!), ....</p>
+
+<ol>
+<li>Special cases: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
-<li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the flip returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>x</em> and 0 otherwise.</li>
+<li>If <em>w</em> is not 0, flip the input coin <em>k</em> times or until the flip returns 0.  If any of the flips returns 0, set <em>w</em> to 0, or if all the flips return 1, divide <em>w</em> by <em>n</em>.  Then, multiply <em>w</em> by a number that is 1 with probability <em>c</em> and 0 otherwise.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
@@ -682,28 +695,33 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>In the following algorithm, <em>k</em> and <em>m</em> are both integers 0 or greater, and <em>x</em> is a rational number in the interval [0, 1].</p>
 
 <ol>
-<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong> <em>m</em> times with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
+<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> <em>m</em> times with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
 <li>If <em>x</em> is 0, return 1.</li>
-<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong> once, with <em>k</em> = <em>k</em> and <em>x</em> = <em>x</em>.  Return the result of this call.</li>
+<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> once, with <em>k</em> = <em>k</em> and <em>x</em> = <em>x</em>.  Return the result of this call.</li>
 </ol>
 
 <p><a id=exp_minus___lambda____m___k></a></p>
 
 <h4>exp(&minus;(<em>&lambda;</em> + <em>m</em>)<sup><em>k</em></sup>)</h4>
 
-<p>In the following algorithm, <em>m</em> and <em>k</em> are both integers 0 or greater.</p>
+<p>In the following algorithm, <em>m</em> and <em>k</em> are both integers 0 or greater unless noted otherwise.</p>
 
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later on this page) with <em>x</em>/<em>y</em> = 1/1, and return the result.</li>
 <li>If <em>k</em> is 1 and <em>m</em> is 0, run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> and return the result.</li>
+<li>If <em>k</em> is 1 and <em>m</em> is greater than 0 (and in this case, <em>m</em> can be any rational number):
+
+<ul>
+<li>Run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em>/<em>y</em> = <em>m</em>.  If the algorithm returns 0, return 0.  Otherwise, return the result of the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>.</li>
+</ul></li>
 <li>Run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em>/<em>y</em> = <em>m</em><sup><em>k</em></sup> / 1.  If the algorithm returns 0, return 0.</li>
-<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong>, with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If the algorithm returns 0, return 0.</li>
+<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong>, with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If the algorithm returns 0, return 0.</li>
 <li>If <em>m</em> is 0, return 1.</li>
 <li>Set <em>i</em> to 1, then while <em>i</em> &lt; <em>k</em>:
 
 <ol>
 <li>Set <em>z</em> to choose(<em>k</em>, <em>i</em>) * <em>m</em><sup><em>k</em> &minus; <em>i</em></sup>.</li>
-<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>x</em>))</strong> <em>z</em> times, with <em>k</em> = <em>i</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
+<li>Run the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> <em>z</em> times, with <em>k</em> = <em>i</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
 <li>Add 1 to <em>i</em>.</li>
 </ol></li>
 <li>Return 1.</li>
@@ -721,28 +739,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Generate a uniform(0, 1) random number <em>U</em>.</li>
 <li>If <em>k</em> &gt; 0 and <em>w</em> is less than <em>U</em>, return 0.</li>
 <li>Set <em>w</em> to <em>U</em>, add 1 to <em>k</em>, and go to step 2.</li>
-</ol>
-
-<p><a id=exp___lambda____c__minus__c></a></p>
-
-<h4>exp(<em>&lambda;</em> * <em>c</em> &minus; <em>c</em>)</h4>
-
-<p>Used in (Dughmi et al. 2017)<sup><a href="#Note31"><strong>(31)</strong></a></sup> to apply an exponential weight (here, <em>c</em>) to an input coin.</p>
-
-<ol>
-<li>Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.</li>
-<li>Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>N</em> is 0); or return 0 otherwise.</li>
-</ol>
-
-<p><a id=exp_minus___lambda___minus__c></a></p>
-
-<h4>exp(&minus;<em>&lambda;</em> &minus; <em>c</em>)</h4>
-
-<p>To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, <em>c</em> is an integer that is 0 or greater.</p>
-
-<ol>
-<li>Run the <strong>algorithm for exp(&minus;<em>c</em>/1)</strong> described later in this document.  Return 0 if the algorithm returns 0.</li>
-<li>Return the result of the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>.</li>
 </ol>
 
 <p><a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a></p>
@@ -832,11 +828,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p><a id=d___c____lambda_2></a></p>
-
-<h4><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</h4>
-
-<p>Run the algorithm for <em>d</em> / (<em>c</em> + <em>&lambda;</em>) with <em>d</em> = 1.</p>
+<blockquote>
+<p><strong>Example</strong>: <strong>1 / (<em>c</em> + <em>&lambda;</em>)</strong>: Run the algorithm for <em>d</em> / (<em>c</em> + <em>&lambda;</em>) with <em>d</em> = 1.</p>
+</blockquote>
 
 <p><a id=d____mu____c____lambda></a></p>
 
@@ -874,7 +868,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p><a id=mu___1__c___d____lambda></a></p>
 
-<h4>(<em>&mu;</em>) / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
+<h4><em>&mu;</em> / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
 
 <p>This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively.  In this algorithm, <em>c</em>/<em>d</em> must be 0 or greater.</p>
 
@@ -960,7 +954,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as <em>&lambda;</em> approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on <em>&lambda;</em> (Mendo 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using partially-sampled random numbers (PSRNs), which exploits knowledge of <em>&lambda;</em> but is not the focus of this article since it involves arithmetic.</p>
+<p><strong>Note:</strong> When <em>x</em>/<em>y</em> is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as <em>&lambda;</em> approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on <em>&lambda;</em> (Mendo 2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.</p>
 </blockquote>
 
 <p><a id=lambda____mu></a></p>

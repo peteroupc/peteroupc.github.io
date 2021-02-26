@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/25"><meta name="citation_online_date" content="2021/02/25"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/26"><meta name="citation_online_date" content="2021/02/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -47,7 +47,7 @@
 <p><strong><em>C</em><sup>2</sup> continuous functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous or <em>twice differentiable</em> there), and</li>
+<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
 <li>in the interval [0, 1]&mdash;
 
 <ul>
@@ -97,7 +97,7 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a C<sup>2</sup> continuous (a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions).  Then for all <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
@@ -106,7 +106,7 @@
 
 <p>Where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
-<p>The counterexample involves the twice differentiable function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
+<p>The counterexample involves the C<sup>2</sup> continuous function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
 
 <p>For <em>g</em>, the coefficients for&mdash;</p>
 

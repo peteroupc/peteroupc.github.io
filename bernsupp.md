@@ -37,7 +37,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **_C_<sup>2</sup> continuous functions.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, _f_ is _C_<sup>2</sup> continuous or _twice differentiable_ there), and
+- has continuous "slope" and "slope-of-slope" functions in the interval \[0, 1\] \(in other words, _f_ is _C_<sup>2</sup> continuous there), and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -73,14 +73,14 @@ In the academic literature (papers and books), there are many approximation sche
 
 The following are approximation schemes with counterexamples to consistency.
 
-**First scheme.** In this scheme (Powell 1981)<sup>[**(3)**](#Note3)</sup>, let _f_ be a twice differentiable function (that is, a C<sup>2</sup> continuous function, or a function with continuous "slope" and "slope-of-slope" functions).  Then for all _n_&ge;1:
+**First scheme.** In this scheme (Powell 1981)<sup>[**(3)**](#Note3)</sup>, let _f_ be a C<sup>2</sup> continuous (a function with continuous "slope" and "slope-of-slope" functions).  Then for all _n_&ge;1:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
 
 Where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
-The counterexample involves the twice differentiable function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
+The counterexample involves the C<sup>2</sup> continuous function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
 
 For _g_, the coefficients for&mdash;
 

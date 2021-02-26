@@ -44,12 +44,10 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**General Factory Functions**](#General_Factory_Functions)
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
-        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))**](#exp_minus___lambda___k___x)
+        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * (_x_ + _m_)))**](#exp_minus___lambda___k___x___m)
         - [**exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)**](#exp_minus___lambda____m___k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
-        - [**exp(_&lambda;_ * _c_ &minus; _c_)**](#exp___lambda____c__minus__c)
-        - [**exp(&minus;_&lambda;_ &minus; _c_)**](#exp_minus___lambda___minus__c)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
@@ -58,10 +56,9 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
-        - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda_2)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
-        - [**(_&mu;_) / (1 + (_c_/_d_)\*_&lambda;_)**](#mu___1__c___d____lambda)
+        - [**_&mu;_ / (1 + (_c_/_d_)\*_&lambda;_)**](#mu___1__c___d____lambda)
         - [**1 / (1 + (_c_/_d_)\*_&lambda;_)**](#1_1__c___d____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -498,15 +495,26 @@ This algorithm converges quickly everywhere in (0, 1).  (In other words, the alg
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-<a id=exp_minus___lambda___k___x></a>
-#### exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))
+<a id=exp_minus___lambda___k___c></a>
+#### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))
 
-In the following algorithm, which applies the general martingale algorithm, _k_ is an integer 0 or greater, and _x_ is a rational number in the interval \[0, 1\].  It represents the series 1 &minus; _&lambda;_<sup>_k_</sup>\*_x_ + _&lambda;_<sup>2\*_k_</sup>\*_x_/2! &minus; _&lambda;_<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _x_, _x_/(2!), _x_/(3!), ....
+In these two algorithms, _k_ is an integer 0 or greater, and _c_ is a real number.
 
-1. Special cases: If _x_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _x_, and return the result.
+The first algorithm was based on the one from (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>, which, in the special case **exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_))**, applied an exponential weight (here, _c_) to an input coin.  The algorithm works when **_c_ is 0 or greater**.
+
+1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
+2. Generate a Poisson(_c_) random integer, call it _N_.
+3. Set _i_ to 0, then while _i_ < _N_:
+    1. Flip the input coin until the flip returns 0 or the coin is flipped _k_ times, whichever comes first.  Return 0 if all of the coin flips (including the last) return 1.
+    2. Add 1 to _i_.
+4. Return 1.
+
+The second algorithm applies the general martingale algorithm, but works only when **_c_ is a rational number in the interval \[0, 1\]**.  The target function is represented as a series 1 &minus; _&lambda;_<sup>_k_</sup>\*_c_ + _&lambda;_<sup>2\*_k_</sup>\*_c_/2! &minus; _&lambda;_<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _c_, _c_/(2!), _c_/(3!), ....
+
+1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
 2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 3. Generate a uniform(0, 1) random number _ret_.
-4. If _w_ is not 0, flip the input coin _k_ times or until the flip returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _x_ and 0 otherwise.
+4. If _w_ is not 0, flip the input coin _k_ times or until the flip returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _c_ and 0 otherwise.
 5. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
 6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 4.
@@ -516,25 +524,27 @@ In the following algorithm, which applies the general martingale algorithm, _k_ 
 
 In the following algorithm, _k_ and _m_ are both integers 0 or greater, and _x_ is a rational number in the interval \[0, 1\].
 
-1. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))** _m_ times with _k_ = _k_ and _x_ = 1.  If any of these calls returns 0, return 0.
+1. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** _m_ times with _k_ = _k_ and _x_ = 1.  If any of these calls returns 0, return 0.
 2. If _x_ is 0, return 1.
-3. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
+3. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
 
 <a id=exp_minus___lambda____m___k></a>
 #### exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)
 
-In the following algorithm, _m_ and _k_ are both integers 0 or greater.
+In the following algorithm, _m_ and _k_ are both integers 0 or greater unless noted otherwise.
 
 1. If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later on this page) with _x_/_y_ = 1/1, and return the result.
 2. If _k_ is 1 and _m_ is 0, run the **algorithm for exp(&minus;_&lambda;_)** and return the result.
-3. Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_<sup>_k_</sup> / 1.  If the algorithm returns 0, return 0.
-4. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))**, with _k_ = _k_ and _x_ = 1.  If the algorithm returns 0, return 0.
-5. If _m_ is 0, return 1.
-6. Set _i_ to 1, then while _i_ < _k_:
+3. If _k_ is 1 and _m_ is greater than 0 (and in this case, _m_ can be any rational number):
+    - Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_.  If the algorithm returns 0, return 0.  Otherwise, return the result of the **algorithm for exp(&minus;_&lambda;_)**.
+4. Run the **algorithm for exp(&minus;_x_/_y_)** with _x_/_y_ = _m_<sup>_k_</sup> / 1.  If the algorithm returns 0, return 0.
+5. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**, with _k_ = _k_ and _x_ = 1.  If the algorithm returns 0, return 0.
+6. If _m_ is 0, return 1.
+7. Set _i_ to 1, then while _i_ < _k_:
      1. Set _z_ to choose(_k_, _i_) * _m_<sup>_k_ &minus; _i_</sup>.
-     2. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_))** _z_ times, with _k_ = _i_ and _x_ = 1.  If any of these calls returns 0, return 0.
+     2. Run the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** _z_ times, with _k_ = _i_ and _x_ = 1.  If any of these calls returns 0, return 0.
      3. Add 1 to _i_.
-7. Return 1.
+8. Return 1.
 
 <a id=exp___lambda___1_minus___lambda></a>
 #### exp(_&lambda;_)*(1&minus;_&lambda;_)
@@ -546,22 +556,6 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater.
 3. Generate a uniform(0, 1) random number _U_.
 4. If _k_ > 0 and _w_ is less than _U_, return 0.
 5. Set _w_ to _U_, add 1 to _k_, and go to step 2.
-
-<a id=exp___lambda____c__minus__c></a>
-#### exp(_&lambda;_ * _c_ &minus; _c_)
-
-Used in (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup> to apply an exponential weight (here, _c_) to an input coin.
-
-1. Generate a Poisson(_c_) random integer, call it _N_.
-2. Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _N_ is 0); or return 0 otherwise.
-
-<a id=exp_minus___lambda___minus__c></a>
-#### exp(&minus;_&lambda;_ &minus; _c_)
-
-To the best of my knowledge, I am not aware of any article or paper by others that presents this particular Bernoulli factory. In this algorithm, _c_ is an integer that is 0 or greater.
-
-1. Run the **algorithm for exp(&minus;_c_/1)** described later in this document.  Return 0 if the algorithm returns 0.
-2. Return the result of the **algorithm for exp(&minus;_&lambda;_)**.
 
 <a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a>
 #### 1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))
@@ -628,10 +622,7 @@ In this algorithm, _c_ must be 1 or greater and _d_ must be in the interval \[0,
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
-<a id=d___c____lambda_2></a>
-#### _d_ / (_c_ + _&lambda;_)
-
-Run the algorithm for _d_ / (_c_ + _&lambda;_) with _d_ = 1.
+> **Example**: **1 / (_c_ + _&lambda;_)**: Run the algorithm for _d_ / (_c_ + _&lambda;_) with _d_ = 1.
 
 <a id=d____mu____c____lambda></a>
 #### (_d_ + _&mu;_) / (_c_ + _&lambda;_)
@@ -656,7 +647,7 @@ In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c
 4. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
 <a id=mu___1__c___d____lambda></a>
-#### (_&mu;_) / (1 + (_c_/_d_)\*_&lambda;_)
+#### _&mu;_ / (1 + (_c_/_d_)\*_&lambda;_)
 
 This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively.  In this algorithm, _c_/_d_ must be 0 or greater.
 
@@ -722,7 +713,7 @@ In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent wor
 6. With probability _x_/(_y_*_i_), return 0.
 7. Add 1 to _i_ and go to step 5.
 
-> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019)<sup>[**(25)**](#Note25)</sup>.  See also the appendix, which also shows an alternative way to implement this and other Bernoulli factory algorithms using partially-sampled random numbers (PSRNs), which exploits knowledge of _&lambda;_ but is not the focus of this article since it involves arithmetic.
+> **Note:** When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019)<sup>[**(25)**](#Note25)</sup>.
 
 <a id=lambda____mu></a>
 #### _&lambda;_<sup>_&mu;_</sup>
