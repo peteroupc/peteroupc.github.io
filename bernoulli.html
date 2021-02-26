@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/02/25"><meta name="citation_online_date" content="2021/02/25"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/02/26"><meta name="citation_online_date" content="2021/02/26"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -263,6 +263,16 @@ functions, or functions in general.</p>
 <li>Add 1 to <em>i</em> and go to step 2.</li>
 </ol>
 
+<p>And here is another optimized algorithm:</p>
+
+<ol>
+<li>Set <em>j</em> to 0 and <em>i</em> to 0.  If <em>n</em> is 0, return 0.  Otherwise, generate a uniform(0, 1) random number, call it <em>u</em>.</li>
+<li>If <em>u</em> is greater than an upper bound of the highest coefficient, return 0.  If <em>u</em> is less than a lower bound of the lowest coefficient, return 1.</li>
+<li>If <em>i</em> is <em>n</em> or greater, or if the coefficients <em>a</em>[<em>k</em>], with <em>k</em> in the interval [<em>j</em>, <em>j</em>+(<em>n</em>&minus;<em>i</em>)], are all equal, return a number that is 1 if <em>u</em> is less than <em>a</em>[<em>j</em>], or 0 otherwise.</li>
+<li>Flip the input coin.  If it returns 1, add 1 to <em>j</em>.</li>
+<li>Add 1 to <em>i</em> and go to step 3.</li>
+</ol>
+
 <blockquote>
 <p><strong>Notes</strong>:</p>
 
@@ -272,7 +282,18 @@ functions, or functions in general.</p>
 <li>This algorithm can serve as an approximate way to simulate any factory function <em>f</em> (or even any function that maps the interval [0, 1] to [0, 1], even if it&#39;s not continuous).  In this case, <em>a</em>[<em>j</em>] is calculated as <em>f</em>(<em>j</em>/<em>n</em>), so that the resulting polynomial closely approximates the function; the higher <em>n</em> is, the better this approximation.  In fact, if <em>f</em> is continuous, it&#39;s possible to choose <em>n</em> high enough that the polynomial differs from <em>f</em> by no more than <em>&epsilon;</em>, where <em>&epsilon;</em> &gt; 0 is the desired error tolerance.</li>
 </ol>
 
-<p><strong>Example:</strong> Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: (1&minus;4*(<em>&lambda;</em>&minus;1/2)<sup>2</sup>)*<em>c</em>, where <em>c</em> is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4*<em>c</em>*<em>&lambda;</em><sup>2</sup>+4*<em>c</em>*<em>&lambda;</em>, so that this <em>power form</em> has coefficients (0, 4*<em>c</em>, &minus;4*<em>c</em>) and a degree (<em>n</em>) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup><a href="#Note12"><strong>(12)</strong></a></sup>), we get coefficients (0, 2*<em>c</em>, 0).  Thus, for this polynomial, <em>a</em>[0] is 0,  <em>a</em>[1] is 2*<em>c</em>, and  <em>a</em>[2] is 0.  Thus, if <em>c</em> is in the interval (0, 1/2], we can simulate this function as follows: &quot;Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2*<em>c</em> and 0 otherwise.  Otherwise, return 0.&quot;  For other values of <em>c</em>, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as <em>c</em> approaches 1.<sup><a href="#Note13"><strong>(13)</strong></a></sup></p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup><a href="#Note11"><strong>(11)</strong></a></sup>: (1&minus;4*(<em>&lambda;</em>&minus;1/2)<sup>2</sup>)*<em>c</em>, where <em>c</em> is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4*<em>c</em>*<em>&lambda;</em><sup>2</sup>+4*<em>c</em>*<em>&lambda;</em>, so that this <em>power form</em> has coefficients (0, 4*<em>c</em>, &minus;4*<em>c</em>) and a degree (<em>n</em>) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup><a href="#Note12"><strong>(12)</strong></a></sup>), we get coefficients (0, 2*<em>c</em>, 0).  Thus, for this polynomial, <em>a</em>[0] is 0,  <em>a</em>[1] is 2*<em>c</em>, and  <em>a</em>[2] is 0.  Thus, if <em>c</em> is in the interval (0, 1/2], we can simulate this function as follows: &quot;Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2*<em>c</em> and 0 otherwise.  Otherwise, return 0.&quot;  For other values of <em>c</em>, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as <em>c</em> approaches 1.<sup><a href="#Note13"><strong>(13)</strong></a></sup></li>
+<li><p>There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, the probability will be a polynomial of degree <em>n</em> (<em>n</em> is greater than 0; the greater <em>n</em> is, the better the approximation).</p>
+
+<ul>
+<li>Henderson and Glynn (2003, Remark 4)<sup><a href="#Note57"><strong>(57)</strong></a></sup> approximates the function <em>&lambda;</em>*2 using a polynomial where <em>a</em>[<em>j</em>] =  min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  It can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; 2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</li>
+<li>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note58"><strong>(58)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>a</em>[<em>j</em>] = min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).</li>
+<li>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, which approximates <em>&lambda;</em>*2.</li>
+</ul></li>
+</ol>
 </blockquote>
 
 <hr>
@@ -1216,6 +1237,10 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and <em>&#x03F5;</em> = 1 &minus; <em>m</em>.</li>
 </ol>
 
+<blockquote>
+<p><strong>Note:</strong> For approximate methods to simulate <em>&lambda;</em>*(<em>x</em>/<em>y</em>), see the examples in &quot;<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;.</p>
+</blockquote>
+
 <p><a id=lambda____x___y___i></a></p>
 
 <h4>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></h4>
@@ -2007,6 +2032,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note55>(55)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note57>(57)</sup> Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</small></li>
+<li><small><sup id=Note58>(58)</sup> For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

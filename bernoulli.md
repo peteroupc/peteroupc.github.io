@@ -207,13 +207,28 @@ For certain polynomials with duplicate coefficients, the following is an optimiz
 3. Flip the input coin.  If it returns 1, add 1 to _j_.
 4. Add 1 to _i_ and go to step 2.
 
+And here is another optimized algorithm:
+
+1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, generate a uniform(0, 1) random number, call it _u_.
+2. If _u_ is greater than an upper bound of the highest coefficient, return 0.  If _u_ is less than a lower bound of the lowest coefficient, return 1.
+3. If _i_ is _n_ or greater, or if the coefficients _a_\[_k_\], with _k_ in the interval \[_j_, _j_+(_n_&minus;_i_)\], are all equal, return a number that is 1 if _u_ is less than _a_\[_j_\], or 0 otherwise.
+4. Flip the input coin.  If it returns 1, add 1 to _j_.
+5. Add 1 to _i_ and go to step 3.
+
 > **Notes**:
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 > 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and XOR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011)<sup>[**(8)**](#Note8)</sup>, Qian and Riedel 2008<sup>[**(10)**](#Note10)</sup>).
 > 3. This algorithm can serve as an approximate way to simulate any factory function _f_ (or even any function that maps the interval [0, 1] to [0, 1], even if it's not continuous).  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function; the higher _n_ is, the better this approximation.  In fact, if _f_ is continuous, it's possible to choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
 >
-> **Example:** Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(11)**](#Note11)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(12)**](#Note12)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(13)**](#Note13)</sup>
+> **Examples:**
+>
+> 1. Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(11)**](#Note11)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(12)**](#Note12)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(13)**](#Note13)</sup>
+> 2. There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, the probability will be a polynomial of degree _n_ (_n_ is greater than 0; the greater _n_ is, the better the approximation).
+>
+>     - Henderson and Glynn (2003, Remark 4)<sup>[**(57)**](#Note57)</sup> approximates the function _&lambda;_\*2 using a polynomial where _a_\[_j_] =  min((_j_/_n_)\*2, 1&minus;1/_n_).  It can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; 2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+>     - I found the following approximation for _&lambda;_\*_c_<sup>[**(58)**](#Note58)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _a_\[_j_\] = min((_j_/_n_)\*_c_, 1).
+>    - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, which approximates _&lambda;_\*2.
 
 ----
 
@@ -917,6 +932,8 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 3. With probability 1 &minus; 2 * _m_, return 1.
 4. Run the 2014 algorithm or 2016 algorithm with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
 
+> **Note:** For approximate methods to simulate _&lambda;_\*(_x_/_y_), see the examples in "[**Certain Polynomials**](#Certain_Polynomials)".
+
 <a id=lambda____x___y___i></a>
 #### (_&lambda;_ * _x_/_y_)<sup>_i_</sup>
 
@@ -1528,6 +1545,8 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note55>(55)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note57>(57)</sup> Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).</small>
+- <small><sup id=Note58>(58)</sup> For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.</small>
 
 <a id=Appendix></a>
 ## Appendix
