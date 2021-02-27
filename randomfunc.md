@@ -2,7 +2,9 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-Discusses many ways applications can do randomization and sampling from an underlying (pseudo-)random number generator and includes pseudocode for many of them.
+**Abstract:** Discusses many ways applications can do randomization and sampling from an underlying (pseudo-)random number generator and includes pseudocode for many of them.
+
+**2020 Mathematics Subject Classification:** 68W20.
 
 <a id=Introduction></a>
 ## Introduction

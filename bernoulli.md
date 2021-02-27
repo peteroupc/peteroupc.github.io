@@ -4,7 +4,7 @@
 
 **Abstract:** This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming "truly random" numbers are available.  The page links to a Python module that implements several Bernoulli factories.
 
-**2020 Mathematics Subject Classification:** 60-08, 60-04.
+**2020 Mathematics Subject Classification:** 68W20, 60-08, 60-04.
 
 <a id=Introduction></a>
 ## Introduction
@@ -484,7 +484,7 @@ This section describes algorithms for specific functions, especially when they h
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is bounded from above by the same constant for all choices of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(29)**](#Note29)</sup>.<sup>[**(30)**](#Note30)</sup>) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
+This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for all choices of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(29)**](#Note29)</sup>.<sup>[**(30)**](#Note30)</sup>) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
 
 1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random number _ret_.
@@ -498,7 +498,7 @@ This algorithm converges quickly everywhere in (0, 1).  (In other words, the alg
 
 In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a real number.
 
-The first algorithm was based on the one from (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>, which, in the special case **exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_))**, applied an exponential weight (here, _c_) to an input coin.  The algorithm works when **_c_ is 0 or greater**.
+The first algorithm works when **_c_ is 0 or greater**.
 
 1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
 2. Generate a Poisson(_c_) random integer, call it _N_.
@@ -521,7 +521,9 @@ The third algorithm builds on the second algorithm and works when **_c_ is a rat
 
 1. Let _m_ be floor(_c_).  Call the second algorithm _m_ times with _k_ = _k_ and _c_ = 1.  If any of these calls returns 0, return 0.
 2. If _c_ is an integer, return 1.
-3. Run the second algorithm once, with _k_ = _k_ and _c_ = _c_ &minus; floor(_c_).  Return the result of this call.
+3. Call the second algorithm once, with _k_ = _k_ and _c_ = _c_ &minus; floor(_c_).  Return the result of this call.
+
+> **Example**: **exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_))** ((Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>; applies an exponential weight&mdash;here, _c_&mdash; to an input coin): "(1) If _c_ is 0, return 1; (2) Generate a Poisson(_c_) random integer, call it _N_; (3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise."
 
 <a id=exp_minus___lambda____m___k></a>
 #### exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)

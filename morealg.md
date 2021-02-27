@@ -4,7 +4,7 @@
 
 **Abstract:** This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.
 
-**2020 Mathematics Subject Classification:** 60-08, 60-04.
+**2020 Mathematics Subject Classification:** 68W20, 60-08, 60-04.
 
 <a id=Introduction></a>
 ## Introduction
@@ -185,7 +185,11 @@ The algorithm is then as follows:
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
 
-Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). (This is a piecewise linear function with two pieces: a rising linear part and a constant part.) This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(4)**](#Note4)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) using the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".  In this section, **fbelow(_n_, _k_)** and **fabove(_n_, _k_)** are the _k_<sup>th</sup> Bernstein coefficients (with _k_ starting at 0) of the lower and upper polynomials, respectively, of degree _n_.
+Let _f_(_&lambda;_) be a function of the form min(_&lambda;_\*_mult_, 1&minus;_&epsilon;_). This is a piecewise linear function with two pieces: a rising linear part and a constant part.
+
+This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to _f_, based on Thomas and Blanchet (2012)<sup>[**(4)**](#Note4)</sup>.  These polynomials can then be used to generate heads with probability _f_(_&lambda;_) using the algorithms given in "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)".
+
+In this section, **fbelow(_n_, _k_)** and **fabove(_n_, _k_)** are the _k_<sup>th</sup> coefficients (with _k_ starting at 0) of the lower and upper polynomials, respectively, in Bernstein form of degree _n_.
 
 The code in the [**appendix**](#Appendix) uses the computer algebra library SymPy to calculate a list of parameters for a sequence of polynomials converging from above.  The method to do so is called `calc_linear_func(eps, mult, count)`, where `eps` is _&epsilon;_, `mult` = _mult_, and `count` is the number of polynomials to generate.  Each item returned by `calc_linear_func` is a list of two items: the degree of the polynomial, and a _Y parameter_.  The procedure to calculate the required polynomials is then logically as follows (as written, it runs very slowly, though):
 
@@ -222,7 +226,7 @@ The Bernoulli factory approach can be extended in two ways to produce random num
 **Algorithm 1.** Say we have an oracle that produces independent random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
 
 - is continuous everywhere,
-- is bounded from above, and
+- has a finite maximum, and
 - returns 0 everywhere or returns a value 0 or greater at each of the points _a_ and _b_ and a value greater than 0 at each other point
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
@@ -338,7 +342,7 @@ The following is an arbitrary-precision sampler for the Rayleigh distribution wi
 2. With probability exp(&minus;(_k_ * 2 + 1)/_y_), go to step 3.  Otherwise, add 1 to _k_ and repeat this step.  (The probability check should be done with the **exp(&minus;_x_/_y_) algorithm** in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)", with _x_/_y_ = (_k_ * 2 + 1)/_y_.)
 3. (Now we sample the piece located at [_k_, _k_ + 1).)  Create a positive-sign zero-integer-part uniform PSRN, and create an input coin that returns the result of **SampleGeometricBag** on that uniform PSRN.
 4. Set _ky_ to _k_ * _k_ / _y_.
-5. (At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_)) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the **exp(&minus;(_&lambda;_<sup>_k_</sup> \* _c_))** algorithm using the same input coin, _c_ = floor(_k_ * 2 / _y_), and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN's fractional part and go to step 4.
+5. (At this point, we simulate exp(&minus;_U_<sup>2</sup>/_y_), exp(&minus;_k_<sup>2</sup>/_y_) , exp(&minus;_U_\*_k_\*2/_y_), as well as a scaled-down version of _U_ + _k_, where _U_ is the number built up by the uniform PSRN.) Call the **exp(&minus;_x_/_y_) algorithm** with _x_/_y_ = _ky_, then call the **exp(&minus;(_&lambda;_<sup>_k_</sup> * _x_)) algorithm** using the input coin from step 2, _x_ = 1/_y_, and _k_ = 2, then call the first or third algorithm for **exp(&minus;(_&lambda;_<sup>_k_</sup> \* _c_))** using the same input coin, _c_ = floor(_k_ * 2 / _y_), and _k_ = 1, then call the **sub-algorithm** given later with the uniform PSRN and _k_ = _k_.  If all of these calls return 1, the uniform PSRN was accepted.  Otherwise, remove all digits from the uniform PSRN's fractional part and go to step 4.
 7. If the uniform PSRN, call it _ret_, was accepted by step 5, set _ret_'s integer part to _k_, then optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), and return _ret_.
 
 The sub-algorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z_</sup>, where _U_ is the number built by the uniform PSRN, _base_ is the base (radix) of digits stored by that PSRN, _k_ is an integer 0 or greater, and _z_ is the number of significant digits in _k_ (for this purpose, _z_ is 0 if _k_ is 0).
@@ -786,7 +790,7 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 <a id=Algorithm_2_for_Non_Negative_Factories></a>
 ### Algorithm 2 for Non-Negative Factories
 
-**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ is bounded from above and from below and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(27)**](#Note27)</sup>:
+**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ has a finite minimum and maximum and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(27)**](#Note27)</sup>:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
