@@ -45,7 +45,6 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
-        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * (_x_ + _m_)))**](#exp_minus___lambda___k___x___m)
         - [**exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)**](#exp_minus___lambda____m___k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
@@ -58,7 +57,6 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
-        - [**_&mu;_ / (1 + (_c_/_d_)\*_&lambda;_)**](#mu___1__c___d____lambda)
         - [**1 / (1 + (_c_/_d_)\*_&lambda;_)**](#1_1__c___d____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -498,7 +496,7 @@ This algorithm converges quickly everywhere in (0, 1).  (In other words, the alg
 <a id=exp_minus___lambda___k___c></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))
 
-In these two algorithms, _k_ is an integer 0 or greater, and _c_ is a real number.
+In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a real number.
 
 The first algorithm was based on the one from (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>, which, in the special case **exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_))**, applied an exponential weight (here, _c_) to an input coin.  The algorithm works when **_c_ is 0 or greater**.
 
@@ -519,14 +517,11 @@ The second algorithm applies the general martingale algorithm, but works only wh
 6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 4.
 
-<a id=exp_minus___lambda___k___x___m></a>
-#### exp(&minus;(_&lambda;_<sup>_k_</sup> * (_x_ + _m_)))
+The third algorithm builds on the second algorithm and works when **_c_ is a rational number 0 or greater**.
 
-In the following algorithm, _k_ and _m_ are both integers 0 or greater, and _x_ is a rational number in the interval \[0, 1\].
-
-1. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** _m_ times with _k_ = _k_ and _x_ = 1.  If any of these calls returns 0, return 0.
-2. If _x_ is 0, return 1.
-3. Call the **algorithm for exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))** once, with _k_ = _k_ and _x_ = _x_.  Return the result of this call.
+1. Let _m_ be floor(_c_).  Call the second algorithm _m_ times with _k_ = _k_ and _c_ = 1.  If any of these calls returns 0, return 0.
+2. If _c_ is an integer, return 1.
+3. Run the second algorithm once, with _k_ = _k_ and _c_ = _c_ &minus; floor(_c_).  Return the result of this call.
 
 <a id=exp_minus___lambda____m___k></a>
 #### exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)
@@ -646,19 +641,16 @@ In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c
     2. Return 0.
 4. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
-<a id=mu___1__c___d____lambda></a>
-#### _&mu;_ / (1 + (_c_/_d_)\*_&lambda;_)
+<a id=1_1__c___d____lambda></a>
+#### 1 / (1 + (_c_/_d_)\*_&lambda;_)
 
-This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively.  In this algorithm, _c_/_d_ must be 0 or greater.
+This algorithm is a special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must be 0 or greater.
 
 1. If _c_ is 0, flip the _&mu;_ input coin and return the result.
 2. With probability _d_/(_c_+_d_), flip the _&mu;_ input coin and return the result.
 3. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.
 
-<a id=1_1__c___d____lambda></a>
-#### 1 / (1 + (_c_/_d_)\*_&lambda;_)
-
-A special case of the previous algorithm and the two-coin algorithm.  Use the algorithm for (_&mu;_) / (1 + (_c_/_d_)\*_&lambda;_), where _&lambda;_ represents the input coin and _&mu;_ represents a coin that always returns 1.
+> **Example**:  **_&mu;_ / (1 + (_c_/_d_)\*_&lambda;_)** (takes two input coins that simulate _&lambda;_ or _&mu;_, respectively): Run the **algorithm for 1 / (1 + (_c_/_d_)\*_&lambda;_)** using the _&lambda;_ input coin.  If it returns 0, return 0.  Otherwise, flip the _&mu;_ input coin and return the result.
 
 <a id=lambda_____mu></a>
 #### _&lambda;_ + _&mu;_

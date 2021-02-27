@@ -62,7 +62,6 @@
 <ul>
 <li><a href="#exp_minus___lambda"><strong>exp(&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
-<li><a href="#exp_minus___lambda___k___x___m"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * (<em>x</em> + <em>m</em>)))</strong></a></li>
 <li><a href="#exp_minus___lambda____m___k"><strong>exp(&minus;(<em>&lambda;</em> + <em>m</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a></li>
@@ -75,7 +74,6 @@
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
-<li><a href="#mu___1__c___d____lambda"><strong><em>&mu;</em> / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_1__c___d____lambda"><strong>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
@@ -660,7 +658,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</h4>
 
-<p>In these two algorithms, <em>k</em> is an integer 0 or greater, and <em>c</em> is a real number.</p>
+<p>In the algorithms in this section, <em>k</em> is an integer 0 or greater, and <em>c</em> is a real number.</p>
 
 <p>The first algorithm was based on the one from (Dughmi et al. 2017)<sup><a href="#Note31"><strong>(31)</strong></a></sup>, which, in the special case <strong>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</strong>, applied an exponential weight (here, <em>c</em>) to an input coin.  The algorithm works when <strong><em>c</em> is 0 or greater</strong>.</p>
 
@@ -688,16 +686,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 </ol>
 
-<p><a id=exp_minus___lambda___k___x___m></a></p>
-
-<h4>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * (<em>x</em> + <em>m</em>)))</h4>
-
-<p>In the following algorithm, <em>k</em> and <em>m</em> are both integers 0 or greater, and <em>x</em> is a rational number in the interval [0, 1].</p>
+<p>The third algorithm builds on the second algorithm and works when <strong><em>c</em> is a rational number 0 or greater</strong>.</p>
 
 <ol>
-<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> <em>m</em> times with <em>k</em> = <em>k</em> and <em>x</em> = 1.  If any of these calls returns 0, return 0.</li>
-<li>If <em>x</em> is 0, return 1.</li>
-<li>Call the <strong>algorithm for exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong> once, with <em>k</em> = <em>k</em> and <em>x</em> = <em>x</em>.  Return the result of this call.</li>
+<li>Let <em>m</em> be floor(<em>c</em>).  Call the second algorithm <em>m</em> times with <em>k</em> = <em>k</em> and <em>c</em> = 1.  If any of these calls returns 0, return 0.</li>
+<li>If <em>c</em> is an integer, return 1.</li>
+<li>Run the second algorithm once, with <em>k</em> = <em>k</em> and <em>c</em> = <em>c</em> &minus; floor(<em>c</em>).  Return the result of this call.</li>
 </ol>
 
 <p><a id=exp_minus___lambda____m___k></a></p>
@@ -866,11 +860,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p><a id=mu___1__c___d____lambda></a></p>
+<p><a id=1_1__c___d____lambda></a></p>
 
-<h4><em>&mu;</em> / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
+<h4>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
 
-<p>This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively.  In this algorithm, <em>c</em>/<em>d</em> must be 0 or greater.</p>
+<p>This algorithm is a special case of the two-coin algorithm.  In this algorithm, <em>c</em>/<em>d</em> must be 0 or greater.</p>
 
 <ol>
 <li>If <em>c</em> is 0, flip the <em>&mu;</em> input coin and return the result.</li>
@@ -878,11 +872,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p><a id=1_1__c___d____lambda></a></p>
-
-<h4>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</h4>
-
-<p>A special case of the previous algorithm and the two-coin algorithm.  Use the algorithm for (<em>&mu;</em>) / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>), where <em>&lambda;</em> represents the input coin and <em>&mu;</em> represents a coin that always returns 1.</p>
+<blockquote>
+<p><strong>Example</strong>:  <strong><em>&mu;</em> / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong> (takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively): Run the <strong>algorithm for 1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong> using the <em>&lambda;</em> input coin.  If it returns 0, return 0.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</p>
+</blockquote>
 
 <p><a id=lambda_____mu></a></p>
 
