@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/27"><meta name="citation_online_date" content="2021/02/27"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/28"><meta name="citation_online_date" content="2021/02/28"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -44,10 +44,10 @@
 
 <p><strong>Convex functions.</strong> If <em>f</em> is known to be <em>convex</em> in the interval [0, 1] (which roughly means that its rate of growth there never goes down), then <strong>fabove</strong>(<em>n</em>, <em>k</em>) can equal <em>f</em>(<em>k</em>/<em>n</em>), thanks to Jensen&#39;s inequality.  One example is <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>/4).</p>
 
-<p><strong><em>C</em><sup>2</sup> continuous functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
+<p><strong>Twice differentiable functions.</strong> The following method, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
 <ul>
-<li>has continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions in the interval [0, 1] (in other words, <em>f</em> is <em>C</em><sup>2</sup> continuous there), and</li>
+<li>has a defined &quot;slope-and-slope&quot; function in <a href="that%20is,%20the%20function%20is%20_twice%20differentiable_%20there">0, 1</a>, and</li>
 <li>in the interval [0, 1]&mdash;
 
 <ul>
@@ -65,6 +65,10 @@
 </ul>
 
 <p>My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>c2params</code>, to calculate the necessary values for <em>m</em> and the bounds of these polynomials, given <em>f</em>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> For this method, the &quot;slope-of-slope&quot; function need not be continuous (Y. Peres, pers. comm., 2021).</p>
+</blockquote>
 
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
 
@@ -262,7 +266,7 @@
 
 <p><em>is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2.</em></p></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M*(1/(7*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2.</em></li>
-<li><em>If f is C<sup>2</sup> continuous, and its second derivative&#39;s absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2.</em></li>
+<li><em>If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2.</em></li>
 <li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
@@ -281,7 +285,8 @@
 <ol>
 <li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.  A hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2*<em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
 <li><em>f</em> is <em>&alpha;</em>-Hölder continuous if its vertical slopes, if any, are no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>, where <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.  An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
-<li>Parts 2 and 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.</li>
+<li>Parts 2 and 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.</li>
+<li>For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</li>
 </ol>
 </blockquote>
 
