@@ -37,7 +37,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **Twice differentiable functions.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- has a defined "slope-and-slope" function in [0, 1] (that is, the function is _twice differentiable_ there), and
+- has a defined "slope-and-slope" function in \[0, 1\] (that is, the function is _twice differentiable_ there), and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or

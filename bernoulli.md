@@ -44,9 +44,12 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**General Factory Functions**](#General_Factory_Functions)
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
-        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
+        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___x)
+        - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * (_x_ + _m_)))**](#exp_minus___lambda___k___x___m)
         - [**exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)**](#exp_minus___lambda____m___k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
+        - [**exp(_&lambda;_ * _c_ &minus; _c_)**](#exp___lambda____c__minus__c)
+        - [**exp(&minus;_&lambda;_ &minus; _c_)**](#exp_minus___lambda___minus__c)
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
@@ -55,8 +58,10 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
+        - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda_2)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
+        - [**(_&mu;_) / (1 + (_c_/_d_)\*_&lambda;_)**](#mu___1__c___d____lambda)
         - [**1 / (1 + (_c_/_d_)\*_&lambda;_)**](#1_1__c___d____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -493,7 +498,7 @@ This algorithm converges quickly everywhere in (0, 1).  (In other words, the alg
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-<a id=exp_minus___lambda___k___c></a>
+<a id=exp_minus___lambda___k___x></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))
 
 In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a real number.
@@ -932,7 +937,9 @@ The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out
 <a id=Expressions_Involving_Polylogarithms></a>
 #### Expressions Involving Polylogarithms
 
-The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * (1 / _&lambda;_ &minus; 1), where _r_ is an integer 1 or greater.  If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  However, even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
+The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * (1 / _&lambda;_ &minus; 1), where _r_ is an integer 1 or greater.    However, even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
+
+If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  See also "[Convex Combinations](#Convex_Combinations)" (the case of 1/2 works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sup>_r_</sup>, where _i_ &ge; 1).
 
 1. Flip the input coin until it returns 0, and let _t_ be 1 plus the number of times the coin returned 1 this way.
 2. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
@@ -1180,15 +1187,6 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 3. Call the **algorithm for exp(&minus; _x_/_y_)** with _x_ = &sum;<sub>_i_</sub> _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
 4. For each component _LC_\[_i_\], call the **algorithm for exp(&minus;_&lambda;_)**, using the corresponding input coin for  _LC_\[_i_\] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.
 
-<a id=Polylogarithmic_Constants></a>
-#### Polylogarithmic Constants
-
-The following algorithm simulates a polylogarithmic constant of the form Li<sub>_r_</sub>(1/2), where _r_ is an integer 1 or greater.  See (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> and "Convex Combinations" (the algorithm works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sup>_r_</sup>, where _i_ &ge; 1).
-
-1. Set _t_ to 1.
-2. With probability 1/2, add 1 to _t_ and repeat this step.  Otherwise, go to step 3.
-3. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
-
 <a id=zeta___3_3_4_and_Other_Zeta_Related_Constants></a>
 #### _&zeta;_(3) * 3 / 4 and Other Zeta-Related Constants
 
@@ -1317,7 +1315,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 <a id=Convex_Combinations></a>
 #### Convex Combinations
 
-Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that returns heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(9)**](#Note9)</sup>.  (Alternatively, the algorithm can be seen as returning heads with probability **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
+Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return heads with a probability that depends on _&lambda;_.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: _g_(0) * _h_<sub>0</sub>(_&lambda;_) + _g_(1) * _h_<sub>1</sub>(_&lambda;_) + ..., where _g_(_i_) is the probability that coin _i_ will be chosen, _h_<sub>_i_</sub> is the function simulated by coin _i_, and all the _g_(_i_) sum to 1.  See (Wästlund 1999, Theorem 2.7)<sup>[**(9)**](#Note9)</sup>.  (Alternatively, the algorithm can be seen as returning heads with probability **E**\[_h_<sub>_X_</sub>(_&lambda;_)\], that is, the expected or average value of _h_<sub>_X_</sub> where _X_ is the number that identifies the randomly chosen coin.)
 
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.  (Specifically, the number _X_ is generated with probability _g_(_X_).)
 2. Flip the coin represented by _X_ and return the result.
@@ -1330,14 +1328,7 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
 > 5. (Wästlund 1999)<sup>[**(9)**](#Note9)</sup>: Generate a Poisson(1) random number _X_, then flip the input coin _X_ times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;_&lambda;_), and corresponds to _g_(_i_) being the Poisson(1) probabilities, namely 1/(_i_!\*exp(1)), and _h_<sub>_i_</sub>() being (1&minus;_&lambda;_)<sup>_i_</sup>.
 > 5. Multivariate Bernoulli factory (Huber 2016)<sup>[**(35)**](#Note35)</sup> of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0, and _R_ &le; 1 &minus; _&#x03F5;_ for any _&#x03F5;_ > 0: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a Poisson process driven by multiple input coins.
-
-<a id=Simulating_the_Probability_Generating_Function></a>
-#### Simulating the Probability Generating Function
-
-The following algorithm is a special case of the convex combination method.  It generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected or average value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the _probability generating function_, also known as _factorial moment generating function_, for the distribution of _X_ (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>.
-
-1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.
-2. Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
+> 6. **Probability generating function** (PGF) (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected or average value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 
 <a id=Integrals></a>
 #### Integrals
