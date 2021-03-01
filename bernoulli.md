@@ -64,6 +64,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
         - [**(_d_ + _&mu;_) / (_c_ + _&lambda;_)**](#d____mu____c____lambda)
+        - [**(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**](#d____mu____d____mu____c____lambda)
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
         - [**1 / (1 + (_c_/_d_)\*_&lambda;_)**](#1_1__c___d____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
@@ -166,6 +167,7 @@ In the following algorithms:
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform(0, 1) random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+- Where an algorithm says "if _a_ is less than (or equal to) _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than-or -equal operation on _a_ and _b_, as appropriate.
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
     - Generate a uniform(0, 1) random number _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  Note that if _x_ is not a rational number, then rounding error will result.
@@ -203,7 +205,7 @@ For certain polynomials with duplicate coefficients, the following is an optimiz
 And here is another optimized algorithm:
 
 1. Set _j_ to 0 and _i_ to 0.  If _n_ is 0, return 0.  Otherwise, generate a uniform(0, 1) random number, call it _u_.
-2. If _u_ is greater than an upper bound of the highest coefficient, return 0.  If _u_ is less than a lower bound of the lowest coefficient, return 1.
+2. If _u_ is less than a lower bound of the lowest coefficient, return 1.  Otherwise, if _u_ is less than (or equal to) an upper bound of the highest coefficient, go to the next step.  Otherwise, return 0.
 3. If _i_ is _n_ or greater, or if the coefficients _a_\[_k_\], with _k_ in the interval \[_j_, _j_+(_n_&minus;_i_)\], are all equal, return a number that is 1 if _u_ is less than _a_\[_j_\], or 0 otherwise.
 4. Flip the input coin.  If it returns 1, add 1 to _j_.
 5. Add 1 to _i_ and go to step 3.
@@ -220,7 +222,7 @@ And here is another optimized algorithm:
 > 2. There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, the approximation will be a polynomial of degree _n_ (_n_ is greater than 0; the greater _n_ is, the better the approximation).
 >
 >     - Henderson and Glynn (2003, Remark 4)<sup>[**(14)**](#Note14)</sup> approximates the function _&lambda;_\*2 using a polynomial where _a_\[_j_] =  min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
->     - I found the following approximation for _&lambda;_\*_c_<sup>[**(15)**](#Note15)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _a_\[_j_\] = min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/2).
+>     - I found the following approximation for _&lambda;_\*_c_<sup>[**(15)**](#Note15)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _a_\[_j_\] = min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/_c_).
 >    - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(5)**](#Note5)</sup>, which approximates _&lambda;_\*2.
 
 ----
@@ -671,8 +673,8 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a 
 
 The first algorithm works when **_c_ is 0 or greater**.
 
-1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
-2. Generate a Poisson(_c_) random integer, call it _N_.
+1. Special case: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_z_)** (given later in this page) with _z_ = _c_, and return the result.
+2. Generate a Poisson(_c_) random integer, call it _N_. (See the appendix on the von Neumann schema for information on generating this integer exactly.)
 3. Set _i_ to 0, then while _i_ < _N_:
     1. Flip the input coin until the flip returns 0 or the coin is flipped _k_ times, whichever comes first.  Return 0 if all of the coin flips (including the last) return 1.
     2. Add 1 to _i_.
@@ -780,7 +782,7 @@ This algorithm, also known as the **logistic Bernoulli factory** (Huber 2016)<su
 This algorithm currently works only if _d_ and _c_ are integers and 0 &le; _d_ < _c_.
 
 1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
-2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the input coin and return the result.  If neither is the case, go to step 1.
+2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the input coin and return the result.  If neither is the case, return 0.
 
 <a id=d___c____lambda></a>
 #### _d_ / (_c_ + _&lambda;_)
@@ -799,8 +801,25 @@ Combines the algorithms in the previous two sections.  This algorithm currently 
 
 1. With probability _c_ / (1 + _c_), do the following:
     1. Generate an integer in [0, _c_) uniformly at random, call it _i_.
-    2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the _&mu;_ input coin and return the result.  If neither is the case, go to the previous substep.
+    2. If _i_ < _d_, return 1.  If _i_ = _d_, flip the _&mu;_ input coin and return the result.  If neither is the case, return 0.
 2. Flip the _&lambda;_ input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
+
+<a id=d____mu____d____mu____c____lambda></a>
+#### (_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))
+
+In this algorithm, _c_ and _d_ are integers 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two different input coins.  In the intended use of this algorithm, _&lambda;_ and _&mu;_ are backed by the fractional parts of two uniform partially-sampled random numbers, and _c_ and _d_ are their integer parts, respectively.
+
+1. Run the sub-algorithm given later, using the _&mu;_ input coin and with _a_ = _d_+_c_ and _b_ = 1+_d_+_c_.  If it returns 1:
+    1. If _c_ is 0, return 1.
+    2. Run the sub-algorithm using the _&mu;_ input coin and with _a_ = _d_ and _b_ = _d_ + _c_.  If it returns 1, return 1.  Otherwise, return 0.
+2. Flip the _&lambda;_ input coin. If the flip returns 1, return 0. Otherwise, go to step 1.
+
+The following sub-algorithm simulates (_a_+_&mu;_) / (_b_+_&mu;_).
+
+1. With probability _b_ / (1+_b_), do the following:
+    1. Generate an integer in [0, _b_) uniformly at random, call it _i_.
+    2. If _i_ < _a_, return 1.  If _i_ = _a_, flip the input coin and return the result.  If neither is the case, return 0.
+2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=d__k___c____lambda____k__or__d___c____lambda____k></a>
 #### _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>
@@ -1409,13 +1428,14 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
-2. I request expressions of mathematical functions that can be expressed in any of the following ways:
-    - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo's algorithm for [**certain power series**](#Certain_Power_Series).
-    - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.
+2. To apply some of the general algorithms for Bernoulli factories, I request expressions of mathematical functions that can be expressed in any of the following ways:
+    - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.
+    - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.
     - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
     - Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
     - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
-    - To apply the algorithms for [**general factory functions**](#General_Factory_Functions), what is needed are two sequences of polynomials written in Bernstein form that converge from above and below to a function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  (These requirements ensure the upper polynomials "decrease" and the lower ones "increase".  The polynomials in each sequence may start closer to the function at some points than at others.)
+    - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
+    - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  (These requirements ensure the upper polynomials "decrease" and the lower ones "increase".  The polynomials in each sequence may start closer to the function at some points than at others.)
 
         The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?
 
@@ -1426,7 +1446,6 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 
         - [**Computing converging polynomials**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).
         - [**Bounds of coefficients of Bernstein-form polynomials**](https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst).
-    - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
@@ -1651,7 +1670,7 @@ def valid_perm(f, x, n):
 
 > **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, because of step 2, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
 >
-> **Example:** Using the class of _sorted permutations_, we can generate a Poisson(_&lambda;_) random number via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; return 1 if a Poisson(_&lambda;_) random number is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as _&lambda;_ approaches 1.
+> **Example:** Using the class of _sorted permutations_, we can generate a Poisson(_&lambda;_) random number via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; return 1 if a Poisson(_&lambda;_) random number is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, a Poisson(floor(_c_)) plus a Poisson(_c_&minus;floor(_c_)) random number generates a Poisson(_c_) random number.
 
 A variation on the von Neumann schema occurs if _G_ is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return _n_ with probability&mdash;
 

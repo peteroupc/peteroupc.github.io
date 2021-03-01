@@ -87,6 +87,7 @@
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
+<li><a href="#d____mu____d____mu____c____lambda"><strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong></a></li>
 <li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
 <li><a href="#1_1__c___d____lambda"><strong>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
@@ -215,6 +216,7 @@
 <li>Otherwise, this can be implemented by generating another uniform(0, 1) random number <em>v</em> and generating 1 if <em>v</em> is less than <em>u</em> or 0 otherwise (less accurate).</li>
 </ul></li>
 <li>Where an algorithm says &quot;if <em>a</em> is less than <em>b</em>&quot;, where <em>a</em> and <em>b</em> are random numbers, it means to run the <strong>RandLess</strong> algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on <em>a</em> and <em>b</em>, as appropriate. (<strong>RandLess</strong> is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Where an algorithm says &quot;if <em>a</em> is less than (or equal to) <em>b</em>&quot;, where <em>a</em> and <em>b</em> are random numbers, it means to run the <strong>RandLess</strong> algorithm on the two numbers (if they are both PSRNs), or do a less-than-or -equal operation on <em>a</em> and <em>b</em>, as appropriate.</li>
 <li>Where a step in the algorithm says &quot;with probability <em>x</em>&quot; to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
 
 <ul>
@@ -263,7 +265,7 @@ functions, or functions in general.</p>
 
 <ol>
 <li>Set <em>j</em> to 0 and <em>i</em> to 0.  If <em>n</em> is 0, return 0.  Otherwise, generate a uniform(0, 1) random number, call it <em>u</em>.</li>
-<li>If <em>u</em> is greater than an upper bound of the highest coefficient, return 0.  If <em>u</em> is less than a lower bound of the lowest coefficient, return 1.</li>
+<li>If <em>u</em> is less than a lower bound of the lowest coefficient, return 1.  Otherwise, if <em>u</em> is less than (or equal to) an upper bound of the highest coefficient, go to the next step.  Otherwise, return 0.</li>
 <li>If <em>i</em> is <em>n</em> or greater, or if the coefficients <em>a</em>[<em>k</em>], with <em>k</em> in the interval [<em>j</em>, <em>j</em>+(<em>n</em>&minus;<em>i</em>)], are all equal, return a number that is 1 if <em>u</em> is less than <em>a</em>[<em>j</em>], or 0 otherwise.</li>
 <li>Flip the input coin.  If it returns 1, add 1 to <em>j</em>.</li>
 <li>Add 1 to <em>i</em> and go to step 3.</li>
@@ -286,7 +288,7 @@ functions, or functions in general.</p>
 
 <ul>
 <li>Henderson and Glynn (2003, Remark 4)<sup><a href="#Note14"><strong>(14)</strong></a></sup> approximates the function <em>&lambda;</em>*2 using a polynomial where <em>a</em>[<em>j</em>] =  min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</li>
-<li>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note15"><strong>(15)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>a</em>[<em>j</em>] = min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/2).</li>
+<li>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note15"><strong>(15)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>a</em>[<em>j</em>] = min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</li>
 <li>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, which approximates <em>&lambda;</em>*2.</li>
 </ul></li>
 </ol>
@@ -894,8 +896,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>The first algorithm works when <strong><em>c</em> is 0 or greater</strong>.</p>
 
 <ol>
-<li>Special case: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
-<li>Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.</li>
+<li>Special case: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> (given later in this page) with <em>z</em> = <em>c</em>, and return the result.</li>
+<li>Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>. (See the appendix on the von Neumann schema for information on generating this integer exactly.)</li>
 <li>Set <em>i</em> to 0, then while <em>i</em> &lt; <em>N</em>:
 
 <ol>
@@ -1043,7 +1045,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.</li>
-<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the input coin and return the result.  If neither is the case, go to step 1.</li>
+<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the input coin and return the result.  If neither is the case, return 0.</li>
 </ol>
 
 <p><a id=d___c____lambda></a></p>
@@ -1072,9 +1074,37 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.</li>
-<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the <em>&mu;</em> input coin and return the result.  If neither is the case, go to the previous substep.</li>
+<li>If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, flip the <em>&mu;</em> input coin and return the result.  If neither is the case, return 0.</li>
 </ol></li>
 <li>Flip the <em>&lambda;</em> input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p><a id=d____mu____d____mu____c____lambda></a></p>
+
+<h4>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</h4>
+
+<p>In this algorithm, <em>c</em> and <em>d</em> are integers 0 or greater, and <em>&lambda;</em> and <em>&mu;</em> are the probabilities of heads of two different input coins.  In the intended use of this algorithm, <em>&lambda;</em> and <em>&mu;</em> are backed by the fractional parts of two uniform partially-sampled random numbers, and <em>c</em> and <em>d</em> are their integer parts, respectively.</p>
+
+<ol>
+<li>Run the sub-algorithm given later, using the <em>&mu;</em> input coin and with <em>a</em> = <em>d</em>+<em>c</em> and <em>b</em> = 1+<em>d</em>+<em>c</em>.  If it returns 1:
+
+<ol>
+<li>If <em>c</em> is 0, return 1.</li>
+<li>Run the sub-algorithm using the <em>&mu;</em> input coin and with <em>a</em> = <em>d</em> and <em>b</em> = <em>d</em> + <em>c</em>.  If it returns 1, return 1.  Otherwise, return 0.</li>
+</ol></li>
+<li>Flip the <em>&lambda;</em> input coin. If the flip returns 1, return 0. Otherwise, go to step 1.</li>
+</ol>
+
+<p>The following sub-algorithm simulates (<em>a</em>+<em>&mu;</em>) / (<em>b</em>+<em>&mu;</em>).</p>
+
+<ol>
+<li>With probability <em>b</em> / (1+<em>b</em>), do the following:
+
+<ol>
+<li>Generate an integer in [0, <em>b</em>) uniformly at random, call it <em>i</em>.</li>
+<li>If <em>i</em> &lt; <em>a</em>, return 1.  If <em>i</em> = <em>a</em>, flip the input coin and return the result.  If neither is the case, return 0.</li>
+</ol></li>
+<li>Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=d__k___c____lambda____k__or__d___c____lambda____k></a></p>
@@ -1877,15 +1907,16 @@ kind of irrational number.</p>
 </ol>
 
 <p>Obviously, these answers depend on the specific permutation class and/or distributions <em>D</em> and <em>E</em>.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question <a href="https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations"><strong>Probabilities arising from permutations</strong></a>.</p></li>
-<li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
+<li><p>To apply some of the general algorithms for Bernoulli factories, I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
 
 <ul>
-<li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.  These are required for Mendo&#39;s algorithm for <a href="#Certain_Power_Series"><strong>certain power series</strong></a>.</li>
-<li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.  This is required for another class of power series.</li>
+<li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.</li>
+<li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.</li>
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
 <li>Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).</li>
-<li><p>To apply the algorithms for <a href="#General_Factory_Functions"><strong>general factory functions</strong></a>, what is needed are two sequences of polynomials written in Bernstein form that converge from above and below to a function as follows: (a) Each sequence&#39;s polynomials must have coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  (These requirements ensure the upper polynomials &quot;decrease&quot; and the lower ones &quot;increase&quot;.  The polynomials in each sequence may start closer to the function at some points than at others.)</p>
+<li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
+<li><p>A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence&#39;s polynomials must have coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  (These requirements ensure the upper polynomials &quot;decrease&quot; and the lower ones &quot;increase&quot;.  The polynomials in each sequence may start closer to the function at some points than at others.)</p>
 
 <p>The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?</p>
 
@@ -1900,7 +1931,6 @@ kind of irrational number.</p>
 <li><a href="https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con"><strong>Computing converging polynomials</strong></a>.</li>
 <li><a href="https://math.stackexchange.com/questions/3929743/are-error-bounds-on-bernstein-form-polynomials-also-error-bounds-on-their-bernst"><strong>Bounds of coefficients of Bernstein-form polynomials</strong></a>.</li>
 </ul></li>
-<li>Simple <a href="#Continued_Fractions"><strong>continued fractions</strong></a> that express useful constants.</li>
 </ul>
 
 <p>All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as <em>&pi;</em> or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that <em>directly</em> contains the constant <em>&pi;</em> is not desired; however, a series expansion that converges to a fraction of <em>&pi;</em> is.</p></li>
@@ -2161,7 +2191,7 @@ def valid_perm(f, x, n):
 <blockquote>
 <p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, because of step 2, the number of input coin flips required by the schema grows without bound as <em>&lambda;</em> approaches 1.</p>
 
-<p><strong>Example:</strong> Using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random number via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &mdash; return 1 if a Poisson(<em>&lambda;</em>) random number is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as <em>&lambda;</em> approaches 1.</p>
+<p><strong>Example:</strong> Using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random number via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &mdash; return 1 if a Poisson(<em>&lambda;</em>) random number is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as <em>&lambda;</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, a Poisson(floor(<em>c</em>)) plus a Poisson(<em>c</em>&minus;floor(<em>c</em>)) random number generates a Poisson(<em>c</em>) random number.</p>
 </blockquote>
 
 <p>A variation on the von Neumann schema occurs if <em>G</em> is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return <em>n</em> with probability&mdash;</p>
