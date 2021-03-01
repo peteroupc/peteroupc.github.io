@@ -70,8 +70,8 @@ If _f_ in \[0, 1] has a defined slope at all but a countable number of points, a
 
 - _f_(0) = 0,
 - _f_ is monotonically increasing,
-- _f&prime;_, or the "slope" function of _f_, is continuous on the interval \[0, 1\] (which implies that _f_ is _C_<sup>1</sup> continuous there),
-- _f&prime;_(_x_) is in the interval (0, 1) for all _x_ in (0, 1), and
+- _f&prime;_, or the "slope" function of _f_, is continuous on the closed interval \[0, 1\] (which implies that _f_ is _C_<sup>1</sup> continuous there),
+- _f&prime;_(_x_) is in the open interval (0, 1) for all _x_ in (0, 1), and
 - _f&prime;_ belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated with the help of the [**_integral method_**](https://peteroupc.github.io/bernoulli.html#Integrals), as follows (see also (Flajolet et al. 2010)<sup>[**(14)**](#Note14)</sup>):
