@@ -156,11 +156,11 @@ In the following algorithms:
 -  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(6)**](#Note6)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
-    - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000)`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)" (less accurate).
+    - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000) / 1000`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
 - The instruction to "generate an exponential random number" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
-    - by generating `-ln(1/RNDRANGEMinExc(0, 1))`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)" (less accurate).
+    - by generating `-ln(1/RNDRANGEMinExc(0, 1))`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)" (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented&mdash;
     - by taking the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
@@ -819,7 +819,7 @@ The following sub-algorithm simulates (_a_+_&mu;_) / (_b_+_&mu;_).
 1. With probability _b_ / (1+_b_), do the following:
     1. Generate an integer in [0, _b_) uniformly at random, call it _i_.
     2. If _i_ < _a_, return 1.  If _i_ = _a_, flip the input coin and return the result.  If neither is the case, return 0.
-2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
+2. Flip the _&mu;_ input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=d__k___c____lambda____k__or__d___c____lambda____k></a>
 #### _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>
@@ -1537,7 +1537,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(25)**](#Note25)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is known to lie in the interval (0, 1).
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(25)**](#Note25)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is neither 0 nor 1.
 
 In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(52)**](#Note52)</sup>, (Peres 1992)<sup>[**(53)**](#Note53)</sup>) and is calculated as&mdash;
 

@@ -516,7 +516,7 @@ The following generator for the **rate ln(2)** is a special case of the previous
 <a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a>
 ### Lindley Distribution and Lindley-Like Mixtures
 
-A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(14)**](#Note14)</sup> with parameter _&theta;_ (a rational number greater than 0) can be generated as follows:
+A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(14)**](#Note14)</sup> with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
 
 1. With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
 2. Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
@@ -526,6 +526,8 @@ For the Garima distribution (Shanker 2016)<sup>[**(15)**](#Note15)</sup>, _w_ = 
 For the i-Garima distribution (Singh and Das 2020)<sup>[**(16)**](#Note16)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
 
 For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup>[**(17)**](#Note17)</sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.
+
+> **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
