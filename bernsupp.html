@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/02/28"><meta name="citation_online_date" content="2021/02/28"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/01"><meta name="citation_online_date" content="2021/03/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -90,6 +90,29 @@
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>&delta;</em>(<em>n</em>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is convex; otherwise, max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if <em>n</em> &lt; 4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + <em>&delta;</em>(<em>n</em>).</li>
 </ul>
+
+<p><strong>Certain increasing functions that equal 0 at 0.</strong> If&mdash;</p>
+
+<ul>
+<li><em>f</em>(0) = 0,</li>
+<li><em>f</em> is monotonically increasing,</li>
+<li><em>f&prime;</em>, or the &quot;slope&quot; function of <em>f</em>, is continuous on the interval [0, 1] (which implies that <em>f</em> is <em>C</em><sup>1</sup> continuous there),</li>
+<li><em>f&prime;</em>(<em>x</em>) is in the interval (0, 1) for all <em>x</em> in (0, 1), and</li>
+<li><em>f&prime;</em> belongs in one of the classes of functions given earlier,</li>
+</ul>
+
+<p>then <em>f</em> can be simulated with the help of the <a href="https://peteroupc.github.io/bernoulli.html#Integrals"><strong><em>integral method</em></strong></a>, as follows (see also (Flajolet et al. 2010)<sup><a href="#Note14"><strong>(14)</strong></a></sup>):</p>
+
+<ol>
+<li>Flip the input coin.  If it returns 0, return 0.</li>
+<li>Generate a uniform(0, 1) random number <em>u</em>.</li>
+<li>Run one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> for <em>f&prime;</em>(.), the &quot;slope&quot; function of <em>f</em>.  This involves building polynomials that converge to <em>f&prime;</em>(.), as described earlier in this section.  During the algorithm, instead of flipping the input coin as normal, flip a different coin that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>.  Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;</li>
+<li>Return the result of the algorithm from step 3.</li>
+</ol>
+
+<blockquote>
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>)&minus;1)/4, then <em>f&prime;</em>(<em>&lambda;</em>) = (sinh(<em>&lambda;</em>)+cosh(<em>&lambda;</em>))/4, which is convex, is twice differentiable (and thus continuous), and maps (0, 1) to (0, 1).  The following SymPy code computes this example: <code>fx = (sinh(x)+cosh(x)-1)/4; pprint(diff(fx,x).simplify())</code>.</p>
+</blockquote>
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 
@@ -237,6 +260,7 @@
 <li><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
 <li><small><sup id=Note12>(12)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
 <li><small><sup id=Note13>(13)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
+<li><small><sup id=Note14>(14)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

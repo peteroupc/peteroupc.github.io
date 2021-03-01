@@ -66,6 +66,23 @@ If _f_ in \[0, 1] has a defined slope at all but a countable number of points, a
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_).
 
+**Certain increasing functions that equal 0 at 0.** If&mdash;
+
+- _f_(0) = 0,
+- _f_ is monotonically increasing,
+- _f&prime;_, or the "slope" function of _f_, is continuous on the interval \[0, 1\] (which implies that _f_ is _C_<sup>1</sup> continuous there),
+- _f&prime;_(_x_) is in the interval (0, 1) for all _x_ in (0, 1), and
+- _f&prime;_ belongs in one of the classes of functions given earlier,
+
+then _f_ can be simulated with the help of the [**_integral method_**](https://peteroupc.github.io/bernoulli.html#Integrals), as follows (see also (Flajolet et al. 2010)<sup>[**(14)**](#Note14)</sup>):
+
+1. Flip the input coin.  If it returns 0, return 0.
+2. Generate a uniform(0, 1) random number _u_.
+3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _f&prime;_(.), the "slope" function of _f_.  This involves building polynomials that converge to _f&prime;_(.), as described earlier in this section.  During the algorithm, instead of flipping the input coin as normal, flip a different coin that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+4. Return the result of the algorithm from step 3.
+
+> **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f&prime;_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_))/4, which is convex, is twice differentiable (and thus continuous), and maps (0, 1) to (0, 1).  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; pprint(diff(fx,x).simplify())`.
+
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
 <a id=Schemes_That_Don_t_Work></a>
@@ -168,6 +185,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 - <small><sup id=Note11>(11)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note12>(12)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
 - <small><sup id=Note13>(13)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note14>(14)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.</small>
 
 <a id=Appendix></a>
 ## Appendix
