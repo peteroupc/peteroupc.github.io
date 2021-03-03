@@ -1,5 +1,6 @@
 from sympy import *
 import math
+import sys
 
 def upperbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision upper bound of x.
@@ -361,7 +362,29 @@ def consistencyCheckCore(curvedata, ratio, diagnose=False):
             return False
     return True
 
-def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
+def funcstring(func, x):
+    pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
+    pwfunc = piecewise_fold(pwfunc)
+    if isinstance(pwfunc, Piecewise):
+        sep = False
+        data = ""
+        for a, b in pwfunc.args:
+            if sep:
+                data += "; "
+            if b == True:
+                data += ("%s otherwise" % (str(a).replace("*", "\*"))).replace(
+                    "lambda", "_&lambda;_"
+                )
+            else:
+                data += (
+                    "%s if %s" % (str(a).replace("*", "\*"), str(b).replace("*", "\*"))
+                ).replace("lambda", "_&lambda;_")
+            sep = True
+        return data
+    else:
+        return "%s" % (str(pwfunc).replace("*", "\*").replace("lambda", "_&lambda;_"))
+
+def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=False):
     """
         This method builds a scheme for approximating a continuous function _f_(_&lambda;_) that maps the interval \[0, 1\] to (0, 1), with the help of polynomials that converge from above and below to that function.  The function is approximated in a way that allows simulating the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_; this is also known as the Bernoulli Factory problem.  Not all functions of this kind are supported yet.
 
@@ -388,25 +411,67 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
         deg = 1
     nmm = nminmax(func, x)
     if nmm[0] < 0 or nmm[1] > 1:
-        print("Function does not admit a Bernoulli factory")
-        return
+        if not isdiff:
+            print("Function does not admit a Bernoulli factory")
+        return False
     conc = concavity(func, x)
     if conc != "concave" and nmm[0] <= 0:
-        print("Non-concave functions with minimum of 0 not yet supported")
-        return
+        if (not isdiff) and func.subs(x, 0) == 0:
+            newfunc = diff(func, x)
+            if approxscheme2(
+                newfunc,
+                x,
+                kind=kind,
+                lip=None,
+                double=double,
+                levels=levels,
+                isdiff=True,
+            ):
+                print(
+                    "Let _f_(_&lambda;_) = "
+                    + funcstring(func, x)
+                    + ".  Then _f&prime;_(_&lambda;_) is the derivative of _f_, and the "
+                    + "function _f_ can be simulated using the integral method."
+                )
+                return True
+        if (not isdiff) and func.subs(x, 1) == 0:
+            newfunc = diff(func.subs(x, 1 - x), x)
+            if approxscheme2(
+                newfunc,
+                x,
+                kind=kind,
+                lip=None,
+                double=double,
+                levels=levels,
+                isdiff=True,
+            ):
+                print(
+                    "Let _f_(_&lambda;_) = "
+                    + funcstring(func, x)
+                    + ".  Then _f&prime;_(1&minus;_&lambda;_) is the derivative of "
+                    + "_f_(_&lambda;_), and the "
+                    + "function _f_ can be simulated using the integral method and a coin that returns 1 "
+                    + "minus the original coin flip result."
+                )
+                return True
+        if not isdiff:
+            print("This non-concave function with minimum of 0 is not yet supported")
+        return False
     if conc != "convex" and nmm[1] >= 1:
-        print("Non-convex functions with maximum of 1 not yet supported")
-        return
+        if not isdiff:
+            print("This non-convex function with maximum of 1 is not yet supported")
+        return False
     dd = buildParam(kind, func, x, lip)
     if dd == oo or dd == zoo:
-        print("Function not supported for the scheme %s" % (kind))
-        return
+        if not isdiff:
+            print("Function not supported for the scheme %s" % (kind))
+        return False
     if dd == 0:
         if lip != None:
             dd = S(lip)
         else:
             print("Erroneous parameter calculated for the scheme %s" % (kind))
-            return
+            return False
     for i in range(1, levels + 1):
         offset = buildOffset(kind, dd, deg)
         curvedata.append(
@@ -420,7 +485,8 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     if not consistencyCheckCore(curvedata, Rational(1)):
         print(
             "INCONSISTENT --> offset=%s [dd=%s, kind=%s]"
-            % (S(offset).n(), upperbound(dd.n()).n(), kind)
+            % (S(offset).n(), upperbound(dd.n()).n(), kind),
+            file=sys.stdout,
         )
         consistencyCheckCore(curvedata, Rational(1), diagnose=True)
         return
@@ -437,7 +503,8 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
         # approximation scheme is highly likely to be correct.
         print(
             "consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]"
-            % (cdlen, S(offset * right).n(), right.n(), upperbound(dd.n()).n(), kind)
+            % (cdlen, S(offset * right).n(), right.n(), upperbound(dd.n()).n(), kind),
+            file=sys.stdout,
         )
     inrangedeg = -1
     inrangedata = None
@@ -449,26 +516,11 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
     nsymbol = symbols("n")
     offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
-    data = "* Let _f_(_&lambda;_) = "
-    pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
-    pwfunc = piecewise_fold(pwfunc)
-    if isinstance(pwfunc, Piecewise):
-        sep = False
-        for a, b in pwfunc.args:
-            if sep:
-                data += "; "
-            if b == True:
-                data += ("%s otherwise" % (str(a).replace("*", "\*"))).replace(
-                    "lambda", "_&lambda;_"
-                )
-            else:
-                data += (
-                    "%s if %s" % (str(a).replace("*", "\*"), str(b).replace("*", "\*"))
-                ).replace("lambda", "_&lambda;_")
-            sep = True
-        data += "."
+    if isdiff:
+        data = "* Let _f&prime;_(_&lambda;_) = "
     else:
-        data += "%s." % (str(pwfunc).replace("*", "\*").replace("lambda", "_&lambda;_"))
+        data = "* Let _f_(_&lambda;_) = "
+    data += funcstring(func, x) + "."
     if double:
         data += " Then, for all _n_ that are powers of 2, starting from 1:\n"
     else:
@@ -490,7 +542,10 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
             # print(["conc",conc,"loweroffset",offsetinrangedeg])
             data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
             lowerbounded = True
-    data += "_f_(_k_/_n_)"
+    if isdiff:
+        data += "_f&prime;_(_k_/_n_)"
+    else:
+        data += "_f_(_k_/_n_)"
     if conc != "concave":
         data += " &minus; `%s`" % (
             str(offsetn.subs(x, symbols("lambda"))).replace("*", "\*")
@@ -525,4 +580,4 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9):
                 % (inrangedeg)
             )
     print(data)
-    return
+    return True
