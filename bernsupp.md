@@ -66,52 +66,32 @@ If _f_ in \[0, 1] has a defined slope at all but a countable number of points, a
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_).
 
-**Certain functions that equal 0 at 0.**
+**Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ at every point in the interval [0, 1].  Unlike for the original function, there might be an approximation scheme described earlier in this section for the transformed function.
 
-_Algorithm 1._ Let _f&prime;_(_&lambda;_) be the "slope" function of _f_.  If&mdash;
+More specifically, _h_(_&lambda;_) must meet the following requirements:
 
-- _f_(0) = 0,
-- _f_ is monotonically increasing,
-- _f&prime;_ is continuous on the closed interval \[0, 1\] (which implies that _f_ is _C_<sup>1</sup> continuous there),
-- _f&prime;_(_x_) is in the open interval (0, 1) for all _x_ in (0, 1), and
-- _f&prime;_ belongs in one of the classes of functions given earlier,
+- _h_(_&lambda;_) is continuous on [0, 1].
+- _h_(0) = 0. (This is required to ensure correctness in case _&lambda;_ is 0.)
+- 1 &ge; _h_(1) &ge; _f_(1) &ge; 0.
+- 1 &gt; _h_(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 for all _&lambda;_ in the open interval (0, 1).
 
-then _f_ can be simulated with the help of the [**_integral method_**](https://peteroupc.github.io/bernoulli.html#Integrals), as follows (see also (Flajolet et al. 2010)<sup>[**(14)**](#Note14)</sup>):
+Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For example, _h_ can be a polynomial in Bernstein form of degree _n_ whose _n_+1 coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials).
 
-1. Flip the input coin.  If it returns 0, return 0.
-2. Generate a uniform(0, 1) random number _u_.
-3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _f&prime;_(.).  This involves building polynomials that converge to _f&prime;_(.), as described earlier in this section.  During the algorithm, instead of flipping the input coin as normal, flip a different coin that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
-4. Return the result of the algorithm from step 3.
+The algorithm is now described.
 
-> **Note**.  Roughly speaking, the graph of _f_ must occupy the open triangle formed by the points (0, 0), (1, 0), and (1, 1).
->
-> **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f&prime;_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_))/4, which is convex, is twice differentiable (and thus continuous), and maps (0, 1) to (0, 1).  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; pprint(diff(fx,x).simplify())`.
+Let _g_(_&lambda;_) = lim<sub>_&nu;_=_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
-_Algorithm 2._ Let _g_(_&lambda;_) = lim<sup>_&nu;_=_&lambda;_</sup> _f_(_&nu;_)/_&nu;_ (in other words, the value that _f_(_&nu;_)/_&nu;_ approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
-
-- _f_(0) = 0,
-- _g_ is continuous on \[0, 1\],
-- _g_(_x_) is in the open interval (0, 1) for all _x_ in (0, 1), and
+- _f_(0) = 0, and
 - _g_ belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
 
-1. Flip the input coin.  If it returns 0, return 0.
-2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_, and return the result of that algorithm.
+1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
+2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
 
-> **Example:** With the same example of _f_ as before, _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; pprint(Piecewise((limit(fx/x,x,0), Eq(x,0)), ((fx/x).simplify(), True)))`.
-
-_Algorithm 3._ Let _g_(_&lambda;_) = lim<sup>_&nu;_=_&lambda;_</sup> _d_(_f_(_&nu;_)/_&nu;_)/_d&nu;_ (in other words, the value that the "slope" of _f_(_&nu;_)/_&nu;_ approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
-
-- _f_(0) = 0,
-- _f_ is monotonically increasing,
-- _g_ is continuous on \[0, 1\],
-- _g_(_x_) is in the open interval (0, 1) for all _x_ in (0, 1), and
-- _g_ belongs in one of the classes of functions given earlier,
-
-then _f_ can be simulated using a different version of the integral method, likewise from the Flajolet paper.  Here, the same algorithm as before is used, except step 1 is omitted and step 3 uses the _g_ function given here rather than _f&prime;_.
-
-> **Example:** With the same example of _f_ as before, _g_(_&lambda;_) is 1/8 if _&lambda;_ = 0, and (_&lambda;_\*exp(_&lambda;_) &minus; exp(_&lambda;_) + 1)/(4\*_&lambda;_<sup>2</sup>) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; pprint(Piecewise((limit(diff(fx/x),x,0), Eq(x,0)), (diff(fx/x,x).simplify(), True)))`.
+> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
+>
+> **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, and if _h_(_&lambda;_) = _&lambda;_, then _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
@@ -215,7 +195,6 @@ The following table summarizes the rate of simulation (in terms of the number of
 - <small><sup id=Note11>(11)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note12>(12)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
 - <small><sup id=Note13>(13)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
-- <small><sup id=Note14>(14)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.</small>
 
 <a id=Appendix></a>
 ## Appendix

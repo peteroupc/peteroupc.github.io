@@ -499,7 +499,7 @@ A PRNG is a high-quality RNG if&mdash;
 
 Every cryptographic RNG is also a high-quality RNG.
 
-Where a noncryptographic PRNG is appropriate, an application should use, if possible, a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.
+Where a noncryptographic PRNG is appropriate, an application should use, if possible, a high-quality PRNG that admits any of 2<sup>127</sup> or more seeds.  (This is a recommendation, since as stated above, high-quality PRNGs are required to admit only 2<sup>63</sup> or more seeds.)
 
 > **Examples:** Examples of high-quality PRNGs include xoshiro256\*\*, xoroshiro128\*\*, xoroshiro128++, Philox4&times;64-7, and SFC64.  I give additional examples in a [**separate page**](https://peteroupc.github.io/hqprng.html).
 
