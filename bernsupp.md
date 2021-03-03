@@ -70,18 +70,20 @@ If _f_ in \[0, 1] has a defined slope at all but a countable number of points, a
 
 More specifically, _h_(_&lambda;_) must meet the following requirements:
 
-- _h_(_&lambda;_) is continuous on [0, 1].
+- _h_(_&lambda;_) is continuous on the closed interval [0, 1].
 - _h_(0) = 0. (This is required to ensure correctness in case _&lambda;_ is 0.)
 - 1 &ge; _h_(1) &ge; _f_(1) &ge; 0.
 - 1 &gt; _h_(_&lambda;_) &gt; _f_(_&lambda;_) &gt; 0 for all _&lambda;_ in the open interval (0, 1).
+- If _f_(1) = 0, then _h_(1) = 0. (This is required to ensure correctness in case _&lambda;_ is 1.)
 
-Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For example, _h_ can be a polynomial in Bernstein form of degree _n_ whose _n_+1 coefficients are \[0, 1, 1, ..., 1\].  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials).
+Also, _h_ should be a function with a simple Bernoulli factory algorithm.  For example, _h_ can be a polynomial in Bernstein form of degree _n_ whose _n_ plus one coefficients are \[0, 1, 1, ..., 1\], unless _f_(1) = 1.  This polynomial is easy to simulate using the algorithms from the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials)".
 
 The algorithm is now described.
 
-Let _g_(_&lambda;_) = lim<sub>_&nu;_=_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
+Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
-- _f_(0) = 0, and
+- _f_(0) = 0,
+- _g_(_&lambda;_) is continuous on [0, 1].
 - _g_ belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
@@ -89,7 +91,7 @@ then _f_ can be simulated using the following algorithm:
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
 
-> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
+> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0 or 1, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
 >
 > **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, and if _h_(_&lambda;_) = _&lambda;_, then _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
 
