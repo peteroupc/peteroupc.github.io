@@ -101,7 +101,7 @@ then _f_ can be simulated using the following algorithm:
 > 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Since _g_(0) = 0, we find new functions _g_ and _h_ based on the current _g_.  The current _g_ is bounded from above by _H_(_&lambda;_) = _&lambda;_\*3\*(2&minus;_&lambda;_)/5 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(_&lambda;_&minus;2)) otherwise. _G_ is bounded away from 0 and 1, so we have the following algorithm:
 >
 >     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
->     2. (Simulate _H_.) Flip the input coin twice.  If neither flip returns 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
+>     2. (Simulate _H_.) Flip the input coin twice.  If neither flip returns 1, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
 >     3. Run a Bernoulli factory algorithm for _G_ (by building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
 
 **Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
@@ -125,10 +125,12 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 
 **Other functions that equal 0 or 1 at the endpoints 0 and/or 1.** If _f_ does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:
 
-- If _f_(0) is in the open interval (0, 1) and _f_(1) = 1, use the algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1 &minus; _f_(1&minus;_&lambda;_).  Instead of the usual input coin, use a coin that does the following: "Flip the input coin and return 1 minus the result."  If the overall algorithm would return 0, it returns 1 instead, and vice versa.
-- If _f_(0) is in (0, 1) and _f_(1) = 0, use the algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = _f_(1&minus;_&lambda;_).  (For example, cosh(_&lambda;_)&minus;1 becomes cosh(1&minus;_&lambda;_)&minus;1.)  Instead of the usual input coin, use a coin that does the following: "Flip the input coin and return 1 minus the result."
-- If _f_(0) = 1 and _f_(1) = 0, use the algorithm for **certain functions that equal 0 at 0 and 1 at 1**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).  If the overall algorithm would return 0, it returns 1 instead, and vice versa.
-- If _f_(0) = 1 and _f_(1) is in the half-open interval (0, 1], use the algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).  If the overall algorithm would return 0, it returns 1 instead, and vice versa.
+| If _f_(0) = | And _f_(1) = |      Method |
+ --- | --- | --- |
+| In (0, 1) | 1 | Use the algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1 &minus; _f_(1&minus;_&lambda;_).<br/>_Inverted coin_: Instead of the usual input coin, use a coin that does the following: "Flip the input coin and return 1 minus the result."<br/>_Inverted result:_ If the overall algorithm would return 0, it returns 1 instead, and vice versa. |
+| In (0, 1) | 0 | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = _f_(1&minus;_&lambda;_).  (For example, cosh(_&lambda;_)&minus;1 becomes cosh(1&minus;_&lambda;_)&minus;1.)<br/>Inverted coin. |
+| 1 | 0 | Algorithm for **certain functions that equal 0 at 0 and 1 at 1**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
+| 1 | In (0, 1] | Algorithm for **certain functions that equal 0 at 0**, but with _f_(_&lambda;_) = 1&minus;_f_(_&lambda;_).<br/>Inverted result. |
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 

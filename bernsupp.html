@@ -137,7 +137,7 @@
 
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
-<li>(Simulate <em>H</em>.) Flip the input coin twice.  If neither flip returns 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
+<li>(Simulate <em>H</em>.) Flip the input coin twice.  If neither flip returns 1, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
 <li>Run a Bernoulli factory algorithm for <em>G</em> (by building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
@@ -173,12 +173,34 @@
 
 <p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
 
-<ul>
-<li>If <em>f</em>(0) is in the open interval (0, 1) and <em>f</em>(1) = 1, use the algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1 &minus; <em>f</em>(1&minus;<em>&lambda;</em>).  Instead of the usual input coin, use a coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;  If the overall algorithm would return 0, it returns 1 instead, and vice versa.</li>
-<li>If <em>f</em>(0) is in (0, 1) and <em>f</em>(1) = 0, use the algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = <em>f</em>(1&minus;<em>&lambda;</em>).  (For example, cosh(<em>&lambda;</em>)&minus;1 becomes cosh(1&minus;<em>&lambda;</em>)&minus;1.)  Instead of the usual input coin, use a coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;</li>
-<li>If <em>f</em>(0) = 1 and <em>f</em>(1) = 0, use the algorithm for <strong>certain functions that equal 0 at 0 and 1 at 1</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).  If the overall algorithm would return 0, it returns 1 instead, and vice versa.</li>
-<li>If <em>f</em>(0) = 1 and <em>f</em>(1) is in the half-open interval (0, 1], use the algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).  If the overall algorithm would return 0, it returns 1 instead, and vice versa.</li>
-</ul>
+<table><thead>
+<tr>
+<th>If <em>f</em>(0) =</th>
+<th>And <em>f</em>(1) =</th>
+<th>Method</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>In (0, 1)</td>
+<td>1</td>
+<td>Use the algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1 &minus; <em>f</em>(1&minus;<em>&lambda;</em>).<br/><em>Inverted coin</em>: Instead of the usual input coin, use a coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br/><em>Inverted result:</em> If the overall algorithm would return 0, it returns 1 instead, and vice versa.</td>
+</tr>
+<tr>
+<td>In (0, 1)</td>
+<td>0</td>
+<td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = <em>f</em>(1&minus;<em>&lambda;</em>).  (For example, cosh(<em>&lambda;</em>)&minus;1 becomes cosh(1&minus;<em>&lambda;</em>)&minus;1.)<br/>Inverted coin.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Algorithm for <strong>certain functions that equal 0 at 0 and 1 at 1</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).<br/>Inverted result.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>In (0, 1]</td>
+<td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).<br/>Inverted result.</td>
+</tr>
+</tbody></table>
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 
