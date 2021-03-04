@@ -67,7 +67,8 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
         The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?
 
         - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
-        - Functions that equal 0 at 0.  (Or a subset of these functions, such as functions that equal 1 at 1, and/or functions meeting certain regularity conditions, such as being C<sup>2</sup> continuous, Lipschitz, Hölder, unimodal, convex, concave, and/or nondecreasing).
+        - Functions that equal 0 and have a "slope" of 0 at the point 0.
+        - Functions that equal 0 at 0, and also equal 1 and have a "slope" of 0 at the point 1.
 
         An intriguing suggestion from Thomas and Blanchet (2012)<sup>[**(2)**](#Note2)</sup> is to use multiple pairs of polynomial sequences that converge to _f_, where each pair is optimized for particular ranges of _&lambda;_: first flip the input coin several times to get a rough estimate of _&lambda;_, then choose the pair that's optimized for the estimated _&lambda;_, and simulate _f_(_&lambda;_) using the chosen polynomials.  The paper gives the example of min(_&lambda;_, 8/10).  Are there formulas for computing these sequences efficiently, unlike the paper's approach that requires computing an intersection of a curve with an approximating polynomial, which gets very inefficient as the polynomial's degree gets large?
 

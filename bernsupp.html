@@ -136,7 +136,7 @@
 <ul>
 <li><em>&phi;</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
 <li><em>&phi;</em>(0) = 0 and <em>&phi;</em>(1) = 1.</li>
-<li>1 &gt; <em>&amp;f</em>(<em>&lambda;</em>) &gt; <em>&phi;</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&phi;</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
 </ul></li>
 <li><em>q</em>(<em>&lambda;</em>) = 1 &minus; (lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&phi;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>)).</li>
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/<em>q</em>(<em>&nu;</em>).</li>
@@ -151,6 +151,10 @@
 <li>Run a Bernoulli factory algorithm for <em>q</em>(.).  If the call returns 0, return 1.</li>
 <li>Run one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> for <em>r</em>(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to <em>r</em>(.), as described earlier in this section.</li>
 </ol>
+
+<blockquote>
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&phi;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = 1&minus;<em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following SymPy code: <code>fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=1-(phi/h); r=(1-fx/h)/q; r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify()</code>.</p>
+</blockquote>
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 

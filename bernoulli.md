@@ -1440,8 +1440,8 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
         The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?
 
         - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
-        - Functions that equal 0 at the point 0 and equal 1 at the point 1.
         - Functions that equal 0 and have a "slope" of 0 at the point 0.
+        - Functions that equal 0 at 0, and also equal 1 and have a "slope" of 0 at the point 1.
 
         See also my questions on _Mathematics Stack Exchange_:
 

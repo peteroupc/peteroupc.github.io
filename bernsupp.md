@@ -100,7 +100,7 @@ then _f_ can be simulated using the following algorithm:
 - _&phi;_(_&lambda;_) is a function that meets the following requirements:
     - _&phi;_(_&lambda;_) is continuous on the closed interval [0, 1].
     - _&phi;_(0) = 0 and _&phi;_(1) = 1.
-    - 1 &gt; _&f_(_&lambda;_) &gt; _&phi;_(_&lambda;_) &gt; 0 for all _&lambda;_ in the open interval (0, 1).
+    - 1 &gt; _f_(_&lambda;_) &gt; _&phi;_(_&lambda;_) &gt; 0 for all _&lambda;_ in the open interval (0, 1).
 - _q_(_&lambda;_) = 1 &minus; (lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&phi;_(_&nu;_)/_h_(_&nu;_)).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/_q_(_&nu;_).
 
@@ -111,6 +111,8 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 0, return 1.
 3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _r_(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to _r_(.), as described earlier in this section.
+
+> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&phi;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = 1&minus;_&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following SymPy code: `fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=1-(phi/h); r=(1-fx/h)/q; r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify()`.
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
