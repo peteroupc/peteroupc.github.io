@@ -83,7 +83,7 @@ The algorithm is now described.
 Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
 - _f_(0) = 0,
-- _g_(_&lambda;_) is continuous on [0, 1].
+- _g_(_&lambda;_) is continuous on [0, 1], and
 - _g_ belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
@@ -91,9 +91,26 @@ then _f_ can be simulated using the following algorithm:
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
 
-> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0 or 1, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
+> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0 or 1 or if _f_(1) = 1, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
 >
 > **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, and if _h_(_&lambda;_) = _&lambda;_, then _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
+
+**Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
+
+- _&phi;_(_&lambda;_) is a function that meets the following requirements:
+    - _&phi;_(_&lambda;_) is continuous on the closed interval [0, 1].
+    - _&phi;_(0) = 0 and _&phi;_(1) = 1.
+    - 1 &gt; _&f_(_&lambda;_) &gt; _&phi;_(_&lambda;_) &gt; 0 for all _&lambda;_ in the open interval (0, 1).
+- _q_(_&lambda;_) = 1 &minus; (lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&phi;_(_&nu;_)/_h_(_&nu;_)).
+- _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/_q_(_&nu;_).
+
+Also, _&phi;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _h_ and _&phi;_ are polynomials of the same degree, _q_ will be a rational function with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+
+Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then _f_ can be simulated using the following algorithm:
+
+1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
+2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 0, return 1.
+3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _r_(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to _r_(.), as described earlier in this section.
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
