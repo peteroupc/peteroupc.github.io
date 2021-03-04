@@ -54,7 +54,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is _&alpha;_-_Hölder continuous_ in [0, 1], meaning its vertical slopes there, if any, are no "steeper" than _m_\*_&lambda;_<sup>_&alpha;_</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
+- is _&alpha;_-[**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) in [0, 1], meaning its vertical slopes there, if any, are no "steeper" than that of _m_\*_&lambda;_<sup>_&alpha;_</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -65,6 +65,8 @@ If _f_ in \[0, 1] has a defined slope at all but a countable number of points, a
 - _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_).
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_).
+
+> **Note:** Some functions _f_ are not _&alpha;_-Hölder continuous for any _&alpha;_ greater than 0.  These functions have an exponentially steep slope and can't be handled by this method.  One example is _f_(_&lambda;_) = 0 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) otherwise, which has an exponentially steep slope near 0.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ at every point in the interval [0, 1].  Unlike for the original function, there might be an approximation scheme described earlier in this section for the transformed function.
 
@@ -91,9 +93,16 @@ then _f_ can be simulated using the following algorithm:
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
 
-> **Note:** Unfortunately, this method can't be used if the "slope" of _f_ is 0 at the point 0 or 1 or if _f_(1) = 1, except in special cases.  A notable example is cosh(_&lambda;_)&minus;1.
+> **Note:** It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and _h_ functions that are found based on the current _g_ function.  See the second example below.
 >
-> **Example:** If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, and if _h_(_&lambda;_) = _&lambda;_, then _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
+> **Examples:**
+>
+> 1. If _f_(_&lambda;_) = (sinh(_&lambda;_)+cosh(_&lambda;_)&minus;1)/4, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 1/4 if _&lambda;_ = 0, and (exp(_&lambda;_) &minus; 1)/(4\*_&lambda;_) otherwise.  The following SymPy code computes this example: `fx = (sinh(x)+cosh(x)-1)/4; h = x; pprint(Piecewise((limit(fx/h,x,0), Eq(x,0)), ((fx/h).simplify(), True)))`.
+> 2. If _f_(_&lambda;_) = cosh(_&lambda;_) &minus; 1, then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, so _g_(_&lambda;_) is 0 if _&lambda;_ = 0, and (cosh(_&lambda;_)&minus;1)/_&lambda;_ otherwise.  Since _g_(0) = 0, we find new functions _g_ and _h_ based on the current _g_.  The current _g_ is bounded from above by _H_(_&lambda;_) = _&lambda;_\*(2&minus;_&lambda;_)/2 (a degree-2 polynomial that in Bernstein form has coefficients [0, 6/10, 6/10]), so _G_(_&lambda;_) = 5/12 if _&lambda;_ = 0, and &minus;(5\*cosh(_&lambda;_) &minus; 5)/(3\*_&lambda;_<sup>2</sup>\*(x&minus;2)) otherwise. _G_ is bounded away from 0 and 1, so we have the following algorithm:
+>
+>     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
+>     2. (Simulate _H_.) Flip the input coin twice.  If neither flip returns 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
+>     3. Run a Bernoulli factory algorithm for _G_ (by building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
 
 **Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
 
@@ -112,7 +121,7 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 1, return 1.
 3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _r_(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to _r_(.), as described earlier in this section.
 
-> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&phi;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following SymPy code: `fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify()`.
+> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&phi;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following SymPy code: `fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
@@ -188,15 +197,15 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 
 In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function _f_(_&lambda;_) depends on how "smooth" the function _f_ is.
 
-The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved _in theory_ depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>2\*_r_</sup>) near _&lambda;_ = 0 or 1, and _O_((1/_n_)<sup>_r_</sup>) elsewhere.
+The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved _in theory_ depending on _f_(_&lambda;_), assuming the unknown probability of heads, _&lambda;_, lies in the interval [_&epsilon;_, 1&minus;_&epsilon;_] for some _&epsilon;_ &gt; 0.  In the table below, _&Delta;_(_n_, _r_, _&lambda;_) = _O_(max(sqrt(_&lambda;_\*(1&minus;_&lambda;_)/_n_),1/_n_)<sup>_r_</sup>), that is, _O_((1/_n_)<sup>_r_</sup>) near _&lambda;_ = 0 or 1, and _O_((1/_n_)<sup>_r_/2</sup>) elsewhere.
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(8)**](#Note8)</sup>. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2011)<sup>[**(9)**](#Note9)</sup>. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
 | Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for all _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and all _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
 | "Fast simulation" (number of flips required has a tail that drops off exponentially).  Also known as "strongly realizable" by Flajolet et al. (2011)<sup>[**(9)**](#Note9)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>. |
 

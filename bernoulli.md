@@ -1437,11 +1437,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
     - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  (These requirements ensure the upper polynomials "decrease" and the lower ones "increase".  The polynomials in each sequence may start closer to the function at some points than at others.)
 
-        The notes in the general factory functions section include formulas for computing these polynomials for certain kinds of functions, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions?
-
-        - Functions that are neither C<sup>2</sup> continuous nor Hölder continuous. (A C<sup>2</sup> continuous function has a continuous "slope-of-slope", and a Hölder continuous function does not go exponentially fast to a vertical slope.)
-        - Functions that equal 0 and have a "slope" of 0 at the point 0.
-        - Functions that equal 0 at 0, and also equal 1 and have a "slope" of 0 at the point 1.
+        The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for the vast majority of functions likely to occur in practice, but not all of them.  Are there formulas to compute these polynomials for the following kinds of functions? (a) Functions that are not Hölder continuous (and thus have an exponentially "steep" slope). (b) Functions that equal 0 at the point 0 and have a "slope" of 0 at the point 0. (c) Functions that equal 0 at 0, and also equal 1 and have a "slope" of 0 at the point 1.
 
         See also my questions on _Mathematics Stack Exchange_:
 
