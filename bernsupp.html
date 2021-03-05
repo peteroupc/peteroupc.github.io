@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/04"><meta name="citation_online_date" content="2021/03/04"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/05"><meta name="citation_online_date" content="2021/03/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -114,9 +114,8 @@
 <p>Let <em>g</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) (in other words, the value that <em>f</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>) approaches as <em>&nu;</em> approaches <em>&lambda;</em>.) If&mdash;</p>
 
 <ul>
-<li><em>f</em>(0) = 0 and <em>f</em>(1) &lt; 1,</li>
-<li><em>g</em>(<em>&lambda;</em>) is continuous on [0, 1], and</li>
-<li><em>g</em> belongs in one of the classes of functions given earlier,</li>
+<li><em>f</em>(0) = 0 and <em>f</em>(1) &lt; 1, and</li>
+<li><em>g</em>(<em>&lambda;</em>) is continuous on [0, 1] and belongs in one of the classes of functions given earlier,</li>
 </ul>
 
 <p>then <em>f</em> can be simulated using the following algorithm:</p>
@@ -127,7 +126,20 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> It may happen that <em>g</em>(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new <em>g</em> and <em>h</em> functions that are found based on the current <em>g</em> function.  See the second example below.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>It may happen that <em>g</em>(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new <em>g</em> and <em>h</em> functions that are found based on the current <em>g</em> function.  See the second example below.</li>
+<li><p>If&mdash;</p>
+
+<ul>
+<li><em>f</em> is monotonically increasing,</li>
+<li><em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
+<li><em>f&prime;</em>(<em>&lambda;</em>), the &quot;slope&quot; function of <em>f</em>, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
+</ul></li>
+</ol>
+
+<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random number <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup> (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p>
 
 <p><strong>Examples:</strong></p>
 
@@ -138,7 +150,7 @@
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
 <li>(Simulate <em>H</em>.) Flip the input coin twice.  If neither flip returns 1, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
-<li>Run a Bernoulli factory algorithm for <em>G</em> (by building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
+<li>Run a Bernoulli factory algorithm for <em>G</em> (which involves building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -157,7 +169,7 @@
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
 </ul>
 
-<p>Also, <em>&phi;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&phi;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
+<p>Roughly speaking, <em>&phi;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&phi;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&phi;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
 
 <p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then <em>f</em> can be simulated using the following algorithm:</p>
 
@@ -204,6 +216,13 @@
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 
+<p><strong>Open questions.</strong></p>
+
+<ul>
+<li>Are there factory functions used in practice that are not covered by the approximation schemes in this section?</li>
+<li>Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions (besides those I list in this section or the main <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a> article)?</li>
+</ul>
+
 <p><a id=Schemes_That_Don_t_Work></a></p>
 
 <h3>Schemes That Don&#39;t Work</h3>
@@ -212,7 +231,7 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note3"><strong>(3)</strong></a></sup>, let <em>f</em> be a C<sup>2</sup> continuous function (a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions) in [0, 1].  Then for all <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, let <em>f</em> be a C<sup>2</sup> continuous function (a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions) in [0, 1].  Then for all <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
@@ -247,7 +266,7 @@
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus;  <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
 </ul>
 
-<p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.</p>
+<p>Where L is the maximum absolute &quot;slope&quot;, also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where <em>k</em> is an integer in the interval [0, <em>n</em>] (Lorentz 1986)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, (Popoviciu 1935)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</p>
 
 <p>There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to &quot;smooth&quot; functions (not just Lipschitz continuous functions):</p>
 
@@ -258,9 +277,9 @@
 
 <p>It is yet to be seen whether a counterexample exists for this scheme when <em>n</em> is restricted to powers of 2.</p>
 
-<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
+<p><strong>Third scheme.</strong> Same as the second scheme, but replacing (5/4) with the Sikkema constant, <em>S</em> = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup><a href="#Note5"><strong>(5)</strong></a></sup>, (Sikkema 1961)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to <em>f</em>.</p>
 
-<p><strong>Fourth scheme.</strong>  In this scheme, which relates to a result from Kopotun et al. (2017)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, let <em>f</em> be a nondecreasing and Lipschitz continuous function in [0, 1].  Then for all <em>n</em>&ge;2:</p>
+<p><strong>Fourth scheme.</strong>  In this scheme, which relates to a result from Kopotun et al. (2017)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, let <em>f</em> be a nondecreasing and Lipschitz continuous function in [0, 1].  Then for all <em>n</em>&ge;2:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + sqrt(1&minus;(2*<em>k</em>/<em>n</em>&minus;1)<sup>2</sup>)*<em>L</em>/<em>n</em>.</li>
@@ -302,10 +321,10 @@
 </thead><tbody>
 <tr>
 <td>Requires no more than <em>n</em> input coin flips.</td>
-<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2011)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
+<td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -321,7 +340,7 @@
 <td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>&quot;Fast simulation&quot; (number of flips required has a tail that drops off exponentially).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2011)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
+<td>&quot;Fast simulation&quot; (number of flips required has a tail that drops off exponentially).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
 <td>If and only if <em>f</em> is real analytic (is <em>C</em><sup>&infin;</sup> continuous, or has continuous <em>k</em><sup>th</sup> derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -337,13 +356,13 @@
 <ul>
 <li><small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 <li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for all <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
-<li><small><sup id=Note3>(3)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
-<li><small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
-<li><small><sup id=Note5>(5)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
-<li><small><sup id=Note6>(6)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
-<li><small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., &quot;<a href="https://arxiv.org/abs/1711.07083"><strong>Interpolatory pointwise estimates for monotone polynomial approximation</strong></a>&quot;, arXiv:1711.07083 [math.CA], 2017.</small></li>
-<li><small><sup id=Note8>(8)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
-<li><small><sup id=Note9>(9)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</small></li>
+<li><small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</small></li>
+<li><small><sup id=Note4>(4)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
+<li><small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
+<li><small><sup id=Note6>(6)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
+<li><small><sup id=Note7>(7)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
+<li><small><sup id=Note8>(8)</sup> Kopotun, K.A., et al., &quot;<a href="https://arxiv.org/abs/1711.07083"><strong>Interpolatory pointwise estimates for monotone polynomial approximation</strong></a>&quot;, arXiv:1711.07083 [math.CA], 2017.</small></li>
+<li><small><sup id=Note9>(9)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
 <li><small><sup id=Note10>(10)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
 <li><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
 <li><small><sup id=Note12>(12)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>

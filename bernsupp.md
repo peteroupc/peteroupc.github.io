@@ -84,16 +84,24 @@ The algorithm is now described.
 
 Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;_) (in other words, the value that _f_(_&nu;_)/_h_(_&nu;_) approaches as _&nu;_ approaches _&lambda;_.) If&mdash;
 
-- _f_(0) = 0 and _f_(1) < 1,
-- _g_(_&lambda;_) is continuous on [0, 1], and
-- _g_ belongs in one of the classes of functions given earlier,
+- _f_(0) = 0 and _f_(1) < 1, and
+- _g_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classes of functions given earlier,
 
 then _f_ can be simulated using the following algorithm:
 
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
 
-> **Note:** It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and _h_ functions that are found based on the current _g_ function.  See the second example below.
+> **Notes:**
+>
+> 1. It may happen that _g_(0) = 0.  In this case, step 2 of this algorithm can involve running this algorithm again, but with new _g_ and _h_ functions that are found based on the current _g_ function.  See the second example below.
+> 2. If&mdash;
+>
+>     - _f_ is monotonically increasing,
+>     - _h_(_&lambda;_) = _&lambda;_, and
+>     - _f&prime;_(_&lambda;_), the "slope" function of _f_, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
+>
+> then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random number _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup> (the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
 >
 > **Examples:**
 >
@@ -102,7 +110,7 @@ then _f_ can be simulated using the following algorithm:
 >
 >     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
 >     2. (Simulate _H_.) Flip the input coin twice.  If neither flip returns 1, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
->     3. Run a Bernoulli factory algorithm for _G_ (by building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
+>     3. Run a Bernoulli factory algorithm for _G_ (which involves building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
 
 **Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
 
@@ -113,7 +121,7 @@ then _f_ can be simulated using the following algorithm:
 - _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&phi;_(_&nu;_)/_h_(_&nu;_).
 - _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
 
-Also, _&phi;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&phi;_ and _h_ are polynomials of the same degree, _q_ will be a rational function with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
+Roughly speaking, _&phi;_ is a function that bounds _f_ from below, just as _h_ bounds _f_ from above. _&phi;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&phi;_ and _h_ are polynomials of the same degree, _q_ will be a rational function with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
 Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then _f_ can be simulated using the following algorithm:
 
@@ -134,6 +142,11 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
+**Open questions.**
+
+- Are there factory functions used in practice that are not covered by the approximation schemes in this section?
+- Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions (besides those I list in this section or the main [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html) article)?
+
 <a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
 
@@ -141,7 +154,7 @@ In the academic literature (papers and books), there are many approximation sche
 
 The following are approximation schemes with counterexamples to consistency.
 
-**First scheme.** In this scheme (Powell 1981)<sup>[**(3)**](#Note3)</sup>, let _f_ be a C<sup>2</sup> continuous function (a function with continuous "slope" and "slope-of-slope" functions) in [0, 1].  Then for all _n_&ge;1:
+**First scheme.** In this scheme (Powell 1981)<sup>[**(4)**](#Note4)</sup>, let _f_ be a C<sup>2</sup> continuous function (a function with continuous "slope" and "slope-of-slope" functions) in [0, 1].  Then for all _n_&ge;1:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
@@ -168,7 +181,7 @@ _The rest of this section will note counterexamples involving other functions an
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _L_\*(5/4) / sqrt(_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus;  _L_\*(5/4) / sqrt(_n_).
 
-Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Popoviciu 1935)<sup>[**(5)**](#Note5)</sup>.
+Where L is the maximum absolute "slope", also known as the Lipschitz constant, and (5/4) is the so-called Popoviciu constant, and where _k_ is an integer in the interval \[0, _n_\] (Lorentz 1986)<sup>[**(5)**](#Note5)</sup>, (Popoviciu 1935)<sup>[**(6)**](#Note6)</sup>.
 
 There are two counterexamples here; together they show that this scheme can fail to ensure consistency, even if the set of functions is restricted to "smooth" functions (not just Lipschitz continuous functions):
 
@@ -177,9 +190,9 @@ There are two counterexamples here; together they show that this scheme can fail
 
 It is yet to be seen whether a counterexample exists for this scheme when _n_ is restricted to powers of 2.
 
-**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(4)**](#Note4)</sup>, (Sikkema 1961)<sup>[**(6)**](#Note6)</sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
+**Third scheme.** Same as the second scheme, but replacing (5/4) with the Sikkema constant, _S_ = (4306+837*sqrt(6))/5832 (Lorentz 1986)<sup>[**(5)**](#Note5)</sup>, (Sikkema 1961)<sup>[**(7)**](#Note7)</sup>, which equals about 1.09.   In fact, the same counterexamples for the second scheme apply to this one, since this scheme merely multiplies the offset to bring the approximating polynomials closer to _f_.
 
-**Fourth scheme.**  In this scheme, which relates to a result from Kopotun et al. (2017)<sup>[**(7)**](#Note7)</sup>, let _f_ be a nondecreasing and Lipschitz continuous function in \[0, 1\].  Then for all _n_&ge;2:
+**Fourth scheme.**  In this scheme, which relates to a result from Kopotun et al. (2017)<sup>[**(8)**](#Note8)</sup>, let _f_ be a nondecreasing and Lipschitz continuous function in \[0, 1\].  Then for all _n_&ge;2:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + sqrt(1&minus;(2\*_k_/_n_&minus;1)<sup>2</sup>)\*_L_/_n_.
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; sqrt(1&minus;(2\*_k_/_n_&minus;1)<sup>2</sup>)\*_L_/_n_.
@@ -210,12 +223,12 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(8)**](#Note8)</sup>. |
-| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2011)<sup>[**(9)**](#Note9)</sup>. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(9)**](#Note9)</sup>. |
+| Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
 | Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for all _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and all _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
-| "Fast simulation" (number of flips required has a tail that drops off exponentially).  Also known as "strongly realizable" by Flajolet et al. (2011)<sup>[**(9)**](#Note9)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
+| "Fast simulation" (number of flips required has a tail that drops off exponentially).  Also known as "strongly realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>. |
 
 <a id=Notes></a>
@@ -223,13 +236,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 - <small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 - <small><sup id=Note2>(2)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for all _x_, _y_ pairs, where _x_ and _y_ are each in \[0, 1\] and _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
-- <small><sup id=Note3>(3)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
-- <small><sup id=Note4>(4)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
-- <small><sup id=Note5>(5)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
-- <small><sup id=Note6>(6)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
-- <small><sup id=Note7>(7)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
-- <small><sup id=Note8>(8)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
-- <small><sup id=Note9>(9)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.</small>
+- <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.</small>
+- <small><sup id=Note4>(4)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
+- <small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
+- <small><sup id=Note6>(6)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
+- <small><sup id=Note7>(7)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
+- <small><sup id=Note8>(8)</sup> Kopotun, K.A., et al., "[**Interpolatory pointwise estimates for monotone polynomial approximation**](https://arxiv.org/abs/1711.07083)", arXiv:1711.07083 [math.CA], 2017.</small>
+- <small><sup id=Note9>(9)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
 - <small><sup id=Note10>(10)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
 - <small><sup id=Note11>(11)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note12>(12)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
