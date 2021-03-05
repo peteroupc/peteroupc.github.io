@@ -136,10 +136,10 @@
 <li><em>f</em> is monotonically increasing,</li>
 <li><em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and</li>
 <li><em>f&prime;</em>(<em>&lambda;</em>), the &quot;slope&quot; function of <em>f</em>, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
-</ul></li>
-</ol>
+</ul>
 
-<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random number <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup> (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p>
+<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random number <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup> (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
+</ol>
 
 <p><strong>Examples:</strong></p>
 
@@ -193,12 +193,12 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>In (0, 1)</td>
+<td>&gt; 0 and &lt; 1</td>
 <td>1</td>
 <td>Use the algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1 &minus; <em>f</em>(1&minus;<em>&lambda;</em>).<br/><em>Inverted coin</em>: Instead of the usual input coin, use a coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br/><em>Inverted result:</em> If the overall algorithm would return 0, it returns 1 instead, and vice versa.</td>
 </tr>
 <tr>
-<td>In (0, 1)</td>
+<td>&gt; 0 and &lt; 1</td>
 <td>0</td>
 <td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = <em>f</em>(1&minus;<em>&lambda;</em>).  (For example, cosh(<em>&lambda;</em>)&minus;1 becomes cosh(1&minus;<em>&lambda;</em>)&minus;1.)<br/>Inverted coin.</td>
 </tr>
@@ -209,7 +209,7 @@
 </tr>
 <tr>
 <td>1</td>
-<td>In (0, 1]</td>
+<td>&gt; 0 and &le; 1</td>
 <td>Algorithm for <strong>certain functions that equal 0 at 0</strong>, but with <em>f</em>(<em>&lambda;</em>) = 1&minus;<em>f</em>(<em>&lambda;</em>).<br/>Inverted result.</td>
 </tr>
 </tbody></table>

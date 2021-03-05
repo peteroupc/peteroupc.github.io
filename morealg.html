@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/03/01"><meta name="citation_online_date" content="2021/03/01"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/03/05"><meta name="citation_online_date" content="2021/03/05"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -71,7 +71,7 @@
 <li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a></li>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
-<li><a href="#Algorithm_2_for_Non_Negative_Factories"><strong>Algorithm 2 for Non-Negative Factories</strong></a></li>
+<li><a href="#More_Algorithms_for_Non_Negative_Factories"><strong>More Algorithms for Non-Negative Factories</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1035,9 +1035,9 @@ calc_linear_func(count=8)
 <li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
 </ol>
 
-<p><a id=Algorithm_2_for_Non_Negative_Factories></a></p>
+<p><a id=More_Algorithms_for_Non_Negative_Factories></a></p>
 
-<h3>Algorithm 2 for Non-Negative Factories</h3>
+<h3>More Algorithms for Non-Negative Factories</h3>
 
 <p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note27"><strong>(27)</strong></a></sup>:</p>
 
@@ -1047,21 +1047,44 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.  Say the oracle produces uniform random numbers in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&mu;</em>) = sin(<em>&mu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random numbers that average to that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note27"><strong>(27)</strong></a></sup>.  Say the oracle produces uniform random numbers in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random numbers that average to that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
+<li>Averaging to the mean of <em>f</em>(<em>X</em>) (that is, <strong>E</strong>[<em>f</em>(<em>X</em>)] where <strong>E</strong>[.] means expected or average value) is not the same as averaging to <em>f</em>(<em>&mu;</em>) where <em>&mu;</em> is the mean of the oracle&#39;s numbers (that is, <em>f</em>(<strong>E</strong>[<em>X</em>])).  For example, if <em>X</em> is 0 or 1 with equal probability, and <em>f</em>(<em>&nu;</em>) = exp(&minus;<em>&nu;</em>), then <strong>E</strong>[<em>f</em>(<em>X</em>)] = exp(0) + (exp(&minus;1) &minus; exp(0))*(1/2), and <em>f</em>(<strong>E</strong>[<em>X</em>]) = <em>f</em>(1/2) = exp(&minus;1/2).</li>
 <li><p>(Lee et al. 2014, Corollary 4)<sup><a href="#Note27"><strong>(27)</strong></a></sup>: If <em>f</em>(<em>&mu;</em>) is known to return only values in the interval [<em>a</em>, <em>c</em>], the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, <em>&delta;</em> &gt; <em>b</em>, and <em>&delta;</em> and <em>b</em> are known numbers, then Algorithm 2 can be modified as follows:</p>
 
 <ul>
-<li>Use <em>f</em>(<em>&mu;</em>) = <em>f</em>(<em>&mu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
+<li>Use <em>f</em>(<em>&nu;</em>) = <em>f</em>(<em>&nu;</em>) &minus; <em>b</em>, and use <em>&delta;</em> = <em>&delta;</em> &minus; <em>b</em>.</li>
 <li><em>m</em> is taken as max(<em>b</em>&minus;<em>a</em>, <em>c</em>&minus;<em>b</em>).</li>
 <li>When Algorithm 2 finishes, add <em>b</em> to its return value.</li>
 </ul></li>
 <li>The check &quot;With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>&quot; is exact if the oracle produces only rational numbers <em>and</em> if <em>f</em>(<em>x</em>) outputs only rational numbers.  If the oracle or <em>f</em> can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then this check should be implemented using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.</li>
 </ol>
+</blockquote>
+
+<p><strong>Algorithm 3.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown, and whose variance should be finite.  The goal is to use the oracle to produce non-negative random numbers with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  This can be done using the algorithm below.  In the algorithm:</p>
+
+<ul>
+<li><em>f</em>(<em>&mu;</em>) must be a function that can be written as the following infinite series expansion: <em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup>, where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
+<li><em>&psi;</em> is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)</li>
+</ul>
+
+<p>The algorithm follows.</p>
+
+<ol>
+<li>Set <em>ret</em> to 0, <em>prod</em> to 1, <em>k</em> to 0, and <em>w</em> to 1. (<em>w</em> is the probability of generating <em>k</em> or more random numbers in a single run of the algorithm.)</li>
+<li>If <em>k</em> is greater than 0: Generate a number from the oracle, call it <em>x</em>, and multiply <em>prod</em> by <em>x</em>&minus;<em>a</em>.</li>
+<li>Add <em>c</em>[<em>k</em>]*<em>prod</em>/<em>w</em> to <em>ret</em>.</li>
+<li>Multiply <em>w</em> by <em>&psi;</em> and add 1 to <em>k</em>.</li>
+<li>With probability <em>&psi;</em>, go to step 2.  Otherwise, return <em>ret</em>.</li>
+</ol>
+
+<p>Now, assume the oracle&#39;s numbers are all less than or equal to <em>b</em> (rather than greater than or equal to <em>a</em>), where <em>b</em> is a known rational number.  Then <em>f</em> must be 0 or greater everywhere in (&minus;<em>&infin;</em>, <em>b</em>] and be nonincreasing there (Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, <em>z</em> = <em>b</em> &minus;<em>&mu;</em>; (2) in step 2, multiply <em>prod</em> by <em>b</em> &minus; <em>x</em> rather than <em>x</em> &minus; <em>a</em>.</p>
+
+<blockquote>
+<p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform PSRNs.  See also note 3 on Algorithm 2.</p>
 </blockquote>
 
 <p><a id=License></a></p>
