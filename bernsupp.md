@@ -37,7 +37,7 @@ A _factory function_ _f_(_&lambda;_) is a function for which the Bernoulli facto
 
 **Twice differentiable functions.** The following method, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- has a defined "slope-and-slope" function in \[0, 1\] (that is, the function is _twice differentiable_ there), and
+- has a defined "slope-of-slope" everywhere in \[0, 1\] (that is, the function is _twice differentiable_ there), and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
@@ -50,7 +50,7 @@ Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) fo
 
 My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given _f_.
 
-> **Note:** For this method, the "slope-of-slope" function need not be continuous (Y. Peres, pers. comm., 2021).
+> **Note:** For this method, the "slope-of-slope" function need not have discontinuous (Y. Peres, pers. comm., 2021).
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
