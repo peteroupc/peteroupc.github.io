@@ -50,7 +50,7 @@ Let _m_ be an upper bound of the highest value of abs(_f&prime;&prime;_(_x_)) fo
 
 My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `c2params`, to calculate the necessary values for _m_ and the bounds of these polynomials, given _f_.
 
-> **Note:** For this method, the "slope-of-slope" function need not have discontinuous (Y. Peres, pers. comm., 2021).
+> **Note:** For this method, the "slope-of-slope" function need not be discontinuous (Y. Peres, pers. comm., 2021).
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
