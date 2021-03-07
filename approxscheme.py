@@ -12,6 +12,18 @@ def lowerbound(x, boundmult=1000000000000000):
     boundmult = S(boundmult)
     return S(int(floor(x * boundmult).n())) / boundmult
 
+def funclimit(func, x, v, dir="+"):
+    # Work around SymPy bugs involving limits of piecewise functions
+    try:
+        return limit(func, x, v, dir=dir)
+    except:
+        pw = piecewise_fold(func)
+        if isinstance(pw, Piecewise):
+            pieces = [(limit(arg[0], x, v, dir=dir), arg[1]) for arg in pw.args]
+            return Piecewise(*pieces).subs(x, v)
+        else:
+            return limit(func, x, v, dir=dir)
+
 def degelev(poly, degs):
     # Degree elevation of Bernstein-form polynomials.
     # See also Tsai and Farouki 2001.
@@ -323,24 +335,31 @@ def concavity(func, x):
             + "so resorting to numerical computation"
         )
         d = diff(func, x)
+        d2 = diff(d, x)
         c = 100
         diffs = []
         for i in range(c + 1):
-            v = d.subs(x, i / c).n()
+            v = d2.subs(x, S(i) / c).n()
             try:
                 Min(v)
                 diffs.append(v)
             except:
                 # Not comparable, so take limits instead
-                diffs.append(limit(d, x, i / c, "-"))
-                diffs.append(limit(d, x, i / c, "+"))
+                snext = S(i + 1) / c
+                diffs.append(
+                    funclimit(d, x, S(i) / c, "-") - funclimit(d, x, snext, "-")
+                )
+                diffs.append(
+                    funclimit(d, x, S(i) / c, "+") - funclimit(d, x, snext, "+")
+                )
         isconcave = True
         isconvex = True
         for i in range(len(diffs) - 1):
             try:
-                if diffs[i] < diffs[i + 1]:
+                # print([diffs[i].n(),diffs[i+1].n()])
+                if diffs[i] > 0:
                     isconcave = False
-                if diffs[i] > diffs[i + 1]:
+                if diffs[i] < 0:
                     isconvex = False
             except:
                 print("WARNING: Can't determine whether function is concave or convex")
@@ -384,6 +403,52 @@ def funcstring(func, x):
     else:
         return "%s" % (str(pwfunc).replace("*", "\*").replace("lambda", "_&lambda;_"))
 
+def bernpoly(a, x):
+    # Create a polynomial in Bernstein form using the given
+    # array of coefficients and the symbol x.  The polynomial's
+    # degree is the length of 'a' minus 1.
+    pt = x
+    n = len(a) - 1
+    ret = 0
+    v = [binomial(n, j) for j in range(n // 2 + 1)]
+    for i in range(0, n + 1):
+        oldret = ret
+        bino = v[i] if i < len(v) else v[n - i]
+        ret += a[i] * bino * pt ** i * (1 - pt) ** (n - i)
+    return ret
+
+def dominates(func, x, hfunc):
+    # Determine whether hfunc is greater than func
+    # everywhere in the open interval (0, 1).
+    try:
+        nmax = minimum(hfunc - func, x, Interval.open(0, 1))
+        if nmax <= 0:
+            return False
+        return True
+    except:
+        print("WARNING: Resorting to numerical optimization")
+        lip = upperbound(buildParam("lipschitz", cc, x))
+        if lip == 0:
+            lip = 1
+        cs = S(1) / 100000
+        ce = 1 - cs
+        n = ceiling(20 * lip) + 2
+        hf = hfunc - func
+        for i in range(n + 1):
+            if hf.subs(x, cs + (ce - cs) * S(i) / n) <= 0:
+                return False
+        return True
+
+def findh(func, x):
+    deg = 1
+    while True:
+        coeffs = [0 if i == 0 else 1 for i in range(deg + 1)]
+        bp = bernpoly(coeffs, x)
+        print(bp - func)
+        if dominates(func, x, bp):
+            return coeffs
+        deg *= 2
+
 def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=False):
     """
         This method builds a scheme for approximating a continuous function _f_(_&lambda;_) that maps the interval \[0, 1\] to (0, 1), with the help of polynomials that converge from above and below to that function.  The function is approximated in a way that allows simulating the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_; this is also known as the Bernoulli Factory problem.  Not all functions of this kind are supported yet.
@@ -416,8 +481,14 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
         return False
     conc = concavity(func, x)
     if conc != "concave" and nmm[0] <= 0:
-        if (not isdiff) and func.subs(x, 0) == 0:
-            newfunc = diff(func, x)
+        if (not isdiff) and func.subs(x, 0) == 0 and func.subs(x, 1) > 0:
+            # TODO: Support case when func(1)==0
+            h = findh(func, x)
+            hpoly = bernpoly(h, x)
+            newfunc = Piecewise(
+                (funclimit(func / hpoly, x, 0), Eq(x, 0)), (func / hpoly, True)
+            )
+            newfunc = piecewise_fold(newfunc)
             if approxscheme2(
                 newfunc,
                 x,
@@ -430,8 +501,14 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
                 print(
                     "Let _f_(_&lambda;_) = "
                     + funcstring(func, x)
-                    + ".  Then _f&prime;_(_&lambda;_) is the derivative of _f_, and the "
-                    + "function _f_ can be simulated using the integral method."
+                    + ".  Then simulate _f_ by first "(
+                        "flipping the input coin"
+                        if h == [0, 1]
+                        else "simulating a polynomial with the following coefficients: "
+                        + str(h)
+                    )
+                    + ".  If it returns 1, then simulate "
+                    + "_g_ and return the result."
                 )
                 return True
         if (not isdiff) and func.subs(x, 1) == 0:
@@ -517,7 +594,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
     offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
     if isdiff:
-        data = "* Let _f&prime;_(_&lambda;_) = "
+        data = "* Let _g_(_&lambda;_) = "
     else:
         data = "* Let _f_(_&lambda;_) = "
     data += funcstring(func, x) + "."
@@ -543,7 +620,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
             data += "0 if _n_&lt;%d; otherwise, " % (inrangedeg)
             lowerbounded = True
     if isdiff:
-        data += "_f&prime;_(_k_/_n_)"
+        data += "_g_(_k_/_n_)"
     else:
         data += "_f_(_k_/_n_)"
     if conc != "concave":

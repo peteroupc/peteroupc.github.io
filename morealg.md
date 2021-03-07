@@ -811,7 +811,7 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 
 **Algorithm 3.** Say we have an _oracle_ that produces independent random real numbers that are all greater than or equal to _a_ (which is a known rational number), whose mean (_&mu;_) is unknown, and whose variance should be finite.  The goal is to use the oracle to produce non-negative random numbers with mean _f_(_&mu;_).  This is possible only if _f_ is 0 or greater everywhere in the interval \[_a_, _&infin;_\) and is nondecreasing in that interval (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>.  This can be done using the algorithm below.  In the algorithm:
 
-- _f_(_&mu;_) must be a function that can be written as the following infinite series expansion: _c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup>, where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
+- _f_(_&mu;_) must be a function that can be written as the following infinite series expansion: _c_[0]\*_z_<sup>0</sup> + _c_[1]\*_z_<sup>1</sup> + ..., where _z_ = _&mu;_&minus;_a_ and all _c_\[_i_\] are 0 or greater.
 - _&psi;_ is a rational number close to 1, such as 95/100.  (The exact choice is arbitrary and can be less or greater for efficiency purposes, but must be greater than 0 and less than 1.)
 
 The algorithm follows.
