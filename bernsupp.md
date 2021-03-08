@@ -2,6 +2,20 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
+<a id=Contents></a>
+## Contents
+
+- [**Contents**](#Contents)
+- [**General Factory Functions**](#General_Factory_Functions)
+    - [**Approximation Schemes**](#Approximation_Schemes)
+    - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
+- [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
+- [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
+- [**Notes**](#Notes)
+- [**Appendix**](#Appendix)
+    - [**Proofs for Hölder Function Approximation Scheme**](#Proofs_for_H_lder_Function_Approximation_Scheme)
+- [**License**](#License)
+
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
 
@@ -230,6 +244,11 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(10)**](#Note10)</sup>. |
 | "Fast simulation" (number of flips required has a tail that drops off exponentially).  Also known as "strongly realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>. |
+
+<a id=Examples_of_Bernoulli_Factory_Approximation_Schemes></a>
+## Examples of Bernoulli Factory Approximation Schemes
+
+The following are approximation schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes were generated automatically using `approxscheme2` and have not been rigorously verified for correctness.
 
 <a id=Notes></a>
 ## Notes

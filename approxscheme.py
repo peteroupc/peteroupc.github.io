@@ -130,7 +130,10 @@ def hoelderconst(func, x, alpha):
     # our purposes, we can do with an
     # upper bound on the Hölder constant, and also to reduce
     # the chance of underestimating that constant.
-    print("WARNING: Resorting to numerical computation", file=sys.stdout)
+    print(
+        "WARNING: Resorting to numerical computation",
+        file=sys.stderr,
+    )
     return upperbound(estimatehoelder(func, xz, alpha, points), 10000)
 
 def c2params(func, x, n):
@@ -170,6 +173,14 @@ def buildOffset(kind, dd, n):
         # Use the theoretical offset for Lipschitz
         # continuous functions. dd=max. abs. "slope"
         return dd * (1 + sqrt(2)) / sqrt(n)
+    elif kind == "myhoelderhalf":
+        # Use my theoretical offset for (1/2)-Hölder
+        # continuous functions, valid if n>=4. dd=Hölder constant
+        return (
+            dd
+            * (Rational(2, 7) ** Rational(1, 4))
+            / ((2 ** Rational(1, 4) - 1) * (n) ** Rational(1, 4))
+        )
     elif kind == "mylipschitz":
         # Use my theoretical offset for Lipschitz
         # continuous functions, valid if n>=4. dd=max. abs. "slope"
@@ -212,7 +223,7 @@ def nminmax(func, x):
     try:
         return [minimum(func, x, Interval(0, 1)), maximum(func, x, Interval(0, 1))]
     except:
-        print("WARNING: Resorting to numerical optimization", file=sys.stdout)
+        print("WARNING: Resorting to numerical optimization", file=sys.stderr)
     cv = [0, 1]
     df = diff(func)
     mmh = isinstance(func, Min) or isinstance(func, Max) or isinstance(func, Heaviside)
@@ -263,8 +274,14 @@ def nminmax(func, x):
     return [lowerbound(Min(*cv).simplify()), upperbound(Max(*cv).simplify())]
 
 def buildParam(kind, func, x, lip=None):
-    # TODO: Support (1/2)-Hölder constant
-    if kind == "c2" or kind == "c1" or kind == "myc2":
+    if kind == "myhoelderhalf":
+        try:
+            dd = hoelderconst(func, x, S.Half)
+        except:
+            if lip == None:
+                raise ValueError
+            dd = S(lip)
+    elif kind == "c2" or kind == "c1" or kind == "myc2":
         try:
             # Maximum of second derivative.
             dd = nminmax(diff(diff(func)), x)
@@ -382,7 +399,7 @@ def concavity(func, x):
         print(
             "WARNING: Can't determine whether function is concave or convex symbolically, "
             + "so resorting to numerical computation",
-            file=sys.stdout,
+            file=sys.stderr,
         )
         isconcave = True
         isconvex = True
@@ -402,7 +419,7 @@ def concavity(func, x):
             except:
                 print(
                     "WARNING: Can't determine whether function is concave or convex",
-                    file=sys.stdout,
+                    file=sys.stderr,
                 )
                 return None
             if (not isconvex) and (not isconcave):
@@ -482,11 +499,14 @@ def dominates(func, x, hfunc):
     # everywhere in the open interval (0, 1).
     try:
         nmax = minimum(hfunc - func, x, Interval.open(0, 1))
-        if nmax <= 0:
+        if nmax < 0:
             return False
+        if nmax == 0:
+            s = solveset(hfunc - func, x, domain=Interval.open(0, 1))
+            return s == EmptySet
         return True
     except:
-        print("WARNING: Resorting to numerical optimization", file=sys.stdout)
+        print("WARNING: Resorting to numerical optimization", file=sys.stderr)
         # Get this function's Lipschitz constant to control
         # the number of evaluation points
         lip = buildParam("lipschitz", func, x)
@@ -505,11 +525,25 @@ def dominates(func, x, hfunc):
         return True
 
 def findh(func, x, endzero=False):
+    # Finds a polynomial that bounds func from above.
     deg = 1
     for k in range(6):
         coeffs = [0 if i == 0 or (endzero and i == deg) else 1 for i in range(deg + 1)]
         bp = bernpoly(coeffs, x)
+        # print(bp)
         if dominates(func, x, bp):
+            return coeffs
+        deg *= 2
+    return None
+
+def findq(func, x):
+    # Finds a polynomial that bounds func from below.
+    deg = 1
+    for k in range(6):
+        coeffs = [0 if i < deg else 1 for i in range(deg + 1)]
+        bp = bernpoly(coeffs, x)
+        # print(bp)
+        if dominates(1 - func, x, 1 - bp):
             return coeffs
         deg *= 2
     return None
@@ -529,17 +563,25 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
     - `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
     - `levels`: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds "c1", "c0", or "sikkema", and degree 1 otherwise.  Default is 9.
 
-    The method prints out text describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**.  **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\]. **fbound** means the coefficients' lower and upper bounds for the polynomial of degree _n_.
+    The method returns a string in Markdown format describing the approximation scheme, which can then be used in either of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) to simulate the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_.  It refers to the functions **fbelow**, **fabove**, and **fbound**.  **fbelow** and **fabove** mean the _k_<sup>th</sup> Bernstein coefficient for the lower or upper degree-_n_ polynomial, respectively, where _k_ is an integer in the interval \[0, _n_\]. **fbound** means the coefficients' lower and upper bounds for the polynomial of degree _n_.  If the method fails, it returns None.
     """
+    # TODO:
+    # - Special handling for polynomials
+    # - Gather warnings to report whether finding the approximation
+    #    scheme relied on numerical methods which may affect
+    #    correctness of the resulting scheme
+    # - Have an option not to tighten the approximation scheme
+    #    for scheme kinds such as "myc2" and "mylipschitz" that have
+    #    theoretically known upper bounds
     if not isdiff:
         print(func)
     curvedata = []
     nmm = nminmax(func, x)
     if nmm[0] < 0 or nmm[1] > 1:
         if not isdiff:
-            print("Function does not admit a Bernoulli factory", file=sys.stdout)
+            print("Function does not admit a Bernoulli factory", file=sys.stderr)
         return False
-    schemes = ["myc2", "mylipschitz"]
+    schemes = ["myc2", "mylipschitz", "myhoelderhalf"]
     if kind != None:
         schemes = [kind]
     kind = None
@@ -553,16 +595,27 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
         kind = scheme
         break
     if kind == None:
-        print("Function not supported for the scheme %s" % (schemes), file=sys.stdout)
-        return False
+        print("Function not supported for the scheme %s" % (schemes), file=sys.stderr)
+        return None
     if kind == "c1" or kind == "c0" or kind == "sikkema":
         deg = 2
-    elif kind == "mylipschitz" or kind == "myc2":
+    elif kind == "mylipschitz" or kind == "myc2" or kind == "myhoelderhalf":
         deg = 4
     else:
         deg = 1
+    origfunc = func
     conc = concavity(func, x)
+    specialHandling = None
+    nonconvex = False
     if conc != "concave" and nmm[0] <= 0:
+        specialHandling = "zero"
+    elif conc != "convex" and nmm[1] >= 1:
+        specialHandling = "one"
+    if specialHandling != None:
+        invertedResult = False
+        if specialHandling == "one":
+            func = 1 - func
+            invertedResult = True
         zeroAtZero = func.subs(x, 0) == 0
         zeroAtOne = func.subs(x, 1) == 0
         invertedCoin = False
@@ -572,37 +625,87 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
             zeroAtZero = zeroAtOne
             zeroAtOne = tmp
             func = func.subs(x, 1 - x)
-        origfunc = func
         if (not isdiff) and zeroAtZero:
             h = findh(func, x, zeroAtOne)
+            h2 = None
             newfunc = None
             if h != None:
                 hpoly = bernpoly(h, x)
-                newfunc = Piecewise(
-                    (funclimit(func / hpoly, x, 0), Eq(x, 0)), (func / hpoly, True)
+                newfunc = func / hpoly
+                funczero = newfunc.subs(x, 0)
+                funczerolim = funclimit(newfunc, x, 0)
+                if funczero != funczerolim:
+                    newfunc = Piecewise((funczerolim, Eq(x, 0)), (newfunc, True))
+                newfunc = piecewise_fold(newfunc.simplify())
+                if funczerolim == 0:
+                    print("Limit is zero, retrying")
+                    h2 = findh(newfunc, x, zeroAtOne)
+                    hpoly2 = bernpoly(h2, x)
+                    newfunc = newfunc / hpoly2
+                    funczero = newfunc.subs(x, 0)
+                    funczerolim = funclimit(newfunc, x, 0)
+                    if funczero != funczerolim:
+                        newfunc = Piecewise((funczerolim, Eq(x, 0)), (newfunc, True))
+                    newfunc = piecewise_fold(newfunc.simplify())
+                schemedata = approxscheme2(
+                    newfunc,
+                    x,
+                    kind=kind,
+                    lip=None,
+                    double=double,
+                    levels=levels,
+                    isdiff=True,
                 )
-                newfunc = piecewise_fold(newfunc)
-            if h != None and approxscheme2(
-                newfunc,
-                x,
-                kind=kind,
-                lip=None,
-                double=double,
-                levels=levels,
-                isdiff=True,
-            ):
-                print(
-                    "    Let _f_(_&lambda;_) = "
-                    + funcstring(origfunc, x)
-                    + ".  Then simulate _f_ by first "
-                    + (
-                        "flipping the input coin"
-                        if h == [0, 1] and not invertedCoin
-                        else "simulating a polynomial with the following coefficients: "
+            if h != None and schemedata != None:
+                simpoly = ""
+                if h == [0, 1] and not invertedCoin:
+                    simpoly = "flipping the input coin.  If it returns 0, "
+                elif h == [0, 1, 1] and not invertedCoin:
+                    simpoly = "flipping the input coin twice.  If both flips return 0, "
+                else:
+                    simpoly = (
+                        "simulating a polynomial with the following coefficients: "
                         + str(h)
+                        + ".  If it returns 0, "
                     )
-                    + ".  If it returns 1, then simulate "
-                    + "_g_ and return the result."
+                data = (
+                    "* Let _f_(_&lambda;_) = "
+                    + "**"
+                    + funcstring(origfunc, x)
+                    + "**"
+                    + ".  Then simulate _f_ by first "
+                    + simpoly
+                    + (
+                        "return 1.  Otherwise, "
+                        if invertedResult
+                        else "return 0.  Otherwise, "
+                    )
+                )
+                if h2 != None:
+                    simpoly = ""
+                    if h2 == [0, 1] and not invertedCoin:
+                        simpoly = "flip the input coin.  If it returns 0, "
+                    elif h2 == [0, 1, 1] and not invertedCoin:
+                        simpoly = "flip the input coin twice.  If both flips return 0, "
+                    else:
+                        simpoly = (
+                            "simulate a polynomial with the following coefficients: "
+                            + str(h2)
+                            + ".  If it returns 0, "
+                        )
+                    data += simpoly + (
+                        "return 1.  Otherwise, "
+                        if invertedResult
+                        else "return 0.  Otherwise,"
+                    )
+                data += (
+                    "simulate "
+                    + "_g_(_&lambda;_) (a function described below) and "
+                    + (
+                        "return 1 minus the result."
+                        if invertedResult
+                        else "return the result."
+                    )
                     + (
                         "  During the simulation, instead of flipping the input coin as "
                         + "usual, a different coin is flipped which "
@@ -611,20 +714,21 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
                         else ""
                     )
                 )
-                return True
-        if not isdiff:
+                data += "<br>\n"
+                data += schemedata
+                print(data)
+                return data
+        if (not isdiff) and specialHandling == "zero":
             print(
                 "This non-concave function with minimum of 0 is not yet supported",
-                file=sys.stdout,
+                file=sys.stderr,
             )
-        return False
-    if conc != "convex" and nmm[1] >= 1:
-        if not isdiff:
+        if (not isdiff) and specialHandling == "one":
             print(
-                "This non-convex function with maximum of 1 is not yet supported",
-                file=sys.stdout,
+                "This non-concave function with maximum of 1 is not yet supported",
+                file=sys.stderr,
             )
-        return False
+        return None
     for i in range(1, levels + 1):
         offset = buildOffset(kind, dd, deg)
         curvedata.append(
@@ -639,10 +743,10 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
         print(
             "INCONSISTENT --> offset=%s [dd=%s, kind=%s]"
             % (S(offset).n(), upperbound(dd.n()).n(), kind),
-            file=sys.stdout,
+            file=sys.stderr,
         )
         consistencyCheckCore(curvedata, Rational(1), diagnose=True)
-        return
+        return None
     for cdlen in range(3, len(curvedata) + 1):
         left = Rational(0, 1)
         right = Rational(1, 1)
@@ -657,7 +761,7 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
         print(
             "consistent(len=%d) --> offset_deg1=%s [ratio=%s, dd=%s, kind=%s]"
             % (cdlen, S(offset * right).n(), right.n(), upperbound(dd.n()).n(), kind),
-            file=sys.stdout,
+            file=sys.stderr,
         )
     inrangedeg = -1
     inrangedata = None
@@ -670,10 +774,11 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
     offsetn = buildOffset(kind, dd, nsymbol)
     offsetn *= right
     if isdiff:
-        data = "* Let _g_(_&lambda;_) = "
+        data = "    Let _g_(_&lambda;_) = "
+        data += funcstring(func, x) + "."
     else:
         data = "* Let _f_(_&lambda;_) = "
-    data += funcstring(func, x) + "."
+        data += "**" + funcstring(func, x) + "**."
     if double:
         data += " Then, for all _n_ that are powers of 2, starting from 1:\n"
     else:
@@ -700,7 +805,7 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
     else:
         data += "_f_(_k_/_n_)"
     if conc != "concave":
-        data += " &minus; `%s`" % (str(offsetn.subs(x, symbols("lambda"))))
+        data += " &minus; %s" % (funcstring(offsetn, x))
     data += ".\n"
     data += "    * **fabove**(_n_, _k_) = "
     if inrangedeg >= 0:
@@ -723,7 +828,7 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
     else:
         data += "_f_(_k_/_n_)"
     if conc != "convex":
-        data += " + `%s`" % (str(offsetn.subs(x, symbols("lambda"))))
+        data += " + %s" % (funcstring(offsetn, x))
     data += ".\n"
     if inrangedeg >= 0 or (upperbounded and lowerbounded):
         if conc == "concave" or conc == "convex" or (upperbounded and lowerbounded):
@@ -733,5 +838,6 @@ def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=Fa
                 "    * **fbound**(_n_) = [0, 1] if _n_&ge;%d, or [&minus;1, 2] otherwise.\n"
                 % (inrangedeg)
             )
-    print(data)
-    return True
+    if not isdiff:
+        print(data)
+    return data
