@@ -130,7 +130,7 @@ def hoelderconst(func, x, alpha):
     # our purposes, we can do with an
     # upper bound on the Hölder constant, and also to reduce
     # the chance of underestimating that constant.
-    print("WARNING: Resorting to numerical computation")
+    print("WARNING: Resorting to numerical computation", file=sys.stdout)
     return upperbound(estimatehoelder(func, xz, alpha, points), 10000)
 
 def c2params(func, x, n):
@@ -203,7 +203,8 @@ def buildOffset(kind, dd, n):
     else:
         raise ValueError
 
-# NOTE: continuous_domain is currently unreliable for Min/Max/Piecewise
+# NOTE: continuous_domain is currently unreliable for Min/Max/Piecewise,
+# but helps improve speed of numerical optimization
 from sympy.calculus.util import continuous_domain
 
 def nminmax(func, x):
@@ -211,10 +212,11 @@ def nminmax(func, x):
     try:
         return [minimum(func, x, Interval(0, 1)), maximum(func, x, Interval(0, 1))]
     except:
-        print("WARNING: Resorting to numerical optimization")
+        print("WARNING: Resorting to numerical optimization", file=sys.stdout)
     cv = [0, 1]
     df = diff(func)
-    n = 20
+    mmh = isinstance(func, Min) or isinstance(func, Max) or isinstance(func, Heaviside)
+    n = 40 if mmh else 20
     for i in range(n):
         try:
             ns = nsolve(df, x, (S(i) / n, S(i + 1) / n), solver="bisect")
@@ -228,17 +230,26 @@ def nminmax(func, x):
     # Evaluate at critical points, and
     # remove incomparable values
     cv2 = []
+    # print(func.__class__)
+    iscont = continuous_domain(func, x, Interval(0, 1)) == Interval(0, 1)
+    # print([func.__class__,iscont])
+    # print(func)
     for c in cv:
         c2s = [func.subs(x, c)]
-        if not isinstance(func, Min) and not isinstance(func, Max):
+        # Finding limits for Min, Max, and Heaviside can be
+        # extremely slow.  Also check whether function is continuous
+        # to avoid unnecessary limit computation
+        if (not iscont) and (not mmh):
             try:
                 c2s.append(funclimit(func, x, c, "+"))
             except:
                 pass
-            try:
-                c2s.append(funclimit(func, x, c, "-"))
-            except:
-                pass
+            # XXX: Disabling because it can be extremely slow in some
+            # cases, especially when Heaviside is involved
+            # try:
+            #  c2s.append(funclimit(func, x, c, "-"))
+            # except:
+            #  pass
         for c2 in c2s:
             # Change complex infinity to infinity
             if c2 == zoo:
@@ -252,6 +263,7 @@ def nminmax(func, x):
     return [lowerbound(Min(*cv).simplify()), upperbound(Max(*cv).simplify())]
 
 def buildParam(kind, func, x, lip=None):
+    # TODO: Support (1/2)-Hölder constant
     if kind == "c2" or kind == "c1" or kind == "myc2":
         try:
             # Maximum of second derivative.
@@ -276,6 +288,13 @@ def buildParam(kind, func, x, lip=None):
             # Maximum of first derivative (Lipschitz constant).
             # Notice that Lipschitz functions are differentiable almost
             # everywhere, due to a result by Rademacher.
+            # Quick checks
+            dd = diff(func).subs(x, 0)
+            if dd == oo or dd == -oo or dd == zoo:
+                return oo
+            dd = diff(func).subs(x, 1)
+            if dd == oo or dd == -oo or dd == zoo:
+                return oo
             ff = func.rewrite(Piecewise)
             dd = nminmax(diff(func), x)
             dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
@@ -362,7 +381,8 @@ def concavity(func, x):
     except:
         print(
             "WARNING: Can't determine whether function is concave or convex symbolically, "
-            + "so resorting to numerical computation"
+            + "so resorting to numerical computation",
+            file=sys.stdout,
         )
         isconcave = True
         isconvex = True
@@ -380,7 +400,10 @@ def concavity(func, x):
                 if vmid > (v1 + v2) / 2:
                     isconvex = False
             except:
-                print("WARNING: Can't determine whether function is concave or convex")
+                print(
+                    "WARNING: Can't determine whether function is concave or convex",
+                    file=sys.stdout,
+                )
                 return None
             if (not isconvex) and (not isconcave):
                 break
@@ -400,7 +423,9 @@ def consistencyCheckCore(curvedata, ratio, diagnose=False):
     return True
 
 def srepl(s):
-    return str(s).replace("*", "\*").replace("&", "&amp;")
+    return str(s).replace("&", "&amp;")
+
+import re
 
 def funcstring(func, x):
     pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
@@ -429,9 +454,14 @@ def funcstring(func, x):
                     "lambda", "_&lambda;_"
                 )
             sep = True
-        return data
     else:
-        return "%s" % (srepl(pwfunc).replace("lambda", "_&lambda;_"))
+        data = "%s" % (srepl(pwfunc).replace("lambda", "_&lambda;_"))
+    data = data.replace(" - ", " &minus; ")
+    data = data.replace(" >= ", " &ge; ")
+    data = re.sub(r"\*\*\(([^\)\(]+)\)", "<sup>\\1</sup>", data)
+    data = re.sub(r"\*\*(\d+)", "<sup>\\1</sup>", data)
+    data = data.replace("*", "\*")
+    return data
 
 def bernpoly(a, x):
     # Create a polynomial in Bernstein form using the given
@@ -456,7 +486,7 @@ def dominates(func, x, hfunc):
             return False
         return True
     except:
-        print("WARNING: Resorting to numerical optimization")
+        print("WARNING: Resorting to numerical optimization", file=sys.stdout)
         # Get this function's Lipschitz constant to control
         # the number of evaluation points
         lip = buildParam("lipschitz", func, x)
@@ -484,7 +514,7 @@ def findh(func, x, endzero=False):
         deg *= 2
     return None
 
-def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=False):
+def approxscheme2(func, x, kind=None, lip=None, double=True, levels=9, isdiff=False):
     """
         This method builds a scheme for approximating a continuous function _f_(_&lambda;_) that maps the interval \[0, 1\] to (0, 1), with the help of polynomials that converge from above and below to that function.  The function is approximated in a way that allows simulating the probability _f_(_&lambda;_) given a black-box way to sample the probability _&lambda;_; this is also known as the Bernoulli Factory problem.  Not all functions of this kind are supported yet.
 
@@ -494,7 +524,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
 
     - `func`: SymPy expression of the desired function.
     - `x`: Variable used by `func`.
-    - `kind`: a string specifying the approximation scheme, such as "c2" (see code for `buildParam`).
+    - `kind`: a string specifying the approximation scheme, such as "c2" (see code for `buildParam`).  If None (the default), the scheme is automatically chosen.
     - `lip`: A manually determined parameter that depends on the 'kind', in case the parameter can't be found automatically.
     - `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
     - `levels`: Number of polynomial levels to generate.  The first level will be the polynomial of degree 2 for the kinds "c1", "c0", or "sikkema", and degree 1 otherwise.  Default is 9.
@@ -504,32 +534,44 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
     if not isdiff:
         print(func)
     curvedata = []
+    nmm = nminmax(func, x)
+    if nmm[0] < 0 or nmm[1] > 1:
+        if not isdiff:
+            print("Function does not admit a Bernoulli factory", file=sys.stdout)
+        return False
+    schemes = ["myc2", "mylipschitz"]
+    if kind != None:
+        schemes = [kind]
+    kind = None
+    dd = None
+    for scheme in schemes:
+        dd = buildParam(scheme, func, x, lip)
+        if dd == oo or dd == zoo:
+            continue
+        if dd == 0:
+            continue
+        kind = scheme
+        break
+    if kind == None:
+        print("Function not supported for the scheme %s" % (schemes), file=sys.stdout)
+        return False
     if kind == "c1" or kind == "c0" or kind == "sikkema":
         deg = 2
     elif kind == "mylipschitz" or kind == "myc2":
         deg = 4
     else:
         deg = 1
-    nmm = nminmax(func, x)
-    if nmm[0] < 0 or nmm[1] > 1:
-        if not isdiff:
-            print("Function does not admit a Bernoulli factory")
-        return False
-    dd = buildParam(kind, func, x, lip)
-    if dd == oo or dd == zoo:
-        if not isdiff:
-            print("Function not supported for the scheme %s" % (kind))
-        return False
-    if dd == 0:
-        if lip != None:
-            dd = S(lip)
-        else:
-            print("Erroneous parameter calculated for the scheme %s" % (kind))
-            return False
     conc = concavity(func, x)
     if conc != "concave" and nmm[0] <= 0:
         zeroAtZero = func.subs(x, 0) == 0
         zeroAtOne = func.subs(x, 1) == 0
+        invertedCoin = False
+        if zeroAtOne and not zeroAtZero:
+            invertedCoin = True
+            tmp = zeroAtZero
+            zeroAtZero = zeroAtOne
+            zeroAtOne = tmp
+            func = func.subs(x, 1 - x)
         origfunc = func
         if (not isdiff) and zeroAtZero:
             h = findh(func, x, zeroAtOne)
@@ -555,20 +597,33 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
                     + ".  Then simulate _f_ by first "
                     + (
                         "flipping the input coin"
-                        if h == [0, 1]
+                        if h == [0, 1] and not invertedCoin
                         else "simulating a polynomial with the following coefficients: "
                         + str(h)
                     )
                     + ".  If it returns 1, then simulate "
                     + "_g_ and return the result."
+                    + (
+                        "  During the simulation, instead of flipping the input coin as "
+                        + "usual, a different coin is flipped which "
+                        + 'does the following: "Flip the input coin and return 1 minus the result."'
+                        if invertedCoin
+                        else ""
+                    )
                 )
                 return True
         if not isdiff:
-            print("This non-concave function with minimum of 0 is not yet supported")
+            print(
+                "This non-concave function with minimum of 0 is not yet supported",
+                file=sys.stdout,
+            )
         return False
     if conc != "convex" and nmm[1] >= 1:
         if not isdiff:
-            print("This non-convex function with maximum of 1 is not yet supported")
+            print(
+                "This non-convex function with maximum of 1 is not yet supported",
+                file=sys.stdout,
+            )
         return False
     for i in range(1, levels + 1):
         offset = buildOffset(kind, dd, deg)
@@ -645,9 +700,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
     else:
         data += "_f_(_k_/_n_)"
     if conc != "concave":
-        data += " &minus; `%s`" % (
-            str(offsetn.subs(x, symbols("lambda"))).replace("*", "\*")
-        )
+        data += " &minus; `%s`" % (str(offsetn.subs(x, symbols("lambda"))))
     data += ".\n"
     data += "    * **fabove**(_n_, _k_) = "
     if inrangedeg >= 0:
@@ -670,7 +723,7 @@ def approxscheme2(func, x, kind="c2", lip=None, double=True, levels=9, isdiff=Fa
     else:
         data += "_f_(_k_/_n_)"
     if conc != "convex":
-        data += " + `%s`" % (str(offsetn.subs(x, symbols("lambda"))).replace("*", "\*"))
+        data += " + `%s`" % (str(offsetn.subs(x, symbols("lambda"))))
     data += ".\n"
     if inrangedeg >= 0 or (upperbounded and lowerbounded):
         if conc == "concave" or conc == "convex" or (upperbounded and lowerbounded):
