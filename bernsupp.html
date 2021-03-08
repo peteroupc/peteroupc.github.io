@@ -378,6 +378,269 @@
 
 <p>The following are approximation schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
 
+<ul>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em> otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 371/500 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 3*sqrt(7)*(sqrt(2) + 2)/(56*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 1</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 2301/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 1774513/(22400000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3*cosh(1)/(28*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 23/400 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 221819/(11200000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sinh(<em>&lambda;</em>)/4 + cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; (1 &minus; exp(<em>&lambda;</em>))/(4*<em>&lambda;</em>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 207/2000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 9617/(112000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(3*<em>&lambda;</em>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1299/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 135/(224*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(-<em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 861/2500 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3/(32*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 1/2)<sup>2</sup>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 170017*2<sup>1/4</sup>*7<sup>3/4</sup>/(4480000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(<em>&lambda;</em>)</strong>.  Then simulate <em>f</em> by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 955827*2<sup>1/4</sup>*7<sup>3/4</sup>/(896000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 41337*2<sup>1/4</sup>*7<sup>3/4</sup>/(560000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 41337*2<sup>1/4</sup>*7<sup>3/4</sup>/(560000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 1/2)<sup>2</sup>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 170017*2<sup>1/4</sup>*7<sup>3/4</sup>/(4480000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> + 2/5)<sup>2</sup>)/2 if <em>&lambda;</em> &le; 1/10; 3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 3/5)<sup>2</sup>)/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 290029*2<sup>1/4</sup>*7<sup>3/4</sup>/(4480000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8313/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 59*pi<sup>2</sup>/(1792*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(<em>&lambda;</em>)</strong>.  Then simulate <em>f</em> by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 955827*2<sup>1/4</sup>*7<sup>3/4</sup>/(896000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1 &minus; <em>&lambda;</em><sup>2</sup></strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 4709/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 13/(112*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>)</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>))/<em>&lambda;</em><sup>2</sup> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 2621833427976937472*2<sup>1/4</sup>*7<sup>3/4</sup>/(21875*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cos(pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 409/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 33*pi<sup>2</sup>/(1792*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1591/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 33*pi<sup>2</sup>/(1792*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>*sin(7*pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 681/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 34039863/(4480000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4837/5000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 34039863/(4480000*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1123/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 25*pi<sup>2</sup>/(56*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8877/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 25*pi<sup>2</sup>/(56*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(6*pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 423*pi<sup>2</sup>/(448*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8957/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 423*pi<sup>2</sup>/(448*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(2*<em>&lambda;</em>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 5613/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 1/(4*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*pi*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1123/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 25*pi<sup>2</sup>/(56*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8877/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 25*pi<sup>2</sup>/(56*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/8 otherwise</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em><sup>2</sup>) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 607/2000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 2/(7*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1143/2000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) + 2/(7*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 693/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 55/(448*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>0 if <em>&lambda;</em> = 0; <em>&lambda;</em>/2 if <em>&lambda;</em> &le; 0.500000000000000; (<em>&lambda;</em>/2 &minus; 1/8)/<em>&lambda;</em> otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4197/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 5/(28*n).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 193/5000 if <em>n</em>&lt;16; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 5001*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4807/5000 if <em>n</em>&lt;16; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 5001*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &lt; 0; (6*<em>&lambda;</em> + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &ge; 1/2; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/5000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 10263*sqrt(7)*(sqrt(2) + 2)/(1120000*sqrt(n)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 2707/5000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) + 10263*sqrt(7)*(sqrt(2) + 2)/(1120000*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 193/5000 if <em>n</em>&lt;16; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 5001*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4807/5000 if <em>n</em>&lt;16; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 5001*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/8 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/8 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 451/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 2501*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1549/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2501*2<sup>1/4</sup>*7<sup>3/4</sup>/(320000*n<sup>1/4</sup>*(-1 + 2<sup>1/4</sup>)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/4 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 2197/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3*sqrt(7)*(sqrt(2) + 2)/(448*sqrt(n)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 &minus; (1 &minus; 2*<em>&lambda;</em>)<sup>5/2</sup>/120 + 31/120 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 + (2*<em>&lambda;</em> &minus; 1)<sup>5/2</sup>/120 + 31/120 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 &minus; (1 &minus; 2*<em>&lambda;</em>)<sup>5/2</sup>/120 + 31/120 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 2397/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 21/(512*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*<em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 3/2 &minus; 3*<em>&lambda;</em>/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1863/2000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 9*sqrt(7)*(sqrt(2) + 2)/(56*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>9*<em>&lambda;</em>/5 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 9/5 &minus; 9*<em>&lambda;</em>/5 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 27*sqrt(7)*(sqrt(2) + 2)/(140*sqrt(n)).</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em> if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 1 &minus; <em>&lambda;</em> otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 123/125 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 3*sqrt(7)*(sqrt(2) + 2)/(28*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 1/2 &minus; <em>&lambda;</em>/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 123/250 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 3*sqrt(7)*(sqrt(2) + 2)/(56*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>19*<em>&lambda;</em>/20 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 19/20 &minus; 19*<em>&lambda;</em>/20 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 2337/2500 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 57*sqrt(7)*(sqrt(2) + 2)/(560*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/8 if 3*<em>&lambda;</em> &ge; 1/8; 3*<em>&lambda;</em> otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 171/400 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 15*sqrt(7)*(sqrt(2) + 2)/(224*sqrt(n)).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+</ul>
+
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
