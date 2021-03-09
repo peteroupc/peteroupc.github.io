@@ -286,7 +286,7 @@ def nminmax(func, x, warningctx=None):
             except:
                 pass
     cv = cv2
-    return [lowerbound(Min(*cv).simplify()), upperbound(Max(*cv).simplify())]
+    return [lowerbound(Min(*cv)), upperbound(Max(*cv))]
 
 def buildParam(kind, func, x, warningctx=None):
     if kind == "myhoelderhalf":
@@ -300,7 +300,7 @@ def buildParam(kind, func, x, warningctx=None):
         try:
             # Maximum of second derivative.
             dd = nminmax(diff(diff(func)), x, warningctx=warningctx)
-            dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
+            dd = Max(Abs(dd[0]), Abs(dd[1]))
         except:
             # Unfortunately, SymPy's maximum and minimum are
             # not powerful enough to handle many common cases
@@ -327,7 +327,7 @@ def buildParam(kind, func, x, warningctx=None):
                 return oo
             ff = func.rewrite(Piecewise)
             dd = nminmax(diff(func), x, warningctx=warningctx)
-            dd = Max(Abs(dd[0]), Abs(dd[1])).simplify()
+            dd = Max(Abs(dd[0]), Abs(dd[1]))
             if dd == 0:
                 # Erroneous parameter, so fall back to estimation
                 if warningctx:
@@ -475,6 +475,28 @@ import re
 def funcstring(func, x):
     pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
     pwfunc = piecewise_fold(pwfunc)
+    minfunc = func.rewrite(Min)
+    if isinstance(minfunc, Min):
+        fs = (
+            "min("
+            + funcstring(minfunc.args[0], x)
+            + ", "
+            + funcstring(minfunc.args[1], x)
+            + ")"
+        )
+        if not ("otherwise" in fs):
+            return fs
+    maxfunc = func.rewrite(Max)
+    if isinstance(maxfunc, Max):
+        fs = (
+            "max("
+            + funcstring(maxfunc.args[0], x)
+            + ", "
+            + funcstring(maxfunc.args[1], x)
+            + ")"
+        )
+        if not ("otherwise" in fs):
+            return fs
     if isinstance(pwfunc, Piecewise):
         # pwfunc = Piecewise((pwfunc, GreaterThan(x, 0) & LessThan(x, 1)))
         # pwfunc = piecewise_fold(pwfunc)
@@ -601,7 +623,7 @@ def approxscheme2(
     if not (kind in [None, "c2", "myc2", "lipschitz", "mylipschitz", "myhoelderhalf"]):
         raise ValueError("unsupported kind: %s" % (str(kind)))
     if not isdiff:
-        print(func)
+        print(funcstring(func, x))
     curvedata = []
     # NOTE: If warningctx["warning"] becomes True at the end of the
     # method, this means that finding the approximation scheme relied
@@ -673,7 +695,7 @@ def approxscheme2(
                 funczerolim = funclimit(newfunc, x, 0)
                 if funczero != funczerolim:
                     newfunc = Piecewise((funczerolim, Eq(x, 0)), (newfunc, True))
-                newfunc = piecewise_fold(newfunc.simplify())
+                newfunc = piecewise_fold(newfunc)
                 if funczerolim == 0:
                     # print("Limit is zero, retrying")
                     h2 = findh(newfunc, x, zeroAtOne, warningctx=warningctx)
@@ -686,7 +708,7 @@ def approxscheme2(
                             newfunc = Piecewise(
                                 (funczerolim, Eq(x, 0)), (newfunc, True)
                             )
-                        newfunc = piecewise_fold(newfunc.simplify())
+                        newfunc = piecewise_fold(newfunc)
             if newfunc != None:
                 schemedata = approxscheme2(
                     newfunc,
