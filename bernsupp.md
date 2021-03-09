@@ -251,154 +251,329 @@ The following table summarizes the rate of simulation (in terms of the number of
 The following are approximation schemes and hints to simulate a coin of probability _f_(_&lambda;_) given an input coin with probability of heads of _&lambda;_.  The schemes were generated automatically using `approxscheme2` and have not been rigorously verified for correctness.
 
 * Let _f_(_&lambda;_) = **1/2 if _&lambda;_ &ge; 1/2; _&lambda;_ otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 371/500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 9563/10000 if _n_&lt;8; otherwise, _f_(_k_/_n_) + sqrt(7)\*(sqrt(2) + 2)/(7\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 371/500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **cosh(_&lambda;_) &minus; 1**.  Then simulate _f_ by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
     Let _g_(_&lambda;_) = 1/4 if _&lambda;_ = 0; -(cosh(_&lambda;_) &minus; 1)/(_&lambda;_<sup>2</sup>\*(_&lambda;_ &minus; 2)) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 2301/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 1774513/(22400000\*n).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 503/2500 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 136501/(700000\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 2301/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 1774513/(22400000\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **cosh(_&lambda;_) &minus; 3/4**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3\*cosh(1)/(28\*n).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * The function was detected to be convex and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; cosh(1)/(7\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3\*cosh(1)/(28\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **cosh(_&lambda;_)/4 &minus; 1/4**.  Then simulate _f_ by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
     Let _g_(_&lambda;_) = 1/16 if _&lambda;_ = 0; -(cosh(_&lambda;_) &minus; 1)/(4\*_&lambda;_<sup>2</sup>\*(_&lambda;_ &minus; 2)) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 23/400 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 221819/(11200000\*n).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 503/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 17063/(350000\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 23/400 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 221819/(11200000\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sinh(_&lambda;_)/4 + cosh(_&lambda;_)/4 &minus; 1/4**.  Then simulate _f_ by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
     Let _g_(_&lambda;_) = 1/8 if _&lambda;_ = 0; (1 &minus; exp(_&lambda;_))/(4\*_&lambda;_\*(_&lambda;_ &minus; 2)) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 207/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 9617/(112000\*n).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 7/100 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 9617/(43750\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 207/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 9617/(112000\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(3\*_&lambda;_)/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 1299/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 135/(224\*n).
-    * **fbound**(_n_) = [0, 1].
+    * The function was detected to be concave and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 1319/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 9/(14\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 1299/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 135/(224\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **exp(-_&lambda;_)**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 861/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3/(32\*n).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * The function was detected to be convex and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 861/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3/(32\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(1 &minus; 4\*(_&lambda;_ &minus; 1/2)<sup>2</sup>)/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 170017\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 10001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 170017\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 * Let _f_(_&lambda;_) = **sqrt(_&lambda;_)**.  Then simulate _f_ by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: "Flip the input coin and return 1 minus the result."<br>
     Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_))/_&lambda;_ otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(896000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(14000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(896000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
 * Let _f_(_&lambda;_) = **3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 41337\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(560000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 41337\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(560000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 4593\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(17500\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 4593\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(17500\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 41337\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(560000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 41337\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(560000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(1 &minus; 4\*(_&lambda;_ &minus; 1/2)<sup>2</sup>)/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 170017\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 10001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 170017\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 * Let _f_(_&lambda;_) = **3/4 &minus; sqrt(1 &minus; 4\*(_&lambda;_ + 2/5)<sup>2</sup>)/2 if _&lambda;_ &le; 1/10; 3/4 &minus; sqrt(1 &minus; 4\*(_&lambda;_ &minus; 3/5)<sup>2</sup>)/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 290029\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-* Let _f_(_&lambda;_) = **sin(pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 8313/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 59\*pi<sup>2</sup>/(1792\*n).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 10001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 290029\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(4480000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+* Let _f_(_&lambda;_) = **sin(&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * The function was detected to be concave and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 4191/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + &pi;<sup>2</sup>/(28\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 8313/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 59\*&pi;<sup>2</sup>/(1792\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sqrt(_&lambda;_)**.  Then simulate _f_ by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: "Flip the input coin and return 1 minus the result."<br>
     Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_))/_&lambda;_ otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(896000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(14000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 955827\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(896000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
 * Let _f_(_&lambda;_) = **1 &minus; _&lambda;_<sup>2</sup>**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.<br>
     Let _g_(_&lambda;_) = 1/(2 &minus; _&lambda;_). Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 4709/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 13/(112\*n).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * The function was detected to be convex and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 857/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 2/(7\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 4709/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 13/(112\*n).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sqrt(1 &minus; _&lambda;_<sup>2</sup>)**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.<br>
     Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_<sup>2</sup>))/_&lambda;_<sup>2</sup> otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 2621833427976937472\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(21875\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-* Let _f_(_&lambda;_) = **cos(pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 409/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 33\*pi<sup>2</sup>/(1792\*n).
-    * **fabove**(_n_, _k_) = 1591/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 33\*pi<sup>2</sup>/(1792\*n).
-    * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **_&lambda;_\*sin(7\*pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 681/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 34039863/(4480000\*n).
-    * **fabove**(_n_, _k_) = 4837/5000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 34039863/(4480000\*n).
-    * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **sin(4\*pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 25\*pi<sup>2</sup>/(56\*n).
-    * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 25\*pi<sup>2</sup>/(56\*n).
-    * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **sin(6\*pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 1043/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 423\*pi<sup>2</sup>/(448\*n).
-    * **fabove**(_n_, _k_) = 8957/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 423\*pi<sup>2</sup>/(448\*n).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 167797339390523998208\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(21875\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 2621833427976937472\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(21875\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
+* Let _f_(_&lambda;_) = **cos(&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * The function was detected to be twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 809/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; &pi;<sup>2</sup>/(28\*n).
+        * **fabove**(_n_, _k_) = 4191/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + &pi;<sup>2</sup>/(28\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 409/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 33\*&pi;<sup>2</sup>/(1792\*n).
+        * **fabove**(_n_, _k_) = 1591/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 33\*&pi;<sup>2</sup>/(1792\*n).
+        * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **_&lambda;_\*sin(7\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * Detected to be twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 523/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 11346621/(700000\*n).
+        * **fabove**(_n_, _k_) = 1229/1250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 11346621/(700000\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 111/2500 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 374438493/(44800000\*n).
+        * **fabove**(_n_, _k_) = 9911/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 374438493/(44800000\*n).
+        * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * The function was detected to be twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 737/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 4\*&pi;<sup>2</sup>/(7\*n).
+        * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 4\*&pi;<sup>2</sup>/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 219/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 51\*&pi;<sup>2</sup>/(112\*n).
+        * **fabove**(_n_, _k_) = 1781/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 51\*&pi;<sup>2</sup>/(112\*n).
+        * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **sin(6\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * The function was detected to be twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 517/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 9\*&pi;<sup>2</sup>/(7\*n).
+        * **fabove**(_n_, _k_) = 9483/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 9\*&pi;<sup>2</sup>/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 23/250 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 459\*&pi;<sup>2</sup>/(448\*n).
+        * **fabove**(_n_, _k_) = 227/250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 459\*&pi;<sup>2</sup>/(448\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(2\*_&lambda;_)/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 5613/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 1/(4\*n).
-    * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **sin(4\*pi\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 25\*pi<sup>2</sup>/(56\*n).
-    * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 25\*pi<sup>2</sup>/(56\*n).
-    * **fbound**(_n_) = [0, 1].
+    * The function was detected to be concave and twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 2851/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 5613/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 1/(4\*n).
+        * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
+    * The function was detected to be twice differentiable, leading to:
+        * **fbelow**(_n_, _k_) = 737/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 4\*&pi;<sup>2</sup>/(7\*n).
+        * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 4\*&pi;<sup>2</sup>/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 219/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 51\*&pi;<sup>2</sup>/(112\*n).
+        * **fabove**(_n_, _k_) = 1781/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 51\*&pi;<sup>2</sup>/(112\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/8 otherwise**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
     Let _g_(_&lambda;_) = 1/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_<sup>2</sup>) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 607/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 2/(7\*n).
-    * **fabove**(_n_, _k_) = 1143/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 2/(7\*n).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 2321/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 4/(7\*n).
+        * **fabove**(_n_, _k_) = 6429/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 4/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 1473/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 9/(28\*n).
+        * **fabove**(_n_, _k_) = 1451/2500 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 9/(28\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 693/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 55/(448\*n).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 321/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 687/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(8\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **0 if _&lambda;_ = 0; _&lambda;_/2 if _&lambda;_ &le; 0.500000000000000; (_&lambda;_/2 &minus; 1/8)/_&lambda;_ otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 4197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 5/(28\*n).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*n).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 423/1000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 43/(224\*n).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/4 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/4 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ < 0; _&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 0.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
     Let _g_(_&lambda;_) = 1/4 if _&lambda;_ = 0; (6\*_&lambda;_ + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) if _&lambda;_ < 0; (6\*_&lambda;_ + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) if _&lambda;_ &ge; 1/2; (6\*_&lambda;_ + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 10263\*sqrt(7)\*(sqrt(2) + 2)/(1120000\*sqrt(n)).
-    * **fabove**(_n_, _k_) = 2707/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 10263\*sqrt(7)\*(sqrt(2) + 2)/(1120000\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 627/10000 if _n_&lt;8; otherwise, _g_(_k_/_n_) &minus; 10263\*sqrt(7)\*(sqrt(2) + 2)/(175000\*sqrt(n)).
+        * **fabove**(_n_, _k_) = 6873/10000 if _n_&lt;8; otherwise, _g_(_k_/_n_) + 10263\*sqrt(7)\*(sqrt(2) + 2)/(175000\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 10263\*sqrt(7)\*(sqrt(2) + 2)/(1120000\*sqrt(n)).
+        * **fabove**(_n_, _k_) = 2707/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 10263\*sqrt(7)\*(sqrt(2) + 2)/(1120000\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/4 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/4 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5001\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/8 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/8 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 451/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fabove**(_n_, _k_) = 1549/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 333/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = 9667/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(70000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 451/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fabove**(_n_, _k_) = 1549/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2501\*2<sup>1/4</sup>\*7<sup>3/4</sup>/(320000\*n<sup>1/4</sup>\*(-1 + 2<sup>1/4</sup>)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ < 0; _&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 2197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3\*sqrt(7)\*(sqrt(2) + 2)/(448\*sqrt(n)).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 1/125 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 2197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3\*sqrt(7)\*(sqrt(2) + 2)/(448\*sqrt(n)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 &minus; (1 &minus; 2\*_&lambda;_)<sup>5/2</sup>/120 + 31/120 if _&lambda;_ < 0; _&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 + (2\*_&lambda;_ &minus; 1)<sup>5/2</sup>/120 + 31/120 if _&lambda;_ &ge; 1/2; _&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 &minus; (1 &minus; 2\*_&lambda;_)<sup>5/2</sup>/120 + 31/120 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = 2397/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 21/(512\*n).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = 1183/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3/(56\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = 2397/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 21/(512\*n).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **3\*_&lambda;_/2 if _&lambda;_ &le; 1 &minus; _&lambda;_; 3/2 &minus; 3\*_&lambda;_/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 1863/2000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 9\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 124/125 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(14\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 1863/2000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 9\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **9\*_&lambda;_/5 if _&lambda;_ &le; 1 &minus; _&lambda;_; 9/5 &minus; 9\*_&lambda;_/5 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 27\*sqrt(7)\*(sqrt(2) + 2)/(140\*sqrt(n)).
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 9\*sqrt(7)\*(sqrt(2) + 2)/(35\*sqrt(n)).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 27\*sqrt(7)\*(sqrt(2) + 2)/(140\*sqrt(n)).
 * Let _f_(_&lambda;_) = **_&lambda;_ if _&lambda;_ &le; 1 &minus; _&lambda;_; 1 &minus; _&lambda;_ otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 123/125 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(28\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 9563/10000 if _n_&lt;8; otherwise, _f_(_k_/_n_) + sqrt(7)\*(sqrt(2) + 2)/(7\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 123/125 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(28\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_/2 if _&lambda;_ &le; 1 &minus; _&lambda;_; 1/2 &minus; _&lambda;_/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 123/250 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 5727/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + sqrt(7)\*(sqrt(2) + 2)/(14\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 123/250 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(56\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **19\*_&lambda;_/20 if _&lambda;_ &le; 1 &minus; _&lambda;_; 19/20 &minus; 19\*_&lambda;_/20 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 2337/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 57\*sqrt(7)\*(sqrt(2) + 2)/(560\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 1817/2000 if _n_&lt;8; otherwise, _f_(_k_/_n_) + 19\*sqrt(7)\*(sqrt(2) + 2)/(140\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 2337/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 57\*sqrt(7)\*(sqrt(2) + 2)/(560\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **1/8 if 3\*_&lambda;_ &ge; 1/8; 3\*_&lambda;_ otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-    * **fabove**(_n_, _k_) = 171/400 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 15\*sqrt(7)\*(sqrt(2) + 2)/(224\*sqrt(n)).
-    * **fbound**(_n_) = [0, 1].
+    * Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 4047/5000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 3\*sqrt(7)\*(sqrt(2) + 2)/(7\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
+        * **fabove**(_n_, _k_) = 171/400 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 15\*sqrt(7)\*(sqrt(2) + 2)/(224\*sqrt(n)).
+        * **fbound**(_n_) = [0, 1].
 
 <a id=Notes></a>
 ## Notes
