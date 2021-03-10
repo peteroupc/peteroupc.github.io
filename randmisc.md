@@ -40,7 +40,7 @@ More specifically, step 7 can be changed as follows:
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula for the factorial's natural logarithm (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
 
-Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the interval \[sqrt(_n_), sqrt(_n_)+3\], so I implement step 1 by starting with _u_ = 2<sup>floor((1+ceil(log2(_n_+1)))/2)</sup>, then calculating _v_ = floor(_u_+floor(_n_/_u_)/2), _w_ = _u_, _u_ = _v_  until _v_ >= _w_, then setting _m_ to _w_ + 1.
+Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the interval \[sqrt(_n_), sqrt(_n_)+3\], so I implement step 1 by starting with _u_ = 2<sup>floor((1+_&beta;_(_n_))/2)</sup>, then calculating _v_ = floor((_u_+floor(_n_/_u_))/2), _w_ = _u_, _u_ = _v_  until _v_ >= _w_, then setting _m_ to _w_ + 1.  Here, _&beta;_(_n_) = ceil(ln(_n_+1)/ln(2)), or alternatively the minimum number of bits needed to store _n_ (with _&beta;_(0) = 0).
 
 > **Notes:**
 >

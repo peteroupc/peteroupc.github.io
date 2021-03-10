@@ -235,11 +235,72 @@ def buildOffset(kind, dd, n):
 # but helps improve speed of numerical optimization
 from sympy.calculus.util import continuous_domain
 
+def pwminmax(func, x, intv):
+    # Finds minimum of certain piecewise functions
+    if not isinstance(func, Piecewise):
+        raise ValueError
+    mn = []
+    mx = []
+    intvstart = intv.start
+    intvend = intv.end
+    for arg in func.args:
+        cset = ConditionSet(x, arg[1])
+        newintv = intv.intersect(cset)
+        if isinstance(cset, ConditionSet):
+            # Handle LessThan, Eq, and GreaterThan
+            if (
+                newintv.args[0] == x
+                and isinstance(newintv.args[1], Eq)
+                and newintv.args[1].args[0] == x
+                and newintv.args[1].args[1].is_constant()
+                and newintv.args[1].args[1] >= intvstart
+                and newintv.args[1].args[1] <= intvend
+            ):
+                newintv = newintv.args[2].intersect(
+                    Interval(newintv.args[1].args[1], newintv.args[1].args[1])
+                )
+            if (
+                newintv.args[0] == x
+                and isinstance(newintv.args[1], LessThan)
+                and newintv.args[1].args[0] == x
+                and newintv.args[1].args[1].is_constant()
+                and newintv.args[1].args[1] >= intvstart
+                and newintv.args[1].args[1] <= intvend
+            ):
+                newintv = newintv.args[2].intersect(
+                    Interval(intvstart, newintv.args[1].args[1])
+                )
+            if (
+                newintv.args[0] == x
+                and isinstance(newintv.args[1], GreaterThan)
+                and newintv.args[1].args[0] == x
+                and newintv.args[1].args[1].is_constant()
+                and newintv.args[1].args[1] >= intvstart
+                and newintv.args[1].args[1] <= intvend
+            ):
+                newintv = newintv.args[2].intersect(
+                    Interval(newintv.args[1].args[1], intvend)
+                )
+        intv -= newintv
+        # print(newintv)
+        if newintv != S.EmptySet:
+            mn.append(minimum(arg[0], x, newintv))
+            mx.append(maximum(arg[0], x, newintv))
+    # print(mn)
+    # print(mx)
+    return [Min(*mn), Max(*mx)]
+
 def nminmax(func, x, warningctx=None):
     # Find minimum and maximum at [0,1].
     try:
         return [minimum(func, x, Interval(0, 1)), maximum(func, x, Interval(0, 1))]
     except:
+        pw = piecewise_fold(func.rewrite(Piecewise))
+        if isinstance(pw, Piecewise):
+            try:
+                return pwminmax(pw, x, Interval(0, 1))
+            except:
+                pass
         print(
             "WARNING: Resorting to numerical optimization: %s" % (func), file=sys.stderr
         )
@@ -493,7 +554,7 @@ def funcstring(func, x):
         if not ("otherwise" in fs):
             return fs
     elif str(func) != str(minfunc):
-        fs = funcstring(maxfunc, x)
+        fs = funcstring(minfunc, x)
         if not ("otherwise" in fs):
             return fs
     maxfunc = func.rewrite(Max)

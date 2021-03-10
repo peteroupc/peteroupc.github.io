@@ -184,7 +184,7 @@ Many kinds of game software generate seemingly "random" game content that might 
 
 - procedurally generated maps for a role-playing game,
 - [**shuffling**](#Shuffling) a virtual deck of cards for a solitaire game, or
-- a game board or puzzle board that normally varies every session.
+- a randomly chosen configuration of a game board or puzzle board.
 
 In general, the bigger that "random" content is, the greater the justification to use a manually-seeded PRNG and a custom seed to generate that content.  The following are special cases:
 
