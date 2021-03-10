@@ -176,7 +176,7 @@ def buildOffset(kind, dd, n):
         # continuous functions. dd=max. abs. "slope"
         # NOTE: Correct for power-of-2 degrees n>=1.
         return dd * (1 + sqrt(2)) / sqrt(n)
-    elif kind == "myhoelderhalf":
+    elif kind == "myhoelderhalforig":
         # Use my theoretical offset for (1/2)-Hölder
         # continuous functions. dd=Hölder constant
         # NOTE: Correct for power-of-2 degrees n>=4.
@@ -185,11 +185,17 @@ def buildOffset(kind, dd, n):
             * (Rational(2, 7) ** Rational(1, 4))
             / ((2 ** Rational(1, 4) - 1) * (n) ** Rational(1, 4))
         )
-    elif kind == "mylipschitz":
+    elif kind == "myhoelderhalf":
+        # Upper bound for "myhoelderhalforig"
+        return dd * 154563 / (40000 * (n) ** Rational(1, 4))
+    elif kind == "mylipschitzorig":
         # Use my theoretical offset for Lipschitz
         # continuous functions. dd=max. abs. "slope"
         # NOTE: Correct for power-of-2 degrees n>=4.
         return dd * (sqrt(7) * (sqrt(2) + 2)) / (7 * sqrt(n))
+    elif kind == "mylipschitz":
+        # Upper bound for "mylipschitzorig"
+        return dd * 322613 / (250000 * sqrt(n))
     elif kind == "sikkema":
         # Use the theoretical offset for C0
         # Lipschitz continuous functions involving Sikkema's constant.
@@ -486,6 +492,10 @@ def funcstring(func, x):
         )
         if not ("otherwise" in fs):
             return fs
+    elif str(func) != str(minfunc):
+        fs = funcstring(maxfunc, x)
+        if not ("otherwise" in fs):
+            return fs
     maxfunc = func.rewrite(Max)
     if isinstance(maxfunc, Max):
         fs = (
@@ -495,6 +505,10 @@ def funcstring(func, x):
             + funcstring(maxfunc.args[1], x)
             + ")"
         )
+        if not ("otherwise" in fs):
+            return fs
+    elif str(func) != str(maxfunc):
+        fs = funcstring(maxfunc, x)
         if not ("otherwise" in fs):
             return fs
     if isinstance(pwfunc, Piecewise):
@@ -612,7 +626,7 @@ def approxscheme2(
 
     - `func`: SymPy expression of the desired function.
     - `x`: Variable used by `func`.
-    - `kind`: a string specifying the approximation scheme, such as "myc2" (see code for `buildParam`).  If None (the default), the scheme is automatically chosen.  Must be None, "c2", "myc2", "lipschitz", "mylipschitz", or "myhoelderhalf".
+    - `kind`: a string specifying the approximation scheme, such as "myc2" (see code for `buildParam`).  If None (the default), the scheme is automatically chosen.  Must be None, "c2", "myc2", "lipschitz", "mylipschitz", "mylipschitzorig", "myhoelderhalforig", or "myhoelderhalf".
     - `double`: Whether to double the degree with each additional level (`True`, the default) or to increase that degree by 1 with each level (`False`).
     - `levels`: Number of polynomial levels to generate.  The first level will be the polynomial of degree 4 for the kinds "myc2", "mylipschitz", or "myhoelderhalf", and degree 1 otherwise.  Default is 9.
 
@@ -637,7 +651,13 @@ def approxscheme2(
         if not isdiff:
             print("Function does not admit a Bernoulli factory", file=sys.stderr)
         return False
-    schemes = ["myc2", "mylipschitz", "myhoelderhalf"]
+    schemes = [
+        "myc2",
+        "mylipschitz",
+        "myhoelderhalf",
+        "mylipschitzorig",
+        "myhoelderhalforig",
+    ]
     if kind != None:
         schemes = [kind]
     kind = None
@@ -657,7 +677,13 @@ def approxscheme2(
         return None
     if kind == "c1" or kind == "c0" or kind == "sikkema":
         deg = 2
-    elif kind == "mylipschitz" or kind == "myc2" or kind == "myhoelderhalf":
+    elif kind in [
+        "mylipschitz",
+        "myc2",
+        "myhoelderhalf",
+        "mylipschitzorig",
+        "myhoelderhalforig",
+    ]:
         deg = 4
     else:
         deg = 1
@@ -873,9 +899,11 @@ def approxscheme2(
     properties = {
         "myc2": "twice differentiable",
         "c2": "twice differentiable",
+        "mylipschitzorig": "Lipschitz continuous",
         "mylipschitz": "Lipschitz continuous",
         "lipschitz": "Lipschitz continuous",
         "myhoelderhalf": "(1/2)-Hölder continuous",
+        "myhoelderhalforig": "(1/2)-Hölder continuous",
     }
     prop = properties[kind]
     if conc == "concave":
