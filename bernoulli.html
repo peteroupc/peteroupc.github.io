@@ -791,7 +791,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol>
 
 <blockquote>
-<p><strong>Example</strong>:</p>
+<p><strong>Examples</strong>:</p>
 
 <ul>
 <li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  The first algorithm in this section can simulate this constant if step 6 is modified to read: &quot;Let <em>m</em> be ((<em>n</em>+1)*2), and let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series).  Add <em>&alpha;</em> to <em>lamunq</em> and set <em>&#x03F5;</em> to 2/((<em>m</em>+1)!) (the error term).&quot;.<sup><a href="#Note34"><strong>(34)</strong></a></sup></li>
@@ -820,15 +820,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p><strong>Building convex combinations.</strong> Let <em>n</em>&ge;0 be an integer.  Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are known functions.  Let <em>P</em>(<em>n</em>) be the probability that a random number <em>X</em> is <em>n</em>.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sup>(<em>&lambda;</em>)/<em>P</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash;<br><br><em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>P</em>(<em>n</em>) * (<em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) / <em>P</em>(<em>n</em>)),<br><br>but this works only if the following two conditions are met for each integer <em>n</em>&ge;0:</p>
+<li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are known functions.  Let <em>g</em>(<em>n</em>) be the probability that a random number <em>X</em> is <em>n</em>.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash;<br><br><em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) / <em>g</em>(<em>n</em>)),<br><br>but this works only if the following two conditions are met for each integer <em>n</em>&ge;0:</p>
 
 <ul>
-<li><em>P</em>(<em>n</em>) &ge; <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) &ge; 0 for all <em>&lambda;</em> in the interval [0, 1] (which roughly means that <em>P</em>(<em>n</em>) &quot;dominates&quot; <em>w</em><sub><em>n</em></sub>).</li>
-<li>The function <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>P</em>(<em>n</em>) admits a Bernoulli factory (which it won&#39;t if it touches 0 or 1 inside the interval (0, 1), but isn&#39;t constant, for example).</li>
+<li><em>g</em>(<em>n</em>) &ge; <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) &ge; 0 for all <em>&lambda;</em> in the interval [0, 1] (which roughly means that <em>g</em>(<em>n</em>) &quot;dominates&quot; <em>w</em><sub><em>n</em></sub>).</li>
+<li>The function <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>) admits a Bernoulli factory (which it won&#39;t if it touches 0 or 1 inside the interval (0, 1), but isn&#39;t constant, for example).</li>
 </ul>
 
-<p>See also Mendo (2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  As one example, assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>P</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</p></li>
-<li><strong>Constants with positive series expansions.</strong> A special case of note 1.  Let <em>n</em> and <em>P</em> be as in that note.  Assume we have a constant with the following series expansion: <em>c</em> = &sum;<sub><em>n</em>=0,1,...</sub> <em>a</em><sub><em>n</em></sub>, where <em>a</em><sub><em>n</em></sub> are each greater than 0 and sum to 1 or less.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em></sup>/<em>P</em>(<em>X</em>)</strong>, we can simulate the constant <em>c</em> as the convex combination&mdash;<br><br><em>c</em> = &sum;<sub><em>n</em>=0,1,...</sub> <em>P</em>(<em>n</em>) * (<em>a</em><sub><em>n</em></sub> / <em>P</em>(<em>n</em>)),<br><br>but only if <em>P</em>(<em>n</em>) &ge; <em>a</em><sub><em>n</em></sub> &ge; 0 for each integer <em>n</em>&ge;0.</li>
+<p>See also Mendo (2019)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  As one example, assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</p></li>
+<li><strong>Constants with positive series expansions.</strong> A special case of note 1.  Let <em>g</em> be as in note 1.  Assume we have a constant with the following series expansion: <em>c</em> = &sum;<sub><em>n</em>=0,1,...</sub> <em>a</em><sub><em>n</em></sub>, where <em>a</em><sub><em>n</em></sub> are each greater than 0 and sum to 1 or less.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em></sub>/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash;<br><br><em>c</em> = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>a</em><sub><em>n</em></sub> / <em>g</em>(<em>n</em>)),<br><br>but only if <em>g</em>(<em>n</em>) &ge; <em>a</em><sub><em>n</em></sub> &ge; 0 for each integer <em>n</em>&ge;0.</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
