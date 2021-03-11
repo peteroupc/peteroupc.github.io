@@ -614,6 +614,16 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 1. Generate a random integer _X_ in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random number.  (Specifically, the number _X_ is generated with probability _g_(_X_).)
 2. Flip the coin represented by _X_ and return the result.
 
+>
+> **Notes:**
+>
+> 1. **Building convex combinations.** Let _n_&ge;0 be an integer.  Assume we have a function of the form _f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sup>(_&lambda;_), where _w_<sub>_n_</sup> are known functions.  Let _P_(_n_) be the probability that a random number _X_ is _n_.  Then by **generating _X_ and flipping a coin with probability of heads of _w_<sub>_X_</sup>(_&lambda;_)/_P_(_X_)**, we can simulate the probability _f_(_&lambda;_) as the convex combination&mdash;<br><br>_f_(_&lambda;_) = &sum;<sub>_n_=0,1,...</sub> _P_(_n_) \* (_w_<sub>_n_</sub>(_&lambda;_) / _P_(_n_)),<br><br>but this works only if the following two conditions are met for each integer _n_&ge;0:
+>     - _P_(_n_) &ge; _w_<sub>_n_</sub>(_&lambda;_) &ge; 0 for all _&lambda;_ in the interval \[0, 1\] (which roughly means that _P_(_n_) "dominates" _w_<sub>_n_</sub>).
+>     - The function _w_<sub>_n_</sub>(_&lambda;_)/_P_(_n_) admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
+>
+>     See also Mendo (2019)<sup>[**(25)**](#Note25)</sup>.  As one example, assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _P_(_n_) = 2<sup>&minus;_n_&minus;1</sup>.
+> 2. **Constants with positive series expansions.** A special case of note 1.  Let _n_ and _P_ be as in that note.  Assume we have a constant with the following series expansion: _c_ = &sum;<sub>_n_=0,1,...</sub> _a_<sub>_n_</sup>, where _a_<sub>_n_</sup> are each greater than 0 and sum to 1 or less.  Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sup>/_P_(_X_)**, we can simulate the constant _c_ as the convex combination&mdash;<br><br>_c_ = &sum;<sub>_n_=0,1,...</sub> _P_(_n_) \* (_a_<sub>_n_</sub> / _P_(_n_)),<br><br>but only if _P_(_n_) &ge; _a_<sub>_n_</sub> &ge; 0 for each _n_&ge;0.
+>
 > **Examples:**
 >
 > 1. Generate a Poisson(_&mu;_) random number _X_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson(_&mu;_) probabilities and _h_<sub>_i_</sub>() returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
@@ -883,7 +893,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>
 
-In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(25)**](#Note25)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
+In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to Mendo (2019)<sup>[**(25)**](#Note25)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
 
 1. If _x_/_y_ is 0, return 1.
 2. If _x_/_y_ is equal to 1, flip the input coin and return the result.

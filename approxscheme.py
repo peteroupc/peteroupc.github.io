@@ -241,51 +241,58 @@ def pwminmax(func, x, intv):
         raise ValueError
     mn = []
     mx = []
-    intvstart = intv.start
-    intvend = intv.end
-    for arg in func.args:
-        cset = ConditionSet(x, arg[1])
-        newintv = intv.intersect(cset)
-        if isinstance(cset, ConditionSet):
-            # Handle LessThan, Eq, and GreaterThan
-            if (
-                newintv.args[0] == x
-                and isinstance(newintv.args[1], Eq)
-                and newintv.args[1].args[0] == x
-                and newintv.args[1].args[1].is_constant()
-                and newintv.args[1].args[1] >= intvstart
-                and newintv.args[1].args[1] <= intvend
-            ):
-                newintv = newintv.args[2].intersect(
-                    Interval(newintv.args[1].args[1], newintv.args[1].args[1])
-                )
-            if (
-                newintv.args[0] == x
-                and isinstance(newintv.args[1], LessThan)
-                and newintv.args[1].args[0] == x
-                and newintv.args[1].args[1].is_constant()
-                and newintv.args[1].args[1] >= intvstart
-                and newintv.args[1].args[1] <= intvend
-            ):
-                newintv = newintv.args[2].intersect(
-                    Interval(intvstart, newintv.args[1].args[1])
-                )
-            if (
-                newintv.args[0] == x
-                and isinstance(newintv.args[1], GreaterThan)
-                and newintv.args[1].args[0] == x
-                and newintv.args[1].args[1].is_constant()
-                and newintv.args[1].args[1] >= intvstart
-                and newintv.args[1].args[1] <= intvend
-            ):
-                newintv = newintv.args[2].intersect(
-                    Interval(newintv.args[1].args[1], intvend)
-                )
-        intv -= newintv
-        # print(newintv)
-        if newintv != S.EmptySet:
-            mn.append(minimum(arg[0], x, newintv))
-            mx.append(maximum(arg[0], x, newintv))
+    try:
+        for ex in func.as_expr_set_pairs(intv):
+            mn.append(minimum(ex[0], x, ex[1]))
+            mx.append(maximum(ex[0], x, ex[1]))
+    except:
+        mn = []
+        mx = []
+        intvstart = intv.start
+        intvend = intv.end
+        for arg in func.args:
+            cset = ConditionSet(x, arg[1])
+            newintv = intv.intersect(cset)
+            if isinstance(cset, ConditionSet):
+                # Handle LessThan, Eq, and GreaterThan
+                if (
+                    newintv.args[0] == x
+                    and isinstance(newintv.args[1], Eq)
+                    and newintv.args[1].args[0] == x
+                    and newintv.args[1].args[1].is_constant()
+                    and newintv.args[1].args[1] >= intvstart
+                    and newintv.args[1].args[1] <= intvend
+                ):
+                    newintv = newintv.args[2].intersect(
+                        Interval(newintv.args[1].args[1], newintv.args[1].args[1])
+                    )
+                if (
+                    newintv.args[0] == x
+                    and isinstance(newintv.args[1], LessThan)
+                    and newintv.args[1].args[0] == x
+                    and newintv.args[1].args[1].is_constant()
+                    and newintv.args[1].args[1] >= intvstart
+                    and newintv.args[1].args[1] <= intvend
+                ):
+                    newintv = newintv.args[2].intersect(
+                        Interval(intvstart, newintv.args[1].args[1])
+                    )
+                if (
+                    newintv.args[0] == x
+                    and isinstance(newintv.args[1], GreaterThan)
+                    and newintv.args[1].args[0] == x
+                    and newintv.args[1].args[1].is_constant()
+                    and newintv.args[1].args[1] >= intvstart
+                    and newintv.args[1].args[1] <= intvend
+                ):
+                    newintv = newintv.args[2].intersect(
+                        Interval(newintv.args[1].args[1], intvend)
+                    )
+            intv -= newintv
+            # print(newintv)
+            if newintv != S.EmptySet:
+                mn.append(minimum(arg[0], x, newintv))
+                mx.append(maximum(arg[0], x, newintv))
     # print(mn)
     # print(mx)
     return [Min(*mn), Max(*mx)]
@@ -697,6 +704,7 @@ def approxscheme2(
     # - Special handling for polynomials
     if not (kind in [None, "c2", "myc2", "lipschitz", "mylipschitz", "myhoelderhalf"]):
         raise ValueError("unsupported kind: %s" % (str(kind)))
+    func = func.simplify()
     if not isdiff:
         print(funcstring(func, x))
     curvedata = []
