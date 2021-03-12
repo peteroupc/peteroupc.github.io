@@ -121,7 +121,9 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 <a id=cosh___lambda___minus_1></a>
 ### cosh(_&lambda;_) &minus; 1
 
-This algorithm involves an application of the general martingale algorithm to the Taylor series for cosh(_&lambda;_)&minus;1, which is _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup>[**(2)**](#Note2)</sup>.
+There are two algorithms.
+
+The first algorithm involves an application of the general martingale algorithm to the Taylor series for cosh(_&lambda;_)&minus;1, which is _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup>[**(2)**](#Note2)</sup>.
 
 1. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random number _ret_.
@@ -132,6 +134,17 @@ This algorithm involves an application of the general martingale algorithm to th
 7. Add 1 to _n_ and go to step 3.
 
 In this algorithm, the error term, which follows from _Taylor's theorem_, has a numerator of 2 because 2 is higher than the maximum value that the function's slope, slope-of-slope, etc. functions can achieve anywhere in the interval [0, 1].
+
+The second algorithm is one I found that takes advantage of the convex combination method.
+
+1. ("Geometric" random number _n_.)  Generate unbiased random bits until a zero is generated this way.  Set _n_ to 2 plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
+2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda_)/_g_(_n_).)  If _n_ is odd, return 0.  Otherwise, with probability 2<sup>_n_&minus;1</sup>/(_n_!), go to the next step.  Otherwise, return 0.
+3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
+
+Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: &Sum;<sub>_n_=0,1,...</sub> _w_<sub>_n_</sub>(_&lambda;_) = &Sum;<sub>_n_=0,1,...</sub> _g_(_n_)\*(_w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_)), where&mdash;
+
+- _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;2</sup> if _n_&ge;2, or 0 otherwise, and
+- _w_<sub>_n_</sub>(_&lambda_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&ge;2 and _n_ is even, or 0 otherwise.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2
@@ -773,7 +786,7 @@ The function min(_&lambda;_, 1/2) can be rewritten as _A_ + _B_ where&mdash;
 
 revealing that the function is a [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), and _B_ is itself a convex combination where&mdash;
 
-- _g_(_k_) = (2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
+- _g_(_k_) = choose(2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
 - _h_<sub>_k_</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
 
 (see also Wästlund (1999)<sup>[**(24)**](#Note24)</sup>; Dale et al. (2015)<sup>[**(25)**](#Note25)</sup>).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
