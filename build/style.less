@@ -286,8 +286,16 @@ aside, div {
 }
 }
 
-@primary: #00b1e7;
-@secondary: #e040db;
+// BLUE
+//@primarycolor: #00b1e7;
+//@secondarycolor: #e040db;
+
+// PURPLE
+@primarycolor: #9f00e7;
+@secondarycolor: #3674b5;
+
+@primary: @primarycolor;
+@secondary: @secondarycolor;
 
 @primary50: mix(#fff,@primary,85%);
 @primary100: mix(#fff,@primary,70%);
@@ -304,7 +312,7 @@ body {
    @secondary50,@secondary200,@secondary700);
 }
 @media (prefers-color-scheme:dark) {
-  @secondary: mix(#fff, #e040db, 70%); // use lighter secondary
+  @secondary: mix(#fff, @secondarycolor, 70%); // use lighter secondary
 
   @primary50: mix(#000,@primary,85%);
   @primary100: mix(#000,@primary,70%);
