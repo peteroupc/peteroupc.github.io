@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/03/11"><meta name="citation_online_date" content="2021/03/11"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/03/17"><meta name="citation_online_date" content="2021/03/17"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -124,8 +124,12 @@
 
 <ol>
 <li><strong>Get the partial denominator given <em>pos</em>, <em>k</em>, <em>m</em>, and <em>&#x2113;</em></strong>, call it <em>kp</em>.</li>
+<li>Do the following repeatedly, until this run of the algorithm returns a value:
+
+<ol>
 <li>With probability <em>kp</em>/(1 + <em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the algorithm returns 1, return 0.  Otherwise, go to step 2.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns 1, return 0.</li>
+</ol></li>
 </ol>
 
 <p><a id=Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1></a></p>
@@ -156,7 +160,7 @@
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
-<li>(Loop.) If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
+<li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
@@ -223,13 +227,17 @@
 <p>The first takes advantage of the so-called Lambert&#39;s continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>k</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
-<li>If <em>k</em> is 1: With probability 1/2, flip the input coin and return the result.</li>
+<li>If <em>k</em> is 1: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
+<li>Do the following repeatedly, until this run of the algorithm returns a value:
+
+<ol>
 <li>If <em>k</em> is greater than 1, then do the following with probability <em>k</em>/(1+<em>k</em>):
 
 <ul>
 <li>Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 </ul></li>
-<li>Run this algorithm recursively, but with <em>k</em> = <em>k</em> + 2.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 2.  If the separate run returns 1, return 0.</li>
+</ol></li>
 </ol>
 
 <p>The second algorithm involves an alternating series expansion of tanh(.) and involves the general martingale algorithm.</p>
@@ -258,7 +266,7 @@
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
-<li>(Loop.) If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
+<li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>(Calculate the next term of the alternating series for tanh.) Let <em>m</em> be 2*(<em>n</em>+1).  <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>. Let <em>t</em> be abs(<em>b</em>)*2<sup><em>m</em></sup>*(2<sup><em>m</em></sup>&minus;1)/(<em>m</em>!).</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>t</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>t</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
@@ -299,7 +307,7 @@
 <p>My own algorithm for min(<em>&lambda;</em>, 1/2) is as follows.  See the <a href="https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>appendix</strong></a> for the derivation of this algorithm.</p>
 
 <ol>
-<li>With probability 1/2, flip the input coin and return the result.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
 <li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
 <li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
 <li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
@@ -373,7 +381,7 @@
 <ol>
 <li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <em>p1</em>&#39;s fractional part to [3, 4, 2] and <em>p1</em>&#39;s integer part to 7.)</li>
 <li>For each PSRN (<em>p1</em>, ..., <em>pN</em>), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
-<li>For each PSRN, optionally do the following: With probability 1/2, set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
+<li>For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
 <li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
 </ol></li>
 <li>If the result of <strong>InShape</strong> is <em>NO</em>, then the current box lies outside the shape and is rejected.  In this case, go to step 2.</li>
@@ -492,7 +500,7 @@
 
 <ol>
 <li> Set <em>N</em> to 0.</li>
-<li> With probability 1/2, go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
+<li> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to the next step.  Otherwise, add 1 to <em>N</em> and repeat this step.</li>
 <li> If <em>N</em> is less than <em>z</em>, return rem(<em>k</em> / 2<sup><em>z</em> &minus; 1 &minus; <em>N</em></sup>, 2).  (Alternatively, shift <em>k</em> to the right, by <em>z</em> &minus; 1 &minus; <em>N</em> bits, then return <em>k</em> <em>AND</em> 1, where &quot;<em>AND</em>&quot; is a bitwise AND-operation.)</li>
 <li> Subtract <em>z</em> from <em>N</em>.  Then, if the item at position <em>N</em> in the uniform PSRN&#39;s fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the capacity of the uniform PSRN&#39;s fractional part as necessary.</li>
 <li> Return the item at position <em>N</em>.</li>
@@ -572,7 +580,7 @@
 <p>The following algorithm generates a PSRN of the form <em>U</em>/(1&minus;<em>U</em>), where <em>U</em> is a uniform random number in [0, 1].</p>
 
 <ol>
-<li>With probability 1/2, set <em>intval</em> to 0, then set <em>size</em> to 1, then go to step 4.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set <em>intval</em> to 0, then set <em>size</em> to 1, then go to step 4.</li>
 <li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
 <li>With probability <em>size</em>/(<em>size</em> + <em>intval</em> + 1), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
@@ -633,9 +641,9 @@
 <li>Set <em>k</em> to 0.</li>
 <li>(Choose a 1-unit-wide piece of the logistic density.) Run the <strong>algorithm for (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1))</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
 <li>(The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it <em>f</em>.</li>
-<li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) With probability 1/2, go to step 3.</li>
+<li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
-<li>With probability 1/2, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> and <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.</li>
 </ol>
 

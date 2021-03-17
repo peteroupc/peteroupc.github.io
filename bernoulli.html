@@ -652,8 +652,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
 <li>If the partial denominator at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>If <em>a</em>[<em>pos</em>] is less than 0, set <em>kp</em> to <em>k</em> &minus; 1 and <em>s</em> to 0.  Otherwise, set <em>kp</em> to <em>k</em> and <em>s</em> to 1. (This step accounts for negative partial denominators.)</li>
+<li>Do the following repeatedly until this run of the algorithm returns a value:
+
+<ol>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
-<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns <em>s</em>, return 0.  Otherwise, go to step 4.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns <em>s</em>, return 0.</li>
+</ol></li>
 </ol>
 
 <p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.</p>
@@ -730,7 +734,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
-<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns 1, return 0.</li>
 </ol></li>
 </ol>
 
@@ -768,9 +772,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
 <li>Generate an exponential random number <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random number <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
+<li>Do the following repeatedly, until the algorithm returns a value:
+
+<ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
 <li>If <em>E</em> is less than <em>inf</em>+<em>intinf</em>, return 0.  If <em>E</em> is less than <em>sup</em>+<em>intinf</em>, go to the next step.  If neither is the case, return 1.</li>
-<li>Set <em>n</em> to 1, then go to step 5.</li>
+<li>Set <em>n</em> to 1.</li>
+</ol></li>
 </ol>
 
 <p>The case when <em>a</em> converges to a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
@@ -778,9 +786,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ol>
 <li>Generate an exponential random number <em>E</em> (with rate 1).</li>
 <li>Set <em>n</em> to 0.</li>
+<li>Do the following repeatedly, until the algorithm returns a value:
+
+<ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
-<li>If <em>E</em> is less than <em>inf</em>+<em>intinf</em>, return 0.  If <em>E</em> is less than <em>sup</em>+<em>intinf</em>, go to the next step.  If neither is the case, return 1.</li>
-<li>Set <em>n</em> to 1, then go to step 5.</li>
+<li>If <em>E</em> is less than <em>inf</em>+<em>intinf</em>, return 0.  If <em>E</em> is less than <em>sup</em>+<em>intinf</em>, go to the next step.  If  neither is the case, return 1.</li>
+<li>Set <em>n</em> to 1.</li>
+</ol></li>
 </ol>
 
 <blockquote>
@@ -1288,7 +1300,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 <li>If <em>s</em> is other than 0, return 0.</li>
 <li>With probability 1/<em>&beta;</em>, return 1.</li>
-<li>Do a separate run of the currently running algorithm, with <em>x</em>/<em>y</em> = <em>&beta;</em> * <em>x</em>/<em>y</em> and <em>&#x03F5;</em> = 1 &minus; <em>&beta;</em> * (1 &minus; <em>&#x03F5;</em>).  If it returns 0, return 0.</li>
+<li>Do a separate run of the currently running algorithm, with <em>x</em>/<em>y</em> = <em>&beta;</em> * <em>x</em>/<em>y</em> and <em>&#x03F5;</em> = 1 &minus; <em>&beta;</em> * (1 &minus; <em>&#x03F5;</em>).  If the separate run returns 0, return 0.</li>
 <li>The <strong>high-power logistic Bernoulli factory</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than or equal to <em>m</em> minus 2:
 
 <ol>

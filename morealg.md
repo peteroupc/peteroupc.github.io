@@ -89,8 +89,9 @@ First, define the following operations:
 An application of the continued fraction algorithm is the following algorithm that generates 1 with probability _G_(_m_, _&#x2113;_)<sup>&minus;_k_</sup> and 0 otherwise, where _k_ is an integer that is 1 or greater (see "Continued Fractions" in my page on Bernoulli factory algorithms). The algorithm starts with _pos_ = 0, then the following steps are taken:
 
 1. **Get the partial denominator given _pos_, _k_, _m_, and _&#x2113;_**, call it _kp_.
-2. With probability _kp_/(1 + _kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
-3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the algorithm returns 1, return 0.  Otherwise, go to step 2.
+2. Do the following repeatedly, until this run of the algorithm returns a value:
+    1. With probability _kp_/(1 + _kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
+    2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
 <a id=Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1></a>
 ### Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).
@@ -113,7 +114,7 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 
 1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random number _ret_.
-3. (Loop.) If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
+3. (The remaining steps are done repeatedly, until the algorithm returns a value.) If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
 4. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
@@ -167,10 +168,11 @@ There are two algorithms.
 
 The first takes advantage of the so-called Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _k_ equal to 1.  Then the following steps are taken.
 
-1. If _k_ is 1: With probability 1/2, flip the input coin and return the result.
-2. If _k_ is greater than 1, then do the following with probability _k_/(1+_k_):
-    - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_k_ and 0 otherwise.
-3. Run this algorithm recursively, but with _k_ = _k_ + 2.  If the result is 1, return 0.  Otherwise, go to step 1.
+1. If _k_ is 1: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+2. Do the following repeatedly, until this run of the algorithm returns a value:
+    1. If _k_ is greater than 1, then do the following with probability _k_/(1+_k_):
+        - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_k_ and 0 otherwise.
+    2. Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0.
 
 The second algorithm involves an alternating series expansion of tanh(.) and involves the general martingale algorithm.
 
@@ -189,7 +191,7 @@ The algorithm is then as follows:
 1. Flip the input coin.  If it returns 0, return 0.
 2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 3. Generate a uniform(0, 1) random number _ret_.
-4. (Loop.) If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
+4. (The remaining steps are done repeatedly, until the algorithm returns a value.) If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
 5. (Calculate the next term of the alternating series for tanh.) Let _m_ be 2\*(_n_+1).  **Get the _m_<sup>th</sup> Bernoulli number**, call it _b_. Let _t_ be abs(_b_)\*2<sup>_m_</sup>\*(2<sup>_m_</sup>&minus;1)/(_m_!).
 6. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _t_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _t_.
 7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
@@ -221,7 +223,7 @@ It would be interesting to find general formulas to find the appropriate polynom
 
 My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
 
-1. With probability 1/2, flip the input coin and return the result.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 2. (Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set _m_ to (_n_&minus;1)/2+1, where _n_ is the number of bits generated this way.
 3. (Build a degree-_m_\*2 polynomial equivalent to (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_m_</sup>/2.) Let _z_ be (4<sup>_m_</sup>/2)/choose(_m_\*2,_m_).  Define a polynomial of degree _m_\*2 whose (_m_\*2)+1 Bernstein coefficients are all zero except the _m_<sup>th</sup> coefficient (starting at 0), whose value is _z_.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial's degree without changing its shape or position; see the derivation in the appendix).  Let _d_ be the new polynomial's degree.
 4. (Simulate the polynomial, whose degree is _d_ (Goyal and Sigman 2012)<sup>[**(6)**](#Note6)</sup>.) Flip the input coin _d_ times and set _h_ to the number of ones generated this way.  Let _a_ be the _h_<sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability _a_, return 1.  Otherwise, return 0.
@@ -278,7 +280,7 @@ The sampler's description has the following skeleton.
 5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
     1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 7342, set _p1_'s fractional part to \[3, 4, 2\] and _p1_'s integer part to 7.)
     2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
-    3. For each PSRN, optionally do the following: With probability 1/2, set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
+    3. For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
     4. Return the PSRNs _p1_, ..., _pN_, in that order.
 6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
 7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
@@ -363,7 +365,7 @@ The sub-algorithm below simulates a probability equal to (_U_+_k_)/_base_<sup>_z
 For base 2:
 
 1.  Set _N_ to 0.
-2.  With probability 1/2, go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
+2.  Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to the next step.  Otherwise, add 1 to _N_ and repeat this step.
 3.  If _N_ is less than _z_, return rem(_k_ / 2<sup>_z_ &minus; 1 &minus; _N_</sup>, 2).  (Alternatively, shift _k_ to the right, by _z_ &minus; 1 &minus; _N_ bits, then return _k_ _AND_ 1, where "_AND_" is a bitwise AND-operation.)
 4.  Subtract _z_ from _N_.  Then, if the item at position _N_ in the uniform PSRN's fractional part (positions start at 0) is not set to a digit (e.g., 0 or 1 for base 2), set the item at that position to a digit chosen uniformly at random (e.g., either 0 or 1 for base 2), increasing the capacity of the uniform PSRN's fractional part as necessary.
 4.  Return the item at position _N_.
@@ -421,7 +423,7 @@ This algorithm uses the skeleton described earlier in "Building an Arbitrary-Pre
 
 The following algorithm generates a PSRN of the form _U_/(1&minus;_U_), where _U_ is a uniform random number in [0, 1].
 
-1. With probability 1/2, set _intval_ to 0, then set _size_ to 1, then go to step 4.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set _intval_ to 0, then set _size_ to 1, then go to step 4.
 2. Set _intval_ to 1 and set _size_ to 1.
 3. With probability _size_/(_size_ + _intval_ + 1), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
@@ -475,9 +477,9 @@ The following new algorithm generates a partially-sampled random number that fol
 1. Set _k_ to 0.
 2. (Choose a 1-unit-wide piece of the logistic density.) Run the **algorithm for (1+exp(_k_))/(1+exp(_k_+1))** described in "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)").  If the call returns 0, add 1 to _k_ and repeat this step.  Otherwise, go to step 3.
 3. (The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it _f_.
-4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) With probability 1/2, go to step 3.
+4. (Steps 4 through 7 succeed with probability exp(&minus;(_f_+_k_))/(1+exp(&minus;(_f_+_k_)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.
 5. Run the **algorithm for exp(&minus;_k_/1)** (described in "Bernoulli Factory Algorithms"), then **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.
-6. With probability 1/2, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to positive or negative with equal probability, then return _f_.
+6. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then set _f_'s sign to positive or negative with equal probability, then return _f_.
 7. Run the **algorithm for exp(&minus;_k_/1)** and **sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN).  If both calls return 1, go to step 3.  Otherwise, go to step 6.
 
 <a id=Cauchy_Distribution></a>
