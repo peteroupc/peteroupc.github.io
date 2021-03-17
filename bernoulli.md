@@ -423,7 +423,7 @@ The first algorithm implements the reverse-time martingale framework (Algorithm 
 2. Set _&#x2113;_ and _&#x2113;t_ to 0.  Set _u_ and _ut_ to 1. Set _lastdegree_ to 0, and set _ones_ to 0.
 3. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 4. Set _startdegree_ to _degree_.
-5. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+5. (The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 6. Calculate _&#x2113;_ and _u_ as follows:
     1. Define **FB**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_).  Calculate **fbelow**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_), then return floor(_LB_\*_c_).
     2. Define **FA**(_a_, _b_) as follows: Let _c_ be choose(_a_, _b_).  Calculate **fabove**(_a_, _b_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that ceil(_LB_\*_c_) = ceil(_UB_\*_c_), then return ceil(_LB_\*_c_).
@@ -439,7 +439,7 @@ The second algorithm was given in Thomas and Blanchet (2012)<sup>[**(11)**](#Not
 1. Set _ones_ to 0, and set _lastdegree_ to 0.
 2. Set _degree_ so that the first pair of polynomials has degree equal to _degree_ and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let **fbound**(_n_) be the minimum value for **fbelow**(_n_, _k_) and the maximum value for **fabove**(_n_,_k_) for any _k_ in the interval \[0, _n_\]; then set _degree_ to 1; then while **fbound**(_degree_\) returns an upper or lower bound that is less than 0 or greater than 1, multiply _degree_ by 2; then go to the next step.
 3. Set _startdegree_ to _degree_.
-4. (Loop.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
+4. (The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin _t_ times, where _t_ is _degree_ &minus; _lastdegree_.  For each time the coin returns 1 this way, add 1 to _ones_.
 5. Set _c_ to choose(_degree_, _ones_).  Optionally, multiply _c_ by 2<sup>_degree_</sup> (see note 3 below).
 6. Find _acount_ and _bcount_ as follows:
     1. Calculate **fbelow**(_degree_, _ones_) as lower and upper bounds _LB_ and _UB_ that are accurate enough that floor(_LB_\*_c_) = floor(_UB_\*_c_).  Then set _a_\[_degree_,_ones_\] and _acount_ to floor(_LB_\*_c_).
@@ -495,7 +495,7 @@ Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
 3. If _a_\[_pos_\] is less than 0, set _kp_ to _k_ &minus; 1 and _s_ to 0.  Otherwise, set _kp_ to _k_ and _s_ to 1. (This step accounts for negative partial denominators.)
 4. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
-5. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is _s_, return 0.  Otherwise, go to step 4.
+5. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns _s_, return 0.  Otherwise, go to step 4.
 
 A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
@@ -505,14 +505,16 @@ Algorithm 2. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
 3. Set _kp_ to abs(_k_) and _s_ to 1.
 4. Set _r2_ to 1 / (_r_ * _b_\[_pos_ + 1\]).  If _a_\[_pos_ + 1\] * _r2_ is less than 0, set _kp_ to _kp_ &minus; 1 and _s_ to 0. (This step accounts for negative partial numerators and denominators.)
-5. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
-6. Run this algorithm recursively, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the result is _s_, return 0.  Otherwise, go to step 5.
+5. Do the following repeatedly until this run of the algorithm returns a value:
+    1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
+    2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the separate run returns _s_, return 0.
 
 Algorithm 3. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
-2. With probability _a_\[_pos_\]/(1 + _a_\[_pos_\]), return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
-3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 2.
+2. Do the following repeatedly until this run of the algorithm returns a value:
+    1. With probability _a_\[_pos_\]/(1 + _a_\[_pos_\]), return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
+    2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
 See the appendix for a correctness proof of Algorithm 3.
 
@@ -542,8 +544,9 @@ The _continued logarithm_ (Gosper 1978)<sup>[**(31)**](#Note31)</sup>, (Borwein 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the coefficient at _pos_ is the last, return a number that is 1 with probability 1/(2<sup>_c_\[_pos_\]</sup>) and 0 otherwise.
-2. With probability 1/2, return a number that is 1 with probability 1/(2<sup>_c_\[_pos_\]</sup>) and 0 otherwise.
-3. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 2.
+2. Do the following repeatedly until this run of the algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability 1/(2<sup>_c_\[_pos_\]</sup>) and 0 otherwise.
+    2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.
 
 For a correctness proof, see the appendix.
 
@@ -565,7 +568,7 @@ The algorithm follows.
 6. Add _a_\[_n_\] to _lamunq_ and set _&#x03F5;_ to _err_\[_n_\].
 7. Add 1 to _n_, then go to step 3.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
-9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 If _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
@@ -750,7 +753,7 @@ An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
 
 This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(40)**](#Note40)</sup> and is uniformly fast.  It will be called the **two-coin special case** in this document.<sup>[**(41)**](#Note41)</sup>
 
-1. With probability 1/2, return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda___1___lambda></a>
@@ -849,7 +852,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 
 (Nacu and Peres 2005, proposition 14(iii))<sup>[**(5)**](#Note5)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_, which must be greater than 0 and chosen such that _&lambda;_ + _&mu;_ < 1 &minus; _&#x03F5;_.
 
-1. Create a _&nu;_ input coin that does the following: "With probability 1/2, flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
+1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the _&nu;_ input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 <a id=lambda___minus___mu></a>
@@ -857,7 +860,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 
 (Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(5)**](#Note5)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_, which must be greater than 0 and chosen such that _&lambda;_ &minus; _&mu;_ > _&#x03F5;_ (and should be chosen such that _&#x03F5;_ is slightly less than _&lambda;_ &minus; _&mu;_).
 
-1. Create a _&nu;_ input coin that does the following: "With probability 1/2, flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
+1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
 2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the _&nu;_ input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
 
 <a id=1_minus___lambda></a>
@@ -878,7 +881,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 <a id=lambda_____mu___2></a>
 #### (_&lambda;_ + _&mu;_) / 2
 
-(Nacu and Peres 2005, proposition 14(iii))<sup>[**(5)**](#Note5)</sup>; (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: With probability 1/2, flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result.
+(Nacu and Peres 2005, proposition 14(iii))<sup>[**(5)**](#Note5)</sup>; (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result.
 
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>
@@ -950,7 +953,7 @@ The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(38)**
     2. Set _s_ to _s_ &minus; _z_ * 2 + 1, where _z_ is the result of the logistic Bernoulli factory.
 5. If _s_ is other than 0, return 0.
 6. With probability 1/_&beta;_, return 1.
-7. Run this algorithm recursively, with _x_/_y_ = _&beta;_ * _x_/_y_ and _&#x03F5;_ = 1 &minus; _&beta;_ * (1 &minus; _&#x03F5;_).  If it returns 0, return 0.
+7. Do a separate run of the currently running algorithm, with _x_/_y_ = _&beta;_ * _x_/_y_ and _&#x03F5;_ = 1 &minus; _&beta;_ * (1 &minus; _&#x03F5;_).  If it returns 0, return 0.
 8. The **high-power logistic Bernoulli factory** is what Huber calls this step.  Set _s_ to 1, then while _s_ is greater than 0 and less than or equal to _m_ minus 2:
     1. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = _&beta;_ * _x_/_y_.
     2. Set _s_ to _s_ + _z_ * 2 &minus; 1, where _z_ is the result of the logistic Bernoulli factory.
@@ -1003,7 +1006,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
-1. With probability 1/2, return 1.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
 3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.
 
@@ -1090,7 +1093,7 @@ The algorithm to simulate sin(_&lambda;_) follows.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
-1. With probability 1/2, flip the input coin and return the result.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 2. Generate a uniform(0, 1) random number _u_, if _u_ wasn't generated yet.
 3. [**Sample from the number _u_**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.
 
@@ -1107,7 +1110,7 @@ Return 1 minus the result of the algorithm for ln(1+_&lambda;_).<sup>[**(45)**](
 1. Generate a uniform(0, 1) random number _u_.
 2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
-4. With probability 1/2, flip the input coin and return the result.
+4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 5. [**Sample from the number _u_**](#Algorithms) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
 <a id=arcsin___lambda___2></a>
@@ -1115,7 +1118,7 @@ Return 1 minus the result of the algorithm for ln(1+_&lambda;_).<sup>[**(45)**](
 
 The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out of arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup>[**(46)**](#Note46)</sup> However, the number of input coin flips is expected to grow without bound as _&lambda;_ approaches 1.
 
-1. With probability 1/2, run the **algorithm for arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1** and return the result.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1** and return the result.
 2. Create a secondary coin _&mu;_ that does the following: "Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1." (The coin simulates 1 &minus; _&lambda;_<sup>2</sup>.)
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 1; otherwise, return 0. (This step effectively cancels out the sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1 part and divides by 2.)
 
@@ -1140,8 +1143,8 @@ kind of irrational number.
 
 This algorithm uses the algorithm described in the section on [**continued fractions**](#Continued_Fractions) to simulate 1 divided by the golden ratio, whose continued fraction's partial denominators are 1, 1, 1, 1, ....
 
-1. With probability 1/2, return 1.
-2. Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
+2. Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=sqrt_2_minus_1></a>
 #### sqrt(2) &minus; 1
@@ -1149,7 +1152,7 @@ This algorithm uses the algorithm described in the section on [**continued fract
 Another example of a continued fraction is that of the fractional part of the square root of 2, where the partial denominators are 2, 2, 2, 2, .... The algorithm to simulate this number is as follows:
 
 1. With probability 2/3, generate an unbiased random bit and return that bit.
-2. Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.
+2. Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=1_sqrt_2></a>
 #### 1/sqrt(2)
@@ -1159,7 +1162,7 @@ This third example of a continued fraction shows how to simulate a probability 1
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If _pos_ is 1, return 1 with probability 1/2.  If _pos_ is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.
-2. Run this algorithm recursively, but with _pos_ = _pos_ + 1.  If the result is 1, return 0.  Otherwise, go to step 1.
+2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=tanh_1_2_or_exp_1_minus_1_exp_1_1></a>
 #### tanh(1/2) or (exp(1) &minus; 1) / (exp(1) + 1)
@@ -1167,7 +1170,7 @@ The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 1. With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
-2. Run this algorithm recursively, but with _k_ = _k_ + 4.  If the result is 1, return 0.  Otherwise, go to step 1.
+2. Do a separate run of the currently running algorithm, but with _k_ = _k_ + 4.  If the separate run returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=arctan__x___y___y___x></a>
 #### arctan(_x_/_y_) \* _y_/_x_
@@ -1182,7 +1185,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
-1. With probability 1/2, return 1.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
 3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
@@ -1284,7 +1287,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 
 This is the probability that the bit at _prec_ (the _prec_<sup>th</sup> bit after the point) is set for an exponential random number with rate _x_/_y_.  This algorithm is a special case of the **logistic Bernoulli factory**.
 
-1. With probability 1/2, return 1.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Call the **algorithm for exp(&minus; _x_/(_y_ * 2<sup>_prec_</sup>))**.  If the call returns 1, return 1.  Otherwise, go to step 1.
 
 <a id=1_1_exp__z__2_prec__LogisticExp></a>
@@ -1305,13 +1308,13 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  It can be seen as a triple integral whose integrand is 1/(1 + _a_ * _b_ * _c_), where _a_, _b_, and _c_ are uniform(0, 1) random numbers.  This algorithm is given below, but using the two-coin special case instead of the even-parity construction.  Note that the triple integral in section 5 of the paper is _&zeta;_(3) * 3 / 4, not _&zeta;_(3) * 7 / 8. (Here, _&zeta;_(_x_) is the Riemann zeta function.)
 
 1. Generate three uniform(0,1) random numbers.
-2. With probability 1/2, return 1.
+2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 3. [**Sample from each of the three numbers**](#Algorithms) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)
 
 This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus; 2<sup>&minus;(_k_ &minus; 1)</sup>) where _k_ &ge; 2 is an integer, as suggested slightly by the Flajolet paper when it mentions _&zeta;_(5) * 31 / 32 (which should probably read _&zeta;_(5) * 15 / 16 instead), using the following algorithm.
 
 1. Generate _k_ uniform(0,1) random numbers.
-2. With probability 1/2, return 1.
+2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 3. [**Sample from each of the _k_ numbers**](#Algorithms) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
 <a id=erf__x__erf_1></a>
@@ -1382,7 +1385,7 @@ The following algorithm to simulate Euler's constant _&gamma;_ is due to Mendo (
 6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to an upper bound on the error that results if the series is truncated after summing this and the previous terms.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_&ge;1 such that _n_ &lt; 2<sup>_b_</sup>).
 7. Add 1 to _n_, then set _prev_ to _&#x03F5;_, then go to step 3.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
-9. With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 <a id=exp_minus__x___y___z___t></a>
 #### exp(&minus;_x_/_y_) \* _z_/_t_
@@ -1398,14 +1401,14 @@ This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(33)**]
 7. (This step adds two terms of exp(&minus;_x_/_y_)'s alternating series, multiplied by _z_/_t_, to _lamunq_, and sets _&#x03F5;_ to an upper bound on how close the current sum is to the desired probability.)  Let _m_ be _n_\*2.  Set _&#x03F5;_ to _z_\*_x_<sup>_m_</sup>/(_t_\*(_m_!)\*_y_<sup>_m_</sup>).  If _m_ is 0, add _z_\*(_y_&minus;_x_)/(_t_\*_y_) to _lamunq_. Otherwise, add _z_\*_x_<sup>_m_</sup>\*(_m_\*_y_&minus;_x_+_y_) / (_t_\*_y_<sup>_m_+1</sup>\*((_m_+1)!)) to _lamunq_.
 8. Add 1 to _n_ and go to step 4.
 9. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
-10. With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
+10. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
 <a id=ln_2></a>
 #### ln(2)
 
 A special case of the algorithm for ln(1+_&lambda;_) given earlier.
 
-1. With probability 1/2, return 1.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random number _u_, if it wasn't generated yet.
 3. [**Sample from the number _u_**](#Algorithms).  If the result is 1, return 0.  Otherwise, go to step 1.
 
@@ -1415,7 +1418,7 @@ A special case of the algorithm for ln(1+_&lambda;_) given earlier.
 See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number in the interval [0, 1].
 
 1. If _y_/_z_ is 0, return 0.
-2. With probability 1/2, return a number that is 1 with probability _y_/_z_ and 0 otherwise.
+2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
 3. Generate a uniform(0, 1) random number _u_, if _u_ wasn't generated yet.
 4. [**Sample from the number _u_**](#Algorithms), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.
 
@@ -1582,7 +1585,7 @@ where _g_(_X_) is a random value that follows the desired distribution, based on
 _Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019)<sup>[**(43)**](#Note43)</sup>.  Using Huber's theorem requires proving two things:
 
 - First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it's called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.
-- Second, we show the algorithm is locally correct when the recursive call in step 3 is replaced with an oracle that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (step 3) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at step 2 with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at step 2 with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at step 3 with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
+- Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with an oracle that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
 
 Since both conditions of Huber's theorem are satisfied, this completes the proof. &#x25a1;
 
@@ -1594,7 +1597,7 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
 - The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.
-- If the call in step 3 is replaced with an oracle that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at step 2 with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at step 2 with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at step 3 with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
+- If the recursive call in the loop is replaced with an oracle that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
 
 <a id=The_von_Neumann_Schema></a>
 ### The von Neumann Schema

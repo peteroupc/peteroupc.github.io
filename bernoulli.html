@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/03/14"><meta name="citation_online_date" content="2021/03/14"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/03/17"><meta name="citation_online_date" content="2021/03/17"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -556,7 +556,7 @@ functions, or functions in general.</p>
 <li>Set <em>&#x2113;</em> and <em>&#x2113;t</em> to 0.  Set <em>u</em> and <em>ut</em> to 1. Set <em>lastdegree</em> to 0, and set <em>ones</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
+<li>(The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
 <li>Calculate <em>&#x2113;</em> and <em>u</em> as follows:
 
 <ol>
@@ -577,7 +577,7 @@ functions, or functions in general.</p>
 <li>Set <em>ones</em> to 0, and set <em>lastdegree</em> to 0.</li>
 <li>Set <em>degree</em> so that the first pair of polynomials has degree equal to <em>degree</em> and has coefficients all lying in [0, 1].  For example, this can be done as follows: Let <strong>fbound</strong>(<em>n</em>) be the minimum value for <strong>fbelow</strong>(<em>n</em>, <em>k</em>) and the maximum value for <strong>fabove</strong>(<em>n</em>,<em>k</em>) for any <em>k</em> in the interval [0, <em>n</em>]; then set <em>degree</em> to 1; then while <strong>fbound</strong>(<em>degree</em>) returns an upper or lower bound that is less than 0 or greater than 1, multiply <em>degree</em> by 2; then go to the next step.</li>
 <li>Set <em>startdegree</em> to <em>degree</em>.</li>
-<li>(Loop.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
+<li>(The remaining steps are now done repeatedly until the algorithm finishes by returning a value.) Flip the input coin <em>t</em> times, where <em>t</em> is <em>degree</em> &minus; <em>lastdegree</em>.  For each time the coin returns 1 this way, add 1 to <em>ones</em>.</li>
 <li>Set <em>c</em> to choose(<em>degree</em>, <em>ones</em>).  Optionally, multiply <em>c</em> by 2<sup><em>degree</em></sup> (see note 3 below).</li>
 <li>Find <em>acount</em> and <em>bcount</em> as follows:
 
@@ -653,7 +653,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If the partial denominator at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>If <em>a</em>[<em>pos</em>] is less than 0, set <em>kp</em> to <em>k</em> &minus; 1 and <em>s</em> to 0.  Otherwise, set <em>kp</em> to <em>k</em> and <em>s</em> to 1. (This step accounts for negative partial denominators.)</li>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is <em>s</em>, return 0.  Otherwise, go to step 4.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns <em>s</em>, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
 <p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.</p>
@@ -665,16 +665,24 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability 1/abs(<em>k</em>) and 0 otherwise.</li>
 <li>Set <em>kp</em> to abs(<em>k</em>) and <em>s</em> to 1.</li>
 <li>Set <em>r2</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em> + 1]).  If <em>a</em>[<em>pos</em> + 1] * <em>r2</em> is less than 0, set <em>kp</em> to <em>kp</em> &minus; 1 and <em>s</em> to 0. (This step accounts for negative partial numerators and denominators.)</li>
+<li>Do the following repeatedly until this run of the algorithm returns a value:
+
+<ol>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1 and <em>r</em> = <em>r</em>.  If the result is <em>s</em>, return 0.  Otherwise, go to step 5.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1 and <em>r</em> = <em>r</em>.  If the separate run returns <em>s</em>, return 0.</li>
+</ol></li>
 </ol>
 
 <p>Algorithm 3. This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
+<li>Do the following repeatedly until this run of the algorithm returns a value:
+
+<ol>
 <li>With probability <em>a</em>[<em>pos</em>]/(1 + <em>a</em>[<em>pos</em>]), return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns 1, return 0.</li>
+</ol></li>
 </ol>
 
 <p>See the appendix for a correctness proof of Algorithm 3.</p>
@@ -718,8 +726,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>If the coefficient at <em>pos</em> is the last, return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
-<li>With probability 1/2, return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
+<li>Do the following repeatedly until this run of the algorithm returns a value:
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.</li>
+</ol></li>
 </ol>
 
 <p>For a correctness proof, see the appendix.</p>
@@ -746,7 +758,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Add <em>a</em>[<em>n</em>] to <em>lamunq</em> and set <em>&#x03F5;</em> to <em>err</em>[<em>n</em>].</li>
 <li>Add 1 to <em>n</em>, then go to step 3.</li>
 <li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &le; <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
-<li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
 <p>If <em>a</em>, given above, is instead a sequence that converges to the <em>base-2 logarithm</em> of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity&#39;s sake, even though logarithms for such probabilities are negative, all the <em>a</em>[<em>i</em>] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
@@ -999,7 +1011,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note40"><strong>(40)</strong></a></sup> and is uniformly fast.  It will be called the <strong>two-coin special case</strong> in this document.<sup><a href="#Note41"><strong>(41)</strong></a></sup></p>
 
 <ol>
-<li>With probability 1/2, return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)</li>
 <li>Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
@@ -1144,7 +1156,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em>, which must be greater than 0 and chosen such that <em>&lambda;</em> + <em>&mu;</em> &lt; 1 &minus; <em>&#x03F5;</em>.</p>
 
 <ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;With probability 1/2, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
 </ol>
 
@@ -1155,7 +1167,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em>, which must be greater than 0 and chosen such that <em>&lambda;</em> &minus; <em>&mu;</em> &gt; <em>&#x03F5;</em> (and should be chosen such that <em>&#x03F5;</em> is slightly less than <em>&lambda;</em> &minus; <em>&mu;</em>).</p>
 
 <ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;With probability 1/2, flip the <em>&lambda;</em> input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return 1 minus the result.</li>
 </ol>
 
@@ -1181,7 +1193,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>(<em>&lambda;</em> + <em>&mu;</em>) / 2</h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note5"><strong>(5)</strong></a></sup>; (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: With probability 1/2, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</p>
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note5"><strong>(5)</strong></a></sup>; (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</p>
 
 <p><a id=lambda___x___y></a></p>
 
@@ -1276,7 +1288,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 <li>If <em>s</em> is other than 0, return 0.</li>
 <li>With probability 1/<em>&beta;</em>, return 1.</li>
-<li>Run this algorithm recursively, with <em>x</em>/<em>y</em> = <em>&beta;</em> * <em>x</em>/<em>y</em> and <em>&#x03F5;</em> = 1 &minus; <em>&beta;</em> * (1 &minus; <em>&#x03F5;</em>).  If it returns 0, return 0.</li>
+<li>Do a separate run of the currently running algorithm, with <em>x</em>/<em>y</em> = <em>&beta;</em> * <em>x</em>/<em>y</em> and <em>&#x03F5;</em> = 1 &minus; <em>&beta;</em> * (1 &minus; <em>&#x03F5;</em>).  If it returns 0, return 0.</li>
 <li>The <strong>high-power logistic Bernoulli factory</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than or equal to <em>m</em> minus 2:
 
 <ol>
@@ -1350,7 +1362,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
@@ -1463,7 +1475,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for all <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>With probability 1/2, flip the input coin and return the result.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
@@ -1484,7 +1496,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Generate a uniform(0, 1) random number <em>u</em>.</li>
 <li>Create a secondary coin <em>&mu;</em> that does the following: &quot;<a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1.&quot;</li>
 <li>Call the <strong>algorithm for <em>&mu;</em><sup>1/2</sup></strong> using the secondary coin <em>&mu;</em>.  If it returns 0, return 0.</li>
-<li>With probability 1/2, flip the input coin and return the result.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a> once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.</li>
 </ol>
 
@@ -1495,7 +1507,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>The Flajolet paper doesn&#39;t explain in detail how arcsin(<em>&lambda;</em>)/2 arises out of arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1 via Bernoulli factory constructions, but here is an algorithm.<sup><a href="#Note46"><strong>(46)</strong></a></sup> However, the number of input coin flips is expected to grow without bound as <em>&lambda;</em> approaches 1.</p>
 
 <ol>
-<li>With probability 1/2, run the <strong>algorithm for arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</strong> and return the result.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the <strong>algorithm for arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</strong> and return the result.</li>
 <li>Create a secondary coin <em>&mu;</em> that does the following: &quot;Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.&quot; (The coin simulates 1 &minus; <em>&lambda;</em><sup>2</sup>.)</li>
 <li>Call the <strong>algorithm for <em>&mu;</em><sup>1/2</sup></strong> using the secondary coin <em>&mu;</em>.  If it returns 0, return 1; otherwise, return 0. (This step effectively cancels out the sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1 part and divides by 2.)</li>
 </ol>
@@ -1527,8 +1539,8 @@ kind of irrational number.</p>
 <p>This algorithm uses the algorithm described in the section on <a href="#Continued_Fractions"><strong>continued fractions</strong></a> to simulate 1 divided by the golden ratio, whose continued fraction&#39;s partial denominators are 1, 1, 1, 1, ....</p>
 
 <ol>
-<li>With probability 1/2, return 1.</li>
-<li>Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
+<li>Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=sqrt_2_minus_1></a></p>
@@ -1539,7 +1551,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>With probability 2/3, generate an unbiased random bit and return that bit.</li>
-<li>Run this algorithm recursively.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=1_sqrt_2></a></p>
@@ -1552,7 +1564,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>If <em>pos</em> is 1, return 1 with probability 1/2.  If <em>pos</em> is greater than 1, then with probability 2/3, generate an unbiased random bit and return that bit.</li>
-<li>Run this algorithm recursively, but with <em>pos</em> = <em>pos</em> + 1.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=tanh_1_2_or_exp_1_minus_1_exp_1_1></a></p>
@@ -1563,7 +1575,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
-<li>Run this algorithm recursively, but with <em>k</em> = <em>k</em> + 4.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
+<li>Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 4.  If the separate run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
 <p><a id=arctan__x___y___y___x></a></p>
@@ -1583,7 +1595,7 @@ kind of irrational number.</p>
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:</p>
 
 <ol>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li>With probability <em>x</em> * <em>x</em>/(<em>y</em> * <em>y</em>), <a href="#Algorithms"><strong>sample from the number <em>u</em></strong></a> twice.  If both of these calls return 1, return 0.</li>
 <li>Go to step 1.</li>
@@ -1719,7 +1731,7 @@ kind of irrational number.</p>
 <p>This is the probability that the bit at <em>prec</em> (the <em>prec</em><sup>th</sup> bit after the point) is set for an exponential random number with rate <em>x</em>/<em>y</em>.  This algorithm is a special case of the <strong>logistic Bernoulli factory</strong>.</p>
 
 <ol>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Call the <strong>algorithm for exp(&minus; <em>x</em>/(<em>y</em> * 2<sup><em>prec</em></sup>))</strong>.  If the call returns 1, return 1.  Otherwise, go to step 1.</li>
 </ol>
 
@@ -1746,7 +1758,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate three uniform(0,1) random numbers.</li>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li><a href="#Algorithms"><strong>Sample from each of the three numbers</strong></a> generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random numbers.)</li>
 </ol>
 
@@ -1754,7 +1766,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Generate <em>k</em> uniform(0,1) random numbers.</li>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li><a href="#Algorithms"><strong>Sample from each of the <em>k</em> numbers</strong></a> generated in step 1.  If all <em>k</em> calls return 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
@@ -1842,7 +1854,7 @@ kind of irrational number.</p>
 <li>(This step adds a term of the series for <em>&gamma;</em> to <em>lamunq</em>, and sets <em>&#x03F5;</em> to an upper bound on the error that results if the series is truncated after summing this and the previous terms.) If <em>n</em> is 0, add 1/2 to <em>lamunq</em> and set <em>&#x03F5;</em> to 1/2.  Otherwise, add <em>B</em>(<em>n</em>)/(2*<em>n</em>*(2*<em>n</em>+1)*(2*<em>n</em>+2)) to <em>lamunq</em> and set <em>&#x03F5;</em> to min(<em>prev</em>, (2+<em>B</em>(<em>n</em>)+(1/<em>n</em>))/(16*<em>n</em>*<em>n</em>)), where <em>B</em>(<em>n</em>) is the minimum number of bits needed to store <em>n</em> (or the smallest <em>b</em>&ge;1 such that <em>n</em> &lt; 2<sup><em>b</em></sup>).</li>
 <li>Add 1 to <em>n</em>, then set <em>prev</em> to <em>&#x03F5;</em>, then go to step 3.</li>
 <li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &le; <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
-<li>With probability 1/2, go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
 <p><a id=exp_minus__x___y___z___t></a></p>
@@ -1861,7 +1873,7 @@ kind of irrational number.</p>
 <li>(This step adds two terms of exp(&minus;<em>x</em>/<em>y</em>)&#39;s alternating series, multiplied by <em>z</em>/<em>t</em>, to <em>lamunq</em>, and sets <em>&#x03F5;</em> to an upper bound on how close the current sum is to the desired probability.)  Let <em>m</em> be <em>n</em>*2.  Set <em>&#x03F5;</em> to <em>z</em>*<em>x</em><sup><em>m</em></sup>/(<em>t</em>*(<em>m</em>!)*<em>y</em><sup><em>m</em></sup>).  If <em>m</em> is 0, add <em>z</em>*(<em>y</em>&minus;<em>x</em>)/(<em>t</em>*<em>y</em>) to <em>lamunq</em>. Otherwise, add <em>z</em>*<em>x</em><sup><em>m</em></sup>*(<em>m</em>*<em>y</em>&minus;<em>x</em>+<em>y</em>) / (<em>t</em>*<em>y</em><sup><em>m</em>+1</sup>*((<em>m</em>+1)!)) to <em>lamunq</em>.</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 <li>Let <em>bound</em> be <em>lam</em>+1/(2<sup><em>k</em></sup>).  If <em>lamunq</em>+<em>&#x03F5;</em> &le; <em>bound</em>, set <em>s</em> to 0.  Otherwise, if <em>lamunq</em> &gt; <em>bound</em>, set <em>s</em> to 2.  Otherwise, set <em>s</em> to 1.</li>
-<li>With probability 1/2, go to step 3.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.  Otherwise, return a number that is 0 if <em>s</em> is 0, 1 if <em>s</em> is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.</li>
 </ol>
 
 <p><a id=ln_2></a></p>
@@ -1871,7 +1883,7 @@ kind of irrational number.</p>
 <p>A special case of the algorithm for ln(1+<em>&lambda;</em>) given earlier.</p>
 
 <ol>
-<li>With probability 1/2, return 1.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, if it wasn&#39;t generated yet.</li>
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>.  If the result is 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
@@ -1884,7 +1896,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>If <em>y</em>/<em>z</em> is 0, return 0.</li>
-<li>With probability 1/2, return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
 <li>Generate a uniform(0, 1) random number <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
 <li><a href="#Algorithms"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -2084,7 +2096,7 @@ kind of irrational number.</p>
 
 <ul>
 <li>First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.</li>
-<li>Second, we show the algorithm is locally correct when the recursive call in step 3 is replaced with an oracle that simulates the correct &quot;continued sub-logarithm&quot;.  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the &quot;continued sub-logarithm&quot; and will be at most 1 by construction.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (step 3) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the &quot;rejection piece&quot; that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at step 2 with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at step 2 with probability <em>f1</em> = (1 &minus; 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at step 3 with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
+<li>Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with an oracle that simulates the correct &quot;continued sub-logarithm&quot;.  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the &quot;continued sub-logarithm&quot; and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the &quot;rejection piece&quot; that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at the first substep of the loop with probability <em>f1</em> = (1 &minus; 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at the second substep with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
 </ul>
 
 <p>Since both conditions of Huber&#39;s theorem are satisfied, this completes the proof. &#x25a1;</p>
@@ -2099,7 +2111,7 @@ kind of irrational number.</p>
 
 <ul>
 <li>The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.</li>
-<li>If the call in step 3 is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Steps 2 and 3 define a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (step 3) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at step 2 with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at step 2 with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at step 3 with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
+<li>If the recursive call in the loop is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at the first substep with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at the first substep of the loop with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at the second substep with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
 </ul>
 
 <p><a id=The_von_Neumann_Schema></a></p>
