@@ -89,7 +89,7 @@ First, define the following operations:
 An application of the continued fraction algorithm is the following algorithm that generates 1 with probability _G_(_m_, _&#x2113;_)<sup>&minus;_k_</sup> and 0 otherwise, where _k_ is an integer that is 1 or greater (see "Continued Fractions" in my page on Bernoulli factory algorithms). The algorithm starts with _pos_ = 0, then the following steps are taken:
 
 1. **Get the partial denominator given _pos_, _k_, _m_, and _&#x2113;_**, call it _kp_.
-2. Do the following repeatedly, until this run of the algorithm returns a value:
+2. Do the following process repeatedly, until this run of the algorithm returns a value:
     1. With probability _kp_/(1 + _kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
@@ -169,7 +169,7 @@ There are two algorithms.
 The first takes advantage of the so-called Lambert's continued fraction for tanh(.), as well as Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _k_ equal to 1.  Then the following steps are taken.
 
 1. If _k_ is 1: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-2. Do the following repeatedly, until this run of the algorithm returns a value:
+2. Do the following process repeatedly, until this run of the algorithm returns a value:
     1. If _k_ is greater than 1, then do the following with probability _k_/(1+_k_):
         - Flip the input coin twice.  If any of these flips returns 0, return 0.  Otherwise, return a number that is 1 with probability 1/_k_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0.

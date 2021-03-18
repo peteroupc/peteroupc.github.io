@@ -652,7 +652,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
 <li>If the partial denominator at <em>pos</em> is the last, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
 <li>If <em>a</em>[<em>pos</em>] is less than 0, set <em>kp</em> to <em>k</em> &minus; 1 and <em>s</em> to 0.  Otherwise, set <em>kp</em> to <em>k</em> and <em>s</em> to 1. (This step accounts for negative partial denominators.)</li>
-<li>Do the following repeatedly until this run of the algorithm returns a value:
+<li>Do the following process repeatedly until this run of the algorithm returns a value:
 
 <ol>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
@@ -669,7 +669,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability 1/abs(<em>k</em>) and 0 otherwise.</li>
 <li>Set <em>kp</em> to abs(<em>k</em>) and <em>s</em> to 1.</li>
 <li>Set <em>r2</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em> + 1]).  If <em>a</em>[<em>pos</em> + 1] * <em>r2</em> is less than 0, set <em>kp</em> to <em>kp</em> &minus; 1 and <em>s</em> to 0. (This step accounts for negative partial numerators and denominators.)</li>
-<li>Do the following repeatedly until this run of the algorithm returns a value:
+<li>Do the following process repeatedly until this run of the algorithm returns a value:
 
 <ol>
 <li>With probability <em>kp</em>/(1+<em>kp</em>), return a number that is 1 with probability 1/<em>kp</em> and 0 otherwise.</li>
@@ -681,7 +681,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
-<li>Do the following repeatedly until this run of the algorithm returns a value:
+<li>Do the following process repeatedly until this run of the algorithm returns a value:
 
 <ol>
 <li>With probability <em>a</em>[<em>pos</em>]/(1 + <em>a</em>[<em>pos</em>]), return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
@@ -730,7 +730,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>If the coefficient at <em>pos</em> is the last, return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
-<li>Do the following repeatedly until this run of the algorithm returns a value:
+<li>Do the following process repeatedly until this run of the algorithm returns a value:
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability 1/(2<sup><em>c</em>[<em>pos</em>]</sup>) and 0 otherwise.</li>
@@ -772,7 +772,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
 <li>Generate an exponential random number <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random number <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Do the following repeatedly, until the algorithm returns a value:
+<li>Do the following process repeatedly, until the algorithm returns a value:
 
 <ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
@@ -786,7 +786,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ol>
 <li>Generate an exponential random number <em>E</em> (with rate 1).</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Do the following repeatedly, until the algorithm returns a value:
+<li>Do the following process repeatedly, until the algorithm returns a value:
 
 <ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>

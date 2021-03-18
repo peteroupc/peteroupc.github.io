@@ -494,7 +494,7 @@ Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
 3. If _a_\[_pos_\] is less than 0, set _kp_ to _k_ &minus; 1 and _s_ to 0.  Otherwise, set _kp_ to _k_ and _s_ to 1. (This step accounts for negative partial denominators.)
-4. Do the following repeatedly until this run of the algorithm returns a value:
+4. Do the following process repeatedly until this run of the algorithm returns a value:
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns _s_, return 0.
 
@@ -506,14 +506,14 @@ Algorithm 2. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
 3. Set _kp_ to abs(_k_) and _s_ to 1.
 4. Set _r2_ to 1 / (_r_ * _b_\[_pos_ + 1\]).  If _a_\[_pos_ + 1\] * _r2_ is less than 0, set _kp_ to _kp_ &minus; 1 and _s_ to 0. (This step accounts for negative partial numerators and denominators.)
-5. Do the following repeatedly until this run of the algorithm returns a value:
+5. Do the following process repeatedly until this run of the algorithm returns a value:
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the separate run returns _s_, return 0.
 
 Algorithm 3. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
-2. Do the following repeatedly until this run of the algorithm returns a value:
+2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. With probability _a_\[_pos_\]/(1 + _a_\[_pos_\]), return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
@@ -545,7 +545,7 @@ The _continued logarithm_ (Gosper 1978)<sup>[**(31)**](#Note31)</sup>, (Borwein 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the coefficient at _pos_ is the last, return a number that is 1 with probability 1/(2<sup>_c_\[_pos_\]</sup>) and 0 otherwise.
-2. Do the following repeatedly until this run of the algorithm returns a value:
+2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability 1/(2<sup>_c_\[_pos_\]</sup>) and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
@@ -577,7 +577,7 @@ If _a_, given above, is instead a sequence that converges to the _base-2 logarit
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
 3. Generate an exponential random number _E_ with rate ln(2).  This can be done, for example, by using the algorithm given in "[**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.html)". (We take advantage of the exponential distribution's _memoryless property_: given that an exponential random number _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
 4. Set _n_ to 0.
-5. Do the following repeatedly, until the algorithm returns a value:
+5. Do the following process repeatedly, until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If neither is the case, return 1.
     3. Set _n_ to 1.
@@ -586,7 +586,7 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 
 1. Generate an exponential random number _E_ (with rate 1).
 2. Set _n_ to 0.
-3. Do the following repeatedly, until the algorithm returns a value:
+3. Do the following process repeatedly, until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If  neither is the case, return 1.
     3. Set _n_ to 1.
