@@ -606,6 +606,7 @@ def funcstring(func, x):
     else:
         data = "%s" % (srepl(pwfunc).replace("lambda", "_&lambda;_"))
     data = data.replace(" - ", " &minus; ")
+    data = data.replace("(-", "(&minus;")
     data = data.replace(" >= ", " &ge; ")
     data = re.sub(r"pi(?!\w)", "&pi;", data)
     data = re.sub(r"\*\*\(([^\)\(]+)\)", "<sup>\\1</sup>", data)
@@ -854,7 +855,7 @@ def approxscheme2(
                     data += simpoly + (
                         "return 1.  Otherwise, "
                         if invertedResult
-                        else "return 0.  Otherwise,"
+                        else "return 0.  Otherwise, "
                     )
                 data += (
                     "simulate "

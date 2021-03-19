@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/17"><meta name="citation_online_date" content="2021/03/17"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/18"><meta name="citation_online_date" content="2021/03/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -341,7 +341,7 @@
 
 <p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere.</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;grows no faster than <em>h</em>(<em>n</em>)&quot;.)</p>
 
 <table><thead>
 <tr>
@@ -358,7 +358,7 @@
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for all <em>&lambda;</em>.</td>
+<td>Number of flips required, raised to power of <em>r</em>, is finite on average and tends to 0 has a tail that drops off uniformly for all <em>&lambda;</em>.</td>
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (has <em>r</em> or more continuous derivatives, or &quot;slope&quot; functions) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -370,7 +370,7 @@
 <td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>&quot;Fast simulation&quot; (number of flips required has a tail that drops off exponentially).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
+<td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
 <td>If and only if <em>f</em> is real analytic (is <em>C</em><sup>&infin;</sup> continuous, or has continuous <em>k</em><sup>th</sup> derivative for every <em>k</em>, and agrees with its Taylor series &quot;near&quot; every point) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -385,19 +385,19 @@
 
 <p>The following note shows the complexity of the algorithm for 1/<em>&phi;</em> in the main article, where <em>&phi;</em> is the golden ratio.</p>
 
-<p>Let <strong>E</strong>[<em>N</em>] be the expected number of unbiased random bits (fair coin flips) generated by the algorithm.</p>
+<p>Let <strong>E</strong>[<em>N</em>] be the expected (average) number of unbiased random bits (fair coin flips) generated by the algorithm.</p>
 
 <p>Then, since each bit is independent, <strong>E</strong>[<em>N</em>] = 2*<em>&phi;</em> as shown below.</p>
 
 <ul>
 <li>Each iteration stops the algorithm with probability <em>p</em> = (1/2) + (1&minus;(1/2)) * (1/<em>&phi;</em>) (1/2 for the initial bit and 1/<em>&phi;</em> for the recursive run; (1&minus;(1/2)) because we&#39;re subtracting the (1/2) earlier on the right-hand side from 1).</li>
-<li>Thus, the expected number of iterations is <strong>E</strong>[<em>T</em>] = 1/<em>p</em> by a well-known rejection sampling argument, since the algorithm doesn&#39;t depend on iteration counts.</li>
+<li>Thus, the expected (average) number of iterations is <strong>E</strong>[<em>T</em>] = 1/<em>p</em> by a well-known rejection sampling argument, since the algorithm doesn&#39;t depend on iteration counts.</li>
 <li>Each iteration uses 1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2) bits on average, so the whole algorithm uses <strong>E</strong>[<em>N</em>] = (1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2)) * <strong>E</strong>[<em>T</em>] bits on average (each iteration consumes either 1 bit with probability 1/2, or (1 + <strong>E</strong>[<em>N</em>]) bits with probability 1/2). This equation has the solution <strong>E</strong>[<em>N</em>] = 1 + sqrt(5) = 2*<em>&phi;</em>.</li>
 </ul>
 
 <p>Also, on average, half of these flips (<em>&phi;</em>) show 1 and half show 0, since the bits are unbiased (the coin is fair).</p>
 
-<p>A similar analysis to the one above can be used to find the expected time complexity of many Bernoulli factory algorithms.</p>
+<p>A similar analysis to the one above can be used to find the expected (average) time complexity of many Bernoulli factory algorithms.</p>
 
 <p><a id=Examples_of_Bernoulli_Factory_Approximation_Schemes></a></p>
 
@@ -425,7 +425,7 @@
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 1</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (cosh(<em>&lambda;</em>) &minus; 1)/(<em>&lambda;</em>*(<em>&lambda;</em><sup>2</sup> + 2*<em>&lambda;</em>*(1 &minus; <em>&lambda;</em>))) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -462,7 +462,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (cosh(<em>&lam
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise,simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; (cosh(<em>&lambda;</em>)/4 &minus; 1/4)/(<em>&lambda;</em>*(<em>&lambda;</em><sup>2</sup> + 2*<em>&lambda;</em>*(1 &minus; <em>&lambda;</em>))) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -480,8 +480,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; (cosh(<em>&la
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sinh(<em>&lambda;</em>)/4 + cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; (sinh(<em>&lambda;</em>)/4 + cosh(<em>&lambda;</em>)/4 &minus; 1/4)/(<em>&lambda;</em><sup>2</sup> + 2*<em>&lambda;</em>*(1 &minus; <em>&lambda;</em>)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
+Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -517,7 +517,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; (sinh(<em>&lam
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(-<em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(&minus;<em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be convex and twice differentiable, leading to:
@@ -535,7 +535,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; (sinh(<em>&lam
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 1/2)<sup>2</sup>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -584,7 +584,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 6389170731/(3200000000*n<sup>1/4</sup>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 1/2)<sup>2</sup>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -600,7 +600,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> + 2/5)<sup>2</sup>)/2 if <em>&lambda;</em> &le; 1/10; 3/4 &minus; sqrt(1 &minus; 4*(<em>&lambda;</em> &minus; 3/5)<sup>2</sup>)/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(25 &minus; 4*(5*<em>&lambda;</em> + 2)<sup>2</sup>)/10 if <em>&lambda;</em> &le; 1/10; 3/4 &minus; sqrt(25 &minus; 4*(5*<em>&lambda;</em> &minus; 3)<sup>2</sup>)/10 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -652,17 +652,17 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1 &minus; <em>&lambda;</em><sup>2</sup></strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; <em>&lambda;</em>/(<em>&lambda;</em><sup>2</sup> + 2*<em>&lambda;</em>*(1 &minus; <em>&lambda;</em>)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
-<li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
+<li>The function was detected to be convex and twice differentiable, leading to:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 857/2000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 2/(7*n).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven:
+<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 4709/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 13/(112*n).</li>
@@ -813,7 +813,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>0 if <em>&lambda;</em> = 0; <em>&lambda;</em>/2 if <em>&lambda;</em> &le; 0.500000000000000; (<em>&lambda;</em>/2 &minus; 1/8)/<em>&lambda;</em> otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 0.500000000000000; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and twice differentiable using numerical methods, which may be inaccurate:
@@ -849,7 +849,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (<em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12)/<em>&lambda;</em> if <em>&lambda;</em> &lt; 0; (6*<em>&lambda;</em> + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &ge; 1/2; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &lt; 0; (6*<em>&lambda;</em> + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &ge; 1/2; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be Lipschitz continuous using numerical methods, which may be inaccurate:
