@@ -355,8 +355,10 @@ One example is a _Gaussian copula_; this copula is sampled by sampling from a [*
        return mvn
     END METHOD
 
-Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(14)**](#Note14)</sup>.)
+Each of the resulting uniform random numbers will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a _marginal distribution_ or _marginal_ here) by taking the quantile of that uniform number for that distribution (see "[**Inverse Transform Sampling**](https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling)", and see also (Cario and Nelson 1997)<sup>[**(14)**](#Note14)</sup>.)
 
+> **Note:** The Gaussian copula is also known as the _normal-to-anything_ method.
+>
 > **Examples:**
 >
 > 1. To generate two correlated uniform random numbers with a Gaussian copula, generate `GaussianCopula([[1, rho], [rho, 1]])`, where `rho` is the Pearson correlation coefficient, in the interval [-1, 1]. (Other correlation coefficients besides `rho` exist. For example, for a two-variable Gaussian copula, the [**Spearman correlation coefficient**](https://en.wikipedia.org/wiki/Rank_correlation) `srho` can be converted to `rho` by `rho = sin(srho * pi / 6) * 2`.  Other correlation coefficients, and other measures of dependence between random numbers, are not further discussed in this document.)
@@ -370,7 +372,19 @@ Each of the resulting uniform random numbers will be in the interval [0, 1], and
 >              -log1p(-copula[1]) / rate2]
 >         END METHOD
 >
-> **Note:** The Gaussian copula is also known as the _normal-to-anything_ method.
+> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021)<sup>[**(18)**](#Note18)</sup> is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lambda` and a marginal that must be a _continuous non-negative_ probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  Sampling from the **T**&ndash;Poisson hierarchy involves&mdash;
+>
+>     1. sampling an N-dimensional random vector via a copula (such as `GaussianCopula`), producing correlated uniform random numbers; then
+>     2. for each component in the vector, taking that component's quantile for the corresponding marginal; then
+>     3. for each component in the vector, replacing it with `Poisson(mean * c)`, where `c` is that component and `lambda` is the `lambda` parameter for the corresponding dimension.
+>
+>     The following example implements the T-Poisson hierarchy using a Gaussian copula and exponential marginals.
+>
+>         METHOD PoissonH(rho, rate1, rate2, lambda1, lambda2)
+>            vec = CorrelatedExpo(rho, rate1, rate2)
+>            return [Poisson(lambda1*vec[0]),Poisson(lambda2*vec[1])]
+>         END METHOD
+>
 
 Other kinds of copulas describe different kinds of dependence between random numbers.  Examples of other copulas are&mdash;
 
@@ -399,6 +413,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - <small><sup id=Note15>(15)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 - <small><sup id=Note16>(16)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note17>(17)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+- <small><sup id=Note18>(18)</sup> Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.</small>
 
 <a id=Appendix></a>
 ## Appendix
