@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/03/10"><meta name="citation_online_date" content="2021/03/10"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/03/22"><meta name="citation_online_date" content="2021/03/22"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Miscellaneous Observations on Randomization</h1>
@@ -216,6 +216,20 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 <li>With probability <em>w</em>(<em>x</em>), return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol>
 
+<p>To generate an <em>inflated X</em> random number with parameters <em>c</em> and <em>&alpha;</em>, generate&mdash;</p>
+
+<ul>
+<li><em>c</em> with probability <em>&alpha;</em>, and</li>
+<li>a random number distributed as X otherwise.</li>
+</ul>
+
+<p>For example, a <em>zero-inflated beta</em> random number is 0 with probability <em>&alpha;</em> and a beta random number otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)<sup><a href="#Note29"><strong>(29)</strong></a></sup>  A zero-and-one inflated X distribution is 0 or 1 with probability <em>&alpha;</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random number (with parameters <em>&alpha;</em>, <em>&theta;</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)<sup><a href="#Note30"><strong>(30)</strong></a></sup>:</p>
+
+<ol>
+<li>With probability <em>&alpha;</em>, return a number that is 0 with probability <em>p</em> and 1 otherwise.</li>
+<li>Generate a unit Lindley(<em>&theta;</em>) random number, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random number</strong></a>.</li>
+</ol>
+
 <blockquote>
 <p><strong>Note</strong>: For more on quantile generation, see &quot;Randomization via Quantiles&quot; later on this page.</p>
 </blockquote>
@@ -393,6 +407,8 @@ END METHOD
 <li><small><sup id=Note26>(26)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229v1"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229v1 [math.PR], 2019.</small></li>
 <li><small><sup id=Note27>(27)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
 <li><small><sup id=Note28>(28)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
+<li><small><sup id=Note29>(29)</sup> Ospina, R., Ferrari, S.L.P., &quot;Inflated Beta Distributions&quot;, 2010.</small></li>
+<li><small><sup id=Note30>(30)</sup> Chakraborty, S., Bhattacharjee, S., &quot;<a href="https://arxiv.org/abs/2103.08916">Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution</a>&quot;, arXiv:2103.08916 [stat.ME], 2021.</small></li>
 </ul>
 
 <p><a id=License></a></p>

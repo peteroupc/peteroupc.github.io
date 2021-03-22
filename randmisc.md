@@ -164,6 +164,16 @@ A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a wei
 1. Generate a random number that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
+To generate an _inflated X_ random number with parameters _c_ and _&alpha;_, generate&mdash;
+
+- _c_ with probability _&alpha;_, and
+- a random number distributed as X otherwise.
+
+For example, a _zero-inflated beta_ random number is 0 with probability _&alpha;_ and a beta random number otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010)<sup>[**(29)**](#Note29)</sup>  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random number (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021)<sup>[**(30)**](#Note30)</sup>:
+
+1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
+2. Generate a unit Lindley(_&theta;_) random number, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random number**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
+
 > **Note**: For more on quantile generation, see "Randomization via Quantiles" later on this page.
 
 <a id=Certain_Distributions></a>
@@ -292,6 +302,8 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
 - <small><sup id=Note26>(26)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
 - <small><sup id=Note27>(27)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
 - <small><sup id=Note28>(28)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note29>(29)</sup> Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.</small>
+- <small><sup id=Note30>(30)</sup> Chakraborty, S., Bhattacharjee, S., "[Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.</small>
 
 <a id=License></a>
 ## License

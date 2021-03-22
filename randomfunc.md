@@ -2,20 +2,20 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** Discusses many ways applications can do randomization and sampling from an underlying (pseudo-)random number generator and includes pseudocode for many of them.
+**Abstract:** This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods.
 
 **2020 Mathematics Subject Classification:** 68W20.
 
 <a id=Introduction></a>
 ## Introduction
 
-This page discusses many ways applications can sample random content by transforming the numbers produced by an underlying source of random numbers (such as a pseudorandom number generator \[PRNG\] or another kind of random number generator \[RNG\]), and offers pseudocode for many of these methods. Those methods include&mdash;
+This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator (PRNG), and offers pseudocode for many of these methods. Those methods include&mdash;
 
 - ways to derive uniform random numbers (such as the [**core method, `RNDINT(N)`**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)),
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
-- generating non-uniform random numbers, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
+- non-uniform distributions, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
 
-This page is focused on sampling methods that _exactly_ sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on an infinite number of values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that _minimize_ the error they introduce.
+This page is focused on sampling methods that _exactly_ sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal "source of random numbers" is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on an infinite number of values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that _minimize_ the error they introduce.
 
 [**Sample Python code**](https://peteroupc.github.io/randomgen.zip) that implements many of the methods in this document is available, together with [**documentation for the code**](https://peteroupc.github.io/randomgendoc.html).
 
@@ -23,9 +23,9 @@ The randomization methods presented on this page assume we have an endless sourc
 
 **In general, the following are outside the scope of this document:**
 
-- This document does not cover how to choose an underlying RNG (or PRNG) for a particular application, including in terms of security, performance, and quality.  I have written more on RNG recommendations in [**another document**](https://peteroupc.github.io/random.html).
+- This document does not cover how to choose an underlying PRNG (or device or program that simulates a "source of random numbers") for a particular application, including in terms of security, performance, and quality.  I have written more on  recommendations in [**another document**](https://peteroupc.github.io/random.html).
 - This document does not include algorithms for specific PRNGs, such as Mersenne Twister, PCG, xorshift, linear congruential generators, or generators based on hash functions.
-- This document does not cover how to test RNGs for correctness or adequate random number generation.  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)".
+- This document does not cover how to test PRNGs for correctness or adequacy, and the same applies to other devices and programs that simulate a "source of random numebrs").  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)".
 - This document does not explain how to specify or generate "seeds" for certain PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
 - This document does not show how to generate random security parameters such as encryption keys.
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
@@ -145,7 +145,7 @@ This section describes four methods: `RNDINT`, `RNDINTEXC`, `RNDINTRANGE`, `RNDI
 
 In this document, **`RNDINT(maxInclusive)`** is the core method in this document; it generates independent uniform random integers **in the interval [0, `maxInclusive`]** using a source of random numbers<sup>[**(2)**](#Note2)</sup>.  In the pseudocode below, which implements `RNDINT`&mdash;
 
-- `NEXTRAND()` reads the next number generated by a source of numbers that behave like independent random numbers of the same distribution (such as a source produced by a PRNG or another kind of random number generator), as described below, and
+- `NEXTRAND()` reads the next number generated by a source of numbers that behave like independently chosen ("random") numbers of the same distribution (such as a source produced by a pseudorandom number generator), as described below, and
 - `MODULUS` is the number of different outcomes possible with that source.
 
 Specifically:
@@ -325,7 +325,7 @@ The idiom `RNDINT((1 << b) - 1)` is a na&iuml;ve way of generating a **uniform r
 In practice, memory is usually divided into _bytes_, or 8-bit integers in the interval [0, 255].  In this case, a block of memory can be filled with random bits&mdash;
 
 - by setting each byte in the block to `RNDINT(255)`, or
-- via a PRNG (or another kind of random number generator) that outputs one or more 8-bit chunks at a time.
+- via a PRNG (or another device or program that simulates a "source of random numbers"), if it outputs one or more 8-bit chunks at a time.
 
 <a id=Examples_of_Using_the_RNDINT_Family></a>
 ### Examples of Using the `RNDINT` Family
@@ -434,7 +434,7 @@ _Sampling without replacement_  essentially means taking a random item _without_
         - a compressed bit set (e.g, "roaring bitmap", EWAH), and
         - a self-sorting data structure such as a [**red&ndash;black tree**](https://en.wikipedia.org/wiki/Red%E2%80%93black_tree), if the random items are to be retrieved in sorted order or in index order.
 
-        Many applications require generating unique random numbers to identify database records or other shared resources, among other reasons.  For ways to generate such numbers, see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
+        Many applications require generating "unique random" values to identify database records or other shared resources, among other reasons.  For ways to generate such values, see my [**recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
 
 <a id=Shuffling></a>
 #### Shuffling
@@ -476,7 +476,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
 
 > **Notes:**
 >
-> 1. The choice of random number generator (including PRNGs) is important when it comes to shuffling; see my [**RNG recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
+> 1. When it comes to shuffling, the choice of pseudorandom number generator (or other device or program that simulates a "source of random numbers") is important; see my [**recommendation document on shuffling**](https://peteroupc.github.io/random.html#Shuffling).
 > 2. A shuffling algorithm that can be carried out in parallel is described in (Bacher et al., 2015)<sup>[**(16)**](#Note16)</sup>.
 > 3. A _derangement_ is a permutation where every item moves to a different position.  A random derangement can be generated as follows (Merlini et al. 2007)<sup>[**(17)**](#Note17)</sup>: (1) modify `Shuffle` by adding the following line after `k = RNDINTEXC(i + 1)`: `if i == list[k]: return nothing`, and changing `while i > 0` to `while i >= 0`; (2) use the following pseudocode with the modified `Shuffle` method: `while True; list = []; for i in 0...n: AddItem(list, n); s=Shuffle(list); if s!=nothing: return s; end`.
 
@@ -512,7 +512,7 @@ The following are examples of character lists:
 > **Notes:**
 >
 > 1. If the list of characters is fixed, the list can be created in advance at runtime or compile time, or (if every character takes up the same number of code units) a string type as provided in the programming language can be used to store the list as a string.
-> 2. **Unique random strings:** Generating character strings that are not only random, but also unique, can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  However, if the unique values will identify something, such as database records or user accounts, the choice of random number generator (including PRNGs) is important, and using _random_ unique values might not be best; see my [**RNG recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
+> 2. **Unique random strings:** Generating character strings that are not only random, but also unique, can be done by storing a list (such as a hash table) of strings already generated and checking newly generated strings against that list.  However, if the unique values will identify something, such as database records or user accounts, an application may care about the choice of PRNG (or other device or program that simulates a "source of random numbers"), so that using _random_ unique values might not be best; see my [**recommendation document**](https://peteroupc.github.io/random.html#Unique_Random_Identifiers).
 > 3. **Word generation:** This technique could also be used to generate "pronounceable" words, but this is less flexible than other approaches; see also "[**Markov Chains**](#Markov_Chains)".
 
 <a id=Pseudocode_for_Random_Sampling></a>
@@ -1502,7 +1502,7 @@ A [**_low-discrepancy sequence_**](https://en.wikipedia.org/wiki/Low-discrepancy
 - If the sequence outputs numbers in the interval \[0, 1\], the [**Baker's map**](http://en.wikipedia.org/wiki/Baker's_map) of the sequence is `2 * (0.5-abs(x - 0.5))`, where `x` is each
 number in the sequence.
 
-The points of a low-discrepancy sequence can be "scrambled" with the help of a pseudorandom number generator (or another kind of RNG).  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020)<sup>[**(66)**](#Note66)</sup>
+The points of a low-discrepancy sequence can be "scrambled" with the help of a pseudorandom number generator (or another device or program that simulates a "source of random numbers").  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020)<sup>[**(66)**](#Note66)</sup>
 
 <a id=Notes_on_Randomization_Involving_Real_Numbers></a>
 ### Notes on Randomization Involving Real Numbers
@@ -2049,7 +2049,7 @@ I also acknowledge Christoph Conrads, who gave suggestions in parts of this arti
 <a id=Other_Documents></a>
 ## Other Documents
 
-The following are some additional articles I have written on the topic of random and pseudorandom number generation.  All of them are open-source.
+The following are some additional articles I have written on the topic of randomization and pseudorandom number generation.  All of them are open-source.
 
 * [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.html)
 * [**More Random Number Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
@@ -2190,11 +2190,11 @@ That is, the methods assume we have a **source of (uniform) random numbers**. (T
 
 However, this is an ideal assumption which is hard if not impossible to achieve in practice.
 
-Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other kind of RNG) even if they don't in theory.
+Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal source of random numbers mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other generator of random-behaving numbers) even if they don't in theory.
 
-Note that the source of random numbers can be generated (or simulated) by a wide range of devices and programs, including PRNGs, so-called &quot;true&quot; random number generators, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  They can serve as a source of random numbers regardless of their predictability or statistical quality, and whether or not they use a fixed algorithm. However, some random number generators are better than others for certain purposes, and giving advice on which RNG to choose is outside the scope of this document.
+Note that the "source of random numbers" can be simulated by a wide range of devices and programs, including PRNGs, so-called &quot;true random number generators&quot;, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  An application ought to choose devices or programs that simulate the "source of random numbers" well enough for its purposes, including in terms of their predictability or statistical quality. However, it is outside this document's scope to give further advice on this choice.
 
-The randomization methods in this document will be deterministic (that is, produce the same values given the same state and input) whenever they are powered by a PRNG (as will generally be the case in practice), as PRNGs are deterministic.  However, if a "true" random number generator powers these methods, they will not necessarily be deterministic.
+The randomization methods in this document will be deterministic (that is, produce the same values given the same state and input) whenever they are powered by a PRNG (as will generally be the case in practice), as PRNGs are deterministic.  However, if these methods are powered by a "true random number generator" (or another _device_ that simulates the "source of random numbers" well enough for an application's purposes), they will not necessarily be deterministic.
 
 <a id=Mean_and_Variance_Calculation></a>
 ### Mean and Variance Calculation
@@ -2244,18 +2244,18 @@ There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More gene
 1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a random integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a random number is generated.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
-4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a random number generator, and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
-5. **Fixed number of random bits.** Random numbers that follow a distribution (e.g., `Poisson`, `Normal`) can be generated with a fixed number (`n`) of unbiased random bits either by [**inverse transform sampling**](#Inverse_Transform_Sampling) or by treating the bits as a seed for a local PRNG and using the PRNG to generate the random number.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>`n`</sup> different outcomes this way.
+4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
+5. **Fixed number of "random" bits.** Values that follow a probability distribution (e.g., `Poisson`, `Normal`) can be generated with a fixed number (`n`) of unbiased random bits either by [**inverse transform sampling**](#Inverse_Transform_Sampling) or by treating the bits as a seed for a local PRNG and using the PRNG to generate a sample from that distribution.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>`n`</sup> different outcomes this way.
 
 <a id=Security_Considerations></a>
 ### Security Considerations
 
 If an application generates random numbers for information security purposes, such as to generate random passwords or encryption keys, the following applies:
 
-1. **Cryptographic RNG.** The application has to use a cryptographic RNG.  Choosing a cryptographic RNG is outside the scope of this document.
-2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  (In general, "constant-time" algorithms are designed to have no timing differences, including memory access patterns, that reveal anything about any secret inputs, such as keys, passwords, or RNG "seeds").  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
+1. **"Cryptographic generators".** The application has to use a device or program that generates random-behaving numbers that are hard to guess for information security purposes (a so-called "cryptographic generator").  Choosing such a device or program is outside the scope of this document.
+2. **Timing attacks.**  Certain security attacks have exploited timing and other differences to recover cleartext, encryption keys, or other sensitive data.  Thus, so-called "constant-time" security algorithms have been developed.  (In general, "constant-time" algorithms are designed to have no timing differences, including memory access patterns, that reveal anything about any secret inputs, such as keys, passwords, or "seeds" for pseudorandom number generators).  But even if an algorithm has variable running time (e.g., [**rejection sampling**](#Rejection_Sampling)), it may or may not have security-relevant timing differences, especially if it does not reuse secrets.
 3. **Security algorithms out of scope.** Security algorithms that take random secrets to generate random security parameters, such as encryption keys, public/private key pairs, elliptic curves, or points on an elliptic curve, are outside this document's scope.
-4. **Floating-point numbers.**  Random numbers generated for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where random floating-point numbers are used (differential privacy and lattice-based cryptography), there are ways to avoid such random numbers<sup>[**(102)**](#Note102)</sup>.
+4. **Floating-point numbers.**  "Random numbers" generated for security purposes are almost always integers (and, in very rare cases, fixed-point numbers). Even in the few security applications where those numbers are floating-point numbers (differential privacy and lattice-based cryptography), there are ways to avoid such numbers<sup>[**(102)**](#Note102)</sup>.
 
 <a id=License></a>
 ## License

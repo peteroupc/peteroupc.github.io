@@ -372,11 +372,11 @@ Each of the resulting uniform random numbers will be in the interval [0, 1], and
 >              -log1p(-copula[1]) / rate2]
 >         END METHOD
 >
-> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021)<sup>[**(18)**](#Note18)</sup> is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lambda` and a marginal that must be a _continuous non-negative_ probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  Sampling from the **T**&ndash;Poisson hierarchy involves&mdash;
+> 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021)<sup>[**(15)**](#Note15)</sup> is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lamda` and a marginal that must be a _continuous non-negative_ probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  To sample from the **T**&ndash;Poisson hierarchy&mdash;
 >
->     1. sampling an N-dimensional random vector via a copula (such as `GaussianCopula`), producing correlated uniform random numbers; then
->     2. for each component in the vector, taking that component's quantile for the corresponding marginal; then
->     3. for each component in the vector, replacing it with `Poisson(mean * c)`, where `c` is that component and `lambda` is the `lambda` parameter for the corresponding dimension.
+>     1. sample an N-dimensional random vector via a copula (such as `GaussianCopula`), producing correlated uniform random numbers; then
+>     2. for each component in the vector, take that component's quantile for the corresponding marginal; then
+>     3. for each component in the vector, replace it with `Poisson(lamda * c)`, where `c` is that component and `lamda` is the `lamda` parameter for the corresponding dimension.
 >
 >     The following example implements the T-Poisson hierarchy using a Gaussian copula and exponential marginals.
 >
@@ -391,7 +391,7 @@ Other kinds of copulas describe different kinds of dependence between random num
 - the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDRANGE(0, 1)`,
 - the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDRANGE(0, 1)`,
 - the **product copula**, where each number is a separately generated `RNDRANGE(0, 1)` (indicating no dependence between the numbers), and
-- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(15)**](#Note15)</sup>.
+- the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011)<sup>[**(16)**](#Note16)</sup>.
 
 <a id=Notes></a>
 ## Notes
@@ -410,10 +410,10 @@ Other kinds of copulas describe different kinds of dependence between random num
 - <small><sup id=Note12>(12)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note13>(13)</sup> Tomasz J. Kozubowski, "[**Computer simulation of geometric stable distributions**](https://www.sciencedirect.com/science/article/pii/S0377042799003180)", _Journal of Computational and Applied Mathematics_ 116(2), pp. 221-229, 2000. [**https://doi.org/10.1016/S0377-0427(99)00318-0**](https://doi.org/10.1016/S0377-0427%2899%2900318-0)</small>
 - <small><sup id=Note14>(14)</sup> Cario, M. C., B. L. Nelson, "Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix", 1997.</small>
-- <small><sup id=Note15>(15)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
-- <small><sup id=Note16>(16)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
-- <small><sup id=Note17>(17)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
-- <small><sup id=Note18>(18)</sup> Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.</small>
+- <small><sup id=Note15>(15)</sup> Knudson, A.D., Kozubowski, T.J., et al., "A flexible multivariate model for high-dimensional correlated count data", _Journal of Statistical Distributions and Applications_ 8:6, 2021.</small>
+- <small><sup id=Note16>(16)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
+- <small><sup id=Note17>(17)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
+- <small><sup id=Note18>(18)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -471,13 +471,13 @@ There are three kinds of randomization algorithms:
 
 Most algorithms on this page, though, are not _error-bounded_, but even so, they may still be useful to an application willing to trade accuracy for speed.
 
-There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)<sup>[**(16)**](#Note16)</sup> is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
+There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)<sup>[**(17)**](#Note17)</sup> is Wasserstein distance (or "earth-mover distance").  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples random numbers whose distribution is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.
 
 >
 > **Examples:**
 >
 > 1. Generating an exponential random number via `-ln(RNDRANGE(0, 1))` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
-> 2. Generating an exponential random number using the `ExpoExact` method from the section "[**Exponential Distribution**](https://peteroupc.github.io/randomfunc.html#Exponential_Distribution)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)<sup>[**(17)**](#Note17)</sup>.
+> 2. Generating an exponential random number using the `ExpoExact` method from the section "[**Exponential Distribution**](https://peteroupc.github.io/randomfunc.html#Exponential_Distribution)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014)<sup>[**(1)**](#Note1)</sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)<sup>[**(18)**](#Note18)</sup>.
 > 3. Examples of _approximate algorithms_ include generating a Gaussian random number via a sum of `RNDRANGE(0, 1)`, or most cases of generating a random integer via modulo reduction (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
 
 <a id=License></a>
