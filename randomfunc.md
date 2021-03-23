@@ -330,17 +330,17 @@ In practice, memory is usually divided into _bytes_, or 8-bit integers in the in
 <a id=Examples_of_Using_the_RNDINT_Family></a>
 ### Examples of Using the `RNDINT` Family
 
-1. To generate a random number that's either &minus;1 or 1 (a _Rademacher random number_), one of the following idioms can be used: `(RNDINT(1) * 2 - 1)` or `(RNDINTEXC(2) * 2 - 1)`.
+1. To choose either &minus;1 or 1 (a _Rademacher random number_) with equal probability, one of the following idioms can be used: `(RNDINT(1) * 2 - 1)` or `(RNDINTEXC(2) * 2 - 1)`.
 2. To generate a random integer that's divisible by a positive integer (`DIV`), generate the integer with any method (such as `RNDINT`), let `X` be that integer, then generate `X - rem(X, DIV)` if `X >= 0`, or `X - (DIV - rem(abs(X), DIV))` otherwise. (Depending on the method, the resulting integer may be out of range, in which case this procedure is to be repeated.)
 3. A random 2-dimensional point on an N&times;M grid can be expressed as a single integer as follows:
       - To generate a random N&times;M point `P`, generate `P = RNDINT(N * M - 1)` (`P` is thus in the interval [0, `N * M`)).
       - To convert a point `P` to its 2D coordinates, generate `[rem(P, N), floor(P / N)]`. (Each coordinate starts at 0.)
       - To convert 2D coordinates `coord` to an N&times;M point, generate `P = coord[1] * N + coord[0]`.
-4. To simulate rolling an N-sided die (N greater than 1), generate a random number in the interval \[1, N\] by `RNDINTRANGE(1, N)`.
+4. To simulate rolling an N-sided die (N greater than 1): `RNDINTRANGE(1, N)`, which chooses a number in the interval \[1, N\] with equal probability.
 5. To generate a random integer with one base-10 digit: `RNDINTRANGE(0, 9)`.
 6. To generate a random integer with N base-10 digits (where N is 2 or greater), where the first digit can't be 0: `RNDINTRANGE(pow(10, N-1), pow(10, N) - 1)`.
-7. To generate a random number in the interval [`mn`, `mx`) in increments equal to `step`: `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
-8. To generate a random integer in the interval [0, `X`):
+7. To choose a number in the interval [`mn`, `mx`), with equal probability, in increments equal to `step`: `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
+8. To choose an integer in the interval [0, `X`) at random:
      - And favor numbers in the middle:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
      - And strongly favor low numbers:  `floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
      - And favor high numbers:  `max(RNDINTEXC(X), RNDINTEXC(X))`.
@@ -591,11 +591,11 @@ list by `RandomKItemsInOrder(list, n - k)`.
 
 _Rejection sampling_ is a simple and flexible approach for generating random content that meets certain requirements.  To implement rejection sampling:
 
-1. Generate the random content (such as a random number) by any method and with any distribution and range.
+1. Generate the random content (such as a number or text string) by any method and with any distribution and range.
 2. If the content doesn't meet predetermined criteria, go to step 1.
 
 Example criteria include checking&mdash;
-- whether a random number&mdash;
+- whether a number generated this way&mdash;
     - is not less than a minimum threshold (_left-truncation_),
     - is not greater than a maximum threshold (_right-truncation_),
     - is prime,
@@ -604,9 +604,9 @@ Example criteria include checking&mdash;
     - was not already chosen (with the aid of a hash table, red&ndash;black tree, or similar structure),
     - was not chosen more often in a row than desired, or
     - is not included in a "blacklist" of numbers,
-- whether a random point is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
-- whether a random point lies in a simple or complex shape,
-- whether a random string matches a regular expression, or
+- whether a point generated this way is sufficiently distant from previous random points (with the aid of a KD-tree or similar structure),
+- whether a point generated this way lies in a simple or complex shape,
+- whether a text string generated this way matches a regular expression, or
 - two or more of the foregoing criteria.
 
 (KD-trees, hash tables, red&ndash;black trees, prime-number testing algorithms, and regular expressions are outside the scope of this document.)
@@ -614,12 +614,12 @@ Example criteria include checking&mdash;
 > **Notes:**
 >
 > 1. The running time for rejection sampling depends on the acceptance rate, that is, how often the sampler accepts a sampled outcome rather than rejecting it.  In general, this rate is the number of acceptable outcomes divided by the total number of outcomes.
-> 2. All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all generate a random number via rejection sampling because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(20)**](#Note20)</sup>
+> 2. All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all implement a rejection sampling technique because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own source of random numbers (such as numbers generated from its own PRNG), then to take the first random number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(20)**](#Note20)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks
 
-A _random walk_ is a process with random behavior over time.  A simple form of random walk involves generating a random number that changes the state of the walk.  The pseudocode below generates a random walk of _n_ random numbers, where `STATEJUMP()` is the next number to add to the current state (see examples later in this section).
+A _random walk_ is a process with random behavior over time.  A simple form of random walk involves choosing, at random, a number that changes the state of the walk.  The pseudocode below generates a random walk of _n_ random numbers, where `STATEJUMP()` is the next number to add to the current state (see examples later in this section).
 
     METHOD RandomWalk(n)
       // Create a new list with an initial state
@@ -797,7 +797,7 @@ The following are various ways to implement `WeightedChoice`. Many of them requi
 | Algorithm | Notes |
   --- | --- |
 | Linear search |  See the pseudocode for `WeightedChoice` above. |
-| Linear search with cumulative weights | Calculates a list of cumulative weights (also known as a _cumulative distribution table_ or _CDT_), then generates a random number less than the sum of (original) weights, then does a linear scan of the new list to find the first item whose cumulative weight exceeds the random number. |
+| Linear search with cumulative weights | Calculates a list of cumulative weights (also known as a _cumulative distribution table_ or _CDT_), then generates, at random, a number less than the sum of (original) weights (which should be an integer if the weights are integers), then does a linear scan of the new list to find the first item whose cumulative weight exceeds the generated number. |
 | _Fast Loaded Dice Roller_ (Saad et al., 2020a)<sup>[**(29)**](#Note29)</sup>. | Uses integer weights only, and samples using random bits ("fair coins"). This sampler comes within 6 bits, on average, of the optimal number of random bits per sample. |
 | Samplers described in (Saad et al., 2020b)<sup>[**(30)**](#Note30)</sup> | Uses integer weights only, and samples using random bits. The samplers come within 2 bits, on average, of the optimal number of random bits per sample as long as the sum of the weights is of the form 2<sup>k</sup> or 2<sup>k</sup> &minus; 2<sup>m</sup>. |
 | Rejection sampling | Given a list (`weights`) of `n` weights: (1) find the highest weight and call it _max_; (2) set _i_ to `RNDINT(n - 1)`; (3) With probability `weights[i]/max` (e.g., if `ZeroOrOne(weights[i], max)==1` for integer weights), return _i_, and go to step 2 otherwise.  (See, e.g., sec. 4 of the Fast Loaded Dice Roller paper, or the Tang or Klundert papers. `weights[i]` can also be a function that calculates the weight for `i` "on the fly"; in that case, `max` is the maximum value of `weights[i]` for all `i`.)<br/>If the weights are instead log-weights (that is, each weight is `ln(x)` where `x` is the original weight), step 3 changes to: "(3) If `Expo(1) > max - weights[i]` (which happens with probability `exp(-(max - weights[i]))`), return _i_, and go to step 2 otherwise."<br/>If the weights are instead "coins", each with a separate but unknown probability of heads, the algorithm is also called _Bernoulli race_ (Dughmi et al. 2017)<sup>[**(31)**](#Note31)</sup>; see also (Morina et al., 2019)<sup>[**(32)**](#Note32)</sup>: (1) set _i_ to `RNDINT(n - 1)`; (2) flip coin _i_ (the first coin is 0, the second is 1, and so on), then return _i_ if it returns 1 or heads, or go to step 1 otherwise.  |
@@ -813,7 +813,7 @@ The following are various ways to implement `WeightedChoice`. Many of them requi
 
 > **Notes:**
 >
-> 1. **Weighted choice algorithms as binary tree walkers.** Just like `RNDINT` algorithms (see the [**`RNDINT` section**](#RNDINT_Random_Integers_in_0_N)), weighted choice algorithms can all be described as random walks on a binary DDG tree.  In this case, though, the probabilities are not necessarily uniform, and on average, the algorithm needs at least as many random bits as the sum of _binary entropies_ of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights add up to 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `(3/21) * log2(21/3) = 0.4010...`, and so on for the other weights).  Thus, any weighted sampler will require at least 1.2800... bits on average to generate a random number with these weights.<sup>[**(10)**](#Note10)</sup>  The note "Reducing 'bit waste'" from the `RNDINT` section also applies here.
+> 1. **Weighted choice algorithms as binary tree walkers.** Just like `RNDINT` algorithms (see the [**`RNDINT` section**](#RNDINT_Random_Integers_in_0_N)), weighted choice algorithms can all be described as random walks on a binary DDG tree.  In this case, though, the probabilities are not necessarily uniform, and on average, the algorithm needs at least as many random bits as the sum of _binary entropies_ of all the probabilities involved.  For example, say we give the four integers 1, 2, 3, 4 the following weights: 3, 15, 1, 2.  The binary entropies of these weights add up to 0.4010... + 0.3467... + 0.2091... + 0.3230... = 1.2800... (because the sum of the weights is 21 and the binary entropy of 3/21 is `(3/21) * log2(21/3) = 0.4010...`, and so on for the other weights).  Thus, any weighted sampler will require at least 1.2800... bits on average to generate a number with probability proportional to these weights.<sup>[**(10)**](#Note10)</sup>  The note "Reducing 'bit waste'" from the `RNDINT` section also applies here.
 > 2. For best results, weights passed to the algorithms in the table above should first be **converted to integers** (e.g., using `NormalizeRatios` in the pseudocode above), **or rational numbers** when indicated. (Obviously, if the weights were originally irrational numbers, this conversion will be lossy and the algorithm won't be exact, unless noted otherwise in the table.)  Also, using floating-point numbers in the algorithms can introduce unnecessary rounding errors, so such numbers should be avoided.
 > 3. The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains a variant of the `WeightedChoice` pseudocode for generating multiple random points in one call.
 >
@@ -998,14 +998,14 @@ If the probability distributions are the same, then strategies 1 to 3 make highe
 >
 > 1. The idiom `min(RNDINTRANGE(1, 6), RNDINTRANGE(1, 6))` takes the lowest of two six-sided die results (strategy 4).  Due to this approach, 1 is more likely to occur than 6.
 > 2. The idiom `RNDINTRANGE(1, 6) + RNDINTRANGE(1, 6)` takes the result of two six-sided dice (see also "[**Dice**](#Dice)") (strategy 7).
-> 3. A **binomial distribution** models the sum of `n` random numbers each generated by `ZeroOrOne(px,py)` (strategy 7) (see "[**Binomial Distribution**](#Binomial_Distribution)").
-> 4. **Clamped random numbers.**  These are one example of transformed random numbers.  To generate a clamped random number, generate a random number as usual, then&mdash;
+> 3. A **binomial distribution** models the sum of `n` numbers each generated by `ZeroOrOne(px,py)` (strategy 7) (see "[**Binomial Distribution**](#Binomial_Distribution)").
+> 4. **Clamped random numbers.**  These are one example of transformed random numbers.  To generate a clamped random number, generate a number at random as usual, then&mdash;
 >     - if that number is less than a minimum threshold, use the minimum threshold instead (_left-censoring_), and/or
 >     - if that number is greater than a maximum threshold, use the maximum threshold instead (_right-censoring_).
 >
 >     An example of a clamped random number is `min(200, RNDINT(255))`.
-> 5. A **compound Poisson distribution** models the sum of _n_ random numbers each generated the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = PoissonInt(10, 1)` for an average of 10 numbers) (strategy 7, sum).
-> 6. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the random numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
+> 5. A **compound Poisson distribution** models the sum of _n_ numbers each chosen at random in the same way, where _n_ follows a [**Poisson distribution**](#Poisson_Distribution) (e.g., `n = PoissonInt(10, 1)` for an average of 10 numbers) (strategy 7, sum).
+> 6. A **P&oacute;lya&ndash;Aeppli distribution** is a compound Poisson distribution in which the numbers are generated by `NegativeBinomial(1, 1-p)+1` for a fixed `p`.
 
 <a id=Specific_Non_Uniform_Distributions></a>
 ## Specific Non-Uniform Distributions
@@ -1209,7 +1209,7 @@ The following method generates a Poisson random number with mean `mx`/`my`, usin
           k = 0
           w = nothing
           while true
-             // Generate a random number of random numbers
+             // Generate uniforms
              // and determine whether they are sorted
              if ZeroOrOne(mx,my)==0: return k
              u2 = UniformNew()
@@ -1451,7 +1451,7 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 - **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
     - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
 
-> **Note:** In many software libraries, random numbers in a range are generated by dividing or multiplying a random integer by a constant.  For example, the equivalent of `RNDRANGEMaxExc(0, 1)` is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.<sup>[**(59)**](#Note59)</sup> The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020)<sup>[**(60)**](#Note60)</sup>.  As another example, `RNDRANGEMaxExc(a, b)` is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` returns a random number in the interval \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985)<sup>[**(61)**](#Note61)</sup>.
+> **Note:** In many software libraries, random numbers in a range are generated by dividing or multiplying a random integer by a constant.  For example, the equivalent of `RNDRANGEMaxExc(0, 1)` is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.<sup>[**(59)**](#Note59)</sup> The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020)<sup>[**(60)**](#Note60)</sup>.  As another example, `RNDRANGEMaxExc(a, b)` is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` returns a number in the interval \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985)<sup>[**(61)**](#Note61)</sup>.
 
 <a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
 ### Monte Carlo Sampling: Expected Values, Integration, and Optimization
@@ -1525,7 +1525,7 @@ The points of a low-discrepancy sequence can be "scrambled" with the help of a p
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(69)**](#Note69)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent random numbers generated the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
 3. It is reasonable to talk about sampling the sum or mean of N random numbers, where N has a fractional part.  In this case, `ceil(N)` random numbers are generated and the last number is multiplied by that fractional part.  For example, to sample the sum of 2.5 random numbers, generate three random numbers, multiply the last by 0.5 (the fractional part of 2.5), then sum all three numbers.
 4. A **hypoexponential distribution** models the sum of _n_ random numbers that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
-5. The **maximal coupling** method mentioned by [**P. Jacob**](https://statisfaction.wordpress.com/2017/09/06/sampling-from-a-maximal-coupling/) generates correlated random numbers from two distributions, _P_ and _Q_, with known probability density functions or PDFs (`PPDF` and `QPDF`, respectively); this works only if the area under each PDF is 1: Sample a random number `x` from distribution _P_, and if `RNDRANGE(0, PPDF(x)) < QPDF(x)`, return `[x, x]`.  Otherwise, sample a random number `y` from distribution _Q_ until `PPDF(y) < RNDRANGE(0, QPDF(y))`, then return `[x, y]`.
+5. The **maximal coupling** method mentioned by [**P. Jacob**](https://statisfaction.wordpress.com/2017/09/06/sampling-from-a-maximal-coupling/) generates correlated random numbers from two distributions, _P_ and _Q_, with known probability density functions or PDFs (`PPDF` and `QPDF`, respectively); this works only if the area under each PDF is 1: Sample a number `x` at random from distribution _P_, and if `RNDRANGE(0, PPDF(x)) < QPDF(x)`, return `[x, x]`.  Otherwise, sample a number `y` at random from distribution _Q_ until `PPDF(y) < RNDRANGE(0, QPDF(y))`, then return `[x, y]`.
 
 <a id=Sampling_from_a_Distribution_of_Data_Points></a>
 ### Sampling from a Distribution of Data Points
@@ -1551,7 +1551,7 @@ Generating random data points based on how a list of data points is distributed 
 > **Notes:**
 >
 > 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best _predictive accuracy_ for the data set (e.g., _goodness of fit_, precision, recall) should be chosen.
-> 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a random number weighted on the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
+> 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
 > 3. If the existing data points each belong in one of several _categories_, choosing a random data point _and_ its category could be done&mdash;
 >     1. by choosing a random data point based on all the existing data points, then finding its category (e.g., via machine learning models known as _classification models_), or
 >     2. by choosing a random category as given above, then by choosing a random data point based only on the existing data points of that category.
@@ -1646,14 +1646,14 @@ END METHOD
 <a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
 
-[**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) (or simply _inversion_) is the most generic way to generate a random number that follows a distribution.
+[**_Inverse transform sampling_**](https://en.wikipedia.org/wiki/Inverse_transform_sampling) (or simply _inversion_) is the most generic way to sample a number from a probability distribution.
 
 If the distribution **has a known quantile function**, generate a uniform random number in (0, 1) if that number wasn't already pregenerated, and take the quantile of that number.  However:
 
 - In most cases, the quantile function is not available.  Thus, it has to be approximated.
 - Even if the quantile function is available, a na&iuml;ve quantile calculation (e.g., `ICDF(RNDRANGEMinMaxExc(0, 1))`) may mean that small changes in the uniform number lead to huge changes in the quantile, leading to gaps in random number coverage (Monahan 1985, sec. 4 and 6)<sup>[**(61)**](#Note61)</sup>.
 
-The following method generates a random number from a distribution via inversion, with an accuracy of 1/`BASE`<sup>`precision`</sup> ((Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(51)**](#Note51)</sup>).  In the method, `ICDF(u, ubits, prec)` returns a two-item list containing upper and lower bounds, respectively, of a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
+The following method samples from a distribution via inversion, with an accuracy of 1/`BASE`<sup>`precision`</sup> ((Devroye and Gravel 2020)<sup>[**(11)**](#Note11)</sup>, but extended for any base; see also (Bringmann and Friedrich 2013, Appendix A)<sup>[**(51)**](#Note51)</sup>).  In the method, `ICDF(u, ubits, prec)` returns a two-item list containing upper and lower bounds, respectively, of a number that is within 1/`BASE`<sup>`prec`</sup> of the true quantile of `u`/`BASE`<sup>`ubits`</sup>, and `BASE` is the digit base (e.g. 2 for binary or 10 for decimal).
 
     METHOD Inversion(precision)
        u=0
@@ -1676,7 +1676,7 @@ The following method generates a random number from a distribution via inversion
        end
     end
 
-Some applications need to convert a pregenerated uniform random number to a non-uniform one via quantiles (notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences).  The following way to compute quantiles is exact in theory:
+Some applications need to convert a pregenerated number in \[0, 1\] (usually a number sampled from a uniform distribution) to a non-uniform distribution via quantiles.  Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
 
 - Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(18)**](#Note18)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 
@@ -1746,14 +1746,14 @@ See also (von Neumann 1951)<sup>[**(52)**](#Note52)</sup>; (Devroye 1986)<sup>[*
 <a id=Alternating_Series></a>
 #### Alternating Series
 
-If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To generate a random number using this method (Devroye 2006)<sup>[**(79)**](#Note79)</sup>: (1) Generate a random number `x` that follows the "dominating" distribution; (2) set `n` to 0; (3) accept `x` if `r <= LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMaxExc(0, PDF2(n))`.
+If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006)<sup>[**(79)**](#Note79)</sup>: (1) Sample from the "dominating" distribution, and let `x` be the sampled number; (2) set `n` to 0; (3) accept `x` if `r <= LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMaxExc(0, PDF2(n))`.
 
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
 
 [**Markov-chain Monte Carlo**](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) (MCMC) is a family of algorithms for sampling many random numbers from a probability distribution by building a _Markov chain_ of random values that build on each other until they converge to the given distribution.  In general, however, a given chain's random values will have a statistical _dependence_ on each other, and it takes an unknown time for the chain to converge (which is why techniques such as "thinning" &mdash; keeping only every Nth sample &mdash; or "burn-in" &mdash; skipping iterations before sampling &mdash; are often employed). MCMC can also estimate the distribution's sampling domain for other samplers, such as rejection sampling (above).
 
-MCMC algorithms<sup>[**(81)**](#Note81)</sup> include _Metropolis&ndash;Hastings_, _slice sampling_, and _Gibbs sampling_ (see also the [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a random number from the previous distribution (_conditional distributions_), that converge to a _joint distribution_.
+MCMC algorithms<sup>[**(81)**](#Note81)</sup> include _Metropolis&ndash;Hastings_, _slice sampling_, and _Gibbs sampling_ (see also the [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  The latter is special in that it uses not a PDF-like function, but two or more distributions, each of which uses a number sampled at random from the previous distribution (_conditional distributions_), that converge to a _joint distribution_.
 
 > **Example:** In one Gibbs sampler, an initial value for `y` is chosen, then multiple `x`, `y` pairs of random numbers are generated, where `x = BetaDist(y, 5)` then `y = Poisson(x * 10)`.
 
@@ -1810,9 +1810,9 @@ Methods to sample additional distributions are given in a [**separate page**](ht
 
 **Many distributions here require random real numbers.**
 
-A &dagger; symbol next to a distribution means the random number can be shifted by a location parameter (`mu`) then scaled by a scale parameter greater than 0 (`sigma`).  Example: `num * sigma + mu`.
+A &dagger; symbol next to a distribution means that a sample from the distribution can be shifted by a location parameter (`mu`) then scaled by a scale parameter greater than 0 (`sigma`).  Example: `num * sigma + mu`.
 
-A &#x2b26; symbol next to a distribution means the random number can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
+A &#x2b26; symbol next to a distribution means the sample can be scaled to any range, which is given with the minimum and maximum values `mini` and `maxi`.  Example: `mini + (maxi - mini) * num`.
 
 For further examples and distributions, see (Devroye 1996)<sup>[**(83)**](#Note83)</sup> and (Crooks 2019)<sup>[**(84)**](#Note84)</sup>.
 
@@ -1891,7 +1891,7 @@ Miscellaneous:
 - **Hypoexponential distribution**: See [**Transformations of Random Numbers**](#Transformations_of_Random_Numbers).
 - **Inverse chi-squared distribution**&dagger;: `df / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.  The scale parameter (`sigma`) is usually `1.0 / df`.
 - **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` with probability `mu / (mu + n)` (e.g., if `RNDRANGE(0, 1) <= mu / (mu + n)`), or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986)<sup>[**(18)**](#Note18)</sup>.
-- **`k`th-order statistic**: `BetaDist(k, n+1-k)`. Returns the `k`th smallest out of `n` uniform random numbers. See also (Devroye 1986, p. 210)<sup>[**(18)**](#Note18)</sup>.
+- **`k`th-order statistic**: `BetaDist(k, n+1-k)`. Returns the `k`th smallest out of `n` uniform random numbers in [**0, 1). See also (Devroye 1986, p. 210)<sup>[(18)**](#Note18)</sup>.
 - **Kumaraswamy distribution**&#x2b26;: `pow(BetaDist(1, b), 1.0 / a)`, where `a` and `b` are shape parameters.
 - **Landau distribution**: See stable distribution.
 - **L&eacute;vy distribution**&dagger;: `0.5 / GammaDist(0.5, 1)`.  The scale parameter (`sigma`) is also called dispersion.
@@ -1899,9 +1899,9 @@ Miscellaneous:
 - **Logarithmic series distribution**: Generate `n = NegativeBinomialInt(1, py - px, py)+1` (where `px`/`py` is a parameter in (0,1)), then return `n` if `ZeroOrOne(1, n) == 1`, or repeat this process otherwise (Flajolet et al., 2010)<sup>[**(53)**](#Note53)</sup>.  If the application can trade accuracy for speed, the following can be used instead: `floor(1.0 - Expo(log1p(-pow(1.0 - p, RNDRANGEMinMaxExc(0, 1)))))`, where `p` is the parameter in (0, 1); see (Devroye 1986)<sup>[**(18)**](#Note18)</sup>.
 - **Logistic distribution**&dagger;: `(ln(x)-log1p(-x))` ([**_logit function_**](http://timvieira.github.io/blog/post/2016/07/04/fast-sigmoid-sampling/)), where `x` is `RNDRANGEMinMaxExc(0, 1)`.
 - **Log-multinormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution).
-- **Max-of-uniform distribution**: `BetaDist(n, 1)`.  Returns a number that simulates the largest out of `n` uniform random numbers.  See also (Devroye 1986, p. 675)<sup>[**(18)**](#Note18)</sup>.
+- **Max-of-uniform distribution**: `BetaDist(n, 1)`.  Returns a number that simulates the largest out of `n` uniform random numbers in [**0, 1).  See also (Devroye 1986, p. 675)<sup>[(18)**](#Note18)</sup>.
 - **Maxwell distribution**&dagger;: `sqrt(GammaDist(1.5, 2))`.
-- **Min-of-uniform distribution**: `BetaDist(1, n)`.  Returns a number that simulates the smallest out of `n` uniform random numbers.  See also (Devroye 1986, p. 210)<sup>[**(18)**](#Note18)</sup>.
+- **Min-of-uniform distribution**: `BetaDist(1, n)`.  Returns a number that simulates the smallest out of `n` uniform random numbers in [**0, 1).  See also (Devroye 1986, p. 210)<sup>[(18)**](#Note18)</sup>.
 - **Moyal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Multinomial distribution**: See [**Multinomial Distribution**](#Multinomial_Distribution).
 - **Multivariate Poisson distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
@@ -2052,7 +2052,7 @@ I also acknowledge Christoph Conrads, who gave suggestions in parts of this arti
 The following are some additional articles I have written on the topic of randomization and pseudorandom number generation.  All of them are open-source.
 
 * [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.html)
-* [**More Random Number Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
+* [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
 * [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
 * [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
 * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)
@@ -2246,7 +2246,7 @@ There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More gene
 
 1. **Shell scripts and Microsoft Windows batch files** are designed for running other programs, rather than general-purpose programming.  However, batch files and `bash` (a shell script interpreter) might support a variable which returns a uniformly distributed "random" integer in the interval \[0, 32767\] (called `%RANDOM%` or `$RANDOM`, respectively); neither variable is designed for information security. Whenever possible, the methods in this document should not be implemented in shell scripts or batch files, especially if information security is a goal.
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to generate random numbers, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
-3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a random number is generated.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
+3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a number is sampled at random.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random numbers at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random numbers.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
 5. **Fixed number of "random" bits.** Values that follow a probability distribution (e.g., `Poisson`, `Normal`) can be generated with a fixed number (`n`) of unbiased random bits either by [**inverse transform sampling**](#Inverse_Transform_Sampling) or by treating the bits as a seed for a local PRNG and using the PRNG to generate a sample from that distribution.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>`n`</sup> different outcomes this way.
 
