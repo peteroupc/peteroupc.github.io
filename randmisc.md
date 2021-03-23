@@ -169,7 +169,7 @@ To generate an _inflated X_ random number with parameters _c_ and _&alpha;_, gen
 - _c_ with probability _&alpha;_, and
 - a random number distributed as X otherwise.
 
-For example, a _zero-inflated beta_ random number is 0 with probability _&alpha;_ and a beta random number otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010)<sup>[**(29)**](#Note29)</sup>  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random number (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021)<sup>[**(30)**](#Note30)</sup>:
+For example, a _zero-inflated beta_ random number is 0 with probability _&alpha;_ and a beta random number otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010)<sup>[**(21)**](#Note21)</sup>  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random number (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021)<sup>[**(22)**](#Note22)</sup>:
 
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
 2. Generate a unit Lindley(_&theta;_) random number, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random number**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
@@ -184,16 +184,16 @@ In the table below, _U_ is a uniform(0, 1) random number.
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(21)**](#Note21)</sup>. | Minimum of _N_ power function(_b_, _c_) random variables, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
-| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(22)**](#Note22)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
+| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(23)**](#Note23)</sup>. | Minimum of _N_ power function(_b_, _c_) random variables, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
+| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(24)**](#Note24)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
 | Marshall&ndash;Olkin(_&alpha;_). | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
-| Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016)<sup>[**(23)**](#Note23)</sup>. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
+| Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016)<sup>[**(25)**](#Note25)</sup>. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 
 <a id=Batching_Random_Samples_via_Randomness_Extraction></a>
 ## Batching Random Samples via Randomness Extraction
 
-Devroye and Gravel (2020)<sup>[**(24)**](#Note24)</sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
+Devroye and Gravel (2020)<sup>[**(26)**](#Note26)</sup> suggest the following randomness extractor to reduce the number of random bits needed to produce a batch of samples by a sampling algorithm.  The extractor works based on the probability that the algorithm consumes _X_ random bits to produce a specific output _Y_ (or _P_(_X_ | _Y_) for short):
 
 1. Start with the interval [0, 1].
 2. For each pair (_X_, _Y_) in the batch, the interval shrinks from below by _P_(_X_&minus;1 | _Y_) and from above by _P_(_X_ | _Y_). (For example, if \[0.2, 0.8\] \(range 0.6) shrinks from below by 0.1 and from above by 0.8, the new interval is \[0.2+0.1\*0.6, 0.2+0.8\*0.6] = [0.26, 0.68].  For correctness, though, the interval is not allowed to shrink to a single point, since otherwise step 3 would run forever.)
@@ -201,7 +201,7 @@ Devroye and Gravel (2020)<sup>[**(24)**](#Note24)</sup> suggest the following ra
 
 After a sampling method produces an output _Y_, both _X_ (the number of random bits the sampler consumed) and _Y_ (the output) are added to the batch and fed to the extractor, and new bits extracted this way are added to a queue for the sampling method to use to produce future outputs. (Notice that the number of bits extracted by the algorithm above grows as the batch grows, so only the new bits extracted this way are added to the queue this way.)
 
-Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(25)**](#Note25)</sup>, _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
+Now we discuss the issue of finding _P_(_X_ | _Y_).  Generally, if the sampling method implements a random walk on a binary tree that is driven by unbiased random bits and has leaves labeled with one outcome each (Knuth and Yao 1976)<sup>[**(27)**](#Note27)</sup>, _P_(_X_ | _Y_) is found as follows (and Claude Gravel clarified to me that this is the intention of the extractor algorithm): Take a weighted count of all leaves labeled _Y_ up to depth _X_ (where the weight for depth _z_ is 1/2<sup>_z_</sup>), then divide it by a weighted count of all leaves labeled _Y_ at all depths (for instance, if the tree has two leaves labeled _Y_ at _z_=2, three at _z_=3, and three at _z_=4, and _X_ is 3, then _P_(_X_ | _Y_) is (2/2<sup>2</sup>+3/2<sup>3</sup>) / (2/2<sup>2</sup>+3/2<sup>3</sup>+3/2<sup>4</sup>)).  In the special case where the tree has at most 1 leaf labeled _Y_ at every depth, this is implemented by finding _P_(_Y_), or the probability to output _Y_, then chopping _P_(_Y_) up to the _X_<sup>th</sup> binary digit after the point and dividing by the original _P_(_Y_) (for instance, if _X_ is 4 and P(_Y_) is 0.101011..., then _P_(_X_ | _Y_) is 0.1010 / 0.101011...).
 
 Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values _Y_ can take on is large or even unbounded.  In this case, I can suggest the following ad hoc algorithm, which uses a randomness extractor that takes _bits_ as input, such as the von Neumann, Peres, or Zhou&ndash;Bruck extractor (see "[**Notes on Randomness Extraction**](https://peteroupc.github.io/randextract.html)").  The algorithm counts the number of bits it consumes (_X_) to produce an output, then feeds _X_ to the extractor as follows.
 
@@ -216,7 +216,7 @@ This note is about generating random numbers from a continuous distribution via 
 
 Let G be a distribution for which the quantile is wanted, and let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
 
-When a random number _x_ is a uniform PSRN in \[0, 1\], then the following generates a quantile from that number with a desired error tolerance of _&epsilon;_ (see (Devroye and Gravel 2020)<sup>[**(24)**](#Note24)</sup>):
+When a random number _x_ is a uniform PSRN in \[0, 1\], then the following generates a quantile from that number with a desired error tolerance of _&epsilon;_ (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
 
 1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of the quantile of _f_(_a_) and an upper bound of the quantile of _f_(_b_) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
@@ -227,14 +227,14 @@ If _f_(_t_) = _t_ and the quantile function is _Lipschitz continuous_, which rou
 2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of the quantiles of _a_ and _b_, respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
-This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020<sup>[**(24)**](#Note24)</sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.
+This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020<sup>[**(26)**](#Note26)</sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.
 
-Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G's probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(24)**](#Note24)</sup>).  This involves calculating lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)) to the distribution G limited to the interval \[_alow_, _bhigh_\] and accepting the resulting PSRN if it clearly lies in \[_ahigh_, _blow_\] or rejecting it if it clearly lies outside \[_alow_, _bhigh_\].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it's clear whether to accept or reject the output PSRN.
+Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G's probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).  This involves calculating lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)) to the distribution G limited to the interval \[_alow_, _bhigh_\] and accepting the resulting PSRN if it clearly lies in \[_ahigh_, _blow_\] or rejecting it if it clearly lies outside \[_alow_, _bhigh_\].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it's clear whether to accept or reject the output PSRN.
 
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(26)**](#Note26)</sup>; Canonne et al. (2020)<sup>[**(27)**](#Note27)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
+This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(28)**](#Note28)</sup>; Canonne et al. (2020)<sup>[**(29)**](#Note29)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y <= 0 or x<0: return error
@@ -269,7 +269,7 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(28)**](#Note28)</sup>
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(30)**](#Note30)</sup>
 
 <a id=Notes></a>
 ## Notes
@@ -294,16 +294,16 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
 - <small><sup id=Note18>(18)</sup> Boshi, M.A.A., et al., "Generalized Gamma – Generalized Gompertz Distribution", _Journal of Physics: Conference Series_ 1591, 012043 (2020).</small>
 - <small><sup id=Note19>(19)</sup> Akdoğan, Y., Kus, C., et al., "Geometric-Zero Truncated Poisson Distribution: Properties and Applications", _Gazi University Journal of Science_ 32(4), 2019.</small>
 - <small><sup id=Note20>(20)</sup> Keller, A.Z., Kamath A.R., "Reliability analysis of CNC machine tools", _Reliability Engineering_ 3 (1982).</small>
-- <small><sup id=Note21>(21)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
-- <small><sup id=Note22>(22)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
-- <small><sup id=Note23>(23)</sup> Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).</small>
-- <small><sup id=Note24>(24)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
-- <small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
-- <small><sup id=Note26>(26)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-- <small><sup id=Note27>(27)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
-- <small><sup id=Note28>(28)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note29>(29)</sup> Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.</small>
-- <small><sup id=Note30>(30)</sup> Chakraborty, S., Bhattacharjee, S., "[Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.</small>
+- <small><sup id=Note21>(21)</sup> Ospina, R., Ferrari, S.L.P., "Inflated Beta Distributions", 2010.</small>
+- <small><sup id=Note22>(22)</sup> Chakraborty, S., Bhattacharjee, S., "[**Modeling proportion of success in high school leaving examination- A comparative study of Inflated Unit Lindley and Inflated Beta distribution**](https://arxiv.org/abs/2103.08916)", arXiv:2103.08916 [stat.ME], 2021.</small>
+- <small><sup id=Note23>(23)</sup> Jodrá, P., "A note on the right truncated Weibull distribution and the minimum of power function distributions", 2020.</small>
+- <small><sup id=Note24>(24)</sup> Elgohari, Hanaa, and Haitham Yousof. "New Extension of Weibull Distribution: Copula, Mathematical Properties and Data Modeling." Stat., Optim. Inf. Comput., Vol.8, December 2020.</small>
+- <small><sup id=Note25>(25)</sup> Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).</small>
+- <small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
+- <small><sup id=Note27>(27)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note28>(28)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note29>(29)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
+- <small><sup id=Note30>(30)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>
 ## License
