@@ -627,22 +627,26 @@ _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq
     abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))),&nbsp;&nbsp;&nbsp;(1)
 
     _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2._
-2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2._
-3. _If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)\*(1/(7\*n)), for all n&ge;4 that are integer powers of 2._
+2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;_
+    - _M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and_
+    - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1._
+3. _If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by&mdash;_
+    - _(M/2)\*(1/(7\*n)), for all n&ge;4 that are integer powers of 2, and_
+    - _(M/2)\*(1/(8\*n&minus;4)), for all integers n&ge;1._
 4. _If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable._
 
 _Proof._
 
 1. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.
-2. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = _M_\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> &le; _M_\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> = _M_\*(1/(8\*_n_&minus;4))<sup>_&alpha;_/2</sup> &le;  _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>.
-3. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) &le;  (_M_/2)\*(1/(7\*_n_)).
+2. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = _M_\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> &le; _M_\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> = _M_\*(1/(8\*_n_&minus;4))<sup>_&alpha;_/2</sup> = _&rho;_.  For all integers _n_&ge;4, _&rho;_ &le;  _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>.
+3. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For all integers _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and bounded by 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
 
 > **Notes:**
 >
 > 1. **E**[.] means expected or average value, and **Var**[.] means variance.  A hypergeometric(2\*_n_, _k_, _n_) random variable is the number of "good" balls out of _n_ balls taken uniformly at random, all at once, from a bag containing 2\*_n_ balls, _k_ of which are "good".
 > 2. _f_ is _&alpha;_-Hölder continuous if its vertical slopes, if any, are no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>, where _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.  An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
-> 3. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.
+> 3. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 
 **Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
@@ -687,9 +691,14 @@ _Proof._  Follows from part 3 of Lemma 2 above as well as Remark B and the proof
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
 
-**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with &delta;(n) = &phi;(sqrt(1/(2\*n)))/(1&minus;&phi;(sqrt(1/(4\*n)))/&phi;(sqrt(1/(2\*n)))), provided &delta;(n) converges to 0 with increasing n._
+**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;_
 
-**Remark:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if _&phi_(_x_) is a so-called "Dini function", in which case the conjecture applies only to the class of _Dini-continuous functions_, which is already broader than the class of Hölder continuous functions.
+- _&delta;(n) = &phi;(sqrt(1/(2\*n)))/(1&minus;&phi;(sqrt(1/(4\*n)))/&phi;(sqrt(1/(2\*n)))), or_
+- _&delta;(n) = &phi;(sqrt(1/(8\*n&minus;4)))/(1&minus;&phi;(sqrt(1/(16\*n&minus;4)))/&phi;(sqrt(1/(8\*n&minus;4)))),_
+
+_provided &delta;(n) converges to 0 with increasing n._
+
+**Remark:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if _&phi;_(_x_) is a so-called "Dini function", in which case the conjecture applies only to the class of _Dini-continuous functions_, which is already broader than the class of Hölder continuous functions.
 
 <a id=License></a>
 ## License

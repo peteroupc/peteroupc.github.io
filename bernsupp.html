@@ -1092,8 +1092,18 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))),&nbsp;&nbsp;&nbsp;(1)</p>
 
 <p><em>is bounded from above by M*(1/(2*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2.</em></p></li>
-<li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by M*(1/(7*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2.</em></li>
-<li><em>If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by (M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2.</em></li>
+<li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;</em>
+
+<ul>
+<li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and</em></li>
+<li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1.</em></li>
+</ul></li>
+<li><em>If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by&mdash;</em>
+
+<ul>
+<li><em>(M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2, and</em></li>
+<li><em>(M/2)*(1/(8*n&minus;4)), for all integers n&ge;1.</em></li>
+</ul></li>
 <li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
@@ -1101,8 +1111,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <ol>
 <li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <em>M</em>*<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup><em>&alpha;</em></sup> (by the definition of Hölder continuous functions) &le; <em>M</em>*(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)<sup><em>&alpha;</em>/2</sup> = <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</li>
-<li>For all integers <em>n</em>&ge;4, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(1/(8*<em>n</em>&minus;4))<sup><em>&alpha;</em>/2</sup> &le;  <em>M</em>*(1/(7*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</li>
-<li>For all integers <em>n</em>&ge;4, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
+<li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; <em>M</em>*<strong>Var</strong>[<em>X</em>/<em>n</em>]<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> &le; <em>M</em>*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>))<sup><em>&alpha;</em>/2</sup> = <em>M</em>*(1/(8*<em>n</em>&minus;4))<sup><em>&alpha;</em>/2</sup> = <em>&rho;</em>.  For all integers <em>n</em>&ge;4, <em>&rho;</em> &le;  <em>M</em>*(1/(7*<em>n</em>))<sup><em>&alpha;</em>/2</sup>.</li>
+<li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(k/(2*<em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For all integers <em>n</em>&ge;4, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>k</em></sub> be a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is bounded by 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
 
@@ -1112,7 +1122,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <ol>
 <li><strong>E</strong>[.] means expected or average value, and <strong>Var</strong>[.] means variance.  A hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable is the number of &quot;good&quot; balls out of <em>n</em> balls taken uniformly at random, all at once, from a bag containing 2*<em>n</em> balls, <em>k</em> of which are &quot;good&quot;.</li>
 <li><em>f</em> is <em>&alpha;</em>-Hölder continuous if its vertical slopes, if any, are no &quot;steeper&quot; than <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>, where <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.  An <em>&alpha;</em>-Hölder continuous function in [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
-<li>Parts 2 and 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, these bounds are proved only for all integers n&ge;4.</li>
+<li>Parts 2 and 3 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
 <li>For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</li>
 </ol>
 </blockquote>
@@ -1173,9 +1183,16 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
 
-<p><strong>Conjecture 1.</strong> <em>Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with &delta;(n) = &phi;(sqrt(1/(2*n)))/(1&minus;&phi;(sqrt(1/(4*n)))/&phi;(sqrt(1/(2*n)))), provided &delta;(n) converges to 0 with increasing n.</em></p>
+<p><strong>Conjecture 1.</strong> <em>Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;</em></p>
 
-<p><strong>Remark:</strong> This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if <em>&amp;phi</em>(<em>x</em>) is a so-called &quot;Dini function&quot;, in which case the conjecture applies only to the class of <em>Dini-continuous functions</em>, which is already broader than the class of Hölder continuous functions.</p>
+<ul>
+<li><em>&delta;(n) = &phi;(sqrt(1/(2*n)))/(1&minus;&phi;(sqrt(1/(4*n)))/&phi;(sqrt(1/(2*n)))), or</em></li>
+<li><em>&delta;(n) = &phi;(sqrt(1/(8*n&minus;4)))/(1&minus;&phi;(sqrt(1/(16*n&minus;4)))/&phi;(sqrt(1/(8*n&minus;4)))),</em></li>
+</ul>
+
+<p><em>provided &delta;(n) converges to 0 with increasing n.</em></p>
+
+<p><strong>Remark:</strong> This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if <em>&phi;</em>(<em>x</em>) is a so-called &quot;Dini function&quot;, in which case the conjecture applies only to the class of <em>Dini-continuous functions</em>, which is already broader than the class of Hölder continuous functions.</p>
 
 <p><a id=License></a></p>
 
