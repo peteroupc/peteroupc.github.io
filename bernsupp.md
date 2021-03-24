@@ -620,7 +620,7 @@ There is a straightforward extension to lemma 6(i) of Nacu and Peres (2005)<sup>
 
 _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(12)**](#Note12)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(13)**](#Note13)</sup>. &#x25a1;
 
-**Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [&minus;1, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
+**Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
 1. _If f is &alpha;-Hölder continuous with Hölder constant M, then&mdash;_
 
@@ -635,7 +635,7 @@ _Proof._
 
 1. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.
 2. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = _M_\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> &le; _M_\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> = _M_\*(1/(8\*_n_&minus;4))<sup>_&alpha;_/2</sup> &le;  _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>.
-3. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) &le;  (_M_/2)\*(1/(7\*_n_)).
+3. For all integers _n_&ge;4, abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and bounded by 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
 
 > **Notes:**
@@ -652,7 +652,7 @@ _Proof._
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. &#x25a1;
+_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*n<sup>_&alpha;_/2</sup>). &#x25a1;
 
 > **Note:** For specific values of _&alpha;_, the functional equation given in the proof can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
@@ -686,6 +686,10 @@ _Proof._  Follows from part 3 of Lemma 2 above as well as Remark B and the proof
     _for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
+
+**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with &delta;(n) = &phi;(sqrt(1/(2\*n)))/(1&minus;&phi;(sqrt(1/(4\*n)))/&phi;(sqrt(1/(2\*n)))), provided &delta;(n) converges to 0 with increasing n._
+
+**Remark:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if _&phi_(_x_) is a so-called "Dini function", in which case the conjecture applies only to the class of _Dini-continuous functions_, which is already broader than the class of Hölder continuous functions.
 
 <a id=License></a>
 ## License

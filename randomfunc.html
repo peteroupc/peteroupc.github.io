@@ -13,7 +13,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page catalogs <em>randomization methods</em> and <em>sampling methods</em>, and provides pseudocode for many of these methods.  A randomization or sampling method is driven by a &quot;source of random numbers&quot; and produces numbers or other values called <strong><em>random variates</em></strong>.  These variates are the result of the randomization.  (The &quot;source of random numbers&quot; is often simulated in practice by so-called pseudorandom number generators, or PRNGs.)  This document covers many methods, including&mdash;</p>
+<p>This page catalogs <em>randomization methods</em> and <em>sampling methods</em>.  A randomization or sampling method is driven by a &quot;source of random numbers&quot; and produces numbers or other values called <strong><em>random variates</em></strong>.  These variates are the result of the randomization.  (The &quot;source of random numbers&quot; is often simulated in practice by so-called pseudorandom number generators, or PRNGs.)  This document covers many methods, including&mdash;</p>
 
 <ul>
 <li>ways to sample integers or real numbers from a uniform distribution (such as the <a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>core method, <code>RNDINT(N)</code></strong></a>),</li>
@@ -23,7 +23,7 @@
 
 <p>This page is focused on randomization and sampling methods that <em>exactly</em> sample from the distribution described, without introducing additional errors beyond those already present in the inputs (and assuming that an ideal &quot;source of random numbers&quot; is available).  This will be the case if there is a finite number of values to choose from.  But for the normal distribution and other distributions that take on an infinite number of values, there will always be some level of approximation involved; in this case, the focus of this page is on methods that <em>minimize</em> the error they introduce.</p>
 
-<p><a href="https://peteroupc.github.io/randomgen.zip"><strong>Sample Python code</strong></a> that implements many of the methods in this document is available, together with <a href="https://peteroupc.github.io/randomgendoc.html"><strong>documentation for the code</strong></a>.</p>
+<p>This document shows pseudocode for many of the methods, and <a href="https://peteroupc.github.io/randomgen.zip"><strong>sample Python code</strong></a> that implements many of the methods in this document is available, together with <a href="https://peteroupc.github.io/randomgendoc.html"><strong>documentation for the code</strong></a>.</p>
 
 <p>The randomization methods presented on this page assume we have an endless source of numbers chosen independently at random and with a uniform distribution.  For more information, see &quot;<a href="#Sources_of_Random_Numbers"><strong>Sources of Random Numbers</strong></a>&quot; in the appendix.</p>
 
@@ -1129,7 +1129,7 @@ END METHOD
 <ol>
 <li>Assume we have the following list: <code>[&quot;apples&quot;, &quot;oranges&quot;, &quot;bananas&quot;, &quot;grapes&quot;]</code>, and <code>weights</code> is the following: <code>[3, 15, 1, 2]</code>.  The weight for &quot;apples&quot; is 3, and the weight for &quot;oranges&quot; is 15.  Since &quot;oranges&quot; has a higher weight than &quot;apples&quot;, the index for &quot;oranges&quot; (1) is more likely to be chosen than the index for &quot;apples&quot; (0) with the <code>WeightedChoice</code> method.  The following idiom implements how to get a randomly chosen item from the list with that method: <code>item = list[WeightedChoice(weights)]</code>.</li>
 <li>Example 1 can be implemented with <code>CumulativeWeightedChoice</code> instead of <code>WeightedChoice</code> if <code>weights</code> is the following list of cumulative weights: <code>[0, 3, 18, 19, 21]</code>.</li>
-<li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  After a random index is chosen with <code>index = WeightedChoice(weights)</code>, an independent uniform random variate in the chosen interval is chosen.  For example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>.</li>
+<li><strong>Piecewise constant distribution.</strong> Assume the weights from example 1 are used and the list contains the following: <code>[0, 5, 10, 11, 13]</code> (one more item than the weights).  This expresses four intervals: [0, 5), [5, 10), and so on.  Choose a random index (and thus interval) with <code>index = WeightedChoice(weights)</code>.  Then independently, choose a number in the chosen interval uniformly at random (for example, code like the following chooses a random integer this way: <code>number = RNDINTEXCRANGE(list[index], list[index + 1])</code>).</li>
 </ol>
 </blockquote>
 
@@ -1714,7 +1714,7 @@ END METHOD
 
 <p>This section describes randomization methods that use random real numbers, not just random integers.  These include random rational numbers, fixed-point numbers, and floating-point numbers.</p>
 
-<p>However, whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
+<p>But whenever possible, <strong>applications should work with random integers</strong>, rather than other random real numbers.  This is because:</p>
 
 <ul>
 <li>No computer can choose from among all real numbers between two others, since there are infinitely many of them.</li>
@@ -2721,7 +2721,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li>each number is <em>chosen independently of any other choice</em>.</li>
 </ul>
 
-<p>That is, the methods assume we have a <strong>&quot;source of (uniform) random numbers&quot;</strong>. (Thus, none of these methods <em>generate</em> random numbers themselves, strictly speaking, but assume we have a source of them already.)</p>
+<p>That is, the methods assume we have a <strong>&quot;source of (uniform) random numbers&quot;</strong>. (Thus, none of these methods <em>generate</em> random numbers themselves, strictly speaking, but rather, they assume we have a source of them already.)</p>
 
 <p>However, this is an ideal assumption which is hard if not impossible to achieve in practice.</p>
 
