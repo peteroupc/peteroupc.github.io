@@ -9,7 +9,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page catalogs _randomization methods_ and _sampling methods_, and provides pseudocode for many of these methods.  A randomization or sampling method takes a "source of random numbers" and produces numbers or other values called **_random variates_**.  These variates are the result of the randomization.  (The "source of random numbers" is often simulated in practice by so-called pseudorandom number generators \[PRNGs\].)
+This page catalogs _randomization methods_ and _sampling methods_, and provides pseudocode for many of these methods.  A randomization or sampling method is driven by a "source of random numbers" and produces numbers or other values called **_random variates_**.  These variates are the result of the randomization.  (The "source of random numbers" is often simulated in practice by so-called pseudorandom number generators, or PRNGs.)  This document covers many methods, including&mdash;
 
 - ways to sample integers or real numbers from a uniform distribution (such as the [**core method, `RNDINT(N)`**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)),
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
@@ -25,8 +25,8 @@ The randomization methods presented on this page assume we have an endless sourc
 
 - This document does not cover how to choose an underlying PRNG (or device or program that simulates a "source of random numbers") for a particular application, including in terms of security, performance, and quality.  I have written more on  recommendations in [**another document**](https://peteroupc.github.io/random.html).
 - This document does not include algorithms for specific PRNGs, such as Mersenne Twister, PCG, xorshift, linear congruential generators, or generators based on hash functions.
-- This document does not cover how to test PRNGs for correctness or adequacy, and the same applies to other devices and programs that simulate a "source of random numebrs").  This is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)".
-- This document does not explain how to specify or generate "seeds" for certain PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
+- This document does not cover how to test PRNGs for correctness or adequacy, and the same applies to other devices and programs that simulate a "source of random numbers".  Testing is covered, for example, in "[**Testing PRNGs for High-Quality Randomness**](https://peteroupc.github.io/randomtest.html)".
+- This document does not explain how to specify or generate "seeds" for use in PRNGs.  This is [**covered in detail**](https://peteroupc.github.io/random.html#Nondeterministic_Sources_and_Seed_Generation) elsewhere.
 - This document does not show how to generate random security parameters such as encryption keys.
 - This document does not cover randomness extraction (also known as _unbiasing_, _deskewing_, or _whitening_).  See my [**Note on Randomness Extraction**](https://peteroupc.github.io/randextract.html).
 - Variance reduction techniques, such as importance sampling or common random numbers, are not in the scope of this document.
