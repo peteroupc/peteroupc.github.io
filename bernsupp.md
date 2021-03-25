@@ -622,41 +622,41 @@ _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
-1. _If f is &alpha;-Hölder continuous with Hölder constant M, then&mdash;_
-
-    abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))),&nbsp;&nbsp;&nbsp;(1)
-
-    _is bounded from above by M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2._
+1. _Let &phi;(x) be a non-negative and concave function in the interval [0, 1].  If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1),<br>is bounded from above by&mdash;_
+    - _&phi;(1/(8\*n&minus;4)), for all integers n&ge;1,_
+    - _&phi;(1/(7\*n)), for all n&ge;4 that are integer powers of 2, and_
+    - _&phi;(1/(2\*n)), for all integers n&ge;1._
 2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;_
+    - _M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all integers n&ge;1,_
     - _M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and_
     - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1._
-3. _If f has a second derivative whose absolute value is bounded from above by M, then the expression (1) is bounded from above by&mdash;_
+3. _If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the expression (1) is bounded from above by&mdash;_
     - _(M/2)\*(1/(7\*n)), for all n&ge;4 that are integer powers of 2, and_
     - _(M/2)\*(1/(8\*n&minus;4)), for all integers n&ge;1._
 4. _If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable._
 
 _Proof._
 
-1. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; _M_\***E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>_&alpha;_</sup> (by the definition of Hölder continuous functions) &le; _M_\*(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)<sup>_&alpha;_/2</sup> = _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> &le; _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>.
-2. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; _M_\***Var**[_X_/_n_]<sup>_&alpha;_/2</sup> = _M_\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> &le; _M_\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>))<sup>_&alpha;_/2</sup> = _M_\*(1/(8\*_n_&minus;4))<sup>_&alpha;_/2</sup> = _&rho;_.  For all integers _n_&ge;4, _&rho;_ &le;  _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>.
-3. abs(**E**[_f_(_X_/_n_)] &minus; _f_(k/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For all integers _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
+1. _&phi;_ is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; **E**\[_&phi;_(abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_)))] &le; _&phi;_(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]) (by Jensen's inequality and because _&phi;_ is concave) &le; _&phi;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)) = _&phi;_(sqrt(**Var**[_X_/_n_])) = _&phi;_(sqrt((_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&phi;_(sqrt((_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) = _&phi;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for all integers _n_&ge;4, _&rho;_ &le; _&phi;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; _&phi;_(sqrt(**Var**[_X_/_n_])) &le; _&phi;_(sqrt(1/(2\*n))).
+2. By the definition of Hölder continuous functions, take _&phi;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&phi;_ is non-negative and concave in [0,1], the result follows from part 1.
+3. abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For all integers _n_&ge;4, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_k_</sub> be a hypergeometric(2\*_n_, _k_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and bounded by 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
 
 > **Notes:**
 >
 > 1. **E**[.] means expected or average value, and **Var**[.] means variance.  A hypergeometric(2\*_n_, _k_, _n_) random variable is the number of "good" balls out of _n_ balls taken uniformly at random, all at once, from a bag containing 2\*_n_ balls, _k_ of which are "good".
 > 2. _f_ is _&alpha;_-Hölder continuous if its vertical slopes, if any, are no "steeper" than _M_\*_&lambda;_<sup>_&alpha;_</sup>, where _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.  An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
-> 3. Parts 2 and 3 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
+> 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 
-**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
+**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 2 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
 - _**fabove**(n, k) = f(k/n) + &delta;(n)._
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>). &#x25a1;
+_Proof._ Follows from part 2 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>). &#x25a1;
 
 > **Note:** For specific values of _&alpha;_, the functional equation given in the proof can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
@@ -691,14 +691,52 @@ _Proof._  Follows from part 3 of Lemma 2 above as well as Remark B and the proof
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
 
-**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be an increasing continuous function that is non-negative for all x in [0, 1]. If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;_
+**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be a function that&mdash;_
+
+- _is monotonically increasing and concave, and_
+- _is positive for all x in [0, 1] except that &phi;(0) may equal 0._
+
+_If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;_
 
 - _&delta;(n) = &phi;(sqrt(1/(2\*n)))/(1&minus;&phi;(sqrt(1/(4\*n)))/&phi;(sqrt(1/(2\*n)))), or_
 - _&delta;(n) = &phi;(sqrt(1/(8\*n&minus;4)))/(1&minus;&phi;(sqrt(1/(16\*n&minus;4)))/&phi;(sqrt(1/(8\*n&minus;4)))),_
 
 _provided &delta;(n) converges to 0 with increasing n._
 
-**Remark:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.  It is possible that this conjecture is valid only if _&phi;_(_x_) is a so-called "Dini function", in which case the conjecture applies only to the class of _Dini-continuous functions_, which is already broader than the class of Hölder continuous functions.
+**Remarks and proof sketch:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.
+
+A sketch of the proof follows:
+
+The bounds proved in Lemma 1, part 1, are used.
+
+Now, drawing from the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, prove that _&delta;(n)_ is a solution to the functional equation&mdash;
+
+- _&delta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(sqrt(1/(8\*n&minus;4))), or
+- _&delta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(sqrt(1/(2\*n))),
+
+as the case may be, for all _n_&ge;1.  Functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.
+
+Notice that _q_(_n_) = sqrt(1/(8\*n&minus;4)) is monotonically decreasing and positive for all _n_&ge;1, so _q_(2\*_n_)/_q_(_n_) is in the interval (0, 1].
+
+The conjecture assumes that _&phi;_ is monotonically increasing and non-negative on (0, 1).
+
+By computing the first statement of _&delta;_ in the conjecture, then subtracting it with the first statement of _&delta;_ in the proof, the result has a numerator of&mdash;
+
+_N_(_n_) = ( _&phi;_(_q_(2\*_n_))<sup>2</sup> - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) \* _&phi;_(_q_(2\*_n_)),
+
+so the goal is to prove that _N_(_n_) is 0, or equivalently that&mdash;
+
+( _&phi;_(_q_(2\*_n_))<sup>2</sup> - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) =  ( _&phi;_(_q_(2\*_n_)) \* _&phi;_(_q_(2\*_n_)) - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) = 0,
+
+or equivalently that&mdash;
+
+_&phi;_(_q_(2\*_n_)) \* _&phi;_(_q_(2\*_n_)) = _&phi;_(_q_(4\*_n_)) \* _&phi;_(_q_(_n_)),
+
+because _&phi;_(_q_(2\*n)) is nonzero as _q_ is nonzero for all _n_&ge;1, so that _&phi;_(_q_) is likewise nonzero by assumption.
+
+(This was already confirmed to be true when _&phi;_(_x_) = _c_\*_x_<sup>_&alpha;_</sup> for _&alpha;_ in (0, 1] and for some constant _c_ greater than 0.)
+
+If this goal is proved, then the result follows from the statements above as well as Remark B and the proof of Proposition 10 of Nacu and Peres.
 
 <a id=License></a>
 ## License
