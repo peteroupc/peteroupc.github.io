@@ -1090,9 +1090,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><em>Let &phi;(x) be a non-negative and concave function in the interval [0, 1].  If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1),<br>is bounded from above by&mdash;</em>
 
 <ul>
-<li><em>&phi;(1/(8*n&minus;4)), for all integers n&ge;1,</em></li>
-<li><em>&phi;(1/(7*n)), for all n&ge;4 that are integer powers of 2, and</em></li>
-<li><em>&phi;(1/(2*n)), for all integers n&ge;1.</em></li>
+<li><em>&phi;(sqrt(1/(8*n&minus;4))), for all integers n&ge;1,</em></li>
+<li><em>&phi;(sqrt(1/(7*n))), for all n&ge;4 that are integer powers of 2, and</em></li>
+<li><em>&phi;(sqrt(1/(2*n))), for all integers n&ge;1.</em></li>
 </ul></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;</em>
 
@@ -1113,7 +1113,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><em>Proof.</em></p>
 
 <ol>
-<li><em>&phi;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <strong>E</strong>[<em>&phi;</em>(abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)))] &le; <em>&phi;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]) (by Jensen&#39;s inequality and because <em>&phi;</em> is concave) &le; <em>&phi;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)) = <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&phi;</em>(sqrt((<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&phi;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&phi;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for all integers <em>n</em>&ge;4, <em>&rho;</em> &le; <em>&phi;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&phi;</em>(sqrt(1/(2*n))).</li>
+<li><em>&phi;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <strong>E</strong>[<em>&phi;</em>(abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)))] &le; <em>&phi;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]) (by Jensen&#39;s inequality and because <em>&phi;</em> is concave) &le; <em>&phi;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)) = <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&phi;</em>(sqrt((<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&phi;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&phi;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for all integers <em>n</em>&ge;4, <em>&rho;</em> &le; <em>&phi;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&phi;</em>(sqrt(1/(2*n))).</li>
 <li>By the definition of Hölder continuous functions, take <em>&phi;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&phi;</em> is non-negative and concave in [0,1], the result follows from part 1.</li>
 <li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For all integers <em>n</em>&ge;4, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>k</em></sub> be a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is bounded by 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
@@ -1185,59 +1185,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
-
-<p><strong>Conjecture 1.</strong> <em>Let f be as defined in Theorem 1, and let &phi;(x) be a function that&mdash;</em></p>
-
-<ul>
-<li><em>is monotonically increasing and concave, and</em></li>
-<li><em>is positive for all x in [0, 1] except that &phi;(0) may equal 0.</em></li>
-</ul>
-
-<p><em>If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;</em></p>
-
-<ul>
-<li><em>&delta;(n) = &phi;(sqrt(1/(2*n)))/(1&minus;&phi;(sqrt(1/(4*n)))/&phi;(sqrt(1/(2*n)))), or</em></li>
-<li><em>&delta;(n) = &phi;(sqrt(1/(8*n&minus;4)))/(1&minus;&phi;(sqrt(1/(16*n&minus;4)))/&phi;(sqrt(1/(8*n&minus;4)))),</em></li>
-</ul>
-
-<p><em>provided &delta;(n) converges to 0 with increasing n.</em></p>
-
-<p><strong>Remarks and proof sketch:</strong> This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.</p>
-
-<p>A sketch of the proof follows:</p>
-
-<p>The bounds proved in Lemma 1, part 1, are used.</p>
-
-<p>Now, drawing from the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, prove that <em>&delta;(n)</em> is a solution to the functional equation&mdash;</p>
-
-<ul>
-<li><em>&delta;</em>(<em>n</em>) = <em>&delta;</em>(2*<em>n</em>) + <em>&phi;</em>(sqrt(1/(8*n&minus;4))), or</li>
-<li><em>&delta;</em>(<em>n</em>) = <em>&delta;</em>(2*<em>n</em>) + <em>&phi;</em>(sqrt(1/(2*n))),</li>
-</ul>
-
-<p>as the case may be, for all <em>n</em>&ge;1.  Functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.</p>
-
-<p>Notice that <em>q</em>(<em>n</em>) = sqrt(1/(8*n&minus;4)) is monotonically decreasing and positive for all <em>n</em>&ge;1, so <em>q</em>(2*<em>n</em>)/<em>q</em>(<em>n</em>) is in the interval (0, 1].</p>
-
-<p>The conjecture assumes that <em>&phi;</em> is monotonically increasing and non-negative on (0, 1).</p>
-
-<p>By computing the first statement of <em>&delta;</em> in the conjecture, then subtracting it with the first statement of <em>&delta;</em> in the proof, the result has a numerator of&mdash;</p>
-
-<p><em>N</em>(<em>n</em>) = ( <em>&phi;</em>(<em>q</em>(2*<em>n</em>))<sup>2</sup> - <em>&phi;</em>(<em>q</em>(4*<em>n</em>))*<em>&phi;</em>(<em>q</em>(<em>n</em>)) ) * <em>&phi;</em>(<em>q</em>(2*<em>n</em>)),</p>
-
-<p>so the goal is to prove that <em>N</em>(<em>n</em>) is 0, or equivalently that&mdash;</p>
-
-<p>( <em>&phi;</em>(<em>q</em>(2*<em>n</em>))<sup>2</sup> - <em>&phi;</em>(<em>q</em>(4*<em>n</em>))*<em>&phi;</em>(<em>q</em>(<em>n</em>)) ) =  ( <em>&phi;</em>(<em>q</em>(2*<em>n</em>)) * <em>&phi;</em>(<em>q</em>(2*<em>n</em>)) - <em>&phi;</em>(<em>q</em>(4*<em>n</em>))*<em>&phi;</em>(<em>q</em>(<em>n</em>)) ) = 0,</p>
-
-<p>or equivalently that&mdash;</p>
-
-<p><em>&phi;</em>(<em>q</em>(2*<em>n</em>)) * <em>&phi;</em>(<em>q</em>(2*<em>n</em>)) = <em>&phi;</em>(<em>q</em>(4*<em>n</em>)) * <em>&phi;</em>(<em>q</em>(<em>n</em>)),</p>
-
-<p>because <em>&phi;</em>(<em>q</em>(2*n)) is nonzero as <em>q</em> is nonzero for all <em>n</em>&ge;1, so that <em>&phi;</em>(<em>q</em>) is likewise nonzero by assumption.</p>
-
-<p>(This was already confirmed to be true when <em>&phi;</em>(<em>x</em>) = <em>c</em>*<em>x</em><sup><em>&alpha;</em></sup> for <em>&alpha;</em> in (0, 1] and for some constant <em>c</em> greater than 0.)</p>
-
-<p>If this goal is proved, then the result follows from the statements above as well as Remark B and the proof of Proposition 10 of Nacu and Peres.</p>
 
 <p><a id=License></a></p>
 

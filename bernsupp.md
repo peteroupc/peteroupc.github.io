@@ -623,9 +623,9 @@ _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
 1. _Let &phi;(x) be a non-negative and concave function in the interval [0, 1].  If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1),<br>is bounded from above by&mdash;_
-    - _&phi;(1/(8\*n&minus;4)), for all integers n&ge;1,_
-    - _&phi;(1/(7\*n)), for all n&ge;4 that are integer powers of 2, and_
-    - _&phi;(1/(2\*n)), for all integers n&ge;1._
+    - _&phi;(sqrt(1/(8\*n&minus;4))), for all integers n&ge;1,_
+    - _&phi;(sqrt(1/(7\*n))), for all n&ge;4 that are integer powers of 2, and_
+    - _&phi;(sqrt(1/(2\*n))), for all integers n&ge;1._
 2. _If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;_
     - _M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all integers n&ge;1,_
     - _M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and_
@@ -690,53 +690,6 @@ _Proof._  Follows from part 3 of Lemma 2 above as well as Remark B and the proof
     _for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
 _Proof._ Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
-
-**Conjecture 1.** _Let f be as defined in Theorem 1, and let &phi;(x) be a function that&mdash;_
-
-- _is monotonically increasing and concave, and_
-- _is positive for all x in [0, 1] except that &phi;(0) may equal 0._
-
-_If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then Theorem 1 is valid with&mdash;_
-
-- _&delta;(n) = &phi;(sqrt(1/(2\*n)))/(1&minus;&phi;(sqrt(1/(4\*n)))/&phi;(sqrt(1/(2\*n)))), or_
-- _&delta;(n) = &phi;(sqrt(1/(8\*n&minus;4)))/(1&minus;&phi;(sqrt(1/(16\*n&minus;4)))/&phi;(sqrt(1/(8\*n&minus;4)))),_
-
-_provided &delta;(n) converges to 0 with increasing n._
-
-**Remarks and proof sketch:** This conjecture is suggested from the proofs in part 1 of Lemma 2 and of Theorem 1.  If this conjecture holds true, then this would form an approximation scheme for a much broader class of continuous functions than Hölder continuous functions.
-
-A sketch of the proof follows:
-
-The bounds proved in Lemma 1, part 1, are used.
-
-Now, drawing from the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, prove that _&delta;(n)_ is a solution to the functional equation&mdash;
-
-- _&delta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(sqrt(1/(8\*n&minus;4))), or
-- _&delta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(sqrt(1/(2\*n))),
-
-as the case may be, for all _n_&ge;1.  Functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.
-
-Notice that _q_(_n_) = sqrt(1/(8\*n&minus;4)) is monotonically decreasing and positive for all _n_&ge;1, so _q_(2\*_n_)/_q_(_n_) is in the interval (0, 1].
-
-The conjecture assumes that _&phi;_ is monotonically increasing and non-negative on (0, 1).
-
-By computing the first statement of _&delta;_ in the conjecture, then subtracting it with the first statement of _&delta;_ in the proof, the result has a numerator of&mdash;
-
-_N_(_n_) = ( _&phi;_(_q_(2\*_n_))<sup>2</sup> - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) \* _&phi;_(_q_(2\*_n_)),
-
-so the goal is to prove that _N_(_n_) is 0, or equivalently that&mdash;
-
-( _&phi;_(_q_(2\*_n_))<sup>2</sup> - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) =  ( _&phi;_(_q_(2\*_n_)) \* _&phi;_(_q_(2\*_n_)) - _&phi;_(_q_(4\*_n_))\*_&phi;_(_q_(_n_)) ) = 0,
-
-or equivalently that&mdash;
-
-_&phi;_(_q_(2\*_n_)) \* _&phi;_(_q_(2\*_n_)) = _&phi;_(_q_(4\*_n_)) \* _&phi;_(_q_(_n_)),
-
-because _&phi;_(_q_(2\*n)) is nonzero as _q_ is nonzero for all _n_&ge;1, so that _&phi;_(_q_) is likewise nonzero by assumption.
-
-(This was already confirmed to be true when _&phi;_(_x_) = _c_\*_x_<sup>_&alpha;_</sup> for _&alpha;_ in (0, 1] and for some constant _c_ greater than 0.)
-
-If this goal is proved, then the result follows from the statements above as well as Remark B and the proof of Proposition 10 of Nacu and Peres.
 
 <a id=License></a>
 ## License
