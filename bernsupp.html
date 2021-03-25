@@ -188,18 +188,18 @@
 <p><strong>Certain functions that equal 0 at 0 and 1 at 1.</strong>  Let <em>f</em>, <em>g</em>, and <em>h</em> be functions as defined earlier, except that <em>f</em>(0) = 0 and <em>f</em>(1) = 1.  Define the following additional functions:</p>
 
 <ul>
-<li><em>&phi;</em>(<em>&lambda;</em>) is a function that meets the following requirements:
+<li><em>&omega;</em>(<em>&lambda;</em>) is a function that meets the following requirements:
 
 <ul>
-<li><em>&phi;</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
-<li><em>&phi;</em>(0) = 0 and <em>&phi;</em>(1) = 1.</li>
-<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&phi;</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
+<li><em>&omega;</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
+<li><em>&omega;</em>(0) = 0 and <em>&omega;</em>(1) = 1.</li>
+<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
 </ul></li>
-<li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&phi;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>).</li>
+<li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&omega;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>).</li>
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
 </ul>
 
-<p>Roughly speaking, <em>&phi;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&phi;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&phi;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
+<p>Roughly speaking, <em>&omega;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&omega;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&omega;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
 
 <p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then <em>f</em> can be simulated using the following algorithm:</p>
 
@@ -210,7 +210,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&phi;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following SymPy code: <code>fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following SymPy code: <code>fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
 <p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
@@ -383,19 +383,19 @@
 
 <h2>Complexity</h2>
 
-<p>The following note shows the complexity of the algorithm for 1/<em>&phi;</em> in the main article, where <em>&phi;</em> is the golden ratio.</p>
+<p>The following note shows the complexity of the algorithm for 1/<em>&omega;</em> in the main article, where <em>&omega;</em> is the golden ratio.</p>
 
 <p>Let <strong>E</strong>[<em>N</em>] be the expected (average) number of unbiased random bits (fair coin flips) generated by the algorithm.</p>
 
-<p>Then, since each bit is independent, <strong>E</strong>[<em>N</em>] = 2*<em>&phi;</em> as shown below.</p>
+<p>Then, since each bit is independent, <strong>E</strong>[<em>N</em>] = 2*<em>&omega;</em> as shown below.</p>
 
 <ul>
-<li>Each iteration stops the algorithm with probability <em>p</em> = (1/2) + (1&minus;(1/2)) * (1/<em>&phi;</em>) (1/2 for the initial bit and 1/<em>&phi;</em> for the recursive run; (1&minus;(1/2)) because we&#39;re subtracting the (1/2) earlier on the right-hand side from 1).</li>
+<li>Each iteration stops the algorithm with probability <em>p</em> = (1/2) + (1&minus;(1/2)) * (1/<em>&omega;</em>) (1/2 for the initial bit and 1/<em>&omega;</em> for the recursive run; (1&minus;(1/2)) because we&#39;re subtracting the (1/2) earlier on the right-hand side from 1).</li>
 <li>Thus, the expected (average) number of iterations is <strong>E</strong>[<em>T</em>] = 1/<em>p</em> by a well-known rejection sampling argument, since the algorithm doesn&#39;t depend on iteration counts.</li>
-<li>Each iteration uses 1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2) bits on average, so the whole algorithm uses <strong>E</strong>[<em>N</em>] = (1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2)) * <strong>E</strong>[<em>T</em>] bits on average (each iteration consumes either 1 bit with probability 1/2, or (1 + <strong>E</strong>[<em>N</em>]) bits with probability 1/2). This equation has the solution <strong>E</strong>[<em>N</em>] = 1 + sqrt(5) = 2*<em>&phi;</em>.</li>
+<li>Each iteration uses 1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2) bits on average, so the whole algorithm uses <strong>E</strong>[<em>N</em>] = (1 * (1/2) + (1 + <strong>E</strong>[<em>N</em>]) * (1/2)) * <strong>E</strong>[<em>T</em>] bits on average (each iteration consumes either 1 bit with probability 1/2, or (1 + <strong>E</strong>[<em>N</em>]) bits with probability 1/2). This equation has the solution <strong>E</strong>[<em>N</em>] = 1 + sqrt(5) = 2*<em>&omega;</em>.</li>
 </ul>
 
-<p>Also, on average, half of these flips (<em>&phi;</em>) show 1 and half show 0, since the bits are unbiased (the coin is fair).</p>
+<p>Also, on average, half of these flips (<em>&omega;</em>) show 1 and half show 0, since the bits are unbiased (the coin is fair).</p>
 
 <p>A similar analysis to the one above can be used to find the expected (average) time complexity of many Bernoulli factory algorithms.</p>
 
@@ -1087,12 +1087,12 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
 
 <ol>
-<li><em>Let &phi;(x) be a non-negative and concave function in the interval [0, 1].  If abs(f(x) &minus; f(y)) &le; &phi;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y, then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1),<br>is bounded from above by&mdash;</em>
+<li><em>Let &omega;(x) be a modulus of continuity of f (a non-negative and increasing function in the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y).  If &omega; is concave, then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1),<br>is bounded from above by&mdash;</em>
 
 <ul>
-<li><em>&phi;(sqrt(1/(8*n&minus;4))), for all integers n&ge;1,</em></li>
-<li><em>&phi;(sqrt(1/(7*n))), for all n&ge;4 that are integer powers of 2, and</em></li>
-<li><em>&phi;(sqrt(1/(2*n))), for all integers n&ge;1.</em></li>
+<li><em>&omega;(sqrt(1/(8*n&minus;4))), for all integers n&ge;1,</em></li>
+<li><em>&omega;(sqrt(1/(7*n))), for all n&ge;4 that are integer powers of 2, and</em></li>
+<li><em>&omega;(sqrt(1/(2*n))), for all integers n&ge;1.</em></li>
 </ul></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M, then the expression (1) is bounded from above by&mdash;</em>
 
@@ -1113,8 +1113,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><em>Proof.</em></p>
 
 <ol>
-<li><em>&phi;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <strong>E</strong>[<em>&phi;</em>(abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)))] &le; <em>&phi;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]) (by Jensen&#39;s inequality and because <em>&phi;</em> is concave) &le; <em>&phi;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)) = <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&phi;</em>(sqrt((<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&phi;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&phi;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for all integers <em>n</em>&ge;4, <em>&rho;</em> &le; <em>&phi;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <em>&phi;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&phi;</em>(sqrt(1/(2*n))).</li>
-<li>By the definition of Hölder continuous functions, take <em>&phi;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&phi;</em> is non-negative and concave in [0,1], the result follows from part 1.</li>
+<li><em>&omega;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2*<em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for all integers <em>n</em>&ge;4, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).</li>
+<li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is non-negative, increasing, and concave in [0,1], the result follows from part 1.</li>
 <li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2*<em>n</em>&minus;<em>k</em>)/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2*<em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For all integers <em>n</em>&ge;4, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>k</em></sub> be a hypergeometric(2*<em>n</em>, <em>k</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2*<em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is bounded by 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
