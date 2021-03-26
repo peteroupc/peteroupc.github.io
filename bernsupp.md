@@ -618,7 +618,7 @@ This section shows mathematical proofs for some of the approximation schemes of 
 
 _Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(12)**](#Note12)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(13)**](#Note13)</sup>. &#x25a1;
 
-Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to any continuous function, not just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions whose slope doesn't go exponentially fast to a vertical slope.
+Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions whose slope doesn't go exponentially fast to a vertical slope.
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
@@ -648,7 +648,7 @@ _Proof._
 > 2. _f_ is _&alpha;_-Hölder continuous if its vertical slopes, if any, are no "steeper" than that of _M_\*_&lambda;_<sup>_&alpha;_</sup>, where _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.  An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
-> 5. All functions that are continuous on the interval [0, 1] have a modulus of continuity.  If _f_ is nondecreasing and concave, and equals 0 at 0, then _f_ is also its own modulus of continuity.
+> 5. All continuous functions that map [0, 1] to [0, 1] have a modulus of continuity.  If _f_ is nondecreasing and concave, and equals 0 at 0, then _f_ is also its own modulus of continuity.
 
 In the following results, a _bounded factory function_ means a continuous function on the interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 
@@ -666,7 +666,7 @@ _Assume that the sum in &eta;(n) converges.  Then, by forming two sequences of p
 - _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = f(k/n) + &eta;(n)._
 
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(_n_), with either form of _&phi;_ given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;.
+_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(_n_), with either form of _&phi;_ given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;
 
 **Corollary 1.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
@@ -684,7 +684,7 @@ _Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 
 - _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
 
-_Proof._ Follows from Theorem 1 by using _&omega;_(_x_) = _M_\*_x_ (a modulus of continuity for Lipschitz continuous functions). This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.&#x25a1;
+_Proof._ Follows from Theorem 1 and the definition of Lipschitz-continuous functions by using _&omega;_(_x_) = _M_\*_x_ (this function is a concave modulus of continuity under part 1 of Lemma 2a). This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
 
 **Theorem 2.** _Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem:_
 

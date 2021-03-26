@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/02/27"><meta name="citation_online_date" content="2021/02/27"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/03/26"><meta name="citation_online_date" content="2021/03/26"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -2159,7 +2159,7 @@ def contbernoullidist(b, lamda, precision=53):
 <ul>
 <li><a href="https://peteroupc.github.io/random.html"><strong>Random Number Generator Recommendations for Applications</strong></a></li>
 <li><a href="https://peteroupc.github.io/randomfunc.html"><strong>Randomization and Sampling Methods</strong></a></li>
-<li><a href="https://peteroupc.github.io/randomnotes.html"><strong>More Random Number Sampling Methods</strong></a></li>
+<li><a href="https://peteroupc.github.io/randomnotes.html"><strong>More Random Sampling Methods</strong></a></li>
 <li><a href="https://peteroupc.github.io/autodist.html"><strong>Code Generator for Discrete Distributions</strong></a></li>
 <li><a href="https://peteroupc.github.io/randomcommon.html"><strong>The Most Common Topics Involving Randomization</strong></a></li>
 <li><a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a></li>
@@ -2271,26 +2271,28 @@ plot(expminusformula(), xlim=(0,1), ylim=(0,2))
 
 <p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion (starting with <em>j</em> = 1 for the first digit after the point), where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note27"><strong>(27)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary expansion&#39;s digits become less and less biased as they move farther and farther from the binary point.</p>
 
-<p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, experiments show that the resulting distribution will have a discontinuous <em>probability density function</em> (PDF) in general.</p>
+<p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.</p>
 
-<p>I conjecture the following:</p>
+<p>However, the resulting distribution will have a discontinuous <em>probability density function</em> (PDF) in general, as the following two results show:</p>
 
-<ol>
-<li><p>For <em>&beta;</em> = 2, the distribution&#39;s PDF will be continuous only if&mdash;</p>
-
-<ul>
-<li>the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and</li>
-<li>the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.</li>
-</ul></li>
-<li><p>The distribution&#39;s PDF will be continuous only if the sequence has the form&mdash;</p>
+<p><strong>Result 1.</strong> <em>For &beta; = 2, the distribution&#39;s PDF will be continuous only if&mdash;</em></p>
 
 <ul>
-<li><em>a</em><sub><em>j</em></sub> = exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)/(1 + exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)),</li>
+<li><em>the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and</em></li>
+<li><em>the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.</em></li>
 </ul>
 
-<p>where <em>&beta;</em> = 2 and <em>w</em> is a constant.  Special cases of this include the uniform distribution (<em>w</em> = 0), the truncated exponential(1) distribution (<em>w</em> = &minus;1; (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general truncated exponential(<em>&lambda;</em>) distribution (<em>w</em> = &minus;<em>&lambda;</em>).  We also have the special case of 1 minus a truncated exponential(<em>w</em>) random number when <em>w</em> &gt; 0, as well as the special case <em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.  As evidence in favor of this conjecture, experiments show that sequences <em>z</em>(<em>j</em>)/(1 + <em>z</em>(<em>j</em>)), other than sequences of the form just given, will generally result in a discontinuous PDF even if <em>z</em>(<em>j</em>) converges to 1 and even if <em>&beta;</em> is other than 2.  Claude Gravel gave me a hint that proving this conjecture might involve studying the distribution&#39;s characteristic function.</p></li>
-<li><p>A similar behavior to (1) applies for <em>&beta;</em> other than 2 (non-base-2 or non-binary cases) as it does to <em>&beta;</em> = 2 (the base-2 or binary case).</p></li>
-</ol>
+<p><strong>Result 2.</strong> <em>The distribution&#39;s PDF will be continuous only if the sequence has the form&mdash;</em></p>
+
+<p><em>a</em><sub><em>j</em></sub> = exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)/(1 + exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)),</p>
+
+<p><em>where &beta; = 2 and w is a constant.</em></p>
+
+<p>I conjectured both these statements and asked for proof on them on Mathematics Stack Exchange.  The community stepped in and gave such proof; see my <a href="https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits"><strong>Stack Exchange question</strong></a>.</p>
+
+<p>Special cases of Result 2 include the uniform distribution (<em>w</em> = 0), the truncated exponential(1) distribution (<em>w</em> = &minus;1; (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general truncated exponential(<em>&lambda;</em>) distribution (<em>w</em> = &minus;<em>&lambda;</em>).  We also have the special case of 1 minus a truncated exponential(<em>w</em>) random number when <em>w</em> &gt; 0, as well as the special case <em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</p>
+
+<p>I continue to conjecture the following: A similar behavior to Result 1 above applies for <em>&beta;</em> other than 2 (non-base-2 or non-binary cases) as it does to <em>&beta;</em> = 2 (the base-2 or binary case).</p>
 
 <p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:</p>
 

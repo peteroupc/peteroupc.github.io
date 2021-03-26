@@ -1689,7 +1689,7 @@ The following are some additional articles I have written on the topic of random
 
 * [**Random Number Generator Recommendations for Applications**](https://peteroupc.github.io/random.html)
 * [**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)
-* [**More Random Number Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
+* [**More Random Sampling Methods**](https://peteroupc.github.io/randomnotes.html)
 * [**Code Generator for Discrete Distributions**](https://peteroupc.github.io/autodist.html)
 * [**The Most Common Topics Involving Randomization**](https://peteroupc.github.io/randomcommon.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
@@ -1786,22 +1786,26 @@ In principle, a partially-sampled random number is possible by finding a sequenc
 
 The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary expansion's digits become less and less biased as they move farther and farther from the binary point.
 
-An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.  However, experiments show that the resulting distribution will have a discontinuous _probability density function_ (PDF) in general.
+An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.
 
-I conjecture the following:
+However, the resulting distribution will have a discontinuous _probability density function_ (PDF) in general, as the following two results show:
 
-1. For _&beta;_ = 2, the distribution's PDF will be continuous only if&mdash;
+**Result 1.** _For &beta; = 2, the distribution's PDF will be continuous only if&mdash;_
 
-    - the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and
-    - the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.
+- _the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and_
+- _the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc._
 
-2. The distribution's PDF will be continuous only if the sequence has the form&mdash;
+**Result 2.** _The distribution's PDF will be continuous only if the sequence has the form&mdash;_
 
-    - _a_<sub>_j_</sub> = exp(_w_/_&beta;_<sup>_j_</sup>)/(1 + exp(_w_/_&beta;_<sup>_j_</sup>)),
+_a_<sub>_j_</sub> = exp(_w_/_&beta;_<sup>_j_</sup>)/(1 + exp(_w_/_&beta;_<sup>_j_</sup>)),
 
-    where _&beta;_ = 2 and _w_ is a constant.  Special cases of this include the uniform distribution (_w_ = 0), the truncated exponential(1) distribution (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_w_ = &minus;_&lambda;_).  We also have the special case of 1 minus a truncated exponential(_w_) random number when _w_ > 0, as well as the special case _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.  As evidence in favor of this conjecture, experiments show that sequences _z_(_j_)/(1 + _z_(_j_)), other than sequences of the form just given, will generally result in a discontinuous PDF even if _z_(_j_) converges to 1 and even if _&beta;_ is other than 2.  Claude Gravel gave me a hint that proving this conjecture might involve studying the distribution's characteristic function.
+_where &beta; = 2 and w is a constant._
 
-3. A similar behavior to (1) applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
+I conjectured both these statements and asked for proof on them on Mathematics Stack Exchange.  The community stepped in and gave such proof; see my [**Stack Exchange question**](https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits).
+
+Special cases of Result 2 include the uniform distribution (_w_ = 0), the truncated exponential(1) distribution (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_w_ = &minus;_&lambda;_).  We also have the special case of 1 minus a truncated exponential(_w_) random number when _w_ > 0, as well as the special case _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
+
+I continue to conjecture the following: A similar behavior to Result 1 above applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
 
 For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
 
