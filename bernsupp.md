@@ -629,7 +629,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 2. _If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the expression (1) is bounded from above by&mdash;_
     - _M\*(1/(2\*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2,_
     - _M\*(1/(7\*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and_
-    - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1._
+    - _M\*(1/(8\*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1 that are integer powers of 2._
 3. _If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the expression (1) is bounded from above by&mdash;_
     - _(M/2)\*(1/(7\*n)), for all n&ge;4 that are integer powers of 2, and_
     - _(M/2)\*(1/(8\*n&minus;4)), for all n&ge;1 that are integer powers of 2._
@@ -637,7 +637,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 
 _Proof._
 
-1. _&omega;_ is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; **E**\[_&omega;_(abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_)))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for all _n_&ge;4 that are integer powers of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).
+1. _&omega;_ is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; **E**[abs(_f_(_X_/_n_) &minus; _f_(_k_/(2\*_n_))] &le; **E**\[_&omega;_(abs(_X_/_n_ &minus; _k_/(2\*_n_))] &le; _&omega;_(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]) (by Jensen's inequality and because _&omega;_ is concave) &le; _&omega;_(sqrt(**E**[abs(_X_/_n_ &minus; _k_/(2\*_n_))]<sup>2</sup>)) = _&omega;_(sqrt(**Var**[_X_/_n_])) = _&omega;_(sqrt((_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) &le; _&omega;_(sqrt((_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)))) = _&omega;_(sqrt((1/(8\*_n_&minus;4)))) = _&rho;_, and for all _n_&ge;4 that are integer powers of 2, _&rho;_ &le; _&omega;_(sqrt(1/(7\*_n_))).  To prove the third bound: abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; _&omega;_(sqrt(**Var**[_X_/_n_])) &le; _&omega;_(sqrt(1/(2\*n))).
 2. By the definition of Hölder continuous functions, take _&omega;_(_x_) = _M_\*_x_<sup>_&alpha;_</sup>.  Because _&omega;_ is non-negative, nondecreasing, and concave in [0,1], the result follows from part 1.
 3. abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) &le; (_M_/2)\***Var**[_X_/_n_] = (_M_/2)\*(_k_\*(2\*_n_&minus;_k_)/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) &le; (_M_/2)\*(_n_<sup>2</sup>/(4\*(2\*_n_&minus;1)\*_n_<sup>2</sup>)) = (_M_/2)\*(1/(8\*_n_&minus;4)) = _&rho;_.  For all _n_&ge;4 that are integer powers of 2, _&rho;_ &le;  (_M_/2)\*(1/(7\*_n_)).
 4. Let _X_<sub>_m_</sub> be a hypergeometric(2\*_n_, _m_, _n_) random variable.  By Lemma 1 and the assumption that _f_ is nondecreasing, **E**[_f_(_X_<sub>_k_</sub>/_n_)] is nondecreasing as _k_ increases, so take **E**[_f_(_X_<sub>_n_</sub>/_n_)] = **E**[_f_(_Y_</sub>/_n_)] as the upper bound.  Then, abs(**E**[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_))) = abs(**E**[_f_(_X_/_n_)] &minus; _f_(**E**[_X_/_n_])) = **E**[_f_(_X_/_n_)] &minus; _f_(**E**\[_X_/_n_\]) (by Jensen's inequality, because _f_ is convex and bounded by 0) = **E**\[_f_(_X_/_n_)] &minus; _f_(_k_/(2\*_n_)) &le; **E**\[_f_(_X_/_n_)\] (because _f_ is bounded by 0) &le; **E**[_f_(_Y_/_n_)]. &#x25a1;
@@ -666,7 +666,7 @@ _Assume that the sum in &eta;(n) converges.  Then, by forming two sequences of p
 - _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = f(k/n) + &eta;(n)._
 
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&delta;_(2\*_n_) + _&phi;_(_n_), with either form of _&phi;_ given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;
+_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2\*_n_) + _&phi;_(_n_), with either form of _&phi;_ given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;
 
 **Corollary 1.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
@@ -684,7 +684,9 @@ _Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 
 - _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
 
-_Proof._ Follows from Theorem 1 and the definition of Lipschitz-continuous functions by using _&omega;_(_x_) = _M_\*_x_ (this function is a concave modulus of continuity under part 1 of Lemma 2a). This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
+_Proof._ Because Lipschitz continuous functions are 1-Hölder continuous with Hölder constant _M_, the result follows from Corollary 1. &#x25a1;
+
+> **Note:** This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.
 
 **Theorem 2.** _Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem:_
 
