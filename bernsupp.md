@@ -622,7 +622,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
-1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function in the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1] with x != y).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
+1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function in the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
     - _&omega;(sqrt(1/(8\*n&minus;4))), for all n&ge;1 that are integer powers of 2,_
     - _&omega;(sqrt(1/(7\*n))), for all n&ge;4 that are integer powers of 2, and_
     - _&omega;(sqrt(1/(2\*n))), for all n&ge;1 that are integer powers of 2._
@@ -648,31 +648,61 @@ _Proof._
 > 2. _f_ is _&alpha;_-Hölder continuous if its vertical slopes, if any, are no "steeper" than that of _M_\*_&lambda;_<sup>_&alpha;_</sup>, where _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.  An _&alpha;_-Hölder continuous function in [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
-> 5. If _f_ is nondecreasing and concave, and equals 0 at 0, then _f_ is also its own modulus of continuity.  Note that all continuous functions have a modulus of continuity.
+> 5. All functions that are continuous on the interval [0, 1] have a modulus of continuity.  If _f_ is nondecreasing and concave, and equals 0 at 0, then _f_ is also its own modulus of continuity.
 
-**Theorem 1.** _Let f(&lambda;), &alpha;, and M be as described in part 2 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2). By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, and thus can be used to simulate f via the algorithms for general factory functions described at the top of this page:_
+**Theorem 1.** _Let f(&lambda;) and &omega;(x) be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Let &eta;(n) be one of the following for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), and assume that the sum converges:_
+
+- _&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(8\*2<sup>k</sup>&minus;4)))._
+- _&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(2\*2<sup>k</sup>)))._
+
+_Then, by forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+
+- _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
+- _**fabove**(n, k) = f(k/n) + &eta;(n)._
+
+_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation&mdash;
+
+- _&eta;_(_n_) = _&delta;_(2\*_n_) + _&omega;_(sqrt(1/(8\*_n_&minus;4))), or
+- _&eta;_(_n_) = _&delta;_(2\*_n_) + _&omega;_(sqrt(1/(2\*_n_))),
+
+respectively, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;
+
+**Corollary 1.** _Let f(&lambda;) be as described in Theorem 1 and in part 2 of Lemma 2 (&alpha;-Hölder continuous functions), and let M be as described in that part of the lemma. Then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
 - _**fabove**(n, k) = f(k/n) + &delta;(n)._
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from part 2 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The term _&delta;_(_n_) is found as a solution to the functional equation _&delta;_(_n_) = _&delta;_(2\*_n_) + _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>). &#x25a1;
+_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2. &#x25a1;
 
-> **Note:** For specific values of _&alpha;_, the functional equation given in the proof can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+> **Note:** For specific values of _&alpha;_, the functional equation used in Corollary 1 can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.  _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2\*_n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 
-**Theorem 2.** _Let f(&lambda;) and M be as described in part 2 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Corollary 2.** _Let f(&lambda;) be as described in Theorem 1.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+
+- _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
+- _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
+
+_Proof._ Follows from Theorem 1 by using _&omega;_(_x_) = _M_\*_x_ (a modulus of continuity for Lipschitz continuous functions). This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.&#x25a1;
+
+**Theorem 2.** _Let f(&lambda;) and &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &eta;(n), **fbelow**, and **fabove**, rather than as given in that theorem:_
+
+- _&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(7\*2<sup>k</sup>)))._
+- _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
+- _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
+
+_Proof._  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2\*_n_) + _&omega;_(sqrt(1/(7\*_n_))), and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in this theorem, each term of the sum is nonnegative making the sum nonnegative; also, this theorem adopts Theorem 1's assumption that the sum converges, so that _&eta;_(n) decreases with increasing _n_. &#x25a1;
+
+**Corollary 3.** _Let f(&lambda;) be as described in Theorem 1 and in part 2 of Lemma 2 (&alpha;-Hölder continuous functions), and let M be as described in that part of the lemma.  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
 
 _Where &eta;(n) = M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._  Follows from part 2 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  The term _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2\*_n_) + _M_\*(1/(7\*_n_))<sup>_&alpha;_/2</sup>, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials.  &#x25a1;
+_Proof._ Follows from Theorem 2 by using the _&omega;_ given in part 2 of Lemma 2. &#x25a1;
 
-> **Note:** The term _&eta;_(_n_) was found in a similar way as the term _&delta;_(_n_) in Theorem 1.
-
-**Theorem 3.** _Let f(&lambda;) and M be as described in part 3 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Theorem 3.** _Let f(&lambda;) be as described in Theorem 1 and in part 3 of Lemma 2 (functions with second derivative), and let M be as described in that part of the lemma.  Then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M/(7\*n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M/(7\*n)._
@@ -681,8 +711,8 @@ _Proof._  Follows from part 3 of Lemma 2 above as well as Remark B and the proof
 
 **Proposition 1.**
 
-1. _Let f be as given in Theorem 1, 2, or 3, except f is concave and may have a minimum of 0.  The approximation scheme of that theorem remains valid if **fbelow**(n, k) = f(k/n), rather than as given in that theorem._
-2. _Let f be as given in Theorem 1, 2, or 3, except f is convex and may have a maximum of 1.  The approximation scheme of that theorem remains valid if **fabove**(n, k) = f(k/n), rather than as given in that theorem._
+1. _Let f be as given in Theorem 1, 2, or 3, except f must be concave and may equal 0 at the points 0 and/or 1.  The approximation scheme of that theorem remains valid if **fbelow**(n, k) = f(k/n), rather than as given in that theorem._
+2. _Let f be as given in Theorem 1, 2, or 3, except f must be convex and may equal 1 at the points 0 and/or 1.  The approximation scheme of that theorem remains valid if **fabove**(n, k) = f(k/n), rather than as given in that theorem._
 3. _Theorems 1, 2, and 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;_
 
     - _**fbelow**(n, k) = (k/n)\***fbelow**(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)\***fbelow**(n&minus;1, min(n&minus;1, k)), and_
