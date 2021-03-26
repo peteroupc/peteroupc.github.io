@@ -24,7 +24,7 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#Proofs_for_H_lder_Function_Approximation_Scheme"><strong>Proofs for Hölder Function Approximation Scheme</strong></a></li>
+<li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1072,9 +1072,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p>&nbsp;</p>
 
-<p><a id=Proofs_for_H_lder_Function_Approximation_Scheme></a></p>
+<p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 
-<h3>Proofs for Hölder Function Approximation Scheme</h3>
+<h3>Proofs for Function Approximation Schemes</h3>
 
 <p>This section shows mathematical proofs for some of the approximation schemes of this page.</p>
 
@@ -1107,7 +1107,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><em>(M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2, and</em></li>
 <li><em>(M/2)*(1/(8*n&minus;4)), for all n&ge;1 that are integer powers of 2.</em></li>
 </ul></li>
-<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by E[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
+<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by <strong>E</strong>[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
 <p><em>Proof.</em></p>
@@ -1131,30 +1131,29 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 </ol>
 </blockquote>
 
-<p><strong>Theorem 1.</strong> <em>Let f(&lambda;) and &omega;(x) be as described in part 1 of Lemma 2, except f maps [0, 1] to the interval [&epsilon;, 1&minus;&epsilon;] for &epsilon; in (0, 1/2).  Let &eta;(n) be one of the following for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), and assume that the sum converges:</em></p>
+<p>In the following results, a <em>bounded factory function</em> means a continuous function on the interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</p>
+
+<p><strong>Theorem 1.</strong> <em>Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a bounded factory function. Let&mdash;</em></p>
+
+<p><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &phi;(2<sup>k</sup>),</em></p>
+
+<p><em>for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), where &phi;(n) is either&mdash;</em></p>
 
 <ul>
-<li><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(8*2<sup>k</sup>&minus;4))).</em></li>
-<li><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(2*2<sup>k</sup>))).</em></li>
+<li><em>&omega;(sqrt(1/(8*n&minus;4))), or</em></li>
+<li><em>&omega;(sqrt(1/(2*n))).</em></li>
 </ul>
 
-<p><em>Then, by forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><em>Assume that the sum in &eta;(n) converges.  Then, by forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &eta;(n).</em></li>
 <li><em><strong>fabove</strong>(n, k) = f(k/n) + &eta;(n).</em></li>
 </ul>
 
-<p><em>Proof.</em> Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The function <em>&eta;</em>(<em>n</em>) is found as a solution to the functional equation&mdash;</p>
+<p><em>Proof.</em> Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The function <em>&eta;</em>(<em>n</em>) is found as a solution to the functional equation <em>&eta;</em>(<em>n</em>) = <em>&delta;</em>(2*<em>n</em>) + <em>&phi;</em>(<em>n</em>), with either form of <em>&phi;</em> given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for <em>&eta;</em>(<em>n</em>) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, <em>&eta;</em>(n) decreases with increasing <em>n</em>. &#x25a1;</p>
 
-<ul>
-<li><em>&eta;</em>(<em>n</em>) = <em>&delta;</em>(2*<em>n</em>) + <em>&omega;</em>(sqrt(1/(8*<em>n</em>&minus;4))), or</li>
-<li><em>&eta;</em>(<em>n</em>) = <em>&delta;</em>(2*<em>n</em>) + <em>&omega;</em>(sqrt(1/(2*<em>n</em>))),</li>
-</ul>
-
-<p>respectively, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for <em>&eta;</em>(<em>n</em>) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, <em>&eta;</em>(n) decreases with increasing <em>n</em>. &#x25a1;</p>
-
-<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be as described in Theorem 1 and in part 2 of Lemma 2 (&alpha;-Hölder continuous functions), and let M be as described in that part of the lemma. Then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -1169,7 +1168,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the functional equation used in Corollary 1 can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.  <em>&delta;</em>(<em>n</em>) can also be found as follows:<br><em>&delta;</em>(<em>n</em>) = <em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup> /<br>(1 &minus; (<em>M</em>*(1/(2*(<em>n</em>*2)))<sup><em>&alpha;</em>/2</sup>) / (<em>M</em>*(1/(2*<em>n</em>))<sup><em>&alpha;</em>/2</sup>))<br> = <em>M</em>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</p>
 </blockquote>
 
-<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be as described in Theorem 1.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
@@ -1178,17 +1177,17 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em> Follows from Theorem 1 by using <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em> (a modulus of continuity for Lipschitz continuous functions). This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.&#x25a1;</p>
 
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) and &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &eta;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem:</em></p>
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem:</em></p>
 
 <ul>
-<li><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &omega;(sqrt(1/(7*2<sup>k</sup>))).</em></li>
+<li><em>&phi;(n) = &omega;(sqrt(1/(7*2<sup>k</sup>))).</em></li>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + &eta;(n).</em></li>
 </ul>
 
-<p><em>Proof.</em>  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  The function <em>&eta;</em>(<em>n</em>) is found as a solution to the functional equation <em>&eta;</em>(<em>n</em>) = <em>&eta;</em>(2*<em>n</em>) + <em>&omega;</em>(sqrt(1/(7*<em>n</em>))), and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for <em>&eta;</em>(<em>n</em>) in this theorem, each term of the sum is nonnegative making the sum nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the sum converges, so that <em>&eta;</em>(n) decreases with increasing <em>n</em>. &#x25a1;</p>
+<p><em>Proof.</em>  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the sum <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the sum converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
-<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be as described in Theorem 1 and in part 2 of Lemma 2 (&alpha;-Hölder continuous functions), and let M be as described in that part of the lemma.  Then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fabove</strong> and <strong>fbelow</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -1199,21 +1198,25 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em> Follows from Theorem 2 by using the <em>&omega;</em> given in part 2 of Lemma 2. &#x25a1;</p>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be as described in Theorem 1 and in part 3 of Lemma 2 (functions with second derivative), and let M be as described in that part of the lemma.  Then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M/(7*n).</em></li>
 </ul>
 
-<p><em>Proof.</em>  Follows from part 3 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, noting that the solution to the functional equation <em>&kappa;</em>(n) = <em>&kappa;</em>(2*<em>n</em>) + (<em>M</em>/2)*(1/(7*<em>n</em>)) is <em>M</em>/(7*<em>n</em>).  Notably, this exploits the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  &#x25a1;</p>
+<p><em>Proof.</em>  Follows from part 3 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres, noting that the solution to the functional equation <em>&kappa;</em>(<em>n</em>) = <em>&kappa;</em>(2*<em>n</em>) + (<em>M</em>/2)*(1/(7*<em>n</em>)) is <em>M</em>/(7*<em>n</em>).  Notably, this exploits the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  &#x25a1;</p>
+
+<p><strong>Theorem 4.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with _&phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
+
+<p><em>Proof.</em>  Follows from Theorem 1 and part 4 of Lemma 2 above. With the <em>&phi;</em> given in this theorem, the sum <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the sum converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
 <p><strong>Proposition 1.</strong></p>
 
 <ol>
-<li><em>Let f be as given in Theorem 1, 2, or 3, except f must be concave and may equal 0 at the points 0 and/or 1.  The approximation scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
-<li><em>Let f be as given in Theorem 1, 2, or 3, except f must be convex and may equal 1 at the points 0 and/or 1.  The approximation scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
-<li><p><em>Theorems 1, 2, and 3 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
+<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be concave, and that f&#39;s minimum can be 0 instead of greater than 0 as long as it equals 0 at the points 0 and/or 1 and nowhere else.  Then the approximation scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><em>Let f be as given in any of Theorems 1 through 4, except f must be convex, and that f&#39;s maximum can be 1 instead of less than 1 as long as it equals 1 at the points 0 and/or 1 and nowhere else.  Then the approximation scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><p><em>Theorems 1 through 4 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = (k/n)*<strong>fbelow</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fbelow</strong>(n&minus;1, min(n&minus;1, k)), and</em></li>
@@ -1223,7 +1226,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><em>for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
 </ol>
 
-<p><em>Proof.</em> Parts 1 and 2 follow from Theorem 1, 2, or 3, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
 
 <p><a id=License></a></p>
 
