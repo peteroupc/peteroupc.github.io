@@ -1064,6 +1064,10 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
 <li><small><sup id=Note12>(12)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
 <li><small><sup id=Note13>(13)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
+<li><small><sup id=Note14>(14)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
+<li><small><sup id=Note15>(15)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
+<li><small><sup id=Note16>(16)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
+<li><small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1127,7 +1131,14 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><em>f</em> is <em>&alpha;</em>-Hölder continuous if its vertical slopes, if any, are no &quot;steeper&quot; than that of <em>M</em>*<em>&lambda;</em><sup><em>&alpha;</em></sup>, where <em>&alpha;</em> is in the interval (0, 1] and <em>M</em> is greater than 0.  An <em>&alpha;</em>-Hölder continuous function on the closed interval [0, 1] is also <em>&beta;</em>-Hölder continuous for any <em>&beta;</em> less than <em>&alpha;</em>.</li>
 <li>Parts 1 and 2 exploit a tighter bound on <strong>Var</strong>[<em>X</em>/<em>n</em>] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  However, for technical reasons, different bounds are proved for different ranges of integers <em>n</em>.</li>
 <li>For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).</li>
-<li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  If <em>f</em> is nondecreasing and concave, and equals 0 at 0, then <em>f</em> is also its own modulus of continuity.  Usually, for the definition of modulus of continuity, <em>&omega;</em>(0) must equal 0, but this property is not required in the proof of part 1 because the bounds proved remain correct even if <em>&omega;</em> is overestimated.</li>
+<li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  Usually, for the definition of modulus of continuity, <em>&omega;</em>(0) must equal 0, but this property is not required in the proof of part 1 because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
+
+<ol>
+<li>If <em>f</em> is nondecreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note14"><strong>(14)</strong></a></sup>; (Gal 1995)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>If <em>f</em> is nonincreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note16"><strong>(16)</strong></a></sup>; (Gal 1995)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</li>
+<li>If <em>f</em> is nondecreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
+<li>If <em>f</em> is nonincreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
+</ol></li>
 </ol>
 </blockquote>
 
