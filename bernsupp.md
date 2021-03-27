@@ -9,7 +9,7 @@
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Approximation Schemes**](#Approximation_Schemes)
     - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
-- [**Approximation by a Single Polynomial**](#Approximation_by_a_Single_Polynomial)
+- [**Approximate Bernoulli Factory via a Single Polynomial**](#Approximate_Bernoulli_Factory_via_a_Single_Polynomial)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
 - [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
@@ -234,12 +234,12 @@ After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as requ
 
 However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
 
-<a id=Approximation_by_a_Single_Polynomial></a>
+<a id=Approximate_Bernoulli_Factory_via_a_Single_Polynomial></a>
 ## Approximate Bernoulli Factory via a Single Polynomial
 
 Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an _approximate_ Bernoulli factory for _f_.
 
-More specifically, we approximate _f_ using a single polynomial of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, it's possible to choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.  See also the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)".
+More specifically, we approximate _f_ using a single polynomial of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, it's possible to choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.  Then, one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" can be used to simulate that polynomial.
 
 The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find the smallest degree _n_ needed to approximate _f_ with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
 
@@ -247,11 +247,11 @@ The schemes in the previous section give an upper bound on the error on approxim
 
 This has the following solution:
 
-- _L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*<sup>2</sup>).
+- _N_ = _L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*_&epsilon;_<sup>2</sup>).
 
-This can be simplified to ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
+This is generally not an integer, so we use _n_ = ceil(_N_) to get the integer solution, or the nearest integer that's bigger than the solution.  This solution can be simplified further to _n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
 
-Thus, if _f_ a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
+Thus, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
 
 1. Calculate _n_ as ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)).
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
@@ -656,7 +656,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
-1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y), and for which &omega;(0) = 0) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
+1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
     - _&omega;(sqrt(1/(8\*n&minus;4))), for all n&ge;1 that are integer powers of 2,_
     - _&omega;(sqrt(1/(7\*n))), for all n&ge;4 that are integer powers of 2, and_
     - _&omega;(sqrt(1/(2\*n))), for all n&ge;1 that are integer powers of 2._
@@ -683,10 +683,10 @@ _Proof._
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 > 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
->     1. If _f_ is nondecreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
->     2. If _f_ is nonincreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
->     3. If _f_ is nondecreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
->     4. If _f_ is nonincreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
+>     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
+>     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
+>     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
+>     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 
 In the following results, a _bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 

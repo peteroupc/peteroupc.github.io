@@ -17,7 +17,7 @@
 <li><a href="#Approximation_Schemes"><strong>Approximation Schemes</strong></a></li>
 <li><a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a></li>
 </ul></li>
-<li><a href="#Approximation_by_a_Single_Polynomial"><strong>Approximation by a Single Polynomial</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factory_via_a_Single_Polynomial"><strong>Approximate Bernoulli Factory via a Single Polynomial</strong></a></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a></li>
 <li><a href="#Examples_of_Bernoulli_Factory_Approximation_Schemes"><strong>Examples of Bernoulli Factory Approximation Schemes</strong></a></li>
@@ -336,9 +336,9 @@
 
 <p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
 
-<p><a id=Approximation_by_a_Single_Polynomial></a></p>
+<p><a id=Approximate_Bernoulli_Factory_via_a_Single_Polynomial></a></p>
 
-<h2>Approximation by a Single Polynomial</h2>
+<h2>Approximate Bernoulli Factory via a Single Polynomial</h2>
 
 <p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a factory function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <em>approximate</em> Bernoulli factory for <em>f</em>.</p>
 
@@ -353,10 +353,10 @@
 <p>This has the following solution:</p>
 
 <ul>
-<li><em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<sup>2</sup>).</li>
+<li><em>N</em> = <em>L</em><sup>2</sup>*(3604122*sqrt(6) + 11372525)/(17006112*<em>&epsilon;</em><sup>2</sup>).</li>
 </ul>
 
-<p>This can be simplified to ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which bounds the previous solution from above.</p>
+<p>This is generally not an integer, so we use <em>n</em> = ceil(<em>N</em>) to get the integer solution, or the nearest integer that&#39;s bigger than the solution.  This solution can be simplified further to <em>n</em> = ceil(59393*<em>L</em><sup>2</sup>/(50000*<em>&epsilon;</em><sup>2</sup>)), which bounds the previous solution from above.</p>
 
 <p>Thus, if <em>f</em> a Lipschitz continuous factory function with Lipschitz constant <em>L</em>, the following algorithm (adapted from &quot;Certain Polynomials&quot;) simulates a polynomial that approximates <em>f</em> with a maximum error of <em>&epsilon;</em>:</p>
 
@@ -1130,7 +1130,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Lemma 2.</strong> <em>Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2*n, k, n) random variable.</em></p>
 
 <ol>
-<li><em>Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y), and for which &omega;(0) = 0) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;</em>
+<li><em>Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;</em>
 
 <ul>
 <li><em>&omega;(sqrt(1/(8*n&minus;4))), for all n&ge;1 that are integer powers of 2,</em></li>
@@ -1173,10 +1173,10 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is nondecreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note14"><strong>(14)</strong></a></sup>; (Gal 1995)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
-<li>If <em>f</em> is nonincreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note14"><strong>(14)</strong></a></sup>; (Gal 1995)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
-<li>If <em>f</em> is nondecreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
-<li>If <em>f</em> is nonincreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
+<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note14"><strong>(14)</strong></a></sup>; (Gal 1995)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note14"><strong>(14)</strong></a></sup>; (Gal 1995)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
+<li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
 </ol></li>
 </ol>
 </blockquote>
