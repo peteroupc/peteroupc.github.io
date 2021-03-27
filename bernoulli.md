@@ -136,14 +136,14 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  The unknown probability of heads is called _&lambda;_ in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
 
-A _factory function_ is a known function that relates the old probability to the new one.  Its domain is [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_, within its domain&mdash;
+A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_, within its domain&mdash;
 
 - is continuous everywhere, and
 - either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point.
 
 As one example, the function _f_ = 2*_&lambda;_ cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).<sup>[**(3)**](#Note3)</sup>
 
-If a function's graph touches 0 or 1 somewhere in (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*_&lambda;_ might become _f_ = min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) where _&#x03F5;_ is in (0, 1/2) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>), or by somehow ensuring that _&lambda;_ does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(5)**](#Note5)</sup>.
+If a function's graph touches 0 or 1 somewhere in the open interval (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*_&lambda;_ might become _f_ = min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) where _&#x03F5;_ is in (0, 1/2) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>), or by somehow ensuring that _&lambda;_ does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(5)**](#Note5)</sup>.
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
