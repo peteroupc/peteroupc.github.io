@@ -9,6 +9,7 @@
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Approximation Schemes**](#Approximation_Schemes)
     - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
+- [**Approximation by a Single Polynomial**](#Approximation_by_a_Single_Polynomial)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
 - [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
@@ -232,6 +233,37 @@ Let _g_ and _h_ be two polynomials in Bernstein form as follows:
 After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as required by the consistency property.
 
 However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
+
+<a id=Approximation_by_a_Single_Polynomial></a>
+## Approximate Bernoulli Factory via a Single Polynomial
+
+Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an _approximate_ Bernoulli factory for _f_.
+
+More specifically, we approximate _f_ using a single polynomial of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, it's possible to choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.  See also the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)".
+
+The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find the smallest degree _n_ needed to approximate _f_ with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
+
+- _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_).
+
+This has the following solution:
+
+- _L_<sup>2</sup>\*(3604122\*sqrt(6) + 11372525)/(17006112\*<sup>2</sup>).
+
+This can be simplified to ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
+
+Thus, if _f_ a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
+
+1. Calculate _n_ as ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)).
+2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
+
+As another example, we use the first scheme in the previous section to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_:
+
+1. Calculate _n_ as ceil(_M_/(8\*_&epsilon;_)) (upper bound of the solution to the equation _&epsilon;_ = _M_/(8\*_n_)).
+2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
+
+We can proceed similarly with other methods that bound the Bernstein-form polynomial approximation error, if they apply to the function _f_ that we seek to approximate.
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
@@ -605,8 +637,6 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note13>(13)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
 - <small><sup id=Note14>(14)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
 - <small><sup id=Note15>(15)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
-- <small><sup id=Note16>(16)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
-- <small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -626,7 +656,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
-1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
+1. _Let &omega;(x) be a modulus of continuity of f (a non-negative and nondecreasing function on the interval [0, 1], for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y), and for which &omega;(0) = 0) for all x in [0, 1] and all y in [0, 1]).  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
     - _&omega;(sqrt(1/(8\*n&minus;4))), for all n&ge;1 that are integer powers of 2,_
     - _&omega;(sqrt(1/(7\*n))), for all n&ge;4 that are integer powers of 2, and_
     - _&omega;(sqrt(1/(2\*n))), for all n&ge;1 that are integer powers of 2._
@@ -652,9 +682,9 @@ _Proof._
 > 2. _f_ is _&alpha;_-Hölder continuous if its vertical slopes, if any, are no "steeper" than that of _M_\*_&lambda;_<sup>_&alpha;_</sup>, where _&alpha;_ is in the interval (0, 1] and _M_ is greater than 0.  An _&alpha;_-Hölder continuous function on the closed interval [0, 1] is also _&beta;_-Hölder continuous for any _&beta;_ less than _&alpha;_.
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
-> 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  Usually, for the definition of modulus of continuity, _&omega;_(0) must equal 0, but this property is not required in the proof of part 1 because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
+> 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
 >     1. If _f_ is nondecreasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
->     2. If _f_ is nonincreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(16)**](#Note16)</sup>; (Gal 1995)<sup>[**(17)**](#Note17)</sup>.
+>     2. If _f_ is nonincreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(14)**](#Note14)</sup>; (Gal 1995)<sup>[**(15)**](#Note15)</sup>.
 >     3. If _f_ is nondecreasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is nonincreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
 

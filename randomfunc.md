@@ -11,7 +11,7 @@
 
 This page catalogs _randomization methods_ and _sampling methods_.  A randomization or sampling method is driven by a "source of random numbers" and produces numbers or other values called **_random variates_**.  These variates are the result of the randomization.  (The "source of random numbers" is often simulated in practice by so-called pseudorandom number generators, or PRNGs.)  This document covers many methods, including&mdash;
 
-- ways to sample integers or real numbers from a uniform distribution (such as the [**core method, `RNDINT(N)`**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)),
+- ways to sample integers or real numbers from a uniform distribution (such as the [**core method, `RNDINT(N)`**](#RNDINT_Random_Integers_in_0_N)),
 - ways to generate randomized content and conditions, such as [**true/false conditions**](#Boolean_True_False_Conditions), [**shuffling**](#Shuffling), and [**sampling unique items from a list**](#Sampling_Without_Replacement_Choosing_Several_Unique_Items), and
 - non-uniform distributions, including [**weighted choice**](#Weighted_Choice), the [**Poisson distribution**](#Poisson_Distribution), and [**other probability distributions**](#Index_of_Non_Uniform_Distributions).
 
@@ -223,7 +223,7 @@ Specifically:
       // to represent MODULUS (if it's a power of 2).
       // This will be a constant here, though.
       modBits=ln(MODULUS)/ln(2)
-      if floor(modBits) == modBits # Is an integer
+      if floor(modBits) == modBits // Is an integer
         return RndIntHelperPowerOfTwo(maxInclusive)
       else
         return RndIntHelperNonPowerOfTwo(maxInclusive)
