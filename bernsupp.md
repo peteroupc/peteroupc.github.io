@@ -239,9 +239,11 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 
 Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an _approximate_ Bernoulli factory for _f_.
 
-More specifically, we approximate _f_ using a single polynomial of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, it's possible to choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.  Then, one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" can be used to simulate that polynomial.
+More specifically, we approximate _f_ using one polynomial in Bernstein form of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, we can choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
 
-The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find the smallest degree _n_ needed to approximate _f_ with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
+Then, one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" can be used to simulate that polynomial: the polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_).
+
+The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
 
 - _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_).
 
@@ -251,11 +253,11 @@ This has the following solution:
 
 This is generally not an integer, so we use _n_ = ceil(_N_) to get the solution if it's an integer, or the nearest integer that's bigger than the solution.  This solution can be simplified further to _n_ = ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)), which bounds the previous solution from above.
 
-Thus, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
+Now, if _f_ is a Lipschitz continuous factory function with Lipschitz constant _L_, the following algorithm (adapted from "Certain Polynomials") simulates a polynomial that approximates _f_ with a maximum error of _&epsilon;_:
 
 1. Calculate _n_ as ceil(59393\*_L_<sup>2</sup>/(50000\*_&epsilon;_<sup>2</sup>)).
 2. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
+3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0. (If _f_(_j_/_n_) can be an irrational number, see "[**Algorithms for General Irrational Constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_General_Irrational_Constants)" for ways to sample this irrational probability exactly.)
 
 As another example, we use the first scheme in the previous section to get the following approximate algorithm for C<sup>2</sup> continuous functions with maximum "slope-of-slope" of _M_:
 
