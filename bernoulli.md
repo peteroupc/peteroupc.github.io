@@ -154,7 +154,7 @@ The following functions illustrate these conditions.  In the table below, _&#x03
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
 | min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
 | 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 slower than any polynomial. |
-| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
+| &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
