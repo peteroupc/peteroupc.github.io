@@ -136,20 +136,24 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  The unknown probability of heads is called _&lambda;_ in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
 
-A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_, within its domain&mdash;
+A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_&mdash;
 
-- is continuous everywhere, and
-- either returns a constant value in \[0, 1\] everywhere, or is polynomially bounded (meaning that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
+- is constant on its domain, or
+- is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
 
-The following functions illustrate these conditions.  Their domain is [0, 1] unless noted otherwise.
+The following functions illustrate these conditions.
 
-- The functions _f_ = 0, _f_ = 1, and _f_ = 1/2 are constant values in [0, 1], so they can serve as factory functions.
-- The function _f_ = floor(_&lambda_/2)*3+1/4 is discontinuous, so it cannot serve as a factory function.
-- The function _f_ = 2*_&lambda;_, with domain \[0, 1\] or \[0, 1/2\), cannot serve as a factory function, since its graph touches 1 somewhere in the interval (0, 1) within its domain.<sup>[**(3)**](#Note3)</sup>
-- The function _f_ = 1 &minus; 2*_&lambda;_, with domain \[0, 1\] or \[0, 1/2\), cannot serve as a factory function, since its graph touches 0 somewhere in the interval (0, 1) within its domain.
-- The function _f_ = 2*_&lambda;_, with domain [0, 1/2&minus;_&#x03F5;_\], where _&#x03F5;_ is in (0, 1/2), _can_ serve as a factory function (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
-- The function _f_ = min(2 * _&lambda;_, 1 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2), _can_ serve as a factory function (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>).
-- The function _f_ = 0 if _&lambda;_ = 0 and exp(&minus;1/(2\*_&lambda;_)) otherwise, cannot serve as a factory function, since it moves away from 0 slower than a polynomial, and so is not polynomially bounded.
+| Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
+ ---- | ---- | ---- |
+| 0 | [0, 1] | Yes; constant. |
+| 1 | [0, 1] | Yes; constant. |
+| 1/2 | [0, 1] | Yes; constant. |
+| floor(_&lambda;_/2)*3+1/4 | [0, 1] | No; discontinuous. |
+| 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph touches 1 somewhere in the interval (0,&nbsp;1) on its domain.<sup>[**(3)**](#Note3)</sup>. |
+| 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph touches 0 somewhere in the interval (0, 1) on its domain. |
+| 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (_&#x03F5;_ is in (0,&nbsp;1/2)) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
+| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (_&#x03F5;_ is in (0,&nbsp;1/2)) (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
+| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 slower than a polynomial. |
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
