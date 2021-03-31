@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/03/27"><meta name="citation_online_date" content="2021/03/27"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/03/31"><meta name="citation_online_date" content="2021/03/31"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomization and Sampling Methods</h1>
@@ -260,14 +260,14 @@
     // using a &quot;floor&quot; function.
     nPlusOne = maxInclusive + 1
     maxexc = floor((MODULUS - 1) / nPlusOne) * nPlusOne
-    while true
+    while true // until we return a value
       ret = NEXTRAND()
       if ret &lt; nPlusOne: return ret
       if ret &lt; maxexc: return rem(ret, nPlusOne)
     end
   else
     cx = floor(maxInclusive / MODULUS) + 1
-    while true
+    while true // until we return a value
        ret = cx * NEXTRAND()
        // NOTE: The addition operation below should
        // check for integer overflow and should reject the
@@ -289,7 +289,7 @@ METHOD RndIntHelperPowerOfTwo(maxInclusive)
   y = 0
   nextBit = modBits
   rngv = 0
-  while true
+  while true // until we return a value
     if nextBit &gt;= modBits
       nextBit = 0
       rngv = NEXTRAND()
@@ -424,7 +424,7 @@ END METHOD
    if minInclusive &gt; 0 or minInclusive + MAXINT &gt;= maxInclusive
        return minInclusive + RNDINT(maxInclusive - minInclusive)
    end
-   while true
+   while true // until we return a value
      ret = RNDINT(MAXINT)
      // NOTE: For case 1, use the following line:
      if RNDINT(1) == 0: ret = -1 - ret
@@ -465,7 +465,7 @@ END METHOD
    if minInclusive &gt;= maxExclusive: return error
    if minInclusive &gt;=0: return RNDINTRANGE(
       minInclusive, maxExclusive - 1)
-   while true
+   while true // until we return a value
      ret = RNDINTRANGE(minInclusive, maxExclusive)
      if ret &lt; maxExclusive: return ret
    end
@@ -549,7 +549,7 @@ METHOD ZeroOrOne(x,y)
   if y &lt;= 0: return error
   if x==y: return 1
   z = x
-  while true
+  while true // until we return a value
     z = z * 2
     if z &gt;= y
       if RNDINT(1) == 0: return 1
@@ -747,7 +747,7 @@ END METHOD
   list = NewList()
   j = 0
   index = 0
-  while true
+  while true // until we return a value
     // Get the next line from the file
     item = GetNextLine(file)
     thisIndex = index
@@ -1190,7 +1190,7 @@ end
 <pre>METHOD RandomKItemsFromFileWeighted(file, k)
   queue=[] // Initialize priority queue
   index = 0
-  while true
+  while true // until we return a value
     // Get the next line from the file
     item = GetNextLine(file)
     thisIndex = index
@@ -1253,7 +1253,7 @@ end
     for i in 0...n: AddItem(items,i)
     return items
   end
-  while true
+  while true // until we return a value
     lamda=min(MakeRatio(1,1)-wts[last-1][0],wts[last][0])
     if lamda==0: return error
     if ZeroOrOne(lamda[0],lamda[1])
@@ -1471,7 +1471,7 @@ END METHOD
 <pre>METHOD PolyaInt(sx, sy, px, py)
    isinteger=rem(sx,sy)==0
    sxceil=ceil(sx/sy)
-   while true
+   while true // until we return a value
       w=NegativeBinomialInt(sxceil, px, py)
       if isinteger or w==0: return w
       tmp=MakeRatio(sx,sy)
@@ -1490,7 +1490,7 @@ END METHOD
 
 <h3>Geometric Distribution</h3>
 
-<p>The geometric distribution is a negative binomial distribution with <code>successes = 1</code>.  In this document, a geometric random variate is the number of failures that have happened before one success happens.  For example, if <code>p</code> is 1/2, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.</p>
+<p>The geometric distribution is a negative binomial distribution with <code>successes = 1</code>.  In this document, a geometric random variate is the number of failures that have happened before one success happens.  For example, if <code>p</code> is 1/2, the geometric distribution models the task &quot;Flip a coin until you get tails, then count the number of heads.&quot;  As a unique property of the geometric distribution, given that <code>n</code> trials have failed, the number of new failing trials has the same distribution (where <code>n</code> is an integer greater than 0).</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1520,11 +1520,11 @@ END METHOD
 METHOD ExpoNumerator(denom)
    if denom&lt;=0: return error
    count=0
-   while true
+   while true // until we return a value
       y1=RNDINTEXC(denom)
       y=y1
       accept=true
-      while true
+      while true // until we return a value
          z=RNDINTEXC(denom)
          if y&lt;=z: break
          accept=not accept
@@ -1571,10 +1571,10 @@ END METHOD
        hmx=floor(mx/2)
        return PoissonInt(hmx,my)+PoissonInt(mx-hmx,my)
     end
-    while true
+    while true // until we return a value
       k = 0
       w = nothing
-      while true
+      while true // until we return a value
          // Generate uniforms
          // and determine whether they are sorted
          if ZeroOrOne(mx,my)==0: return k
@@ -1788,7 +1788,7 @@ END METHOD
     // Straddles negative and positive ranges
     // NOTE: Changes negative zero to positive
     mabs = max(abs(lo),abs(hi))
-    while true
+    while true // until we return a value
        ret=RNDRANGE(0, mabs)
        neg=RNDINT(1)
        if neg==0: ret=-ret
@@ -1809,7 +1809,7 @@ END METHOD
     s=RNDINTRANGE(losig, hisig)
     return s*1.0*pow(FPRADIX, loexp)
   end
-  while true
+  while true // until we return a value
     ex=hiexp
     while ex&gt;MINEXP
       v=RNDINTEXC(FPRADIX)
@@ -2118,7 +2118,7 @@ END METHOD
    ubits=0
    threshold=MakeRatio(1,pow(BASE, precision))*2
    incr=8
-   while true
+   while true // until we return a value
       incr=8
       if ubits==0: incr=precision
       // NOTE: If a uniform number (`n`) is already pregenerated,
@@ -2793,7 +2793,7 @@ END METHOD
 <li><strong>Query languages such as SQL</strong> have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to choose a number at random, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.</li>
 <li><strong>Stateless PRNGs.</strong> Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a number is sampled at random.  But for <a href="https://peteroupc.github.io/random.html#Designs_for_PRNGs"><strong><em>stateless</em> PRNG designs</strong></a> (including so-called &quot;splittable&quot; PRNGs), <code>RNDINT()</code>, <code>NEXTRAND()</code>, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).</li>
 <li><strong>Multithreading.</strong> Multithreading can serve as a fast way to generate multiple random variates at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a &quot;source of random numbers&quot;), and letting each thread fill its assigned chunk with random variates.  For an example, see &quot;<a href="https://docs.scipy.org/doc/numpy/reference/random/multithreading.html"><strong>Multithreaded Generation</strong></a>&quot;.</li>
-<li><strong>Fixed amount of &quot;randomness&quot;.</strong> Given an integer <em>n</em> in the interval [0, <em>m</em>), chosen uniformly at random (e.g., <code>RNDINT(m-1)</code>), values that approximate a probability distribution (e.g., <code>Poisson</code>, <code>Normal</code>) can be generated with the integer <em>n</em> either by <a href="#Inverse_Transform_Sampling"><strong>inversion of the number <em>n</em>/<em>m</em></strong></a> or by treating <em>n</em> as a seed for a local PRNG and using the PRNG to generate a sample from that distribution.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only <em>n</em> different outcomes this way.</li>
+<li><strong>Fixed amount of &quot;randomness&quot;.</strong> Given a <em>k</em>-bit unsigned integer <em>n</em> (which lies in the interval [0, 2<sup><em>k</em></sup>) and is chosen uniformly at random), values that approximate a probability distribution (e.g., <code>Poisson</code>, <code>Normal</code>) can be generated with the integer <em>n</em> either by <a href="#Inverse_Transform_Sampling"><strong>inversion of the number <em>n</em>/2<sup><em>k</em></sup></strong></a> or by treating <em>n</em> as a seed for a local PRNG and using the PRNG to generate a sample from that distribution. An application should use this suggestion only if it wants to ensure a fixed amount of &quot;randomness&quot; per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup><em>k</em></sup> different outcomes this way. (In general, <em>n</em> can&#39;t be chosen uniformly at random with a <em>fixed</em> amount of &quot;randomness&quot;, unless the number of different outcomes for <em>n</em> is a power of 2.)</li>
 </ol>
 
 <p><a id=Security_Considerations></a></p>

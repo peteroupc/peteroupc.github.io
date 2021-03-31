@@ -139,9 +139,13 @@ A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an
 A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_, within its domain&mdash;
 
 - is continuous everywhere, and
-- either returns a constant value in \[0, 1\] everywhere, or returns a value in \[0, 1\] at each of the points 0 and 1 and a value in (0, 1) at each other point.
+- either returns a constant value in \[0, 1\] everywhere, or is polynomially bounded (meaning that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
 
-As one example, the function _f_ = 2*_&lambda;_ cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).<sup>[**(3)**](#Note3)</sup>
+The following illustrates these conditions:
+
+- The functions _f_ = 0, _f_ = 1, and _f_ = 1/2 are constants in [0, 1], so they can serve as factory functions.
+- The function _f_ = 2*_&lambda;_ cannot serve as a factory function, since its graph touches 1 somewhere in the open interval (0, 1).<sup>[**(3)**](#Note3)</sup>
+- The function _f_ = 0 if _&lambda;_ = 0 and exp(&minus;1/(2\*_&lambda;_)) otherwise, cannot serve as a factory function, since it moves away from 0 slower than a polynomial, and so is not polynomially bounded.
 
 If a function's graph touches 0 or 1 somewhere in the open interval (0, 1), papers have suggested dealing with this by modifying the function so it no longer touches 0 or 1 there (for example, _f_ = 2*_&lambda;_ might become _f_ = min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) where _&#x03F5;_ is in (0, 1/2) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>, (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>), or by somehow ensuring that _&lambda;_ does not come close to the point where the graph touches 0 or 1 (Nacu and Peres 2005, theorem 1)<sup>[**(5)**](#Note5)</sup>.
 

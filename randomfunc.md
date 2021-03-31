@@ -168,14 +168,14 @@ Specifically:
         // using a "floor" function.
         nPlusOne = maxInclusive + 1
         maxexc = floor((MODULUS - 1) / nPlusOne) * nPlusOne
-        while true
+        while true // until we return a value
           ret = NEXTRAND()
           if ret < nPlusOne: return ret
           if ret < maxexc: return rem(ret, nPlusOne)
         end
       else
         cx = floor(maxInclusive / MODULUS) + 1
-        while true
+        while true // until we return a value
            ret = cx * NEXTRAND()
            // NOTE: The addition operation below should
            // check for integer overflow and should reject the
@@ -197,7 +197,7 @@ Specifically:
       y = 0
       nextBit = modBits
       rngv = 0
-      while true
+      while true // until we return a value
         if nextBit >= modBits
           nextBit = 0
           rngv = NEXTRAND()
@@ -276,7 +276,7 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
        if minInclusive > 0 or minInclusive + MAXINT >= maxInclusive
            return minInclusive + RNDINT(maxInclusive - minInclusive)
        end
-       while true
+       while true // until we return a value
          ret = RNDINT(MAXINT)
          // NOTE: For case 1, use the following line:
          if RNDINT(1) == 0: ret = -1 - ret
@@ -311,7 +311,7 @@ where `MAXINT` is an integer greater than 0, the following pseudocode for `RNDIN
        if minInclusive >= maxExclusive: return error
        if minInclusive >=0: return RNDINTRANGE(
           minInclusive, maxExclusive - 1)
-       while true
+       while true // until we return a value
          ret = RNDINTRANGE(minInclusive, maxExclusive)
          if ret < maxExclusive: return ret
        end
@@ -377,7 +377,7 @@ The method can also be implemented in the following way (as pointed out by Lumbr
       if y <= 0: return error
       if x==y: return 1
       z = x
-      while true
+      while true // until we return a value
         z = z * 2
         if z >= y
           if RNDINT(1) == 0: return 1
@@ -529,7 +529,7 @@ The following pseudocode implements two methods:
       list = NewList()
       j = 0
       index = 0
-      while true
+      while true // until we return a value
         // Get the next line from the file
         item = GetNextLine(file)
         thisIndex = index
@@ -870,7 +870,7 @@ If the number of items in a list is not known in advance, then the following pse
     METHOD RandomKItemsFromFileWeighted(file, k)
       queue=[] // Initialize priority queue
       index = 0
-      while true
+      while true // until we return a value
         // Get the next line from the file
         item = GetNextLine(file)
         thisIndex = index
@@ -930,7 +930,7 @@ METHOD InclusionSelect(weights, n)
     for i in 0...n: AddItem(items,i)
     return items
   end
-  while true
+  while true // until we return a value
     lamda=min(MakeRatio(1,1)-wts[last-1][0],wts[last][0])
     if lamda==0: return error
     if ZeroOrOne(lamda[0],lamda[1])
@@ -1114,7 +1114,7 @@ If `successes` is a non-integer, the distribution is often called a _Pólya dist
     METHOD PolyaInt(sx, sy, px, py)
        isinteger=rem(sx,sy)==0
        sxceil=ceil(sx/sy)
-       while true
+       while true // until we return a value
           w=NegativeBinomialInt(sxceil, px, py)
           if isinteger or w==0: return w
           tmp=MakeRatio(sx,sy)
@@ -1131,7 +1131,7 @@ If `successes` is a non-integer, the distribution is often called a _Pólya dist
 <a id=Geometric_Distribution></a>
 ### Geometric Distribution
 
-The geometric distribution is a negative binomial distribution with `successes = 1`.  In this document, a geometric random variate is the number of failures that have happened before one success happens.  For example, if `p` is 1/2, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."  As a unique property of the geometric distribution, the number of trials that have already failed in a row says nothing about the number of new trials that will fail in a row.
+The geometric distribution is a negative binomial distribution with `successes = 1`.  In this document, a geometric random variate is the number of failures that have happened before one success happens.  For example, if `p` is 1/2, the geometric distribution models the task "Flip a coin until you get tails, then count the number of heads."  As a unique property of the geometric distribution, given that `n` trials have failed, the number of new failing trials has the same distribution (where `n` is an integer greater than 0).
 
 > **Notes:**
 >
@@ -1156,11 +1156,11 @@ In this document, `Expo(lamda)` is an exponentially-distributed random variate w
     METHOD ExpoNumerator(denom)
        if denom<=0: return error
        count=0
-       while true
+       while true // until we return a value
           y1=RNDINTEXC(denom)
           y=y1
           accept=true
-          while true
+          while true // until we return a value
              z=RNDINTEXC(denom)
              if y<=z: break
              accept=not accept
@@ -1205,10 +1205,10 @@ The following method generates a Poisson random variate with mean `mx`/`my`, usi
            hmx=floor(mx/2)
            return PoissonInt(hmx,my)+PoissonInt(mx-hmx,my)
         end
-        while true
+        while true // until we return a value
           k = 0
           w = nothing
-          while true
+          while true // until we return a value
              // Generate uniforms
              // and determine whether they are sorted
              if ZeroOrOne(mx,my)==0: return k
@@ -1392,7 +1392,7 @@ See also (Downey 2007)<sup>[**(58)**](#Note58)</sup> and the [**Rademacher Float
         // Straddles negative and positive ranges
         // NOTE: Changes negative zero to positive
         mabs = max(abs(lo),abs(hi))
-        while true
+        while true // until we return a value
            ret=RNDRANGE(0, mabs)
            neg=RNDINT(1)
            if neg==0: ret=-ret
@@ -1413,7 +1413,7 @@ See also (Downey 2007)<sup>[**(58)**](#Note58)</sup> and the [**Rademacher Float
         s=RNDINTRANGE(losig, hisig)
         return s*1.0*pow(FPRADIX, loexp)
       end
-      while true
+      while true // until we return a value
         ex=hiexp
         while ex>MINEXP
           v=RNDINTEXC(FPRADIX)
@@ -1660,7 +1660,7 @@ The following method samples from a distribution via inversion, with an accuracy
        ubits=0
        threshold=MakeRatio(1,pow(BASE, precision))*2
        incr=8
-       while true
+       while true // until we return a value
           incr=8
           if ubits==0: incr=precision
           // NOTE: If a uniform number (`n`) is already pregenerated,
@@ -2248,7 +2248,7 @@ There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More gene
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to choose a number at random, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a number is sampled at random.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random variates at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random variates.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
-5. **Fixed amount of "randomness".** Given an integer _n_ in the interval \[0, _m_), chosen uniformly at random (e.g., `RNDINT(m-1)`), values that approximate a probability distribution (e.g., `Poisson`, `Normal`) can be generated with the integer _n_ either by [**inversion of the number _n_/_m_**](#Inverse_Transform_Sampling) or by treating _n_ as a seed for a local PRNG and using the PRNG to generate a sample from that distribution.  An application should use this suggestion only if it wants to ensure a fixed number of random bits per sampled outcome is ultimately drawn, because the sampling method can return one of only _n_ different outcomes this way.
+5. **Fixed amount of "randomness".** Given a _k_-bit unsigned integer _n_ (which lies in the interval \[0, 2<sup>_k_</sup>) and is chosen uniformly at random), values that approximate a probability distribution (e.g., `Poisson`, `Normal`) can be generated with the integer _n_ either by [**inversion of the number _n_/2<sup>_k_</sup>**](#Inverse_Transform_Sampling) or by treating _n_ as a seed for a local PRNG and using the PRNG to generate a sample from that distribution. An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ amount of "randomness", unless the number of different outcomes for _n_ is a power of 2.)
 
 <a id=Security_Considerations></a>
 ### Security Considerations
