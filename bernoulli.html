@@ -176,7 +176,7 @@
 <li>is continuous and polynomially bounded on its domain (polynomially bounded means that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em>).</li>
 </ul>
 
-<p>The following functions illustrate these conditions.</p>
+<p>The following functions illustrate these conditions.  In the table below, <em>&#x03F5;</em> is a number greater than 0 and less than 1/2.</p>
 
 <table><thead>
 <tr>
@@ -218,17 +218,22 @@
 <tr>
 <td>2*<em>&lambda;</em></td>
 <td>[0,&nbsp;1/2&minus;&#x03F5;]</td>
-<td>Yes; continuous and polynomially bounded on domain (<em>&#x03F5;</em> is in (0,&nbsp;1/2)) (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</td>
+<td>Yes; continuous and polynomially bounded on domain (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>min(2 * <em>&lambda;</em>, 1 &minus; <em>&#x03F5;</em>)</td>
 <td>[0,&nbsp;1/2&minus;&#x03F5;]</td>
-<td>Yes; continuous and polynomially bounded on domain (<em>&#x03F5;</em> is in (0,&nbsp;1/2)) (Huber 2014, introduction)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</td>
+<td>Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>0 if <em>&lambda;</em> = 0, or exp(&minus;1/(2*<em>&lambda;</em>)) otherwise</td>
 <td>[0, 1]</td>
-<td>No; not polynomially bounded since it moves away from 0 slower than a polynomial.</td>
+<td>No; not polynomially bounded since it moves away from 0 slower than any polynomial.</td>
+</tr>
+<tr>
+<td>0 if <em>&lambda;</em> = 0, or exp(&minus;1/(2*<em>&lambda;</em>)) + &#x03F5; otherwise</td>
+<td>[0, 1]</td>
+<td>Yes; continuous and bounded away from 0 and 1.</td>
 </tr>
 </tbody></table>
 

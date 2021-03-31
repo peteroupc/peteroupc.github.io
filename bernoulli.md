@@ -141,7 +141,7 @@ A _factory function_ is a known function that relates the old probability to the
 - is constant on its domain, or
 - is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
 
-The following functions illustrate these conditions.
+The following functions illustrate these conditions.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
 | Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
  ---- | ---- | ---- |
@@ -151,9 +151,10 @@ The following functions illustrate these conditions.
 | floor(_&lambda;_/2)*3+1/4 | [0, 1] | No; discontinuous. |
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph touches 1 somewhere in the interval (0,&nbsp;1) on its domain.<sup>[**(3)**](#Note3)</sup>. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph touches 0 somewhere in the interval (0, 1) on its domain. |
-| 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (_&#x03F5;_ is in (0,&nbsp;1/2)) (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
-| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (_&#x03F5;_ is in (0,&nbsp;1/2)) (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
-| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 slower than a polynomial. |
+| 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
+| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
+| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 slower than any polynomial. |
+| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
