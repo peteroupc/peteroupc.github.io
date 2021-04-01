@@ -773,7 +773,7 @@ The following example uses the results above to build an approximation scheme fo
 
 Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and &minus;_&lambda;_\*ln(_&lambda;_) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:
 
-- _&eta;_(_k_) = `2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)`.
+- _&eta;_(_k_) = [Complicated expression].
 - **fbelow**(n, k) = f(_k_/_n_).
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
@@ -785,17 +785,33 @@ The first step is to find a concave modulus of continuity of _f_ (called _&omega
 - _G_(_h_) = _f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1).
 - _&omega;_(_h_) = _F_(_h_) + _G_(_h_).
 
-And thus _&omega;_(_h_) = 0 if _h_ = 0; &minus;_&lambda;_\*2\*ln(_&lambda;_) if _&lambda;_ < exp(&minus;1); and 2\*exp(&minus;1) otherwise.
+And thus _&omega;_(_h_) = 0 if _h_ = 0; &minus;_&lambda;_\*ln(_&lambda;_) + (_&lambda;_ &minus; 1)\*ln(1 &minus; _&lambda;_) if _&lambda;_ &le; e_&lambda;_p(&minus;1); exp(1)\*(_&lambda;_ &minus; 1)\*ln(1 &minus; _&lambda;_) + 1)\*exp(&minus;1) if _&lambda;_ &le; 1 &minus; exp(&minus;1); and 2\*exp(&minus;1) otherwise.
 
-By plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2:
+By plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2 (assuming _n_&ge;0):
 
-- _&phi;_(_n_) = `sqrt(7)*(-ln(1/n) + ln(7))*sqrt(1/n)/7` if `sqrt(7)*sqrt(1/n)/7` &le; exp(-1), and 2*exp(&minus;1) otherwise.
+- _&phi;_(_n_) = [Complicated expression].
 
 Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  The sum converges, resulting in:
 
-- _&eta;_(_k_) = `2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)`.
+- _&eta;_(_k_) = [Complicated expression].
 
 Which matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
+
+```
+px=Piecewise((0,Eq(x,0)),(-x*log(x),True))
+# Compute piecewise monotone, two-piece concave
+# modulus of continuity
+sigma=exp(-1) # breakpoint; solves diff(px)
+ff=px.subs(x,Min(x,sigma)) - px.subs(x,0)
+gg=px.subs(x,1-Min(x,1-sigma)) - px.subs(x,1)
+# omega is modulus of continuity
+omega=ff+gg
+omega=piecewise_fold(omega.rewrite(Piecewise))
+# compute phi according to Theorem 2
+phi=omega.subs(x,sqrt(1/(7*n)))
+# compute eta according to Theorem 1
+eta=summation(phi.subs(n,2**n),(n,k,oo)).subs(k,log(k,2))
+```
 
 <a id=License></a>
 ## License

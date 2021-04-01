@@ -1290,8 +1290,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and &minus;<em>&lambda;</em>*ln(<em>&lambda;</em>) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:</p>
 
 <ul>
-<li><em>&eta;</em>(<em>k</em>) = <code>2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)</code>.</li>
-<li><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) &minus; <em>&eta;</em>(<em>n</em>).</li>
+<li><em>&eta;</em>(<em>k</em>) = [Complicated expression].</li>
+<li><strong>fbelow</strong>(n, k) = f(<em>k</em>/<em>n</em>).</li>
 <li><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) +  <em>&eta;</em>(<em>n</em>).</li>
 </ul>
 
@@ -1305,21 +1305,36 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><em>&omega;</em>(<em>h</em>) = <em>F</em>(<em>h</em>) + <em>G</em>(<em>h</em>).</li>
 </ul>
 
-<p>And thus <em>&omega;</em>(<em>h</em>) = 0 if <em>h</em> = 0; &minus;<em>&lambda;</em>*2*ln(<em>&lambda;</em>) if <em>&lambda;</em> &lt; exp(&minus;1); and 2*exp(&minus;1) otherwise.</p>
+<p>And thus <em>&omega;</em>(<em>h</em>) = 0 if <em>h</em> = 0; &minus;<em>&lambda;</em>*ln(<em>&lambda;</em>) + (<em>&lambda;</em> &minus; 1)*ln(1 &minus; <em>&lambda;</em>) if <em>&lambda;</em> &le; e_&lambda;<em>p(&minus;1); exp(1)*(</em>&lambda;_ &minus; 1)*ln(1 &minus; <em>&lambda;</em>) + 1)*exp(&minus;1) if <em>&lambda;</em> &le; 1 &minus; exp(&minus;1); and 2*exp(&minus;1) otherwise.</p>
 
-<p>By plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2:</p>
+<p>By plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2 (assuming <em>n</em>&ge;0):</p>
 
 <ul>
-<li><em>&phi;</em>(<em>n</em>) = <code>sqrt(7)*(-ln(1/n) + ln(7))*sqrt(1/n)/7</code> if <code>sqrt(7)*sqrt(1/n)/7</code> &le; exp(-1), and 2*exp(&minus;1) otherwise.</li>
+<li><em>&phi;</em>(<em>n</em>) = [Complicated expression].</li>
 </ul>
 
 <p>Now, by applying Theorem 1, we compute <em>&eta;</em>(<em>k</em>) by substituting <em>n</em> with 2<sup><em>n</em></sup>, summing over [<em>k</em>, &infin;), and substituting <em>k</em> with log2(<em>k</em>).  The sum converges, resulting in:</p>
 
 <ul>
-<li><em>&eta;</em>(<em>k</em>) = <code>2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)</code>.</li>
+<li><em>&eta;</em>(<em>k</em>) = [Complicated expression].</li>
 </ul>
 
-<p>Which matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2.</p>
+<p>Which matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because <em>f</em> is concave.</p>
+
+<pre>px=Piecewise((0,Eq(x,0)),(-x*log(x),True))
+# Compute piecewise monotone, two-piece concave
+# modulus of continuity
+sigma=exp(-1) # breakpoint; solves diff(px)
+ff=px.subs(x,Min(x,sigma)) - px.subs(x,0)
+gg=px.subs(x,1-Min(x,1-sigma)) - px.subs(x,1)
+# omega is modulus of continuity
+omega=ff+gg
+omega=piecewise_fold(omega.rewrite(Piecewise))
+# compute phi according to Theorem 2
+phi=omega.subs(x,sqrt(1/(7*n)))
+# compute eta according to Theorem 1
+eta=summation(phi.subs(n,2**n),(n,k,oo)).subs(k,log(k,2))
+</pre>
 
 <p><a id=License></a></p>
 
