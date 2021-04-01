@@ -136,12 +136,12 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  The unknown probability of heads is called _&lambda;_ in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
 
-A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if _f_&mdash;
+A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if&mdash;
 
-- is constant on its domain, or
-- is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
+- _f_ is constant on its domain, or
+- _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
 
-The following functions illustrate these conditions.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
+The following shows some functions that are factory functions and some that are not.  In the table below, _&#x03F5;_ is a number greater than 0 and less than 1/2.
 
 | Function _f_(_&lambda;_) | Domain | Can _f_ be a factory function? |
  ---- | ---- | ---- |
@@ -152,9 +152,9 @@ The following functions illustrate these conditions.  In the table below, _&#x03
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph touches 1 somewhere in the interval (0,&nbsp;1) on its domain.<sup>[**(3)**](#Note3)</sup>. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph touches 0 somewhere in the interval (0, 1) on its domain. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
-| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
-| 0 if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 slower than any polynomial. |
-| &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/(2\*_&lambda;_)) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
+| min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
+| 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 more slowly than any polynomial. |
+| &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
 
 The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
 
