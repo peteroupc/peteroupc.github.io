@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/03/31"><meta name="citation_online_date" content="2021/03/31"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/04/01"><meta name="citation_online_date" content="2021/04/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -26,6 +26,7 @@
 
 <ul>
 <li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
+<li><a href="#Example_of_Approximation_Scheme"><strong>Example of Approximation Scheme</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1098,6 +1099,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><small><sup id=Note13>(13)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
 <li><small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 <li><small><sup id=Note15>(15)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
+<li><small><sup id=Note16>(16)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1278,6 +1280,46 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
+
+<p><a id=Example_of_Approximation_Scheme></a></p>
+
+<h3>Example of Approximation Scheme</h3>
+
+<p>The following example uses the results above to build an approximation scheme for a factory function.</p>
+
+<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and &minus;<em>&lambda;</em>*ln(<em>&lambda;</em>) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:</p>
+
+<ul>
+<li><em>&eta;</em>(<em>k</em>) = <code>2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)</code>.</li>
+<li><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) &minus; <em>&eta;</em>(<em>n</em>).</li>
+<li><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) +  <em>&eta;</em>(<em>n</em>).</li>
+</ul>
+
+<p>Notice that this function is not Hölder continuous; its slope is exponentially steep at the point 0.</p>
+
+<p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)), using the results in Anastassiou and Gal (2012)<sup><a href="#Note16"><strong>(16)</strong></a></sup>. To do this, we notice that <em>f</em> is concave and increases then decreases.  In other words, <em>f</em> is piecewise monotone with two concave pieces.  To find where <em>f</em> stops increasing and starts decreasing, we solve <em>f</em>&#39;s &quot;slope&quot; function (the &quot;slope&quot; function is <code>diff()</code> in SymPy).  This solution is <em>&sigma;</em> = exp(&minus;1).  This, together with the results in that book, leads to the following for concave and two-piece monotone functions on the interval [0, 1]:</p>
+
+<ul>
+<li><em>F</em>(<em>h</em>) = <em>f</em>(min(<em>h</em>, <em>&sigma;</em>))&minus;<em>f</em>(0).</li>
+<li><em>G</em>(<em>h</em>) = <em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1).</li>
+<li><em>&omega;</em>(<em>h</em>) = <em>F</em>(<em>h</em>) + <em>G</em>(<em>h</em>).</li>
+</ul>
+
+<p>And thus <em>&omega;</em>(<em>h</em>) = 0 if <em>h</em> = 0; &minus;<em>&lambda;</em>*2*ln(<em>&lambda;</em>) if <em>&lambda;</em> &lt; exp(&minus;1); and 2*exp(&minus;1) otherwise.</p>
+
+<p>By plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2:</p>
+
+<ul>
+<li><em>&phi;</em>(<em>n</em>) = <code>sqrt(7)*(-ln(1/n) + ln(7))*sqrt(1/n)/7</code> if <code>sqrt(7)*sqrt(1/n)/7</code> &le; exp(-1), and 2*exp(&minus;1) otherwise.</li>
+</ul>
+
+<p>Now, by applying Theorem 1, we compute <em>&eta;</em>(<em>k</em>) by substituting <em>n</em> with 2<sup><em>n</em></sup>, summing over [<em>k</em>, &infin;), and substituting <em>k</em> with log2(<em>k</em>).  The sum converges, resulting in:</p>
+
+<ul>
+<li><em>&eta;</em>(<em>k</em>) = <code>2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)</code>.</li>
+</ul>
+
+<p>Which matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2.</p>
 
 <p><a id=License></a></p>
 

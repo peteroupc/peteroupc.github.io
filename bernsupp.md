@@ -16,6 +16,7 @@
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Proofs for Function Approximation Schemes**](#Proofs_for_Function_Approximation_Schemes)
+    - [**Example of Approximation Scheme**](#Example_of_Approximation_Scheme)
 - [**License**](#License)
 
 <a id=General_Factory_Functions></a>
@@ -630,6 +631,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note13>(13)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
 - <small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
 - <small><sup id=Note15>(15)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
+- <small><sup id=Note16>(16)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -763,6 +765,37 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
     _for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme._
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and Jensen's inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
+
+<a id=Example_of_Approximation_Scheme></a>
+### Example of Approximation Scheme
+
+The following example uses the results above to build an approximation scheme for a factory function.
+
+Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and &minus;_&lambda;_\*ln(_&lambda;_) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:
+
+- _&eta;_(_k_) = `2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)`.
+- **fbelow**(n, k) = f(_k_/_n_).
+- **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
+
+Notice that this function is not Hölder continuous; its slope is exponentially steep at the point 0.
+
+The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)), using the results in Anastassiou and Gal (2012)<sup>[**(16)**](#Note16)</sup>. To do this, we notice that _f_ is concave and increases then decreases.  In other words, _f_ is piecewise monotone with two concave pieces.  To find where _f_ stops increasing and starts decreasing, we solve _f_'s "slope" function (the "slope" function is `diff()` in SymPy).  This solution is _&sigma;_ = exp(&minus;1).  This, together with the results in that book, leads to the following for concave and two-piece monotone functions on the interval [0, 1]:
+
+- _F_(_h_) = _f_(min(_h_, _&sigma;_))&minus;_f_(0).
+- _G_(_h_) = _f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1).
+- _&omega;_(_h_) = _F_(_h_) + _G_(_h_).
+
+And thus _&omega;_(_h_) = 0 if _h_ = 0; &minus;_&lambda;_\*2\*ln(_&lambda;_) if _&lambda;_ < exp(&minus;1); and 2\*exp(&minus;1) otherwise.
+
+By plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2:
+
+- _&phi;_(_n_) = `sqrt(7)*(-ln(1/n) + ln(7))*sqrt(1/n)/7` if `sqrt(7)*sqrt(1/n)/7` &le; exp(-1), and 2*exp(&minus;1) otherwise.
+
+Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  The sum converges, resulting in:
+
+- _&eta;_(_k_) = `2*sqrt(7)*(-sqrt(2)*ln(k/2) + 2*ln(k) + ln(7**(2 - sqrt(2))))/(7*sqrt(k)*(2 - sqrt(2))**2)`.
+
+Which matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
 
 <a id=License></a>
 ## License
