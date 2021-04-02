@@ -1098,8 +1098,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><small><sup id=Note12>(12)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
 <li><small><sup id=Note13>(13)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
 <li><small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
-<li><small><sup id=Note15>(15)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
-<li><small><sup id=Note16>(16)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1171,6 +1171,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note13"><strong>(13)</strong></a></sup>; (Gal 1995)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
 <li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
+<li>If <em>f</em> is concave and increases then decreases monotonically, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))&minus;(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1179,7 +1180,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <ul>
 <li>A <em>bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A <em>general factory function</em> means a continuous function <em>f</em>(<em>&lambda;</em>) on the closed interval [0, 1] that is either identically 0, identically 1, or such that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>A <em>general factory function</em> means a continuous function <em>f</em>(<em>&lambda;</em>) on the closed interval [0, 1] that is either identically 0, identically 1, or such that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
 </ul>
 
 <p><strong>Theorem 1.</strong> <em>Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a bounded factory function. Let&mdash;</em></p>
@@ -1287,56 +1288,52 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p>The following example uses the results above to build an approximation scheme for a factory function.</p>
 
-<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and &minus;<em>&lambda;</em>*ln(<em>&lambda;</em>) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) = 0 if <em>&lambda;</em> is 0, and (ln(<em>&lambda;</em>/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:</p>
 
 <ul>
-<li><em>&eta;</em>(<em>k</em>) = [Complicated expression].</li>
+<li><em>&eta;</em>(<em>k</em>) = &Phi;(1, 2, (ln(<em>k</em>)+ln(7)+6)/ln(2))*4/ln(2)<sup>2</sup>.</li>
 <li><strong>fbelow</strong>(n, k) = f(<em>k</em>/<em>n</em>).</li>
 <li><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(<em>k</em>/<em>n</em>) +  <em>&eta;</em>(<em>n</em>).</li>
 </ul>
 
-<p>Notice that this function is not Hölder continuous; its slope is exponentially steep at the point 0.</p>
+<p>Where &Phi; is a function called the <em>Lerch transcendent</em>.</p>
 
-<p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)), using the results in Anastassiou and Gal (2012)<sup><a href="#Note16"><strong>(16)</strong></a></sup>. To do this, we notice that <em>f</em> is concave and increases then decreases.  In other words, <em>f</em> is piecewise monotone with two concave pieces.  To find where <em>f</em> stops increasing and starts decreasing, we solve <em>f</em>&#39;s &quot;slope&quot; function (the &quot;slope&quot; function is <code>diff()</code> in SymPy).  This solution is <em>&sigma;</em> = exp(&minus;1).  This, together with the results in that book, leads to the following for concave and two-piece monotone functions on the interval [0, 1]:</p>
+<p>Notice that the function <em>f</em> is not Hölder continuous; its slope is exponentially steep at the point 0.</p>
 
-<ul>
-<li><em>F</em>(<em>h</em>) = <em>f</em>(min(<em>h</em>, <em>&sigma;</em>))&minus;<em>f</em>(0).</li>
-<li><em>G</em>(<em>h</em>) = <em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1).</li>
-<li><em>&omega;</em>(<em>h</em>) = <em>F</em>(<em>h</em>) + <em>G</em>(<em>h</em>).</li>
-</ul>
+<p>The first step is to find a concave modulus of continuity of <em>f</em> (called <em>&omega;</em>(<em>h</em>)).  Because <em>f</em> is monotone increasing and concave, and because <em>f</em>(0) = 0, we can take <em>&omega;</em>(<em>h</em>) = <em>f</em>(<em>h</em>).</p>
 
-<p>And thus <em>&omega;</em>(<em>h</em>) = 0 if <em>h</em> = 0; &minus;<em>&lambda;</em>*ln(<em>&lambda;</em>) + (<em>&lambda;</em> &minus; 1)*ln(1 &minus; <em>&lambda;</em>) if <em>&lambda;</em> &le; e_&lambda;<em>p(&minus;1); exp(1)*(</em>&lambda;_ &minus; 1)*ln(1 &minus; <em>&lambda;</em>) + 1)*exp(&minus;1) if <em>&lambda;</em> &le; 1 &minus; exp(&minus;1); and 2*exp(&minus;1) otherwise.</p>
-
-<p>By plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2 (assuming <em>n</em>&ge;0):</p>
+<p>Now, by plugging sqrt(1/(7*<em>n</em>)) into <em>&omega;</em>, we get the following for Theorem 2 (assuming <em>n</em>&ge;0):</p>
 
 <ul>
-<li><em>&phi;</em>(<em>n</em>) = [Complicated expression].</li>
+<li><em>&phi;</em>(<em>n</em>) = 1/(ln(sqrt(7/<em>n</em>)/7)&minus;3)<sup>2</sup>.</li>
 </ul>
 
 <p>Now, by applying Theorem 1, we compute <em>&eta;</em>(<em>k</em>) by substituting <em>n</em> with 2<sup><em>n</em></sup>, summing over [<em>k</em>, &infin;), and substituting <em>k</em> with log2(<em>k</em>).  The sum converges, resulting in:</p>
 
 <ul>
-<li><em>&eta;</em>(<em>k</em>) = [Complicated expression].</li>
+<li><em>&eta;</em>(<em>k</em>) = &Phi;(1, 2, (ln(<em>k</em>)+ln(7)+6)/ln(2))*4/ln(2)<sup>2</sup>,</li>
 </ul>
 
-<p>Which matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because <em>f</em> is concave.</p>
+<p>where &Phi; is the Lerch transcendent.  This <em>&eta;</em> matches the <em>&eta;</em> given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because <em>f</em> is concave.</p>
 
-<pre>px=Piecewise((0,Eq(x,0)),(-x*log(x),True))
-# Compute piecewise monotone, two-piece concave
-# modulus of continuity
-sigma=exp(-1) # breakpoint; solves diff(px)
-ff=px.subs(x,Min(x,sigma)) - px.subs(x,0)
-gg=px.subs(x,1-Min(x,1-sigma)) - px.subs(x,1)
-# omega is modulus of continuity
-omega=ff+gg
-omega=piecewise_fold(omega.rewrite(Piecewise))
-# compute phi according to Theorem 2
+<p>The following SymPy code is an example of finding the parameters for this approximation scheme.</p>
+
+<pre>px=Piecewise((0,Eq(x,0)),((log(x/exp(3))**-2),True))
+# omega is modulus of continuity.  Since
+# px is monotone increasing, concave, and px(0)=0,
+# we can take omega as px
+omega=px
+omega=piecewise_fold(omega.rewrite(Piecewise)).simplify()
+# compute omega
 phi=omega.subs(x,sqrt(1/(7*n)))
-# compute eta according to Theorem 1
-eta=summation(phi.subs(n,2**n),(n,k,oo)).subs(k,log(k,2))
+pprint(phi)
+# compute eta
+eta=summation(phi.subs(n,2**n),(n,k,oo)).simplify()
+pprint(eta)
 for i in range(20):
+  # Calculate upper bounds for eta at certain points.
   try:
-    print(&quot;eta(2^%d) ~= %s&quot; % (i,eta.subs(k,i).n()))
+    print(&quot;eta(2^%d) ~= %s&quot; % (i,ceiling(eta.subs(k,i)*10000000).n()/10000000))
   except:
     print(&quot;eta(2^%d) ~= [FAILED]&quot; % (i))
 </pre>

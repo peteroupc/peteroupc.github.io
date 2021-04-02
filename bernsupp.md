@@ -630,8 +630,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note12>(12)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
 - <small><sup id=Note13>(13)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
 - <small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
-- <small><sup id=Note15>(15)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
-- <small><sup id=Note16>(16)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
+- <small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
+- <small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -683,11 +683,12 @@ _Proof._
 >     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(13)**](#Note13)</sup>; (Gal 1995)<sup>[**(14)**](#Note14)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
+>     5. If _f_ is concave and increases then decreases monotonically, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))&minus;(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
 
 In the following results:
 
 - A _bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
-- A _general factory function_ means a continuous function _f_(_&lambda;_) on the closed interval [0, 1] that is either identically 0, identically 1, or such that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(15)**](#Note15)</sup>.
+- A _general factory function_ means a continuous function _f_(_&lambda;_) on the closed interval [0, 1] that is either identically 0, identically 1, or such that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(16)**](#Note16)</sup>.
 
 **Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a bounded factory function. Let&mdash;_
 
@@ -771,49 +772,47 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and
 
 The following example uses the results above to build an approximation scheme for a factory function.
 
-Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and &minus;_&lambda;_\*ln(_&lambda;_) otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:
+Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:
 
-- _&eta;_(_k_) = [Complicated expression].
+- _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>.
 - **fbelow**(n, k) = f(_k_/_n_).
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
-Notice that this function is not Hölder continuous; its slope is exponentially steep at the point 0.
+Where &Phi; is a function called the _Lerch transcendent_.
 
-The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)), using the results in Anastassiou and Gal (2012)<sup>[**(16)**](#Note16)</sup>. To do this, we notice that _f_ is concave and increases then decreases.  In other words, _f_ is piecewise monotone with two concave pieces.  To find where _f_ stops increasing and starts decreasing, we solve _f_'s "slope" function (the "slope" function is `diff()` in SymPy).  This solution is _&sigma;_ = exp(&minus;1).  This, together with the results in that book, leads to the following for concave and two-piece monotone functions on the interval [0, 1]:
+Notice that the function _f_ is not Hölder continuous; its slope is exponentially steep at the point 0.
 
-- _F_(_h_) = _f_(min(_h_, _&sigma;_))&minus;_f_(0).
-- _G_(_h_) = _f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1).
-- _&omega;_(_h_) = _F_(_h_) + _G_(_h_).
+The first step is to find a concave modulus of continuity of _f_ (called _&omega;_(_h_)).  Because _f_ is monotone increasing and concave, and because _f_(0) = 0, we can take _&omega;_(_h_) = _f_(_h_).
 
-And thus _&omega;_(_h_) = 0 if _h_ = 0; &minus;_&lambda;_\*ln(_&lambda;_) + (_&lambda;_ &minus; 1)\*ln(1 &minus; _&lambda;_) if _&lambda;_ &le; e_&lambda;_p(&minus;1); exp(1)\*(_&lambda;_ &minus; 1)\*ln(1 &minus; _&lambda;_) + 1)\*exp(&minus;1) if _&lambda;_ &le; 1 &minus; exp(&minus;1); and 2\*exp(&minus;1) otherwise.
+Now, by plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2 (assuming _n_&ge;0):
 
-By plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theorem 2 (assuming _n_&ge;0):
-
-- _&phi;_(_n_) = [Complicated expression].
+- _&phi;_(_n_) = 1/(ln(sqrt(7/_n_)/7)&minus;3)<sup>2</sup>.
 
 Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  The sum converges, resulting in:
 
-- _&eta;_(_k_) = [Complicated expression].
+- _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>,
 
-Which matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
+where &Phi; is the Lerch transcendent.  This _&eta;_ matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
+
+The following SymPy code is an example of finding the parameters for this approximation scheme.
 
 ```
-px=Piecewise((0,Eq(x,0)),(-x*log(x),True))
-# Compute piecewise monotone, two-piece concave
-# modulus of continuity
-sigma=exp(-1) # breakpoint; solves diff(px)
-ff=px.subs(x,Min(x,sigma)) - px.subs(x,0)
-gg=px.subs(x,1-Min(x,1-sigma)) - px.subs(x,1)
-# omega is modulus of continuity
-omega=ff+gg
-omega=piecewise_fold(omega.rewrite(Piecewise))
-# compute phi according to Theorem 2
+px=Piecewise((0,Eq(x,0)),((log(x/exp(3))**-2),True))
+# omega is modulus of continuity.  Since
+# px is monotone increasing, concave, and px(0)=0,
+# we can take omega as px
+omega=px
+omega=piecewise_fold(omega.rewrite(Piecewise)).simplify()
+# compute omega
 phi=omega.subs(x,sqrt(1/(7*n)))
-# compute eta according to Theorem 1
-eta=summation(phi.subs(n,2**n),(n,k,oo)).subs(k,log(k,2))
+pprint(phi)
+# compute eta
+eta=summation(phi.subs(n,2**n),(n,k,oo)).simplify()
+pprint(eta)
 for i in range(20):
+  # Calculate upper bounds for eta at certain points.
   try:
-    print("eta(2^%d) ~= %s" % (i,eta.subs(k,i).n()))
+    print("eta(2^%d) ~= %s" % (i,ceiling(eta.subs(k,i)*10000000).n()/10000000))
   except:
     print("eta(2^%d) ~= [FAILED]" % (i))
 ```
