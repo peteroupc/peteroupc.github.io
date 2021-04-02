@@ -811,6 +811,11 @@ omega=piecewise_fold(omega.rewrite(Piecewise))
 phi=omega.subs(x,sqrt(1/(7*n)))
 # compute eta according to Theorem 1
 eta=summation(phi.subs(n,2**n),(n,k,oo)).subs(k,log(k,2))
+for i in range(20):
+  try:
+    print("eta(2^%d) ~= %s" % (i,eta.subs(k,i).n()))
+  except:
+    print("eta(2^%d) ~= [FAILED]" % (i))
 ```
 
 <a id=License></a>
