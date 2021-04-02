@@ -683,7 +683,7 @@ _Proof._
 >     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(13)**](#Note13)</sup>; (Gal 1995)<sup>[**(14)**](#Note14)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and increases then decreases monotonically, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))&minus;(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
+>     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))&minus;(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
 
 In the following results:
 
@@ -699,25 +699,35 @@ _for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), where &phi;
 - _&omega;(sqrt(1/(8\*n&minus;4))), or_
 - _&omega;(sqrt(1/(2\*n)))._
 
-_Assume that the sum in &eta;(n) converges.  Then, by forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, the result is an approximation scheme that meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+_Under the necessary and sufficient condition that the sum in &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, by defining **fabove** and **fbelow** as follows:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = f(k/n) + &eta;(n)._
 
-_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.  The function _&eta;_(_n_) is found as a solution to the functional equation _&eta;_(_n_) = _&eta;_(2 \* _n_) + _&phi;_(_n_), with either form of _&phi;_ given in the theorem, and functional equations of this kind were suggested in the proof of Proposition 10, to find the offset by which to shift the approximating polynomials. We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(n) decreases with increasing _n_. &#x25a1;
+_Except that the following bounding note applies: If **fabove**(n, k) > 1 for a given n and some k, **fabove**(n, k) = 1 instead for that n, and if **fbelow**(n, k) < 0 for a given n and some k, **fbelow**(n, k) = 0 instead for that n._
 
-**Corollary 1.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+_Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.
+
+We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(_n_) decreases with increasing _n_.
+
+Condition (i) says that the coefficients **fbelow** and **fabove** must be bounded by 0 and 1.  This is ensured starting with a large enough value of _n_, call it _n_<sub>0</sub>, by the assumption that the sum converges and that _f_ is bounded away from 0 and 1.  For _n_ less than _n_<sub>0</sub>, this is ensured by setting **fbelow** and **fabove** to 0 or 1, respectively.
+
+Condition (iii) says that the upper polynomials must converge to _f_ and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the sum converges.  For _n_ less than _n_<sub>0</sub>, the values of **fbelow** and **fabove** can be 0 or 1 without affecting convergence.
+
+Condition (iv) is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_), where _&phi;_ can take on either form given in the theorem. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the sum for _n_ = 2\*_n_, then adding _&phi;_(_n_) to it, in effect working backwards and recursively, and we can easily see that we can calculate the sum for _n_ = 2\*_n_ only if the sum converges, hence the assumption of a converging sum. For _n_<sub>0</sub>, the consistency requirement is maintained by noting that the degree-_n_<sub>0</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>0</sub>, and those polynomials are identically 0 and identically 1, respectively, as are their coefficients. &#x25a1;
+
+**Corollary 1.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
 - _**fabove**(n, k) = f(k/n) + &delta;(n)._
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2. &#x25a1;
+_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2, and by using _&phi;_(_n_) = _&omega_;(sqrt(1/(2\*_n_))). &#x25a1;
 
-> **Note:** For specific values of _&alpha;_, the functional equation used in Corollary 1 can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.  _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2 \* _n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2 \* _n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
+> **Note:** For specific values of _&alpha;_, the equation _&delta;_(_n_) = _&delta;_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.  _&delta;_(_n_) can also be found as follows:<br>_&delta;_(_n_) = _M_\*(1/(2 \* _n_))<sup>_&alpha;_/2</sup> /<br>(1 &minus; (_M_\*(1/(2\*(_n_\*2)))<sup>_&alpha;_/2</sup>) / (_M_\*(1/(2 \* _n_))<sup>_&alpha;_/2</sup>))<br> = _M_/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 
-**Corollary 2.** _Let f(&lambda;) be a bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Corollary 2.** _Let f(&lambda;) be a bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)\*sqrt(n))._
 - _**fabove**(n, k) = f(k/n) + M/((sqrt(2)&minus;1)\*sqrt(n))._
@@ -726,7 +736,7 @@ _Proof._ Because Lipschitz continuous functions are 1-Hölder continuous with H�
 
 > **Note:** This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.
 
-**Theorem 2.** _Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem:_
+**Theorem 2.** _Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), **fbelow**, and **fabove**, rather than as given in that theorem, subject to the bounding note:_
 
 - _&phi;(n) = &omega;(sqrt(1/(7\*n)))._
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
@@ -734,7 +744,7 @@ _Proof._ Because Lipschitz continuous functions are 1-Hölder continuous with H�
 
 _Proof._  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the _&phi;_ given in this theorem, the sum _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the sum converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
-**Corollary 3.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fabove** and **fbelow** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Corollary 3.** _Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
@@ -743,7 +753,7 @@ _Where &eta;(n) = M\*(2/7)<sup>&alpha;/2</sup>/((2<sup>&alpha;/2</sup>&minus;1)\
 
 _Proof._ Follows from Theorem 2 by using the _&omega;_ given in part 2 of Lemma 2. &#x25a1;
 
-**Theorem 3.** _Let f(&lambda;) be a bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme determined by **fbelow** and **fabove** meets conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2:_
+**Theorem 3.** _Let f(&lambda;) be a bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:_
 
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; M/(7\*n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + M/(7\*n)._
@@ -772,13 +782,13 @@ _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and
 
 The following example uses the results above to build an approximation scheme for a factory function.
 
-Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following approximation scheme is valid for all n&ge;1 that are integer powers of 2:
+Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&minus;2</sup> otherwise.  Then the following approximation scheme is valid in the sense of Theorem 1:
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>.
 - **fbelow**(n, k) = f(_k_/_n_).
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
-Where &Phi; is a function called the _Lerch transcendent_.
+Where &Phi; is a function called the _Lerch transcendent_, and **fabove** is subject to Theorem 1's bounding note.
 
 Notice that the function _f_ is not Hölder continuous; its slope is exponentially steep at the point 0.
 
