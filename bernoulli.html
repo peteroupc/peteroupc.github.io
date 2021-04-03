@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/04/01"><meta name="citation_online_date" content="2021/04/01"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/04/02"><meta name="citation_online_date" content="2021/04/02"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -2287,72 +2287,62 @@ def valid_perm(f, x, n):
 <table><thead>
 <tr>
 <th>Permutation Class</th>
-<th>Distribution <em>D</em></th>
-<th>Distribution <em>E</em></th>
+<th>Distributions <em>D</em> and <em>E</em></th>
 <th>The algorithm returns <em>n</em> with this probability:</th>
 <th>The probability that <em>n</em> is ...</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Uniform(0,1)</td>
-<td>Uniform(0,1)</td>
+<td>Both uniform(0,1)</td>
 <td><em>n</em> / ((<em>n</em> + 1)!).</td>
 <td>Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1).</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Any</td>
-<td>Any</td>
+<td>Each arbitrary</td>
 <td>(&int;<sub>(&minus;&infin;,&infin;)</sub> DPDF(<em>z</em>) * (ECDF(<em>z</em>)<sup><em>n</em>&minus;1</sup>/((<em>n</em>&minus;1)!) &minus; ECDF(<em>z</em>)<sup><em>n</em></sup>/(<em>n</em>!)) <em>dz</em>), for all <em>n</em> &gt; 0 (see also proof of Theorem 2.1 of (Devroye 1986, Chapter IV)<sup><a href="#Note30"><strong>(30)</strong></a></sup>. DPDF and ECDF are defined later.</td>
 <td>Odd is denominator of formula 1 below.</td>
 </tr>
 <tr>
 <td>Alternating numbers</td>
-<td>Uniform(0,1)</td>
-<td>Uniform(0,1)</td>
+<td>Both uniform(0,1)</td>
 <td>(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1) &minus; <em>a</em><sub><em>n</em> + 1</sub>) / (<em>n</em> + 1)!, where <em>a</em><sub><em>i</em></sub> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</td>
-<td>Odd is 1&minus;cos(1)/(sin(1)+1).<br/>Even is cos(1)/(sin(1)+1).</td>
+<td>Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).</td>
 </tr>
 <tr>
 <td>Any</td>
-<td>Uniform(0,1)</td>
-<td>Uniform(0,1)</td>
+<td>Both uniform(0,1)</td>
 <td>(&int;<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>&minus;1</sup>*V(<em>n</em>)/((<em>n</em>&minus;1)!) &minus; <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for all <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!]; this algorithm won&#39;t work, for example, if there are 0 permutations of odd size.</td>
-<td>Odd is 1 &minus; 1 / EGF(1).<br/>Even is 1/EGF(1).<br/>Less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</td>
+<td>Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</td>
 </tr>
 </tbody></table>
 
 <table><thead>
 <tr>
 <th>Permutation Class</th>
-<th>Distribution <em>D</em></th>
-<th>Distribution <em>E</em></th>
+<th>Distributions <em>D</em> and <em>E</em></th>
 <th>The probability that the first number in the sequence is less than <em>x</em> given that <em>n</em> is ...</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Any</td>
-<td>Any</td>
+<td>Each arbitrary</td>
 <td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note30"><strong>(30)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note48"><strong>(48)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function (CDF) of <em>E</em>.<br>If <em>x</em> is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Any</td>
-<td>Any</td>
+<td>Each arbitrary</td>
 <td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Uniform(0,1)</td>
-<td>Uniform(0,1)</td>
+<td>Both uniform(0,1)</td>
 <td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note51"><strong>(51)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Uniform(0,1)</td>
-<td>Max. of two uniform(0,1)</td>
+<td><em>D</em> is uniform(0,1); <em>E</em> is max. of two uniform(0,1)</td>
 <td>Odd is erf(<em>x</em>)/erf(1) (uses Formula 1, where DPDF(<em>z</em>) = 1 and ECDF(<em>z</em>) = <em>z</em><sup>2</sup> for <em>z</em> in [0, 1]; see also <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a>).</td>
 </tr>
 </tbody></table>

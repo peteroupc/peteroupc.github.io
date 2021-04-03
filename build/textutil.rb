@@ -154,6 +154,7 @@ def markdownTitle(markdown)
    markdown.scan(/^(?:\#\#)\s+(.*)\n+/) {|m|
      title=m[0];break }
   end
+  title=title.gsub(/&ndash;/,"--")
   return title
 end
 
@@ -171,7 +172,11 @@ Dir.glob("*.md").sort.each{|fn|
   r=r.gsub(/\A\s*(?:<a\s+id.*)?\s*(\#+\s+.*)\n+/) {
     $1+"\n\n" + sprintf("This version of the document is dated %04d-%02d-%02d.",
         mtime.year,mtime.mon,mtime.day) + "\n\n" }
-  IO.write(Dir::tmpdir()+"/#{file}.md",preparePandoc(r))
+  r=preparePandoc(r)
+  r=r.gsub(/_&lambda;_/,"$lambda$")
+  #r="---\ntitle: #{title}\nauthor: Peter Occil\n---\n\n"+r
+  tmpfilemd=Dir::tmpdir()+"/#{file}.md"
+  IO.write(tmpfilemd,r)
   puts(r[0,100])
   i=0
   while true
@@ -183,23 +188,35 @@ Dir.glob("*.md").sort.each{|fn|
     p rtmppdf
     p rpdf
     outputengine="html5"
+    #outputengine="latex"
     output="-o '#{rtmppdf}'"
-    #output="-s -o '#{rtex}'"
+    #output="-o '#{rtex}'"
     File.delete(rtex) rescue nil
-    cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=chapter"
+    cmd="pandoc -V papersize=letter -f gfm --number-sections --number-offset=0 --top-level-division=" + (outputengine=="html5" ? "chapter" : "section")
     cmd+=" -t #{outputengine}"
-    cmd+=" #{output} --metadata pagetitle=\"#{title}\" /tmp/#{file}.md"
+    #cmd+=" --pdf-engine=lualatex"
+    cmd+=" #{output} --metadata pagetitle=\"#{title}\""
+    if outputengine!="html5"
+      cmd+=" --variable=title:\"#{title}\""
+      cmd+=" --variable=author:\"Peter Occil\""
+    end
+    cmd+=" -s #{tmpfilemd}"
     puts cmd
     puts `#{cmd}`
     p FileTest.exist?(rtmppdf)
     if !FileTest.exist?(rtmppdf) && !FileTest.exist?(rtex)
       i+=1; next
     end
+    tm=Dir::tmpdir()+"/tempmeta.meta"
+    IO.write(tm,
+       "author Peter Occil\ntitle #{title}\n")
+    `setpdfmetadata '#{rtmppdf}' '#{tm}' '#{rtmppdf}'`
     FileUtils.cp(rtmppdf,rpdf) rescue nil
     p rpdf
     p FileTest.exist?(rpdf)
     if FileTest.exist?(rpdf) || FileTest.exist?(rtex)
       File.delete("/tmp/#{file}.md") rescue nil
+      File.delete("/tmp/tempmeta.meta") rescue nil
       File.delete("/tmp/#{file}#{ii}.pdf") rescue nil
       break
     end
