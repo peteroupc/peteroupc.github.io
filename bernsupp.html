@@ -1179,11 +1179,11 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p>In the following results:</p>
 
 <ul>
-<li>A <em>bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A <em>general factory function</em> means a continuous function <em>f</em>(<em>&lambda;</em>) on the closed interval [0, 1] that is either identically 0, identically 1, or such that both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
+<li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
+<li>A function is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
 </ul>
 
-<p><strong>Theorem 1.</strong> <em>Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a bounded factory function. Let&mdash;</em></p>
+<p><strong>Theorem 1.</strong> <em>Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;</em></p>
 
 <p><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &phi;(2<sup>k</sup>),</em></p>
 
@@ -1221,7 +1221,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Note:</strong> There is only one solution <em>&eta;</em>(<em>n</em>) in our case.  In contrast to so-called <em>functional equations</em> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in our case, namely the solution that makes the sum converge, if it exists at all.  Alternatively, the solution can be seen as expanding the equation to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</p>
 </blockquote>
 
-<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &delta;(n).</em></li>
@@ -1236,7 +1236,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the equation <em>&delta;</em>(<em>n</em>) = <em>&delta;</em>(2 * <em>n</em>) + <em>&phi;</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>
 </blockquote>
 
-<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; M/((sqrt(2)&minus;1)*sqrt(n)).</em></li>
@@ -1249,7 +1249,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><strong>Note:</strong> This special case of Theorem 1 was already found by Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</p>
 </blockquote>
 
-<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note:</em></p>
+<p><strong>Theorem 2.</strong> <em>Let f(&lambda;) be a strictly bounded factory function, and let &omega;(x) be as described in Theorem 1. Theorem 1 remains valid with the following versions of &phi;(n), <strong>fbelow</strong>, and <strong>fabove</strong>, rather than as given in that theorem, subject to the bounding note:</em></p>
 
 <ul>
 <li><em>&phi;(n) = &omega;(sqrt(1/(7*n))).</em></li>
@@ -1259,7 +1259,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em>  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from <em>n</em> = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the <em>&phi;</em> given in this theorem, the sum <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the sum converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
-<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Corollary 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; &eta;(n).</em></li>
@@ -1270,7 +1270,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em> Follows from Theorem 2 by using the <em>&omega;</em> given in part 2 of Lemma 2. &#x25a1;</p>
 
-<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
+<p><strong>Theorem 3.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) &minus; M/(7*n).</em></li>
@@ -1279,15 +1279,15 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Proof.</em>  Because (<em>M</em>/2)*(1/(7*<em>n</em>) in part 3 of Lemma 2 is bounded the same way as the statement <em>&omega;</em>(sqrt(1/(7*n))) in Theorem 2 and part 1 of Lemma 2, take <em>&omega;</em>(<em>n</em>) as (<em>M</em>/2)*(1/(7*<em>n</em>).  Then the result follows from Theorem 2.  &#x25a1;</p>
 
-<p><strong>Theorem 4.</strong> <em>Let f(&lambda;) be a bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
+<p><strong>Theorem 4.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
 
 <p><em>Proof.</em>  Follows from Theorem 1 and part 4 of Lemma 2 above. With the <em>&phi;</em> given in this theorem, the sum <em>&eta;</em>(<em>n</em>) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1&#39;s assumption that the sum converges, so that <em>&eta;</em>(<em>n</em>) still decreases with increasing <em>n</em>. &#x25a1;</p>
 
 <p><strong>Proposition 1.</strong></p>
 
 <ol>
-<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be concave and may be a general factory function.  Then the approximation scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
-<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be convex and may be a general factory function.  Then the approximation scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be concave and polynomially bounded and may have a minimum of 0. Then the approximation scheme of that theorem remains valid if <strong>fbelow</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
+<li><em>Let f be as given in any of Theorems 1 through 4, except that f must be convex and polynomially bounded and may have a maximum of 1.  Then the approximation scheme of that theorem remains valid if <strong>fabove</strong>(n, k) = f(k/n), rather than as given in that theorem.</em></li>
 <li><p><em>Theorems 1 through 4 can be extended to all integers n&ge;1, not just those that are powers of 2, by defining&mdash;</em></p>
 
 <ul>
@@ -1298,7 +1298,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <p><em>for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
 </ol>
 
-<p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be, and Jensen&#39;s inequality.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein approximations of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
 
 <p><a id=Example_of_Approximation_Scheme></a></p>
 
