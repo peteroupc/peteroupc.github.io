@@ -9,7 +9,7 @@
 - [**General Factory Functions**](#General_Factory_Functions)
     - [**Approximation Schemes**](#Approximation_Schemes)
     - [**Schemes That Don't Work**](#Schemes_That_Don_t_Work)
-- [**Approximate Bernoulli Factory via a Single Polynomial**](#Approximate_Bernoulli_Factory_via_a_Single_Polynomial)
+- [**Approximate Bernoulli Factories**](#Approximate_Bernoulli_Factories)
 - [**Achievable Simulation Rates**](#Achievable_Simulation_Rates)
 - [**Complexity**](#Complexity)
 - [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
@@ -226,10 +226,10 @@ After elevating _g_'s degree, _g_'s coefficients are no less than _h_'s, as requ
 
 However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prime;_ with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and _h_ is now _h&prime;_ with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate _g&prime;_ for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of _g&prime;_ are less than those of _h&prime;_.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.
 
-<a id=Approximate_Bernoulli_Factory_via_a_Single_Polynomial></a>
-## Approximate Bernoulli Factory via a Single Polynomial
+<a id=Approximate_Bernoulli_Factories></a>
+## Approximate Bernoulli Factories
 
-Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an _approximate_ Bernoulli factory for _f_.
+Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an **approximate Bernoulli factory** for _f_.
 
 More specifically, we approximate _f_ using one polynomial in Bernstein form of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, we can choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
 
@@ -258,6 +258,14 @@ As another example, we use the first scheme in the previous section to get the f
 3. With probability _f_(_j_/_n_), return 1.  Otherwise, return 0.
 
 We can proceed similarly with other methods that give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function _f_ that we seek to approximate.
+
+**Approximate methods for linear functions.** There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
+
+- Henderson and Glynn (2003, Remark 4)<sup>[**(17)**](#Note17)</sup> approximates the function _&lambda;_\*2 using a polynomial where _a_\[_j_] =  min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+
+- I found the following approximation for _&lambda;_\*_c_<sup>[**(18)**](#Note18)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _a_\[_j_\] = min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/_c_).
+
+- The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(19)**](#Note19)</sup>, which approximates _&lambda;_\*2.
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
@@ -632,6 +640,9 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
 - <small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
 - <small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
+- <small><sup id=Note17>(17)</sup> Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).</small>
+- <small><sup id=Note18>(18)</sup> For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.</small>
+- <small><sup id=Note19>(19)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -683,7 +694,7 @@ _Proof._
 >     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(13)**](#Note13)</sup>; (Gal 1995)<sup>[**(14)**](#Note14)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))&minus;(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
+>     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
 
 In the following results:
 
@@ -712,7 +723,7 @@ We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of th
 
 Condition (i) says that the coefficients **fbelow** and **fabove** must be bounded by 0 and 1.  This is ensured starting with a large enough value of _n_ greater than 0, call it _n_<sub>0</sub>, as shown next.
 
-Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. By the assumption that the sum in _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the coefficients of a Bernstein approximation of _f_ are bounded by the minimum and maximum of _f_ by construction.  This combined means that the coefficients **fbelow** and **fabove** will eventually be bounded by 0 and 1 for all integers _n_ starting with _n_<sub>0</sub>.
+Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. By the assumption that the sum in _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction.  This combined means that the coefficients **fbelow** and **fabove** will eventually be bounded by 0 and 1 for all integers _n_ starting with _n_<sub>0</sub>.
 
 For _n_ less than _n_<sub>0</sub>, condition (i) is ensured by setting **fbelow** and **fabove** to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be outside the bounds.
 

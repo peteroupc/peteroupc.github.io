@@ -17,7 +17,7 @@
 <li><a href="#Approximation_Schemes"><strong>Approximation Schemes</strong></a></li>
 <li><a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a></li>
 </ul></li>
-<li><a href="#Approximate_Bernoulli_Factory_via_a_Single_Polynomial"><strong>Approximate Bernoulli Factory via a Single Polynomial</strong></a></li>
+<li><a href="#Approximate_Bernoulli_Factories"><strong>Approximate Bernoulli Factories</strong></a></li>
 <li><a href="#Achievable_Simulation_Rates"><strong>Achievable Simulation Rates</strong></a></li>
 <li><a href="#Complexity"><strong>Complexity</strong></a></li>
 <li><a href="#Examples_of_Bernoulli_Factory_Approximation_Schemes"><strong>Examples of Bernoulli Factory Approximation Schemes</strong></a></li>
@@ -326,11 +326,11 @@
 
 <p>However, if we clamp coefficients above 1 to equal 1, so that <em>g</em> is now <em>g&prime;</em> with [1, 1, 9387/10000, 1, 499/500, 9339/10000] and <em>h</em> is now <em>h&prime;</em> with [1, 593/625, 9633/10000, 4513/5000, 4947/5000, 9473/10000, 4519/5000], and elevate <em>g&prime;</em> for coefficients [1, 1, 14387/15000, 19387/20000, 1499/1500, 59239/60000, 9339/10000], some of the coefficients of <em>g&prime;</em> are less than those of <em>h&prime;</em>.  Thus, for this pair of polynomials, clamping the coefficients will destroy the consistent approximation property.</p>
 
-<p><a id=Approximate_Bernoulli_Factory_via_a_Single_Polynomial></a></p>
+<p><a id=Approximate_Bernoulli_Factories></a></p>
 
-<h2>Approximate Bernoulli Factory via a Single Polynomial</h2>
+<h2>Approximate Bernoulli Factories</h2>
 
-<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a factory function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <em>approximate</em> Bernoulli factory for <em>f</em>.</p>
+<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a factory function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <strong>approximate Bernoulli factory</strong> for <em>f</em>.</p>
 
 <p>More specifically, we approximate <em>f</em> using one polynomial in Bernstein form of degree <em>n</em>.  The higher <em>n</em> is, the better this approximation.  In fact, since every factory function is continuous, we can choose <em>n</em> high enough that the polynomial differs from <em>f</em> by no more than <em>&epsilon;</em>, where <em>&epsilon;</em> &gt; 0 is the desired error tolerance.</p>
 
@@ -367,6 +367,14 @@
 </ol>
 
 <p>We can proceed similarly with other methods that give an upper bound on the Bernstein-form polynomial approximation error, if they apply to the function <em>f</em> that we seek to approximate.</p>
+
+<p><strong>Approximate methods for linear functions.</strong> There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
+
+<ul>
+<li><p>Henderson and Glynn (2003, Remark 4)<sup><a href="#Note17"><strong>(17)</strong></a></sup> approximates the function <em>&lambda;</em>*2 using a polynomial where <em>a</em>[<em>j</em>] =  min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
+<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note18"><strong>(18)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>a</em>[<em>j</em>] = min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
+<li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, which approximates <em>&lambda;</em>*2.</p></li>
+</ul>
 
 <p><a id=Achievable_Simulation_Rates></a></p>
 
@@ -1100,6 +1108,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 <li><small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
 <li><small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
+<li><small><sup id=Note17>(17)</sup> Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</small></li>
+<li><small><sup id=Note18>(18)</sup> For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</small></li>
+<li><small><sup id=Note19>(19)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1171,7 +1182,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note13"><strong>(13)</strong></a></sup>; (Gal 1995)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
 <li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))&minus;(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1209,7 +1220,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p>Condition (i) says that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> must be bounded by 0 and 1.  This is ensured starting with a large enough value of <em>n</em> greater than 0, call it <em>n</em><sub>0</sub>, as shown next.</p>
 
-<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. By the assumption that the sum in <em>&eta;</em> converges, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And the coefficients of a Bernstein approximation of <em>f</em> are bounded by the minimum and maximum of <em>f</em> by construction.  This combined means that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> will eventually be bounded by 0 and 1 for all integers <em>n</em> starting with <em>n</em><sub>0</sub>.</p>
+<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. By the assumption that the sum in <em>&eta;</em> converges, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction.  This combined means that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> will eventually be bounded by 0 and 1 for all integers <em>n</em> starting with <em>n</em><sub>0</sub>.</p>
 
 <p>For <em>n</em> less than <em>n</em><sub>0</sub>, condition (i) is ensured by setting <strong>fbelow</strong> and <strong>fabove</strong> to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be outside the bounds.</p>
 
