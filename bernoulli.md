@@ -230,7 +230,8 @@ And here is another optimized algorithm:
 > **Examples:**
 >
 > 1. Take the following parabolic function discussed in (Thomas and Blanchet 2012)<sup>[**(10)**](#Note10)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(11)**](#Note11)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(12)**](#Note12)</sup>
-----
+
+&nbsp;
 
 **Multiple coins.** Niazadeh et al. (2020)<sup>[**(13)**](#Note13)</sup> describes monomials (involving one or more coins) of the form _&prod;_<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] &ge; 0 and _b_\[_i_\] &ge; 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
 

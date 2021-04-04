@@ -330,13 +330,20 @@
 
 <h2>Approximate Bernoulli Factories</h2>
 
-<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a factory function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <strong>approximate Bernoulli factory</strong> for <em>f</em>.</p>
+<p>Although the schemes in the previous section don&#39;t work when building a <em>family</em> of polynomials that converge to a function <em>f</em>(<em>&lambda;</em>), they are still useful for building an <em>approximation</em> to that function, in the form of a <em>single</em> polynomial, so that we get an <strong>approximate Bernoulli factory</strong> for <em>f</em>.</p>
 
-<p>More specifically, we approximate <em>f</em> using one polynomial in Bernstein form of degree <em>n</em>.  The higher <em>n</em> is, the better this approximation.  In fact, since every factory function is continuous, we can choose <em>n</em> high enough that the polynomial differs from <em>f</em> by no more than <em>&epsilon;</em>, where <em>&epsilon;</em> &gt; 0 is the desired error tolerance.</p>
+<p>Here, <em>f</em>(<em>&lambda;</em>) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn&#39;t continuous or a factory function (examples include the &quot;step function&quot; 0 if <em>&lambda;</em> &lt; 1/2 and 1 otherwise, or the function min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)).</p>
 
-<p>Then, one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; can be used to simulate that polynomial: the polynomial has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>).</p>
+<p>To build an approximate Bernoulli factory:</p>
 
-<p>The schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  For example, the third scheme does this when <em>f</em> is a Lipschitz continuous function (with Lipschitz constant <em>L</em>).  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, we need to solve the following equation for <em>n</em>:</p>
+<ol>
+<li><p>We first find a polynomial in Bernstein form of degree <em>n</em> that is close to the desired function <em>f</em>.  The higher <em>n</em> is, the better this approximation.  And if <em>f</em> is continuous, we can choose <em>n</em> high enough that the polynomial differs from <em>f</em> by no more than <em>&epsilon;</em>, where <em>&epsilon;</em> &gt; 0 is the desired error tolerance.</p>
+
+<p>The simplest choice for this polynomial has <em>n</em>+1 coefficients and its <em>j</em><sup>th</sup> coefficient (starting at 0) is found as <em>f</em>(<em>j</em>/<em>n</em>), and this is used in the examples below.  Whatever the choice, the polynomial&#39;s coefficients must all lie in [0, 1].</p></li>
+<li><p>Then, we use one of the algorithms in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Certain Polynomials</strong></a>&quot; to simulate that polynomial, given its coefficients.</p></li>
+</ol>
+
+<p><strong>Examples of approximate Bernoulli factories.</strong> The schemes in the previous section give an upper bound on the error on approximating <em>f</em> with a degree-<em>n</em> polynomial in Bernstein form.  For example, the third scheme does this when <em>f</em> is a Lipschitz continuous function (with Lipschitz constant <em>L</em>).  To find a degree <em>n</em> such that <em>f</em> is approximated with a maximum error of <em>&epsilon;</em>, we need to solve the following equation for <em>n</em>:</p>
 
 <ul>
 <li><em>&epsilon;</em> = <em>L</em>*((4306+837*sqrt(6))/5832) / sqrt(<em>n</em>).</li>
@@ -371,9 +378,9 @@
 <p><strong>Approximate methods for linear functions.</strong> There are a number of approximate methods to simulate <em>&lambda;</em>*<em>c</em>, where <em>c</em> &gt; 1 and <em>&lambda;</em> lies in [0, 1/<em>c</em>).  (&quot;Approximate&quot; because this function touches 1 at 1/<em>c</em>, so it can&#39;t be a factory function.) Since the methods use only up to <em>n</em> flips, where <em>n</em> is an integer greater than 0, the approximation will be a polynomial of degree <em>n</em>.</p>
 
 <ul>
-<li><p>Henderson and Glynn (2003, Remark 4)<sup><a href="#Note17"><strong>(17)</strong></a></sup> approximates the function <em>&lambda;</em>*2 using a polynomial where <em>a</em>[<em>j</em>] =  min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
-<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note18"><strong>(18)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>a</em>[<em>j</em>] = min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
-<li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, which approximates <em>&lambda;</em>*2.</p></li>
+<li><p>Henderson and Glynn (2003, Remark 4)<sup><a href="#Note8"><strong>(8)</strong></a></sup> approximates the function <em>&lambda;</em>*2 using a polynomial where the <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*2, 1&minus;1/<em>n</em>).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/2).  <em>g</em> can be computed with the SymPy computer algebra library as follows: <code>from sympy.stats import *; g=2*E( Min(sum(Bernoulli((&quot;B%d&quot; % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))</code>.</p></li>
+<li><p>I found the following approximation for <em>&lambda;</em>*<em>c</em><sup><a href="#Note9"><strong>(9)</strong></a></sup>: &quot;(1.) Set <em>j</em> to 0 and <em>i</em> to 0; (2.) If <em>i</em> &ge; <em>n</em>, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to <em>j</em>; (4.) (Estimate the probability and return 1 if it &#39;went over&#39;.) If (<em>j</em>/(<em>i</em>+1)) &ge; 1/<em>c</em>, return 1; (5.) Add 1 to <em>i</em> and go to step 2.&quot;  Here, <em>&lambda;</em>*<em>c</em> is approximated by a polynomial where <em>j</em><sup>th</sup> coefficient (starting at 0) is min((<em>j</em>/<em>n</em>)*<em>c</em>, 1).  If <em>g</em>(<em>&lambda;</em>) is that polynomial, then the error is no greater than 1&minus;<em>g</em>(1/<em>c</em>).</p></li>
+<li><p>The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, which approximates <em>&lambda;</em>*2.</p></li>
 </ul>
 
 <p><a id=Achievable_Simulation_Rates></a></p>
@@ -392,23 +399,23 @@
 </thead><tbody>
 <tr>
 <td>Requires no more than <em>n</em> input coin flips.</td>
-<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> can be written as a polynomial in Bernstein form of degree <em>n</em> with coefficients in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Requires a finite number of flips on average. Also known as &quot;realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips required, raised to power of <em>r</em>, is finite on average and tends to 0 has a tail that drops off uniformly for all <em>&lambda;</em>.</td>
+<td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for all <em>&lambda;</em>.</td>
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (has <em>r</em> or more continuous derivatives, or &quot;slope&quot; functions) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and all <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
-<td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
+<td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and all <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>
@@ -416,7 +423,7 @@
 </tr>
 <tr>
 <td>Average number of flips bounded from below by (<em>f&prime;</em>(<em>&lambda;</em>))<sup>2</sup>*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/(<em>f</em>(<em>&lambda;</em>)*(1&minus;<em>f</em>(<em>&lambda;</em>))), where <em>f&prime;</em> is the first derivative of <em>f</em>.</td>
-<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</td>
+<td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</td>
 </tr>
 </tbody></table>
 
@@ -1099,18 +1106,17 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li><small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
 <li><small><sup id=Note6>(6)</sup> Popoviciu, T., &quot;Sur l&#39;approximation des fonctions convexes d&#39;ordre supérieur&quot;, Mathematica (Cluj), 1935.</small></li>
 <li><small><sup id=Note7>(7)</sup> Sikkema, P.C., &quot;Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen&quot;, Numer. Math. 3 (1961).</small></li>
-<li><small><sup id=Note8>(8)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
-<li><small><sup id=Note9>(9)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
-<li><small><sup id=Note10>(10)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
-<li><small><sup id=Note11>(11)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
-<li><small><sup id=Note12>(12)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
-<li><small><sup id=Note13>(13)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
-<li><small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
-<li><small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
-<li><small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
-<li><small><sup id=Note17>(17)</sup> Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</small></li>
-<li><small><sup id=Note18>(18)</sup> For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</small></li>
-<li><small><sup id=Note19>(19)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
+<li><small><sup id=Note8>(8)</sup> Henderson, S.G., Glynn, P.W., &quot;Nonexistence of a class of variate generation schemes&quot;, <em>Operations Research Letters</em> 31 (2003).</small></li>
+<li><small><sup id=Note9>(9)</sup> For this approximation, if <em>n</em> were infinity, the method would return 1 with probability 1 and so would not approximate <em>&lambda;</em>*<em>c</em>, of course.</small></li>
+<li><small><sup id=Note10>(10)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
+<li><small><sup id=Note11>(11)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
+<li><small><sup id=Note12>(12)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
+<li><small><sup id=Note13>(13)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
+<li><small><sup id=Note14>(14)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
+<li><small><sup id=Note15>(15)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
+<li><small><sup id=Note16>(16)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
+<li><small><sup id=Note17>(17)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note18>(18)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1127,7 +1133,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
 
-<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note12"><strong>(12)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note14"><strong>(14)</strong></a></sup>. &#x25a1;</p>
 
 <p>Lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes <em>Hölder continuous</em> functions, namely continuous functions whose slope doesn&#39;t go exponentially fast to a vertical slope.</p>
 
@@ -1178,11 +1184,11 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note13"><strong>(13)</strong></a></sup>; (Gal 1995)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
-<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note13"><strong>(13)</strong></a></sup>; (Gal 1995)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note15"><strong>(15)</strong></a></sup>; (Gal 1995)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note15"><strong>(15)</strong></a></sup>; (Gal 1995)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
 <li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</li>
+<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -1191,7 +1197,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
-<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
+<li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 </ul>
 
 <p><strong>Theorem 1.</strong> <em>Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;</em></p>
@@ -1241,7 +1247,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 
 <p><em>Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)*n<sup>&alpha;/2</sup>).</em></p>
 
-<p><em>Proof.</em> Follows from Theorem 1 by using the <em>&omega;</em> given in part 2 of Lemma 2, and by using <em>&phi;</em>(<em>n</em>) = <em>&omega;</em>;(sqrt(1/(2*<em>n</em>))). &#x25a1;</p>
+<p><em>Proof.</em> Follows from Theorem 1 by using the <em>&omega;</em> given in part 2 of Lemma 2, and by using <em>&phi;</em>(<em>n</em>) = <em>&omega;</em>(sqrt(1/(2*<em>n</em>))). &#x25a1;</p>
 
 <blockquote>
 <p><strong>Note:</strong> For specific values of <em>&alpha;</em>, the equation <em>&delta;</em>(<em>n</em>) = <em>&delta;</em>(2 * <em>n</em>) + <em>&phi;</em>(<em>n</em>) can be solved via linear recurrences; an example for <em>&alpha;</em> = 1/2 is the following SymPy code: <code>rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()</code>.  Trying different values of <em>&alpha;</em> suggested the following formula for Hölder continuous functions with <em>&alpha;</em> of 1/<em>j</em> or greater: (<em>M</em>* &sum;<sub><em>i</em> = 0,...,(<em>j</em>*2)&minus;1</sub> 2<sup><em>i</em>/(2*<em>j</em>)</sup>)/<em>n</em><sup>1/(2*<em>j</em>)</sup> = <em>M</em> / ((2<sup>1/(2*<em>j</em>)</sup>&minus;1)*<em>n</em><sup>1/(2*<em>j</em>)</sup>); and generalizing the latter expression led to the term in the theorem.</p>

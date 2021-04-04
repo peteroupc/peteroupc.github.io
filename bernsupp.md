@@ -229,13 +229,19 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 <a id=Approximate_Bernoulli_Factories></a>
 ## Approximate Bernoulli Factories
 
-Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a factory function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an **approximate Bernoulli factory** for _f_.
+Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an **approximate Bernoulli factory** for _f_.
 
-More specifically, we approximate _f_ using one polynomial in Bernstein form of degree _n_.  The higher _n_ is, the better this approximation.  In fact, since every factory function is continuous, we can choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
+Here, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function min(_&lambda;_, 1 &minus; _&lambda;_)).
 
-Then, one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" can be used to simulate that polynomial: the polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_).
+To build an approximate Bernoulli factory:
 
-The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
+1. We first find a polynomial in Bernstein form of degree _n_ that is close to the desired function _f_.  The higher _n_ is, the better this approximation.  And if _f_ is continuous, we can choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
+
+    The simplest choice for this polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_), and this is used in the examples below.  Whatever the choice, the polynomial's coefficients must all lie in \[0, 1\].
+
+2. Then, we use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to simulate that polynomial, given its coefficients.
+
+**Examples of approximate Bernoulli factories.** The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
 
 - _&epsilon;_ = _L_\*((4306+837*sqrt(6))/5832) / sqrt(_n_).
 
@@ -261,11 +267,11 @@ We can proceed similarly with other methods that give an upper bound on the Bern
 
 **Approximate methods for linear functions.** There are a number of approximate methods to simulate _&lambda;_\*_c_, where _c_ > 1 and _&lambda;_ lies in \[0, 1/_c_).  ("Approximate" because this function touches 1 at 1/_c_, so it can't be a factory function.) Since the methods use only up to _n_ flips, where _n_ is an integer greater than 0, the approximation will be a polynomial of degree _n_.
 
-- Henderson and Glynn (2003, Remark 4)<sup>[**(17)**](#Note17)</sup> approximates the function _&lambda;_\*2 using a polynomial where _a_\[_j_] =  min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
+- Henderson and Glynn (2003, Remark 4)<sup>[**(8)**](#Note8)</sup> approximates the function _&lambda;_\*2 using a polynomial where the _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*2, 1&minus;1/_n_).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/2).  _g_ can be computed with the SymPy computer algebra library as follows: `from sympy.stats import *; g=2*E( Min(sum(Bernoulli(("B%d" % (i)),z) for i in range(n))/n,(S(1)-S(1)/n)/2))`.
 
-- I found the following approximation for _&lambda;_\*_c_<sup>[**(18)**](#Note18)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _a_\[_j_\] = min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/_c_).
+- I found the following approximation for _&lambda;_\*_c_<sup>[**(9)**](#Note9)</sup>: "(1.) Set _j_ to 0 and _i_ to 0; (2.) If _i_ &ge; _n_, return 0; (3.) Flip the input coin, and if it returns 1, add 1 to _j_; (4.) (Estimate the probability and return 1 if it 'went over'.) If (_j_/(_i_+1)) &ge; 1/_c_, return 1; (5.) Add 1 to _i_ and go to step 2."  Here, _&lambda;_\*_c_ is approximated by a polynomial where _j_<sup>th</sup> coefficient (starting at 0) is min((_j_/_n_)\*_c_, 1).  If _g_(_&lambda;_) is that polynomial, then the error is no greater than 1&minus;_g_(1/_c_).
 
-- The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(19)**](#Note19)</sup>, which approximates _&lambda;_\*2.
+- The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, which approximates _&lambda;_\*2.
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
@@ -276,13 +282,13 @@ The following table summarizes the rate of simulation (in terms of the number of
 
 |   Property of simulation   |   Property of _f_
   ------------- |  ------------------------
-| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(8)**](#Note8)</sup>. |
+| Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Number of flips required, raised to power of _r_, is finite on average and tends to 0 has a tail that drops off uniformly for all _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and all _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(9)**](#Note9)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(9)**](#Note9)</sup>. |
+| Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for all _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and all _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(11)**](#Note11)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(11)**](#Note11)</sup>. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
-| Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(10)**](#Note10)</sup>. |
+| Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(12)**](#Note12)</sup>. |
 
 <a id=Complexity></a>
 ## Complexity
@@ -631,18 +637,17 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
 - <small><sup id=Note6>(6)</sup> Popoviciu, T., "Sur l'approximation des fonctions convexes d'ordre supérieur", Mathematica (Cluj), 1935.</small>
 - <small><sup id=Note7>(7)</sup> Sikkema, P.C., "Der Wert einiger Konstanten in der Theorie der Approximation mit Bernstein-Polynomen", Numer. Math. 3 (1961).</small>
-- <small><sup id=Note8>(8)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
-- <small><sup id=Note9>(9)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
-- <small><sup id=Note10>(10)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
-- <small><sup id=Note11>(11)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
-- <small><sup id=Note12>(12)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
-- <small><sup id=Note13>(13)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
-- <small><sup id=Note14>(14)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
-- <small><sup id=Note15>(15)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
-- <small><sup id=Note16>(16)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
-- <small><sup id=Note17>(17)</sup> Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).</small>
-- <small><sup id=Note18>(18)</sup> For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.</small>
-- <small><sup id=Note19>(19)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
+- <small><sup id=Note8>(8)</sup> Henderson, S.G., Glynn, P.W., "Nonexistence of a class of variate generation schemes", _Operations Research Letters_ 31 (2003).</small>
+- <small><sup id=Note9>(9)</sup> For this approximation, if _n_ were infinity, the method would return 1 with probability 1 and so would not approximate _&lambda;_\*_c_, of course.</small>
+- <small><sup id=Note10>(10)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
+- <small><sup id=Note11>(11)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
+- <small><sup id=Note12>(12)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
+- <small><sup id=Note13>(13)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
+- <small><sup id=Note14>(14)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note15>(15)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
+- <small><sup id=Note16>(16)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
+- <small><sup id=Note17>(17)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
+- <small><sup id=Note18>(18)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -656,7 +661,7 @@ This section shows mathematical proofs for some of the approximation schemes of 
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(11)**](#Note11)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(12)**](#Note12)</sup>. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(13)**](#Note13)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(14)**](#Note14)</sup>. &#x25a1;
 
 Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions whose slope doesn't go exponentially fast to a vertical slope.
 
@@ -690,16 +695,16 @@ _Proof._
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 > 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
->     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(13)**](#Note13)</sup>; (Gal 1995)<sup>[**(14)**](#Note14)</sup>.
->     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(13)**](#Note13)</sup>; (Gal 1995)<sup>[**(14)**](#Note14)</sup>.
+>     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(15)**](#Note15)</sup>; (Gal 1995)<sup>[**(16)**](#Note16)</sup>.
+>     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(15)**](#Note15)</sup>; (Gal 1995)<sup>[**(16)**](#Note16)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(15)**](#Note15)</sup>.
+>     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(17)**](#Note17)</sup>.
 
 In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
-- A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(16)**](#Note16)</sup>.
+- A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(18)**](#Note18)</sup>.
 
 **Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;_
 
@@ -740,7 +745,7 @@ Condition (iv) is the _consistency requirement_ described earlier in this page. 
 
 _Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
-_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2, and by using _&phi;_(_n_) = _&omega;_;(sqrt(1/(2\*_n_))). &#x25a1;
+_Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2, and by using _&phi;_(_n_) = _&omega;_(sqrt(1/(2\*_n_))). &#x25a1;
 
 > **Note:** For specific values of _&alpha;_, the equation _&delta;_(_n_) = _&delta;_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
