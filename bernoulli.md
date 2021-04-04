@@ -624,7 +624,12 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 >     - The function _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_) admits a Bernoulli factory (which it won't if it touches 0 or 1 inside the interval (0, 1), but isn't constant, for example).
 >
 >     See also Mendo (2019)<sup>[**(23)**](#Note23)</sup>.
-> 2. **Constants with non-negative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: _c_ = &sum;<sub>_n_=0,1,...</sub> _a_<sub>_n_</sub>, where _a_<sub>_n_</sub> are each 0 or greater and sum to 1 or less.  Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash;<br><br>_c_ = &sum;<sub>_n_=0,1,...</sub> _g_(_n_) \* (_a_<sub>_n_</sub> / _g_(_n_)),<br><br>but only if _g_(_n_) &ge; _a_<sub>_n_</sub> &ge; 0 for each integer _n_&ge;0.
+> 2. **Constants with non-negative series expansions.** A special case of note 1.  Let _g_ be as in note 1.  Assume we have a constant with the following series expansion: _c_ = &sum;<sub>_n_=0,1,...</sub> _a_<sub>_n_</sub>, where&mdash;
+>
+>     - _a_<sub>_n_</sub> are each 0 or greater and sum to 1 or less, and
+>     - _g_(_n_) &ge; _a_<sub>_n_</sub> &ge; 0 for each integer _n_&ge;0.
+>
+>     Then by **generating _X_ and flipping a coin with probability of heads of _a_<sub>_X_</sub>/_g_(_X_)**, we can simulate the probability  _c_ as the convex combination&mdash;<br><br>_c_ = &sum;<sub>_n_=0,1,...</sub> _g_(_n_) \* (_a_<sub>_n_</sub> / _g_(_n_)).
 >
 > **Examples:**
 >

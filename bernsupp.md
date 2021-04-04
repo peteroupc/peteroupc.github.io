@@ -235,9 +235,11 @@ Here, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] t
 
 To build an approximate Bernoulli factory:
 
-1. We first find a polynomial in Bernstein form of degree _n_ that is close to the desired function _f_.  The higher _n_ is, the better this approximation.  And if _f_ is continuous, we can choose _n_ high enough that the polynomial differs from _f_ by no more than _&epsilon;_, where _&epsilon;_ > 0 is the desired error tolerance.
+1. We first find a polynomial in Bernstein form of degree _n_ that is close to the desired function _f_.
 
-    The simplest choice for this polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_), and this is used in the examples below.  Whatever the choice, the polynomial's coefficients must all lie in \[0, 1\].
+    The simplest choice for this polynomial has _n_+1 coefficients and its _j_<sup>th</sup> coefficient (starting at 0) is found as _f_(_j_/_n_), and this is used in the examples below.  For this choice, if _f_ is continuous, the polynomial can be brought arbitrarily close to _f_ by choosing _n_ high enough.
+
+    Whatever polynomial is used, the polynomial's coefficients must all lie in \[0, 1\].
 
 2. Then, we use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to simulate that polynomial, given its coefficients.
 
@@ -715,7 +717,7 @@ _for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), where &phi;
 - _&omega;(sqrt(1/(8\*n&minus;4))), or_
 - _&omega;(sqrt(1/(2\*n)))._
 
-_If the sum in &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, by defining **fabove** and **fbelow** as follows:_
+_If the infinite series &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients **fabove**(n, k) for the upper polynomials, and **fbelow**(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, for all n&ge;1 that are integer powers of 2, by defining **fabove** and **fbelow** as follows:_
 
 - _**fbelow**(n, k) = f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = f(k/n) + &eta;(n)._
@@ -724,19 +726,19 @@ _Except that the following bounding note applies: If **fabove**(n, k) > 1 for a 
 
 _Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.
 
-We note that for the sum stated for _&eta;_(_n_) in the theorem, each term of the sum is nonnegative making the sum nonnegative and, by the assumption that the sum converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
+We note that for the series _&eta;_(_n_) in the theorem, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
 
 Condition (i) says that the coefficients **fbelow** and **fabove** must be bounded by 0 and 1.  This is ensured starting with a large enough value of _n_ greater than 0, call it _n_<sub>0</sub>, as shown next.
 
-Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. By the assumption that the sum in _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction.  This combined means that the coefficients **fbelow** and **fabove** will eventually be bounded by 0 and 1 for all integers _n_ starting with _n_<sub>0</sub>.
+Let _&epsilon;_ be a positive distance between 0 and the minimum or between 1 and the maximum of _f_, whichever is smaller.  This _&epsilon;_ exists by the assumption that _f_ is bounded away from 0 and 1. Because the series _&eta;_ converges, _&eta;_(_n_) will eventually stay less than _&epsilon;_.  And the `f(k/n)` term is bounded by the minimum and maximum of _f_ by construction.  This combined means that the coefficients **fbelow** and **fabove** will eventually be bounded by 0 and 1 for all integers _n_ starting with _n_<sub>0</sub>.
 
 For _n_ less than _n_<sub>0</sub>, condition (i) is ensured by setting **fbelow** and **fabove** to 0 or 1, respectively, whenever a coefficient of the degree-_n_ polynomial would otherwise be outside the bounds.
 
-Condition (iii) says that the upper polynomials must converge to _f_ and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the sum converges: as _n_ goes to infinity, _&eta;_(_n_) goes to 0 so that the coefficients, and thus the polynomials, converge to _f_.  For _n_ less than _n_<sub>0</sub>, the values of **fbelow** and **fabove** can be 0 or 1 without affecting convergence.
+Condition (iii) says that the upper polynomials must converge to _f_ and so must the lower polynomials.  This is ensured in a similar way as in Proposition 10, as well as by the assumption that the series converges: as _n_ goes to infinity, _&eta;_(_n_) goes to 0 so that the coefficients, and thus the polynomials, converge to _f_.  For _n_ less than _n_<sub>0</sub>, the values of **fbelow** and **fabove** can be 0 or 1 without affecting convergence.
 
-Condition (iv) is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_ can take on either form given in the theorem. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the sum for _n_ = 2\*_n_, then adding _&phi;_(_n_) to it, in effect working backwards and recursively, and we can easily see that we can calculate the sum for _n_ = 2\*_n_ only if the sum converges, hence the assumption of a converging sum. For _n_<sub>0</sub>, the consistency requirement is maintained by noting that the degree-_n_<sub>0</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>0</sub>, and those polynomials are identically 0 and identically 1, respectively, as are their coefficients. &#x25a1;
+Condition (iv) is the _consistency requirement_ described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is _&eta;_(_n_), a solution to the equation 0 = _&eta;_(_n_) &minus; _&eta;_(2 \* _n_) &minus; _&phi;_(_n_) (see note below), where _&phi;_ can take on either form given in the theorem. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for _n_ = 2\*_n_, then adding _&phi;_(_n_) to it, in effect working backwards and recursively, and we can easily see that we can calculate the series for _n_ = 2\*_n_ only if the series converges, hence the assumption of a converging series. For _n_<sub>0</sub>, the consistency requirement is maintained by noting that the degree-_n_<sub>0</sub> polynomial's coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than _n_<sub>0</sub>, and those polynomials are identically 0 and identically 1, respectively, as are their coefficients. &#x25a1;
 
-> **Note:** There is only one solution _&eta;_(_n_) in our case.  Unlike so-called [**_functional equations_**](https://math.stackexchange.com/questions/3993739) and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in our case, namely the solution that makes the sum converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = _&eta;_(_n_) &minus; _&eta;_(4 \* _n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = _&eta;_(_n_) &minus; _&eta;_(8 \* _n_) &minus; _&phi;_(4\*_n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = ...
+> **Note:** There is only one solution _&eta;_(_n_) in our case.  Unlike so-called [**_functional equations_**](https://math.stackexchange.com/questions/3993739) and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in our case, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = _&eta;_(_n_) &minus; _&eta;_(4 \* _n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = _&eta;_(_n_) &minus; _&eta;_(8 \* _n_) &minus; _&phi;_(4\*_n_) &minus; _&phi;_(2\*_n_) &minus; _&phi;_(_n_) = ...
 
 **Corollary 1.** _Let f(&lambda;) be a strictly bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
 
@@ -764,7 +766,7 @@ _Proof._ Because Lipschitz continuous functions are 1-Hölder continuous with H�
 - _**fbelow**(n, k) = min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if n < 4; otherwise, f(k/n) &minus; &eta;(n)._
 - _**fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(k/n) + &eta;(n)._
 
-_Proof._  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the _&phi;_ given in this theorem, the sum _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the sum converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
+_Proof._  Follows from Theorem 1 and part 1 of Lemma 2 above, as well as Remark B and the proof of Proposition 10 of Nacu and Peres, including the observation in Remark B of the paper that we can start the algorithm from _n_ = 4; in that case, the upper and lower polynomials of degree 1 through 3 above would be constant functions, so that as polynomials in Bernstein form, the coefficients of each one would be equal.  With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
 **Corollary 3.** _Let f(&lambda;) be a strictly bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme is valid in the sense of Theorem 1, subject to the bounding note:_
 
@@ -784,7 +786,7 @@ _Proof._  Because (_M_/2)\*(1/(7\*_n_) in part 3 of Lemma 2 is bounded the same 
 
 **Theorem 4.** _Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = **E**\[f(Y/n)\] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem._
 
-_Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ given in this theorem, the sum _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the sum converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
+_Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ given in this theorem, the series _&eta;_(_n_) in Theorem 1 remains nonnegative; also, this theorem adopts Theorem 1's assumption that the series converges, so that _&eta;_(_n_) still decreases with increasing _n_. &#x25a1;
 
 **Proposition 1.**
 
@@ -820,7 +822,7 @@ Now, by plugging sqrt(1/(7\*_n_)) into _&omega;_, we get the following for Theor
 
 - _&phi;_(_n_) = 1/(ln(sqrt(7/_n_)/7)&minus;3)<sup>2</sup>.
 
-Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  The sum converges, resulting in:
+Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<sup>_n_</sup>, summing over [_k_, &infin;), and substituting _k_ with log2(_k_).  _&eta;_ converges, resulting in:
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>,
 
