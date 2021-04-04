@@ -1456,7 +1456,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
     - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on Mathematics Stack Exchange**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).
 
-        The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for the vast majority of functions likely to occur in practice, but not all of them. (a) Are there Bernoulli Factory functions used in practice that don't have a polynomial approximation scheme given in the the supplemental notes? (b) Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions in a manner needed for the Bernoulli factory problem (besides those I list in this article or the supplemental notes)?
+        The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for the vast majority of functions likely to occur in practice, but not all of them. (a) Are there Bernoulli Factory functions used in practice that don't have a polynomial approximation scheme given in the supplemental notes? (b) Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions in a manner needed for the Bernoulli factory problem (besides those I list in this article or the supplemental notes)?
 
     All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
@@ -1572,10 +1572,7 @@ the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces e
 
 In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ or _f_(_&lambda;_). See also (Mossel and Peres 2005, section 4.3)<sup>[**(14)**](#Note14)</sup>.
 
-Only _factory functions_ can have unbiased estimation algorithms whose estimates lie in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>  For example, function A can't serve as a factory function, so no simulator for that function (and no unbiased estimator of the kind just given) is possible.  This _is_ possible for function B, however (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>.
-
-- Function A: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2).
-- Function B: 2 * _&lambda;_, when _&lambda;_ lies in (0, 1/2 &minus; _&#x03F5;_), where _&#x03F5;_ is in (0, 1/2).
+Only _factory functions_ (as defined in "[**About Bernoulli Factories**](#About_Bernoulli_Factories)) can have unbiased estimation algorithms whose estimates lie in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.
 
 Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 

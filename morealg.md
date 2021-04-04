@@ -238,11 +238,10 @@ I suspected that the required degree _d_ would be floor(_m_\*2/3)+1, as describe
 
 The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different _oracle_ (black box) from coins that output heads or tails.
 
-**Algorithm 1.** Say we have an oracle that produces independent random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  This is possible if and only if _f_, in the interval \[_a_, _b_\]&mdash;
+**Algorithm 1.** Say we have an oracle that produces independent random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
-- is continuous everywhere,
-- has a finite maximum, and
-- returns 0 everywhere or returns a value 0 or greater at each of the points _a_ and _b_ and a value greater than 0 at each other point
+- _f_ is continuous on \[_a_, _b_\], and
+- _f_(_&mu;_) is bounded from below by _&epsilon;_\*min((_&mu;_ &minus; _&a_)<sup>_n_</sup>, (_&mu;_ &minus; _&a_)<sup>_n_</sup>) for some integer _n_ and some positive _&epsilon;_
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/03/30"><meta name="citation_online_date" content="2021/03/30"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/04/04"><meta name="citation_online_date" content="2021/04/04"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Requests and Open Questions</h1>
@@ -78,6 +78,8 @@
 <li><p>I request expressions of mathematical functions that can be expressed in any of the following ways:</p>
 
 <ul>
+<li>Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.</li>
+<li>A series expansion with non-negative terms that can be &quot;tucked&quot; under a discrete probability mass function.</li>
 <li>Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.</li>
 <li>Series expansions with non-negative coefficients and for which bounds on the truncation error are available.</li>
 <li>Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.</li>
@@ -105,8 +107,8 @@
 <p>These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to <em>f</em>, where <em>L</em> or <em>L&prime;</em> and <em>U</em> or <em>U&prime;</em> are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  Specifically:</p>
 
 <ol>
-<li>Given the number of heads <em>H</em><sub><em>n</em></sub>, <em>L</em> is the <em>H</em><sub>n</sub> Bernstein coefficient of the <em>n</em><sup>th</sup> lower approximating polynomial, and <em>U</em> is the <em>n</em><sup>th</sup> Bernstein coefficient of the upper approximating polynomial.</li>
-<li><em>L&prime;</em> is the <em>H</em><sub>n</sub><sup>th</sup> Bernstein coefficient of the (<em>n</em>&minus;1)<sup>th</sup> lower approximating polynomial, and <em>U&prime;</em> is the <em>H</em><sub><em>n</em></sub> Bernstein coefficient of the (<em>n</em>&minus;1)<sup>th</sup> upper approximating polynomial, after elevating both polynomials to degree <em>n</em>.</li>
+<li>Given the number of heads <em>H</em><sub><em>n</em></sub>, <em>L</em> is the <em>H</em><sub>n</sub> Bernstein coefficient of the <em>n</em><sup>th</sup> lower approximating polynomial, and <em>U</em> is that of the corresponding upper polynomial.</li>
+<li><em>L&prime;</em> is the <em>H</em><sub>n</sub><sup>th</sup> Bernstein coefficient of the (<em>n</em>&minus;1)<sup>th</sup> lower approximating polynomial, and <em>U&prime;</em> is that of the corresponding upper polynomial, after elevating both polynomials to degree <em>n</em>.</li>
 </ol>
 
 <p>But how do these steps work when the approximating functions (the functions that converge to <em>f</em>) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?</p></li>
