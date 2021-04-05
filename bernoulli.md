@@ -1033,12 +1033,12 @@ Observing that the even-parity construction used in the Flajolet paper is equiva
 <a id=cos___lambda></a>
 #### cos(_&lambda;_)
 
-This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(_&lambda;_) is 1 &minus; _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;
+This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(_&lambda;_) is 1 &minus; _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because, with probability 1&mdash;
 
-- the lower truncation is less than or equal to its corresponding upper truncation almost surely,
+- the lower truncation is less than or equal to its corresponding upper truncation,
 - the lower and upper truncations are in the interval [0, 1],
-- each lower truncation is greater than or equal to the previous lower truncation almost surely,
-- each upper truncation is less than or equal to the previous upper truncation almost surely, and
+- each lower truncation is greater than or equal to the previous lower truncation,
+- each upper truncation is less than or equal to the previous upper truncation, and
 - the lower and upper truncations have an expected value that approaches _&lambda;_ from below and above.
 
 The algorithm to simulate cos(_&lambda;_) follows.
@@ -1546,7 +1546,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(23)**](#Note23)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is neither 0 nor 1.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(23)**](#Note23)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(49)**](#Note49)</sup>.
+
+A non-randomized algorithm doesn't work whenever the probability of heads of any of the input coins can be 0 or 1. (More generally, it doesn't work whenever it's possible for the input coin, or the "black box" from which samples are taken, to produce the same value with probability 1.)
 
 In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(50)**](#Note50)</sup>, (Peres 1992)<sup>[**(51)**](#Note51)</sup>) and is calculated as&mdash;
 
@@ -1564,7 +1566,7 @@ If an algorithm&mdash;
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)),
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
 
 1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(52)**](#Note52)</sup>
 2. generating a uniform random number in [0,1], call it _u_; and
@@ -1572,14 +1574,14 @@ the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces e
 
 In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ or _f_(_&lambda;_). See also (Mossel and Peres 2005, section 4.3)<sup>[**(14)**](#Note14)</sup>.
 
-Only _factory functions_ (as defined in "[**About Bernoulli Factories**](#About_Bernoulli_Factories)) can have unbiased estimation algorithms whose estimates lie in \[0, 1\] almost surely (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.
+Only _factory functions_ (as defined in "[**About Bernoulli Factories**](#About_Bernoulli_Factories)) can have unbiased estimation algorithms whose estimates lie in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.
 
 Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 
-- _exact simulation_, or generating random numbers with the same _distribution_ as that of _g_(_X_)  (same "shape", location, and scale of probabilities) in almost surely finite time, and
-- _exact estimation_, or generating random numbers with the same _expected value_ as that of _g_(_X_) in almost surely finite time (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator),
+- _exact simulation_, or methods that simulate the same _distribution_ as that of _g_(_X_) (same "shape", location, and scale of probabilities) and finish with probability 1, and
+- _exact estimation_, or methods that simulate the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) and finish with probability 1,
 
-where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
+where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Both exact simulation and exact estimation terminate with probability 1.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>
 ### Correctness Proof for the Continued Logarithm Simulation Algorithm
@@ -1588,7 +1590,7 @@ where _g_(_X_) is a random value that follows the desired distribution, based on
 
 _Proof._ This proof of correctness takes advantage of Huber's "fundamental theorem of perfect simulation" (Huber 2019)<sup>[**(41)**](#Note41)</sup>.  Using Huber's theorem requires proving two things:
 
-- First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it's called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.
+- First, we note that the algorithm clearly finishes with probability 1, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it's called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.
 - Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with an oracle that simulates the correct "continued sub-logarithm".  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), where _x_ is the "continued sub-logarithm" and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to _x_/2), and the last piece is the "rejection piece" that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability _p_ = (1 / 2<sup>_c_\[_i_\]</sup>) / 2 and fail either at the first substep of the loop with probability _f1_ = (1 &minus; 1 / 2<sup>_c_\[_i_\]</sup>) / 2, or at the second substep with probability _f2_ = _x_/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (_p_ / (_p_ + _f1_ + _f2_)) leads to (1 / 2<sup>_c_\[_i_\]</sup>) / (1 + _x_), which is the probability we wanted.
 
 Since both conditions of Huber's theorem are satisfied, this completes the proof. &#x25a1;
@@ -1600,7 +1602,7 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
-- The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.
+- The algorithm finishes with probability 1 for the same reason as the similar continued logarithm simulator.
 - If the recursive call in the loop is replaced with an oracle that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
 
 <a id=The_von_Neumann_Schema></a>

@@ -1447,13 +1447,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>cos(<em>&lambda;</em>)</h4>
 
-<p>This algorithm adapts the general martingale algorithm for this function&#39;s series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(<em>&lambda;</em>) is 1 &minus; <em>&lambda;</em><sup>2</sup>/(2!) + <em>&lambda;</em><sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A <em>lower truncation</em> of the series is a truncation of that series that ends with a minus term, and the corresponding <em>upper truncation</em> is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because&mdash;</p>
+<p>This algorithm adapts the general martingale algorithm for this function&#39;s series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup> (which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(<em>&lambda;</em>) is 1 &minus; <em>&lambda;</em><sup>2</sup>/(2!) + <em>&lambda;</em><sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A <em>lower truncation</em> of the series is a truncation of that series that ends with a minus term, and the corresponding <em>upper truncation</em> is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because, with probability 1&mdash;</p>
 
 <ul>
-<li>the lower truncation is less than or equal to its corresponding upper truncation almost surely,</li>
+<li>the lower truncation is less than or equal to its corresponding upper truncation,</li>
 <li>the lower and upper truncations are in the interval [0, 1],</li>
-<li>each lower truncation is greater than or equal to the previous lower truncation almost surely,</li>
-<li>each upper truncation is less than or equal to the previous upper truncation almost surely, and</li>
+<li>each lower truncation is greater than or equal to the previous lower truncation,</li>
+<li>each upper truncation is less than or equal to the previous upper truncation, and</li>
 <li>the lower and upper truncations have an expected value that approaches <em>&lambda;</em> from below and above.</li>
 </ul>
 
@@ -2099,7 +2099,9 @@ kind of irrational number.</p>
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.  A non-randomized algorithm works only if the probability of heads of any of the input coins is neither 0 nor 1.</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.</p>
+
+<p>A non-randomized algorithm doesn&#39;t work whenever the probability of heads of any of the input coins can be 0 or 1. (More generally, it doesn&#39;t work whenever it&#39;s possible for the input coin, or the &quot;black box&quot; from which samples are taken, to produce the same value with probability 1.)</p>
 
 <p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note50"><strong>(50)</strong></a></sup>, (Peres 1992)<sup><a href="#Note51"><strong>(51)</strong></a></sup>) and is calculated as&mdash;</p>
 
@@ -2122,7 +2124,7 @@ kind of irrational number.</p>
 <li>produces heads with a probability that depends on <em>&lambda;</em> (<em>f</em>(<em>&lambda;</em>)),</li>
 </ul>
 
-<p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
+<p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] with probability (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
 
 <ol>
 <li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note52"><strong>(52)</strong></a></sup></li>
@@ -2132,16 +2134,16 @@ kind of irrational number.</p>
 
 <p>In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because &quot;exact sampling&quot; is the focus of this page, this page does not cover algorithms that directly estimate <em>&lambda;</em> or <em>f</em>(<em>&lambda;</em>). See also (Mossel and Peres 2005, section 4.3)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
-<p>Only <em>factory functions</em> (as defined in &quot;<a href="#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) can have unbiased estimation algorithms whose estimates lie in [0, 1] almost surely (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</p>
+<p>Only <em>factory functions</em> (as defined in &quot;<a href="#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) can have unbiased estimation algorithms whose estimates lie in [0, 1] with probability 1 (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</p>
 
 <p>Glynn (2016)<sup><a href="#Note53"><strong>(53)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
-<li><em>exact simulation</em>, or generating random numbers with the same <em>distribution</em> as that of <em>g</em>(<em>X</em>)  (same &quot;shape&quot;, location, and scale of probabilities) in almost surely finite time, and</li>
-<li><em>exact estimation</em>, or generating random numbers with the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) in almost surely finite time (<em>unbiased</em> estimator, not merely a <em>consistent</em> or <em>asymptotically unbiased</em> estimator),</li>
+<li><em>exact simulation</em>, or methods that simulate the same <em>distribution</em> as that of <em>g</em>(<em>X</em>) (same &quot;shape&quot;, location, and scale of probabilities) and finish with probability 1, and</li>
+<li><em>exact estimation</em>, or methods that simulate the same <em>expected value</em> as that of <em>g</em>(<em>X</em>) (<em>unbiased</em> estimator, not merely a <em>consistent</em> or <em>asymptotically unbiased</em> estimator) and finish with probability 1,</li>
 </ul>
 
-<p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
+<p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Both exact simulation and exact estimation terminate with probability 1.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
 
@@ -2152,7 +2154,7 @@ kind of irrational number.</p>
 <p><em>Proof.</em> This proof of correctness takes advantage of Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; (Huber 2019)<sup><a href="#Note41"><strong>(41)</strong></a></sup>.  Using Huber&#39;s theorem requires proving two things:</p>
 
 <ul>
-<li>First, we note that the algorithm clearly halts almost surely, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.</li>
+<li>First, we note that the algorithm clearly finishes with probability 1, since step 1 will stop the algorithm if it reaches the last coefficient, and step 2 always gives a chance that the algorithm will return a value, even if it&#39;s called recursively or the number of coefficients is infinite.  Thus, the chance the algorithm has to be called recursively or with more iterations shrinks and shrinks as the algorithm does more recursions and iterations.</li>
 <li>Second, we show the algorithm is locally correct when the recursive call in the loop is replaced with an oracle that simulates the correct &quot;continued sub-logarithm&quot;.  If step 1 reaches the last coefficient, the algorithm obviously passes with the correct probability.  Otherwise, we will be simulating the probability (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), where <em>x</em> is the &quot;continued sub-logarithm&quot; and will be at most 1 by construction.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up one half, the second piece (in the second substep) takes up a portion of the other half (which here is equal to <em>x</em>/2), and the last piece is the &quot;rejection piece&quot; that reruns the loop.  Since this loop changes no variables that affect later iterations, each iteration acts like an acceptance/rejection algorithm already proved to be a perfect simulator by Huber.  The algorithm will pass at the first substep with probability <em>p</em> = (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2 and fail either at the first substep of the loop with probability <em>f1</em> = (1 &minus; 1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / 2, or at the second substep with probability <em>f2</em> = <em>x</em>/2 (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails (<em>p</em> / (<em>p</em> + <em>f1</em> + <em>f2</em>)) leads to (1 / 2<sup><em>c</em>[<em>i</em>]</sup>) / (1 + <em>x</em>), which is the probability we wanted.</li>
 </ul>
 
@@ -2167,7 +2169,7 @@ kind of irrational number.</p>
 <p><em>Proof.</em> We use Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; again in the proof of correctness.</p>
 
 <ul>
-<li>The algorithm halts almost surely for the same reason as the similar continued logarithm simulator.</li>
+<li>The algorithm finishes with probability 1 for the same reason as the similar continued logarithm simulator.</li>
 <li>If the recursive call in the loop is replaced with an oracle that simulates the correct &quot;sub-fraction&quot;, the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), where <em>x</em> is the &quot;continued sub-fraction&quot; and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to <em>h</em> = <em>a</em>[<em>i</em>]/(<em>a</em>[<em>i</em>] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to <em>x</em> * (1 &minus; <em>h</em>)), and the last piece is the &quot;rejection piece&quot;.  The algorithm will pass at the first substep with probability <em>p</em> = (<em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em> and fail either at the first substep of the loop with probability <em>f1</em> = (1 &minus; <em>b</em>[<em>i</em>] / <em>a</em>[<em>pos</em>]) * <em>h</em>, or at the second substep with probability <em>f2</em> = <em>x</em> * (1 &minus; <em>h</em>) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to <em>b</em>[<em>i</em>] / (<em>a</em>[<em>i</em>] + <em>x</em>), which is the probability we wanted, so that both of Huber&#39;s conditions are satisfied and we are done.  &#x25a1;</li>
 </ul>
 

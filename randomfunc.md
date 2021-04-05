@@ -342,9 +342,10 @@ In practice, memory is usually divided into _bytes_, or 8-bit integers in the in
 7. To choose a number in the interval [`mn`, `mx`), with equal probability, in increments equal to `step`: `mn+step*RNDINTEXC(ceil((mx-mn)/(1.0*step)))`.
 8. To choose an integer in the interval [0, `X`) at random:
      - And favor numbers in the middle:  `floor((RNDINTEXC(X) + RNDINTEXC(X)) / 2)`.
-     - And strongly favor low numbers:  `floor(RNDINTEXC(X) * RNDINTEXC(X) / X)`.
      - And favor high numbers:  `max(RNDINTEXC(X), RNDINTEXC(X))`.
-     - And strongly favor high numbers:  `X - 1 - floor(RNDINTEXC(X) * RNDINTEXC(X) / X)` or `max(RNDINTEXC(X), RNDINTEXC(X), RNDINTEXC(X))`.
+     - And favor low numbers:  `min(RNDINTEXC(X), RNDINTEXC(X))`.
+     - And strongly favor high numbers:  `max(RNDINTEXC(X), RNDINTEXC(X), RNDINTEXC(X))`.
+     - And strongly favor low numbers:  `min(RNDINTEXC(X), RNDINTEXC(X), RNDINTEXC(X))`.
 
 <a id=Randomization_Techniques></a>
 ## Randomization Techniques
