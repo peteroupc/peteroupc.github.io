@@ -1566,7 +1566,7 @@ If an algorithm&mdash;
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)),
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
 
 1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(52)**](#Note52)</sup>
 2. generating a uniform random number in [0,1], call it _u_; and
@@ -1581,7 +1581,7 @@ Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 - _exact simulation_, or methods that simulate the same _distribution_ as that of _g_(_X_) (same "shape", location, and scale of probabilities) and finish with probability 1, and
 - _exact estimation_, or methods that simulate the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) and finish with probability 1,
 
-where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Both exact simulation and exact estimation terminate with probability 1.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
+where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>
 ### Correctness Proof for the Continued Logarithm Simulation Algorithm

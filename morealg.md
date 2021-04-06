@@ -224,24 +224,37 @@ It would be interesting to find general formulas to find the appropriate polynom
 My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-2. (Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set _m_ to (_n_&minus;1)/2+1, where _n_ is the number of bits generated this way.
-3. (Build a degree-_m_\*2 polynomial equivalent to (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_m_</sup>/2.) Let _z_ be (4<sup>_m_</sup>/2)/choose(_m_\*2,_m_).  Define a polynomial of degree _m_\*2 whose (_m_\*2)+1 Bernstein coefficients are all zero except the _m_<sup>th</sup> coefficient (starting at 0), whose value is _z_.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial's degree without changing its shape or position; see the derivation in the appendix).  Let _d_ be the new polynomial's degree.
-4. (Simulate the polynomial, whose degree is _d_ (Goyal and Sigman 2012)<sup>[**(6)**](#Note6)</sup>.) Flip the input coin _d_ times and set _h_ to the number of ones generated this way.  Let _a_ be the _h_<sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability _a_, return 1.  Otherwise, return 0.
+2. Run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) given later, and return the result of that run.
 
-I suspected that the required degree _d_ would be floor(_m_\*2/3)+1, as described in the appendix.  With help from the [**MathOverflow community**](https://mathoverflow.net/questions/381419), steps 3 and 4 of the algorithm can be described more efficiently as follows:
+And the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) is as follows:
+
+1. (Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set _m_ to (_n_&minus;1)/2+1, where _n_ is the number of bits generated this way.
+2. (Build a degree-_m_\*2 polynomial equivalent to (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_m_</sup>/2.) Let _z_ be (4<sup>_m_</sup>/2)/choose(_m_\*2,_m_).  Define a polynomial of degree _m_\*2 whose (_m_\*2)+1 Bernstein coefficients are all zero except the _m_<sup>th</sup> coefficient (starting at 0), whose value is _z_.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial's degree without changing its shape or position; see the derivation in the appendix).  Let _d_ be the new polynomial's degree.
+3. (Simulate the polynomial, whose degree is _d_ (Goyal and Sigman 2012)<sup>[**(6)**](#Note6)</sup>.) Flip the input coin _d_ times and set _h_ to the number of ones generated this way.  Let _a_ be the _h_<sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability _a_, return 1.  Otherwise, return 0.
+
+I suspected that the required degree _d_ would be floor(_m_\*2/3)+1, as described in the appendix.  With help from the [**MathOverflow community**](https://mathoverflow.net/questions/381419), steps 2 and 3 of the algorithm above can be described more efficiently as follows:
 
 - (3.) Let _r_ be floor(_m_\*2/3)+1, and let _d_ be _m_\*2+_r_.
 - (4.) (Simulate the polynomial, whose degree is _d_.) Flip the input coin _d_ times and set _h_ to the number of ones generated this way.  Let _a_ be (1/2) \* 2<sup>_m_\*2</sup>\*choose(_r_,_h_&minus;_m_)/choose(_d_, _h_) (the polynomial's _h_<sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability _a_, return 1.  Otherwise, return 0.
 
+The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certain other piecewise linear functions with three breakpoints, and algorithms for those functions are shown in the following table.  In the table, _&mu;_ is the unknown probability of heads of a second input coin.
+
+|  Breakpoints  | Algorithm |
+ --- | --- |
+| 0 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 1, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
+| _&mu;_ at 0; 1/2 at 1/2; and 0 at 1. | Flip the _&mu;_ input coin.  If it returns 1, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
+| 1 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
+| _&mu;_ at 0; 1/2 at 1/2; and 1 at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
+
 <a id=Non_Negative_Factories></a>
 ### Non-Negative Factories
 
-The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different _oracle_ (black box) from coins that output heads or tails.
+The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different _oracle_ (black box) than coins that output heads or tails.
 
 **Algorithm 1.** Say we have an oracle that produces independent random numbers in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random numbers that average to _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
 - _f_ is continuous on \[_a_, _b_\], and
-- _f_(_&mu;_) is bounded from below by _&epsilon;_\*min((_&mu;_ &minus; _\a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is non-negative and neither touches 0 inside (_a_, _b_) nor moves away from _a_ or _b_ more slowly than a polynomial)
+- _f_(_&mu;_) is bounded from below by _&epsilon;_\*min((_&mu;_ &minus; _a_)<sup>_n_</sup>, (_b_ &minus; _&mu;_)<sup>_n_</sup>) for some integer _n_ and some _&epsilon;_ greater than 0 (loosely speaking, _f_ is non-negative and neither touches 0 inside (_a_, _b_) nor moves away from 0 more slowly than a polynomial)
 
 (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>. (Here, _a_ and _b_ are both rational numbers and may be less than 0.)
 
@@ -783,7 +796,7 @@ The following explains how the algorithm is derived.
 The function min(_&lambda;_, 1/2) can be rewritten as _A_ + _B_ where&mdash;
 
 - _A_  = (1/2) \* _&lambda;_, and
-- _B_ = (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2) = (1/2) \* &sum;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
+- _B_ = (1/2) \* min(_&lambda;_, 1&minus;_&lambda;_)<br/>&nbsp;&nbsp;= (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2)<br/>&nbsp;&nbsp;(1/2) \* &sum;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
 
 revealing that the function is a [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), and _B_ is itself a convex combination where&mdash;
 

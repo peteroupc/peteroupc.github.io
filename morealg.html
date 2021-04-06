@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/04/04"><meta name="citation_online_date" content="2021/04/04"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/04/06"><meta name="citation_online_date" content="2021/04/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -308,29 +308,61 @@
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
+<li>Run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) given later, and return the result of that run.</li>
+</ol>
+
+<p>And the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) is as follows:</p>
+
+<ol>
 <li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
 <li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
 <li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
 </ol>
 
-<p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 3 and 4 of the algorithm can be described more efficiently as follows:</p>
+<p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 2 and 3 of the algorithm above can be described more efficiently as follows:</p>
 
 <ul>
 <li>(3.) Let <em>r</em> be floor(<em>m</em>*2/3)+1, and let <em>d</em> be <em>m</em>*2+<em>r</em>.</li>
 <li>(4.) (Simulate the polynomial, whose degree is <em>d</em>.) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be (1/2) * 2<sup><em>m</em>*2</sup>*choose(<em>r</em>,<em>h</em>&minus;<em>m</em>)/choose(<em>d</em>, <em>h</em>) (the polynomial&#39;s <em>h</em><sup>th</sup> Bernstein coefficient starting at 0; the first term is 1/2 because the polynomial being simulated has the value 1/2 at the point 1/2).  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
 </ul>
 
+<p>The min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) algorithm can be used to simulate certain other piecewise linear functions with three breakpoints, and algorithms for those functions are shown in the following table.  In the table, <em>&mu;</em> is the unknown probability of heads of a second input coin.</p>
+
+<table><thead>
+<tr>
+<th>Breakpoints</th>
+<th>Algorithm</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>0 at 0; 1/2 at 1/2; and <em>&mu;</em> at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
+<td><em>&mu;</em> at 0; 1/2 at 1/2; and 0 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
+<td>1 at 0; 1/2 at 1/2; and <em>&mu;</em> at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
+</tr>
+<tr>
+<td><em>&mu;</em> at 0; 1/2 at 1/2; and 1 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
+</tr>
+</tbody></table>
+
 <p><a id=Non_Negative_Factories></a></p>
 
 <h3>Non-Negative Factories</h3>
 
-<p>The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) from coins that output heads or tails.</p>
+<p>The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
 
 <p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random numbers in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random numbers that average to <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
-<li><em>f</em>(<em>&mu;</em>) is bounded from below by <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>\a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is non-negative and neither touches 0 inside (<em>a</em>, <em>b</em>) nor moves away from <em>a</em> or <em>b</em> more slowly than a polynomial)</li>
+<li><em>f</em>(<em>&mu;</em>) is bounded from below by <em>&epsilon;</em>*min((<em>&mu;</em> &minus; <em>a</em>)<sup><em>n</em></sup>, (<em>b</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> and some <em>&epsilon;</em> greater than 0 (loosely speaking, <em>f</em> is non-negative and neither touches 0 inside (<em>a</em>, <em>b</em>) nor moves away from 0 more slowly than a polynomial)</li>
 </ul>
 
 <p>(Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>. (Here, <em>a</em> and <em>b</em> are both rational numbers and may be less than 0.)</p>
@@ -1029,7 +1061,7 @@ calc_linear_func(count=8)
 
 <ul>
 <li><em>A</em>  = (1/2) * <em>&lambda;</em>, and</li>
-<li><em>B</em> = (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2) = (1/2) * &sum;<sub><em>k</em> = 1, 2, ...</sub> <em>g</em>(<em>k</em>) *  <em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>),</li>
+<li><em>B</em> = (1/2) * min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)<br/>&nbsp;&nbsp;= (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2)<br/>&nbsp;&nbsp;(1/2) * &sum;<sub><em>k</em> = 1, 2, ...</sub> <em>g</em>(<em>k</em>) *  <em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>),</li>
 </ul>
 
 <p>revealing that the function is a <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a>, and <em>B</em> is itself a convex combination where&mdash;</p>
