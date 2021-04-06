@@ -2146,7 +2146,7 @@ kind of irrational number.</p>
 <p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
 
 <blockquote>
-<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for <em>f</em>(<em>&lambda;</em>) equals <em>f</em>(<em>&lambda;</em>) * (1&mdash;<em>f</em>(<em>&lambda;</em>)) and can go as high as 1/4.  There are ways to reduce this variance, but those are beyond the scope of this document.</p>
+<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for <em>f</em>(<em>&lambda;</em>) equals <em>f</em>(<em>&lambda;</em>) * (1&mdash;<em>f</em>(<em>&lambda;</em>)) and can go as high as 1/4.  There are ways to reduce this variance, which are outside the scope of this document.  An estimation algorithm&#39;s <em>mean square error</em> equals variance plus square of bias.</p>
 </blockquote>
 
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
