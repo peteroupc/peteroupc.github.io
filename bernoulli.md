@@ -478,7 +478,7 @@ and let _v_ be min(_ones_, _diff_).  (The following substeps remove outcomes fro
 
 This section shows general-purpose algorithms generate heads with a probability equal to an _irrational number_ (a number that isn't a ratio of two integers), when that number is known by its digit or series expansion, continued fraction, or continued logarithm.
 
-But on the other hand, probabilities that are _rational_ constants are trivial to simulate.  If fair coins are available, the `ZeroOrOne` method, which is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions), should be used.  If coins with unknown bias are available, then a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) method should be used to turn them into fair coins.
+But on the other hand, probabilities that are _rational_ constants are trivial to simulate.  If fair coins are available, the `ZeroOrOne` method, which is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions), should be used.  If coins with unknown probability of heads are available, then a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) method should be used to turn them into fair coins.
 
 <a id=Digit_Expansions></a>
 #### Digit Expansions
@@ -1500,7 +1500,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note17>(17)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 - <small><sup id=Note18>(18)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229)", arXiv:1912.09229 [math.PR], 2019/2020.</small>
 - <small><sup id=Note19>(19)</sup> Propp, J.G., Wilson, D.B., "Exact sampling with coupled Markov chains and applications to statistical mechanics", 1996.</small>
-- <small><sup id=Note20>(20)</sup> A _pushdown automaton_, as used here, is defined in Mossel and Peres 2005 and is described as a machine that maintains a stack of symbols and transitions from one state to another based on the current state, the symbol at the top of the stack, and the outcome of a biased coin flip.  With each state transition, the machine adds symbols to the stack or removes symbols from it.  When the stack is empty, the machine halts, and the result is 0 or 1 depending on the machine's state at that time.</small>
+- <small><sup id=Note20>(20)</sup> A _pushdown automaton_, as used here, is defined in Mossel and Peres 2005 and is described as a machine that maintains a stack of symbols and transitions from one state to another based on the current state, the symbol at the top of the stack, and the outcome of a coin flip with unknown probability of heads.  With each state transition, the machine adds symbols to the stack or removes symbols from it.  When the stack is empty, the machine halts, and the result is 0 or 1 depending on the machine's state at that time.</small>
 - <small><sup id=Note21>(21)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just "&sum; <sub>_k_ = 0, 1, 2, ... </sub> (W(_k_) * (_&lambda;_/2)<sup>_k_</sup>)", appears to be incorrect in conjunction with Figure 4 of that paper.</small>
 - <small><sup id=Note22>(22)</sup> Here, "choose(_g_, _g_/_t_)" means that out of _g_ letters, _g_/_t_ of them must be A's, and "(_&beta;_&minus;1)<sup>_g_&minus;_g_/_t_</sup>" is the number of words that have _g_&minus;_g_/_t_ letters other than A, given that the remaining letters were A's.</small>
 - <small><sup id=Note23>(23)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
@@ -1532,7 +1532,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note49>(49)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note50>(50)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note51>(51)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note52>(52)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small>
+- <small><sup id=Note52>(52)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.</small>
 - <small><sup id=Note53>(53)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
 - <small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note55>(55)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
@@ -1554,7 +1554,7 @@ In fact, there is a lower bound on the average number of coin flips needed to tu
 
 - ((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) / ((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
-For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the probability of heads is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
+For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin strongly leans towards heads or tails (the probability of heads is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
 
 For certain values of _&lambda;_, Kozen (2014)<sup>[**(33)**](#Note33)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
@@ -1582,6 +1582,8 @@ Glynn (2016)<sup>[**(53)**](#Note53)</sup> distinguishes between&mdash;
 - _exact estimation_, or methods that simulate the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) and finish with probability 1,
 
 where _g_(_X_) is a random value that follows the desired distribution, based on random numbers _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
+
+> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&mdash;_f_(_&lambda;_)) and can go as high as 1/4.  There are ways to reduce this variance, but those are beyond the scope of this document.
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>
 ### Correctness Proof for the Continued Logarithm Simulation Algorithm

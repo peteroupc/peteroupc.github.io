@@ -675,7 +675,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>This section shows general-purpose algorithms generate heads with a probability equal to an <em>irrational number</em> (a number that isn&#39;t a ratio of two integers), when that number is known by its digit or series expansion, continued fraction, or continued logarithm.</p>
 
-<p>But on the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method, which is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>, should be used.  If coins with unknown bias are available, then a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> method should be used to turn them into fair coins.</p>
+<p>But on the other hand, probabilities that are <em>rational</em> constants are trivial to simulate.  If fair coins are available, the <code>ZeroOrOne</code> method, which is described in my article on <a href="https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions"><strong>random sampling methods</strong></a>, should be used.  If coins with unknown probability of heads are available, then a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> method should be used to turn them into fair coins.</p>
 
 <p><a id=Digit_Expansions></a></p>
 
@@ -2050,7 +2050,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note17>(17)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 <li><small><sup id=Note18>(18)</sup> Morina, G., Łatuszyński, K., et al., &quot;<a href="https://arxiv.org/abs/1912.09229"><strong>From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains</strong></a>&quot;, arXiv:1912.09229 [math.PR], 2019/2020.</small></li>
 <li><small><sup id=Note19>(19)</sup> Propp, J.G., Wilson, D.B., &quot;Exact sampling with coupled Markov chains and applications to statistical mechanics&quot;, 1996.</small></li>
-<li><small><sup id=Note20>(20)</sup> A <em>pushdown automaton</em>, as used here, is defined in Mossel and Peres 2005 and is described as a machine that maintains a stack of symbols and transitions from one state to another based on the current state, the symbol at the top of the stack, and the outcome of a biased coin flip.  With each state transition, the machine adds symbols to the stack or removes symbols from it.  When the stack is empty, the machine halts, and the result is 0 or 1 depending on the machine&#39;s state at that time.</small></li>
+<li><small><sup id=Note20>(20)</sup> A <em>pushdown automaton</em>, as used here, is defined in Mossel and Peres 2005 and is described as a machine that maintains a stack of symbols and transitions from one state to another based on the current state, the symbol at the top of the stack, and the outcome of a coin flip with unknown probability of heads.  With each state transition, the machine adds symbols to the stack or removes symbols from it.  When the stack is empty, the machine halts, and the result is 0 or 1 depending on the machine&#39;s state at that time.</small></li>
 <li><small><sup id=Note21>(21)</sup> The probability given in Theorem 3.2 of the Flajolet paper, namely just &quot;&sum; <sub><em>k</em> = 0, 1, 2, ... </sub> (W(<em>k</em>) * (<em>&lambda;</em>/2)<sup><em>k</em></sup>)&quot;, appears to be incorrect in conjunction with Figure 4 of that paper.</small></li>
 <li><small><sup id=Note22>(22)</sup> Here, &quot;choose(<em>g</em>, <em>g</em>/<em>t</em>)&quot; means that out of <em>g</em> letters, <em>g</em>/<em>t</em> of them must be A&#39;s, and &quot;(<em>&beta;</em>&minus;1)<sup><em>g</em>&minus;<em>g</em>/<em>t</em></sup>&quot; is the number of words that have <em>g</em>&minus;<em>g</em>/<em>t</em> letters other than A, given that the remaining letters were A&#39;s.</small></li>
 <li><small><sup id=Note23>(23)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
@@ -2082,7 +2082,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note49>(49)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
 <li><small><sup id=Note50>(50)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
 <li><small><sup id=Note51>(51)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note52>(52)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.  Indeed, even though standard deviation equals the square root of variance, taking the square root of the bias-corrected sample variance does not lead to an unbiased estimator of the standard deviation.</small></li>
+<li><small><sup id=Note52>(52)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.</small></li>
 <li><small><sup id=Note53>(53)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
 <li><small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note55>(55)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
@@ -2109,7 +2109,7 @@ kind of irrational number.</p>
 <li>((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) / ((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</li>
 </ul>
 
-<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin is strongly biased towards heads or tails (the probability of heads is <em>&lambda;</em>).  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
+<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin strongly leans towards heads or tails (the probability of heads is <em>&lambda;</em>).  Note that this formula only works if nothing but coin flips is allowed as randomness.</p>
 
 <p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note33"><strong>(33)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for any integer <em>n</em>.</p>
 
@@ -2144,6 +2144,10 @@ kind of irrational number.</p>
 </ul>
 
 <p>where <em>g</em>(<em>X</em>) is a random value that follows the desired distribution, based on random numbers <em>X</em>.  Again, the focus of this page is &quot;exact sampling&quot; (<em>exact simulation</em>), not &quot;exact estimation&quot;, but the input coin with probability of heads of <em>&lambda;</em> can be any &quot;exact estimator&quot; of <em>&lambda;</em> (as defined above) that outputs either 0 or 1.</p>
+
+<blockquote>
+<p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for <em>f</em>(<em>&lambda;</em>) equals <em>f</em>(<em>&lambda;</em>) * (1&mdash;<em>f</em>(<em>&lambda;</em>)) and can go as high as 1/4.  There are ways to reduce this variance, but those are beyond the scope of this document.</p>
+</blockquote>
 
 <p><a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a></p>
 

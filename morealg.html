@@ -339,6 +339,10 @@
 <td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
 </tr>
 <tr>
+<td>0 at 0; <em>&mu;</em>/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
+<td>Flip the <em>&mu;</em> input coin.  If it returns 0, return 0.  Otherwise, generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
+</tr>
+<tr>
 <td><em>&mu;</em> at 0; 1/2 at 1/2; and 0 at 1.</td>
 <td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return 1 minus the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
 </tr>
@@ -1061,7 +1065,7 @@ calc_linear_func(count=8)
 
 <ul>
 <li><em>A</em>  = (1/2) * <em>&lambda;</em>, and</li>
-<li><em>B</em> = (1/2) * min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)<br/>&nbsp;&nbsp;= (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2)<br/>&nbsp;&nbsp;(1/2) * &sum;<sub><em>k</em> = 1, 2, ...</sub> <em>g</em>(<em>k</em>) *  <em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>),</li>
+<li><em>B</em> = (1/2) * min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>)<br/>&nbsp;&nbsp;= (1/2) * ((1&minus;sqrt(1&minus;4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)))/2)<br/>&nbsp;&nbsp;= (1/2) * &sum;<sub><em>k</em> = 1, 2, ...</sub> <em>g</em>(<em>k</em>) *  <em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>),</li>
 </ul>
 
 <p>revealing that the function is a <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a>, and <em>B</em> is itself a convex combination where&mdash;</p>

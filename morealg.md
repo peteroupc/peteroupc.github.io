@@ -242,6 +242,7 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 |  Breakpoints  | Algorithm |
  --- | --- |
 | 0 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 1, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
+| 0 at 0; _&mu;_/2 at 1/2; and _&mu;_/2 at 1. | Flip the _&mu;_ input coin.  If it returns 0, return 0.  Otherwise, generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
 | _&mu;_ at 0; 1/2 at 1/2; and 0 at 1. | Flip the _&mu;_ input coin.  If it returns 1, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
 | 1 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
 | _&mu;_ at 0; 1/2 at 1/2; and 1 at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
@@ -796,7 +797,7 @@ The following explains how the algorithm is derived.
 The function min(_&lambda;_, 1/2) can be rewritten as _A_ + _B_ where&mdash;
 
 - _A_  = (1/2) \* _&lambda;_, and
-- _B_ = (1/2) \* min(_&lambda;_, 1&minus;_&lambda;_)<br/>&nbsp;&nbsp;= (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2)<br/>&nbsp;&nbsp;(1/2) \* &sum;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
+- _B_ = (1/2) \* min(_&lambda;_, 1&minus;_&lambda;_)<br/>&nbsp;&nbsp;= (1/2) \* ((1&minus;sqrt(1&minus;4\*_&lambda;_\*(1&minus;_&lambda;_)))/2)<br/>&nbsp;&nbsp;= (1/2) \* &sum;<sub>_k_ = 1, 2, ...</sub> _g_(_k_) \*  _h_<sub>_k_</sub>(_&lambda;_),
 
 revealing that the function is a [**convex combination**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), and _B_ is itself a convex combination where&mdash;
 
