@@ -1,0 +1,180 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.cbor.CBORDateConverter</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1>com.upokecenter.cbor.CBORDateConverter</h1>
+
+<h1>com.upokecenter.cbor.CBORDateConverter</h1>
+
+<pre>public final class CBORDateConverter extends java.lang.Object implements ICBORToFromConverter&lt;java.util.Date&gt;
+</pre>
+
+<p>Not documented yet.</p>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static class  CBORDateConverter.ConversionType</code><br>
+Not documented yet.</li>
+<li><code>static CBORDateConverter TaggedNumber</code><br>
+Not documented yet.</li>
+<li><code>static CBORDateConverter TaggedString</code><br>
+Not documented yet.</li>
+<li><code>static CBORDateConverter UntaggedNumber</code><br>
+Not documented yet.</li>
+</ul>
+
+<h2>Nested Classes</h2>
+
+<ul>
+<li><code>static class  CBORDateConverter.ConversionType</code><br>
+Not documented yet.</li>
+</ul>
+
+<h2>Constructors</h2>
+
+<ul>
+<li><code>CBORDateConverter()</code><br>
+Initializes a new instance of the CBORDateConverter class.</li>
+<li><code>CBORDateConverter​(CBORDateConverter.ConversionType convType)</code><br>
+Initializes a new instance of the CBORDateConverter class.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
+<li><code>java.util.Date FromCBORObject​(CBORObject obj)</code><br>
+Not documented yet.</li>
+<li><code>static java.util.Date StringToDateTime​(java.lang.String str)</code><br>
+Not documented yet.</li>
+<li><code>CBORObject ToCBORObject​(java.util.Date obj)</code><br>
+Not documented yet.</li>
+</ul>
+
+<h2>Field Details</h2>
+
+<h3>TaggedString</h3>
+
+<pre>public static final CBORDateConverter TaggedString
+</pre>
+
+<p>Not documented yet.</p>
+
+<h3>TaggedNumber</h3>
+
+<pre>public static final CBORDateConverter TaggedNumber
+</pre>
+
+<p>Not documented yet.</p>
+
+<h3>UntaggedNumber</h3>
+
+<pre>public static final CBORDateConverter UntaggedNumber
+</pre>
+
+<p>Not documented yet.</p>
+
+<h2>Method Details</h2>
+
+<h3>FromCBORObject</h3>
+
+<pre>public java.util.Date FromCBORObject​(CBORObject obj)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>FromCBORObject</code> in interface <code>ICBORToFromConverter&lt;java.util.Date&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>obj</code> is null.</li>
+</ul>
+
+<h3>StringToDateTime</h3>
+
+<pre>public static java.util.Date StringToDateTime​(java.lang.String str)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>str</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<h3>ToCBORObject</h3>
+
+<pre>public CBORObject ToCBORObject​(java.util.Date obj)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Specified by:</strong></p>
+
+<ul>
+<li><code>ToCBORObject</code> in interface <code>ICBORConverter&lt;java.util.Date&gt;</code></li>
+</ul>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>obj</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
+</ul>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>
