@@ -214,10 +214,12 @@ This method may overflow.
 This method may overflow.</li>
 <li><code>EInteger GetSignedBitLengthAsEInteger()</code><br>
 Finds the minimum number of bits needed to represent this object&#39;s value,
-except for its sign, in the form of an arbitrary-precision integer.</li>
+except for its sign, and returns that number of bits as an
+arbitrary-precision integer.</li>
 <li><code>long GetSignedBitLengthAsInt64()</code><br>
 Finds the minimum number of bits needed to represent this object&#39;s value,
-except for its sign, in the form of a 64-bit signed integer.</li>
+except for its sign, and returns that number of bits as a 64-bit
+signed integer.</li>
 <li><code>static EInteger getTen()</code><br>
 Gets the number 10 as an arbitrary-precision integer.</li>
 <li><code>boolean GetUnsignedBit​(int index)</code><br>
@@ -230,10 +232,11 @@ This method may overflow.
 This method may overflow.</li>
 <li><code>EInteger GetUnsignedBitLengthAsEInteger()</code><br>
 Finds the minimum number of bits needed to represent this number&#39;s absolute
-value, in the form of an arbitrary-precision integer.</li>
+value, and returns that number of bits as an arbitrary-precision
+integer.</li>
 <li><code>long GetUnsignedBitLengthAsInt64()</code><br>
 Finds the minimum number of bits needed to represent this number&#39;s absolute
-value, in the form of a 64-bit signed integer.</li>
+value, and returns that number of bits as a 64-bit signed integer.</li>
 <li><code>static EInteger getZero()</code><br>
 Gets the number zero as an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
@@ -2074,13 +2077,16 @@ value; otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
- except for its sign, in the form of an arbitrary-precision integer.
- If the value is negative, finds the number of bits in the value
- equal to this object&#39;s absolute value minus 1. For example, all
- integers in the interval [-(2^63), (2^63) - 1], which is the same as
- the range of integers in Java&#39;s and.NET&#39;s <code>long</code> type, have a
- signed bit length of 63 or less, and all other integers have a
- signed bit length of greater than 63.</p>
+ except for its sign, and returns that number of bits as an
+ arbitrary-precision integer. If the value is negative, finds the
+ number of bits in the value equal to this object&#39;s absolute value
+ minus 1. For example, all integers in the interval [-(2^63), (2^63)</p>
+
+<ul>
+<li>1], which is the same as the range of integers in Java&#39;s and.NET&#39;s
+<code>long</code> type, have a signed bit length of 63 or less, and all
+other integers have a signed bit length of greater than 63.</li>
+</ul>
 
 <p><strong>Returns:</strong></p>
 
@@ -2095,13 +2101,13 @@ Returns 0 if this object&#39;s value is 0 or negative 1.</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
- except for its sign, in the form of a 64-bit signed integer. If the
- value is negative, finds the number of bits in the value equal to
- this object&#39;s absolute value minus 1. For example, all integers in
- the interval [-(2^63), (2^63) - 1], which is the same as the range
- of integers in Java&#39;s and.NET&#39;s <code>long</code> type, have a signed bit
- length of 63 or less, and all other integers have a signed bit
- length of greater than 63.</p>
+ except for its sign, and returns that number of bits as a 64-bit
+ signed integer. If the value is negative, finds the number of bits
+ in the value equal to this object&#39;s absolute value minus 1. For
+ example, all integers in the interval [-(2^63), (2^63) - 1], which
+ is the same as the range of integers in Java&#39;s and.NET&#39;s <code>long</code>
+ type, have a signed bit length of 63 or less, and all other integers
+ have a signed bit length of greater than 63.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2192,11 +2198,12 @@ value.</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this number&#39;s absolute
- value, in the form of an arbitrary-precision integer. For example,
- all integers in the interval [-((2^63) - 1), (2^63) - 1] have an
- unsigned bit length of 63 or less, and all other integers have an
- unsigned bit length of greater than 63. This interval is not the
- same as the range of integers in Java&#39;s and.NET&#39;s <code>long</code> type.</p>
+ value, and returns that number of bits as an arbitrary-precision
+ integer. For example, all integers in the interval [-((2^63) - 1),
+ (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+ integers have an unsigned bit length of greater than 63. This
+ interval is not the same as the range of integers in Java&#39;s
+ and.NET&#39;s <code>long</code> type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2211,11 +2218,12 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 </pre>
 
 <p>Finds the minimum number of bits needed to represent this number&#39;s absolute
- value, in the form of a 64-bit signed integer. For example, all
- integers in the interval [-((2^63) - 1), (2^63) - 1] have an
- unsigned bit length of 63 or less, and all other integers have an
- unsigned bit length of greater than 63. This interval is not the
- same as the range of integers in Java&#39;s and.NET&#39;s <code>long</code> type.</p>
+ value, and returns that number of bits as a 64-bit signed integer.
+ For example, all integers in the interval [-((2^63) - 1), (2^63) -
+ 1] have an unsigned bit length of 63 or less, and all other integers
+ have an unsigned bit length of greater than 63. This interval is not
+ the same as the range of integers in Java&#39;s and.NET&#39;s <code>long</code>
+ type.</p>
 
 <p><strong>Returns:</strong></p>
 
