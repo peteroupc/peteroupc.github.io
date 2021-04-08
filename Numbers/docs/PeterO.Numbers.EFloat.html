@@ -5598,7 +5598,7 @@ This object&#39;s value is not an exact integer.</p></li>
 
 <p><b>Return Value:</b></p>
 
-<p>A string representation of this object. The value is converted to decimal and the decimal form of this number&#39;s value is returned. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the converted number&#39;s scale is positive or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
+<p>A string representation of this object. The value is converted to a decimal number (using the EDecimal.FromEFloat method) and the decimal form of this number&#39;s value is returned. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if the converted decimal number&#39;s exponent (EDecimal&#39;s Exponent property) is greater than 0 or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
 
 <p><a id="ToUInt16Checked"></a></p>
 

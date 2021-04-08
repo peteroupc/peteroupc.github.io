@@ -962,7 +962,7 @@ Converts this value to an arbitrary-precision integer, only if this number&#39;s
 value is an exact integer and that integer does not overflow the
 given signed bit count.</li>
 <li><code>java.lang.String toString()</code><br>
-Converts this value to a string.</li>
+Converts this value to a text string.</li>
 <li><code>EDecimal Ulp()</code><br>
 Returns the unit in the last place.</li>
 </ul>
@@ -6072,7 +6072,7 @@ value exceeds the range of a 32-bit floating point number.</li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Converts this value to a string. Returns a value compatible with this
+<p>Converts this value to a text string. Returns a value compatible with this
  class&#39;s FromString method.</p>
 
 <p><strong>Overrides:</strong></p>
@@ -6085,9 +6085,10 @@ value exceeds the range of a 32-bit floating point number.</li>
 
 <ul>
 <li>A string representation of this object. The text string will be in
-exponential notation if the exponent is greater than 0 or if the
-number&#39;s first nonzero digit is more than five digits after the
-decimal point.</li>
+exponential notation (expressed as a number 1 or greater, but less
+than 10, times a power of 10) if this object&#39;s Exponent property is
+greater than 0 or if the number&#39;s first nonzero decimal digit is
+more than five digits after the decimal point.</li>
 </ul>
 
 <h3>Ulp</h3>

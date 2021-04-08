@@ -391,7 +391,7 @@
 <li><code><a href="#ToSingleBits">ToSingleBits()</a></code> - Converts this value to its closest equivalent as a 32-bit floating-point number encoded in the IEEE 754 binary32 format, using the half-even rounding mode.</li>
 <li><code><a href="#ToSizedEInteger_int">ToSizedEInteger(int)</a></code> - Converts this value to an arbitrary-precision integer by discarding its fractional part and checking whether the resulting integer overflows the given signed bit count.</li>
 <li><code><a href="#ToSizedEIntegerIfExact_int">ToSizedEIntegerIfExact(int)</a></code> - Converts this value to an arbitrary-precision integer, only if this number&#39;s value is an exact integer and that integer does not overflow the given signed bit count.</li>
-<li><code><a href="#ToString">ToString()</a></code> - Converts this value to a string.</li>
+<li><code><a href="#ToString">ToString()</a></code> - Converts this value to a text string.</li>
 <li><code><a href="#ToUInt16Checked">ToUInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToUInt16IfExact">ToUInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit unsigned integer if it can fit in a 16-bit unsigned integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToUInt16Unchecked">ToUInt16Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit unsigned integer.</li>
@@ -5990,11 +5990,11 @@ This object&#39;s value is not an exact integer.</p></li>
 <pre>public override string ToString();
 </pre>
 
-<p>Converts this value to a string. Returns a value compatible with this class&#39;s FromString method.</p>
+<p>Converts this value to a text string. Returns a value compatible with this class&#39;s FromString method.</p>
 
 <p><b>Return Value:</b></p>
 
-<p>A string representation of this object. The text string will be in exponential notation if the exponent is greater than 0 or if the number&#39;s first nonzero digit is more than five digits after the decimal point.</p>
+<p>A string representation of this object. The text string will be in exponential notation (expressed as a number 1 or greater, but less than 10, times a power of 10) if this object&#39;s Exponent property is greater than 0 or if the number&#39;s first nonzero decimal digit is more than five digits after the decimal point.</p>
 
 <p><a id="ToUInt16Checked"></a></p>
 
