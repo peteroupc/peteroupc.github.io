@@ -8,34 +8,52 @@
 <pre>public final class CBORDateConverter extends java.lang.Object implements ICBORToFromConverter&lt;java.util.Date&gt;
 </pre>
 
-<p>Not documented yet.</p>
+<p>A class for converting date-time objects to and from tagged CBOR
+  objects.</p> <p>In this method's documentation, the "number of seconds
+  since the start of 1970" is based on the POSIX definition of "seconds
+  since the Epoch", a definition that does not count leap seconds. This
+ number of seconds assumes the use of a proleptic Gregorian calendar,
+ in which the rules regarding the number of days in each month and
+ which years are leap years are the same for all years as they were in
+ 1970 (including without regard to transitions from other calendars to
+ the Gregorian).</p>
 
 <h2>Fields</h2>
 
 <ul>
 <li><code>static class  CBORDateConverter.ConversionType</code><br>
-Not documented yet.</li>
+Conversion type for date-time conversion.</li>
 <li><code>static CBORDateConverter TaggedNumber</code><br>
-Not documented yet.</li>
+A converter object where FromCBORObject accepts CBOR objects with tag 0
+(date/time strings) and tag 1 (number of seconds since the start
+of 1970), and ToCBORObject converts date/time objects (java.util.Date
+in DotNet, and Date in Java) to CBOR objects of tag 1.</li>
 <li><code>static CBORDateConverter TaggedString</code><br>
-Not documented yet.</li>
+A converter object where FromCBORObject accepts CBOR objects with tag 0
+(date/time strings) and tag 1 (number of seconds since the start
+of 1970), and ToCBORObject converts date/time objects (java.util.Date
+in DotNet, and Date in Java) to CBOR objects of tag 0.</li>
 <li><code>static CBORDateConverter UntaggedNumber</code><br>
-Not documented yet.</li>
+A converter object where FromCBORObject accepts untagged CBOR integer or
+CBOR floating-point objects that give the number of seconds since
+the start of 1970, and where ToCBORObject converts date/time
+objects (java.util.Date in DotNet, and Date in Java) to such untagged
+CBOR objects.</li>
 </ul>
 
 <h2>Nested Classes</h2>
 
 <ul>
 <li><code>static class  CBORDateConverter.ConversionType</code><br>
-Not documented yet.</li>
+Conversion type for date-time conversion.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>CBORDateConverter()</code><br>
+<li><code>CBORDateConverter() CBORDateConverter</code><br>
 Initializes a new instance of the CBORDateConverter class.</li>
-<li><code>CBORDateConverter​(CBORDateConverter.ConversionType convType)</code><br>
+<li><code>CBORDateConverter​(CBORDateConverter.ConversionType convType) CBORDateConverter</code><br>
 Initializes a new instance of the CBORDateConverter class.</li>
 </ul>
 
@@ -43,8 +61,6 @@ Initializes a new instance of the CBORDateConverter class.</li>
 
 <ul>
 <li><code>java.util.Date FromCBORObject​(CBORObject obj)</code><br>
-Not documented yet.</li>
-<li><code>static java.util.Date StringToDateTime​(java.lang.String str)</code><br>
 Not documented yet.</li>
 <li><code>CBORObject ToCBORObject​(java.util.Date obj)</code><br>
 Not documented yet.</li>
@@ -57,21 +73,44 @@ Not documented yet.</li>
 <pre>public static final CBORDateConverter TaggedString
 </pre>
 
-<p>Not documented yet.</p>
+<p>A converter object where FromCBORObject accepts CBOR objects with tag 0
+ (date/time strings) and tag 1 (number of seconds since the start
+ of 1970), and ToCBORObject converts date/time objects (java.util.Date
+ in DotNet, and Date in Java) to CBOR objects of tag 0.</p>
 
 <h3>TaggedNumber</h3>
 
 <pre>public static final CBORDateConverter TaggedNumber
 </pre>
 
-<p>Not documented yet.</p>
+<p>A converter object where FromCBORObject accepts CBOR objects with tag 0
+ (date/time strings) and tag 1 (number of seconds since the start
+ of 1970), and ToCBORObject converts date/time objects (java.util.Date
+ in DotNet, and Date in Java) to CBOR objects of tag 1. The
+ ToCBORObject conversion is lossless only if the number of seconds
+ since the start of 1970 can be represented exactly as an integer
+ in the interval [-(2^64), 2^64 - 1] or as a 64-bit floating-point
+ number in the IEEE 754r binary64 format; the conversion is lossy
+ otherwise. The ToCBORObject conversion will throw an exception if
+ the conversion to binary64 results in positive infinity, negative
+ infinity, or not-a-number.</p>
 
 <h3>UntaggedNumber</h3>
 
 <pre>public static final CBORDateConverter UntaggedNumber
 </pre>
 
-<p>Not documented yet.</p>
+<p>A converter object where FromCBORObject accepts untagged CBOR integer or
+ CBOR floating-point objects that give the number of seconds since
+ the start of 1970, and where ToCBORObject converts date/time
+ objects (java.util.Date in DotNet, and Date in Java) to such untagged
+ CBOR objects. The ToCBORObject conversion is lossless only if the
+ number of seconds since the start of 1970 can be represented
+ exactly as an integer in the interval [-(2^64), 2^64 - 1] or as a
+ 64-bit floating-point number in the IEEE 754r binary64 format;
+ the conversion is lossy otherwise. The ToCBORObject conversion
+ will throw an exception if the conversion to binary64 results in
+ positive infinity, negative infinity, or not-a-number.</p>
 
 <h2>Method Details</h2>
 
@@ -91,7 +130,7 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - Not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is a Cbor.CBORObject object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -104,25 +143,6 @@ Not documented yet.</li>
 
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>obj</code> is null.</li>
-</ul>
-
-<h3>StringToDateTime</h3>
-
-<pre>public static java.util.Date StringToDateTime​(java.lang.String str)
-</pre>
-
-<p>Not documented yet.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>str</code> - Not documented yet.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>ToCBORObject</h3>
@@ -141,7 +161,7 @@ Not documented yet.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>obj</code> - Not documented yet.</li>
+<li><code>obj</code> - The parameter <code>obj</code> is a java.util.Date object.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
