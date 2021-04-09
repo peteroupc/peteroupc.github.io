@@ -2218,48 +2218,48 @@ deep, or another error occurred when serializing the object.</p></li>
  number of seconds assumes the use of a proleptic Gregorian calendar,
  in which the rules regarding the number of days in each month and
  which years are leap years are the same for all years as they were
- in 1970 (including without regard to transitions from other
- calendars to the Gregorian). The string format used in tag 0
- supports only years up to 4 decimal digits long. For tag 1, CBOR
- objects that express infinity or not-a-number (NaN) are treated as
- invalid by this method. This default behavior for <code>java.util.Date</code>
- and <code>Date</code> can be changed by passing a suitable CBORTypeMapper
- to this method, such as a CBORTypeMapper that registers a
- CBORDateConverter for <code>java.util.Date</code> or <code>Date</code> objects. See
- the examples.</li> <li>If the type is <code>java.net.URI</code> (or <code>URI</code> in
- Java), returns a URI object if possible.</li> <li>If the type is
- <code>java.util.UUID</code> (or <code>UUID</code> in Java), returns a UUID object if
- possible.</li> <li>Plain-Old-Data deserialization: If the object is
- a type not specially handled above, the type includes a
- zero-parameter constructor (default or not), this CBOR object is a
-  CBOR map, and the &quot;mapper&quot; parameter (if any) allows this type to be
- eligible for Plain-Old-Data deserialization, then this method checks
- the given type for eligible setters as follows:</li> <li>(<em>) In the
-.NET version, eligible setters are the public, nonstatic setters of
- properties with a public, nonstatic getter. Eligible setters also
- include public, nonstatic, non- <code>static final</code> , non- <code>readonly</code>
-  fields. If a class has two properties and/or fields of the form &quot;X&quot;
-  and &quot;IsX&quot;, where &quot;X&quot; is any name, or has multiple properties and/or
- fields with the same name, those properties and fields are
- ignored.</li> <li>(</em>) In the Java version, eligible setters are
-  public, nonstatic methods starting with &quot;set&quot; followed by a
- character other than a basic digit or lower-case letter, that is,
-  other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;, that take one parameter. The
- class containing an eligible setter must have a public, nonstatic
-  method with the same name, but starting with &quot;get&quot; or &quot;is&quot; rather
-  than &quot;set&quot;, that takes no parameters and does not return void. (For
-  example, if a class has &quot;public setValue(string)&quot; and &quot;public
-  getValue()&quot;, &quot;setValue&quot; is an eligible setter. However, &quot;setValue()&quot;
-  and &quot;setValue(string, int)&quot; are not eligible setters.) In addition,
- public, nonstatic, nonfinal fields are also eligible setters. If a
- class has two or more otherwise eligible setters (methods and/or
- fields) with the same name, but different parameter type, they are
- not eligible setters.</li> <li>Then, the method creates an object of
- the given type and invokes each eligible setter with the
- corresponding value in the CBOR map, if any. Key names in the map
- are matched to eligible setters according to the rules described in
- the <code>PODOptions</code> documentation. Note that
- for security reasons, certain types are not supported even if they
+ in 1970 (including without regard to time zone differences or
+ transitions from other calendars to the Gregorian). The string
+ format used in tag 0 supports only years up to 4 decimal digits
+ long. For tag 1, CBOR objects that express infinity or not-a-number
+ (NaN) are treated as invalid by this method. This default behavior
+ for <code>java.util.Date</code> and <code>Date</code> can be changed by passing a
+ suitable CBORTypeMapper to this method, such as a CBORTypeMapper
+ that registers a CBORDateConverter for <code>java.util.Date</code> or
+ <code>Date</code> objects. See the examples.</li> <li>If the type is
+ <code>java.net.URI</code> (or <code>URI</code> in Java), returns a URI object if
+ possible.</li> <li>If the type is <code>java.util.UUID</code> (or <code>UUID</code> in
+ Java), returns a UUID object if possible.</li> <li>Plain-Old-Data
+ deserialization: If the object is a type not specially handled
+ above, the type includes a zero-parameter constructor (default or
+  not), this CBOR object is a CBOR map, and the &quot;mapper&quot; parameter (if
+ any) allows this type to be eligible for Plain-Old-Data
+ deserialization, then this method checks the given type for eligible
+ setters as follows:</li> <li>(<em>) In the .NET version, eligible
+ setters are the public, nonstatic setters of properties with a
+ public, nonstatic getter. Eligible setters also include public,
+ nonstatic, non- <code>static final</code> , non- <code>readonly</code> fields. If a
+  class has two properties and/or fields of the form &quot;X&quot; and &quot;IsX&quot;,
+  where &quot;X&quot; is any name, or has multiple properties and/or fields with
+ the same name, those properties and fields are ignored.</li> <li>(</em>)
+ In the Java version, eligible setters are public, nonstatic methods
+  starting with &quot;set&quot; followed by a character other than a basic digit
+  or lower-case letter, that is, other than &quot;a&quot; to &quot;z&quot; or &quot;0&quot; to &quot;9&quot;,
+ that take one parameter. The class containing an eligible setter
+ must have a public, nonstatic method with the same name, but
+  starting with &quot;get&quot; or &quot;is&quot; rather than &quot;set&quot;, that takes no
+ parameters and does not return void. (For example, if a class has
+  &quot;public setValue(string)&quot; and &quot;public getValue()&quot;, &quot;setValue&quot; is an
+  eligible setter. However, &quot;setValue()&quot; and &quot;setValue(string, int)&quot;
+ are not eligible setters.) In addition, public, nonstatic, nonfinal
+ fields are also eligible setters. If a class has two or more
+ otherwise eligible setters (methods and/or fields) with the same
+ name, but different parameter type, they are not eligible
+ setters.</li> <li>Then, the method creates an object of the given
+ type and invokes each eligible setter with the corresponding value
+ in the CBOR map, if any. Key names in the map are matched to
+ eligible setters according to the rules described in the <code>PODOptions</code> documentation. Note that for
+ security reasons, certain types are not supported even if they
  contain eligible setters. For the Java version, the object creation
  may fail in the case of a nested nonstatic class.</li> </ul><p>
  </p><p>The following example (originally written in C# for the DotNet
