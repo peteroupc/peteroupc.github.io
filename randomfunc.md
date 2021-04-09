@@ -1334,7 +1334,7 @@ This section describes randomization methods that use random real numbers, not j
 But whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
 
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
-- Working with integers is more portable than working with other real numbers, especially floating-point numbers.<sup>[**(56)**](#Note56)</sup>
+- Algorithms that work with integers are more portable than those that work with other real numbers, especially floating-point numbers.<sup>[**(56)**](#Note56)</sup>  Integer algorithms are easier to control for their level of accuracy.
 - For applications that may care about reproducible "random" numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers (especially floating-point numbers) can complicate the task of making a method reproducible from run to run or across computers.
 
 The methods in this section should not be used to sample at random for information security purposes, even if a secure "source of random numbers" is available.  See "Security Considerations" in the appendix.
