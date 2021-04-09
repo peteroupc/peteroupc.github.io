@@ -1,0 +1,79 @@
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Cbor.CBORDateConverter.ConversionType</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
+<div class="mainarea" id="top">
+<h1>PeterO.Cbor.CBORDateConverter.ConversionType</h1>
+
+<h2>PeterO.Cbor.CBORDateConverter.ConversionType</h2>
+
+<pre>public sealed struct ConversionType :
+    System.Enum,
+    System.IComparable,
+    System.IConvertible,
+    System.IFormattable
+</pre>
+
+<p>Conversion type for date-time conversion.</p>
+
+<h3>Member Summary</h3>
+
+<ul>
+<li><code><a href="#TaggedNumber">public static PeterO.Cbor.CBORDateConverter.ConversionType TaggedNumber = 1;</a></code> - FromCBORObject accepts objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects to CBOR objects of tag 1.</li>
+<li><code><a href="#TaggedString">public static PeterO.Cbor.CBORDateConverter.ConversionType TaggedString = 0;</a></code> - FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects to CBOR objects of tag 0.</li>
+<li><code><a href="#UntaggedNumber">public static PeterO.Cbor.CBORDateConverter.ConversionType UntaggedNumber = 2;</a></code> - FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects.</li>
+</ul>
+
+<p><a id="TaggedNumber"></a></p>
+
+<h3>TaggedNumber</h3>
+
+<pre>public static PeterO.Cbor.CBORDateConverter.ConversionType TaggedNumber = 1;
+</pre>
+
+<p>FromCBORObject accepts objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects to CBOR objects of tag 1. The ToCBORObject conversion is lossless only if the number of seconds since the start of 1970 can be represented exactly as an integer in the interval [-(2^64), 2^64 - 1] or as a 64-bit floating-point number in the IEEE 754r binary64 format; the conversion is lossy otherwise. The ToCBORObject conversion will throw an exception if the conversion to binary64 results in positive infinity, negative infinity, or not-a-number.</p>
+
+<p><a id="TaggedString"></a></p>
+
+<h3>TaggedString</h3>
+
+<pre>public static PeterO.Cbor.CBORDateConverter.ConversionType TaggedString = 0;
+</pre>
+
+<p>FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects to CBOR objects of tag 0.</p>
+
+<p><a id="UntaggedNumber"></a></p>
+
+<h3>UntaggedNumber</h3>
+
+<pre>public static PeterO.Cbor.CBORDateConverter.ConversionType UntaggedNumber = 2;
+</pre>
+
+<p>FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects. The ToCBORObject conversion is lossless only if the number of seconds since the start of 1970 can be represented exactly as an integer in the interval [-(2^64), 2^64 - 1] or as a 64-bit floating-point number in the IEEE 754r binary64 format; the conversion is lossy otherwise. The ToCBORObject conversion will throw an exception if the conversion to binary64 results in positive infinity, negative infinity, or not-a-number.</p>
+
+<p><a href="/CBOR/">Back to CBOR start page.</a></p>
+</div><nav id="navigation"><ul>
+<li><a href="/">Back to start site.</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
+<li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
+<p>
+If you like this software, you should consider donating to me, Peter O., at the link below:</p>
+<p class="printonly"><b>peteroupc.github.io</b></p>
+<div class="noprint">
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
+<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
+name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
+<p>
+<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+</p>
+</div>
+</nav><script>
+if("share" in navigator){
+ document.getElementById("sharer").href="javascript:void(null)";
+ document.getElementById("sharer").innerHTML="Share This Page";
+ navigator.share({title:document.title,url:document.location.href}).then(
+   function(){});
+} else {
+ document.getElementById("sharer").href="//www.facebook.com/sharer/sharer.php?u="+
+    encodeURIComponent(document.location.href)
+}
+</script>
+</body></html>

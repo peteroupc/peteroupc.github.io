@@ -129,7 +129,7 @@ In this document:
 
 - The [**pseudocode conventions**](https://peteroupc.github.io/pseudocode.html) apply to this document.
 - The following notation for intervals is used: [`a`, `b`) means "`a` or greater, but less than `b`".  (`a`, `b`) means "greater than `a`, but less than `b`".  (`a`, `b`] means "greater than `a` and less than or equal to `b`". [`a`, `b`] means "`a` or greater and `b` or less".
-- `log1p(x)` is equivalent to `ln(1 + x)` and is a robust alternative where `x` is a floating-point number (Pedersen 2018)<sup>[**(1)**](#Note1)</sup>.
+- `log1p(x)` is equivalent to `ln(1 + x)` and is a "robust" alternative to `ln(1 + x)` where `x` is a floating-point number (Pedersen 2018)<sup>[**(1)**](#Note1)</sup>.
 - `MakeRatio(n, d)` creates a rational number with the given numerator `n` and denominator `d`.
 - `Sum(list)` calculates the sum of the numbers in the given list.  Note, however, that summing floating-point numbers naïvely can introduce round-off errors.  [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) along with parallel reductions can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.
 
@@ -1334,7 +1334,7 @@ This section describes randomization methods that use random real numbers, not j
 But whenever possible, **applications should work with random integers**, rather than other random real numbers.  This is because:
 
 - No computer can choose from among all real numbers between two others, since there are infinitely many of them.
-- Working with integers is more portable and numerically stable than working with other real numbers, especially floating-point numbers.<sup>[**(56)**](#Note56)</sup>
+- Working with integers is more portable than working with other real numbers, especially floating-point numbers.<sup>[**(56)**](#Note56)</sup>
 - For applications that may care about reproducible "random" numbers (unit tests, simulations, machine learning, and so on), using non-integer numbers (especially floating-point numbers) can complicate the task of making a method reproducible from run to run or across computers.
 
 The methods in this section should not be used to sample at random for information security purposes, even if a secure "source of random numbers" is available.  See "Security Considerations" in the appendix.
