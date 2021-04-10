@@ -175,6 +175,8 @@ In the following algorithms:
     - by generating `-ln(1/RNDRANGEMinExc(0, 1))`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)" (less accurate).
 - The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented&mdash;
     - by taking the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
+
+    For example, "Choose 0, 1, or 2 with probability proportional to the weights [A, B, C]" means to choose 0, 1, or 2 at random so that 0 is chosen with probability A/(A+B+C), 1 with probability B/(A+B+C), and 2 with probability C/(A+B+C).
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform(0, 1) random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
@@ -252,7 +254,7 @@ The following is a special case:
 <a id=Certain_Rational_Functions></a>
 #### Certain Rational Functions
 
-According to (Mossel and Peres 2005)<sup>[**(14)**](#Note14)</sup>, a function can be simulated by a finite-state machine (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(15)**](#Note15)</sup>, (Icard 2019)<sup>[**(16)**](#Note16)</sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input _&lambda;_ in some subset of (0, 1) and outputs a number in the interval (0, 1).
+According to (Mossel and Peres 2005)<sup>[**(14)**](#Note14)</sup>, a function can be simulated by a finite-state machine (equivalently, a "probabilistic regular grammar" (Smith and Johnson 2007)<sup>[**(15)**](#Note15)</sup>, (Icard 2019)<sup>[**(16)**](#Note16)</sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input _&lambda;_ in a proper subset of (0, 1) and outputs a number in the interval (0, 1).
 
 The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup>[**(10)**](#Note10)</sup>.  It assumes the rational function is of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -800,7 +802,10 @@ Returns 1 with probability&mdash;
 where _r_ is an integer greater than 0, _c_ and _d_ are each 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins (Agrawal et al. 2021, Appendix D)<sup>[**(41)**](#Note41)</sup>.  In that paper, _c_, _d_, _&lambda;_ and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
 
 1. Choose an integer in \[0, _r_\] with probability proportional to the following weights: \[_c_<sup>0</sup>\*_d_<sup>_r_</sup>, _c_<sup>1</sup>\*_d_<sup>_r_&minus;1</sup>, ..., _c_<sup>_r_</sup>\*_d_<sup>0</sup>\].  Call the chosen integer _i_.
-2. Flip the _&lambda;_ input coin _i_ times and the _&mu;_ input coin _r_&minus;_i_ times.  If any of these flips returns 0, go to step 1.  Otherwise, if _i_ = 0, return 0.  Otherwise, return 1.
+2. Flip the _&lambda;_ input coin _i_ times and the _&mu;_ input coin _r_&minus;_i_ times.  If any of these flips returns 0, go to step 1.
+3. If _i_ = 0, return 0.  Otherwise, return 1.
+
+> **Note:** In fact, this algorithm can be generalized further. By replacing step 3 with "Return _i_", the algorithm chooses _i_ with probability&mdash;<br/>_&phi;_<sub>_i_</sub> = (_c_\*_&lambda;_)<sup>_i_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_i_</sup> / &sum;<sub>_k_=0,...,_r_</sub> (_c_\*_&lambda;_)<sup>_k_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_k_</sup>.<br/>If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_ in _S_</sub> _&phi;_<sub>_k_</sub>.  See also the Bernoulli Race in "[**Convex Combinations**](#Convex_Combinations)".
 
 <a id=c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda></a>
 #### _c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))

@@ -262,11 +262,13 @@
 <li>by getting the result of the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (described in my article on PSRNs) with a rate of 1, or</li>
 <li>by generating <code>-ln(1/RNDRANGEMinExc(0, 1))</code>, as described in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers"><strong>Randomization and Sampling Methods</strong></a>&quot; (less accurate).</li>
 </ul></li>
-<li>The instruction to &quot;choose [integers] with probability proportional to [<em>weights</em>]&quot; can be implemented&mdash;
+<li><p>The instruction to &quot;choose [integers] with probability proportional to [<em>weights</em>]&quot; can be implemented&mdash;</p>
 
 <ul>
 <li>by taking the result of <strong>WeightedChoice</strong>(<strong>NormalizeRatios</strong>(<em>weights</em>))), where <strong>WeightedChoice</strong> and <strong>NormalizeRatios</strong> are given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Sampling Methods</strong></a>&quot;.</li>
-</ul></li>
+</ul>
+
+<p>For example, &quot;Choose 0, 1, or 2 with probability proportional to the weights [A, B, C]&quot; means to choose 0, 1, or 2 at random so that 0 is chosen with probability A/(A+B+C), 1 with probability B/(A+B+C), and 2 with probability C/(A+B+C).</p></li>
 <li>To <strong>sample from a random number <em>u</em></strong> means to generate a number that is 1 with probability <em>u</em> and 0 otherwise.
 
 <ul>
@@ -1124,8 +1126,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Choose an integer in [0, <em>r</em>] with probability proportional to the following weights: [<em>c</em><sup>0</sup>*<em>d</em><sup><em>r</em></sup>, <em>c</em><sup>1</sup>*<em>d</em><sup><em>r</em>&minus;1</sup>, ..., <em>c</em><sup><em>r</em></sup>*<em>d</em><sup>0</sup>].  Call the chosen integer <em>i</em>.</li>
-<li>Flip the <em>&lambda;</em> input coin <em>i</em> times and the <em>&mu;</em> input coin <em>r</em>&minus;<em>i</em> times.  If any of these flips returns 0, go to step 1.  Otherwise, if <em>i</em> = 0, return 0.  Otherwise, return 1.</li>
+<li>Flip the <em>&lambda;</em> input coin <em>i</em> times and the <em>&mu;</em> input coin <em>r</em>&minus;<em>i</em> times.  If any of these flips returns 0, go to step 1.</li>
+<li>If <em>i</em> = 0, return 0.  Otherwise, return 1.</li>
 </ol>
+
+<blockquote>
+<p><strong>Note:</strong> In fact, this algorithm can be generalized further. By replacing step 3 with &quot;Return <em>i</em>&quot;, the algorithm chooses <em>i</em> with probability&mdash;<br/><em>&phi;</em><sub><em>i</em></sub> = (<em>c</em>*<em>&lambda;</em>)<sup><em>i</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>i</em></sup> / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> (<em>c</em>*<em>&lambda;</em>)<sup><em>k</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>k</em></sup>.<br/>If we define <em>S</em> to be a subset of integers in [0, <em>r</em>] and replace step 3 with &quot;If <em>i</em> is in the set <em>S</em>, return 1.  Otherwise, return 0.&quot;, the algorithm returns 1 with probability &sum;<sub><em>k</em> in <em>S</em></sub> <em>&phi;</em><sub><em>k</em></sub>.  See also the Bernoulli Race in &quot;<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;.</p>
+</blockquote>
 
 <p><a id=c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda></a></p>
 

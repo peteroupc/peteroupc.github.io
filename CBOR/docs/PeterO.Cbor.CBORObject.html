@@ -22,7 +22,7 @@
 
 <p><b>To and from other objects:</b> The  <code>CBORObject.FromObject</code>  method converts many kinds of objects to a CBOR object, including numbers, strings, and arrays and maps of numbers and strings. Methods like AsNumber and AsString convert a CBOR object to different types of object. The  <code>CBORObject.ToObject</code>  method converts a CBOR object to an object of a given type; for example, a CBOR array to a native  <code>List</code>  (or  <code>ArrayList</code>  in Java), or a CBOR integer to an  <code>int</code>  or  <code>long</code> .</p>
 
-<p><b>To and from JSON:</b> This class also doubles as a reader and writer of JavaScript Object Notation (JSON). The CBORObject.FromJSONString method converts JSON in text string form to a CBOR object, and the ToJSONString method converts a CBOR object to a JSON string. (Note that the conversion from CBOR to JSON is not always without loss and may make it impossible to recover the original object when converting the JSON back to CBOR. See the ToJSONString documentation.) Likewise, ToJSONBytes and FromJSONBytes work with JSON in the form of byte arrays rather than text strings.</p>
+<p><b>To and from JSON:</b> This class also doubles as a reader and writer of JavaScript Object Notation (JSON). The CBORObject.FromJSONString method converts JSON to a CBOR object, and the ToJSONString method converts a CBOR object to a JSON string. (Note that the conversion from CBOR to JSON is not always without loss and may make it impossible to recover the original object when converting the JSON back to CBOR. See the ToJSONString documentation.)</p>
 
 <p>In addition, the CBORObject.WriteJSON method writes many kinds of objects as JSON to a data stream, including numbers, CBOR objects, strings, and arrays of numbers and strings. The CBORObject.Read method reads a CBOR object from a JSON data stream.</p>
 
@@ -4833,22 +4833,22 @@ is null.</li>
 <p>The example code given below (originally written in C# for the.NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
 <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order
-             given
-             in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
-             &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
-             IList&lt;CBORObject&gt; keys) { if (mapObj == null) { throw new
-             ArgumentNullException)nameof(mapObj));}
-             if (keys == null) { throw new
-             ArgumentNullException)nameof(keys));}
-             if (obj.Type != CBORType.Map) {
-             throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
-             builder = new StringBuilder(); var first = true; builder.Append(&quot;{&quot;);
-             for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) { if
-             (!first) {builder.Append(&quot;, &quot;);} var keyString=(key.CBORType ==
-             CBORType.String) ? key.AsString() : key.ToJSONString();
-             builder.Append(CBORObject.FromObject(keyString) .ToJSONString())
-             .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString()); first=false; } } return
-             builder.Append(&quot;}&quot;).ToString(); }
+            given
+            in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
+            &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
+            IList&lt;CBORObject&gt; keys) { if (mapObj == null) { throw new
+            ArgumentNullException)nameof(mapObj));}
+            if (keys == null) { throw new
+            ArgumentNullException)nameof(keys));}
+            if (obj.Type != CBORType.Map) {
+            throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
+            builder = new StringBuilder(); var first = true; builder.Append(&quot;{&quot;);
+            for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) { if
+            (!first) {builder.Append(&quot;, &quot;);} var keyString=(key.CBORType ==
+            CBORType.String) ? key.AsString() : key.ToJSONString();
+            builder.Append(CBORObject.FromObject(keyString) .ToJSONString())
+            .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString()); first=false; } } return
+            builder.Append(&quot;}&quot;).ToString(); }
 </pre>
 
 <p>.</p>
