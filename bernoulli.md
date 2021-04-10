@@ -60,7 +60,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**_&lambda;_/(1+_&lambda;_)**](#lambda___1___lambda)
         - [**_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))**](#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
-        - [**The Die-Coin Algorithm**](#The_Die_Coin_Algorithm)
+        - [**Generalized Bernoulli Race**](#Generalized_Bernoulli_Race)
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
         - [**_d_ / (_c_ + _&lambda;_)**](#d___c____lambda)
@@ -791,21 +791,29 @@ This is the general **two-coin algorithm** of (Gonçalves et al., 2017)<sup>[**(
 1. With probability _&beta;_, go to step 2.  Otherwise, return 0. (For example, call `ZeroOrOne` with _&beta;_'s numerator and denominator, and return 0 if that call returns 0, or go to step 2 otherwise.  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).)
 2. With probability _c_ / (_c_ + _d_), flip the _&lambda;_ input coin.  Otherwise, flip the _&mu;_ input coin.  If the _&lambda;_ input coin returns 1, return 1.  If the _&mu;_ input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.
 
-<a id=The_Die_Coin_Algorithm></a>
-#### The Die-Coin Algorithm
+<a id=Generalized_Bernoulli_Race></a>
+#### Generalized Bernoulli Race
 
-Returns 1 with probability&mdash;
+The following algorithm (Schmon et al. 2019)<sup>[**(58)**](#Note58)</sup> returns _i_ with probability&mdash;
 
-- 1 &minus; (_d_\*_&mu;_)<sup>_r_</sup> / &sum;<sub>_k_=0,...,_r_</sub> (_c_\*_&lambda;_)<sup>_k_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_k_</sup>, or
-- (&sum;<sub>_k_=1,...,_r_</sub> (_c_\*_&lambda;_)<sup>_k_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_k_</sup>) / &sum;<sub>_k_=0,...,_r_</sub> (_c_\*_&lambda;_)<sup>_k_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_k_</sup>,
+- _&phi;_<sub>_k_</sub> = _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**) / &sum;<sub>_k_=0,...,_r_</sub> _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**),
 
-where _r_ is an integer greater than 0, _c_ and _d_ are each 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins (Agrawal et al. 2021, Appendix D)<sup>[**(41)**](#Note41)</sup>.  In that paper, _c_, _d_, _&lambda;_ and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
+where&mdash;
 
-1. Choose an integer in \[0, _r_\] with probability proportional to the following weights: \[_c_<sup>0</sup>\*_d_<sup>_r_</sup>, _c_<sup>1</sup>\*_d_<sup>_r_&minus;1</sup>, ..., _c_<sup>_r_</sup>\*_d_<sup>0</sup>\].  Call the chosen integer _i_.
-2. Flip the _&lambda;_ input coin _i_ times and the _&mu;_ input coin _r_&minus;_i_ times.  If any of these flips returns 0, go to step 1.
-3. If _i_ = 0, return 0.  Otherwise, return 1.
+- _r_ is an integer greater than 0,
+- _g_(_i_) takes an integer _i_ and returns a number 0 or greater (which should be a rational number), and
+- _h_<sub>_i_</sub>(**_&lambda;_**) takes in a number _i_ and the probabilities of heads of one or more input coins, and returns a number in the interval [0, 1].
 
-> **Note:** In fact, this algorithm can be generalized further. By replacing step 3 with "Return _i_", the algorithm chooses _i_ with probability&mdash;<br/>_&phi;_<sub>_i_</sub> = (_c_\*_&lambda;_)<sup>_i_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_i_</sup> / &sum;<sub>_k_=0,...,_r_</sub> (_c_\*_&lambda;_)<sup>_k_</sup>\*(_d_\*_&mu;_)<sup>_r_&minus;_k_</sup>.<br/>If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_ in _S_</sub> _&phi;_<sub>_k_</sub>.  See also the Bernoulli Race in "[**Convex Combinations**](#Convex_Combinations)".
+The algorithm follows.
+
+1. Choose an integer in \[0, _r_\] with probability proportional to the following weights: \[_g_(0), _g_(1), ..., _g_(_r_)\].  Call the chosen integer _i_.
+2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&lambda;_**).  If the run returns 0, go to step 1.
+3. Return _i_.
+
+> **Notes:**
+>
+> 1. The Bernoulli Race (see "[**Convex Combinations**](#Convex_Combinations)") is a special case of this algorithm with _g_(_k_) = 1 for all _k_.
+> 2. If we define _S_ to be a subset of integers in \[0, _r_\] and replace step 3 with "If _i_ is in the set _S_, return 1.  Otherwise, return 0.", the algorithm returns 1 with probability &sum;<sub>_k_ in _S_</sub> _&phi;_<sub>_k_</sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called "die-coin algorithm" of Agrawal et al. (2021, Appendix D)<sup>[**(41)**](#Note41)</sup> as a special case with&mdash;<br>_g_(_k_) = _c_<sup>_k_</sup>\*_d_<sup>_r_&minus;_k_</sup>,<br>_h_<sub>_k_</sub>(_&lambda;_, _&mu;_) = _&lambda;_<sup>_k_</sup>\*_&mu;_<sup>_r_&minus;_k_</sup> (flip the _&lambda;_ coin _k_ times and the _&mu;_ coin _r_&minus;_k_ times; successful if all flips return 1), and<br>_S_ = \[1, _r_\],<br>where _c_&ge;0, _d_&ge;0, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.  In that paper, _c_, _d_, _&lambda;_ and _&mu;_ correspond to _c_<sub>_y_</sub>, _c_<sub>_x_</sub>, _p_<sub>_y_</sub>, and _p_<sub>_x_</sub>, respectively.
 
 <a id=c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda></a>
 #### _c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))
@@ -1561,6 +1569,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note56>(56)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note58>(58)</sup> Schmon, S.M., Doucet, A. and Deligiannidis, G., 2019, April. Bernoulli race particle filters. In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 2350-2358).</small>
 
 <a id=Appendix></a>
 ## Appendix

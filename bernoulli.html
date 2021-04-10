@@ -83,7 +83,7 @@
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda___1___lambda"><strong><em>&lambda;</em>/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d"><strong><em>c</em> * <em>&lambda;</em> * <em>&beta;</em> / (<em>&beta;</em> * (<em>c</em> * <em>&lambda;</em> + <em>d</em> * <em>&mu;</em>) &minus; (<em>&beta;</em> &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
-<li><a href="#The_Die_Coin_Algorithm"><strong>The Die-Coin Algorithm</strong></a></li>
+<li><a href="#Generalized_Bernoulli_Race"><strong>Generalized Bernoulli Race</strong></a></li>
 <li><a href="#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda"><strong><em>c</em> * <em>&lambda;</em> / (<em>c</em> * <em>&lambda;</em> + <em>d</em>) or (<em>c</em>/<em>d</em>) * <em>&lambda;</em> / (1 + (<em>c</em>/<em>d</em>) * <em>&lambda;</em>))</strong></a></li>
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
 <li><a href="#d___c____lambda"><strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong></a></li>
@@ -375,7 +375,7 @@ functions, or functions in general.</p>
 
 <h4>Certain Rational Functions</h4>
 
-<p>According to (Mossel and Peres 2005)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, a function can be simulated by a finite-state machine (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, (Icard 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input <em>&lambda;</em> in some subset of (0, 1) and outputs a number in the interval (0, 1).</p>
+<p>According to (Mossel and Peres 2005)<sup><a href="#Note14"><strong>(14)</strong></a></sup>, a function can be simulated by a finite-state machine (equivalently, a &quot;probabilistic regular grammar&quot; (Smith and Johnson 2007)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, (Icard 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>) if and only if the function can be written as a rational function (ratio of polynomials) with rational coefficients, that takes in an input <em>&lambda;</em> in a proper subset of (0, 1) and outputs a number in the interval (0, 1).</p>
 
 <p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
@@ -1111,27 +1111,39 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>With probability <em>c</em> / (<em>c</em> + <em>d</em>), flip the <em>&lambda;</em> input coin.  Otherwise, flip the <em>&mu;</em> input coin.  If the <em>&lambda;</em> input coin returns 1, return 1.  If the <em>&mu;</em> input coin returns 1, return 0.  If the corresponding coin returns 0, go to step 1.</li>
 </ol>
 
-<p><a id=The_Die_Coin_Algorithm></a></p>
+<p><a id=Generalized_Bernoulli_Race></a></p>
 
-<h4>The Die-Coin Algorithm</h4>
+<h4>Generalized Bernoulli Race</h4>
 
-<p>Returns 1 with probability&mdash;</p>
+<p>The following algorithm (Schmon et al. 2019)<sup><a href="#Note58"><strong>(58)</strong></a></sup> returns <em>i</em> with probability&mdash;</p>
 
 <ul>
-<li>1 &minus; (<em>d</em>*<em>&mu;</em>)<sup><em>r</em></sup> / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> (<em>c</em>*<em>&lambda;</em>)<sup><em>k</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>k</em></sup>, or</li>
-<li>(&sum;<sub><em>k</em>=1,...,<em>r</em></sub> (<em>c</em>*<em>&lambda;</em>)<sup><em>k</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>k</em></sup>) / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> (<em>c</em>*<em>&lambda;</em>)<sup><em>k</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>k</em></sup>,</li>
+<li><em>&phi;</em><sub><em>k</em></sub> = <em>g</em>(<em>k</em>)*<em>h</em><sub><em>k</em></sub>(<strong><em>&lambda;</em></strong>) / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> <em>g</em>(<em>k</em>)*<em>h</em><sub><em>k</em></sub>(<strong><em>&lambda;</em></strong>),</li>
 </ul>
 
-<p>where <em>r</em> is an integer greater than 0, <em>c</em> and <em>d</em> are each 0 or greater, and <em>&lambda;</em> and <em>&mu;</em> are the probabilities of heads of two input coins (Agrawal et al. 2021, Appendix D)<sup><a href="#Note41"><strong>(41)</strong></a></sup>.  In that paper, <em>c</em>, <em>d</em>, <em>&lambda;</em> and <em>&mu;</em> correspond to <em>c</em><sub><em>y</em></sub>, <em>c</em><sub><em>x</em></sub>, <em>p</em><sub><em>y</em></sub>, and <em>p</em><sub><em>x</em></sub>, respectively.</p>
+<p>where&mdash;</p>
+
+<ul>
+<li><em>r</em> is an integer greater than 0,</li>
+<li><em>g</em>(<em>i</em>) takes an integer <em>i</em> and returns a number 0 or greater (which should be a rational number), and</li>
+<li><em>h</em><sub><em>i</em></sup>(<strong><em>&lambda;</em></strong>) takes in a number <em>i</em> and the probabilities of heads of one or more input coins, and returns a number in the interval [0, 1].</li>
+</ul>
+
+<p>The algorithm follows.</p>
 
 <ol>
-<li>Choose an integer in [0, <em>r</em>] with probability proportional to the following weights: [<em>c</em><sup>0</sup>*<em>d</em><sup><em>r</em></sup>, <em>c</em><sup>1</sup>*<em>d</em><sup><em>r</em>&minus;1</sup>, ..., <em>c</em><sup><em>r</em></sup>*<em>d</em><sup>0</sup>].  Call the chosen integer <em>i</em>.</li>
-<li>Flip the <em>&lambda;</em> input coin <em>i</em> times and the <em>&mu;</em> input coin <em>r</em>&minus;<em>i</em> times.  If any of these flips returns 0, go to step 1.</li>
-<li>If <em>i</em> = 0, return 0.  Otherwise, return 1.</li>
+<li>Choose an integer in [0, <em>r</em>] with probability proportional to the following weights: [<em>g</em>(0), <em>g</em>(1), ..., <em>g</em>(<em>r</em>)].  Call the chosen integer <em>i</em>.</li>
+<li>Run a Bernoulli factory algorithm for <em>h</em><sub><em>i</em></sup>(<strong><em>&lambda;</em></strong>).  If the run returns 0, go to step 1.</li>
+<li>Return <em>i</em>.</li>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> In fact, this algorithm can be generalized further. By replacing step 3 with &quot;Return <em>i</em>&quot;, the algorithm chooses <em>i</em> with probability&mdash;<br/><em>&phi;</em><sub><em>i</em></sub> = (<em>c</em>*<em>&lambda;</em>)<sup><em>i</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>i</em></sup> / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> (<em>c</em>*<em>&lambda;</em>)<sup><em>k</em></sup>*(<em>d</em>*<em>&mu;</em>)<sup><em>r</em>&minus;<em>k</em></sup>.<br/>If we define <em>S</em> to be a subset of integers in [0, <em>r</em>] and replace step 3 with &quot;If <em>i</em> is in the set <em>S</em>, return 1.  Otherwise, return 0.&quot;, the algorithm returns 1 with probability &sum;<sub><em>k</em> in <em>S</em></sub> <em>&phi;</em><sub><em>k</em></sub>.  See also the Bernoulli Race in &quot;<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The Bernoulli Race (see &quot;<a href="#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;) is a special case of this algorithm with <em>g</em>(<em>k</em>) = 1 for all <em>k</em>.</li>
+<li>If we define <em>S</em> to be a subset of integers in [0, <em>r</em>] and replace step 3 with &quot;If <em>i</em> is in the set <em>S</em>, return 1.  Otherwise, return 0.&quot;, the algorithm returns 1 with probability &sum;<sub><em>k</em> in <em>S</em></sub> <em>&phi;</em><sub><em>k</em></sub>, and 0 otherwise.  In that case, the modified algorithm has the so-called &quot;die-coin algorithm&quot; of Agrawal et al. (2021, Appendix D)<sup><a href="#Note41"><strong>(41)</strong></a></sup> as a special case with&mdash;<br><em>g</em>(<em>k</em>) = <em>c</em><sup><em>k</em></sup>*<em>d</em><sup><em>r</em>&minus;<em>k</em></sup>,<br><em>h</em><sub><em>k</em></sub>(<em>&lambda;</em>, <em>&mu;</em>) = <em>&lambda;</em><sup><em>k</em></sup>*<em>&mu;</em><sup><em>r</em>&minus;<em>k</em></sup> (flip the <em>&lambda;</em> coin <em>k</em> times and the <em>&mu;</em> coin <em>r</em>&minus;<em>k</em> times; successful if all flips return 1), and<br><em>S</em> = [1, <em>r</em>],<br>where <em>c</em>&ge;0, <em>d</em>&ge;0, and <em>&lambda;</em> and <em>&mu;</em> are the probabilities of heads of two input coins.  In that paper, <em>c</em>, <em>d</em>, <em>&lambda;</em> and <em>&mu;</em> correspond to <em>c</em><sub><em>y</em></sub>, <em>c</em><sub><em>x</em></sub>, <em>p</em><sub><em>y</em></sub>, and <em>p</em><sub><em>x</em></sub>, respectively.</li>
+</ol>
 </blockquote>
 
 <p><a id=c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda></a></p>
@@ -2120,6 +2132,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note56>(56)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note58>(58)</sup> Schmon, S.M., Doucet, A. and Deligiannidis, G., 2019, April. Bernoulli race particle filters. In The 22nd International Conference on Artificial Intelligence and Statistics (pp. 2350-2358).</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
