@@ -15,7 +15,7 @@ And this page catalogs algorithms to solve this problem for a wide variety of fu
 
 Many of these algorithms were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>, but without step-by-step instructions in many cases.  This page provides these instructions to help programmers implement the Bernoulli factories they describe.  The Python module [**_bernoulli.py_**](https://peteroupc.github.io/bernoulli.py) includes implementations of several Bernoulli factories.
 
-This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  Again, many of these were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
+This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem.  (An _irrational number_ is a number that can't be written as a ratio of two integers.) Again, many of these algorithms were suggested in (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.
 
 This page is focused on methods that _exactly_ sample the probability described, without introducing rounding errors or other errors beyond those already present in the inputs (and assuming that we have a source of "truly" random numbers, that is, random numbers that are independent and identically distributed).
 
@@ -36,6 +36,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 - [**Contents**](#Contents)
 - [**About Bernoulli Factories**](#About_Bernoulli_Factories)
 - [**Algorithms**](#Algorithms)
+    - [**Implementation Notes**](#Implementation_Notes)
     - [**Algorithms for General Functions of _&lambda;_**](#Algorithms_for_General_Functions_of___lambda)
         - [**Certain Polynomials**](#Certain_Polynomials)
         - [**Certain Rational Functions**](#Certain_Rational_Functions)
@@ -157,15 +158,26 @@ The following shows some functions that are factory functions and some that are 
 | 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 more slowly than any polynomial. |
 | &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
 
-The next section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
-
 <a id=Algorithms></a>
 ## Algorithms
+
+This section will show algorithms for a number of factory functions, allowing different kinds of probabilities to be sampled from input coins.
+
+The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.
+
+The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
+
+Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
+
+<a id=Implementation_Notes></a>
+### Implementation Notes
+
+This section shows implementation notes that apply to the algorithms in this article.  They should be followed to avoid introducing error in the algorithms.
 
 In the following algorithms:
 
 - _&lambda;_ is the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a binomial coefficient.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+-  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  Note that for all _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - The instruction to "generate a uniform(0, 1) random number" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating `RNDRANGEMaxExc(0, 1)` or `RNDINT(1000) / 1000`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
@@ -173,25 +185,20 @@ In the following algorithms:
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
     - by generating `-ln(1/RNDRANGEMinExc(0, 1))`, as described in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Real_Numbers)" (less accurate).
-- The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented&mdash;
-    - by taking the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
+- The instruction to "choose [integers] with probability proportional to [_weights_]" can be implemented in one of the following ways:
+    - If the weights are rational numbers, take the result of **WeightedChoice**(**NormalizeRatios**(_weights_))), where **WeightedChoice** and **NormalizeRatios** are given in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
+    - If the weights are uniform PSRNs, use the algorithm given in "[**Weighted Choice Involving PSRNs**](https://peteroupc.github.io/morealg.html)".
 
     For example, "Choose 0, 1, or 2 with probability proportional to the weights [A, B, C]" means to choose 0, 1, or 2 at random so that 0 is chosen with probability A/(A+B+C), 1 with probability B/(A+B+C), and 2 with probability C/(A+B+C).
 - To **sample from a random number _u_** means to generate a number that is 1 with probability _u_ and 0 otherwise.
     - If the number is a uniform PSRN, call the **SampleGeometricBag** algorithm with the PSRN and take the result of that call (which will be 0 or 1) (most accurate). (**SampleGeometricBag** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     - Otherwise, this can be implemented by generating another uniform(0, 1) random number _v_ and generating 1 if _v_ is less than _u_ or 0 otherwise (less accurate).
 - Where an algorithm says "if _a_ is less than _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than operation on _a_ and _b_, as appropriate. (**RandLess** is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-- Where an algorithm says "if _a_ is less than (or equal to) _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than-or -equal operation on _a_ and _b_, as appropriate.
+- Where an algorithm says "if _a_ is less than (or equal to) _b_", where _a_ and _b_ are random numbers, it means to run the **RandLess** algorithm on the two numbers (if they are both PSRNs), or do a less-than-or-equal operation on _a_ and _b_, as appropriate.
 - Where a step in the algorithm says "with probability _x_" to refer to an event that may or may not happen, then this can be implemented in one of the following ways:
     - Generate a uniform(0, 1) random number _v_ (see above). The event occurs if _v_ is less than _x_ (see above).
     - Convert _x_ to a rational number _y_/_z_, then call `ZeroOrOne(y, z)`.  The event occurs if the call returns 1. For example, if an instruction says "With probability 3/5, return 1", then implement it as "Call `ZeroOrOne(3, 5)`. If the call returns 1, return 1."  `ZeroOrOne` is described in my article on [**random sampling methods**](https://peteroupc.github.io/randomfunc.html#Boolean_True_False_Conditions).  Note that if _x_ is not a rational number, then rounding error will result.
 - For best results, the algorithms should be implemented using exact rational arithmetic (such as `Fraction` in Python or `Rational` in Ruby).  Floating-point arithmetic is discouraged because it can introduce errors due to fixed-precision calculations, such as rounding and cancellations.
-
-The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.
-
-The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
-
-Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
 
 <a id=Algorithms_for_General_Functions_of___lambda></a>
 ### Algorithms for General Functions of _&lambda;_
@@ -677,15 +684,15 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different cha
 <a id=Generalized_Bernoulli_Race></a>
 #### Generalized Bernoulli Race
 
-The following algorithm (Schmon et al. 2019)<sup>[**(37)**](#Note37)</sup> returns _k_ with probability&mdash;
+The following algorithm (Schmon et al. 2019)<sup>[**(37)**](#Note37)</sup> generalizes the Bernoulli Race from the "Convex Combinations" section.  It returns _i_ with probability&mdash;
 
-- _&phi;_<sub>_k_</sub> = _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**) / &sum;<sub>_k_=0,...,_r_</sub> _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**),
+- _&phi;_<sub>_i_</sub> = _g_(_i_)\*_h_<sub>_i_</sub>(**_&lambda;_**) / &sum;<sub>_k_=0,...,_r_</sub> _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**),
 
-where&mdash;
+where:
 
-- _r_ is an integer greater than 0,
-- _g_(_i_) takes an integer _i_ and returns a number 0 or greater (which should be a rational number), and
-- _h_<sub>_i_</sub>(**_&lambda;_**) takes in a number _i_ and the probabilities of heads of one or more input coins, and returns a number in the interval [0, 1].
+- _r_ is an integer greater than 0.  There are _r_+1 values this algorithm can choose from.
+- _g_(_i_) takes an integer _i_ and returns a number 0 or greater.  This serves as a _weight_ for the "coin" labeled _i_; the higher the weight, the more likely the "coin" will be "flipped".
+- _h_<sub>_i_</sub>(**_&lambda;_**) takes in a number _i_ and the probabilities of heads of one or more input coins, and returns a number in the interval [0, 1].  This represents the "coin" for one of the _r_+1 choices.
 
 The algorithm follows.
 
