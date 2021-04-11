@@ -91,10 +91,9 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
 [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
 
-A _partially-sampled random number_ (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.  There are some open questions on PSRNs.
+A _partially-sampled random number_ (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.  The following is an open question on PSRNs.
 
-1. Are there constructions for PSRNs other than for cases given earlier in this document?  (The constructions include uniform PSRNs, where the digits are generated uniformly at random; as well as exponential PSRNs or e-rands, where the PSRN follows an exponential distribution.)
-2. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
+Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
 
 <a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
 ## More Algorithms for Arbitrary-Precision Sampling

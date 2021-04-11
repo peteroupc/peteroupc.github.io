@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/04/08"><meta name="citation_online_date" content="2021/04/08"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/04/11"><meta name="citation_online_date" content="2021/04/11"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -113,7 +113,6 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#SymPy_Formula_for_the_algorithm_for_exp_minus__x___y"><strong>SymPy Formula for the algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong></a></li>
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
 <li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
@@ -697,7 +696,7 @@
 
 <ul>
 <li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, (Nezhad et al., 2013)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding and cancellation errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
-<li>For some distributions (including the uniform and exponential distributions), the digit probabilities don&#39;t depend on previous digits, only on the position of the digit.  In this case, however, there appear to be limits on how practical this approach is; see the <a href="#Setting_Digits_by_Digit_Probabilities"><strong>appendix</strong></a> for details.</li>
+<li>For some distributions, the digit probabilities don&#39;t depend on previous digits, only on the position of the digit.  However, the uniform and exponential distributions are the only practical distributions of this kind.  See the <a href="#Setting_Digits_by_Digit_Probabilities"><strong>appendix</strong></a> for details.</li>
 </ul>
 
 <p>Finally, arithmetic with PSRNs may be possible if the result of the arithmetic is distributed with a known probability density function (PDF) (e.g., one found via Rohatgi&#39;s formula (Rohatgi 1976)<sup><a href="#Note18"><strong>(18)</strong></a></sup>), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in the <strong>UniformReciprocal</strong> algorithm above or in in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then the distribution of <em>X</em><sup>3</sup> has the PDF <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
@@ -1062,7 +1061,7 @@ def _fill_geometric_bag(b, bag, precision):
         return _toreal(ret, precision)
 </pre>
 
-<p>The following Python code implements the exponential sampler described earlier.  In the Python code below, note that <code>zero_or_one</code> uses <code>random.randint</code> which does not necessarily use only random bits, even though it&#39;s called only to return either zero or one.</p>
+<p>The following Python code implements the exponential sampler described earlier.  In the Python code below, note that <code>zero_or_one</code> uses <code>random.randint</code> which does not necessarily use only random bits, even though it&#39;s called only to return either zero or one.  The reference in <code>zero_or_one_exp_minus</code> below is (Canonne et al. 2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
 
 <pre>import random
 
@@ -1650,7 +1649,7 @@ def add_psrn_and_fraction(psrn, fraction, digits=2):
 
 <h3>Exponential Sampler: Extension</h3>
 
-<p>The code above supports rational-valued <em>&lambda;</em> parameters.  It can be extended to support any real-valued <em>&lambda;</em> parameter greater than 0, as long as <em>&lambda;</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
+<p>The code above supports rational-valued <em>&lambda;</em> parameters.  It can be extended to support any real-valued <em>&lambda;</em> parameter greater than 0, as long as <em>&lambda;</em> can be rewritten as the sum of one or more components whose fractional parts can each be simulated by a Bernoulli factory algorithm that outputs heads with probability equal to that fractional part.<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</p>
 
 <p>More specifically:</p>
 
@@ -1950,7 +1949,7 @@ def exprandscore(ln,ld,ln2,ld2):
 <li>If the PSRN is accepted, optionally fill the PSRN with uniform random digits as necessary to give its fractional part <em>n</em> digits (similarly to <strong>FillGeometricBag</strong> above), where <em>n</em> is a precision parameter, then return the PSRN.</li>
 </ol>
 
-<p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].<sup><a href="#Note21"><strong>(21)</strong></a></sup>  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
+<p>However, the speed of this algorithm depends crucially on the mode (highest point) of <em>f</em> in [0, 1].<sup><a href="#Note22"><strong>(22)</strong></a></sup>  As the mode approaches 0, the average rejection rate increases.  Effectively, this step generates a point uniformly at random in a 1&times;1 area in space.  If the mode is close to 0, <em>f</em> will cover only a tiny portion of this area, so that the chance is high that the generated point will fall outside the area of <em>f</em> and have to be rejected.</p>
 
 <p>The beta distribution&#39;s PDF at (1) fits the requirements of Keane and O&#39;Brien (for <code>alpha</code> and <code>beta</code> both greater than 1), thus it can be simulated by Bernoulli factories and is covered by this general algorithm.</p>
 
@@ -1968,7 +1967,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h3>An Example: The Continuous Bernoulli Distribution</h3>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note22"><strong>(22)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup> was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
 
 <p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
 
@@ -2047,7 +2046,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random number&#39;s fractional part (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  (For a given probability <em>p</em>, the binary entropy is <code>p*log2(1/p)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
 <p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
@@ -2067,7 +2066,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)<sup><a href="#Note25"><strong>(25)</strong></a></sup>.  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -2084,40 +2083,6 @@ def contbernoullidist(b, lamda, precision=53):
 <p><strong>SampleGeometricBagComplement</strong> has the same bit complexity as <strong>SampleGeometricBag</strong>.</p>
 
 <p><strong>FillGeometricBag</strong>&#39;s bit complexity is rather easy to find.  For base 2, it uses only one bit to sample each unfilled digit at positions less than <code>p</code>. (For bases other than 2, sampling <em>each</em> digit this way might not be optimal, since the digits are generated one at a time and random bits are not recycled over several digits.)  As a result, for an algorithm that uses both <strong>SampleGeometricBag</strong> and <strong>FillGeometricBag</strong> with <code>p</code> bits, these two contribute, on average, anywhere from <code>p + g * 2</code> to <code>p + g * 4</code> bits to the complexity, where <code>g</code> is the number of calls to <strong>SampleGeometricBag</strong>. (This complexity could be increased by 1 bit if <strong>FillGeometricBag</strong> is implemented with a rounding mechanism other than simple truncation.)</p>
-
-<p>The complexity of the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (which outputs 1 with probability exp(&minus;<em>x</em>/<em>y</em>)) was discussed in some detail by (Canonne et al. 2020)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, but not in terms of its bit complexity.  The special case of &gamma; =<em>x</em>/<em>y</em> = 0 requires no bits.  If &gamma; is an integer greater than 1, then the bit complexity is the same as that of sampling a random number <em>G</em>, where <em>G</em> is &gamma; or the number of successes before the first failure, whichever is less, and where a success has probility exp(&minus;1).</p>
-
-<ul>
-<li>Optimal lower bound: Has a complicated formula for general &gamma;, but approaches <code>log2(exp(1)-(exp(1)+1)*ln(exp(1)-1))</code> = 2.579730853... bits with increasing &gamma;.</li>
-<li>Optimal upper bound: Optimal lower bound plus 2.</li>
-<li>The actual implementation&#39;s average bit complexity is generally&mdash;
-
-<ul>
-<li>the expected number of calls to the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (with &gamma; = 1), which is the expected value of <em>G</em> as described above, times</li>
-<li>the bit complexity for each such call.</li>
-</ul></li>
-</ul>
-
-<p>If &gamma; is 1 or less, the optimal bit complexity is determined as the complexity of sampling a random integer <em>k</em> with probability mass function&mdash;</p>
-
-<ul>
-<li>P(<em>k</em>) = &gamma;<sup><em>k</em></sup>/<em>k</em>! &minus; &gamma;<sup><em>k</em> + 1</sup>/(<em>k</em> + 1)!,</li>
-</ul>
-
-<p>and the optimal lower bound is found by taking the binary entropy of each probability (<code>P(k)/log2(1/P(k))</code>) and summing them all.</p>
-
-<ul>
-<li>Optimal lower bound: Again, this has a complicated formula (see the appendix for SymPy code), but it appears to be highest at about 1.85 bits, which is reached when &gamma; is about 0.848.</li>
-<li>Optimal upper bound: Optimal lower bound plus 2.</li>
-<li>The actual implementation&#39;s average bit complexity is generally&mdash;
-
-<ul>
-<li>the expected number of calls to <code>zero_or_one</code>, which was determined to be exp(&gamma;) in (Canonne et al. 2020)<sup><a href="#Note25"><strong>(25)</strong></a></sup>, times</li>
-<li>the bit complexity for each such call (which is generally 2, but is lower in the case of &gamma; = 1, which involves <code>zero_or_one(1, 1)</code> that uses no random bits).</li>
-</ul></li>
-</ul>
-
-<p>If &gamma; is a non-integer greater than 1, the bit complexity is the sum of the bit complexities for its integer part and for its fractional part.</p>
 
 <p><a id=Application_to_Weighted_Reservoir_Sampling></a></p>
 
@@ -2140,9 +2105,8 @@ def contbernoullidist(b, lamda, precision=53):
 <p>There are some open questions on PSRNs:</p>
 
 <ol>
-<li>Are there constructions for PSRNs other than for cases given earlier in this document?</li>
 <li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
-<li>Are the conjectures in the section &quot;<a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a>&quot; true?</li>
+<li>Is the conjecture in the section &quot;<a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a>&quot; true?</li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>
@@ -2193,12 +2157,12 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note17>(17)</sup> Nezhad, R.F., Effatparvar, M., Rahimzadeh, M., 2013. &quot;Designing a Universal Data-Oriented Random Number Generator&quot;, <em>International Journal of Modern Education and Computer Science</em> 2013(2), pp. 19-24.</small></li>
 <li><small><sup id=Note18>(18)</sup> Rohatgi, V.K., 1976. An Introduction to Probability Theory Mathematical Statistics.</small></li>
 <li><small><sup id=Note19>(19)</sup> Fan, Baoying et al. “On Generating Exponentially Distributed Variates by Using Early Rejection.” <em>2019 IEEE 5th International Conference on Computer and Communications (ICCC)</em> (2019): 1307-1311.</small></li>
-<li><small><sup id=Note20>(20)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even come from a uniform PSRN.</small></li>
-<li><small><sup id=Note21>(21)</sup> More specifically, the <em>essential supremum</em>, that is, the function&#39;s highest point in [0, 1] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don&#39;t admit Bernoulli factories, as required by step 2.</small></li>
-<li><small><sup id=Note22>(22)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></li>
-<li><small><sup id=Note23>(23)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
-<li><small><sup id=Note24>(24)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
-<li><small><sup id=Note25>(25)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
+<li><small><sup id=Note20>(20)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
+<li><small><sup id=Note21>(21)</sup> In fact, thanks to the &quot;geometric bag&quot; technique of Flajolet et al. (2010), that fractional part can even come from a uniform PSRN.</small></li>
+<li><small><sup id=Note22>(22)</sup> More specifically, the <em>essential supremum</em>, that is, the function&#39;s highest point in [0, 1] ignoring zero-volume, or measure-zero, sets.  However, the mode is also correct here, since discontinuous PDFs don&#39;t admit Bernoulli factories, as required by step 2.</small></li>
+<li><small><sup id=Note23>(23)</sup> Loaiza-Ganem, G., Cunningham, J.P., &quot;<a href="https://arxiv.org/abs/1907.06845v5"><strong>The continuous Bernoulli: fixing a pervasive error in variational autoencoders</strong></a>&quot;, arXiv:1907.06845v5  [stat.ML], 2019.</small></li>
+<li><small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
+<li><small><sup id=Note25>(25)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
 <li><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
 <li><small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to <em>Lebesgue measure</em>, which, roughly speaking, measures sets of real numbers according to their &quot;length&quot;.</small></li>
 </ul>
@@ -2206,26 +2170,6 @@ def contbernoullidist(b, lamda, precision=53):
 <p><a id=Appendix></a></p>
 
 <h2>Appendix</h2>
-
-<p><a id=SymPy_Formula_for_the_algorithm_for_exp_minus__x___y></a></p>
-
-<h3>SymPy Formula for the algorithm for exp(&minus;<em>x</em>/<em>y</em>)</h3>
-
-<p>The following Python code uses SymPy to plot the bit complexity lower bound for the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> when &gamma; is 1 or less:</p>
-
-<pre>def ent(p):
-   return p*log(1/p,2)
-
-def expminusformula():
-   i=symbols(&#39;i&#39;,integer=True)
-   x=symbols(&#39;x&#39;,real=True)
-   # Approximation for k = [0, 6]; the result is little different
-   # for k = [0, infinity]
-   return summation(ent(x**i/factorial(i) - \
-      x**(i+1)/factorial(i+1)), (i,0,6))
-
-plot(expminusformula(), xlim=(0,1), ylim=(0,2))
-</pre>
 
 <p><a id=Equivalence_of_SampleGeometricBag_Algorithms></a></p>
 
