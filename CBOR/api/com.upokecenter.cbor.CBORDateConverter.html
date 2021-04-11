@@ -67,7 +67,7 @@ Not documented yet.</li>
 <li><code>boolean TryGetDateTimeFields​(CBORObject obj,
                 com.upokecenter.numbers.EInteger[] year,
                 int[] lesserFields)</code><br>
-Not documented yet.</li>
+Tries to extract the fields of a date and time in the form of a CBOR object.</li>
 </ul>
 
 <h2>Field Details</h2>
@@ -154,27 +154,45 @@ Not documented yet.</li>
 <pre>public boolean TryGetDateTimeFields​(CBORObject obj, com.upokecenter.numbers.EInteger[] year, int[] lesserFields)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Tries to extract the fields of a date and time in the form of a CBOR object.</p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
 <li><p><code>obj</code> - Not documented yet.</p></li>
-<li><p><code>year</code> - Not documented yet.</p></li>
-<li><p><code>lesserFields</code> - Not documented yet.</p></li>
+<li><p><code>year</code> - An array whose first element will store the year. The array&#39;s
+length must be 1 or greater. If this function fails, the first element
+is set to null.</p></li>
+<li><p><code>lesserFields</code> - An array that will store the fields (other than the
+year) of the date and time. The array&#39;s length must be 7 or greater.
+If this function fails, the first seven elements are set to 0. If this
+method is successful, the first seven elements of the array (starting
+at 0) will be as follows: <ul> <li>0 - Month of the year, from 1
+(January) through 12 (December).</li> <li>1 - Day of the month, from 1
+through 31.</li> <li>2 - Hour of the day, from 0 through 23.</li>
+<li>3 - Minute of the hour, from 0 through 59.</li> <li>4 - Second of
+the minute, from 0 through 59.</li> <li>5 - Fractional seconds,
+expressed in nanoseconds. This value cannot be less than 0.</li> <li>6</p>
+
+<ul>
+<li>Number of minutes to subtract from this date and time to get global
+time. This number can be positive or negative, but cannot be less than
+-1439 or greater than 1439. For tags 0 and 1, this value is always
+0.</li></ul></li>
+</ul></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>Either &quot;true&quot; if the method is successful, or &quot;false&quot; otherwise.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
 
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>year</code> or <code>
-lesserFields</code> is null.</li>
+lesserFields</code> is null, or contains fewer elements than required.</li>
 </ul>
 
 <h3>ToCBORObject</h3>

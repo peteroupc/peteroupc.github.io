@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/04/06"><meta name="citation_online_date" content="2021/04/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/04/10"><meta name="citation_online_date" content="2021/04/10"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -45,6 +45,7 @@
 <li><a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a></li>
 <li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
 <li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
+<li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
 
@@ -508,6 +509,18 @@
 <p><strong>Example:</strong> One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a> for details).</p>
 </blockquote>
 
+<p><a id=Weighted_Choice_Involving_PSRNs></a></p>
+
+<h3>Weighted Choice Involving PSRNs</h3>
+
+<p>Given <em>n</em> uniform PSRNs, called <em>weights</em>, with labels starting from 0 and ending at <em>n</em>&minus;1, the following algorithm chooses an integer in [0, <em>n</em>) with probability proportional to its weight.  Each weight&#39;s sign must be positive.</p>
+
+<ol>
+<li>Create an empty list, then for each weight starting with weight 0, add the weight&#39;s integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the <em>rounded weights list</em>.</li>
+<li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Samping Methods</strong></a>&quot;.</li>
+<li>Run <strong>URandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
+</ol>
+
 <p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
 
 <h2>Specific Arbitrary-Precision Samplers</h2>
@@ -934,7 +947,7 @@
 <li><p>For correctness, <em>f</em>(<em>U</em>) must meet the following conditions:</p>
 
 <ul>
-<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be a continuous function that maps the interval [0, 1] to [0, 1] and doesn&#39;t touch 0 or 1 except possibly at the points 0 and/or 1.</li>
+<li>If the algorithm will be run multiple times with the same PSRN, <em>f</em>(<em>U</em>) must be the constant 0 or 1, or be continuous and polynomially bounded on the interval <a href="polynomially%20bounded%20means%20that%20both%20_f_(_U_)%20and%201&amp;minus;_f_(_U_)%20are%20bounded%20from%20below%20by%20min(_U_%3Csup%3E_n_%3C/sup%3E,%20(1&amp;minus;_U_)%3Csup%3E_n_%3C/sup%3E)%20for%20some%20integer%20_n_">0, 1</a>.</li>
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere except at a countable number of points.</li>
 </ul>
 

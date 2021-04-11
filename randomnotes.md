@@ -73,6 +73,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)
 > 3. The following are some approximations to the normal distribution that papers have suggested:
 >    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`. (Kabal 2000/2019)<sup>[**(6)**](#Note6)</sup> "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution"**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution), namely the sum of `n` many `RNDRANGE(0, 1)` numbers, on Wikipedia.  D. Thomas (2014)<sup>[**(7)**](#Note7)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` numbers in [0, 1] sampled from the uniform distribution as follows: `RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...`.
 >    - Numerical [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(8)**](#Note8)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
+> 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGE(0, 1)`), and the two variates are not independent of each other (Thistleton et al. 2007)<sup>[**(19)**](#Note19)</sup>.
 
 <a id=Gamma_Distribution></a>
 #### Gamma Distribution
@@ -414,6 +415,7 @@ Other kinds of copulas describe different kinds of dependence between randomly s
 - <small><sup id=Note16>(16)</sup> Hofert, M., and Maechler, M.  "Nested Archimedean Copulas Meet R: The nacopula Package".  _Journal of Statistical Software_ 39(9), 2011, pp. 1-20.</small>
 - <small><sup id=Note17>(17)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note18>(18)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
+- <small><sup id=Note19>(19)</sup> Thistleton, W., Marsh, J., et al., "Generalized Box-Müller Method for Generating q-Gaussian Random Deviates", _IEEE Transactions on Information Theory_ 53(12), 2007.</small>
 
 <a id=Appendix></a>
 ## Appendix

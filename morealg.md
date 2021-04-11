@@ -32,6 +32,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
     - [**Mixtures**](#Mixtures)
+    - [**Weighted Choice Involving PSRNs**](#Weighted_Choice_Involving_PSRNs)
 - [**Specific Arbitrary-Precision Samplers**](#Specific_Arbitrary_Precision_Samplers)
     - [**Rayleigh Distribution**](#Rayleigh_Distribution)
     - [**Sum of Exponential Random Numbers**](#Sum_of_Exponential_Random_Numbers)
@@ -356,6 +357,15 @@ A _mixture_ involves sampling one of several distributions, where each distribut
 
 > **Example:** One example of a mixture is two beta distributions, with separate parameters.  One beta distribution is chosen with probability exp(&minus;3) (a probability for which a Bernoulli factory algorithm exists) and the other is chosen with the opposite probability.  For the two beta distributions, an arbitrary-precision sampling algorithm exists (see my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html) for details).
 
+<a id=Weighted_Choice_Involving_PSRNs></a>
+### Weighted Choice Involving PSRNs
+
+Given _n_ uniform PSRNs, called _weights_, with labels starting from 0 and ending at _n_&minus;1, the following algorithm chooses an integer in [0, _n_) with probability proportional to its weight.  Each weight's sign must be positive.
+
+1. Create an empty list, then for each weight starting with weight 0, add the weight's integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the _rounded weights list_.
+2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Samping Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
+3. Run **URandLessThanReal**(_w_, _rw_), where _w_ is the original weight for integer _i_, and _rw_ is the rounded weight for integer _i_ in the rounded weights list.  That algorithm returns 1 if _w_ turns out to be less than _rw_.  If the result is 1, return _i_.  Otherwise, go to step 2.
+
 <a id=Specific_Arbitrary_Precision_Samplers></a>
 ## Specific Arbitrary-Precision Samplers
 
@@ -679,7 +689,7 @@ The following algorithm takes a uniform partially-sampled random number (PSRN) a
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
 - For correctness, _f_(_U_) must meet the following conditions:
-    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be a continuous function that maps the interval \[0, 1] to \[0, 1] and doesn't touch 0 or 1 except possibly at the points 0 and/or 1.
+    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the interval [0, 1] (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_).
     - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere except at a countable number of points.
 
     The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)<sup>[**(2)**](#Note2)</sup>.
