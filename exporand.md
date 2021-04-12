@@ -159,7 +159,7 @@ An algorithm that samples from a continuous distribution using PSRNs has the fol
 > **Notes:**
 >
 > 1. It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  The following are some reasons for this.
->     - One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)".
+>     - One reason is that arithmetic and other math operations on uniform PSRNs do not always lead to a uniform PSRN; see "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)".
 >     - Another issue occurs when the original sampler uses the same random number for different purposes in the algorithm (an example is "_W_\*_Y_, (1&minus;_W_)\*_Y_", where _W_ and _Y_ are independent random numbers (Devroye 1986, p. 394)<sup>[**(14)**](#Note14)</sup>).  In this case, if one PSRN spawns additional PSRNs (so that they become _dependent_ on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it's hard to characterize when the additional PSRNs become inaccurate this way and when not.)
 > 2. The _exact rejection sampling_ algorithm described by Oberhoff (2018)<sup>[**(12)**](#Note12)</sup> produces samples that act like PSRNs; however, the algorithm doesn't have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm's progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup>[**(4)**](#Note4)</sup>).  For completeness, Oberhoff's method appears in the appendix.
 
@@ -415,18 +415,7 @@ The algorithms given above for addition and multiplication are useful for scalin
 2. Run the **UniformMultiplyRational** algorithm to multiply the uniform PSRN by the rational parameter _scale_ to get a new uniform PSRN.
 3. Run the **UniformAddRational** algorithm to add the new uniform PSRN and the rational parameter _location_ to get a third uniform PSRN.  Return this third PSRN.
 
-Note that incorrect results may occur if the _same PSRN_ is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the **UniformAddRational** or **UniformMultiplyRational** algorithm when it's called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.
-
-It might be believed that the issue just described could be solved by the algorithm below:
-
-_Let  vec be the vector of rational numbers, and let vec\[i\] be the rational number at position i of the vector (positions start at 0)._
-
-1. _Set i to 0, set **a** to the input PSRN, set num to vec\[i\], and set 'output' to an empty list._
-2. _Set ret to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number num._
-3. _Add a pointer to ret to the list 'output'.  If vec\[i\] was the last number in the vector, stop this algorithm._
-4. _Set **a** to point to ret, then add 1 to i, then set num to vec\[i\]/vec\[i&minus;1\]._
-
-However, even this algorithm doesn't ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let **a** be the PSRN 0.... (or the interval \[0.0, 1.0\]), then let **b** be the result of **UniformMultiplyRational**(**a**, 1/2), then let **c** be the result of **UniformMultiplyRational**(**b**, 1/3).  One possible result for **b** is 0.41... and for **c** is 0.138.... Now we fill **a**, **b**, and **c** with uniform random bits.  Thus, as one possible result, **a** is now 0.13328133..., **b** is now 0.41792367..., and **c** is now 0.13860371....  Here, however, **c** divided by **b** is not exactly 1/3, although it's quite close, and **b** divided by **a** is far from 1/2 (especially since **a** was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.
+See also the section "Discussion" later in this article.
 
 <a id=Comparisons></a>
 ### Comparisons
@@ -497,7 +486,9 @@ The following shows how to implement **URandLessThanReal** when **b** is a fract
 <a id=Discussion></a>
 ### Discussion
 
-As can be seen in the arithmetic algorithms above (such as **UniformAdd** and **UniformMultiplyRational**), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019)<sup>[**(15)**](#Note15)</sup>) are not as trivial as adding, multiplying, etc. their integer and fractional parts.
+This section discusses issues involving arithmetic with PSRNs.
+
+As can be seen in the arithmetic algorithms earlier in this section (such as **UniformAdd** and **UniformMultiplyRational**), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019)<sup>[**(15)**](#Note15)</sup>) are not as trivial as adding, multiplying, etc. their integer and fractional parts.
 
 An example illustrates this. Say we have two uniform PSRNs: _A_ = 0.12345... and _B_ = 0.38901....  They represent random numbers in the intervals _AI_ = \[0.12345, 0.12346\] and _BI_ = \[0.38901, 0.38902\], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result _C_ lies in _CI_ = \[0.12345 + 0.38901, 0.12346 + 0.38902\] = \[0.51246, 0.51248\].  However, the resulting random number is _not_ uniformly distributed in \[0.51246, 0.51248\], so that simply choosing a uniform random number in the interval won't work.  This can be demonstrated by generating many pairs of uniform random numbers in the intervals _AI_ and _BI_, summing the numbers in each pair, and building a histogram using the sums (which will all lie in the interval _CI_).  In this case, the histogram will show a triangular distribution that peaks at 0.51247.
 
@@ -505,7 +496,7 @@ This example can also apply to other arithmetic operations besides addition: do 
 
 Another reason most operations are nontrivial is that the result of the operation may be an irrational number (as in `log`, `sin`, etc.), or can even have a non-terminating digit expansion (as in most cases of division).  For these operations, although interval arithmetic can tightly bound the possible result to a finite number of digits, the resulting interval can include numbers with a probability density of zero.
 
-On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, and operations affecting the PSRN's integer part only.
+**Implementing other operations.** In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)<sup>[**(1)**](#Note1)</sup>, and operations affecting the PSRN's integer part only.
 
 Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result's digit expansion, to some kind of formula.
 
@@ -513,6 +504,19 @@ Partially-sampled-number arithmetic may also be possible by relating the relativ
 - For some distributions, the digit probabilities don't depend on previous digits, only on the position of the digit.  However, the uniform and exponential distributions are the only practical distributions of this kind.  See the [**appendix**](#Setting_Digits_by_Digit_Probabilities) for details.
 
 Finally, arithmetic with PSRNs may be possible if the result of the arithmetic is distributed with a known probability density function (PDF), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in the **UniformReciprocal** algorithm above or in in my article on [**arbitrary-precision samplers for the sum of uniform random numbers**](https://peteroupc.github.io/uniformsum.html).  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if _X_ is a uniform PSRN, then the distribution of _X_<sup>3</sup> has the PDF `(1/3) / pow(X, 2/3)`, which has an unbounded peak at 0.  While this rules out plain rejection samplers for _X_<sup>3</sup> in practice, it's still possible to sample powers of uniforms using PSRNs, which will be described later in this article.
+
+**Reusing PSRNs.** The arithmetic algorithms in this section may give incorrect results if the _same PSRN_ is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the **UniformAddRational** or **UniformMultiplyRational** algorithm when it's called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.
+
+It might be believed that the issue just described could be solved by the algorithm below:
+
+_Let  vec be a vector of rational numbers to multiply the input PSRN by, and let vec\[i\] be the rational number at position i of the vector (positions start at 0)._
+
+1. _Set i to 0, set **a** to the input PSRN, set num to vec\[i\], and set 'output' to an empty list._
+2. _Set ret to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number num._
+3. _Add a pointer to ret to the list 'output'.  If vec\[i\] was the last number in the vector, stop this algorithm._
+4. _Set **a** to point to ret, then add 1 to i, then set num to vec\[i\]/vec\[i&minus;1\], then go to step 2._
+
+However, even this algorithm doesn't ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let **a** be the PSRN 0.... (or the interval \[0.0, 1.0\]), then let **b** be the result of **UniformMultiplyRational**(**a**, 1/2), then let **c** be the result of **UniformMultiplyRational**(**b**, 1/3).  One possible result for **b** is 0.41... and for **c** is 0.138.... Now we fill **a**, **b**, and **c** with uniform random bits.  Thus, as one possible result, **a** is now 0.13328133..., **b** is now 0.41792367..., and **c** is now 0.13860371....  Here, however, **c** divided by **b** is not exactly 1/3, although it's quite close, and **b** divided by **a** is far from 1/2 (especially since **a** was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.
 
 <a id=Building_Blocks></a>
 ## Building Blocks
@@ -564,7 +568,7 @@ The algorithm is as follows:
 1. Create `n` uniform PSRNs with positive sign and an integer part of 0.
 2. Set `index` to 1.
 3. If `index <= k` and `index + n >= k`:
-    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the base, or radix (for the binary case, _b_ = 2, so this is equivalent to generating `LC` = binomial(`n`, 0.5) and setting **v** to {`LC`, `n - LC`}).
+    1. Generate **v**, a multinomial random vector with _b_ probabilities equal to 1/_b_, where _b_ is the base, or radix (for the binary case, _b_ = 2, so this is equivalent to generating a binomial(`n`, 0.5) random number, call it `LC`, and setting **v** to {`LC`, `n - LC`}).
     2. Starting at `index`, append the digit 0 to the first **v**\[0\] PSRNs, a 1 digit to the next **v**\[1\] PSRNs, and so on to appending a _b_ &minus; 1 digit to the last **v**\[_b_ &minus; 1\] PSRNs (for the binary case, this means appending a 0 bit to the first `LC` PSRNs and a 1 bit to the next `n - LC` PSRNs).
     3. For each integer _i_ in \[0, _b_): If **v**\[_i_\] > 1, repeat step 3 and these substeps with `index` = `index` + &sum;<sub>_j_=0, ..., _i_&minus;1</sub> **v**\[_j_\] and `n` = **v**\[_i_\]. (For the binary case, this means: If `LC > 1`, repeat step 3 and these substeps with the same `index` and `n = LC`; then, if `n - LC > 1`, repeat step 3 and these substeps with `index = index + LC`, and `n = n - LC`).
 4. Take the `k`th PSRN (starting at 1), then optionally fill it with uniform random digits as necessary to give its fractional part `bitcount` many digits (similarly to **FillGeometricBag** above), then return that number.  (Note that the beta sampler  described later chooses to fill the PSRN this way via this algorithm.)
@@ -1747,7 +1751,7 @@ The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note
 
 An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.
 
-However, the resulting distribution will have a discontinuous _probability density function_ (PDF) in general, as the following two results show:
+However, as the following two results show, the resulting distribution will have a discontinuous _probability density function_ (PDF) in general, leaving the uniform and exponential distributions as the only practical distributions that can be formed this way:
 
 **Result 1.** _For &beta; = 2, the distribution's PDF will be continuous only if&mdash;_
 

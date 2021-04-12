@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/04/11"><meta name="citation_online_date" content="2021/04/11"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/04/12"><meta name="citation_online_date" content="2021/04/12"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -224,7 +224,7 @@
 <li>It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  The following are some reasons for this.
 
 <ul>
-<li>One reason is that arithmetic and other math operations on uniform PSRNs does not always lead to a uniform PSRN; see &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;.</li>
+<li>One reason is that arithmetic and other math operations on uniform PSRNs do not always lead to a uniform PSRN; see &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;.</li>
 <li>Another issue occurs when the original sampler uses the same random number for different purposes in the algorithm (an example is &quot;<em>W</em>*<em>Y</em>, (1&minus;<em>W</em>)*<em>Y</em>&quot;, where <em>W</em> and <em>Y</em> are independent random numbers (Devroye 1986, p. 394)<sup><a href="#Note14"><strong>(14)</strong></a></sup>).  In this case, if one PSRN spawns additional PSRNs (so that they become <em>dependent</em> on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it&#39;s hard to characterize when the additional PSRNs become inaccurate this way and when not.)</li>
 </ul></li>
 <li>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)<sup><a href="#Note12"><strong>(12)</strong></a></sup> produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)<sup><a href="#Note4"><strong>(4)</strong></a></sup>).  For completeness, Oberhoff&#39;s method appears in the appendix.</li>
@@ -581,20 +581,7 @@
 <li>Run the <strong>UniformAddRational</strong> algorithm to add the new uniform PSRN and the rational parameter <em>location</em> to get a third uniform PSRN.  Return this third PSRN.</li>
 </ol>
 
-<p>Note that incorrect results may occur if the <em>same PSRN</em> is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the <strong>UniformAddRational</strong> or <strong>UniformMultiplyRational</strong> algorithm when it&#39;s called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.</p>
-
-<p>It might be believed that the issue just described could be solved by the algorithm below:</p>
-
-<p><em>Let  vec be the vector of rational numbers, and let vec[i] be the rational number at position i of the vector (positions start at 0).</em></p>
-
-<ol>
-<li><em>Set i to 0, set <strong>a</strong> to the input PSRN, set num to vec[i], and set &#39;output&#39; to an empty list.</em></li>
-<li><em>Set ret to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number num.</em></li>
-<li><em>Add a pointer to ret to the list &#39;output&#39;.  If vec[i] was the last number in the vector, stop this algorithm.</em></li>
-<li><em>Set <strong>a</strong> to point to ret, then add 1 to i, then set num to vec[i]/vec[i&minus;1].</em></li>
-</ol>
-
-<p>However, even this algorithm doesn&#39;t ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let <strong>a</strong> be the PSRN 0.... (or the interval [0.0, 1.0]), then let <strong>b</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>a</strong>, 1/2), then let <strong>c</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>b</strong>, 1/3).  One possible result for <strong>b</strong> is 0.41... and for <strong>c</strong> is 0.138.... Now we fill <strong>a</strong>, <strong>b</strong>, and <strong>c</strong> with uniform random bits.  Thus, as one possible result, <strong>a</strong> is now 0.13328133..., <strong>b</strong> is now 0.41792367..., and <strong>c</strong> is now 0.13860371....  Here, however, <strong>c</strong> divided by <strong>b</strong> is not exactly 1/3, although it&#39;s quite close, and <strong>b</strong> divided by <strong>a</strong> is far from 1/2 (especially since <strong>a</strong> was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.</p>
+<p>See also the section &quot;Discussion&quot; later in this article.</p>
 
 <p><a id=Comparisons></a></p>
 
@@ -689,7 +676,9 @@
 
 <h3>Discussion</h3>
 
-<p>As can be seen in the arithmetic algorithms above (such as <strong>UniformAdd</strong> and <strong>UniformMultiplyRational</strong>), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>) are not as trivial as adding, multiplying, etc. their integer and fractional parts.</p>
+<p>This section discusses issues involving arithmetic with PSRNs.</p>
+
+<p>As can be seen in the arithmetic algorithms earlier in this section (such as <strong>UniformAdd</strong> and <strong>UniformMultiplyRational</strong>), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019)<sup><a href="#Note15"><strong>(15)</strong></a></sup>) are not as trivial as adding, multiplying, etc. their integer and fractional parts.</p>
 
 <p>An example illustrates this. Say we have two uniform PSRNs: <em>A</em> = 0.12345... and <em>B</em> = 0.38901....  They represent random numbers in the intervals <em>AI</em> = [0.12345, 0.12346] and <em>BI</em> = [0.38901, 0.38902], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result <em>C</em> lies in <em>CI</em> = [0.12345 + 0.38901, 0.12346 + 0.38902] = [0.51246, 0.51248].  However, the resulting random number is <em>not</em> uniformly distributed in [0.51246, 0.51248], so that simply choosing a uniform random number in the interval won&#39;t work.  This can be demonstrated by generating many pairs of uniform random numbers in the intervals <em>AI</em> and <em>BI</em>, summing the numbers in each pair, and building a histogram using the sums (which will all lie in the interval <em>CI</em>).  In this case, the histogram will show a triangular distribution that peaks at 0.51247.</p>
 
@@ -697,7 +686,7 @@
 
 <p>Another reason most operations are nontrivial is that the result of the operation may be an irrational number (as in <code>log</code>, <code>sin</code>, etc.), or can even have a non-terminating digit expansion (as in most cases of division).  For these operations, although interval arithmetic can tightly bound the possible result to a finite number of digits, the resulting interval can include numbers with a probability density of zero.</p>
 
-<p>On the other hand, some other arithmetic operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, and operations affecting the PSRN&#39;s integer part only.</p>
+<p><strong>Implementing other operations.</strong> In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, and operations affecting the PSRN&#39;s integer part only.</p>
 
 <p>Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.</p>
 
@@ -707,6 +696,21 @@
 </ul>
 
 <p>Finally, arithmetic with PSRNs may be possible if the result of the arithmetic is distributed with a known probability density function (PDF), allowing for an algorithm that implements rejection from the uniform or exponential distribution.  An example of this is found in the <strong>UniformReciprocal</strong> algorithm above or in in my article on <a href="https://peteroupc.github.io/uniformsum.html"><strong>arbitrary-precision samplers for the sum of uniform random numbers</strong></a>.  However, that PDF may have an unbounded peak, thus ruling out rejection sampling in practice.  For example, if <em>X</em> is a uniform PSRN, then the distribution of <em>X</em><sup>3</sup> has the PDF <code>(1/3) / pow(X, 2/3)</code>, which has an unbounded peak at 0.  While this rules out plain rejection samplers for <em>X</em><sup>3</sup> in practice, it&#39;s still possible to sample powers of uniforms using PSRNs, which will be described later in this article.</p>
+
+<p><strong>Reusing PSRNs.</strong> The arithmetic algorithms in this section may give incorrect results if the <em>same PSRN</em> is used more than once in different runs of these addition and multiplication algorithms.  This is easy to see for the <strong>UniformAddRational</strong> or <strong>UniformMultiplyRational</strong> algorithm when it&#39;s called more than once with the same PSRN and the same rational number:  although the same random number ought to be returned each time, in reality different random numbers will be generated this way almost surely, especially when additional digits are sampled from them afterwards.</p>
+
+<p>It might be believed that the issue just described could be solved by the algorithm below:</p>
+
+<p><em>Let  vec be a vector of rational numbers to multiply the input PSRN by, and let vec[i] be the rational number at position i of the vector (positions start at 0).</em></p>
+
+<ol>
+<li><em>Set i to 0, set <strong>a</strong> to the input PSRN, set num to vec[i], and set &#39;output&#39; to an empty list.</em></li>
+<li><em>Set ret to the result of <strong>UniformMultiplyRational</strong> with the PSRN <strong>a</strong> and the rational number num.</em></li>
+<li><em>Add a pointer to ret to the list &#39;output&#39;.  If vec[i] was the last number in the vector, stop this algorithm.</em></li>
+<li><em>Set <strong>a</strong> to point to ret, then add 1 to i, then set num to vec[i]/vec[i&minus;1], then go to step 2.</em></li>
+</ol>
+
+<p>However, even this algorithm doesn&#39;t ensure that the output PSRNs will be exactly proportional to the same random number.  An example: Let <strong>a</strong> be the PSRN 0.... (or the interval [0.0, 1.0]), then let <strong>b</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>a</strong>, 1/2), then let <strong>c</strong> be the result of <strong>UniformMultiplyRational</strong>(<strong>b</strong>, 1/3).  One possible result for <strong>b</strong> is 0.41... and for <strong>c</strong> is 0.138.... Now we fill <strong>a</strong>, <strong>b</strong>, and <strong>c</strong> with uniform random bits.  Thus, as one possible result, <strong>a</strong> is now 0.13328133..., <strong>b</strong> is now 0.41792367..., and <strong>c</strong> is now 0.13860371....  Here, however, <strong>c</strong> divided by <strong>b</strong> is not exactly 1/3, although it&#39;s quite close, and <strong>b</strong> divided by <strong>a</strong> is far from 1/2 (especially since <strong>a</strong> was very coarse to begin with). Although we show PSRNs with decimal digits, the situation is worse with binary digits.</p>
 
 <p><a id=Building_Blocks></a></p>
 
@@ -771,7 +775,7 @@
 <li>If <code>index &lt;= k</code> and <code>index + n &gt;= k</code>:
 
 <ol>
-<li>Generate <strong>v</strong>, a multinomial random vector with <em>b</em> probabilities equal to 1/<em>b</em>, where <em>b</em> is the base, or radix (for the binary case, <em>b</em> = 2, so this is equivalent to generating <code>LC</code> = binomial(<code>n</code>, 0.5) and setting <strong>v</strong> to {<code>LC</code>, <code>n - LC</code>}).</li>
+<li>Generate <strong>v</strong>, a multinomial random vector with <em>b</em> probabilities equal to 1/<em>b</em>, where <em>b</em> is the base, or radix (for the binary case, <em>b</em> = 2, so this is equivalent to generating a binomial(<code>n</code>, 0.5) random number, call it <code>LC</code>, and setting <strong>v</strong> to {<code>LC</code>, <code>n - LC</code>}).</li>
 <li>Starting at <code>index</code>, append the digit 0 to the first <strong>v</strong>[0] PSRNs, a 1 digit to the next <strong>v</strong>[1] PSRNs, and so on to appending a <em>b</em> &minus; 1 digit to the last <strong>v</strong>[<em>b</em> &minus; 1] PSRNs (for the binary case, this means appending a 0 bit to the first <code>LC</code> PSRNs and a 1 bit to the next <code>n - LC</code> PSRNs).</li>
 <li>For each integer <em>i</em> in [0, <em>b</em>): If <strong>v</strong>[<em>i</em>] &gt; 1, repeat step 3 and these substeps with <code>index</code> = <code>index</code> + &sum;<sub><em>j</em>=0, ..., <em>i</em>&minus;1</sub> <strong>v</strong>[<em>j</em>] and <code>n</code> = <strong>v</strong>[<em>i</em>]. (For the binary case, this means: If <code>LC &gt; 1</code>, repeat step 3 and these substeps with the same <code>index</code> and <code>n = LC</code>; then, if <code>n - LC &gt; 1</code>, repeat step 3 and these substeps with <code>index = index + LC</code>, and <code>n = n - LC</code>).</li>
 </ol></li>
@@ -2224,7 +2228,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.</p>
 
-<p>However, the resulting distribution will have a discontinuous <em>probability density function</em> (PDF) in general, as the following two results show:</p>
+<p>However, as the following two results show, the resulting distribution will have a discontinuous <em>probability density function</em> (PDF) in general, leaving the uniform and exponential distributions as the only practical distributions that can be formed this way:</p>
 
 <p><strong>Result 1.</strong> <em>For &beta; = 2, the distribution&#39;s PDF will be continuous only if&mdash;</em></p>
 
