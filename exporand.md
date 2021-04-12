@@ -509,7 +509,7 @@ Finally, arithmetic with PSRNs may be possible if the result of the arithmetic i
 
 It might be believed that the issue just described could be solved by the algorithm below:
 
-_Let  vec be a vector of rational numbers to multiply the input PSRN by, and let vec\[i\] be the rational number at position i of the vector (positions start at 0)._
+_Assume we want to multiply the same PSRN by different numbers.  Let vec be a vector of rational numbers to multiply the same PSRN by, and let vec\[i\] be the rational number at position i of the vector (positions start at 0)._
 
 1. _Set i to 0, set **a** to the input PSRN, set num to vec\[i\], and set 'output' to an empty list._
 2. _Set ret to the result of **UniformMultiplyRational** with the PSRN **a** and the rational number num._
