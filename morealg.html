@@ -733,13 +733,30 @@
 
 <h3>Exponential Distribution with Rate ln(<em>x</em>)</h3>
 
-<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random number.  Here, <em>x</em> is a rational number that&#39;s greater than 1.  In the algorithm, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</p>
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random number.  This algorithm has two supported cases:</p>
+
+<ul>
+<li><em>x</em> is a rational number that&#39;s greater than 1.  In that case, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</li>
+<li><em>x</em> is a uniform PSRN with a positive sign and an integer part of 1 or greater.  In that case, let <em>b</em> be floor(ln(<em>i</em>)/ln(2)), where <em>i</em> is <em>x</em>&#39;s integer part.</li>
+</ul>
+
+<p>The algorithm follows.</p>
 
 <ol>
-<li>(Samples the integer part of the random number.) Generate a random number that expresses the number of failed trials before the first success, where each trial succeeds with probability 1&minus;1/<em>x</em>.  Set <em>k</em> to that random number.  (This is also known as a &quot;geometric random number&quot;, but this terminology is avoided because it has conflicting meanings in academic works.  If <em>x</em> is a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.)</li>
+<li>(Samples the integer part of the random number.) Generate a random number that expresses the number of failed trials before the first success, where each trial succeeds with probability 1&minus;1/<em>x</em>.  Set <em>k</em> to that random number. (This is also known as a &quot;geometric random number&quot;, but this terminology is avoided because it has conflicting meanings in academic works.)
+
+<ul>
+<li>If <em>x</em> is a rational number and a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.</li>
+<li>If <em>x</em> is a uniform PSRN, this step is implemented as follows: Run the first subalgorithm (later in this section) repeatedly until a run returns 0.  Set <em>k</em> to the number of runs that returned 1 this way.</li>
+</ul></li>
 <li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
-<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)    If <em>x</em> is not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
-<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If <em>x</em> is not a power of 2, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
+<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)   Then:
+
+<ul>
+<li>If <em>x</em> is a rational number, but not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>If <em>x</em> is a uniform PSRN, also create a <em>&rho;</em> input coin that does the following: &quot;Return the result of the second subalgorithm (later in this section), given <em>x</em> and <em>b</em>&quot;, and a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>&lambda;</em>)</strong>, using the <em>&rho;</em> input coin.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+</ul></li>
+<li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If a <em>&nu;</em> input coin was created in step 3, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
 <li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
 </ol>
 
@@ -755,6 +772,20 @@
 <li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
 <li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
+</ol>
+
+<p>The first subalgorithm samples the probability 1/<em>x</em>, where <em>x</em>&ge;1 is a uniform PSRN:</p>
+
+<ol>
+<li>Set <em>c</em> to <em>x</em>&#39;s integer part.  With probability <em>c</em> / (1 + <em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
+<li>Run <strong>SampleGeometricBag</strong> on <em>x</em> (which ignores <em>x</em>&#39;s integer part and sign).  If the run returns 1, return 0.  Otherwise, go to step 1.</li>
+</ol>
+
+<p>The second subalgorithm samples the probability (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>, where <em>x</em>&ge;1 is a uniform PSRN and <em>b</em>&ge;0 is an integer:</p>
+
+<ol>
+<li>Subtract 2<sup><em>b</em></sup> from <em>x</em>&#39;s integer part, then create <em>y</em> as <strong>RandUniformFromReal</strong>(2<sup><em>b</em></sup>), then run <strong>URandLessThanReal</strong>(<em>x</em>, <em>y</em>), then add 2<sup><em>b</em></sup> back to <em>x</em>&#39;s integer part.</li>
+<li>Return the result of <strong>URandLessThanReal</strong> from step 1.</li>
 </ol>
 
 <p><a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a></p>
@@ -810,7 +841,7 @@
 <li><small><sup id=Note10>(10)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 <li><small><sup id=Note11>(11)</sup> Harlow, J., Sainudiin, R., Tucker, W., &quot;Mapped Regular Pavings&quot;, <em>Reliable Computing</em> 16 (2012).</small></li>
 <li><small><sup id=Note12>(12)</sup> Bringmann, K. and Friedrich, T., 2013, July. &quot;Exact and efficient generation of geometric random variates and random graphs&quot;, in <em>International Colloquium on Automata, Languages, and Programming</em> (pp. 267-278).</small></li>
-<li><small><sup id=Note13>(13)</sup> Ahrens, J.H., and Dieter, U., &quot;Computer methods from sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</small></li>
+<li><small><sup id=Note13>(13)</sup> Ahrens, J.H., and Dieter, U., &quot;Computer methods for sampling from the exponential and normal distributions&quot;, <em>Communications of the ACM</em> 15, 1972.</small></li>
 <li><small><sup id=Note14>(14)</sup> Lindley, D.V., &quot;Fiducial distributions and Bayes&#39; theorem&quot;, <em>Journal of the Royal Statistical Society Series B</em>, 1958.</small></li>
 <li><small><sup id=Note15>(15)</sup> Shanker, R., &quot;Garima distribution and its application to model behavioral science data&quot;, <em>Biom Biostat Int J.</em> 4(7), 2016.</small></li>
 <li><small><sup id=Note16>(16)</sup> Singh, B.P., Das, U.D., &quot;<a href="https://arxiv.org/abs/2010.15078"><strong>On an Induced Distribution and its Statistical Properties</strong></a>&quot;, arXiv:2010.15078 [stat.ME], 2020.</small></li>

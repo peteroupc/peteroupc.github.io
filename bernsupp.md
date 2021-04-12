@@ -231,7 +231,7 @@ However, if we clamp coefficients above 1 to equal 1, so that _g_ is now _g&prim
 
 Although the schemes in the previous section don't work when building a _family_ of polynomials that converge to a function _f_(_&lambda;_), they are still useful for building an _approximation_ to that function, in the form of a _single_ polynomial, so that we get an **approximate Bernoulli factory** for _f_.
 
-Here, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function min(_&lambda;_, 1 &minus; _&lambda;_)).
+Here, _f_(_&lambda;_) can be any function that maps the closed interval [0, 1] to [0, 1], even if it isn't continuous or a factory function (examples include the "step function" 0 if _&lambda;_ < 1/2 and 1 otherwise, or the function 2\*min(_&lambda;_, 1 &minus; _&lambda;_)).
 
 To build an approximate Bernoulli factory:
 
@@ -275,7 +275,7 @@ We can proceed similarly with other methods that give an upper bound on the Bern
 
 - The previous approximation generalizes the one given in section 6 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, which approximates _&lambda;_\*2.
 
-> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_ has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)).  Unlike with bias, there are ways to reduce variance, which are outside the scope of this document.  An estimation algorithm's _mean square error_ equals variance plus square of bias.
+> **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  Let _g_(_&lambda;_) be an approximation of _f_(_&lambda;_). The original Bernoulli factory for _f_, if it exists, has bias 0 and variance _f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_)), but the approximate Bernoulli factory has bias _g_(_&lambda;_) &minus; _f_(_&lambda;_) and variance _g_(_&lambda;_)\*(1&minus;_g_(_&lambda;_)).  Unlike with bias, there are ways to reduce variance, which are outside the scope of this document.  An estimation algorithm's _mean square error_ equals variance plus square of bias.
 
 <a id=Achievable_Simulation_Rates></a>
 ## Achievable Simulation Rates
