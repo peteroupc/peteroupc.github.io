@@ -47,8 +47,8 @@ Pae (2005)<sup>[**(8)**](#Note8)</sup> and (Pae and Loui 2006)<sup>[**(9)**](#No
     2. Otherwise, if those bits are 0/1, append 1 to U, then write a 0.
     3. Otherwise, if those bits are 1/0, append 1 to U, then write a 1.
     4. Otherwise, if those bits are 1/1, append 0 to U and 1 to V.
-2. Run this algorithm recursively, reading from the bits placed in U.
-3. Run this algorithm recursively, reading from the bits placed in V.
+2. Do a separate (recursive) run of this algorithm, reading from the bits placed in U.
+3. Do a separate (recursive) run of this algorithm, reading from the bits placed in V.
 
 A streaming algorithm, which builds something like an "extractor tree", is another example of a randomness extractor (Zhou and Bruck 2012)<sup>[**(12)**](#Note12)</sup>.
 

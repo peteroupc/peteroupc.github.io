@@ -60,6 +60,20 @@ Initializes a new instance of the CBORDateConverter class.</li>
 <h2>Methods</h2>
 
 <ul>
+<li><code>CBORObject DateFieldsToCBORObject​(int smallYear,
+                  int month,
+                  int day)</code><br>
+Not documented yet.</li>
+<li><code>CBORObject DateFieldsToCBORObject​(int smallYear,
+                  int month,
+                  int day,
+                  int hour,
+                  int minute,
+                  int second)</code><br>
+Not documented yet.</li>
+<li><code>CBORObject DateFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear,
+                  int[] lesserFields)</code><br>
+Not documented yet.</li>
 <li><code>java.util.Date FromCBORObject​(CBORObject obj)</code><br>
 Not documented yet.</li>
 <li><code>CBORObject ToCBORObject​(java.util.Date obj)</code><br>
@@ -185,7 +199,8 @@ time. This number can be positive or negative, but cannot be less than
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>Either &quot;true&quot; if the method is successful, or &quot;false&quot; otherwise.</li>
+<li>Either <code>true</code> if the method is successful, or <code>false</code>
+otherwise.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -193,6 +208,60 @@ time. This number can be positive or negative, but cannot be less than
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>year</code> or <code>
 lesserFields</code> is null, or contains fewer elements than required.</li>
+</ul>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public CBORObject DateFieldsToCBORObject​(int smallYear, int month, int day)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>smallYear</code> - Not documented yet.</p></li>
+<li><p><code>month</code> - Not documented yet.</p></li>
+<li><p><code>day</code> - Not documented yet.</p></li>
+</ul>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public CBORObject DateFieldsToCBORObject​(int smallYear, int month, int day, int hour, int minute, int second)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>smallYear</code> - Not documented yet.</p></li>
+<li><p><code>month</code> - Not documented yet.</p></li>
+<li><p><code>day</code> - Not documented yet.</p></li>
+<li><p><code>hour</code> - Not documented yet.</p></li>
+<li><p><code>minute</code> - Not documented yet.</p></li>
+<li><p><code>second</code> - Not documented yet.</p></li>
+</ul>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public CBORObject DateFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear, int[] lesserFields)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>bigYear</code> - Not documented yet.</p></li>
+<li><p><code>lesserFields</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>bigYear</code> or <code>
+lesserFields</code> is null.</li>
 </ul>
 
 <h3>ToCBORObject</h3>
