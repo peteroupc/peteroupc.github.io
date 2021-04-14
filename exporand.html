@@ -837,7 +837,7 @@
 
 <ol>
 <li>Set <em>aintpart</em> to floor(<em>a</em>) &minus; 1, set <em>bintpart</em> to floor(<em>b</em>) &minus; 1, set <em>arest</em> to <em>a</em> &minus; <em>aintpart</em>, and set <em>brest</em> to <em>b</em> &minus; <em>bintpart</em>.</li>
-<li>Run this algorithm recursively, but with <em>a</em> = <em>aintpart</em> and <em>b</em> = <em>bintpart</em>. Set <em>bag</em> to the PSRN created by the run.</li>
+<li>Do a separate (recursive) run of this algorithm, but with <em>a</em> = <em>aintpart</em> and <em>b</em> = <em>bintpart</em>. Set <em>bag</em> to the PSRN created by the run.</li>
 <li>Create an input coin <em>geobag</em> that returns the result of <strong>SampleGeometricBag</strong> using the given PSRN.  Create another input coin <em>geobagcomp</em> that returns the result of <strong>SampleGeometricBagComplement</strong> using the given PSRN.</li>
 <li>Call the <strong>algorithm for <em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong>, described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the <em>geobag</em> input coin and <em>x</em>/<em>y</em> = <em>arest</em>/1, then call the same algorithm using the <em>geobagcomp</em> input coin and <em>x</em>/<em>y</em> = <em>brest</em>/1. If both calls return 1, return <em>bag</em>. Otherwise, go to substep 2.</li>
 </ol></li>

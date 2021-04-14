@@ -17,10 +17,14 @@
 <h3>Member Summary</h3>
 
 <ul>
+<li><code><a href="#DateFieldsToCBORObject_int_int_int">DateFieldsToCBORObject(int, int, int)</a></code> - Not documented yet.</li>
+<li><code><a href="#DateFieldsToCBORObject_int_int_int_int_int_int">DateFieldsToCBORObject(int, int, int, int, int, int)</a></code> - Not documented yet.</li>
+<li><code><a href="#DateFieldsToCBORObject_PeterO_Numbers_EInteger_int">DateFieldsToCBORObject(PeterO.Numbers.EInteger, int[])</a></code> - Not documented yet.</li>
 <li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Not documented yet.</li>
 <li><code><a href="#TaggedNumber">public static readonly PeterO.Cbor.CBORDateConverter TaggedNumber;</a></code> - A converter object where FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to CBOR objects of tag 1.</li>
 <li><code><a href="#TaggedString">public static readonly PeterO.Cbor.CBORDateConverter TaggedString;</a></code> - A converter object where FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to CBOR objects of tag 0.</li>
 <li><code><a href="#ToCBORObject_System_DateTime">ToCBORObject(System.DateTime)</a></code> - Not documented yet.</li>
+<li><code><a href="#TryGetDateTimeFields_PeterO_Cbor_CBORObject_PeterO_Numbers_EInteger_int">TryGetDateTimeFields(PeterO.Cbor.CBORObject, PeterO.Numbers.EInteger[], int[])</a></code> - Tries to extract the fields of a date and time in the form of a CBOR object.</li>
 <li><code><a href="#UntaggedNumber">public static readonly PeterO.Cbor.CBORDateConverter UntaggedNumber;</a></code> - A converter object where FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and where ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects.</li>
 </ul>
 
@@ -77,6 +81,91 @@ is a Cbor.CBORDateConverter.ConversionType object.</li>
 
 <p>A converter object where FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and where ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects. The ToCBORObject conversion is lossless only if the number of seconds since the start of 1970 can be represented exactly as an integer in the interval [-(2^64), 2^64 - 1] or as a 64-bit floating-point number in the IEEE 754r binary64 format; the conversion is lossy otherwise. The ToCBORObject conversion will throw an exception if the conversion to binary64 results in positive infinity, negative infinity, or not-a-number.</p>
 
+<p><a id="DateFieldsToCBORObject_int_int_int"></a></p>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
+    int smallYear,
+    int month,
+    int day);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>smallYear</i>: Not documented yet.</p></li>
+<li><p><i>month</i>: Not documented yet.</p></li>
+<li><p><i>day</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><a id="DateFieldsToCBORObject_int_int_int_int_int_int"></a></p>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
+    int smallYear,
+    int month,
+    int day,
+    int hour,
+    int minute,
+    int second);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>smallYear</i>: Not documented yet.</p></li>
+<li><p><i>month</i>: Not documented yet.</p></li>
+<li><p><i>day</i>: Not documented yet.</p></li>
+<li><p><i>hour</i>: Not documented yet.</p></li>
+<li><p><i>minute</i>: Not documented yet.</p></li>
+<li><p><i>second</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><a id="DateFieldsToCBORObject_PeterO_Numbers_EInteger_int"></a></p>
+
+<h3>DateFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
+    PeterO.Numbers.EInteger bigYear,
+    int[] lesserFields);
+</pre>
+
+<p>Not documented yet.</p>
+
+<p>Not documented yet.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigYear</i>: Not documented yet.</p></li>
+<li><p><i>lesserFields</i>: Not documented yet.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>bigYear</i>
+or  <i>lesserFields</i>
+is null.</li>
+</ul>
+
 <p><a id="FromCBORObject_PeterO_Cbor_CBORObject"></a></p>
 
 <h3>FromCBORObject</h3>
@@ -126,6 +215,46 @@ is a DateTime object.</li>
 <p><b>Return Value:</b></p>
 
 <p>The return value is not documented yet.</p>
+
+<p><a id="TryGetDateTimeFields_PeterO_Cbor_CBORObject_PeterO_Numbers_EInteger_int"></a></p>
+
+<h3>TryGetDateTimeFields</h3>
+
+<pre>public bool TryGetDateTimeFields(
+    PeterO.Cbor.CBORObject obj,
+    PeterO.Numbers.EInteger[] year,
+    int[] lesserFields);
+</pre>
+
+<p>Tries to extract the fields of a date and time in the form of a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>obj</i>: Not documented yet.</p></li>
+<li><p><i>year</i>: An array whose first element will store the year. The array&#39;s length must be 1 or greater. If this function fails, the first element is set to null.</p></li>
+<li><p><i>lesserFields</i>: An array that will store the fields (other than the year) of the date and time. The array&#39;s length must be 7 or greater. If this function fails, the first seven elements are set to 0. If this method is successful, the first seven elements of the array (starting at 0) will be as follows:</p></li>
+<li><p>0 - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p>1 - Day of the month, from 1 through 31.</p></li>
+<li><p>2 - Hour of the day, from 0 through 23.</p></li>
+<li><p>3 - Minute of the hour, from 0 through 59.</p></li>
+<li><p>4 - Second of the minute, from 0 through 59.</p></li>
+<li><p>5 - Fractional seconds, expressed in nanoseconds. This value cannot be less than 0.</p></li>
+<li><p>6 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439. For tags 0 and 1, this value is always 0.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>Either  <code>true</code>  if the method is successful, or  <code>false</code>  otherwise.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>System.ArgumentNullException:
+The parameter  <i>year</i>
+or  <i>lesserFields</i>
+is null, or contains fewer elements than required.</li>
+</ul>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

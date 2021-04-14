@@ -173,7 +173,7 @@ Tries to extract the fields of a date and time in the form of a CBOR object.</li
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>obj</code> - Not documented yet.</p></li>
+<li><p><code>obj</code> - The parameter <code>obj</code> is a Cbor.CBORObject object.</p></li>
 <li><p><code>year</code> - An array whose first element will store the year. The array&#39;s
 length must be 1 or greater. If this function fails, the first element
 is set to null.</p></li>
@@ -192,7 +192,7 @@ expressed in nanoseconds. This value cannot be less than 0.</li> <li>6</p>
 <li>Number of minutes to subtract from this date and time to get global
 time. This number can be positive or negative, but cannot be less than
 -1439 or greater than 1439. For tags 0 and 1, this value is always
-0.</li></ul></li>
+0.</li></ul>.</li>
 </ul></li>
 </ul>
 
@@ -220,9 +220,15 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>smallYear</code> - Not documented yet.</p></li>
-<li><p><code>month</code> - Not documented yet.</p></li>
-<li><p><code>day</code> - Not documented yet.</p></li>
+<li><p><code>smallYear</code> - The parameter <code>smallYear</code> is a 32-bit signed integer.</p></li>
+<li><p><code>month</code> - The parameter <code>month</code> is a 32-bit signed integer.</p></li>
+<li><p><code>day</code> - The parameter <code>day</code> is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>DateFieldsToCBORObject</h3>
@@ -235,12 +241,18 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>smallYear</code> - Not documented yet.</p></li>
-<li><p><code>month</code> - Not documented yet.</p></li>
-<li><p><code>day</code> - Not documented yet.</p></li>
-<li><p><code>hour</code> - Not documented yet.</p></li>
-<li><p><code>minute</code> - Not documented yet.</p></li>
-<li><p><code>second</code> - Not documented yet.</p></li>
+<li><p><code>smallYear</code> - The parameter <code>smallYear</code> is a 32-bit signed integer.</p></li>
+<li><p><code>month</code> - The parameter <code>month</code> is a 32-bit signed integer.</p></li>
+<li><p><code>day</code> - The parameter <code>day</code> is a 32-bit signed integer.</p></li>
+<li><p><code>hour</code> - The parameter <code>hour</code> is a 32-bit signed integer.</p></li>
+<li><p><code>minute</code> - The parameter <code>minute</code> is a 32-bit signed integer.</p></li>
+<li><p><code>second</code> - The parameter <code>second</code> is a 32-bit signed integer.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>DateFieldsToCBORObject</h3>
@@ -253,8 +265,15 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bigYear</code> - Not documented yet.</p></li>
-<li><p><code>lesserFields</code> - Not documented yet.</p></li>
+<li><p><code>bigYear</code> - The parameter <code>bigYear</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>lesserFields</code> - The parameter <code>lesserFields</code> is an array of 32-bit
+unsigned integers.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The return value is not documented yet.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
