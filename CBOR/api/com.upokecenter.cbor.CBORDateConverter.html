@@ -9,7 +9,7 @@
 </pre>
 
 <p>A class for converting date-time objects to and from tagged CBOR
-  objects.</p> <p>In this method's documentation, the "number of seconds
+  objects.</p> <p>In this class's documentation, the "number of seconds
   since the start of 1970" is based on the POSIX definition of "seconds
   since the Epoch", a definition that does not count leap seconds. This
  number of seconds assumes the use of a proleptic Gregorian calendar,
@@ -60,19 +60,19 @@ Initializes a new instance of the CBORDateConverter class.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>CBORObject DateFieldsToCBORObject​(int smallYear,
-                  int month,
-                  int day)</code><br>
+<li><code>CBORObject DateTimeFieldsToCBORObject​(int smallYear,
+                      int month,
+                      int day)</code><br>
 Not documented yet.</li>
-<li><code>CBORObject DateFieldsToCBORObject​(int smallYear,
-                  int month,
-                  int day,
-                  int hour,
-                  int minute,
-                  int second)</code><br>
+<li><code>CBORObject DateTimeFieldsToCBORObject​(int smallYear,
+                      int month,
+                      int day,
+                      int hour,
+                      int minute,
+                      int second)</code><br>
 Not documented yet.</li>
-<li><code>CBORObject DateFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear,
-                  int[] lesserFields)</code><br>
+<li><code>CBORObject DateTimeFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear,
+                      int[] lesserFields)</code><br>
 Not documented yet.</li>
 <li><code>java.util.Date FromCBORObject​(CBORObject obj)</code><br>
 Not documented yet.</li>
@@ -210,9 +210,9 @@ otherwise.</li>
 lesserFields</code> is null, or contains fewer elements than required.</li>
 </ul>
 
-<h3>DateFieldsToCBORObject</h3>
+<h3>DateTimeFieldsToCBORObject</h3>
 
-<pre>public CBORObject DateFieldsToCBORObject​(int smallYear, int month, int day)
+<pre>public CBORObject DateTimeFieldsToCBORObject​(int smallYear, int month, int day)
 </pre>
 
 <p>Not documented yet.</p>
@@ -220,20 +220,21 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>smallYear</code> - The parameter <code>smallYear</code> is a 32-bit signed integer.</p></li>
-<li><p><code>month</code> - The parameter <code>month</code> is a 32-bit signed integer.</p></li>
-<li><p><code>day</code> - The parameter <code>day</code> is a 32-bit signed integer.</p></li>
+<li><p><code>smallYear</code> - The year.</p></li>
+<li><p><code>month</code> - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p><code>day</code> - Day of the month, from 1 through 31.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A CBOR object encoding the given date fields according to the
+conversion type used to create this date converter.</li>
 </ul>
 
-<h3>DateFieldsToCBORObject</h3>
+<h3>DateTimeFieldsToCBORObject</h3>
 
-<pre>public CBORObject DateFieldsToCBORObject​(int smallYear, int month, int day, int hour, int minute, int second)
+<pre>public CBORObject DateTimeFieldsToCBORObject​(int smallYear, int month, int day, int hour, int minute, int second)
 </pre>
 
 <p>Not documented yet.</p>
@@ -241,23 +242,24 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>smallYear</code> - The parameter <code>smallYear</code> is a 32-bit signed integer.</p></li>
-<li><p><code>month</code> - The parameter <code>month</code> is a 32-bit signed integer.</p></li>
-<li><p><code>day</code> - The parameter <code>day</code> is a 32-bit signed integer.</p></li>
-<li><p><code>hour</code> - The parameter <code>hour</code> is a 32-bit signed integer.</p></li>
-<li><p><code>minute</code> - The parameter <code>minute</code> is a 32-bit signed integer.</p></li>
-<li><p><code>second</code> - The parameter <code>second</code> is a 32-bit signed integer.</p></li>
+<li><p><code>smallYear</code> - The year.</p></li>
+<li><p><code>month</code> - Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p><code>day</code> - Day of the month, from 1 through 31.</p></li>
+<li><p><code>hour</code> - Hour of the day, from 0 through 23.</p></li>
+<li><p><code>minute</code> - Minute of the hour, from 0 through 59.</p></li>
+<li><p><code>second</code> - Second of the minute, from 0 through 59.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A CBOR object encoding the given date fields according to the
+conversion type used to create this date converter.</li>
 </ul>
 
-<h3>DateFieldsToCBORObject</h3>
+<h3>DateTimeFieldsToCBORObject</h3>
 
-<pre>public CBORObject DateFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear, int[] lesserFields)
+<pre>public CBORObject DateTimeFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear, int[] lesserFields)
 </pre>
 
 <p>Not documented yet.</p>
@@ -266,14 +268,16 @@ lesserFields</code> is null, or contains fewer elements than required.</li>
 
 <ul>
 <li><p><code>bigYear</code> - The parameter <code>bigYear</code> is a Numbers.EInteger object.</p></li>
-<li><p><code>lesserFields</code> - The parameter <code>lesserFields</code> is an array of 32-bit
-unsigned integers.</p></li>
+<li><p><code>lesserFields</code> - An array that will store the fields (other than the
+year) of the date and time. See the TryGetDateTimeFields method for
+information on the &quot;lesserFields&quot; parameter.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A CBOR object encoding the given date fields according to the
+conversion type used to create this date converter.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
