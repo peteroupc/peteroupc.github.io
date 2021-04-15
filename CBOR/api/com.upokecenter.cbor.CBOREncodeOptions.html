@@ -57,6 +57,10 @@ levels of arrays and/or maps is allowed, duplicate map keys are not
 allowed when decoding, and floating-point numbers are written out in
 their 64-bit encoding form regardless of whether their value can be
 encoded without loss in a smaller form.</li>
+<li><code>boolean getFloat64()</code><br>
+Gets a value indicating whether to encode floating-point numbers in a CBOR
+object in their 64-bit encoding form regardless of whether their
+value can be encoded without loss in a smaller form.</li>
 <li><code>boolean getResolveReferences()</code><br>
 Gets a value indicating whether to resolve references to sharable objects
 and sharable strings in the process of decoding a CBOR object.</li>
@@ -223,6 +227,25 @@ false.</li>
 <ul>
 <li>A value indicating whether to allow duplicate keys when reading CBOR
 objects from a data stream. The default is false.</li>
+</ul>
+
+<h3>getFloat64</h3>
+
+<pre>public final boolean getFloat64()
+</pre>
+
+<p>Gets a value indicating whether to encode floating-point numbers in a CBOR
+ object in their 64-bit encoding form regardless of whether their
+ value can be encoded without loss in a smaller form. Used only when
+ encoding CBOR objects.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>Gets a value indicating whether to encode floating-point numbers in
+a CBOR object in their 64-bit encoding form regardless of whether
+their value can be encoded without loss in a smaller form. Used only
+when encoding CBOR objects. The default is false.</li>
 </ul>
 
 <h3>getCtap2Canonical</h3>

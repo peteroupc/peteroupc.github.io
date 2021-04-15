@@ -719,24 +719,44 @@ CLASSES
      |  gaussian_copula(self, cov)
      |
      |  gbas(self, coin, k=385)
-     |      Estimates the probability of heads of a coin.  GBAS = Gamma Bernoulli approximation scheme.
-     |              The algorithm is simple to describe: "Flip a coin until it shows heads
-     |                 _k_ times.  The estimated probability of heads is then `(k+2)/GammaDist(r, 1)`,
-     |                 where _r_ is the total number of coin flips."
-     |              The estimate is unbiased but has nonzero probability of being
-     |              greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
-     |              coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
-     |              k: Number of times the coin must return 1 (heads) before the estimation
-     |                  stops.
-     |      The following method can be used to choose a suitable value for
-     |      k such that the relative error's absolute value exceeds eps with probability less than delta:
-     |
-     |      def deltaeps(delta,eps):
-     |        if delta>2*math.exp(-5): raise ValueError
-     |        if 4*pi*math.log(2/delta)<(1+eps*2/3)**2: raise ValueError
-     |        return math.ceil(2*math.log(2/delta)*eps**-2/(1-2*eps))+1
-     |
-     |      Reference: Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.
+     |      Estimates the probability of heads of  a coin.  GBAS = Gamma Bernoulli approximation scheme.
+     |      The algorithm is simple to describe: "Flip a coin until it shows heads
+     |         _k_ times.  The estimated probability of heads is then `(k-1)/GammaDist(r, 1)`,
+     |         where _r_ is the total number of coin flips."
+     |      The estimate is unbiased (multiple estimates average to the true probability
+     |      of heads) but has nonzero probability of being
+     |      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
+     |      [[[NOTE: As can be seen in Feng et al., the following are equivalent to the previous
+     |      algorithm:
+     |        Geometric: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add GammaDist(r, 1) to G.' The estimated probability
+     |         of heads is then `(k-1)/G`."
+     |        Bernoulli: "Let G be 0. Do this until heads is shown _k_ times: 'Flip a coin and add Expo(1) to G.' The estimated probability of heads is then `(k-1)/G`."
+     |        Both algorithms use the fact that (k-1)/(X1+...+Xk) is an unbiased estimator
+     |        of p, namely 1 divided by the mean of an Expo(p) random variable (X1, X2, ... Xk
+     |        are i.i.d. Expo(p) random variates), with p>0.  In the same way, any algorithm to turn
+     |        an endless sequence of random numbers with mean M into k many i.i.d. Expo(M)
+     |        random variates will work, as with the Poisson distribution, for example.
+     |        Note that GammaDist(r,1) is distributed as the sum of _r_ many i.i.d. Expo(1) variates.]]]
+     |      References: Huber, M., 2017. A Bernoulli mean estimate with
+     |         known relative error distribution. Random Structures & Algorithms, 50(2),
+     |         pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).
+     |         Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).
+     |      coin: A function that returns 1 (or heads) with unknown probability and 0 otherwise.
+     |      k: Number of times the coin must return 1 (heads) before the estimation
+     |          stops.
+     |          To ensure an estimate whose relative error's absolute value exceeds
+     |          epsilon with probability at most delta, calculate the smallest
+     |          integer k such that:
+     |             gammainc(k,(k-1)/(1+epsilon)) +
+     |                 (1 - gammainc(k,(k-1)/(1-epsilon))) <= delta
+     |          (where gammainc is the regularized lower incomplete gamma function,
+     |          implemented, e.g., as scipy.special.gammainc), and set this parameter
+     |          to the calculated k value or higher.
+     |            The default is 385, which allows the relative error to exceed 0.1 (epsilon) with
+     |            probability at most 0.05 (delta).
+     |            A simpler suggestion is k>=ceiling(-6*ln(2/delta)/((epsilon**2)*(4*epsilon-3))).
+     |            For both suggestions, epsilon is in the interval (0, 3/4) and delta is in (0, 1).
+     |            Note: "14/3" in the paper should probably read "4/3".
      |
      |  gbas01(self, coin, k=385)
      |      Estimates the mean of a random variable lying in [0, 1].
