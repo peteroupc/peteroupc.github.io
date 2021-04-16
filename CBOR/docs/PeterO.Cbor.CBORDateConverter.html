@@ -12,19 +12,20 @@
 
 <p>A class for converting date-time objects to and from tagged CBOR objects.</p>
 
-<p>In this method&#39;s documentation, the &quot;number of seconds since the start of 1970&quot; is based on the POSIX definition of &quot;seconds since the Epoch&quot;, a definition that does not count leap seconds. This number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to time zone differences or transitions from other calendars to the Gregorian).</p>
+<p>In this class&#39;s documentation, the &quot;number of seconds since the start of 1970&quot; is based on the POSIX definition of &quot;seconds since the Epoch&quot;, a definition that does not count leap seconds. This number of seconds assumes the use of a proleptic Gregorian calendar, in which the rules regarding the number of days in each month and which years are leap years are the same for all years as they were in 1970 (including without regard to time zone differences or transitions from other calendars to the Gregorian).</p>
 
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#DateFieldsToCBORObject_int_int_int">DateFieldsToCBORObject(int, int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#DateFieldsToCBORObject_int_int_int_int_int_int">DateFieldsToCBORObject(int, int, int, int, int, int)</a></code> - Not documented yet.</li>
-<li><code><a href="#DateFieldsToCBORObject_PeterO_Numbers_EInteger_int">DateFieldsToCBORObject(PeterO.Numbers.EInteger, int[])</a></code> - Not documented yet.</li>
-<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Not documented yet.</li>
+<li><code><a href="#DateTimeFieldsToCBORObject_int_int_int">DateTimeFieldsToCBORObject(int, int, int)</a></code> - Converts a date/time in the form of a year, month, and day to a CBOR object.</li>
+<li><code><a href="#DateTimeFieldsToCBORObject_int_int_int_int_int_int">DateTimeFieldsToCBORObject(int, int, int, int, int, int)</a></code> - Converts a date/time in the form of a year, month, day, hour, minute, and second to a CBOR object.</li>
+<li><code><a href="#DateTimeFieldsToCBORObject_PeterO_Numbers_EInteger_int">DateTimeFieldsToCBORObject(PeterO.Numbers.EInteger, int[])</a></code> - Converts a date/time in the form of a year, month, day, hour, minute, second, fractional seconds, and time offset to a CBOR object.</li>
+<li><code><a href="#FromCBORObject_PeterO_Cbor_CBORObject">FromCBORObject(PeterO.Cbor.CBORObject)</a></code> - Converts a CBOR object to a DateTime (in DotNet) or a Date (in Java).</li>
 <li><code><a href="#TaggedNumber">public static readonly PeterO.Cbor.CBORDateConverter TaggedNumber;</a></code> - A converter object where FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to CBOR objects of tag 1.</li>
 <li><code><a href="#TaggedString">public static readonly PeterO.Cbor.CBORDateConverter TaggedString;</a></code> - A converter object where FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1 (number of seconds since the start of 1970), and ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to CBOR objects of tag 0.</li>
-<li><code><a href="#ToCBORObject_System_DateTime">ToCBORObject(System.DateTime)</a></code> - Not documented yet.</li>
+<li><code><a href="#ToCBORObject_System_DateTime">ToCBORObject(System.DateTime)</a></code> - Converts a DateTime (in DotNet) or Date (in Java) to a CBOR object in a manner specified by this converter&#39;s conversion type.</li>
 <li><code><a href="#TryGetDateTimeFields_PeterO_Cbor_CBORObject_PeterO_Numbers_EInteger_int">TryGetDateTimeFields(PeterO.Cbor.CBORObject, PeterO.Numbers.EInteger[], int[])</a></code> - Tries to extract the fields of a date and time in the form of a CBOR object.</li>
+<li><code><a href="#Type">Type</a></code> - Gets the conversion type for this date converter.</li>
 <li><code><a href="#UntaggedNumber">public static readonly PeterO.Cbor.CBORDateConverter UntaggedNumber;</a></code> - A converter object where FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and where ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects.</li>
 </ul>
 
@@ -81,35 +82,51 @@ is a Cbor.CBORDateConverter.ConversionType object.</li>
 
 <p>A converter object where FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects that give the number of seconds since the start of 1970, and where ToCBORObject converts date/time objects (DateTime in DotNet, and Date in Java) to such untagged CBOR objects. The ToCBORObject conversion is lossless only if the number of seconds since the start of 1970 can be represented exactly as an integer in the interval [-(2^64), 2^64 - 1] or as a 64-bit floating-point number in the IEEE 754r binary64 format; the conversion is lossy otherwise. The ToCBORObject conversion will throw an exception if the conversion to binary64 results in positive infinity, negative infinity, or not-a-number.</p>
 
-<p><a id="DateFieldsToCBORObject_int_int_int"></a></p>
+<p><a id="Type"></a></p>
 
-<h3>DateFieldsToCBORObject</h3>
+<h3>Type</h3>
 
-<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
+<pre>public PeterO.Cbor.CBORDateConverter.ConversionType Type { get; }
+</pre>
+
+<p>Gets the conversion type for this date converter.</p>
+
+<p><a id="DateTimeFieldsToCBORObject_int_int_int"></a></p>
+
+<h3>DateTimeFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateTimeFieldsToCBORObject(
     int smallYear,
     int month,
     int day);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p>Not documented yet.</p>
+<p>Converts a date/time in the form of a year, month, and day to a CBOR object. The hour, minute, and second are treated as 00:00:00 by this method, and the time offset is treated as 0 by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>smallYear</i>: Not documented yet.</p></li>
-<li><p><i>month</i>: Not documented yet.</p></li>
-<li><p><i>day</i>: Not documented yet.</p></li>
+<li><p><i>smallYear</i>: The year.</p></li>
+<li><p><i>month</i>: Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p><i>day</i>: Day of the month, from 1 through 31.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><a id="DateFieldsToCBORObject_int_int_int_int_int_int"></a></p>
+<p>A CBOR object encoding the given date fields according to the conversion type used to create this date converter.</p>
 
-<h3>DateFieldsToCBORObject</h3>
+<p><b>Exceptions:</b></p>
 
-<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
+<ul>
+<li>PeterO.Cbor.CBORException:
+An error occurred in conversion.</li>
+</ul>
+
+<p><a id="DateTimeFieldsToCBORObject_int_int_int_int_int_int"></a></p>
+
+<h3>DateTimeFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateTimeFieldsToCBORObject(
     int smallYear,
     int month,
     int day,
@@ -118,52 +135,62 @@ is a Cbor.CBORDateConverter.ConversionType object.</li>
     int second);
 </pre>
 
-<p>Not documented yet.</p>
-
-<p>Not documented yet.</p>
+<p>Converts a date/time in the form of a year, month, day, hour, minute, and second to a CBOR object. The time offset is treated as 0 by this method.</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>smallYear</i>: Not documented yet.</p></li>
-<li><p><i>month</i>: Not documented yet.</p></li>
-<li><p><i>day</i>: Not documented yet.</p></li>
-<li><p><i>hour</i>: Not documented yet.</p></li>
-<li><p><i>minute</i>: Not documented yet.</p></li>
-<li><p><i>second</i>: Not documented yet.</p></li>
+<li><p><i>smallYear</i>: The year.</p></li>
+<li><p><i>month</i>: Month of the year, from 1 (January) through 12 (December).</p></li>
+<li><p><i>day</i>: Day of the month, from 1 through 31.</p></li>
+<li><p><i>hour</i>: Hour of the day, from 0 through 23.</p></li>
+<li><p><i>minute</i>: Minute of the hour, from 0 through 59.</p></li>
+<li><p><i>second</i>: Second of the minute, from 0 through 59.</p></li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p><a id="DateFieldsToCBORObject_PeterO_Numbers_EInteger_int"></a></p>
-
-<h3>DateFieldsToCBORObject</h3>
-
-<pre>public PeterO.Cbor.CBORObject DateFieldsToCBORObject(
-    PeterO.Numbers.EInteger bigYear,
-    int[] lesserFields);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><p><i>bigYear</i>: Not documented yet.</p></li>
-<li><p><i>lesserFields</i>: Not documented yet.</p></li>
-</ul>
-
-<p><b>Return Value:</b></p>
+<p>A CBOR object encoding the given date fields according to the conversion type used to create this date converter.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li>PeterO.Cbor.CBORException:
+An error occurred in conversion.</li>
+</ul>
+
+<p><a id="DateTimeFieldsToCBORObject_PeterO_Numbers_EInteger_int"></a></p>
+
+<h3>DateTimeFieldsToCBORObject</h3>
+
+<pre>public PeterO.Cbor.CBORObject DateTimeFieldsToCBORObject(
+    PeterO.Numbers.EInteger bigYear,
+    int[] lesserFields);
+</pre>
+
+<p>Converts a date/time in the form of a year, month, day, hour, minute, second, fractional seconds, and time offset to a CBOR object.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><p><i>bigYear</i>: The parameter  <i>bigYear</i>
+is a Numbers.EInteger object.</p></li>
+<li><p><i>lesserFields</i>: An array that will store the fields (other than the year) of the date and time. See the TryGetDateTimeFields method for information on the &quot;lesserFields&quot; parameter.</p></li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A CBOR object encoding the given date fields according to the conversion type used to create this date converter.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li><p>System.ArgumentNullException:
 The parameter  <i>bigYear</i>
 or  <i>lesserFields</i>
-is null.</li>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+An error occurred in conversion.</p></li>
 </ul>
 
 <p><a id="FromCBORObject_PeterO_Cbor_CBORObject"></a></p>
@@ -174,25 +201,26 @@ is null.</li>
     PeterO.Cbor.CBORObject obj);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a CBOR object to a DateTime (in DotNet) or a Date (in Java).</p>
 
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>obj</i>: The parameter  <i>obj</i>
-is a Cbor.CBORObject object.</li>
+<li><i>obj</i>: A CBOR object that specifies a date/time according to the conversion type used to create this date converter.</li>
 </ul>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A DateTime or Date that encodes the date/time specified in the CBOR object.</p>
 
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>obj</i>
-is null.</li>
+is null.</p></li>
+<li><p>PeterO.Cbor.CBORException:
+The format of the CBOR object is not supported, or another error occurred in conversion.</p></li>
 </ul>
 
 <p><a id="ToCBORObject_System_DateTime"></a></p>
@@ -203,7 +231,7 @@ is null.</li>
     System.DateTime obj);
 </pre>
 
-<p>Not documented yet.</p>
+<p>Converts a DateTime (in DotNet) or Date (in Java) to a CBOR object in a manner specified by this converter&#39;s conversion type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -214,7 +242,14 @@ is a DateTime object.</li>
 
 <p><b>Return Value:</b></p>
 
-<p>The return value is not documented yet.</p>
+<p>A CBOR object encoding the date/time in the DateTime or Date according to the conversion type used to create this date converter.</p>
+
+<p><b>Exceptions:</b></p>
+
+<ul>
+<li>PeterO.Cbor.CBORException:
+An error occurred in conversion.</li>
+</ul>
 
 <p><a id="TryGetDateTimeFields_PeterO_Cbor_CBORObject_PeterO_Numbers_EInteger_int"></a></p>
 
@@ -231,7 +266,7 @@ is a DateTime object.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>obj</i>: Not documented yet.</p></li>
+<li><p><i>obj</i>: A CBOR object that specifies a date/time according to the conversion type used to create this date converter.</p></li>
 <li><p><i>year</i>: An array whose first element will store the year. The array&#39;s length must be 1 or greater. If this function fails, the first element is set to null.</p></li>
 <li><p><i>lesserFields</i>: An array that will store the fields (other than the year) of the date and time. The array&#39;s length must be 7 or greater. If this function fails, the first seven elements are set to 0. If this method is successful, the first seven elements of the array (starting at 0) will be as follows:</p></li>
 <li><p>0 - Month of the year, from 1 (January) through 12 (December).</p></li>
@@ -242,6 +277,8 @@ is a DateTime object.</li>
 <li><p>5 - Fractional seconds, expressed in nanoseconds. This value cannot be less than 0.</p></li>
 <li><p>6 - Number of minutes to subtract from this date and time to get global time. This number can be positive or negative, but cannot be less than -1439 or greater than 1439. For tags 0 and 1, this value is always 0.</p></li>
 </ul>
+
+<p>.</p>
 
 <p><b>Return Value:</b></p>
 

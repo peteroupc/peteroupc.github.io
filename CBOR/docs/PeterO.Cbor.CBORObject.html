@@ -58,7 +58,7 @@
 <li><code><a href="#Addition_PeterO_Cbor_CBORObject_PeterO_Cbor_CBORObject">Addition(PeterO.Cbor.CBORObject, PeterO.Cbor.CBORObject)</a></code> - <b>Deprecated:</b> Instead, convert both CBOR objects to numbers (with .AsNumber()), and use the first number&#39;s .Add() method.</li>
 <li><code><a href="#AsBoolean">AsBoolean()</a></code> - Returns false if this object is a CBOR false, null, or undefined value (whether or not the object has tags); otherwise, true.</li>
 <li><code><a href="#AsByte">AsByte()</a></code> - <b>Deprecated:</b> Instead, use .ToObject&lt;byte&gt;() in .NET or .ToObject(Byte.class) in Java.</li>
-<li><code><a href="#AsDecimal">AsDecimal()</a></code> - Converts this object to a.</li>
+<li><code><a href="#AsDecimal">AsDecimal()</a></code> - <b>Deprecated:</b> Instead, use .ToObject&lt;decimal&gt;().</li>
 <li><code><a href="#AsDouble">AsDouble()</a></code> - Converts this object to a 64-bit floating point number.</li>
 <li><code><a href="#AsDoubleBits">AsDoubleBits()</a></code> - Converts this object to the bits of a 64-bit floating-point number if this CBOR object&#39;s type is FloatingPoint.</li>
 <li><code><a href="#AsDoubleValue">AsDoubleValue()</a></code> - Converts this object to a 64-bit floating-point number if this CBOR object&#39;s type is FloatingPoint.</li>
@@ -899,7 +899,9 @@ This object&#39;s value exceeds the range of a byte (would be less than 0 or gre
 <pre>public decimal AsDecimal();
 </pre>
 
-<p>Converts this object to a.NET decimal.</p>
+<p><b>Deprecated.</b> Instead, use .ToObject&lt;decimal&gt;().</p>
+
+<p>Converts this object to a DotNet decimal.</p>
 
 <p><b>Return Value:</b></p>
 
@@ -911,7 +913,7 @@ This object&#39;s value exceeds the range of a byte (would be less than 0 or gre
 <li><p>System.InvalidOperationException:
 This object does not represent a number (for this purpose, infinities and not-a-number or NaN values, but not CBORObject.Null, are considered numbers).</p></li>
 <li><p>System.OverflowException:
-This object&#39;s value exceeds the range of a.NET decimal.</p></li>
+This object&#39;s value exceeds the range of a DotNet decimal.</p></li>
 </ul>
 
 <p><a id="AsDouble"></a></p>
