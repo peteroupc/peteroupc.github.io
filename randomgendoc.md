@@ -719,13 +719,14 @@ CLASSES
      |  gaussian_copula(self, cov)
      |
      |  gbas(self, coin, k=385)
-     |      Estimates the probability of heads of  a coin.  GBAS = Gamma Bernoulli approximation scheme.
+     |      Estimates the probability of heads of a coin.  GBAS = Gamma Bernoulli approximation scheme.
      |      The algorithm is simple to describe: "Flip a coin until it shows heads
      |         _k_ times.  The estimated probability of heads is then `(k-1)/GammaDist(r, 1)`,
      |         where _r_ is the total number of coin flips."
      |      The estimate is unbiased (multiple estimates average to the true probability
      |      of heads) but has nonzero probability of being
      |      greater than 1 (that is, the estimate does not lie in [0, 1] almost surely).
+     |      Assumes the probability of heads is in the interval (0, 1].
      |      [[[NOTE: As can be seen in Feng et al., the following are equivalent to the previous
      |      algorithm:
      |        Geometric: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add GammaDist(r, 1) to G.' The estimated probability
