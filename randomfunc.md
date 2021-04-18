@@ -628,7 +628,10 @@ A _random walk_ is a process with random behavior over time.  A simple form of r
       return list
     END METHOD
 
-> **Note:** A **white noise process** is simulated by creating a list of independent random variates generated in the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  One example is `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
+> **Notes:**
+>
+> 1. A **white noise process** is simulated by creating a list of independent random variates generated in the same way.  Such a process generally models behavior over time that does not depend on the time or the current state.  One example is `ZeroOrOne(px,py)` (for modeling a _Bernoulli process_, where each number is 0 or 1 depending on the probability `px`/`py`).
+> 2. A useful reference here is De Bruyne et al. (2021)<sup>[**(104)**](#Note104)</sup>.
 
 > **Examples:**
 >
@@ -2173,6 +2176,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note101>(101)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`. Square and cube roots replaced with maximums.</small>
 - <small><sup id=Note102>(102)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note103>(103)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note104>(104)</sup> De Bruyne, B., et al., "Generating discrete-time constrained random walks and Lévy flights, arXiv:2104.06145 (2021).</small>
 
 <a id=Appendix></a>
 ## Appendix
