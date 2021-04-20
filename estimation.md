@@ -21,10 +21,62 @@ Each algorithm takes a stream of random numbers.  These numbers follow a _probab
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the random numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
 
+For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
+
+<a id=Estimators_with_User_Specified_Relative_Error></a>
+## Estimators with User-Specified Relative Error
+
+The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.
+
+The algorithm has the following parameters:
+
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 3/4 or less, and _&delta;_ must be 1 or less.  With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.
+
+The algorithm follows:
+
+1. Calculate the minimum number of samples _k_.  There are two suggestions.  The simpler one is _k_ = ceil(&minus;6\*ln(2/_&delta;_)/(_&epsilon;_<sup>2</sup>\*(4\*_&epsilon;_&minus;3))).  A more complicated one is the smallest integer _k_ such that gammainc(_k_,(_k_&minus;1)/(1+_&epsilon;_)) + (1 &minus; gammainc(_k_,(_k_&minus;1)/(1&minus;_&epsilon;_))) &le; _&delta;, where gammainc is the regularized lower incomplete gamma function.
+2. Take samples from the stream until _k_ 1's are taken this way.  Let _r_ be the total number of samples taken this way.
+3. Generate _g_, a gamma(_r_) random variate, then return (_k_&minus;1)/_g_.
+
+> **Note**:
+>
+> 1. As noted in Huber 2017, if we have a stream of random numbers that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;
+>
+>    1. generating a uniform(0, 1) random variate _u_, then
+>    2. changing that number to 1 if _u_ is less than that number, or 0 otherwise,
+>
+>    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
+> 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of the original algorithm: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like the original algorithm.
+
+[TODO: Discuss Poisson and exponential estimators.]
+
+<a id=An_Algorithm_for_a_Stream_of_Bounded_Random_Numbers></a>
+## An Algorithm for a Stream of Bounded Random Numbers
+
+The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random numbers taking on values in the closed interval [0, 1].  It assumes the stream of numbers can't take on the value 0 with probability 1.
+
+The algorithm has the following parameters:
+
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 1/8 or less, and _&delta;_ must be 1 or less.  The relative error is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.  With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.
+
+The algorithm follows.
+
+1. Set _k_ to ceil(2\*ln(6/_&delta;_)/_&epsilon;_<sup>2/3</sup>).
+2. Set _b_ to 0 and _n_ to 0.
+3. (Stage 1: Modified gamma Bernoulli approximation scheme.) While _b_ is less than _k_:
+    - Add 1 to _n_, then take a sample from the stream, then set _b_ to a number that is 1 if a uniform(0, 1) random number is less than the sample, and 0 otherwise.
+4. Set _gb_ to _k_ + 2, then divide _gb_ by a gamma(_n_) random variate.
+5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
+6. Set _n_ to a Poisson(_c1_/(_&epsilon;_\*_gb_)) random variate.
+7. ......
+8. [To be continued]
+
+> **Note:** As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in this algorithm, and the algorithm will still work.
+
 <a id=An_Adaptive_Algorithm></a>
 ## An Adaptive Algorithm
 
-The following algorithm comes from Kunsch et al. 2019 <<Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .>>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
+The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
 
 - It has a finite _q_<sup>th</sup> c.a.m. (also called _q_-moment in this section).
 - It has a finite _p_<sup>th</sup> c.a.m. (also called _p_-moment in this section).
@@ -97,6 +149,15 @@ q = S(4) # Degree of q-moment
 kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
+
+<a id=Notes></a>
+## Notes
+
+- <small><sup id=Note1>(1)</sup> Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</small>
+- <small><sup id=Note2>(2)</sup> Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).</small>
+- <small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.</small>
+- <small><sup id=Note4>(4)</sup> Huber, Mark, "[An optimal(_&epsilon_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
+- <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
 
 <a id=License></a>
 ## License
