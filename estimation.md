@@ -7,6 +7,8 @@
 
 This page presents general-purpose algorithms for estimating the mean value of a stream of random numbers, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
 
+The algorithms are described to make them easy to implement by programmers.
+
 <a id=Concepts></a>
 ## Concepts
 
@@ -26,7 +28,7 @@ For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &min
 <a id=Estimators_with_User_Specified_Relative_Error></a>
 ## Estimators with User-Specified Relative Error
 
-The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.
+The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  The algorithm assumes the stream of numbers can't take on the value 0 with probability 1.
 
 The algorithm has the following parameters:
 
@@ -34,7 +36,7 @@ The algorithm has the following parameters:
 
 The algorithm follows:
 
-1. Calculate the minimum number of samples _k_.  There are two suggestions.  The simpler one is _k_ = ceil(&minus;6\*ln(2/_&delta;_)/(_&epsilon;_<sup>2</sup>\*(4\*_&epsilon;_&minus;3))).  A more complicated one is the smallest integer _k_ such that gammainc(_k_,(_k_&minus;1)/(1+_&epsilon;_)) + (1 &minus; gammainc(_k_,(_k_&minus;1)/(1&minus;_&epsilon;_))) &le; _&delta;, where gammainc is the regularized lower incomplete gamma function.
+1. Calculate the minimum number of samples _k_.  There are two suggestions.  The simpler one is _k_ = ceil(&minus;6\*ln(2/_&delta;_)/(_&epsilon;_<sup>2</sup>\*(4\*_&epsilon;_&minus;3))).  A more complicated one is the smallest integer _k_ such that gammainc(_k_,(_k_&minus;1)/(1+_&epsilon;_)) + (1 &minus; gammainc(_k_,(_k_&minus;1)/(1&minus;_&epsilon;_))) &le; _&delta;_, where gammainc is the regularized lower incomplete gamma function.
 2. Take samples from the stream until _k_ 1's are taken this way.  Let _r_ be the total number of samples taken this way.
 3. Generate _g_, a gamma(_r_) random variate, then return (_k_&minus;1)/_g_.
 
@@ -47,8 +49,6 @@ The algorithm follows:
 >
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
 > 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of the original algorithm: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like the original algorithm.
-
-[TODO: Discuss Poisson and exponential estimators.]
 
 <a id=An_Algorithm_for_a_Stream_of_Bounded_Random_Numbers></a>
 ## An Algorithm for a Stream of Bounded Random Numbers
@@ -64,12 +64,31 @@ The algorithm follows.
 1. Set _k_ to ceil(2\*ln(6/_&delta;_)/_&epsilon;_<sup>2/3</sup>).
 2. Set _b_ to 0 and _n_ to 0.
 3. (Stage 1: Modified gamma Bernoulli approximation scheme.) While _b_ is less than _k_:
-    - Add 1 to _n_, then take a sample from the stream, then set _b_ to a number that is 1 if a uniform(0, 1) random number is less than the sample, and 0 otherwise.
+    1. Add 1 to _n_.
+    2. Take a sample from the stream, call it _s_.
+    3. Generate a uniform(0, 1) random number, call it _u_.
+    4. If _u_ is less than _s_, add 1 to _b_.
 4. Set _gb_ to _k_ + 2, then divide _gb_ by a gamma(_n_) random variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
 6. Set _n_ to a Poisson(_c1_/(_&epsilon;_\*_gb_)) random variate.
-7. ......
-8. [To be continued]
+7. Run the standard deviation sub-algorithm (given later) _n_ times.  Set _A_ to the number of 1's returned by that sub-algorithm this way.
+8. Set _csquared_ to (_A_ / _c1_ + 1 / 2 + sqrt(_A_ / _c1_ + 1 / 4)) * (1 + _&epsilon;_<sup>1 / 3</sup>)<sup>2</sup>\*_&epsilon;_/_gb_.
+9. Set _n_ to ceil((2\*ln(6/_&delta;_)/_&epsilon;_<sup>2</sup>)/(1&minus;_&epsilon;_<sup>1/3</sup>)).
+10. (Stage 2: Light-tailed sample average.)  Set _e0_ to _&epsilon;_<sup>1/3</sup>.
+11. Set _mu0_ to _gb_/(1&minus;_e0_<sup>2</sup>).
+12. Set _alpha_ to _&epsilon;_/(_csquared_\*_mu0_).
+13. Set _w_ to _n_\*_mu0_.
+14. Do the following _n_ times:
+    1. Get a sample from the stream, call it _g_.  Set _s_ to _alpha_\*(_g_&minus;_mu0_).
+    2. If _s_&ge;0, add ln(1+_s_+_s_\*_s_/2)/_alpha_ to _w_.  Otherwise, subtract ln(1&minus;_s_+_s_\*_s_/2)/_alpha_ from _w_.
+15. Return _w_/_n_.
+
+The standard deviation sub-algorithm follows:
+
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.
+2. Get two samples from the stream, call them _x_ and _y_.
+3. Generate a uniform(0, 1) random number, call it _u_.
+4. If _u_ is less than (_x_&minus;_y_)<sup>2</sup>, return 1.  Otherwise, return 0.
 
 > **Note:** As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in this algorithm, and the algorithm will still work.
 
@@ -86,7 +105,7 @@ The algorithm works by first estimating the _p_-moment of the stream, then using
 
 The algorithm has the following parameters:
 
-- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be 1 or less.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater.  The algorithm is not guaranteed to maintain a finite mean square error or expected error in its estimates.
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be 1 or less.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_-moment that the algorithm will estimate to determine the mean.
 - _q_: The algorithm assumes the distribution has a _q_-moment.  _q_ must be greater than _p_.
 - _&kappa;_: May not be less than the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root, and may not be less than 1.
@@ -156,7 +175,7 @@ pprint(Max(1,kappa))
 - <small><sup id=Note1>(1)</sup> Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</small>
 - <small><sup id=Note2>(2)</sup> Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).</small>
 - <small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.</small>
-- <small><sup id=Note4>(4)</sup> Huber, Mark, "[An optimal(_&epsilon_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
+- <small><sup id=Note4>(4)</sup> Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
 
 <a id=License></a>

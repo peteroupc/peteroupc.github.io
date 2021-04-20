@@ -11,6 +11,8 @@
 
 <p>This page presents general-purpose algorithms for estimating the mean value of a stream of random numbers, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.</p>
 
+<p>The algorithms are described to make them easy to implement by programmers.</p>
+
 <p><a id=Concepts></a></p>
 
 <h2>Concepts</h2>
@@ -34,7 +36,7 @@
 
 <h2>Estimators with User-Specified Relative Error</h2>
 
-<p>The following algorithm from Huber (2017)<sup><a href="#Note1"><strong>(1)</strong></a></sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.</p>
+<p>The following algorithm from Huber (2017)<sup><a href="#Note1"><strong>(1)</strong></a></sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  The algorithm assumes the stream of numbers can&#39;t take on the value 0 with probability 1.</p>
 
 <p>The algorithm has the following parameters:</p>
 
@@ -45,7 +47,7 @@
 <p>The algorithm follows:</p>
 
 <ol>
-<li>Calculate the minimum number of samples <em>k</em>.  There are two suggestions.  The simpler one is <em>k</em> = ceil(&minus;6*ln(2/<em>&delta;</em>)/(<em>&epsilon;</em><sup>2</sup>*(4*<em>&epsilon;</em>&minus;3))).  A more complicated one is the smallest integer <em>k</em> such that gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1+<em>&epsilon;</em>)) + (1 &minus; gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1&minus;<em>&epsilon;</em>))) &le; _&delta;, where gammainc is the regularized lower incomplete gamma function.</li>
+<li>Calculate the minimum number of samples <em>k</em>.  There are two suggestions.  The simpler one is <em>k</em> = ceil(&minus;6*ln(2/<em>&delta;</em>)/(<em>&epsilon;</em><sup>2</sup>*(4*<em>&epsilon;</em>&minus;3))).  A more complicated one is the smallest integer <em>k</em> such that gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1+<em>&epsilon;</em>)) + (1 &minus; gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1&minus;<em>&epsilon;</em>))) &le; <em>&delta;</em>, where gammainc is the regularized lower incomplete gamma function.</li>
 <li>Take samples from the stream until <em>k</em> 1&#39;s are taken this way.  Let <em>r</em> be the total number of samples taken this way.</li>
 <li>Generate <em>g</em>, a gamma(<em>r</em>) random variate, then return (<em>k</em>&minus;1)/<em>g</em>.</li>
 </ol>
@@ -66,8 +68,6 @@
 </ol>
 </blockquote>
 
-<p>[TODO: Discuss Poisson and exponential estimators.]</p>
-
 <p><a id=An_Algorithm_for_a_Stream_of_Bounded_Random_Numbers></a></p>
 
 <h2>An Algorithm for a Stream of Bounded Random Numbers</h2>
@@ -87,14 +87,38 @@
 <li>Set <em>b</em> to 0 and <em>n</em> to 0.</li>
 <li>(Stage 1: Modified gamma Bernoulli approximation scheme.) While <em>b</em> is less than <em>k</em>:
 
-<ul>
-<li>Add 1 to <em>n</em>, then take a sample from the stream, then set <em>b</em> to a number that is 1 if a uniform(0, 1) random number is less than the sample, and 0 otherwise.</li>
-</ul></li>
+<ol>
+<li>Add 1 to <em>n</em>.</li>
+<li>Take a sample from the stream, call it <em>s</em>.</li>
+<li>Generate a uniform(0, 1) random number, call it <em>u</em>.</li>
+<li>If <em>u</em> is less than <em>s</em>, add 1 to <em>b</em>.</li>
+</ol></li>
 <li>Set <em>gb</em> to <em>k</em> + 2, then divide <em>gb</em> by a gamma(<em>n</em>) random variate.</li>
 <li>(Find the sample size for the next stage.) Set <em>c1</em> to 2*ln(3/<em>&delta;</em>).</li>
 <li>Set <em>n</em> to a Poisson(<em>c1</em>/(<em>&epsilon;</em>*<em>gb</em>)) random variate.</li>
-<li>......</li>
-<li>[To be continued]</li>
+<li>Run the standard deviation sub-algorithm (given later) <em>n</em> times.  Set <em>A</em> to the number of 1&#39;s returned by that sub-algorithm this way.</li>
+<li>Set <em>csquared</em> to (<em>A</em> / <em>c1</em> + 1 / 2 + sqrt(<em>A</em> / <em>c1</em> + 1 / 4)) * (1 + <em>&epsilon;</em><sup>1 / 3</sup>)<sup>2</sup>*<em>&epsilon;</em>/<em>gb</em>.</li>
+<li>Set <em>n</em> to ceil((2*ln(6/<em>&delta;</em>)/<em>&epsilon;</em><sup>2</sup>)/(1&minus;<em>&epsilon;</em><sup>1/3</sup>)).</li>
+<li>(Stage 2: Light-tailed sample average.)  Set <em>e0</em> to <em>&epsilon;</em><sup>1/3</sup>.</li>
+<li>Set <em>mu0</em> to <em>gb</em>/(1&minus;<em>e0</em><sup>2</sup>).</li>
+<li>Set <em>alpha</em> to <em>&epsilon;</em>/(<em>csquared</em>*<em>mu0</em>).</li>
+<li>Set <em>w</em> to <em>n</em>*<em>mu0</em>.</li>
+<li>Do the following <em>n</em> times:
+
+<ol>
+<li>Get a sample from the stream, call it <em>g</em>.  Set <em>s</em> to <em>alpha</em>*(<em>g</em>&minus;<em>mu0</em>).</li>
+<li>If <em>s</em>&ge;0, add ln(1+<em>s</em>+<em>s</em>*<em>s</em>/2)/<em>alpha</em> to <em>w</em>.  Otherwise, subtract ln(1&minus;<em>s</em>+<em>s</em>*<em>s</em>/2)/<em>alpha</em> from <em>w</em>.</li>
+</ol></li>
+<li>Return <em>w</em>/<em>n</em>.</li>
+</ol>
+
+<p>The standard deviation sub-algorithm follows:</p>
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.</li>
+<li>Get two samples from the stream, call them <em>x</em> and <em>y</em>.</li>
+<li>Generate a uniform(0, 1) random number, call it <em>u</em>.</li>
+<li>If <em>u</em> is less than (<em>x</em>&minus;<em>y</em>)<sup>2</sup>, return 1.  Otherwise, return 0.</li>
 </ol>
 
 <blockquote>
@@ -118,7 +142,7 @@
 <p>The algorithm has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater.  The algorithm is not guaranteed to maintain a finite mean square error or expected error in its estimates.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em>-moment that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The algorithm assumes the distribution has a <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
 <li><em>&kappa;</em>: May not be less than the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, and may not be less than 1.</li>
@@ -214,7 +238,7 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note1>(1)</sup> Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures &amp; Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</small></li>
 <li><small><sup id=Note2>(2)</sup> Feng, J. et al. “Monte Carlo with User-Specified Relative Error.” (2016).</small></li>
 <li><small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. &quot;Faster estimates of the mean of bounded random variables.&quot; Mathematics and Computers in Simulation 161 (2019): 93-101.</small></li>
-<li><small><sup id=Note4>(4)</sup> Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478">An optimal(<em>&amp;epsilon</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</a>&quot;, arXiv:1706.01478, 2017.</small></li>
+<li><small><sup id=Note4>(4)</sup> Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>&epsilon;</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>&quot;, arXiv:1706.01478, 2017.</small></li>
 <li><small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. &quot;Solvable integration problems and optimal sample size selection.&quot; Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> .</small></li>
 </ul>
 
