@@ -24,11 +24,11 @@ Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  
 <a id=An_Adaptive_Algorithm></a>
 ## An Adaptive Algorithm
 
-The following algorithm comes from Kunsch et al. <<Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .>>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
+The following algorithm comes from Kunsch et al. 2019 <<Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .>>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
 
 - It has a finite _q_<sup>th</sup> c.a.m. (also called _q_-moment in this section).
 - It has a finite _p_<sup>th</sup> c.a.m. (also called _p_-moment in this section).
-- The _q_-moment's _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_-moment's _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is called _standard deviation_ if _q_ = 2, and called _mean_ if _q_ = 1; similarly for _p_.)
+- The _q_-moment's _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_-moment's _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
 
@@ -42,7 +42,7 @@ The algorithm has the following parameters:
 For example:
 
 - With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers' distribution has a bounded 4th c.a.m. and that the 4th c.a.m.'s 4th root is no more than 1.1 times the 2nd c.a.m.'s square root (that is, the standard deviation), and will return an estimate that's within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers' distribution has a standard deviation (_q_=2) that is no more than twice its mean (_p_=1), and will return an estimate that's within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers' distribution has a standard deviation (_q_=2) that is no more than 2 times its mean deviation (_p_=1), and will return an estimate that's within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.
 
 The algorithm can be implemented as follows.
 
