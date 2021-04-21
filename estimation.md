@@ -97,8 +97,7 @@ The standard deviation sub-algorithm follows:
 
 The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
 
-- It has a finite _q_<sup>th</sup> c.a.m. (also called _q_-moment in this section).
-- It has a finite _p_<sup>th</sup> c.a.m. (also called _p_-moment in this section).
+- It has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_-moment and _p_-moment, respectively, in this section).
 - The _q_-moment's _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_-moment's _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
@@ -137,6 +136,8 @@ The algorithm can be implemented as follows.
     1. Get _mp_ samples from the stream.
     2. Add the samples and divide by _mp_ to get this block's sample mean.
 11. (Find the median of the sample means.  This is definitely an unbiased estimate of the mean when _kp_ is 1 or 2, but unfortunately, it isn't one for any _kp_ > 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(_kp_/2) with positions starting at 0); this works because _kp_ is odd.
+
+> **Note:** If the stream of random numbers meets the condition for this algorithm for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
 
 <a id=Randomized_Integration></a>
 ## Randomized Integration

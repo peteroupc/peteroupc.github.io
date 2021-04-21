@@ -132,8 +132,7 @@
 <p>The following algorithm comes from Kunsch et al. (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:</p>
 
 <ul>
-<li>It has a finite <em>q</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment in this section).</li>
-<li>It has a finite <em>p</em><sup>th</sup> c.a.m. (also called <em>p</em>-moment in this section).</li>
+<li>It has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment and <em>p</em>-moment, respectively, in this section).</li>
 <li>The <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is no more than <em>&kappa;</em> times the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, where <em>&kappa;</em> is 1 or greater. (Note that the <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
 
@@ -194,6 +193,10 @@
 </ol></li>
 <li>(Find the median of the sample means.  This is definitely an unbiased estimate of the mean when <em>kp</em> is 1 or 2, but unfortunately, it isn&#39;t one for any <em>kp</em> &gt; 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(<em>kp</em>/2) with positions starting at 0); this works because <em>kp</em> is odd.</li>
 </ol>
+
+<blockquote>
+<p><strong>Note:</strong> If the stream of random numbers meets the condition for this algorithm for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
+</blockquote>
 
 <p><a id=Randomized_Integration></a></p>
 

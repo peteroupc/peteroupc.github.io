@@ -28,6 +28,7 @@ Open-source articles on programming subjects.  Help me on my [**requests and ope
     * [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)
     * [**Miscellaneous Observations on Randomization**](./randmisc.html)
     * [**Code Generator for Discrete Distributions**](./autodist.html)
+    * [**Randomized Estimation Algorithms**](./estimation.html)
 * Other
     * [**A Note on Hash Functions**](./hash.html)
     * [**Pseudocode Conventions**](./pseudocode.html)
