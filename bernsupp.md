@@ -85,7 +85,7 @@ If _f_ in \[0, 1] has a defined slope at all points or at all but a countable nu
 
 > **Note:**
 >
-> 1. Some functions _f_ are not _&alpha;_-Hölder continuous for any _&alpha;_ greater than 0.  These functions have a slope that's steeper than any "nth" root. and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than any "nth" root.
+> 1. Some functions _f_ are not _&alpha;_-Hölder continuous for any _&alpha;_ greater than 0.  These functions have a slope that's steeper than any "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than any "nth" root.
 > 2. In the Lipschitz case (_&alpha;_ = 1), _&delta;_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
 > 3. In the case _&alpha;_ = 1/2, _&delta;_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 

@@ -149,7 +149,7 @@ end
 def markdownTitle(markdown)
   title="Untitled"
   markdown.scan(/^(?:\#)\s+(.*)\n+/) {|m|
-     title=m[0] }
+     title=m[0];break }
   if title=="Untitled"
    markdown.scan(/^(?:\#\#)\s+(.*)\n+/) {|m|
      title=m[0];break }
