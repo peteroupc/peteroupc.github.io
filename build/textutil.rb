@@ -173,7 +173,7 @@ Dir.glob("*.md").sort.each{|fn|
     $1+"\n\n" + sprintf("This version of the document is dated %04d-%02d-%02d.",
         mtime.year,mtime.mon,mtime.day) + "\n\n" }
   r=preparePandoc(r)
-  r=r.gsub(/_&lambda;_/,"$lambda$")
+  #r=r.gsub(/_&lambda;_/,"$lambda$")
   #r="---\ntitle: #{title}\nauthor: Peter Occil\n---\n\n"+r
   tmpfilemd=Dir::tmpdir()+"/#{file}.md"
   IO.write(tmpfilemd,r)
@@ -224,4 +224,8 @@ Dir.glob("*.md").sort.each{|fn|
   end
   #sleep(8)
 }
+end
+
+if ARGV.include?("--pdf")
+   preparePdfs()
 end
