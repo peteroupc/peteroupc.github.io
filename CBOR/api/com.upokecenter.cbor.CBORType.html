@@ -43,7 +43,7 @@ A text string.</li>
 <h2>Methods</h2>
 
 <ul>
-<li><code>static CBORType valueOf​(java.lang.String name)</code><br>
+<li><code>static CBORType valueOf​(java.lang.String name)</code><br>
 Returns the enum constant of this type with the specified name.</li>
 <li><code>static CBORType[] values()</code><br>
 Returns an array containing the constants of this enum type, in
@@ -116,14 +116,14 @@ the order they are declared.</li>
 
 <p>Deprecated.
 Since version 4.0, CBORObject.Type no longer returns this value for any
- CBOR Object - this is a breaking change from earlier
- versions. Instead, use the IsNumber property of CBORObject to
- determine whether a CBOR Object represents a number, or use the two new
- CBORType values instead. CBORType.Integer covers CBOR objects
- representing integers of major type 0 and 1.
- CBORType.FloatingPoint covers CBOR objects representing 16-, 32-, and
- 64-bit floating-point numbers. CBORType.Number may be removed in version
- 5.0 or later.</p>
+CBOR Object - this is a breaking change from earlier
+versions. Instead, use the IsNumber property of CBORObject to
+determine whether a CBOR Object represents a number, or use the two new
+CBORType values instead. CBORType.Integer covers CBOR objects
+representing integers of major type 0 and 1.
+CBORType.FloatingPoint covers CBOR objects representing 16-, 32-, and
+64-bit floating-point numbers. CBORType.Number may be removed in version
+5.0 or later.</p>
 
 <h3>Boolean</h3>
 
@@ -173,7 +173,7 @@ Since version 4.0, CBORObject.Type no longer returns this value for any
 </pre>
 
 <p>An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
- 0 and 1.</p>
+0 and 1.</p>
 
 <h3>FloatingPoint</h3>
 

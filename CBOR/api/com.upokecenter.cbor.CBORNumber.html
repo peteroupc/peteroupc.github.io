@@ -9,20 +9,20 @@
 </pre>
 
 <p>An instance of a number that CBOR or certain CBOR tags can represent. For
- this purpose, infinities and not-a-number or NaN values are considered
- numbers. Currently, this class can store one of the following kinds of
- numbers: 64-bit signed integers or binary floating-point numbers; or
- arbitrary-precision integers, decimal numbers, binary numbers, or
- rational numbers.</p>
+this purpose, infinities and not-a-number or NaN values are considered
+numbers. Currently, this class can store one of the following kinds of
+numbers: 64-bit signed integers or binary floating-point numbers; or
+arbitrary-precision integers, decimal numbers, binary numbers, or
+rational numbers.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>static class  CBORNumber.NumberKind</code><br>
+<li><code>static class CBORNumber.NumberKind</code><br>
 Specifies the underlying form of this CBOR number object.</li>
 <li><code>CBORNumber Abs()</code><br>
 Returns the absolute value of this CBOR number.</li>
-<li><code>CBORNumber Add​(CBORNumber b)</code><br>
+<li><code>CBORNumber Add​(CBORNumber b)</code><br>
 Returns the sum of this number and another number.</li>
 <li><code>boolean CanFitInDouble()</code><br>
 Returns whether this object&#39;s value can be converted to a 64-bit floating
@@ -52,21 +52,21 @@ its fractional part, would be -(2^63) or greater, and less than
 <li><code>boolean CanTruncatedIntFitInUInt64()</code><br>
 Returns whether this object&#39;s value, converted to an integer by discarding
 its fractional part, would be 0 or greater, and less than 2^64.</li>
-<li><code>int compareTo​(int other)</code><br>
+<li><code>int compareTo​(int other)</code><br>
 Compares this CBOR number with a 32-bit signed integer.</li>
-<li><code>int compareTo​(long other)</code><br>
+<li><code>int compareTo​(long other)</code><br>
 Compares this CBOR number with a 64-bit signed integer.</li>
-<li><code>int compareTo​(CBORNumber other)</code><br>
+<li><code>int compareTo​(CBORNumber other)</code><br>
 Compares this CBOR number with another.</li>
-<li><code>CBORNumber Divide​(CBORNumber b)</code><br>
+<li><code>CBORNumber Divide​(CBORNumber b)</code><br>
 Returns the quotient of this number and another number.</li>
-<li><code>static CBORNumber FromByte​(byte inputByte)</code><br>
+<li><code>static CBORNumber FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</li>
-<li><code>static CBORNumber FromCBORObject​(CBORObject o)</code><br>
+<li><code>static CBORNumber FromCBORObject​(CBORObject o)</code><br>
 Creates a CBOR number object from a CBOR object representing a number (that
 is, one for which the IsNumber property in.NET or the isNumber()
 method in Java returns true).</li>
-<li><code>static CBORNumber FromInt16​(short inputInt16)</code><br>
+<li><code>static CBORNumber FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision decimal number.</li>
 <li><code>CBORNumber.NumberKind getKind()</code><br>
 Gets the underlying form of this CBOR number object.</li>
@@ -87,18 +87,18 @@ Gets a value indicating whether this object represents negative infinity.</li>
 Gets a value indicating whether this object represents positive infinity.</li>
 <li><code>boolean IsZero()</code><br>
 Gets a value indicating whether this object&#39;s value equals 0.</li>
-<li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
+<li><code>CBORNumber Multiply​(CBORNumber b)</code><br>
 Returns a CBOR number expressing the product of this number and the given
 number.</li>
 <li><code>CBORNumber Negate()</code><br>
 Returns a CBOR number with the same value as this one but with the sign
 reversed.</li>
-<li><code>CBORNumber Remainder​(CBORNumber b)</code><br>
+<li><code>CBORNumber Remainder​(CBORNumber b)</code><br>
 Returns the remainder when this number is divided by another number.</li>
 <li><code>int signum()</code><br>
 Gets this value&#39;s sign: -1 if nonzero and negative; 1 if nonzero and
 positive; 0 if zero.</li>
-<li><code>CBORNumber Subtract​(CBORNumber b)</code><br>
+<li><code>CBORNumber Subtract​(CBORNumber b)</code><br>
 Returns a number that expresses this number minus another.</li>
 <li><code>byte ToByteChecked()</code><br>
 Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
@@ -168,7 +168,7 @@ Returns the value of this object in text form.</li>
 <h2>Nested Classes</h2>
 
 <ul>
-<li><code>static class  CBORNumber.NumberKind</code><br>
+<li><code>static class CBORNumber.NumberKind</code><br>
 Specifies the underlying form of this CBOR number object.</li>
 </ul>
 
@@ -193,8 +193,8 @@ Specifies the underlying form of this CBOR number object.</li>
 </pre>
 
 <p>Gets this value&#39;s sign: -1 if nonzero and negative; 1 if nonzero and
- positive; 0 if zero. Not-a-number (NaN) values are positive or
- negative depending on what sign is stored in their underlying forms.</p>
+positive; 0 if zero. Not-a-number (NaN) values are positive or
+negative depending on what sign is stored in their underlying forms.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -208,8 +208,8 @@ Specifies the underlying form of this CBOR number object.</li>
 </pre>
 
 <p>Creates a CBOR number object from a CBOR object representing a number (that
- is, one for which the IsNumber property in.NET or the isNumber()
- method in Java returns true).</p>
+is, one for which the IsNumber property in.NET or the isNumber()
+method in Java returns true).</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -243,8 +243,8 @@ does not represent a number.</li>
 </pre>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
- its fractional part, would be -(2^31) or greater, and less than
- 2^31.</p>
+its fractional part, would be -(2^31) or greater, and less than
+2^31.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -260,8 +260,8 @@ less than 2^31; otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
- its fractional part, would be -(2^63) or greater, and less than
- 2^63.</p>
+its fractional part, would be -(2^63) or greater, and less than
+2^63.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -277,7 +277,7 @@ less than 2^63; otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
- its fractional part, would be 0 or greater, and less than 2^64.</p>
+its fractional part, would be 0 or greater, and less than 2^64.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -293,8 +293,8 @@ discarding its fractional part, would be 0 or greater, and less than
 </pre>
 
 <p>Returns whether this object&#39;s value can be converted to a 32-bit floating
- point number without its value being rounded to another numerical
- value.</p>
+point number without its value being rounded to another numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -312,8 +312,8 @@ number; otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Returns whether this object&#39;s value can be converted to a 64-bit floating
- point number without its value being rounded to another numerical
- value.</p>
+point number without its value being rounded to another numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -345,8 +345,8 @@ otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Gets a value indicating whether this object represents an integer number,
- that is, a number without a fractional part. Infinity and
- not-a-number are not considered integers.</p>
+that is, a number without a fractional part. Infinity and
+not-a-number are not considered integers.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -389,7 +389,7 @@ false</code>.</li>
 </pre>
 
 <p>Converts this object to an arbitrary-precision integer. See the ToObject
- overload taking a type for more information.</p>
+overload taking a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -409,7 +409,7 @@ false</code>.</li>
 </pre>
 
 <p>Converts this object to an arbitrary-precision integer if its value is an
- integer.</p>
+integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -430,8 +430,8 @@ an exact integer.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) after converting it to an integer by discarding
- its fractional part.</p>
+byte (from 0 to 255) after converting it to an integer by discarding
+its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -453,8 +453,8 @@ part, is less than 0 or greater than 255.</li>
 </pre>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two&#39;s-complement
- form as a byte (from 0 to 255).</p>
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a byte (from 0 to 255).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -469,8 +469,8 @@ value is infinity or not-a-number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
- byte (from 0 to 255) without rounding to a different numerical
- value.</p>
+byte (from 0 to 255) without rounding to a different numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -510,8 +510,8 @@ an exact integer, or is less than 0 or greater than 255.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
- 16-bit signed integer after converting it to an integer by
- discarding its fractional part.</p>
+16-bit signed integer after converting it to an integer by
+discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -533,8 +533,8 @@ part, is less than -32768 or greater than 32767.</li>
 </pre>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two&#39;s-complement
- form as a 16-bit signed integer.</p>
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 16-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -549,8 +549,8 @@ value is infinity or not-a-number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
- 16-bit signed integer without rounding to a different numerical
- value.</p>
+16-bit signed integer without rounding to a different numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -590,8 +590,8 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
- 32-bit signed integer after converting it to an integer by
- discarding its fractional part.</p>
+32-bit signed integer after converting it to an integer by
+discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -613,8 +613,8 @@ part, is less than -2147483648 or greater than 2147483647.</li>
 </pre>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two&#39;s-complement
- form as a 32-bit signed integer.</p>
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 32-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -629,8 +629,8 @@ value is infinity or not-a-number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
- 32-bit signed integer without rounding to a different numerical
- value.</p>
+32-bit signed integer without rounding to a different numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -642,9 +642,10 @@ value is infinity or not-a-number.</li>
 
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, is not
-an exact integer, or is less than -2147483648 or greater than
-2147483647.</li>
+an exact integer, or is less than -2147483648 or greater than</li>
 </ul>
+
+<p>2147483647.</p>
 
 <h3>ToInt64Checked</h3>
 
@@ -652,8 +653,8 @@ an exact integer, or is less than -2147483648 or greater than
 </pre>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
- 64-bit signed integer after converting it to an integer by
- discarding its fractional part.</p>
+64-bit signed integer after converting it to an integer by
+discarding its fractional part.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -666,9 +667,10 @@ an exact integer, or is less than -2147483648 or greater than
 <ul>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number, or the
 number, once converted to an integer by discarding its fractional
-part, is less than -9223372036854775808 or greater than
-9223372036854775807.</li>
+part, is less than -9223372036854775808 or greater than</li>
 </ul>
+
+<p>9223372036854776000.</p>
 
 <h3>ToInt64Unchecked</h3>
 
@@ -676,8 +678,8 @@ part, is less than -9223372036854775808 or greater than
 </pre>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
- part, and returns the least-significant bits of its two&#39;s-complement
- form as a 64-bit signed integer.</p>
+part, and returns the least-significant bits of its two&#39;s-complement
+form as a 64-bit signed integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -692,8 +694,8 @@ value is infinity or not-a-number.</li>
 </pre>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
- 64-bit signed integer without rounding to a different numerical
- value.</p>
+64-bit signed integer without rounding to a different numerical
+value.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -734,7 +736,7 @@ than 9223372036854775807.</li>
 </pre>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
- greater, and is less than 2^31.</p>
+greater, and is less than 2^31.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -749,7 +751,7 @@ than 9223372036854775807.</li>
 </pre>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
- greater, and is less than 2^63.</p>
+greater, and is less than 2^63.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -764,7 +766,7 @@ than 9223372036854775807.</li>
 </pre>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is 0 or
- greater, and is less than 2^64.</p>
+greater, and is less than 2^64.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -848,7 +850,7 @@ otherwise, <code>false</code>.</li>
 </pre>
 
 <p>Converts this object to an arbitrary-precision binary floating point number.
- See the ToObject overload taking a type for more information.</p>
+See the ToObject overload taking a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -863,7 +865,7 @@ object&#39;s value.</li>
 </pre>
 
 <p>Converts this object to a rational number. See the ToObject overload taking
- a type for more information.</p>
+a type for more information.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -890,7 +892,7 @@ object&#39;s value.</li>
 </pre>
 
 <p>Returns a CBOR number with the same value as this one but with the sign
- reversed.</p>
+reversed.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -961,7 +963,7 @@ to store).</p></li>
 </pre>
 
 <p>Returns a CBOR number expressing the product of this number and the given
- number.</p>
+number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1046,8 +1048,8 @@ to store).</p></li>
 </pre>
 
 <p>Compares this CBOR number with a 32-bit signed integer. In this
- implementation, the two numbers&#39; mathematical values are compared.
- Here, NaN (not-a-number) is considered greater than any number.</p>
+implementation, the two numbers&#39; mathematical values are compared.
+Here, NaN (not-a-number) is considered greater than any number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1070,8 +1072,8 @@ implementation returns a positive number if.</li>
 </pre>
 
 <p>Compares this CBOR number with a 64-bit signed integer. In this
- implementation, the two numbers&#39; mathematical values are compared.
- Here, NaN (not-a-number) is considered greater than any number.</p>
+implementation, the two numbers&#39; mathematical values are compared.
+Here, NaN (not-a-number) is considered greater than any number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1094,8 +1096,8 @@ implementation returns a positive number if.</li>
 </pre>
 
 <p>Compares this CBOR number with another. In this implementation, the two
- numbers&#39; mathematical values are compared. Here, NaN (not-a-number)
- is considered greater than any number.</p>
+numbers&#39; mathematical values are compared. Here, NaN (not-a-number)
+is considered greater than any number.</p>
 
 <p><strong>Specified by:</strong></p>
 

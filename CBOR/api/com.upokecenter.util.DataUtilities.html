@@ -9,8 +9,9 @@
 </pre>
 
 <p>Contains methods useful for reading and writing text strings. It is designed
- to have no dependencies other than the basic runtime class library.
- <p>Many of these methods work with text encoded in UTF-8, an encoding
+to have no dependencies other than the basic runtime class library.</p>
+
+<p><p>Many of these methods work with text encoded in UTF-8, an encoding
  form of the Unicode Standard which uses one byte to encode the most
  basic characters and two to four bytes to encode other characters. For
  example, the <code>GetUtf8</code> method converts a text string to an array
@@ -30,83 +31,48 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static int CodePointAt​(java.lang.String str,
-       int index)</code><br>
+<li><code>static int CodePointAt​(java.lang.String str, int index)</code><br>
 Gets the Unicode code point at the given index of the string.</li>
-<li><code>static int CodePointAt​(java.lang.String str,
-       int index,
-       int surrogateBehavior)</code><br>
+<li><code>static int CodePointAt​(java.lang.String str, int index, int surrogateBehavior)</code><br>
 Gets the Unicode code point at the given index of the string.</li>
-<li><code>static int CodePointBefore​(java.lang.String str,
-           int index)</code><br>
+<li><code>static int CodePointBefore​(java.lang.String str, int index)</code><br>
 Gets the Unicode code point just before the given index of the string.</li>
-<li><code>static int CodePointBefore​(java.lang.String str,
-           int index,
-           int surrogateBehavior)</code><br>
+<li><code>static int CodePointBefore​(java.lang.String str, int index, int surrogateBehavior)</code><br>
 Gets the Unicode code point just before the given index of the string.</li>
-<li><code>static int CodePointCompare​(java.lang.String strA,
-            java.lang.String strB)</code><br>
+<li><code>static int CodePointCompare​(java.lang.String strA, java.lang.String strB)</code><br>
 Compares two strings in Unicode code point order.</li>
-<li><code>static int CodePointLength​(java.lang.String str)</code><br>
+<li><code>static int CodePointLength​(java.lang.String str)</code><br>
 Finds the number of Unicode code points in the given text string.</li>
-<li><code>static byte[] GetUtf8Bytes​(java.lang.String str,
-        boolean replace)</code><br>
+<li><code>static byte[] GetUtf8Bytes​(java.lang.String str, boolean replace)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
-<li><code>static byte[] GetUtf8Bytes​(java.lang.String str,
-        boolean replace,
-        boolean lenientLineBreaks)</code><br>
+<li><code>static byte[] GetUtf8Bytes​(java.lang.String str, boolean replace, boolean lenientLineBreaks)</code><br>
 Encodes a string in UTF-8 as a byte array.</li>
-<li><code>static long GetUtf8Length​(java.lang.String str,
-         boolean replace)</code><br>
+<li><code>static long GetUtf8Length​(java.lang.String str, boolean replace)</code><br>
 Calculates the number of bytes needed to encode a string in UTF-8.</li>
-<li><code>static java.lang.String GetUtf8String​(byte[] bytes,
-         boolean replace)</code><br>
+<li><code>static java.lang.String GetUtf8String​(byte[] bytes, boolean replace)</code><br>
 Generates a text string from a UTF-8 byte array.</li>
-<li><code>static java.lang.String GetUtf8String​(byte[] bytes,
-         int offset,
-         int bytesCount,
-         boolean replace)</code><br>
+<li><code>static java.lang.String GetUtf8String​(byte[] bytes, int offset, int bytesCount, boolean replace)</code><br>
 Generates a text string from a portion of a UTF-8 byte array.</li>
-<li><code>static int ReadUtf8​(java.io.InputStream stream,
-    int bytesCount,
-    java.lang.StringBuilder builder,
-    boolean replace)</code><br>
+<li><code>static int ReadUtf8​(java.io.InputStream stream, int bytesCount, java.lang.StringBuilder builder, boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a data stream.</li>
-<li><code>static int ReadUtf8FromBytes​(byte[] data,
-             int offset,
-             int bytesCount,
-             java.lang.StringBuilder builder,
-             boolean replace)</code><br>
+<li><code>static int ReadUtf8FromBytes​(byte[] data, int offset, int bytesCount, java.lang.StringBuilder builder, boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a byte array.</li>
-<li><code>static java.lang.String ReadUtf8ToString​(java.io.InputStream stream)</code><br>
+<li><code>static java.lang.String ReadUtf8ToString​(java.io.InputStream stream)</code><br>
 Reads a string in UTF-8 encoding from a data stream in full and returns that
 string.</li>
-<li><code>static java.lang.String ReadUtf8ToString​(java.io.InputStream stream,
-            int bytesCount,
-            boolean replace)</code><br>
+<li><code>static java.lang.String ReadUtf8ToString​(java.io.InputStream stream, int bytesCount, boolean replace)</code><br>
 Reads a string in UTF-8 encoding from a data stream and returns that string.</li>
-<li><code>static java.lang.String ToLowerCaseAscii​(java.lang.String str)</code><br>
+<li><code>static java.lang.String ToLowerCaseAscii​(java.lang.String str)</code><br>
 Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
 converted to the corresponding basic lower-case letters.</li>
-<li><code>static java.lang.String ToUpperCaseAscii​(java.lang.String str)</code><br>
+<li><code>static java.lang.String ToUpperCaseAscii​(java.lang.String str)</code><br>
 Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A)
 converted to the corresponding basic upper-case letters.</li>
-<li><code>static int WriteUtf8​(java.lang.String str,
-     int offset,
-     int length,
-     java.io.OutputStream stream,
-     boolean replace)</code><br>
+<li><code>static int WriteUtf8​(java.lang.String str, int offset, int length, java.io.OutputStream stream, boolean replace)</code><br>
 Writes a portion of a string in UTF-8 encoding to a data stream.</li>
-<li><code>static int WriteUtf8​(java.lang.String str,
-     int offset,
-     int length,
-     java.io.OutputStream stream,
-     boolean replace,
-     boolean lenientLineBreaks)</code><br>
+<li><code>static int WriteUtf8​(java.lang.String str, int offset, int length, java.io.OutputStream stream, boolean replace, boolean lenientLineBreaks)</code><br>
 Writes a portion of a string in UTF-8 encoding to a data stream.</li>
-<li><code>static int WriteUtf8​(java.lang.String str,
-     java.io.OutputStream stream,
-     boolean replace)</code><br>
+<li><code>static int WriteUtf8​(java.lang.String str, java.io.OutputStream stream, boolean replace)</code><br>
 Writes a string in UTF-8 encoding to a data stream.</li>
 </ul>
 
@@ -148,8 +114,8 @@ is false.</p></li>
 </pre>
 
 <p>Finds the number of Unicode code points in the given text string. Unpaired
- surrogate code points increase this number by 1. This is not
-  necessarily the length of the string in &quot;char&quot; s.</p>
+surrogate code points increase this number by 1. This is not
+necessarily the length of the string in &quot;char&quot; s.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -410,9 +376,9 @@ UTF-16 code units.</li>
 </pre>
 
 <p>Gets the Unicode code point at the given index of the string.<p> </p><p>The
- following example shows how to iterate a text string code point by
- code point, terminating the loop when an unpaired surrogate is
-  found.</p> <pre>for (int i = 0;i&lt;str.length(); ++i) { int codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /* Unpaired surrogate <em>/ } System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point */ } }</pre> .</p>
+following example shows how to iterate a text string code point by
+code point, terminating the loop when an unpaired surrogate is
+found.</p> <pre>for (int i = 0;i&lt;str.length(); ++i) { int codePoint = DataUtilities.CodePointAt(str, i, 2); if (codePoint &lt; 0) { break; /_ Unpaired surrogate <em>/ } System.out.println(&quot;codePoint:&quot;+codePoint); if (codePoint &gt;= 0x10000) { i++; /</em> Supplementary code point _/ } }</pre> .</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -448,8 +414,8 @@ point takes up two UTF-16 code units.</li>
 </pre>
 
 <p>Returns a string with the basic upper-case letters A to Z (U+0041 to U+005A)
- converted to the corresponding basic lower-case letters. Other
- characters remain unchanged.</p>
+converted to the corresponding basic lower-case letters. Other
+characters remain unchanged.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -469,8 +435,8 @@ point takes up two UTF-16 code units.</li>
 </pre>
 
 <p>Returns a string with the basic lower-case letters A to Z (U+0061 to U+007A)
- converted to the corresponding basic upper-case letters. Other
- characters remain unchanged.</p>
+converted to the corresponding basic upper-case letters. Other
+characters remain unchanged.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -490,7 +456,7 @@ point takes up two UTF-16 code units.</li>
 </pre>
 
 <p>Compares two strings in Unicode code point order. Unpaired surrogate code
- points are treated as individual code points.</p>
+points are treated as individual code points.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -665,8 +631,8 @@ greater than the length of <code>data</code>.</p></li>
 </pre>
 
 <p>Reads a string in UTF-8 encoding from a data stream in full and returns that
- string. Replaces invalid encoding with the replacement character
- (U+FFFD).</p>
+string. Replaces invalid encoding with the replacement character
+(U+FFFD).</p>
 
 <p><strong>Parameters:</strong></p>
 
