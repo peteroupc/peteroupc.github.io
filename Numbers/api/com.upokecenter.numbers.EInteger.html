@@ -254,11 +254,11 @@ greater than 0.</li>
 <li><code>boolean isZero()</code><br>
 Gets a value indicating whether this value is 0.</li>
 <li><code>EInteger LowBits​(int bitCount)</code><br>
-Not documented yet.</li>
+Extracts the lowest bits of this integer.</li>
 <li><code>EInteger LowBits​(long longBitCount)</code><br>
-Not documented yet.</li>
+Extracts the lowest bits of this integer.</li>
 <li><code>EInteger LowBits​(EInteger bigBitCount)</code><br>
-Not documented yet.</li>
+Extracts the lowest bits of this integer.</li>
 <li><code>static EInteger Max​(EInteger first,
 EInteger second)</code><br>
 Returns the greater of two arbitrary-precision integers.</li>
@@ -2606,7 +2606,9 @@ example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
 <pre>public EInteger LowBits​(long longBitCount)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^longBitCount - 1)</code>, but is more efficient when this
+ integer is non-negative and longBitCount&#39;s value is large.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2626,7 +2628,9 @@ integer.</li>
 <pre>public EInteger LowBits​(int bitCount)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
+ non-negative and bitCount&#39;s value is large.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2645,7 +2649,9 @@ integer.</li>
 <pre>public EInteger LowBits​(EInteger bigBitCount)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Extracts the lowest bits of this integer. This is equivalent to
+ <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
+ is non-negative and bigBitCount&#39;s value is large.</p>
 
 <p><strong>Parameters:</strong></p>
 
