@@ -13,43 +13,60 @@
 <h2>Methods</h2>
 
 <ul>
-<li><code>static CBORObject ParseJSONNumber​(byte[] bytes)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(byte[] bytes)</code><br>
 Parses a number from a byte sequence whose format follows the JSON
 specification.</li>
-<li><code>static CBORObject ParseJSONNumber​(byte[] bytes, int offset, int count)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(byte[] bytes,
+           int offset,
+           int count)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) from
 a portion of a byte sequence, and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(byte[] bytes, int offset, int count, JSONOptions options)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(byte[] bytes,
+           int offset,
+           int count,
+           JSONOptions options)</code><br>
 Parses a number from a byte sequence whose format follows the JSON
 specification (RFC 8259) and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(byte[] bytes, JSONOptions options)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(byte[] bytes,
+           JSONOptions options)</code><br>
 Parses a number from a byte sequence whose format follows the JSON
 specification (RFC 8259) and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(char[] chars) char</code><br>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars) char</code><br>
 Parses a number from a sequence of char s whose format follows the
 JSON specification.</li>
-<li><code>static CBORObject ParseJSONNumber​(char[] chars, int offset, int count) char</code><br>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           int offset,
+           int count) char</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) from
 a portion of a sequence of char s, and converts that number
 to a CBOR object.</li>
-<li><code>static CBORObject ParseJSONNumber​(char[] chars, int offset, int count, JSONOptions options) char</code><br>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           int offset,
+           int count,
+           JSONOptions options) char</code><br>
 Parses a number from a sequence of char s whose format follows the
 JSON specification (RFC 8259) and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(char[] chars, JSONOptions options) char</code><br>
+<li><code>static CBORObject ParseJSONNumber​(char[] chars,
+           JSONOptions options) char</code><br>
 Parses a number from a sequence of char s whose format follows the
 JSON specification (RFC 8259) and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str)</code><br>
 Parses a number whose format follows the JSON specification.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str, boolean integersOnly, boolean positiveOnly)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           boolean integersOnly,
+           boolean positiveOnly)</code><br>
 Deprecated.
 Call the one-argument version of this method instead.
 Call the one-argument version of this method instead.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str, boolean integersOnly, boolean positiveOnly, boolean preserveNegativeZero)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           boolean integersOnly,
+           boolean positiveOnly,
+           boolean preserveNegativeZero)</code><br>
 Deprecated.
 Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
 sets preserveNegativeZero to the desired value, either true or
@@ -57,14 +74,20 @@ false.
 Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
 sets preserveNegativeZero to the desired value, either true or
 false.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           int offset,
+           int count)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) from
 a portion of a text string, and converts that number to a CBOR
 object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str, int offset, int count, JSONOptions options)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           int offset,
+           int count,
+           JSONOptions options)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) and
 converts that number to a CBOR object.</li>
-<li><code>static CBORObject ParseJSONNumber​(java.lang.String str, JSONOptions options)</code><br>
+<li><code>static CBORObject ParseJSONNumber​(java.lang.String str,
+           JSONOptions options)</code><br>
 Parses a number whose format follows the JSON specification (RFC 8259) and
 converts that number to a CBOR object.</li>
 </ul>
@@ -77,8 +100,8 @@ converts that number to a CBOR object.</li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification. The method uses
-a JSONOptions with all default properties except for a
-PreserveNegativeZero property of false.</p>
+ a JSONOptions with all default properties except for a
+ PreserveNegativeZero property of false.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -102,10 +125,10 @@ string is null or empty.</li>
 
 <p>Deprecated.
 Call the one-argument version of this method instead. If this method
-call used positiveOnly = true, check that the String does
-not begin with &#39;-&#39; before calling that version. If this method
-call used integersOnly = true, check that the String does not
-contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
+ call used positiveOnly = true, check that the String does
+ not begin with &#39;-&#39; before calling that version. If this method
+ call used integersOnly  = true, check that the String does not
+ contain &#39;.&#39;, &#39;E&#39;, or &#39;e&#39; before calling that version.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -133,12 +156,12 @@ string is null or empty.</li>
 
 <p>Deprecated.
 Instead, call ParseJSONNumber(str, jsonoptions) with a JSONOptions that
-sets preserveNegativeZero to the desired value, either true or
-false. If this method call used positiveOnly = true, check that the
-String does not begin with &#39;-&#39; before calling that
-version. If this method call used integersOnly = true, check
-that the String does not contain &#39;.&#39;, &#39;E&#39;,
-or &#39;e&#39; before calling that version.</p>
+ sets preserveNegativeZero to the desired value, either true or
+ false. If this method call used positiveOnly = true, check that the
+ String does not begin with &#39;-&#39; before calling that
+ version. If this method call used integersOnly  = true, check
+ that the String does not contain &#39;.&#39;, &#39;E&#39;,
+ or &#39;e&#39; before calling that version.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -166,14 +189,14 @@ parsing fails, including if the string is null or empty.</li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259) and
-converts that number to a CBOR object.<p>Roughly speaking, a valid
-JSON number consists of an optional minus sign, one or more basic
-digits (starting with 1 to 9 unless there is only one digit and that
-digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
-more basic digits, and an optional letter E or e with an optional
-plus or minus sign and one or more basic digits (the exponent). A
-text string representing a valid JSON number is not allowed to
-contain white space characters, including spaces.</p></p>
+ converts that number to a CBOR object.<p>Roughly speaking, a valid
+ JSON number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless there is only one digit and that
+  digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
+ more basic digits, and an optional letter E or e with an optional
+ plus or minus sign and one or more basic digits (the exponent). A
+ text string representing a valid JSON number is not allowed to
+ contain white space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -197,15 +220,15 @@ parsing fails, including if the string is null or empty.</li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259) from
-a portion of a text string, and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A text string representing a
-valid JSON number is not allowed to contain white space characters,
-including spaces.</p></p>
+ a portion of a text string, and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A text string representing a
+ valid JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -239,14 +262,14 @@ length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259) and
-converts that number to a CBOR object.<p>Roughly speaking, a valid
-JSON number consists of an optional minus sign, one or more basic
-digits (starting with 1 to 9 unless there is only one digit and that
-digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
-more basic digits, and an optional letter E or e with an optional
-plus or minus sign and one or more basic digits (the exponent). A
-text string representing a valid JSON number is not allowed to
-contain white space characters, including spaces.</p></p>
+ converts that number to a CBOR object.<p>Roughly speaking, a valid
+ JSON number consists of an optional minus sign, one or more basic
+ digits (starting with 1 to 9 unless there is only one digit and that
+  digit is 0), an optional decimal point (&quot;.&quot;, full stop) with one or
+ more basic digits, and an optional letter E or e with an optional
+ plus or minus sign and one or more basic digits (the exponent). A
+ text string representing a valid JSON number is not allowed to
+ contain white space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -282,15 +305,15 @@ count</code> is 0 or less.</li>
 </pre>
 
 <p>Parses a number from a byte sequence whose format follows the JSON
-specification (RFC 8259) and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A byte sequence representing a
-valid JSON number is not allowed to contain white space characters,
-including spaces.</p></p>
+ specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A byte sequence representing a
+ valid JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -326,15 +349,15 @@ parsing fails, including if the byte sequence is null or empty or
 </pre>
 
 <p>Parses a number from a byte sequence whose format follows the JSON
-specification (RFC 8259) and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A byte sequence representing a
-valid JSON number is not allowed to contain white space characters,
-including spaces.</p></p>
+ specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A byte sequence representing a
+ valid JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -358,15 +381,15 @@ parsing fails, including if the byte sequence is null or empty.</li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259) from
-a portion of a byte sequence, and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A byte sequence representing a
-valid JSON number is not allowed to contain white space characters,
-including spaces.</p></p>
+ a portion of a byte sequence, and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A byte sequence representing a
+ valid JSON number is not allowed to contain white space characters,
+ including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -400,8 +423,8 @@ length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </pre>
 
 <p>Parses a number from a byte sequence whose format follows the JSON
-specification. The method uses a JSONOptions with all default
-properties except for a PreserveNegativeZero property of false.</p>
+ specification. The method uses a JSONOptions with all default
+ properties except for a PreserveNegativeZero property of false.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -424,15 +447,15 @@ byte sequence is null or empty.</li>
 </pre>
 
 <p>Parses a number from a sequence of <code>char</code> s whose format follows the
-JSON specification (RFC 8259) and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A sequence of <code>char</code> s
-representing a valid JSON number is not allowed to contain white
-space characters, including spaces.</p></p>
+ JSON specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A sequence of <code>char</code> s
+ representing a valid JSON number is not allowed to contain white
+ space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -468,15 +491,15 @@ or empty or <code>count</code> is 0 or less.</li>
 </pre>
 
 <p>Parses a number from a sequence of <code>char</code> s whose format follows the
-JSON specification (RFC 8259) and converts that number to a CBOR
-object.<p>Roughly speaking, a valid JSON number consists of an
-optional minus sign, one or more basic digits (starting with 1 to 9
-unless there is only one digit and that digit is 0), an optional
-decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
-optional letter E or e with an optional plus or minus sign and one
-or more basic digits (the exponent). A sequence of <code>char</code> s
-representing a valid JSON number is not allowed to contain white
-space characters, including spaces.</p></p>
+ JSON specification (RFC 8259) and converts that number to a CBOR
+ object.<p>Roughly speaking, a valid JSON number consists of an
+ optional minus sign, one or more basic digits (starting with 1 to 9
+ unless there is only one digit and that digit is 0), an optional
+  decimal point (&quot;.&quot;, full stop) with one or more basic digits, and an
+ optional letter E or e with an optional plus or minus sign and one
+ or more basic digits (the exponent). A sequence of <code>char</code> s
+ representing a valid JSON number is not allowed to contain white
+ space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -501,15 +524,15 @@ or empty.</li>
 </pre>
 
 <p>Parses a number whose format follows the JSON specification (RFC 8259) from
-a portion of a sequence of <code>char</code> s, and converts that number
-to a CBOR object.<p>Roughly speaking, a valid JSON number consists
-of an optional minus sign, one or more basic digits (starting with 1
-to 9 unless there is only one digit and that digit is 0), an
-optional decimal point (&quot;.&quot;, full stop) with one or more basic
-digits, and an optional letter E or e with an optional plus or minus
-sign and one or more basic digits (the exponent). A sequence of
-<code>char</code> s representing a valid JSON number is not allowed to
-contain white space characters, including spaces.</p></p>
+ a portion of a sequence of <code>char</code> s, and converts that number
+ to a CBOR object.<p>Roughly speaking, a valid JSON number consists
+ of an optional minus sign, one or more basic digits (starting with 1
+ to 9 unless there is only one digit and that digit is 0), an
+  optional decimal point (&quot;.&quot;, full stop) with one or more basic
+ digits, and an optional letter E or e with an optional plus or minus
+ sign and one or more basic digits (the exponent). A sequence of
+ <code>char</code> s representing a valid JSON number is not allowed to
+ contain white space characters, including spaces.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -544,8 +567,8 @@ length minus <code>offset</code> is less than <code>count</code>.</p></li>
 </pre>
 
 <p>Parses a number from a sequence of <code>char</code> s whose format follows the
-JSON specification. The method uses a JSONOptions with all default
-properties except for a PreserveNegativeZero property of false.</p>
+ JSON specification. The method uses a JSONOptions with all default
+ properties except for a PreserveNegativeZero property of false.</p>
 
 <p><strong>Parameters:</strong></p>
 

@@ -158,8 +158,9 @@
 <li><code><a href="#Or_PeterO_Numbers_EInteger_PeterO_Numbers_EInteger">Or(PeterO.Numbers.EInteger, PeterO.Numbers.EInteger)</a></code> - Does an OR operation between two arbitrary-precision integer instances.</li>
 <li><code><a href="#OrNot_PeterO_Numbers_EInteger">OrNot(PeterO.Numbers.EInteger)</a></code> - Does an OR NOT operation (or implication or IMP operation) between this arbitrary-precision integer and another one.</li>
 <li><code><a href="#Pow_int">Pow(int)</a></code> - Raises an arbitrary-precision integer to a power.</li>
+<li><code><a href="#Pow_long">Pow(long)</a></code> - Raises an arbitrary-precision integer to a power.</li>
 <li><code><a href="#Pow_PeterO_Numbers_EInteger">Pow(PeterO.Numbers.EInteger)</a></code> - Raises an arbitrary-precision integer to a power.</li>
-<li><code><a href="#PowBigIntVar_PeterO_Numbers_EInteger">PowBigIntVar(PeterO.Numbers.EInteger)</a></code> - Raises an arbitrary-precision integer to a power, which is given as another arbitrary-precision integer.</li>
+<li><code><a href="#PowBigIntVar_PeterO_Numbers_EInteger">PowBigIntVar(PeterO.Numbers.EInteger)</a></code> - <b>Deprecated:</b> Use Pow instead.</li>
 <li><code><a href="#Remainder_int">Remainder(int)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 32-bit signed integer.</li>
 <li><code><a href="#Remainder_long">Remainder(long)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by a 64-bit signed integer.</li>
 <li><code><a href="#Remainder_PeterO_Numbers_EInteger">Remainder(PeterO.Numbers.EInteger)</a></code> - Returns the remainder that would result when this arbitrary-precision integer is divided by another arbitrary-precision integer.</li>
@@ -1649,8 +1650,6 @@ The parameter  <i>bigintSecond</i>
 is null.</p></li>
 <li><p>System.DivideByZeroException:
 Attempted to divide by zero.</p></li>
-<li><p>System.ArgumentException:
-bigPower is negative; doesn&#39;t satisfy shiftBits&lt;16; doesn&#39;t satisfy sqroot.Sign&gt;= 0.</p></li>
 </ul>
 
 <p><a id="GetBits_int_int"></a></p>
@@ -3547,6 +3546,27 @@ is null.</li>
 <p>The result. Returns 1 if  <i>powerSmall</i>
  is 0.</p>
 
+<p><a id="Pow_long"></a></p>
+
+<h3>Pow</h3>
+
+<pre>public PeterO.Numbers.EInteger Pow(
+    long longPower);
+</pre>
+
+<p>Raises an arbitrary-precision integer to a power.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>longPower</i>: The exponent to raise this integer to.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>The result. Returns 1 if  <i>longPower</i>
+ is 0.</p>
+
 <p><a id="Pow_PeterO_Numbers_EInteger"></a></p>
 
 <h3>Pow</h3>
@@ -3585,6 +3605,8 @@ BigPower is negative.</p></li>
 <pre>public PeterO.Numbers.EInteger PowBigIntVar(
     PeterO.Numbers.EInteger power);
 </pre>
+
+<p><b>Deprecated.</b> Use Pow instead.</p>
 
 <p>Raises an arbitrary-precision integer to a power, which is given as another arbitrary-precision integer.</p>
 

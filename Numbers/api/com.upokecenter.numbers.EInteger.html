@@ -305,11 +305,14 @@ Does an OR NOT operation (or implication or IMP operation) between this
 arbitrary-precision integer and another one.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
+<li><code>EInteger Pow​(long longPower)</code><br>
+Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger Pow​(EInteger bigPower)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger PowBigIntVar​(EInteger power)</code><br>
-Raises an arbitrary-precision integer to a power, which is given as another
-arbitrary-precision integer.</li>
+Deprecated.
+Use Pow instead.
+Use Pow instead.</li>
 <li><code>EInteger Remainder​(int intValue)</code><br>
 Returns the remainder that would result when this arbitrary-precision
 integer is divided by a 32-bit signed integer.</li>
@@ -2391,6 +2394,25 @@ integer times another arbitrary-precision integer.</li>
 
 <h3>Pow</h3>
 
+<pre>public EInteger Pow​(long longPower)
+</pre>
+
+<p>Raises an arbitrary-precision integer to a power.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>longPower</code> - The exponent to raise this integer to.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>The result. Returns 1 if <code>longPower</code> is 0.</li>
+</ul>
+
+<h3>Pow</h3>
+
 <pre>public EInteger Pow​(EInteger bigPower)
 </pre>
 
@@ -2436,11 +2458,11 @@ integer times another arbitrary-precision integer.</li>
 
 <h3>PowBigIntVar</h3>
 
-<pre>public EInteger PowBigIntVar​(EInteger power)
+<pre>@Deprecated public EInteger PowBigIntVar​(EInteger power)
 </pre>
 
-<p>Raises an arbitrary-precision integer to a power, which is given as another
- arbitrary-precision integer.</p>
+<p>Deprecated.
+Use Pow instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2627,8 +2649,8 @@ this integer.</li>
 </pre>
 
 <p>Extracts the lowest bits of this integer. This is equivalent to
- <code>And(2^bitCount - 1)</code>, but is more efficient when this integer is
- non-negative and bitCount&#39;s value is large.</p>
+ <code>And(2^bitCount - 1)</code>, but is more efficient when this integer
+ is non-negative and bitCount&#39;s value is large.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2649,8 +2671,8 @@ integer.</li>
 </pre>
 
 <p>Extracts the lowest bits of this integer. This is equivalent to
- <code>And(2^bigBitCount - 1)</code>, but is more efficient when this integer
- is non-negative and bigBitCount&#39;s value is large.</p>
+ <code>And(2^bigBitCount - 1)</code>, but is more efficient when this
+ integer is non-negative and bigBitCount&#39;s value is large.</p>
 
 <p><strong>Parameters:</strong></p>
 

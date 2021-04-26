@@ -13,7 +13,7 @@
 <h2>Fields</h2>
 
 <ul>
-<li><code>static class JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
+<li><code>static class  JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
 Specifies how JSON numbers are converted to CBOR objects when decoding JSON
 (such as via FromJSONString or ReadJSON).</li>
 <li><code>static JSONOptions Default</code><br>
@@ -23,7 +23,7 @@ The default options for converting CBOR objects to JSON.</li>
 <h2>Nested Classes</h2>
 
 <ul>
-<li><code>static class JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
+<li><code>static class  JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
 Specifies how JSON numbers are converted to CBOR objects when decoding JSON
 (such as via FromJSONString or ReadJSON).</li>
 </ul>
@@ -34,13 +34,14 @@ Specifies how JSON numbers are converted to CBOR objects when decoding JSON
 <li><code>JSONOptions() JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
 class with default options.</li>
-<li><code>JSONOptions​(boolean base64Padding)</code><br>
+<li><code>JSONOptions​(boolean base64Padding)</code><br>
 Deprecated.
 Use the more readable String constructor instead.
 Use the more readable String constructor instead.</li>
-<li><code>JSONOptions​(boolean base64Padding, boolean replaceSurrogates)</code><br>
+<li><code>JSONOptions​(boolean base64Padding,
+       boolean replaceSurrogates)</code><br>
 Deprecated.</li>
-<li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
+<li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
 class.</li>
 </ul>
@@ -108,10 +109,10 @@ described in the string constructor for this class.</li>
 </pre>
 
 <p>Deprecated.
-This property now has no effect. This library now includes necessary
-padding when writing traditional base64 to JSON and includes no
-padding when writing base64url to JSON, in accordance with the
-revision of the CBOR specification.</p>
+This property now has no effect. This library now includes  necessary
+ padding when writing traditional base64 to JSON and includes no
+ padding when writing base64url to JSON, in  accordance with the
+ revision of the CBOR specification.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -125,13 +126,13 @@ revision of the CBOR specification.</p>
 </pre>
 
 <p>Gets a value indicating whether the JSON decoder should preserve the
-distinction between positive zero and negative zero when the decoder
-decodes JSON to a floating-point number format that makes this
-distinction. For a value of <code>false</code>, if the result of parsing a
-JSON string would be a floating-point negative zero, that result is
-a positive zero instead. (Note that this property has no effect for
-conversion kind <code>IntOrFloatFromDouble</code>, where floating-point
-zeros are not possible.).</p>
+ distinction between positive zero and negative zero when the decoder
+ decodes JSON to a floating-point number format that makes this
+ distinction. For a value of <code>false</code>, if the result of parsing a
+ JSON string would be a floating-point negative zero, that result is
+ a positive zero instead. (Note that this property has no effect for
+ conversion kind <code>IntOrFloatFromDouble</code>, where floating-point
+ zeros are not possible.).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -147,8 +148,8 @@ true.</li>
 </pre>
 
 <p>Gets a value indicating how JSON numbers are decoded to CBOR objects. None
-of the conversion modes affects how CBOR objects are later encoded
-(such as via <code>EncodeToBytes</code>).</p>
+ of the conversion modes affects how CBOR objects are later encoded
+ (such as via <code>EncodeToBytes</code>).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -163,9 +164,9 @@ is <code>ConversionMode.Full</code>.</li>
 </pre>
 
 <p>Gets a value indicating whether to allow duplicate keys when reading JSON.
-Used only when decoding JSON. If this property is <code>true</code> and a
-JSON object has two or more values with the same key, the last value
-of that key set forth in the JSON object is taken.</p>
+ Used only when decoding JSON. If this property is <code>true</code> and a
+ JSON object has two or more values with the same key, the last value
+ of that key set forth in the JSON object is taken.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -180,10 +181,10 @@ JSON. The default is false.</li>
 </pre>
 
 <p>Gets a value indicating whether surrogate code points not part of a
-surrogate pair (which consists of two consecutive <code>char</code> s
-forming one Unicode code point) are each replaced with a replacement
-character (U+FFFD). If false, an exception is thrown when such code
-points are encountered.</p>
+ surrogate pair (which consists of two consecutive <code>char</code> s
+ forming one Unicode code point) are each replaced with a replacement
+ character (U+FFFD). If false, an exception is thrown when such code
+ points are encountered.</p>
 
 <p><strong>Returns:</strong></p>
 
