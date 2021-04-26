@@ -1891,6 +1891,10 @@ result of the Remainder method on the two operands.</li>
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
+<li><p><code>java.lang.IllegalArgumentException</code> - doesn&#39;t satisfy eia.signum()&gt;= 0; doesn&#39;t
+satisfy eib.signum()&gt;= 0; bigPower is negative; bigPower is
+negative; doesn&#39;t satisfy shiftBits&lt;16; doesn&#39;t satisfy
+sqroot.signum()&gt;= 0.</p></li>
 </ul>
 
 <h3>GetDigitCountAsEInteger</h3>
@@ -2409,6 +2413,12 @@ integer times another arbitrary-precision integer.</li>
 
 <ul>
 <li>The result. Returns 1 if <code>longPower</code> is 0.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.IllegalArgumentException</code> - bigPower is negative.</li>
 </ul>
 
 <h3>Pow</h3>
