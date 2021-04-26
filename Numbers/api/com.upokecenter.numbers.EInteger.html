@@ -1888,8 +1888,6 @@ result of the Remainder method on the two operands.</li>
 <ul>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigintSecond</code> is null.</p></li>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - bigPower is negative; doesn&#39;t satisfy
-shiftBits&lt;16; doesn&#39;t satisfy sqroot.signum()&gt;= 0.</p></li>
 </ul>
 
 <h3>GetDigitCountAsEInteger</h3>
@@ -2613,14 +2611,14 @@ example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>longBitCount</code> - The parameter <code>longBitCount</code> is a 64-bit signed
-integer.</li>
+<li><code>longBitCount</code> - The number of bits to extract from the lowest part of
+this integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A value equivalent to <code>And(2^longBitCount - 1)</code>.</li>
 </ul>
 
 <h3>LowBits</h3>
@@ -2635,13 +2633,14 @@ integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bitCount</code> - The parameter <code>bitCount</code> is a 32-bit signed integer.</li>
+<li><code>bitCount</code> - The number of bits to extract from the lowest part of this
+integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A value equivalent to <code>And(2^bitCount - 1)</code>.</li>
 </ul>
 
 <h3>LowBits</h3>
@@ -2656,14 +2655,14 @@ integer.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>bigBitCount</code> - The parameter <code>bigBitCount</code> is a Numbers.EInteger
-object.</li>
+<li><code>bigBitCount</code> - The number of bits to extract from the lowest part of
+this integer.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>A value equivalent to <code>And(2^bigBitCount - 1)</code>.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
