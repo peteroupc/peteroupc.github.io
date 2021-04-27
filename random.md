@@ -7,8 +7,8 @@ Most apps that use random numbers care about either unpredictability, high quali
 <a id=Introduction></a>
 ## Introduction
 
-Many applications rely on random number generators (RNGs);
-however, it's not enough for random numbers to merely "look random".  But unfortunately, most popular programming languages today&mdash;
+Many applications rely on random number generators (RNGs) to produce a sequence of numbers that seemingly occur by chance;
+however, it's not enough for this sequence to merely "look random".  But unfortunately, most popular programming languages today&mdash;
 
 - specify few and weak requirements on their built-in RNGs (such as [**C's `rand`**](http://en.cppreference.com/w/cpp/numeric/random/rand)),
 - specify a relatively weak general-purpose RNG (such as Java's `java.math.Random`),
@@ -118,7 +118,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 >
 > -  when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, "salts", and secret values),
 > -  for the purposes of sending or receiving messages or other data securely between computers, or
-> -  whenever predicting future random numbers would give a player or user a significant and unfair advantage (such as in multiplayer networked games).
+> -  whenever predicting future random outcomes would give a player or user a significant and unfair advantage (such as in multiplayer networked games).
 
 <a id=Noncryptographic_PRNGs></a>
 ## Noncryptographic PRNGs
@@ -256,7 +256,7 @@ RFC 4086, "Randomness Requirements for Security", section 3, contains a survey o
 <a id=What_Is_Entropy></a>
 ### What Is Entropy?
 
-_Entropy_ is a value that describes how hard it is to guess a nondeterministic source's output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as an ideal random 32-bit data block.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
+_Entropy_ is a value that describes how hard it is to guess a nondeterministic source's output, compared to an ideal process of generating independent uniform random bits.  Entropy is generally the number of bits produced by that ideal process.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as 32 independent uniform random bits.)  NIST SP 800-90B recommends _min-entropy_ as the entropy measure.  Characterizing a nondeterministic source's entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.
 
 <a id=Seed_Generation></a>
 ### Seed Generation

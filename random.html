@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2021/04/02"><meta name="citation_online_date" content="2021/04/02"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Random Number Generator Recommendations for Applications</title><meta name="citation_title" content="Random Number Generator Recommendations for Applications"><meta name="citation_pdf_url" content="https://peteroupc.github.io/random.pdf"><meta name="citation_url" content="https://peteroupc.github.io/random.html"><meta name="citation_date" content="2021/04/26"><meta name="citation_online_date" content="2021/04/26"><meta name="og:title" content="Random Number Generator Recommendations for Applications"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/random.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Random Number Generator Recommendations for Applications"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Random Number Generator Recommendations for Applications</h1>
@@ -11,8 +11,8 @@
 
 <h2>Introduction</h2>
 
-<p>Many applications rely on random number generators (RNGs);
-however, it&#39;s not enough for random numbers to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
+<p>Many applications rely on random number generators (RNGs) to produce a sequence of numbers that seemingly occur by chance;
+however, it&#39;s not enough for this sequence to merely &quot;look random&quot;.  But unfortunately, most popular programming languages today&mdash;</p>
 
 <ul>
 <li>specify few and weak requirements on their built-in RNGs (such as <a href="http://en.cppreference.com/w/cpp/numeric/random/rand"><strong>C&#39;s <code>rand</code></strong></a>),</li>
@@ -179,7 +179,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 <ul>
 <li> when generating security parameters (including encryption keys, random passwords, nonces, session identifiers, &quot;salts&quot;, and secret values),</li>
 <li> for the purposes of sending or receiving messages or other data securely between computers, or</li>
-<li> whenever predicting future random numbers would give a player or user a significant and unfair advantage (such as in multiplayer networked games).</li>
+<li> whenever predicting future random outcomes would give a player or user a significant and unfair advantage (such as in multiplayer networked games).</li>
 </ul>
 </blockquote>
 
@@ -373,7 +373,7 @@ For cryptographic RNGs, an application should use only one thread-safe instance 
 
 <h3>What Is Entropy?</h3>
 
-<p><em>Entropy</em> is a value that describes how hard it is to guess a nondeterministic source&#39;s output, compared to ideal random data; this is generally the size in bits of the ideal random data.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as an ideal random 32-bit data block.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure.  Characterizing a nondeterministic source&#39;s entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.</p>
+<p><em>Entropy</em> is a value that describes how hard it is to guess a nondeterministic source&#39;s output, compared to an ideal process of generating independent uniform random bits.  Entropy is generally the number of bits produced by that ideal process.  (For example, a 64-bit output with 32 bits of entropy is as hard to guess as 32 independent uniform random bits.)  NIST SP 800-90B recommends <em>min-entropy</em> as the entropy measure.  Characterizing a nondeterministic source&#39;s entropy is nontrivial and beyond the scope of this document.  See also RFC 4086 section 2.</p>
 
 <p><a id=Seed_Generation></a></p>
 
