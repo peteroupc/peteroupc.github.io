@@ -1309,6 +1309,8 @@ This object does not represent a number (for this purpose, infinities and not-a-
 
 <p>Gets the value of this object as a text string.</p>
 
+<p>This method is not the &quot;reverse&quot; of the  <code>FromObject</code>  method in the sense that FromObject can take either a text string or  <code>null</code> , but this method can accept only text strings. The  <code>ToObject</code>  method is closer to a &quot;reverse&quot; version to  <code>FromObject</code>  than the  <code>AsString</code>  method:  <code>ToObject&lt;String&gt;(cbor)</code>  in DotNet, or  <code>ToObject(String.class)</code>  in Java, will convert a CBOR object to a DotNet or Java String if it represents a text string, or to  <code>null</code>  if  <code>IsNull</code>  returns  <code>true</code>  for the CBOR object, and will fail in other cases.</p>
+
 <p><b>Return Value:</b></p>
 
 <p>Gets this object&#39;s string.</p>
