@@ -143,7 +143,7 @@
 <ul>
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em>-moment that the algorithm will estimate to determine the mean.</li>
-<li><em>q</em>: The algorithm assumes the distribution has a <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
+<li><em>q</em>: The degree of the <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
 <li><em>&kappa;</em>: May not be less than the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, and may not be less than 1.</li>
 </ul>
 
@@ -239,13 +239,13 @@ pprint(Max(1,kappa))
 
 <p>There is one request on randomized estimation:</p>
 
-<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions.</p>
+<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known minimum and maximum, but an unknown mean (average).  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions, and <strong>E</strong>[<em>X</em>] is the true mean of the oracle&#39;s numbers.</p>
 
 <p>The algorithm should&mdash;</p>
 
 <ul>
-<li>ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance, or if that is not possible,</li>
-<li>return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus <em>&delta;</em>, where <em>&delta;</em> is user-specified.</li>
+<li>ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance (<em>&epsilon;</em>), or if that is not possible,</li>
+<li>return an estimate that is within a user-specified tolerance (<em>&epsilon;</em>) on the absolute error or relative error with probability greater than 1 minus <em>&delta;</em>, where <em>&delta;</em> is user-specified.</li>
 </ul>
 
 <p>The classes of functions <em>f</em> that are of interest are:</p>

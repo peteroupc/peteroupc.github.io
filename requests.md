@@ -12,6 +12,7 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
 - [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions)
 - [**More Algorithms for Arbitrary-Precision Sampling**](#More_Algorithms_for_Arbitrary_Precision_Sampling)
+- [**Randomized Estimation Algorithms**](#Randomized_Estimation_Algorithms)
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -108,6 +109,36 @@ This page has more algorithms for sampling using partially-sampled random number
 2. The [**appendix**](https://peteroupc.github.io/morealg.html#Appendix) contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?  See also my related Stack Exchange question: [**How can we check if an arbitrary shape covers a box (partially, fully, or not) if we can only evaluate the shape pointwise?**](https://stackoverflow.com/questions/64728693/how-can-we-check-if-an-arbitrary-shape-covers-a-box-partially-fully-or-not-i).
 3. Take a polynomial _f_(_&lambda;_) of even degree _n_ of the form choose(_n_,_n_/2)\*_&lambda;_<sup>_n_/2</sup>\*(1&minus;_&lambda;_)<sup>_n_/2</sup>\*_k_, where _k_ is greater than 1 (thus all _f_'s Bernstein coefficients are 0 except for the middle one, which equals _k_).  Suppose _f_(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the [**appendix**](https://peteroupc.github.io/morealg.html#Appendix), enough times (at least _r_ times), then _f_'s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A [**MathOverflow answer**](https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1) showed that _r_ is at least _m_ = (_n_/_f_(1/2)<sup>2</sup>)/(1&minus;_f_(1/2)<sup>2</sup>), but is it true that floor(_m_)+1 elevations are enough?
 
+<a id=Randomized_Estimation_Algorithms></a>
+## Randomized Estimation Algorithms
+
+[**https://peteroupc.github.io/estimation.html**](https://peteroupc.github.io/estimation.html)
+
+There is one request on randomized estimation:
+
+Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known minimum and maximum, but an unknown mean (average).  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions, and **E**[_X_] is the true mean of the oracle's numbers.
+
+The algorithm should&mdash;
+
+- ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance (_&epsilon;_), or if that is not possible,
+- return an estimate that is within a user-specified tolerance (_&epsilon;_) on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is user-specified.
+
+The classes of functions _f_ that are of interest are:
+
+- C1: Continuous functions that map [0, 1] to [0, 1] and are polynomially bounded (meaning that _f_(_x_) and 1&minus;_f_(_x_) are both bounded from below by min(_x_<sup>_n_</sup>, (1&minus;_x_)<sup>_n_</sup>) for some integer _n_) (Keane and O'Brien 1994)<sup>[**(1)**](#Note1)</sup>.
+- C2: Continuous functions that map [0, 1] to [0, 1] and are not necessarily polynomially bounded.
+- C3: Piecewise continuous functions that map [0, 1] to [0, 1].
+
+Note the following:
+
+- The value the algorithm should approximate is _f_(**E**[_X_]), not **E**[_f_(_X_)], which is different in general.  But algorithms for **E**[_f_(_X_)] are welcome in case it's more difficult.
+- The Gamma Bernoulli Approximation scheme (Huber 2017)<sup>[**(6)**](#Note6)</sup> as well as the Kunsch algorithm (Kunsch et al. 2019)<sup>[**(7)**](#Note7)</sup> both estimate the mean of _X_ (**E**[_X_]), rather than a function of that mean (_f_(**E**[_X_])), as this request asks.
+- Some algorithms produce unbiased estimates of _f_(**E**[_X_]), but not with a user-specified error, as this request asks (Jacob and Thiery 2015)<sup>[**(8)**](#Note8)</sup>.
+- Algorithms like the one being asked for here are especially useful because they can help build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.   In this case, _X_ should follow the Bernoulli distribution.
+- It is suspected that the algorithm's performance will depend on the "smoothness" of _f_(_X_) (see also (Holtz et al. 2011)<sup>[**(9)**](#Note9)</sup>).
+
+Also, are there results that estimate _f_(**E**[_X_]) with a user-specified error bound even if _X_ follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?
+
 <a id=Color_Topics_for_Programmers></a>
 ## Color Topics for Programmers
 
@@ -131,6 +162,10 @@ Does any of the following exist?
 - <small><sup id=Note3>(3)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 - <small><sup id=Note4>(4)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
 - <small><sup id=Note5>(5)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy." Journal of Mathematical Psychology 95 (2020): 102308.</small>
+- <small><sup id=Note6>(6)</sup> Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures & Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</small>
+- <small><sup id=Note7>(7)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
+- <small><sup id=Note8>(8)</sup> Pierre E. Jacob.  Alexandre H. Thiery. "On nonnegative unbiased estimators." Ann. Statist. 43 (2) 769 - 784, April 2015.</small>
+- <small><sup id=Note9>(9)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", Constructive Approximation 33 (2011).</small>
 
 <a id=License></a>
 ## License

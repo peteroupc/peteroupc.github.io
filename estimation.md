@@ -106,7 +106,7 @@ The algorithm has the following parameters:
 
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be 1 or less.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_-moment that the algorithm will estimate to determine the mean.
-- _q_: The algorithm assumes the distribution has a _q_-moment.  _q_ must be greater than _p_.
+- _q_: The degree of the _q_-moment.  _q_ must be greater than _p_.
 - _&kappa;_: May not be less than the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root, and may not be less than 1.
 
 For example:
@@ -175,12 +175,12 @@ pprint(Max(1,kappa))
 
 There is one request on randomized estimation:
 
-Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions.
+Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known minimum and maximum, but an unknown mean (average).  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions, and **E**[_X_] is the true mean of the oracle's numbers.
 
 The algorithm should&mdash;
 
-- ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance, or if that is not possible,
-- return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is user-specified.
+- ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance (_&epsilon;_), or if that is not possible,
+- return an estimate that is within a user-specified tolerance (_&epsilon;_) on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is user-specified.
 
 The classes of functions _f_ that are of interest are:
 
