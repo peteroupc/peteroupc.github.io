@@ -340,7 +340,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = 487/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 154309/(700000\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 462927/(2800000\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
@@ -369,7 +369,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 1319/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 9/(14\*n).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 1299/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 135/(224\*n).
         * **fbound**(_n_) = [0, 1].
@@ -378,7 +378,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 861/2500 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3/(32\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
@@ -389,14 +389,6 @@ The following are approximation schemes and hints to simulate a coin of probabil
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 26278337571/(25600000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-* Let _f_(_&lambda;_) = **sqrt(_&lambda;_)**.  Then simulate _f_ by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: "Flip the input coin and return 1 minus the result."<br>
-    Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_))/_&lambda;_ otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 147735488601/(80000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 147735488601/(5120000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
 * Let _f_(_&lambda;_) = **3\*sin(sqrt(3)\*sqrt(sin(2\*_&lambda;_)))/4 + 1/50**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 709907859/(100000000\*n<sup>1/4</sup>).
@@ -411,19 +403,12 @@ The following are approximation schemes and hints to simulate a coin of probabil
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 26278337571/(25600000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-* Let _f_(_&lambda;_) = **3/4 &minus; sqrt(25 &minus; 4\*(5\*_&lambda;_ + 2)<sup>2</sup>)/10 if _&lambda;_ &le; 1/10; 3/4 &minus; sqrt(25 &minus; 4\*(5\*_&lambda;_ &minus; 3)<sup>2</sup>)/10 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 44827752327/(25600000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 * Let _f_(_&lambda;_) = **sin(&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
     * The function was detected to be concave and twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 4191/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 246741/(700000\*n).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 8313/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 14557719/(44800000\*n).
         * **fbound**(_n_) = [0, 1].
@@ -441,7 +426,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = 857/2000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 2/(7\*n).
         * **fabove**(_n_, _k_) = _g_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 4709/10000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 13/(112\*n).
         * **fabove**(_n_, _k_) = _g_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
@@ -458,7 +443,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = 809/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 246741/(700000\*n).
         * **fabove**(_n_, _k_) = 4191/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 246741/(700000\*n).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 409/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 8142453/(44800000\*n).
         * **fabove**(_n_, _k_) = 1591/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 8142453/(44800000\*n).
         * **fbound**(_n_) = [0, 1].
@@ -468,8 +453,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fabove**(_n_, _k_) = 1229/1250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 11346621/(700000\*n).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 111/2500 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 374438493/(44800000\*n).
-        * **fabove**(_n_, _k_) = 9911/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 374438493/(44800000\*n).
+        * **fbelow**(_n_, _k_) = 681/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 34039863/(4480000\*n).
+        * **fabove**(_n_, _k_) = 4837/5000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 34039863/(4480000\*n).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:
@@ -477,8 +462,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(350000\*n).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 219/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 100669971/(22400000\*n).
-        * **fabove**(_n_, _k_) = 1781/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 100669971/(22400000\*n).
+        * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(448000\*n).
+        * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(448000\*n).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(6\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for all _n_ that are powers of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:
@@ -486,15 +471,15 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fabove**(_n_, _k_) = 9483/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 2220661/(175000\*n).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 23/250 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 113253711/(11200000\*n).
-        * **fabove**(_n_, _k_) = 227/250 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 113253711/(11200000\*n).
+        * **fbelow**(_n_, _k_) = 1043/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 104371067/(11200000\*n).
+        * **fabove**(_n_, _k_) = 8957/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 104371067/(11200000\*n).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(2\*_&lambda;_)/2**. Then, for all _n_ that are powers of 2, starting from 1:
     * The function was detected to be concave and twice differentiable, leading to:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 2851/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*n).
         * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+    * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 5613/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 1/(4\*n).
         * **fbound**(_n_) = [0, 1].
@@ -504,8 +489,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fabove**(_n_, _k_) = 9263/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(350000\*n).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 219/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 100669971/(22400000\*n).
-        * **fabove**(_n_, _k_) = 1781/2000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 100669971/(22400000\*n).
+        * **fbelow**(_n_, _k_) = 1123/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) &minus; 1973921/(448000\*n).
+        * **fabove**(_n_, _k_) = 8877/10000 if _n_&lt;32; otherwise, _f_(_k_/_n_) + 1973921/(448000\*n).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/2 + 1/10 if _&lambda;_ &le; 1/2; _&lambda;_/2 &minus; 1/40 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -513,18 +498,25 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 687/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(8\*n).
+        * **fbelow**(_n_, _k_) = 693/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 55/(448\*n).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **_&lambda;_/2 if _&lambda;_ &le; 0.500000000000000; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
+* Let _f_(_&lambda;_) = **_&lambda;_/2 if _&lambda;_ &le; 1/2; (4\*_&lambda;_ &minus; 1)/(8\*_&lambda;_) otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be concave and twice differentiable using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 893/2000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*n).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 423/1000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 43/(224\*n).
+        * **fabove**(_n_, _k_) = 4197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 5/(28\*n).
         * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/2 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/2 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
+    * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 1545784563/(400000000\*n<sup>1/4</sup>).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 1545784563/(400000000\*n<sup>1/4</sup>).
+    * Generated using tighter bounds than necessarily proven:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 10820491941/(12800000000\*n<sup>1/4</sup>).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_) + 10820491941/(12800000000\*n<sup>1/4</sup>).
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/4 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/4 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 772969563/(400000000\*n<sup>1/4</sup>).
@@ -533,16 +525,13 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = 193/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) &minus; 5410786941/(12800000000\*n<sup>1/4</sup>).
         * **fabove**(_n_, _k_) = 4807/5000 if _n_&lt;16; otherwise, _f_(_k_/_n_) + 5410786941/(12800000000\*n<sup>1/4</sup>).
         * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **_&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ < 0; _&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 0.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return the result.<br>
-    Let _g_(_&lambda;_) = 1/4 if _&lambda;_ = 0; (6\*_&lambda;_ + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) if _&lambda;_ < 0; (6\*_&lambda;_ + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) if _&lambda;_ &ge; 1/2; (6\*_&lambda;_ + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup> &minus; 1)/(12\*_&lambda;_) otherwise. Then, for all _n_ that are powers of 2, starting from 1:
-    * Detected to be Lipschitz continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 627/10000 if _n_&lt;8; otherwise, _g_(_k_/_n_) &minus; 3310977219/(6250000000\*sqrt(n)).
-        * **fabove**(_n_, _k_) = 6873/10000 if _n_&lt;8; otherwise, _g_(_k_/_n_) + 3310977219/(6250000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+* Let _f_(_&lambda;_) = **_&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ < 0; _&lambda;_/2 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if _&lambda;_ &ge; 1/2; _&lambda;_/2 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/12 &minus; 1/12 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
+    * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 322613/(500000\*sqrt(n)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 1043/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) &minus; 3310977219/(40000000000\*sqrt(n)).
-        * **fabove**(_n_, _k_) = 2707/5000 if _n_&lt;4; otherwise, _g_(_k_/_n_) + 3310977219/(40000000000\*sqrt(n)).
-        * **fbound**(_n_) = [0, 1].
+        * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 3548743/(32000000\*sqrt(n)).
+        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
 * Let _f_(_&lambda;_) = **1/2 &minus; sqrt(1 &minus; 2\*_&lambda;_)/4 if _&lambda;_ < 1/2; sqrt(2\*_&lambda;_ &minus; 1)/4 + 1/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; 772969563/(400000000\*n<sup>1/4</sup>).
@@ -562,20 +551,11 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **_&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ < 0; _&lambda;_/4 + (2\*_&lambda;_ &minus; 1)<sup>3/2</sup>/24 + 5/24 if _&lambda;_ &ge; 1/2; _&lambda;_/4 + (1 &minus; 2\*_&lambda;_)<sup>3/2</sup>/24 + 5/24 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
     * Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 1/125 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 967839/(2000000\*sqrt(n)).
+        * **fbelow**(_n_, _k_) = 443/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 322613/(1000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
     * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 2197/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 967839/(16000000\*sqrt(n)).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **_&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 &minus; (1 &minus; 2\*_&lambda;_)<sup>5/2</sup>/120 + 31/120 if _&lambda;_ < 0; _&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 + (2\*_&lambda;_ &minus; 1)<sup>5/2</sup>/120 + 31/120 if _&lambda;_ &ge; 1/2; _&lambda;_<sup>2</sup>/8 &minus; _&lambda;_/24 &minus; (1 &minus; 2\*_&lambda;_)<sup>5/2</sup>/120 + 31/120 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:
-    * Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = 1183/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3/(56\*n).
-        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
-        * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = 2397/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 21/(512\*n).
+        * **fbelow**(_n_, _k_) = 1111/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 3548743/(64000000\*sqrt(n)).
         * **fabove**(_n_, _k_) = _f_(_k_/_n_).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **3\*_&lambda;_/2 if _&lambda;_ &le; 1 &minus; _&lambda;_; 3/2 &minus; 3\*_&lambda;_/2 otherwise**. Then, for all _n_ that are powers of 2, starting from 1:

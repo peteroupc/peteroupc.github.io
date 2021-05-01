@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/04/24"><meta name="citation_online_date" content="2021/04/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/04/30"><meta name="citation_online_date" content="2021/04/30"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -507,7 +507,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&la
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 462927/(2800000*n).</li>
@@ -563,7 +563,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1319/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 9/(14*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
@@ -581,7 +581,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 861/2500 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3/(32*n).</li>
@@ -603,23 +603,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 26278337571/(25600000000*n<sup>1/4</sup>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(<em>&lambda;</em>)</strong>.  Then simulate <em>f</em> by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 147735488601/(80000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 147735488601/(5120000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
@@ -654,22 +637,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(25 &minus; 4*(5*<em>&lambda;</em> + 2)<sup>2</sup>)/10 if <em>&lambda;</em> &le; 1/10; 3/4 &minus; sqrt(25 &minus; 4*(5*<em>&lambda;</em> &minus; 3)<sup>2</sup>)/10 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1545784563/(400000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 44827752327/(25600000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
@@ -680,7 +647,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4191/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 246741/(700000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
@@ -716,7 +683,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for a
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 4709/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 13/(112*n).</li>
@@ -751,7 +718,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4191/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 246741/(700000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 409/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 8142453/(44800000*n).</li>
@@ -772,8 +739,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 111/2500 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 374438493/(44800000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 9911/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 374438493/(44800000*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 681/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 34039863/(4480000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4837/5000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 34039863/(4480000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
@@ -790,8 +757,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 219/2000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 100669971/(22400000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1781/2000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 100669971/(22400000*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1123/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1973921/(448000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8877/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 1973921/(448000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
@@ -808,8 +775,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 23/250 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 113253711/(11200000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 227/250 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 113253711/(11200000*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 104371067/(11200000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8957/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 104371067/(11200000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
@@ -823,7 +790,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 2851/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
-<li>Generated using tighter bounds than necessarily proven, but highly likely to be correct:
+<li>Generated using tighter bounds than necessarily proven:
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
@@ -844,8 +811,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 219/2000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 100669971/(22400000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1781/2000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 100669971/(22400000*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1123/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1973921/(448000*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8877/10000 if <em>n</em>&lt;32; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 1973921/(448000*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
@@ -862,12 +829,12 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 687/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(8*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 693/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 55/(448*n).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 0.500000000000000; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and twice differentiable using numerical methods, which may be inaccurate:
@@ -881,8 +848,24 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 423/1000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 43/(224*n).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4197/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 5/(28*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul></li>
+</ul></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/2 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/2 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+
+<ul>
+<li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1545784563/(400000000*n<sup>1/4</sup>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 1545784563/(400000000*n<sup>1/4</sup>).</li>
+</ul></li>
+<li>Generated using tighter bounds than necessarily proven:
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 10820491941/(12800000000*n<sup>1/4</sup>).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 10820491941/(12800000000*n<sup>1/4</sup>).</li>
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
@@ -902,23 +885,20 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &lt; 0; (6*<em>&lambda;</em> + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) if <em>&lambda;</em> &ge; 1/2; (6*<em>&lambda;</em> + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup> &minus; 1)/(12*<em>&lambda;</em>) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
 
 <ul>
-<li>Detected to be Lipschitz continuous using numerical methods, which may be inaccurate:
+<li>Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 627/10000 if <em>n</em>&lt;8; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 3310977219/(6250000000*sqrt(n)).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 6873/10000 if <em>n</em>&lt;8; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) + 3310977219/(6250000000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 322613/(500000*sqrt(n)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/5000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 3310977219/(40000000000*sqrt(n)).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 2707/5000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) + 3310977219/(40000000000*sqrt(n)).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3548743/(32000000*sqrt(n)).</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
@@ -962,32 +942,14 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; (6*<em>&lambda
 <li>Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1/125 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 967839/(2000000*sqrt(n)).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 443/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 322613/(1000000*sqrt(n)).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 <li>Generated using tighter bounds than necessarily proven:
 
 <ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 2197/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 967839/(16000000*sqrt(n)).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 &minus; (1 &minus; 2*<em>&lambda;</em>)<sup>5/2</sup>/120 + 31/120 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 + (2*<em>&lambda;</em> &minus; 1)<sup>5/2</sup>/120 + 31/120 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em><sup>2</sup>/8 &minus; <em>&lambda;</em>/24 &minus; (1 &minus; 2*<em>&lambda;</em>)<sup>5/2</sup>/120 + 31/120 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1183/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3/(56*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 2397/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 21/(512*n).</li>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1111/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 3548743/(64000000*sqrt(n)).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>

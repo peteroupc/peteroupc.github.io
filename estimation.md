@@ -30,7 +30,7 @@ For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &min
 
 The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  The algorithm assumes the stream of numbers can't take on the value 0 with probability 1.
 
-The algorithm has the following parameters:
+The algorithm, also known as _Gamma Bernoulli Approximation Scheme_, has the following parameters:
 
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 3/4 or less, and _&delta;_ must be 1 or less.  With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.
 
@@ -170,6 +170,35 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
 
+<a id=Requests_and_Open_Questions></a>
+## Requests and Open Questions
+
+Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function of a single variable.
+
+The algorithm should&mdash;
+
+- ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance, or if that is not possible,
+- return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is a user-specified tolerance.
+
+The classes of functions _f_ that are of interest are:
+
+- C1: Continuous functions that map [0, 1] to [0, 1] and are polynomially bounded (meaning that _f_(_x_) and 1&minus;_f_(_x_) are both bounded from below by min(_x_<sup>_n_</sup>, (1&minus;_x_)<sup>_n_</sup>) for some integer _n_) (Keane and O'Brien 1994)<sup>[**(6)**](#Note6)</sup>.
+- C2: Continuous functions that map [0, 1] to [0, 1] and are not necessarily polynomially bounded.
+- C3: Piecewise continuous functions that map [0, 1] to [0, 1].
+
+Note the following:
+
+- The value the algorithm should approximate is _f_(**E**[_X_]), not **E**[_f_(_X_)], which is different in general.  But algorithms for **E**[_f_(_X_)] are welcome in case it's more difficult.
+- The Gamma Bernoulli Approximation scheme as well as the Kunsch algorithm both estimate the mean of _X_ (**E**[_X_]), rather than a function of that mean (_f_(**E**[_X_])), as this request asks.
+- Some algorithms produce unbiased estimates of _f_(**E**[_X_]), but not with a user-specified error, as this request asks (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>.
+- Algorithms like the one being asked for here are especially useful because they can help build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.   In this case, _X_ should follow the Bernoulli distribution.
+- It is suspected that the algorithm's performance will depend on the "smoothness" of _f_(_X_) (see also (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>).
+
+Also, are there results that estimate _f_(**E**[_X_]) with a user-specified error bound even if&mdash;
+
+- _X_ (the numbers produced by the oracle) follows a continuous or discrete, but bounded, distribution, or a subset of such distributions, and/or
+- _X_ follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?
+
 <a id=Notes></a>
 ## Notes
 
@@ -178,6 +207,9 @@ pprint(Max(1,kappa))
 - <small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.</small>
 - <small><sup id=Note4>(4)</sup> Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
+- <small><sup id=Note6>(6)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
+- <small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. "On nonnegative unbiased estimators." Ann. Statist. 43 (2) 769 - 784, April 2015. [https://doi.org/10.1214/15-AOS1311</small>](https://doi.org/10.1214/15-AOS1311</small>)
+- <small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", Constructive Approximation 33 (2011).</small>
 
 <a id=License></a>
 ## License
