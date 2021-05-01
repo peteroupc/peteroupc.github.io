@@ -173,12 +173,14 @@ pprint(Max(1,kappa))
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function of a single variable.
+There is one request on randomized estimation:
+
+Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions.
 
 The algorithm should&mdash;
 
 - ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance, or if that is not possible,
-- return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is a user-specified tolerance.
+- return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus _&delta;_, where _&delta;_ is user-specified.
 
 The classes of functions _f_ that are of interest are:
 
@@ -194,10 +196,7 @@ Note the following:
 - Algorithms like the one being asked for here are especially useful because they can help build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.   In this case, _X_ should follow the Bernoulli distribution.
 - It is suspected that the algorithm's performance will depend on the "smoothness" of _f_(_X_) (see also (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>).
 
-Also, are there results that estimate _f_(**E**[_X_]) with a user-specified error bound even if&mdash;
-
-- _X_ (the numbers produced by the oracle) follows a continuous or discrete, but bounded, distribution, or a subset of such distributions, and/or
-- _X_ follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?
+Also, are there results that estimate _f_(**E**[_X_]) with a user-specified error bound even if _X_ follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?
 
 <a id=Notes></a>
 ## Notes
@@ -208,7 +207,7 @@ Also, are there results that estimate _f_(**E**[_X_]) with a user-specified erro
 - <small><sup id=Note4>(4)</sup> Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
 - <small><sup id=Note6>(6)</sup> Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small>
-- <small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. "On nonnegative unbiased estimators." Ann. Statist. 43 (2) 769 - 784, April 2015. [https://doi.org/10.1214/15-AOS1311</small>](https://doi.org/10.1214/15-AOS1311</small>)
+- <small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. "On nonnegative unbiased estimators." Ann. Statist. 43 (2) 769 - 784, April 2015. [**https://doi.org/10.1214/15-AOS1311**](https://doi.org/10.1214/15-AOS1311)</small>
 - <small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", Constructive Approximation 33 (2011).</small>
 
 <a id=License></a>

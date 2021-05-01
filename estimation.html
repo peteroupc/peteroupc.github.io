@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/04/30"><meta name="citation_online_date" content="2021/04/30"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/01"><meta name="citation_online_date" content="2021/05/01"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -237,13 +237,15 @@ pprint(Max(1,kappa))
 
 <h2>Requests and Open Questions</h2>
 
-<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function of a single variable.</p>
+<p>There is one request on randomized estimation:</p>
+
+<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known lower and upper bound, but an unknown mean.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions.</p>
 
 <p>The algorithm should&mdash;</p>
 
 <ul>
 <li>ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance, or if that is not possible,</li>
-<li>return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus <em>&delta;</em>, where <em>&delta;</em> is a user-specified tolerance.</li>
+<li>return an estimate that is within a user-specified tolerance on the absolute error or relative error with probability greater than 1 minus <em>&delta;</em>, where <em>&delta;</em> is user-specified.</li>
 </ul>
 
 <p>The classes of functions <em>f</em> that are of interest are:</p>
@@ -264,12 +266,7 @@ pprint(Max(1,kappa))
 <li>It is suspected that the algorithm&#39;s performance will depend on the &quot;smoothness&quot; of <em>f</em>(<em>X</em>) (see also (Holtz et al. 2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>).</li>
 </ul>
 
-<p>Also, are there results that estimate <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound even if&mdash;</p>
-
-<ul>
-<li><em>X</em> (the numbers produced by the oracle) follows a continuous or discrete, but bounded, distribution, or a subset of such distributions, and/or</li>
-<li><em>X</em> follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?</li>
-</ul>
+<p>Also, are there results that estimate <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound even if <em>X</em> follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?</p>
 
 <p><a id=Notes></a></p>
 
@@ -282,7 +279,7 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note4>(4)</sup> Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>&epsilon;</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>&quot;, arXiv:1706.01478, 2017.</small></li>
 <li><small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. &quot;Solvable integration problems and optimal sample size selection.&quot; Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> .</small></li>
 <li><small><sup id=Note6>(6)</sup> Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small></li>
-<li><small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. &quot;On nonnegative unbiased estimators.&quot; Ann. Statist. 43 (2) 769 - 784, April 2015. <a href="https://doi.org/10.1214/15-AOS1311">https://doi.org/10.1214/15-AOS1311</a></small></li>
+<li><small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. &quot;On nonnegative unbiased estimators.&quot; Ann. Statist. 43 (2) 769 - 784, April 2015. <a href="https://doi.org/10.1214/15-AOS1311"><strong>https://doi.org/10.1214/15-AOS1311</strong></a></small></li>
 <li><small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, Constructive Approximation 33 (2011).</small></li>
 </ul>
 
