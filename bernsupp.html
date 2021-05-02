@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/04/30"><meta name="citation_online_date" content="2021/04/30"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/05/02"><meta name="citation_online_date" content="2021/05/02"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -1285,6 +1285,21 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein approximations of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
+
+<p>In addition to the results above, I believe I&#39;ve found the following result involving concave Lipschitz continuous functions.</p>
+
+<p><em>Consider S, an open subset of (0, 1). Let f(x) be a function that maps S to (0, 1), is concave, and is Lipschitz continuous with Lipschitz constant 1.  Then there is a simulation algorithm for f on S such that the number of required inputs is finite on average.</em></p>
+
+<p>Here is a sketch of the proof.</p>
+
+<p>Referring to Mendo&#39;s (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> paper on asymptotically optimal Bernoulli factories, the equation (40) can be written as:</p>
+
+<pre>E[N] = \sum{n=1}^\infty  (1 - \sum_{i=1}^{n-1}  (h_{i-1}(p) - g_{i-1}(p)) - (h_n(p) - g_n(p)))
+</pre>
+
+<p>(see Holtz et al. 2011), where <code>g_i</code> is the lower polynomial of degree i and <code>h_i</code> is the upper polynomial of degree i.  Because <em>f</em> is concave, <code>g_i</code> can have Bernstein coefficients of <em>f</em>(<em>k</em>/<em>n</em>).  Meanwhile, <code>h_i = f(k/n) + 1/((sqrt(2)-1)*sqrt(n))</code>, but equals 1 instead whenever any Bernstein coefficient of <code>h_i</code> would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to <code>1/((sqrt(2)-1)*sqrt(n))</code> (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and these constant terms converge, resulting in a finite and continuous <strong>E</strong>[<em>N</em>].</p>
+
+<p>With this result, it is suspected that the bound in Equation (10) of Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> applies to any such function described in the result that is also differentiable on the set <em>S</em>.</p>
 
 <p><a id=Example_of_Approximation_Scheme></a></p>
 
