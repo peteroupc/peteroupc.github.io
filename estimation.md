@@ -175,7 +175,7 @@ pprint(Max(1,kappa))
 
 There is one request on randomized estimation:
 
-Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known minimum and maximum, but an unknown mean (average).  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions, and **E**[_X_] is the true mean of the oracle's numbers.
+Assume we have an _oracle_, or "black box", that produces independent random numbers _X_ with a known minimum and maximum, but an unknown mean (average).  Assume further that the oracle's numbers are not all the same with probability 1. Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates _f_(**E**[_X_]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, _f_ is a known function belonging to a given class of functions, and **E**[_X_] is the true mean of the oracle's numbers.
 
 The algorithm should&mdash;
 
@@ -191,8 +191,9 @@ The classes of functions _f_ that are of interest are:
 Note the following:
 
 - The value the algorithm should approximate is _f_(**E**[_X_]), not **E**[_f_(_X_)], which is different in general.  But algorithms for **E**[_f_(_X_)] are welcome in case it's more difficult.
-- The Gamma Bernoulli Approximation scheme as well as the Kunsch algorithm both estimate the mean of _X_ (**E**[_X_]), rather than a function of that mean (_f_(**E**[_X_])), as this request asks.
-- Some algorithms produce unbiased estimates of _f_(**E**[_X_]), but not with a user-specified error, as this request asks (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>.
+- The following algorithms are different from the algorithms asked for here:
+    - The Gamma Bernoulli Approximation scheme as well as the Kunsch algorithm both estimate the mean of _X_ (**E**[_X_]), rather than a function of that mean (_f_(**E**[_X_])).
+    - Some algorithms produce unbiased estimates of _f_(**E**[_X_]), but not with a user-specified error (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>.
 - Algorithms like the one being asked for here are especially useful because they can help build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.   In this case, _X_ should follow the Bernoulli distribution.
 - It is suspected that the algorithm's performance will depend on the "smoothness" of _f_(_X_) (see also (Holtz et al. 2011)<sup>[**(8)**](#Note8)</sup>).
 

@@ -153,7 +153,7 @@
 
 <p>There is one request on randomized estimation:</p>
 
-<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known minimum and maximum, but an unknown mean (average).  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions, and <strong>E</strong>[<em>X</em>] is the true mean of the oracle&#39;s numbers.</p>
+<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known minimum and maximum, but an unknown mean (average).  Assume further that the oracle&#39;s numbers are not all the same with probability 1.  Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions, and <strong>E</strong>[<em>X</em>] is the true mean of the oracle&#39;s numbers.</p>
 
 <p>The algorithm should&mdash;</p>
 
@@ -174,13 +174,17 @@
 
 <ul>
 <li>The value the algorithm should approximate is <em>f</em>(<strong>E</strong>[<em>X</em>]), not <strong>E</strong>[<em>f</em>(<em>X</em>)], which is different in general.  But algorithms for <strong>E</strong>[<em>f</em>(<em>X</em>)] are welcome in case it&#39;s more difficult.</li>
-<li>The Gamma Bernoulli Approximation scheme (Huber 2017)<sup><a href="#Note6"><strong>(6)</strong></a></sup> as well as the Kunsch algorithm (Kunsch et al. 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup> both estimate the mean of <em>X</em> (<strong>E</strong>[<em>X</em>]), rather than a function of that mean (<em>f</em>(<strong>E</strong>[<em>X</em>])), as this request asks.</li>
-<li>Some algorithms produce unbiased estimates of <em>f</em>(<strong>E</strong>[<em>X</em>]), but not with a user-specified error, as this request asks (Jacob and Thiery 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
-<li>Algorithms like the one being asked for here are especially useful because they can help build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.   In this case, <em>X</em> should follow the Bernoulli distribution.</li>
+<li>The following algorithms are different from the algorithms asked for here:
+
+<ul>
+<li>The Gamma Bernoulli Approximation scheme (Huber 2017)<sup><a href="#Note6"><strong>(6)</strong></a></sup> as well as the Kunsch algorithm (Kunsch et al. 2019)<sup><a href="#Note7"><strong>(7)</strong></a></sup> both estimate the mean of <em>X</em> (<strong>E</strong>[<em>X</em>]), rather than a function of that mean (<em>f</em>(<strong>E</strong>[<em>X</em>])).</li>
+<li>Some algorithms produce unbiased estimates of <em>f</em>(<strong>E</strong>[<em>X</em>]), but not with a user-specified error (Jacob and Thiery 2015)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</li>
+</ul></li>
+<li>Algorithms like those being asked for here are especially useful because they can help build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.   In this case, <em>X</em> should follow the Bernoulli distribution.</li>
 <li>It is suspected that the algorithm&#39;s performance will depend on the &quot;smoothness&quot; of <em>f</em>(<em>X</em>) (see also (Holtz et al. 2011)<sup><a href="#Note9"><strong>(9)</strong></a></sup>).</li>
 </ul>
 
-<p>Also, are there results that estimate <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound even if <em>X</em> follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?</p>
+<p>Also, are there results that estimate <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound even if <em>X</em> follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with finite variance and/or exponential tails)?</p>
 
 <p><a id=Color_Topics_for_Programmers></a></p>
 
