@@ -152,7 +152,7 @@ Specifically:
 
 | If the underlying source produces: | Then `NEXTRAND()` is: | And `MODULUS` is: |
  --------- | ------ | ------ |
-| Non-uniform numbers<sup>[**(3)**](#Note3)</sup>. | The next number from a new source formed by writing the underlying source's outputs to a stream of memory units (such as 8-bit bytes) and using a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to transform that stream to _n_-bit non-negative integers. | 2<sup>_n_</sup>. |
+| Non-uniform numbers<sup>[**(3)**](#Note3)</sup>. | The next bit from a new source formed by taking the underlying source's outputs as input to a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) technique to produce independent unbiased random bits (zeros or ones). | 2. |
 | Uniform numbers not described below. | Same as above. | 2<sup>_n_</sup>. | 2<sup>_n_</sup>. |
 | Uniform 32-bit non-negative integers. | The next number from the source. | 2<sup>32</sup>. |
 | Uniform 64-bit non-negative integers. | The next number from the source. | 2<sup>64</sup>. |
