@@ -802,7 +802,10 @@ Here is a sketch of a proof.
 
 The expression **E**[_N_] above is used again here.  Without loss of generality, take _n_ as all positive integers that are powers of 2. Here, `g_n`'s Bernstein coefficients are `f(k/n) - M/((sqrt(2)-1)*sqrt(n))` where `M` is a Lipschitz constant of _f_, but `g_n` equals 0 instead whenever any of those coefficients would otherwise be less than 0; and `h_n`'s Bernstein coefficients are `f(k/n) + M/((sqrt(2)-1)*sqrt(n))`, but `h_n` equals 1 instead whenever any of those coefficients would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant; specifically, they become constant as soon as the Bernstein coefficients of both polynomials become bounded by 0 and 1 for a given `n` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
 
-If these two results turn out to hold true, it is suspected that the lower bound in Equation (10) of Mendo (2019)<sup>[**(11)**](#Note11)</sup> applies to any function described in either of the results above that is also differentiable on the set _S_.
+If these two results turn out to hold true, it is suspected that:
+
+- The lower bound in Equation (10) of Mendo (2019)<sup>[**(11)**](#Note11)</sup> applies to any function described in either of the results above that is also differentiable on the set _S_.
+- Combined with proposition 23 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>, the following result holds true: "Let _I_ be a closed interval in (0, 1).  A function _f_(&lambda;) that maps _I_ to another closed interval in (0, 1) can be sampled using, on average, a finite number of flips of a coin with probability of heads &lambda; if and only if _f_ is Lipschitz continuous on _I_."
 
 <a id=Example_of_Approximation_Scheme></a>
 ### Example of Approximation Scheme

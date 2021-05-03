@@ -1304,7 +1304,12 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>The expression <strong>E</strong>[<em>N</em>] above is used again here.  Without loss of generality, take <em>n</em> as all positive integers that are powers of 2. Here, <code>g_n</code>&#39;s Bernstein coefficients are <code>f(k/n) - M/((sqrt(2)-1)*sqrt(n))</code> where <code>M</code> is a Lipschitz constant of <em>f</em>, but <code>g_n</code> equals 0 instead whenever any of those coefficients would otherwise be less than 0; and <code>h_n</code>&#39;s Bernstein coefficients are <code>f(k/n) + M/((sqrt(2)-1)*sqrt(n))</code>, but <code>h_n</code> equals 1 instead whenever any of those coefficients would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant; specifically, they become constant as soon as the Bernstein coefficients of both polynomials become bounded by 0 and 1 for a given <code>n</code> (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous <strong>E</strong>[<em>N</em>].</p>
 
-<p>If these two results turn out to hold true, it is suspected that the bound in Equation (10) of Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> applies to any function described in either of the results above that is also differentiable on the set <em>S</em>.</p>
+<p>If these two results turn out to hold true, it is suspected that:</p>
+
+<ul>
+<li>The lower bound in Equation (10) of Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> applies to any function described in either of the results above that is also differentiable on the set <em>S</em>.</li>
+<li>Combined with proposition 23 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, the following result holds true: &quot;Let <em>I</em> be a closed interval in (0, 1).  A function <em>f</em>(&lambda;) that maps <em>I</em> to another closed interval in (0, 1) can be simulated using, on average, a finite number of flips of a coin with probability of heads &lambda; if and only if <em>f</em> is Lipschitz continuous on <em>I</em>.&quot;</li>
+</ul>
 
 <p><a id=Example_of_Approximation_Scheme></a></p>
 
