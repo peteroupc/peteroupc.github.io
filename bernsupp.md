@@ -790,11 +790,11 @@ _Consider S, an open subset of the interval (0, 1). Let f(&lambda;) be a functio
 
 Here is a sketch of the proof.
 
-Referring to Mendo's (2019)<sup>[**(11)**](#Note11)</sup> paper on asymptotically optimal Bernoulli factories, the equation (40) can be written as:
+Referring to Mendo's (2019)<sup>[**(11)**](#Note11)</sup> paper on asymptotically optimal Bernoulli factories, the equation (40) for the average number of coin flips of an algorithm can be written as:
 
 **E**[_N_] = &sum;<sub>_n_=1,2,...</sub> (1&minus; &sum;<sub>_i_=1,...,_n_&minus;1</sub> (_h_<sub>_i_&minus;1</sub>(_&lambda;_)&minus;_g_<sub>_i_&minus;1</sub>(_&lambda;_)) &minus; (_h_<sub>_i_</sub>(_&lambda;_)&minus;_g_<sub>_i_</sub>(_&lambda;_)))
 
-(see Holtz et al. 2011), where `g_i` is the lower polynomial of degree `i` and `h_i` is the upper polynomial of degree `i`.  Because _f_ is concave, `g_i` can have Bernstein coefficients of _f_(_k_/_n_).  Meanwhile, `h_i = f(k/n) + 1/((sqrt(2)-1)*sqrt(n))`, but equals 1 instead whenever any Bernstein coefficient of `h_i` would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to `1/((sqrt(2)-1)*sqrt(n))` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
+(see Holtz et al. 2011), where `g_i` is the lower polynomial of degree `i` and `h_i` is the upper polynomial of degree `i`.  Because _f_ is concave, `g_i` can have Bernstein coefficients of _f_(_k_/_n_).  Meanwhile, `h_i`'s Bernstein coefficients are `f(k/n) + 1/((sqrt(2)-1)*sqrt(n))`, but equals 1 instead whenever any Bernstein coefficient of `h_i` would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to `1/((sqrt(2)-1)*sqrt(n))` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
 
 With this result, it is suspected that the bound in Equation (10) of Mendo (2019)<sup>[**(11)**](#Note11)</sup> applies to any such function described in the result that is also differentiable on the set _S_.
 
