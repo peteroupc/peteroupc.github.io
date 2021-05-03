@@ -1204,7 +1204,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <p>Condition (iv) is the <em>consistency requirement</em> described earlier in this page. This is ensured as in Proposition 10 by bounding, from below, the offset by which to shift the approximating polynomials.  This lower bound is <em>&eta;</em>(<em>n</em>), a solution to the equation 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(2 * <em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) (see note below), where <em>&phi;</em> can take on either form given in the theorem. The solution given in the theorem is easy to prove by noting that this is a recursive process: we start by calculating the series for <em>n</em> = 2*<em>n</em>, then adding <em>&phi;</em>(<em>n</em>) to it, in effect working backwards and recursively, and we can easily see that we can calculate the series for <em>n</em> = 2*<em>n</em> only if the series converges, hence the assumption of a converging series. For <em>n</em><sub>0</sub>, the consistency requirement is maintained by noting that the degree-<em>n</em><sub>0</sub> polynomial&#39;s coefficients must be bounded by 0 and 1 by condition (i) so they will likewise be bounded by those of the lower and upper polynomials of degree less than <em>n</em><sub>0</sub>, and those polynomials are identically 0 and identically 1, respectively, as are their coefficients. &#x25a1;</p>
 
 <blockquote>
-<p><strong>Note:</strong> There is only one solution <em>&eta;</em>(<em>n</em>) in our case.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in our case, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</p>
+<p><strong>Note:</strong> There is only one solution <em>&eta;</em>(<em>n</em>) in the case at hand.  Unlike so-called <a href="https://math.stackexchange.com/questions/3993739"><strong><em>functional equations</em></strong></a> and linear recurrences, with a solution that varies depending on the starting value, there is only one solution in the case at hand, namely the solution that makes the series converge, if it exists at all.  Alternatively, the equation can be expanded to 0 = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(4 * <em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = <em>&eta;</em>(<em>n</em>) &minus; <em>&eta;</em>(8 * <em>n</em>) &minus; <em>&phi;</em>(4*<em>n</em>) &minus; <em>&phi;</em>(2*<em>n</em>) &minus; <em>&phi;</em>(<em>n</em>) = ...</p>
 </blockquote>
 
 <p><strong>Corollary 1.</strong> <em>Let f(&lambda;) be a strictly bounded factory function. If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the following approximation scheme determined by <strong>fbelow</strong> and <strong>fabove</strong> is valid in the sense of Theorem 1, subject to the bounding note:</em></p>
@@ -1263,7 +1263,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em><strong>fabove</strong>(n, k) = max(<strong>fabove</strong>(4,0), <strong>fabove</strong>(4,1), ..., <strong>fabove</strong>(4,4)) if n &lt; 4; otherwise, f(k/n) + M/(7*n).</em></li>
 </ul>
 
-<p><em>Proof.</em>  Because (<em>M</em>/2)*(1/(7*<em>n</em>) in part 3 of Lemma 2 is bounded the same way as the statement <em>&omega;</em>(sqrt(1/(7*n))) in Theorem 2 and part 1 of Lemma 2, take <em>&omega;</em>(<em>n</em>) as (<em>M</em>/2)*(1/(7*<em>n</em>).  Then the result follows from Theorem 2.  &#x25a1;</p>
+<p><em>Proof.</em>  Because (<em>M</em>/2)*(1/(7*<em>n</em>)) in part 3 of Lemma 2 is bounded the same way as the statement <em>&omega;</em>(sqrt(1/(7*n))) in Theorem 2 and part 1 of Lemma 2, take <em>&omega;</em>(<em>n</em>) as (<em>M</em>/2)*(1/(7*<em>n</em>)).  Then the result follows from Theorem 2.  &#x25a1;</p>
 
 <p><strong>Theorem 4.</strong> <em>Let f(&lambda;) be a strictly bounded factory function.  If f is convex and nondecreasing, then Theorem 1 remains valid with &phi;(n) = <strong>E</strong>[f(Y/n)] (where Y is a hypergeometric(2*n, n, n) random variable), rather than as given in that theorem.</em></p>
 
@@ -1285,31 +1285,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein approximations of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>
-
-<p>In addition to the results above, I believe I&#39;ve found the following results involving certain Lipschitz continuous functions.</p>
-
-<p><em>Let S be an open subset of the interval (0, 1). Let f(&lambda;) be a function that maps S to (0, 1), is concave, and is Lipschitz continuous with Lipschitz constant 1.  Then there is an algorithm that samples f(&lambda;) using, on average, a finite number of flips of a coin with probability of heads &lambda;.</em></p>
-
-<p>Here is a sketch of a proof.</p>
-
-<p>Referring to Mendo&#39;s (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> paper on asymptotically optimal Bernoulli factories, the equation (40) for the average number of coin flips of an algorithm can be written as:</p>
-
-<p><strong>E</strong>[<em>N</em>] = &sum;<sub><em>n</em>=1,2,...</sub> (1&minus; &sum;<sub><em>i</em>=1,...,<em>n</em>&minus;1</sub> (<em>h</em><sub><em>i</em>&minus;1</sub>(<em>&lambda;</em>)&minus;<em>g</em><sub><em>i</em>&minus;1</sub>(<em>&lambda;</em>)) &minus; (<em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>)&minus;<em>g</em><sub><em>i</em></sub>(<em>&lambda;</em>)))</p>
-
-<p>(see Holtz et al. 2011), where <code>g_i</code> is the lower polynomial of degree <code>i</code> and <code>h_i</code> is the upper polynomial of degree <code>i</code>.  Without loss of generality, take <em>n</em> as all positive integers that are powers of 2. Because <em>f</em> is concave, <code>g_n</code> can have Bernstein coefficients of <em>f</em>(<em>k</em>/<em>n</em>).  Meanwhile, <code>h_n</code>&#39;s Bernstein coefficients are <code>f(k/n) + 1/((sqrt(2)-1)*sqrt(n))</code>, but <code>h_n</code> equals 1 instead whenever any Bernstein coefficient of <code>h_n</code> would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to <code>1/((sqrt(2)-1)*sqrt(n))</code> (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous <strong>E</strong>[<em>N</em>].</p>
-
-<p><em>Let S be an open subset of the interval (0, 1). Let f(&lambda;) be a Lipschitz continuous function that maps S to a closed interval in (0, 1).  Then there is an algorithm that samples f(&lambda;) using, on average, a finite number of flips of a coin with probability of heads &lambda;.</em></p>
-
-<p>Here is a sketch of a proof.</p>
-
-<p>The expression <strong>E</strong>[<em>N</em>] above is used again here.  Without loss of generality, take <em>n</em> as all positive integers that are powers of 2. Here, <code>g_n</code>&#39;s Bernstein coefficients are <code>f(k/n) - M/((sqrt(2)-1)*sqrt(n))</code> where <code>M</code> is a Lipschitz constant of <em>f</em>, but <code>g_n</code> equals 0 instead whenever any of those coefficients would otherwise be less than 0; and <code>h_n</code>&#39;s Bernstein coefficients are <code>f(k/n) + M/((sqrt(2)-1)*sqrt(n))</code>, but <code>h_n</code> equals 1 instead whenever any of those coefficients would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant; specifically, they become constant as soon as the Bernstein coefficients of both polynomials become bounded by 0 and 1 for a given <code>n</code> (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous <strong>E</strong>[<em>N</em>].</p>
-
-<p>If these two results turn out to hold true, it is suspected that:</p>
-
-<ul>
-<li>The lower bound in Equation (10) of Mendo (2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup> applies to any function described in either of the results above that is also differentiable on the set <em>S</em>.</li>
-<li>Combined with proposition 23 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, the following result holds true: &quot;Let <em>I</em> be a closed interval in (0, 1).  A function <em>f</em>(&lambda;) that maps <em>I</em> to another closed interval in (0, 1) can be simulated using, on average, a finite number of flips of a coin with probability of heads &lambda; if and only if <em>f</em> is Lipschitz continuous on <em>I</em>.&quot;</li>
-</ul>
 
 <p><a id=Example_of_Approximation_Scheme></a></p>
 
