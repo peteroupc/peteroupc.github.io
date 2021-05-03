@@ -784,9 +784,9 @@ _Proof._  Follows from Theorem 1 and part 4 of Lemma 2 above. With the _&phi;_ g
 
 _Proof._ Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-_n_ Bernstein approximations of _f_, and they meet the conditions in those theorems by Jensen's inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>. &#x25a1;
 
-In addition to the results above, I believe I've found the following result involving certain concave Lipschitz continuous functions.
+In addition to the results above, I believe I've found the following results involving certain Lipschitz continuous functions.
 
-_Consider S, an open subset of the interval (0, 1). Let f(&lambda;) be a function that maps S to (0, 1), is concave, and is Lipschitz continuous with Lipschitz constant 1.  Then there is an algorithm that samples f(&lambda;) using, on average, a finite number of flips of a coin with probability of heads &lambda;._
+_Let S be an open subset of the interval (0, 1). Let f(&lambda;) be a function that maps S to (0, 1), is concave, and is Lipschitz continuous with Lipschitz constant 1.  Then there is an algorithm that samples f(&lambda;) using, on average, a finite number of flips of a coin with probability of heads &lambda;._
 
 Here is a sketch of the proof.
 
@@ -794,9 +794,15 @@ Referring to Mendo's (2019)<sup>[**(11)**](#Note11)</sup> paper on asymptoticall
 
 **E**[_N_] = &sum;<sub>_n_=1,2,...</sub> (1&minus; &sum;<sub>_i_=1,...,_n_&minus;1</sub> (_h_<sub>_i_&minus;1</sub>(_&lambda;_)&minus;_g_<sub>_i_&minus;1</sub>(_&lambda;_)) &minus; (_h_<sub>_i_</sub>(_&lambda;_)&minus;_g_<sub>_i_</sub>(_&lambda;_)))
 
-(see Holtz et al. 2011), where `g_i` is the lower polynomial of degree `i` and `h_i` is the upper polynomial of degree `i`.  Because _f_ is concave, `g_i` can have Bernstein coefficients of _f_(_k_/_n_).  Meanwhile, `h_i`'s Bernstein coefficients are `f(k/n) + 1/((sqrt(2)-1)*sqrt(n))`, but equals 1 instead whenever any Bernstein coefficient of `h_i` would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to `1/((sqrt(2)-1)*sqrt(n))` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
+(see Holtz et al. 2011), where `g_i` is the lower polynomial of degree `i` and `h_i` is the upper polynomial of degree `i`.  Without loss of generality, take _n_ as all positive integers that are powers of 2. Because _f_ is concave, `g_n` can have Bernstein coefficients of _f_(_k_/_n_).  Meanwhile, `h_n`'s Bernstein coefficients are `f(k/n) + 1/((sqrt(2)-1)*sqrt(n))`, but equals 1 instead whenever any Bernstein coefficient of `h_n` would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant and correspond roughly to `1/((sqrt(2)-1)*sqrt(n))` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
 
-With this result, it is suspected that the bound in Equation (10) of Mendo (2019)<sup>[**(11)**](#Note11)</sup> applies to any such function described in the result that is also differentiable on the set _S_.
+_Let S be an open subset of the interval (0, 1). Let f(&lambda;) be a function that maps S to a closed interval in (0, 1) and is Lipschitz continuous with Lipschitz constant 1.  Then there is an algorithm that samples f(&lambda;) using, on average, a finite number of flips of a coin with probability of heads &lambda;._
+
+Here is a sketch of the proof.
+
+The expression **E**[_N_] above is used again here.  Without loss of generality, take _n_ as all positive integers that are powers of 2. Here, `g_n`'s Bernstein coefficients are `f(k/n) - 1/((sqrt(2)-1)*sqrt(n))`, but equals 0 instead whenever any of those coefficients would otherwise be less than 0; and `h_n`'s Bernstein coefficients are `f(k/n) + 1/((sqrt(2)-1)*sqrt(n))`, but equals 1 instead whenever any of those coefficients would otherwise be greater than 1.  With this setup, the terms in the series given above eventually become constant; specifically, they become constant as soon as the Bernstein coefficients of both polynomials become bounded by 0 and 1 for a given `n` (before that happens, the number of terms is finite and so sum to a continuous function, namely a polynomial), and the sum of these constant terms converges, resulting in a finite and continuous **E**[_N_].
+
+With these results, it is suspected that the bound in Equation (10) of Mendo (2019)<sup>[**(11)**](#Note11)</sup> applies to any function described in either of the results above that is also differentiable on the set _S_.
 
 <a id=Example_of_Approximation_Scheme></a>
 ### Example of Approximation Scheme
