@@ -86,9 +86,9 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
     But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions with integer coefficients? Rational functions with rational coefficients? Arbitrary approximating functions?
 5. According to (Mossel and Peres 2005)<sup>[**(4)**](#Note4)</sup>, a pushdown automaton can take a coin with unknown probability of heads of _&lambda;_ and turn it into a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a factory function and can be a solution of a polynomial system with rational coefficients. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also Icard 2019<sup>[**(5)**](#Note5)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
-6. The following is an open question in Nacu and Peres 2005.  Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100], and let _f_(_&lambda;_) be a function that admits a Bernoulli factory.  Suppose there is an algorithm that a coin with probability of heads _&lambda;_ and produces one or more samples of the probability _f_(_&lambda;_).  When the probability _&lambda;_ can be any value in _J_, is it possible for this algorithm to have an expected number of input coin flips per sample that is arbitrarily close to the so-called _entropy bound_?  The entropy bound is _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is the Shannon entropy function.  Does the answer change if the algorithm can also use a separate source of unbiased random bits?
+6. The following is an open question in Nacu and Peres 2005.  Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100], and let _f_(_&lambda;_) be a function that admits a Bernoulli factory.  Suppose there is an algorithm that takes a coin with probability of heads _&lambda;_ and produces one or more samples of the probability _f_(_&lambda;_).  When the probability _&lambda;_ can be any value in _J_, is it possible for this algorithm to have an expected number of input coin flips per sample that is arbitrarily close to the so-called _entropy bound_?  The entropy bound is _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is the Shannon entropy function.  Does the answer change if the algorithm can also use a separate source of unbiased random bits?
 
-    I believe that an algorithm like that does not exist for all functions that admit a Bernoulli factory.  For example, Luis Mendo (2016) proved a lower bound that applies, among other things, when _f_ is a polynomial, but this bound can be higher than the entropy bound for the polynomial with Bernstein coefficients (0, 9/10, 2/10, 7/10, 5/10), for example.  On the other hand, constant functions _f_ do admit such an algorithm, as already noted in Nacu and Peres.
+    I believe that an algorithm like that does not exist for all functions that admit a Bernoulli factory.  For example, Luis Mendo (2019) proved a lower bound that applies, among other things, when _f_ is a polynomial, but this bound can be higher than the entropy bound for the polynomial with Bernstein coefficients (0, 9/10, 2/10, 7/10, 5/10), for example.  On the other hand, constant functions _f_ do admit such an algorithm, as already noted in Nacu and Peres.
 
     Thus, a natural question is: for which functions does an algorithm like this exist?
 
@@ -136,14 +136,17 @@ The classes of functions _f_ that are of interest are:
 
 Note the following:
 
-- The value the algorithm should approximate is _f_(**E**[_X_]), not **E**[_f_(_X_)], which is different in general.  But algorithms for **E**[_f_(_X_)] are welcome in case it's more difficult.
 - The following algorithms are different from the algorithms asked for here:
     - The Gamma Bernoulli Approximation scheme (Huber 2017)<sup>[**(6)**](#Note6)</sup> as well as the Kunsch algorithm (Kunsch et al. 2019)<sup>[**(7)**](#Note7)</sup> both estimate the mean of _X_ (**E**[_X_]), rather than a function of that mean (_f_(**E**[_X_])).
     - Some algorithms produce unbiased estimates of _f_(**E**[_X_]), but not with a user-specified error (Jacob and Thiery 2015)<sup>[**(8)**](#Note8)</sup>.
 - Algorithms like those being asked for here are especially useful because they can help build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.
 - It is suspected that the algorithm's performance will depend on the "smoothness" of _f_(_X_) (see also (Holtz et al. 2011)<sup>[**(9)**](#Note9)</sup>).
 
-Also, are there results that estimate _f_(**E**[_X_]) with a user-specified error bound even if _X_ follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with finite variance and/or exponential tails)?
+Also, does the answer to this question change if&mdash;
+
+- _X_ is allowed to follow a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with finite variance and/or exponential tails), and/or
+- the oracle's numbers are allowed to take on the same value with probability 1, and/or
+- the algorithm estimates the mean of _f_(_X_), namely **E**[_f_(_X_)], rather than _f_(**E**[_X_]), which is different in general?
 
 <a id=Color_Topics_for_Programmers></a>
 ## Color Topics for Programmers

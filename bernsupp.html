@@ -181,7 +181,7 @@
 
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
-<li>(Simulate <em>H</em>.) Flip the input coin twice.  If neither flip returns 1, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
+<li>(Simulate <em>H</em>.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
 <li>Run a Bernoulli factory algorithm for <em>G</em> (which involves building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
@@ -395,7 +395,7 @@
 
 <p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;grows no faster than <em>h</em>(<em>n</em>)&quot;.)</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;grows no faster than <em>h</em>(<em>n</em>) times a constant&quot;.)</p>
 
 <table><thead>
 <tr>
@@ -432,6 +432,10 @@
 <td>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</td>
 </tr>
 </tbody></table>
+
+<blockquote>
+<p><strong>Note:</strong> By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average unless <em>f</em> is <em>C</em><sup>2</sup> continuous.</p>
+</blockquote>
 
 <p><a id=Complexity></a></p>
 
