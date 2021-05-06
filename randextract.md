@@ -99,7 +99,11 @@ Devroye and Gravel (2020)<sup>[**(15)**](#Note15)</sup> suggest a special random
 <a id=On_Algorithm_M></a>
 ### On Algorithm M
 
-Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number, and as long as each _pair_ of throws is independent of any other.
+Algorithm M works regardless of what numbers _X_ and _Y_ can take on and with what probability, and even if the "dice" for _X_ and _Y_ are loaded differently, as long as&mdash;
+
+- each _pair_ of throws is independent of each other,
+- each "die" has a chance of showing different outcomes, and
+- the chance that the first "die" shows a number less than the second "die" is the same as the chance that the first "die" shows a greater number.
 
 More formally, P(_X_ &lt; _Y_) must be equal to P(_X_ &gt; _Y_).  This relationship is equivalent to _statistical indifference_ (Montes Gutiérrez 2014)<sup>[**(16)**](#Note16)</sup>, (De Schuymer et al. 2003)<sup>[**(17)**](#Note17)</sup>. This relationship works even if _X_ and _Y_ are dependent on each other but independent of everything else; this is easy to see if we treat _X_ and _Y_ as a single random "vector" \[_X_, _Y_\].  This is shown by the following two propositions.  In the propositions below, a random variable is _non-degenerate_ if it does not take on a single value with probability 1.
 
