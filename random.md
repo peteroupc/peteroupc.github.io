@@ -473,8 +473,8 @@ A cryptographic RNG generates random bits that behave like independent uniform r
 
 If a cryptographic RNG implementation uses a PRNG:
 
-- The security strength used by the RNG is at least 128 bits and should be at least 256 bits.
-- Before the RNG generates a random number, the RNG has to have been initialized to a state that ultimately derives from data that, as a whole, is at least as hard to guess as ideal random data with as many bits as the security strength<sup>[**(39)**](#Note39)</sup>.
+- Let _S_ be the security strength of the RNG.  _S_ is at least 128 bits and should be at least 256 bits.
+- Before the RNG generates a random number, the RNG has to have been initialized to a state that ultimately derives from data that, as a whole, is at least as hard to guess as an ideal process of generating _S_ many independent uniform random bits<sup>[**(39)**](#Note39)</sup>.
 
 A cryptographic RNG is not required to reseed itself.
 
