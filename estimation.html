@@ -32,17 +32,25 @@
 
 <p>For any estimation algorithm, the <em>relative error</em> is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
 
-<p><a id=Estimators_with_User_Specified_Relative_Error></a></p>
+<p><a id=A_Relative_Error_Estimator_for_Bernoulli_Random_Numbers></a></p>
 
-<h2>Estimators with User-Specified Relative Error</h2>
+<h2>A Relative-Error Estimator for Bernoulli Random Numbers</h2>
 
-<p>The following algorithm from Huber (2017)<sup><a href="#Note1"><strong>(1)</strong></a></sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  The algorithm assumes the stream of numbers can&#39;t take on the value 0 with probability 1.</p>
+<p>The following algorithm from Huber (2017)<sup><a href="#Note1"><strong>(1)</strong></a></sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
+
+<ul>
+<li>The stream produces only zeros and ones (that is, the stream follows the Bernoulli distribution).</li>
+<li>The stream of numbers can&#39;t take on the value 0 with probability 1.</li>
+<li>The stream&#39;s mean (expected value) is unknown.</li>
+</ul>
 
 <p>The algorithm, also known as <em>Gamma Bernoulli Approximation Scheme</em>, has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 3/4 or less, and <em>&delta;</em> must be 1 or less.  With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 3/4 or less, and <em>&delta;</em> must be 1 or less.</li>
 </ul>
+
+<p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate can be higher than 1 with probability greater than 0.</p>
 
 <p>The algorithm follows:</p>
 
@@ -68,17 +76,25 @@
 </ol>
 </blockquote>
 
-<p><a id=An_Algorithm_for_a_Stream_of_Bounded_Random_Numbers></a></p>
+<p><a id=An_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a></p>
 
-<h2>An Algorithm for a Stream of Bounded Random Numbers</h2>
+<h2>An Relative-Error Algorithm for Bounded Random Numbers</h2>
 
-<p>The following algorithm comes from Huber and Jones (2019)<sup><a href="#Note3"><strong>(3)</strong></a></sup>; see also Huber (2017)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  It estimates the expected value of a stream of random numbers taking on values in the closed interval [0, 1].  It assumes the stream of numbers can&#39;t take on the value 0 with probability 1.</p>
+<p>The following algorithm comes from Huber and Jones (2019)<sup><a href="#Note3"><strong>(3)</strong></a></sup>; see also Huber (2017)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  It estimates the expected value of a stream of random numbers with the following properties:</p>
+
+<ul>
+<li>The numbers in the stream lie in the closed interval [0, 1].</li>
+<li>The stream of numbers can&#39;t take on the value 0 with probability 1.</li>
+<li>The stream&#39;s mean (expected value) is unknown.</li>
+</ul>
 
 <p>The algorithm has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 1/8 or less, and <em>&delta;</em> must be 1 or less.  The relative error is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.  With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 1/8 or less, and <em>&delta;</em> must be 1 or less.  The relative error is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</li>
 </ul>
+
+<p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate can be higher than 1 with probability greater than 0.</p>
 
 <p>The algorithm follows.</p>
 
@@ -125,14 +141,14 @@
 <p><strong>Note:</strong> As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, <em>m</em>], where <em>m</em> is a known number, we can divide the stream&#39;s numbers by <em>m</em> before using them in this algorithm, and the algorithm will still work.</p>
 </blockquote>
 
-<p><a id=An_Adaptive_Algorithm></a></p>
+<p><a id=An_Absolute_Error_Adaptive_Algorithm></a></p>
 
-<h2>An Adaptive Algorithm</h2>
+<h2>An Absolute-Error Adaptive Algorithm</h2>
 
-<p>The following algorithm comes from Kunsch et al. (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:</p>
+<p>The following algorithm comes from Kunsch et al. (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  It estimates the mean of a stream of random numbers with the following properties:</p>
 
 <ul>
-<li>It has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment and <em>p</em>-moment, respectively, in this section).</li>
+<li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment and <em>p</em>-moment, respectively, in this section).</li>
 <li>The exact <em>q</em>-moment and <em>p</em>-moment need not be known in advance.</li>
 <li>The <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is no more than <em>&kappa;</em> times the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, where <em>&kappa;</em> is 1 or greater. (Note that the <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
@@ -142,7 +158,7 @@
 <p>The algorithm has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em>-moment that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The degree of the <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
 <li><em>&kappa;</em>: May not be less than the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, and may not be less than 1.</li>
@@ -198,36 +214,46 @@
 <blockquote>
 <p><strong>Note:</strong> If the stream of random numbers meets the condition for this algorithm for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
 
-<p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or and 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
+<p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
 </blockquote>
 
 <p><a id=Estimating_a_Function_of_the_Mean></a></p>
 
 <h2>Estimating a Function of the Mean</h2>
 
-<p>The adaptive algorithm in the previous section can be used to estimate a function of the mean of a stream of a random number.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<em>Z</em>]), where:</p>
+<p>The adaptive algorithm in the previous section can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<em>Z</em>]), where:</p>
 
 <ul>
-<li><em>Z</em> is a random number produced by the stream.  The distribution of <em>Z</em> must be bounded by [0, 1], and the distribution&#39;s <em>q</em>-moment may not be less than <em>&kappa;</em> times its <em>p</em>-moment.</li>
+<li><em>Z</em> is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].</li>
 <li><em>f</em> is a continuous function that maps the closed interval [0, 1] to [0, 1].</li>
 </ul>
 
-<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater.  In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in the adaptive algorithm.</p>
+<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1]. In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in the adaptive algorithm.  For this reason, it works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.</p>
 
 <ol>
-<li>Calculate <em>&gamma;</em> = <em>&omega;</em>(<em>&epsilon;</em>), where <em>&omega;</em>(<em>&amp;epsilon</em>) is a so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>). (<em>&gamma;</em> can also be greater.)
+<li>Calculate <em>&gamma;</em> as a number equal to or greater than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
 
 <ul>
-<li>Loosely speaking, a modulus of continuity shows the maximum rate of change of <em>f</em> when <em>x</em> changes by <em>&epsilon;</em>.</li>
-<li>For example, if <em>f</em>&#39;s slope is continuous at every point and never vertical, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>&amp;epsilon</em>) = <em>M</em>*<em>&epsilon;</em>, where <em>M</em> is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.</li>
+<li>Loosely speaking, a modulus of continuity shows the maximum range of <em>f</em> in a window of size <em>&eta;</em>.</li>
+<li>For example, if <em>f</em>&#39;s slope is continuous at every point and never vertical, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>&eta;</em>) = <em>M</em>*<em>&eta;</em>, where <em>M</em> is the Lipschitz constant, which in this case is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.  The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
 <li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 </ul></li>
 <li>Run the adaptive algorithm with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
+<p>A simpler version of the algorithm was given as an answer to the linked-to question.  As with the previous algorithm, the algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</p>
+
+<ol>
+<li>Calculate <em>&gamma;</em> as given in step 1 of the previous algorithm.</li>
+<li>(Calculate the sample size.) Set <em>n</em> to ceil(ln(2/<em>&delta;</em>))/(2*<em>&gamma;</em><sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding&#39;s inequality.)</li>
+<li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>.  Return the result.</li>
+</ol>
+
 <blockquote>
-<p><strong>Note:</strong> This algorithm won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (including if <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</p>
+<p><strong>Note:</strong> These algorithms won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</p>
+
+<p><strong>Example:</strong> Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run this algorithm with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see previous section).</p>
 </blockquote>
 
 <p><a id=Randomized_Integration></a></p>
