@@ -26,9 +26,13 @@ Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  
 For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
 <a id=Estimators_with_User_Specified_Relative_Error></a>
-## Estimators with User-Specified Relative Error
+## A Relative-Error Estimator for Bernoulli Random Numbers
 
-The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability of 1 of a stream of random zeros and ones (that is, it estimates the mean of a stream of Bernoulli random numbers with unknown mean).  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  The algorithm assumes the stream of numbers can't take on the value 0 with probability 1.
+The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  Specifically, the stream of numbers has the following properties:
+
+- The stream produces only zeros and ones (that is, the stream follows the Bernoulli distribution).
+- The stream of numbers can't take on the value 0 with probability 1.
+- The stream's mean (expected value) is unknown.
 
 The algorithm, also known as _Gamma Bernoulli Approximation Scheme_, has the following parameters:
 
@@ -51,9 +55,13 @@ The algorithm follows:
 > 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of the original algorithm: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like the original algorithm.
 
 <a id=An_Algorithm_for_a_Stream_of_Bounded_Random_Numbers></a>
-## An Algorithm for a Stream of Bounded Random Numbers
+## An Relative-Error Algorithm for Bounded Random Numbers
 
-The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random numbers taking on values in the closed interval [0, 1].  It assumes the stream of numbers can't take on the value 0 with probability 1.
+The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random numbers with the following properties:
+
+- The numbers in the stream lie in the closed interval [0, 1].
+- The stream of numbers can't take on the value 0 with probability 1.
+- The stream's mean (expected value) is unknown.
 
 The algorithm has the following parameters:
 
@@ -93,11 +101,12 @@ The standard deviation sub-algorithm follows:
 > **Note:** As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in this algorithm, and the algorithm will still work.
 
 <a id=An_Adaptive_Algorithm></a>
-## An Adaptive Algorithm
+## An Absolute-Error Adaptive Algorithm
 
-The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random numbers, assuming their distribution has the following properties:
+The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random numbers with the following properties:
 
-- It has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_-moment and _p_-moment, respectively, in this section).
+- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_-moment and _p_-moment, respectively, in this section).
+- The exact _q_-moment and _p_-moment need not be known in advance.
 - The _q_-moment's _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_-moment's _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
@@ -138,6 +147,27 @@ The algorithm can be implemented as follows.
 11. (Find the median of the sample means.  This is definitely an unbiased estimate of the mean when _kp_ is 1 or 2, but unfortunately, it isn't one for any _kp_ > 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(_kp_/2) with positions starting at 0); this works because _kp_ is odd.
 
 > **Note:** If the stream of random numbers meets the condition for this algorithm for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
+>
+> **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or and 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
+
+<a id=Estimating_a_Function_of_the_Mean></a>
+## Estimating a Function of the Mean
+
+The adaptive algorithm in the previous section can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate _f_(**E**[_Z_]), where:
+
+- _Z_ is a random number produced by the stream.  The distribution of _Z_ must be bounded by [0, 1], and the distribution's _q_-moment may not be less than _&kappa;_ times its _p_-moment.
+- _f_ is a continuous function that maps the closed interval [0, 1] to [0, 1].
+
+The following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[_Z_]) with probability 1 &minus; _&delta;_ or greater.  In the algorithm, _p_, _q_, and _&kappa;_ are as defined in the adaptive algorithm.
+
+1. Calculate _&gamma;_ = _&omega;_(_&epsilon;_), where _&omega;_(_&epsilon_) is a so-called _modulus of continuity_ of _f_(_x_). (_&gamma;_ can also be greater.)
+    - Loosely speaking, a modulus of continuity shows the maximum rate of change of _f_ when _x_ changes by _&epsilon;_.
+    - For example, if _f_'s slope is continuous at every point and never vertical, then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_&epsilon_) = _M_\*_&epsilon;_, where _M_ is the maximum absolute value of _f_'s "slope function".
+    - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
+2. Run the adaptive algorithm with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
+3. Return _f_(_&mu;_).
+
+> **Note:** This algorithm won't work in general when _f_(_x_) has jump discontinuities (including if _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 
 <a id=Randomized_Integration></a>
 ## Randomized Integration

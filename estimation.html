@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/02"><meta name="citation_online_date" content="2021/05/02"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/08"><meta name="citation_online_date" content="2021/05/08"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -133,6 +133,7 @@
 
 <ul>
 <li>It has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment and <em>p</em>-moment, respectively, in this section).</li>
+<li>The exact <em>q</em>-moment and <em>p</em>-moment need not be known in advance.</li>
 <li>The <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is no more than <em>&kappa;</em> times the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, where <em>&kappa;</em> is 1 or greater. (Note that the <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
 
@@ -196,6 +197,37 @@
 
 <blockquote>
 <p><strong>Note:</strong> If the stream of random numbers meets the condition for this algorithm for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
+
+<p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or and 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
+</blockquote>
+
+<p><a id=Estimating_a_Function_of_the_Mean></a></p>
+
+<h2>Estimating a Function of the Mean</h2>
+
+<p>The adaptive algorithm in the previous section can be used to estimate a function of the mean of a stream of a random number.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<em>Z</em>]), where:</p>
+
+<ul>
+<li><em>Z</em> is a random number produced by the stream.  The distribution of <em>Z</em> must be bounded by [0, 1], and the distribution&#39;s <em>q</em>-moment may not be less than <em>&kappa;</em> times its <em>p</em>-moment.</li>
+<li><em>f</em> is a continuous function that maps the closed interval [0, 1] to [0, 1].</li>
+</ul>
+
+<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater.  In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in the adaptive algorithm.</p>
+
+<ol>
+<li>Calculate <em>&gamma;</em> = <em>&omega;</em>(<em>&epsilon;</em>), where <em>&omega;</em>(<em>&amp;epsilon</em>) is a so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>). (<em>&gamma;</em> can also be greater.)
+
+<ul>
+<li>Loosely speaking, a modulus of continuity shows the maximum rate of change of <em>f</em> when <em>x</em> changes by <em>&epsilon;</em>.</li>
+<li>For example, if <em>f</em>&#39;s slope is continuous at every point and never vertical, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>&amp;epsilon</em>) = <em>M</em>*<em>&epsilon;</em>, where <em>M</em> is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.</li>
+<li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
+</ul></li>
+<li>Run the adaptive algorithm with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
+<li>Return <em>f</em>(<em>&mu;</em>).</li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> This algorithm won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (including if <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</p>
 </blockquote>
 
 <p><a id=Randomized_Integration></a></p>
