@@ -124,8 +124,8 @@ The algorithm has the following parameters:
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers' distribution has a bounded 4th c.a.m. and that the 4th c.a.m.'s 4th root is no more than 1.1 times the 2nd c.a.m.'s square root (that is, the standard deviation), and will return an estimate that's within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers' distribution has a standard deviation (_q_=2) that is no more than 2 times its mean deviation (_p_=1), and will return an estimate that's within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers' distribution has a bounded 4th c.a.m. and that the 4th c.a.m.'s 4th root is no more than 1.1 times the 2nd c.a.m.'s square root (that is, the standard deviation), and will return an estimate that's within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers' distribution has a standard deviation (_q_=2) that is no more than 2 times its mean deviation (_p_=1), and will return an estimate that's within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.
 
 The algorithm, called **Algorithm C** in this document, follows.
 
@@ -150,7 +150,12 @@ The algorithm, called **Algorithm C** in this document, follows.
     2. Add the samples and divide by _mp_ to get this block's sample mean.
 11. (Find the median of the sample means.  This is definitely an unbiased estimate of the mean when _kp_ is 1 or 2, but unfortunately, it isn't one for any _kp_ > 2.)  Sort the sample means from step 10 in ascending order, and return the value in the middle of the sorted list (at position floor(_kp_/2) with positions starting at 0); this works because _kp_ is odd.
 
-> **Note:** If the stream of random numbers meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
+> **Notes:**
+>
+> 1. If the stream of random numbers meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
+> 2. Theorem 3.4 of Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup> shows that there is no mean estimation algorithm that&mdash;
+>      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
+>      - works for all streams whose distribution is known only to have a finite _n_<sup>th</sup> moment for any fixed _n_ (such as a finite mean or finite variance).
 >
 > **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
 

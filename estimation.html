@@ -167,8 +167,8 @@
 <p>For example:</p>
 
 <ul>
-<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 1.1, the algorithm assumes the random numbers&#39; distribution has a bounded 4th c.a.m. and that the 4th c.a.m.&#39;s 4th root is no more than 1.1 times the 2nd c.a.m.&#39;s square root (that is, the standard deviation), and will return an estimate that&#39;s within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
-<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the random numbers&#39; distribution has a standard deviation (<em>q</em>=2) that is no more than 2 times its mean deviation (<em>p</em>=1), and will return an estimate that&#39;s within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
+<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 1.1, the algorithm assumes the random numbers&#39; distribution has a bounded 4th c.a.m. and that the 4th c.a.m.&#39;s 4th root is no more than 1.1 times the 2nd c.a.m.&#39;s square root (that is, the standard deviation), and will return an estimate that&#39;s within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
+<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the random numbers&#39; distribution has a standard deviation (<em>q</em>=2) that is no more than 2 times its mean deviation (<em>p</em>=1), and will return an estimate that&#39;s within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm C</strong> in this document, follows.</p>
@@ -212,7 +212,17 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> If the stream of random numbers meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>If the stream of random numbers meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</li>
+<li>Theorem 3.4 of Kunsch et al. (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup> shows that there is no mean estimation algorithm that&mdash;
+
+<ul>
+<li>produces an estimate within a user-specified error tolerance (in terms of <em>absolute error</em>, as opposed to <em>relative error</em>) with probability greater than a user-specified value, and</li>
+<li>works for all streams whose distribution is known only to have a finite <em>n</em><sup>th</sup> moment for any fixed <em>n</em> (such as a finite mean or finite variance).</li>
+</ul></li>
+</ol>
 
 <p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
 </blockquote>
