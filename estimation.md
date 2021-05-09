@@ -155,7 +155,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 > 1. If the stream of random numbers meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
 > 2. Theorem 3.4 of Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup> shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
->      - works for all streams whose distribution is known only to have a finite _n_<sup>th</sup> moment for any fixed _n_ (such as a finite mean or finite variance).
+>      - works for all streams whose distribution is known only to have a finite _n_<sup>th</sup> moment for any fixed _n_ (such as a finite mean).
 >
 > **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
 
@@ -192,12 +192,11 @@ A simpler version of _Algorithm D_ was given as an answer to the linked-to quest
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 > 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_, and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
-> 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, as follows:
+> 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
->     - Instead of _f_(_x_), take _g_(_x_) where _g_(_x_) = _f_(_a_ + (_x_\*(_b_ &minus; _a_))).
->     - If _Algorithm D_ or _Algorithm E_ would return a result _r_, it returns _a_ + (_r_\*(_b_ &minus; _a_)) instead.
+>     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
 > **Examples:**
 >
