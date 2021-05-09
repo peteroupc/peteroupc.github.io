@@ -32,14 +32,14 @@
 
 <p>For any estimation algorithm, the <em>relative error</em> is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
 
-<p><a id=A_Relative_Error_Estimator_for_Bernoulli_Random_Numbers></a></p>
+<p><a id=A_Relative_Error_Algorithm_for_Bernoulli_Random_Numbers></a></p>
 
-<h2>A Relative-Error Estimator for Bernoulli Random Numbers</h2>
+<h2>A Relative-Error Algorithm for Bernoulli Random Numbers</h2>
 
 <p>The following algorithm from Huber (2017)<sup><a href="#Note1"><strong>(1)</strong></a></sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
 
 <ul>
-<li>The stream produces only zeros and ones (that is, the stream follows the Bernoulli distribution).</li>
+<li>The stream produces only zeros and ones (that is, the stream follows the <strong>Bernoulli distribution</strong>).</li>
 <li>The stream of numbers can&#39;t take on the value 0 with probability 1.</li>
 <li>The stream&#39;s mean (expected value) is unknown.</li>
 </ul>
@@ -52,7 +52,7 @@
 
 <p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate can be higher than 1 with probability greater than 0.</p>
 
-<p>The algorithm follows:</p>
+<p>The algorithm, called <strong>Algorithm A</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate the minimum number of samples <em>k</em>.  There are two suggestions.  The simpler one is <em>k</em> = ceil(&minus;6*ln(2/<em>&delta;</em>)/(<em>&epsilon;</em><sup>2</sup>*(4*<em>&epsilon;</em>&minus;3))).  A more complicated one is the smallest integer <em>k</em> such that gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1+<em>&epsilon;</em>)) + (1 &minus; gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1&minus;<em>&epsilon;</em>))) &le; <em>&delta;</em>, where gammainc is the regularized lower incomplete gamma function.</li>
@@ -72,7 +72,7 @@
 </ol>
 
 <p>and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.</p></li>
-<li>As can be seen in Feng et al. (2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, the following is equivalent to steps 2 and 3 of the original algorithm: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), and add a gamma(<em>r</em>) random variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, and add a gamma(<em>r</em>) random variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like the original algorithm.</li>
+<li>As can be seen in Feng et al. (2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), and add a gamma(<em>r</em>) random variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, and add a gamma(<em>r</em>) random variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
 </ol>
 </blockquote>
 
@@ -96,7 +96,7 @@
 
 <p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate can be higher than 1 with probability greater than 0.</p>
 
-<p>The algorithm follows.</p>
+<p>The algorithm, called <strong>Algorithm B</strong> in this document, follows.</p>
 
 <ol>
 <li>Set <em>k</em> to ceil(2*ln(6/<em>&delta;</em>)/<em>&epsilon;</em><sup>2/3</sup>).</li>
@@ -128,7 +128,7 @@
 <li>Return <em>w</em>/<em>n</em>.</li>
 </ol>
 
-<p>The standard deviation sub-algorithm follows:</p>
+<p>The standard deviation sub-algorithm follows.</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.</li>
@@ -138,7 +138,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, <em>m</em>], where <em>m</em> is a known number, we can divide the stream&#39;s numbers by <em>m</em> before using them in this algorithm, and the algorithm will still work.</p>
+<p><strong>Note:</strong> As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, <em>m</em>], where <em>m</em> is a known number, we can divide the stream&#39;s numbers by <em>m</em> before using them in <em>Algorithm B</em>, and the algorithm will still work.</p>
 </blockquote>
 
 <p><a id=An_Absolute_Error_Adaptive_Algorithm></a></p>
@@ -171,7 +171,7 @@
 <li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the random numbers&#39; distribution has a standard deviation (<em>q</em>=2) that is no more than 2 times its mean deviation (<em>p</em>=1), and will return an estimate that&#39;s within 1/10 of the true mean with probability greater than (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
 </ul>
 
-<p>The algorithm can be implemented as follows.</p>
+<p>The algorithm, called <strong>Algorithm C</strong> in this document, follows.</p>
 
 <ol>
 <li>If <em>&kappa;</em> is 1:
@@ -212,7 +212,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> If the stream of random numbers meets the condition for this algorithm for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
+<p><strong>Note:</strong> If the stream of random numbers meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</p>
 
 <p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
 </blockquote>
@@ -221,28 +221,29 @@
 
 <h2>Estimating a Function of the Mean</h2>
 
-<p>The adaptive algorithm in the previous section can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<em>Z</em>]), where:</p>
+<p><em>Algorithm C</em> can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate <em>f</em>(<strong>E</strong>[<strong>z</strong>]), where:</p>
 
 <ul>
-<li><em>Z</em> is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].</li>
+<li><strong>z</strong> is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].</li>
 <li><em>f</em> is a continuous function that maps the closed interval [0, 1] to [0, 1].</li>
+<li>The stream&#39;s numbers can take on a single value with probability 1.</li>
 </ul>
 
-<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1]. In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in the adaptive algorithm.  For this reason, it works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.</p>
+<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1]. In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in <em>Algorithm C</em>.  For this reason, it works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
-<li>Calculate <em>&gamma;</em> as a number equal to or greater than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
+<li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
 
 <ul>
 <li>Loosely speaking, a modulus of continuity shows the maximum range of <em>f</em> in a window of size <em>&eta;</em>.</li>
 <li>For example, if <em>f</em>&#39;s slope is continuous at every point and never vertical, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>&eta;</em>) = <em>M</em>*<em>&eta;</em>, where <em>M</em> is the Lipschitz constant, which in this case is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.  The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
 <li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 </ul></li>
-<li>Run the adaptive algorithm with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
+<li>Run <em>Algorithm C</em> with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>A simpler version of the algorithm was given as an answer to the linked-to question.  As with the previous algorithm, the algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<em>Z</em>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</p>
+<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question.  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of the previous algorithm.</li>
@@ -251,30 +252,49 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> These algorithms won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</p>
+<p><strong>Notes:</strong></p>
 
-<p><strong>Example:</strong> Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run this algorithm with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see previous section).</p>
+<ol>
+<li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
+<li><em>Algorithm E</em> can be used to build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the <em>Bernoulli distribution</em>, and <em>f</em> should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running <em>Algorithm E</em> and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.</li>
+</ol>
+
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
+<li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/1.</li>
+</ol>
 </blockquote>
 
 <p><a id=Randomized_Integration></a></p>
 
 <h2>Randomized Integration</h2>
 
-<p>Monte Carlo integration is a randomized way to estimate the integral of a function.  The adaptive algorithm in this article can be used to estimate an integral of a function <em>f</em>(<em>Z</em>), where <em>Z</em> is an n-dimensional vector chosen at random in the sampling domain.  The estimate will come within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
+<p>Monte Carlo integration is a randomized way to estimate the integral of a function.  <em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), with the following properties:</p>
 
 <ul>
-<li>The <em>q</em><sup>th</sup> c.a.m. for <em>f</em>(<em>Z</em>) is finite.  That is, <strong>E</strong>[abs(<em>f</em>(<em>Z</em>)&minus;<strong>E</strong>[<em>f</em>(<em>Z</em>)])<sup><em>q</em></sup>] is finite.</li>
+<li><em>h</em>(<strong>x</strong>) is a multidimensional function that takes an <em>n</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>x</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>
+<li><strong>z</strong> is an <em>n</em>-dimensional vector chosen at random in the sampling domain.</li>
+</ul>
+
+<p>The estimate will come within <em>&epsilon;</em> of the true integral with probability 1 &minus; <em>&delta;</em> or greater, as long as the following conditions are met:</p>
+
+<ul>
+<li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)&minus;<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
 <li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is no more than <em>&kappa;</em> times the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root, where <em>&kappa;</em> is 1 or greater.</li>
 </ul>
 
-<p>Unfortunately, these conditions may be hard to verify in practice, especially when <em>f</em>(<em>Z</em>) is not known.  (In fact, <strong>E</strong>[<em>f</em>(<em>Z</em>)], as seen above, is the unknown integral that we seek to estimate.)</p>
+<p>Unfortunately, these conditions may be hard to verify in practice, especially when the distribution <em>h</em>(<strong>z</strong>) is not known.  (In fact, <strong>E</strong>[<em>h</em>(<strong>z</strong>)], as seen above, is the unknown integral that we seek to estimate.)</p>
 
 <p>For this purpose, each number in the stream of random numbers is generated as follows (see also Kunsch et al.):</p>
 
 <ol>
-<li>Set <em>Z</em> to an <em>n</em>-dimensional vector (list of <em>n</em> numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, <em>Z</em> is chosen <em>uniformly</em> at random this way.</li>
-<li>Calculate <em>f</em>(<em>Z</em>), and set the next number in the stream to that value.</li>
+<li>Set <strong>z</strong> to an <em>n</em>-dimensional vector (list of <em>n</em> numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, <strong>z</strong> is chosen <em>uniformly</em> at random this way.</li>
+<li>Calculate <em>h</em>(<strong>z</strong>), and set the next number in the stream to that value.</li>
 </ol>
+
+<p>Alternatively, if <em>h</em>(<strong>z</strong>) can take on only numbers in the closed interval [0, 1], the much simpler <em>Algorithm E</em> can be used on the newly generated stream (taking <em>f</em>(<em>x</em>) = <em>x</em>), rather than <em>Algorithm C</em>.</p>
 
 <p>The following example (coded in Python for the SymPy computer algebra library) shows how to find parameter <em>&kappa;</em> for estimating the integral of min(<em>Z1</em>, <em>Z2</em>) where <em>Z1</em> and <em>Z2</em> are each uniformly chosen at random in the interval [0, 1].  It assumes <em>p</em> = 2 and <em>q</em> = 4. (This is a trivial example because we can calculate the integral directly &mdash; 1/3 &mdash; but it shows how to proceed for more complicated cases.)</p>
 
@@ -291,45 +311,6 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 </pre>
 
-<p><a id=Requests_and_Open_Questions></a></p>
-
-<h2>Requests and Open Questions</h2>
-
-<p>There is one request on randomized estimation:</p>
-
-<p>Assume we have an <em>oracle</em>, or &quot;black box&quot;, that produces independent random numbers <em>X</em> with a known minimum and maximum, but an unknown mean (average).  Assume further that the oracle&#39;s numbers are not all the same with probability 1. Given this oracle and possibly a second source of randomness (such as unbiased random bits), are there results that give an algorithm that approximates <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound, ideally using as few samples from the oracle as possible?  Here, <em>f</em> is a known function belonging to a given class of functions, and <strong>E</strong>[<em>X</em>] is the true mean of the oracle&#39;s numbers.</p>
-
-<p>The algorithm should&mdash;</p>
-
-<ul>
-<li>ensure the expected (absolute) error and/or mean squared error is within a user-specified error tolerance (<em>&epsilon;</em>), or if that is not possible,</li>
-<li>return an estimate that is within a user-specified tolerance (<em>&epsilon;</em>) on the absolute error or relative error with probability greater than 1 minus <em>&delta;</em>, where <em>&delta;</em> is user-specified.</li>
-</ul>
-
-<p>The classes of functions <em>f</em> that are of interest are:</p>
-
-<ul>
-<li>C1: Continuous functions that map [0, 1] to [0, 1] and are polynomially bounded (meaning that <em>f</em>(<em>x</em>) and 1&minus;<em>f</em>(<em>x</em>) are both bounded from below by min(<em>x</em><sup><em>n</em></sup>, (1&minus;<em>x</em>)<sup><em>n</em></sup>) for some integer <em>n</em>) (Keane and O&#39;Brien 1994)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.</li>
-<li>C2: Continuous functions that map [0, 1] to [0, 1] and are not necessarily polynomially bounded.</li>
-<li>C3: Piecewise continuous functions that map [0, 1] to [0, 1].</li>
-</ul>
-
-<p>Note the following:</p>
-
-<ul>
-<li>The value the algorithm should approximate is <em>f</em>(<strong>E</strong>[<em>X</em>]), not <strong>E</strong>[<em>f</em>(<em>X</em>)], which is different in general.  But algorithms for <strong>E</strong>[<em>f</em>(<em>X</em>)] are welcome in case it&#39;s more difficult.</li>
-<li>The following algorithms are different from the algorithms asked for here:
-
-<ul>
-<li>The Gamma Bernoulli Approximation scheme as well as the Kunsch algorithm both estimate the mean of <em>X</em> (<strong>E</strong>[<em>X</em>]), rather than a function of that mean (<em>f</em>(<strong>E</strong>[<em>X</em>])).</li>
-<li>Some algorithms produce unbiased estimates of <em>f</em>(<strong>E</strong>[<em>X</em>]), but not with a user-specified error (Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.</li>
-</ul></li>
-<li>Algorithms like the one being asked for here are especially useful because they can help build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.   In this case, <em>X</em> should follow the Bernoulli distribution.</li>
-<li>It is suspected that the algorithm&#39;s performance will depend on the &quot;smoothness&quot; of <em>f</em>(<em>X</em>) (see also (Holtz et al. 2011)<sup><a href="#Note8"><strong>(8)</strong></a></sup>).</li>
-</ul>
-
-<p>Also, are there results that estimate <em>f</em>(<strong>E</strong>[<em>X</em>]) with a user-specified error bound even if <em>X</em> follows a certain kind of unbounded distribution (such as a geometric, exponential, or Poisson distribution, or another distribution with exponential tails)?</p>
-
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
@@ -340,9 +321,6 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. &quot;Faster estimates of the mean of bounded random variables.&quot; Mathematics and Computers in Simulation 161 (2019): 93-101.</small></li>
 <li><small><sup id=Note4>(4)</sup> Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>&epsilon;</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>&quot;, arXiv:1706.01478, 2017.</small></li>
 <li><small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. &quot;Solvable integration problems and optimal sample size selection.&quot; Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> .</small></li>
-<li><small><sup id=Note6>(6)</sup> Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</small></li>
-<li><small><sup id=Note7>(7)</sup> Pierre E. Jacob.  Alexandre H. Thiery. &quot;On nonnegative unbiased estimators.&quot; Ann. Statist. 43 (2) 769 - 784, April 2015. <a href="https://doi.org/10.1214/15-AOS1311"><strong>https://doi.org/10.1214/15-AOS1311</strong></a></small></li>
-<li><small><sup id=Note8>(8)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, Constructive Approximation 33 (2011).</small></li>
 </ul>
 
 <p><a id=License></a></p>
