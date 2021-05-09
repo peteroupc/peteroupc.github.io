@@ -56,8 +56,8 @@ The algorithm, called **Algorithm A** in this document, follows.
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
 > 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
 
-<a id=An_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a>
-## An Relative-Error Algorithm for Bounded Random Numbers
+<a id=A_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a>
+## A Relative-Error Algorithm for Bounded Random Numbers
 
 The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random numbers with the following properties:
 
@@ -69,7 +69,7 @@ The algorithm has the following parameters:
 
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 1/8 or less, and _&delta;_ must be 1 or less.  The relative error is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
-With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.  However, the estimate can be higher than 1 with probability greater than 0.
+With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.  However, the estimate has a nonzero probability of being higher than 1.
 
 The algorithm, called **Algorithm B** in this document, follows.
 
@@ -160,10 +160,15 @@ The algorithm, called **Algorithm C** in this document, follows.
 _Algorithm C_ can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate _f_(**E**[**z**]), where:
 
 - **z** is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].
-- _f_ is a continuous function that maps the closed interval [0, 1] to [0, 1].
+- _f_ is a known continuous function that maps the closed interval [0, 1] to [0, 1].
 - The stream's numbers can take on a single value with probability 1.
 
-The following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1]. In the algorithm, _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.  For this reason, it works only if the stream's distribution has the following technical property: The _q_-th c.a.m.'s _q_-th root may not be less than _&kappa;_ times the _p_-th c.a.m.'s _p_-th root.  The algorithm, called **Algorithm D** in this document, follows.
+The following algorithm takes the following parameters:
+
+- _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.
+- _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].
+
+The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_-th c.a.m.'s _q_-th root may not be less than _&kappa;_ times the _p_-th c.a.m.'s _p_-th root.  The algorithm, called **Algorithm D** in this document, follows.
 
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_&eta;_), and solving the equation _&omega;_(_&eta;_) = _&epsilon;_ for _&eta;_.
     - Loosely speaking, a modulus of continuity shows the maximum range of _f_ in a window of size _&eta;_.
@@ -174,14 +179,20 @@ The following algorithm will return an estimate within _&epsilon;_ of _f_(**E**[
 
 A simpler version of _Algorithm D_ was given as an answer to the linked-to question.  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
 
-1. Calculate _&gamma;_ as given in step 1 of the previous algorithm.
+1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_))/(2\*_&gamma;_<sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding's inequality.)
-3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_.  Return the result.
+3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 > 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_, and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
+> 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, as follows:
+>
+>     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
+>     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
+>     - Instead of _f_(_x_), take _g_(_x_) where _g_(_x_) = _f_(_a_ + (_x_\*(_b_ &minus; _a_))).
+>     - If _Algorithm D_ or _Algorithm E_ would return a result _r_, it returns _a_ + (_r_\*(_b_ &minus; _a_)) instead.
 >
 > **Examples:**
 >

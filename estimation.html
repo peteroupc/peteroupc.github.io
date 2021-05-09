@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/08"><meta name="citation_online_date" content="2021/05/08"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/09"><meta name="citation_online_date" content="2021/05/09"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -76,9 +76,9 @@
 </ol>
 </blockquote>
 
-<p><a id=An_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a></p>
+<p><a id=A_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a></p>
 
-<h2>An Relative-Error Algorithm for Bounded Random Numbers</h2>
+<h2>A Relative-Error Algorithm for Bounded Random Numbers</h2>
 
 <p>The following algorithm comes from Huber and Jones (2019)<sup><a href="#Note3"><strong>(3)</strong></a></sup>; see also Huber (2017)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  It estimates the expected value of a stream of random numbers with the following properties:</p>
 
@@ -94,7 +94,7 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 1/8 or less, and <em>&delta;</em> must be 1 or less.  The relative error is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</li>
 </ul>
 
-<p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate can be higher than 1 with probability greater than 0.</p>
+<p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate has a nonzero probability of being higher than 1.</p>
 
 <p>The algorithm, called <strong>Algorithm B</strong> in this document, follows.</p>
 
@@ -225,11 +225,18 @@
 
 <ul>
 <li><strong>z</strong> is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].</li>
-<li><em>f</em> is a continuous function that maps the closed interval [0, 1] to [0, 1].</li>
+<li><em>f</em> is a known continuous function that maps the closed interval [0, 1] to [0, 1].</li>
 <li>The stream&#39;s numbers can take on a single value with probability 1.</li>
 </ul>
 
-<p>The following algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1]. In the algorithm, <em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in <em>Algorithm C</em>.  For this reason, it works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
+<p>The following algorithm takes the following parameters:</p>
+
+<ul>
+<li><em>p</em>, <em>q</em>, and <em>&kappa;</em> are as defined in <em>Algorithm C</em>.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</li>
+</ul>
+
+<p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
@@ -246,9 +253,9 @@
 <p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question.  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
 
 <ol>
-<li>Calculate <em>&gamma;</em> as given in step 1 of the previous algorithm.</li>
+<li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
 <li>(Calculate the sample size.) Set <em>n</em> to ceil(ln(2/<em>&delta;</em>))/(2*<em>&gamma;</em><sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding&#39;s inequality.)</li>
-<li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>.  Return the result.</li>
+<li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>&mu;</em>.  Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
 <blockquote>
@@ -257,6 +264,14 @@
 <ol>
 <li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 <li><em>Algorithm E</em> can be used to build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the <em>Bernoulli distribution</em>, and <em>f</em> should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running <em>Algorithm E</em> and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.</li>
+<li><p><em>Algorithm D</em> and <em>Algorithm E</em> can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, as follows:</p>
+
+<ul>
+<li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> &minus; <em>a</em>).</li>
+<li>Instead of <em>&epsilon;</em>, take <em>&epsilon;</em>/(<em>b</em> &minus; <em>a</em>).</li>
+<li>Instead of <em>f</em>(<em>x</em>), take <em>g</em>(<em>x</em>) where <em>g</em>(<em>x</em>) = <em>f</em>(<em>a</em> + (<em>x</em>*(<em>b</em> &minus; <em>a</em>))).</li>
+<li>If <em>Algorithm D</em> or <em>Algorithm E</em> would return a result <em>r</em>, it returns <em>a</em> + (<em>r</em>*(<em>b</em> &minus; <em>a</em>)) instead.</li>
+</ul></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
