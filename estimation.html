@@ -220,7 +220,7 @@
 
 <ul>
 <li>produces an estimate within a user-specified error tolerance (in terms of <em>absolute error</em>, as opposed to <em>relative error</em>) with probability greater than a user-specified value, and</li>
-<li>works for all streams whose distribution is known only to have a finite <em>n</em><sup>th</sup> moment for any fixed <em>n</em> (such as a finite mean or finite variance).</li>
+<li>works for all streams whose distribution is known only to have a finite <em>n</em><sup>th</sup> moment for any fixed <em>n</em> (such as a finite mean).</li>
 </ul></li>
 </ol>
 
@@ -274,13 +274,12 @@
 <ol>
 <li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 <li><em>Algorithm E</em> can be used to build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the <em>Bernoulli distribution</em>, and <em>f</em> should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running <em>Algorithm E</em> and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.</li>
-<li><p><em>Algorithm D</em> and <em>Algorithm E</em> can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, as follows:</p>
+<li><p><em>Algorithm D</em> and <em>Algorithm E</em> can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to [<em>a</em>, <em>b</em>], as follows:</p>
 
 <ul>
 <li>For each number in the stream, subtract <em>a</em> from it, then divide it by (<em>b</em> &minus; <em>a</em>).</li>
 <li>Instead of <em>&epsilon;</em>, take <em>&epsilon;</em>/(<em>b</em> &minus; <em>a</em>).</li>
-<li>Instead of <em>f</em>(<em>x</em>), take <em>g</em>(<em>x</em>) where <em>g</em>(<em>x</em>) = <em>f</em>(<em>a</em> + (<em>x</em>*(<em>b</em> &minus; <em>a</em>))).</li>
-<li>If <em>Algorithm D</em> or <em>Algorithm E</em> would return a result <em>r</em>, it returns <em>a</em> + (<em>r</em>*(<em>b</em> &minus; <em>a</em>)) instead.</li>
+<li>If the algorithm would return <em>f</em>(<em>&mu;</em>), instead return <em>g</em>(<em>&mu;</em>) where <em>g</em>(<em>&mu;</em>) = <em>f</em>(<em>a</em> + (<em>&mu;</em>*(<em>b</em> &minus; <em>a</em>))).</li>
 </ul></li>
 </ol>
 
