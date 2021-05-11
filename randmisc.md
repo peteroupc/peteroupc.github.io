@@ -35,8 +35,8 @@ This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  H
 More specifically, step 7 can be changed as follows:
 
 - (7.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_ret_+1)&minus;loggamma((_n_&minus;_ret_)+1)+ln(_m_)+ln(2)\*((_k_&minus;_n_)+2) (where loggamma(_x_) is the logarithm of the gamma function).
-- (7a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _e_ to 0 minus that number.
-- (7b.) If _e_ is greater than _p_, go to step 3.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 3 if _e_ is greater than the upper bound, or return _ret_ if _e_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
+- (7a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set _&eta;_ to 0 minus that number.
+- (7b.) If _h_ is greater than _p_, go to step 3.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 3 if _h_ is greater than the upper bound, or return _ret_ if _h_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula for the factorial's natural logarithm (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
 
@@ -234,14 +234,14 @@ If _f_(_t_) = _t_ and the quantile function is _Lipschitz continuous_, which rou
 
 This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020<sup>[**(26)**](#Note26)</sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.
 
-> **Note:** I suspect that if the quantile function is continuous, has a minimum and maximum, and admits a modulus of continuity _&omega;_(_h_) that is monotone increasing, then _d_ in step 1 above can be calculated as ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_)), where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>)
+> **Note:** I suspect that if the quantile function is continuous, has a minimum and maximum, and admits a modulus of continuity _&omega;_(_h_) that is monotone increasing, then _d_ in step 1 above can be calculated as ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_)), where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(31)**](#Note31)</sup>)
 
 Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G's probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).  This involves calculating lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)) to the distribution G limited to the interval \[_alow_, _bhigh_\] and accepting the resulting PSRN if it clearly lies in \[_ahigh_, _blow_\] or rejecting it if it clearly lies outside \[_alow_, _bhigh_\].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it's clear whether to accept or reject the output PSRN.
 
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(29)**](#Note29)</sup>; Canonne et al. (2020)<sup>[**(30)**](#Note30)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
+This algorithm `ExpoExact`, samples an exponential random number given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(28)**](#Note28)</sup>; Canonne et al. (2020)<sup>[**(29)**](#Note29)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y <= 0 or x<0: return error
@@ -276,7 +276,7 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(31)**](#Note31)</sup>
+> **Note:** After `ExpoExact` is used to generate a random number, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(30)**](#Note30)</sup>
 
 <a id=Notes></a>
 ## Notes
@@ -308,10 +308,10 @@ This algorithm `ExpoExact`, samples an exponential random number given the rate 
 - <small><sup id=Note25>(25)</sup> Rady,  E.H.A.,  Hassanein,  W.A.,  Elhaddad,  T.A., "The power Lomax distribution with an application to bladder cancer data", (2016).</small>
 - <small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note27>(27)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
-- <small><sup id=Note28>(28)</sup> Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, e.g., "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.</small>
-- <small><sup id=Note29>(29)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-- <small><sup id=Note30>(30)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
-- <small><sup id=Note31>(31)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note28>(28)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note29>(29)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
+- <small><sup id=Note30>(30)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note31>(31)</sup> Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, e.g., "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.</small>
 
 <a id=License></a>
 ## License

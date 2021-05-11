@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/05/08"><meta name="citation_online_date" content="2021/05/08"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/05/11"><meta name="citation_online_date" content="2021/05/11"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Requests and Open Questions</h1>
@@ -17,6 +17,7 @@
 <li><a href="#Bernoulli_Factory_Algorithms"><strong>Bernoulli Factory Algorithms</strong></a></li>
 <li><a href="#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions"><strong>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</strong></a></li>
 <li><a href="#More_Algorithms_for_Arbitrary_Precision_Sampling"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a></li>
+<li><a href="#Randomized_Estimation_Algorithms"><strong>Randomized Estimation Algorithms</strong></a></li>
 <li><a href="#Color_Topics_for_Programmers"><strong>Color Topics for Programmers</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -147,6 +148,30 @@
 </ul></li>
 <li>The <a href="https://peteroupc.github.io/morealg.html#Appendix"><strong>appendix</strong></a> contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?  See also my related Stack Exchange question: <a href="https://stackoverflow.com/questions/64728693/how-can-we-check-if-an-arbitrary-shape-covers-a-box-partially-fully-or-not-i"><strong>How can we check if an arbitrary shape covers a box (partially, fully, or not) if we can only evaluate the shape pointwise?</strong></a>.</li>
 <li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>*(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the <a href="https://peteroupc.github.io/morealg.html#Appendix"><strong>appendix</strong></a>, enough times (at least <em>r</em> times), then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A <a href="https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1"><strong>MathOverflow answer</strong></a> showed that <em>r</em> is at least <em>m</em> = (<em>n</em>/<em>f</em>(1/2)<sup>2</sup>)/(1&minus;<em>f</em>(1/2)<sup>2</sup>), but is it true that floor(<em>m</em>)+1 elevations are enough?</li>
+</ol>
+
+<p><a id=Randomized_Estimation_Algorithms></a></p>
+
+<h2>Randomized Estimation Algorithms</h2>
+
+<p><a href="https://peteroupc.github.io/estimation.html">https://peteroupc.github.io/estimation.html</a></p>
+
+<p>Let <em>X</em> be a stream of random numbers and let <em>f</em>(<em>x</em>) be a continuous function.</p>
+
+<ol>
+<li><p>Is there an algorithm, besides <em>Algorithm C</em> in the article, that can find <em>f</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error, when the distribution of <em>X</em> is unbounded, and additional assumptions on the distribution of <em>X</em> apply, such as&mdash;</p></li>
+</ol>
+
+<ul>
+<li>being unimodal (having one peak) and symmetric (same on each side of the peak), and/or</li>
+<li>following a geometric, exponential, or Poisson distribution, and/or</li>
+<li>having decreasing or nonincreasing probabilities?</li>
+</ul>
+
+<p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.</p>
+
+<ol>
+<li>How can <em>Algorithm D</em> or <em>Algorithm E</em> in the article be adapted to discontinuous functions <em>g</em>, so that the algorithm finds <em>g</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error at all points in [0, 1] except at a &quot;negligible&quot; area around <em>g</em>&#39;s discontinuities?  Is it enough to replace <em>g</em> with a continuous function <em>f</em> that equals <em>g</em> everywhere except at that &quot;negligible&quot; area?  Here, the accuracy tolerances for small error, high probability, and &quot;negligible&quot; area are user-specified.</li>
 </ol>
 
 <p><a id=Color_Topics_for_Programmers></a></p>

@@ -12,6 +12,7 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
 - [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions)
 - [**More Algorithms for Arbitrary-Precision Sampling**](#More_Algorithms_for_Arbitrary_Precision_Sampling)
+- [**Randomized Estimation Algorithms**](#Randomized_Estimation_Algorithms)
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -112,6 +113,23 @@ This page has more algorithms for sampling using partially-sampled random number
     - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
 2. The [**appendix**](https://peteroupc.github.io/morealg.html#Appendix) contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?  See also my related Stack Exchange question: [**How can we check if an arbitrary shape covers a box (partially, fully, or not) if we can only evaluate the shape pointwise?**](https://stackoverflow.com/questions/64728693/how-can-we-check-if-an-arbitrary-shape-covers-a-box-partially-fully-or-not-i).
 3. Take a polynomial _f_(_&lambda;_) of even degree _n_ of the form choose(_n_,_n_/2)\*_&lambda;_<sup>_n_/2</sup>\*(1&minus;_&lambda;_)<sup>_n_/2</sup>\*_k_, where _k_ is greater than 1 (thus all _f_'s Bernstein coefficients are 0 except for the middle one, which equals _k_).  Suppose _f_(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the [**appendix**](https://peteroupc.github.io/morealg.html#Appendix), enough times (at least _r_ times), then _f_'s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A [**MathOverflow answer**](https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1) showed that _r_ is at least _m_ = (_n_/_f_(1/2)<sup>2</sup>)/(1&minus;_f_(1/2)<sup>2</sup>), but is it true that floor(_m_)+1 elevations are enough?
+
+<a id=Randomized_Estimation_Algorithms></a>
+## Randomized Estimation Algorithms
+
+[https://peteroupc.github.io/estimation.html](https://peteroupc.github.io/estimation.html)
+
+Let _X_ be a stream of random numbers and let _f_(_x_) be a continuous function.
+
+1. Is there an algorithm, besides _Algorithm C_ in the article, that can find _f_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
+
+- being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
+- following a geometric, exponential, or Poisson distribution, and/or
+- having decreasing or nonincreasing probabilities?
+
+Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.
+
+2. How can _Algorithm D_ or _Algorithm E_ in the article be adapted to discontinuous functions _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.
 
 <a id=Color_Topics_for_Programmers></a>
 ## Color Topics for Programmers

@@ -335,6 +335,28 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 </pre>
 
+<p><a id=Requests_and_Open_Questions></a></p>
+
+<h2>Requests and Open Questions</h2>
+
+<p>Let <em>X</em> be a stream of random numbers and let <em>f</em>(<em>x</em>) be a continuous function.</p>
+
+<ol>
+<li><p>Is there an algorithm, besides <em>Algorithm C</em>, that can find <em>f</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error, when the distribution of <em>X</em> is unbounded, and additional assumptions on the distribution of <em>X</em> apply, such as&mdash;</p></li>
+</ol>
+
+<ul>
+<li>being unimodal (having one peak) and symmetric (same on each side of the peak), and/or</li>
+<li>following a geometric, exponential, or Poisson distribution, and/or</li>
+<li>having decreasing or nonincreasing probabilities?</li>
+</ul>
+
+<p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.</p>
+
+<ol>
+<li>How can <em>Algorithm D</em> or <em>Algorithm E</em> be adapted to a known discontinuous function <em>g</em>, so that the algorithm finds <em>g</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error at all points in [0, 1] except at a &quot;negligible&quot; area around <em>g</em>&#39;s discontinuities?  Is it enough to replace <em>g</em> with a continuous function <em>f</em> that equals <em>g</em> everywhere except at that &quot;negligible&quot; area?  Here, the accuracy tolerances for small error, high probability, and &quot;negligible&quot; area are user-specified.</li>
+</ol>
+
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
