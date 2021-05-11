@@ -649,7 +649,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
-- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1].
+- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_h_) gives _f_'s maximum range in a window of size _h_.
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 

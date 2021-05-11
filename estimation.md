@@ -155,7 +155,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 > 1. If the stream of random numbers meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
 > 2. Theorem 3.4 of Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup> shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
->      - works for all streams whose distribution is known only to have a finite _n_<sup>th</sup> moment for any fixed _n_ (such as a finite mean).
+>      - works for all streams whose distribution is known only to have finite moments.
 >
 > **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
 
