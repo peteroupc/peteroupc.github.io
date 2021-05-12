@@ -117,17 +117,17 @@ This page has more algorithms for sampling using partially-sampled random number
 <a id=Randomized_Estimation_Algorithms></a>
 ## Randomized Estimation Algorithms
 
-[https://peteroupc.github.io/estimation.html](https://peteroupc.github.io/estimation.html)
+[**https://peteroupc.github.io/estimation.html**](https://peteroupc.github.io/estimation.html)
 
 Let _X_ be a stream of random numbers and let _f_(_x_) be a continuous function.
 
-1. Is there an algorithm, besides _Algorithm C_ in the article, that can find _f_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
+1. Is there an algorithm, besides _Algorithm C_ in the article, that can find **E**[_X_] (or _f_(**E**[_X_])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
 
-- being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
-- following a geometric, exponential, or Poisson distribution, and/or
-- having decreasing or nonincreasing probabilities?
+    - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
+    - following a geometric, exponential, or Poisson distribution, and/or
+    - having decreasing or nonincreasing probabilities?
 
-Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.
+    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.
 
 2. How can _Algorithm D_ or _Algorithm E_ in the article be adapted to discontinuous functions _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.
 
