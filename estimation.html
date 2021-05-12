@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/11"><meta name="citation_online_date" content="2021/05/11"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/12"><meta name="citation_online_date" content="2021/05/12"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -24,7 +24,7 @@
 <ul>
 <li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the average value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a random number from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as <em>n</em> gets large.</li>
 <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.  In other words, take random samples, raise them to the power <em>n</em>, then take their average.  The average will approach the <em>n</em><sup>th</sup> moment as <em>n</em> gets large.</li>
-<li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em><sup><em>n</em></sup> &minus; <em>&mu;</em>), where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>, and the 4th central moment <em>kurtosis</em>.</li>
+<li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em><sup><em>n</em></sup> &minus; <em>&mu;</em>), where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>.</li>
 <li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em><sup><em>n</em></sup> &minus; <em>&mu;</em>), where <em>&mu;</em> is the distribution&#39;s mean.  This is the same as the central moment when <em>n</em> is even.</li>
 </ul>
 
@@ -161,14 +161,14 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be 1 or less.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em>-moment that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The degree of the <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
-<li><em>&kappa;</em>: May not be less than the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root, and may not be less than 1.</li>
+<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup> <sup><a href="#Note7"><strong>(7)</strong></a></sup>.) <em>&kappa;</em> may not be less than 1.</li>
 </ul>
 
 <p>For example:</p>
 
 <ul>
-<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 1.1, the algorithm assumes the random numbers&#39; distribution has a bounded 4th c.a.m. and that the 4th c.a.m.&#39;s 4th root is no more than 1.1 times the 2nd c.a.m.&#39;s square root (that is, the standard deviation), and will return an estimate that&#39;s within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
-<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the random numbers&#39; distribution has a standard deviation (<em>q</em>=2) that is no more than 2 times its mean deviation (<em>p</em>=1), and will return an estimate that&#39;s within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.</li>
+<li>With parameters <em>p</em> = 2, <em>q</em> = 4, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 1.1, the algorithm assumes the random numbers are distributed so that the kurtosis&#39;s 4th root, that is, the 4th c.a.m.&#39;s 4th root (<em>q</em>=4) divided by the standard deviation (<em>p</em>=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
+<li>With parameters <em>p</em> = 1, <em>q</em> = 2, <em>&epsilon;</em> = 1/10, <em>&delta;</em> = 1/16, <em>&kappa;</em> = 2, the algorithm assumes the random numbers are distributed so that the standard deviation (<em>q</em>=2) divided by the mean deviation (<em>p</em>=1) is no more than 2, and will return an estimate that&#39;s within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.</li>
 </ul>
 
 <p>The algorithm, called <strong>Algorithm C</strong> in this document, follows.</p>
@@ -246,7 +246,7 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].</li>
 </ul>
 
-<p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em>-th c.a.m.&#39;s <em>q</em>-th root may not be less than <em>&kappa;</em> times the <em>p</em>-th c.a.m.&#39;s <em>p</em>-th root.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
+<p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
@@ -306,7 +306,7 @@
 
 <ul>
 <li>The <em>q</em><sup>th</sup> c.a.m. for <em>h</em>(<strong>z</strong>) is finite.  That is, <strong>E</strong>[abs(<em>h</em>(<strong>z</strong>)&minus;<strong>E</strong>[<em>h</em>(<strong>z</strong>)])<sup><em>q</em></sup>] is finite.</li>
-<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is no more than <em>&kappa;</em> times the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root, where <em>&kappa;</em> is 1 or greater.</li>
+<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.</li>
 </ul>
 
 <p>Unfortunately, these conditions may be hard to verify in practice, especially when the distribution <em>h</em>(<strong>z</strong>) is not known.  (In fact, <strong>E</strong>[<em>h</em>(<strong>z</strong>)], as seen above, is the unknown integral that we seek to estimate.)</p>
@@ -364,6 +364,8 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. &quot;Faster estimates of the mean of bounded random variables.&quot; Mathematics and Computers in Simulation 161 (2019): 93-101.</small></li>
 <li><small><sup id=Note4>(4)</sup> Huber, Mark, &quot;<a href="https://arxiv.org/abs/1706.01478"><strong>An optimal(<em>&epsilon;</em>, <em>&delta;</em>)-approximation scheme for the mean of random variables with bounded relative variance</strong></a>&quot;, arXiv:1706.01478, 2017.</small></li>
 <li><small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. &quot;Solvable integration problems and optimal sample size selection.&quot; Journal of Complexity 53 (2019): 40-67.  Also in <a href="https://arxiv.org/pdf/1805.08637.pdf"><strong>https://arxiv.org/pdf/1805.08637.pdf</strong></a> .</small></li>
+<li><small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., &quot;<a href="https://arxiv.org/abs/1208.4318v2"><strong>Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling</strong></a>&quot;, arXiv:1208.4318v2 [math.ST], 2012.</small></li>
+<li><small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small></li>
 </ul>
 
 <p><a id=License></a></p>

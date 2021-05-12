@@ -18,7 +18,7 @@ Each algorithm takes a stream of random numbers.  These numbers follow a _probab
 
 - The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a random number from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as _n_ gets large.
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.  In other words, take random samples, raise them to the power _n_, then take their average.  The average will approach the _n_<sup>th</sup> moment as _n_ gets large.
-- An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_, and the 4th central moment _kurtosis_.
+- An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
 - An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the random numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
@@ -120,12 +120,12 @@ The algorithm has the following parameters:
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be 1 or less.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_-moment that the algorithm will estimate to determine the mean.
 - _q_: The degree of the _q_-moment.  _q_ must be greater than _p_.
-- _&kappa;_: May not be less than the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root, and may not be less than 1.
+- _&kappa;_: Maximum value allowed for the following value: the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012)<sup>[**(6)**](#Note6)</sup> <sup>[**(7)**](#Note7)</sup>.) _&kappa;_ may not be less than 1.
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers' distribution has a bounded 4th c.a.m. and that the 4th c.a.m.'s 4th root is no more than 1.1 times the 2nd c.a.m.'s square root (that is, the standard deviation), and will return an estimate that's within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers' distribution has a standard deviation (_q_=2) that is no more than 2 times its mean deviation (_p_=1), and will return an estimate that's within 1/10 of the true mean with probability (1 &minus; 1/16) or greater, or 15/16 or greater.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
 
 The algorithm, called **Algorithm C** in this document, follows.
 
@@ -173,7 +173,7 @@ The following algorithm takes the following parameters:
 - _p_, _q_, and _&kappa;_ are as defined in _Algorithm C_.
 - _&epsilon;_, _&delta;_: The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].
 
-The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_-th c.a.m.'s _q_-th root may not be less than _&kappa;_ times the _p_-th c.a.m.'s _p_-th root.  The algorithm, called **Algorithm D** in this document, follows.
+The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.  The algorithm, called **Algorithm D** in this document, follows.
 
 1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_&eta;_), and solving the equation _&omega;_(_&eta;_) = _&epsilon;_ for _&eta;_.
     - Loosely speaking, a modulus of continuity shows the maximum range of _f_ in a window of size _&eta;_.
@@ -214,7 +214,7 @@ Monte Carlo integration is a randomized way to estimate the integral of a functi
 The estimate will come within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
 
 - The _q_<sup>th</sup> c.a.m. for _h_(**z**) is finite.  That is, **E**\[abs(_h_(**z**)&minus;**E**\[_h_(**z**)\])<sup>_q_</sup>\] is finite.
-- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater.
+- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.
 
 Unfortunately, these conditions may be hard to verify in practice, especially when the distribution _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral that we seek to estimate.)
 
@@ -264,6 +264,8 @@ Let _X_ be an endless stream of random numbers and let _f_(_x_) be a continuous 
 - <small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.</small>
 - <small><sup id=Note4>(4)</sup> Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
+- <small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v2)", arXiv:1208.4318v2 [math.ST], 2012.</small>
+- <small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small>
 
 <a id=License></a>
 ## License
