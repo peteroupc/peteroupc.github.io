@@ -23,7 +23,7 @@ Each algorithm takes a stream of random variates (numbers).  These numbers follo
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
 
-For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
+For any estimation algorithm, the _relative error_ is abs(_est_/_trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
 <a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a>
 ## A Relative-Error Algorithm for a Bernoulli Stream
@@ -175,7 +175,7 @@ The following algorithm takes the following parameters:
 
 The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.  The algorithm, called **Algorithm D** in this document, follows.
 
-1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_&eta;_), and solving the equation _&omega;_(_&eta;_) = _&epsilon;_ for _&eta;_.
+1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_&eta;_), and solving the equation _&omega;_(_&eta;_) = _&epsilon;_ for _&eta;_.
     - Loosely speaking, a modulus of continuity shows the maximum range of _f_ in a window of size _&eta;_.
     - For example, if _f_'s slope is continuous at every point and never vertical, then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_&eta;_) = _M_\*_&eta;_, where _M_ is the Lipschitz constant, which in this case is the maximum absolute value of _f_'s "slope function".  The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
@@ -188,7 +188,7 @@ A simpler version of _Algorithm D_ was given as an answer to the linked-to quest
 2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_))/(2\*_&gamma;_<sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding's inequality.)
 3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
-If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (or the variance _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup>[**(6)**](#Note6)</sup>, but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
+If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup>[**(6)**](#Note6)</sup>, but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)).

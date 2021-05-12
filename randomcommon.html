@@ -1,11 +1,11 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Randomization</title><meta name="citation_title" content="The Most Common Topics Involving Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomcommon.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomcommon.html"><meta name="citation_date" content="2021/02/15"><meta name="citation_online_date" content="2021/02/15"><meta name="og:title" content="The Most Common Topics Involving Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomcommon.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Most Common Topics Involving Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Randomization</title><meta name="citation_title" content="The Most Common Topics Involving Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomcommon.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomcommon.html"><meta name="citation_date" content="2021/05/12"><meta name="citation_online_date" content="2021/05/12"><meta name="og:title" content="The Most Common Topics Involving Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomcommon.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Most Common Topics Involving Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>The Most Common Topics Involving Randomization</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><strong>Abstract</strong>: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&amp;A site.  The topics included generating uniform random numbers, unique random values, choosing one or more random items, shuffling, and querying random records from a database.</p>
+<p><strong>Abstract</strong>: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&amp;A site.  The topics included generating uniform random variates, unique random values, choosing one or more random items, shuffling, and querying random records from a database.</p>
 
 <p><a id=Introduction></a></p>
 
@@ -21,10 +21,10 @@
 <li>Generating uniform random integers in a range.</li>
 <li>Generating uniform random floating-point numbers in a range.</li>
 <li>Generating unique random integers in a range.</li>
-<li>Choosing a random item from a list.</li>
+<li>Choosing an item at random from a list.</li>
 <li>Choosing several unique items from a list.</li>
 <li>Choosing items with separate probabilities.</li>
-<li>Choosing random records from a database.</li>
+<li>Choosing records at random from a database.</li>
 <li>Shuffling.</li>
 <li>Generating a random text string of characters selected from a restricted character set (such as only A to Z, a to z, 0 to 9).</li>
 </ul>
@@ -62,7 +62,7 @@
 
 <h2>Uniform Numbers in a Range</h2>
 
-<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>For algorithms on generating uniform random <em>integers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers"><strong>&quot;Uniform Random Integers&quot;</strong></a>.  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom <code>(Math.random() &lt; 0.5 ? 0 : 1)</code> will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**<code>minInclusive</code>, <code>maxExclusive</code>), using the Fast Dice Roller by J. Lumbroso (2013)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
 
 <pre>function randomInt(minInclusive, maxExclusive) {
   var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -82,11 +82,11 @@
 }
 </pre>
 
-<p>Many common programming languages have no convenient or correct way to generate random numbers in a range.  For example:</p>
+<p>Many common programming languages have no convenient or correct way to generate numbers in a range at random.  For example:</p>
 
 <ul>
 <li>Java&#39;s <code>java.util.Random</code> until version 8 had methods to produce <code>int</code>s in the interval [0, n) (<code>nextInt</code>), but not <code>long</code>s in that interval or integers in an arbitrary interval [a, b).   Additional methods named <code>longs</code> and <code>ints</code> were later provided that offer this functionality, but even so, they are often not as convenient as the existing <code>nextInt</code> method.</li>
-<li>JavaScript until recently has only one API for random number generation, namely <code>Math.random()</code>, and no built-in method for random integer generation or shuffling, among other things.  Naïve solutions such as <code>Math.floor(Math.random()*x)+y</code> are not guaranteed to work reliably, in part because JavaScript doesn&#39;t require any particular implementation for <code>Math.random</code>.</li>
+<li>JavaScript until recently has only one API that exposes a random number generator, namely <code>Math.random()</code>, and no built-in method for shuffling or producing integers at random, among other things.  Naïve solutions such as <code>Math.floor(Math.random()*x)+y</code> are not guaranteed to work reliably, in part because JavaScript doesn&#39;t require any particular implementation for <code>Math.random</code>.</li>
 <li>C&#39;s <code>rand</code> function produces random integers in a predetermined range ([0, <code>RAND_MAX</code>]) that is not within the application&#39;s control.  This is just one of a <a href="https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465"><strong>host of issues with <code>rand</code></strong></a>, by the way (unspecified algorithm, yet is initializable with &quot;srand&quot; for repeatability; non-thread-safety; unspecified distribution; historical implementations had weak low bits; etc.).</li>
 </ul>
 
@@ -128,14 +128,14 @@
 
 <h2>Random Records from a Database</h2>
 
-<p>Querying random records (<em>rows</em>) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.</p>
+<p>Querying random records (<em>rows</em>) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to produce randomly generated or pseudorandom numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.</p>
 
 <p>With that said, the following specific situations tend to come up in random record queries.</p>
 
 <ul>
 <li>Querying one random record from a database.</li>
 <li>Querying a specified number of random records from a database.</li>
-<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, itself its own column, and <code>R</code> is a per-record uniform random number in (0, 1)) (see also (Arratia 2002)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
+<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, itself its own column, and <code>R</code> is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
 </ul>
 
 <p><a id=Random_Character_Strings></a></p>
@@ -184,8 +184,8 @@
 <li>Generating a number that follows the <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>normal distribution</strong></a>.</li>
 <li>Generating a number that follows an <a href="https://peteroupc.github.io/randomfunc.html#Random_Numbers_from_an_Arbitrary_Distribution"><strong>arbitrary distribution</strong></a>.</li>
 <li><a href="https://peteroupc.github.io/colorgen.html#Generating_a_Random_Color"><strong>Random colors</strong></a>.</li>
-<li>Random <a href="https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum"><strong>numbers with a given sum</strong></a>.</li>
-<li>Random <a href="https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times"><strong>dates and times</strong></a>.</li>
+<li>Randomly generating <a href="https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum"><strong>numbers with a given sum</strong></a>.</li>
+<li>Randomly generating <a href="https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times"><strong>dates and times</strong></a>.</li>
 <li>Stratified sampling (per-group sampling).</li>
 <li>Generating a <a href="https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone"><strong>random point inside a circle</strong></a>.</li>
 </ul>

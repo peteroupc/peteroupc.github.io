@@ -30,7 +30,7 @@
 
 <p>Some distributions don&#39;t have an <em>n</em><sup>th</sup> moment for a particular <em>n</em>.  This usually means the <em>n</em><sup>th</sup> power of the stream&#39;s numbers varies so wildly that it can&#39;t be estimated accurately.  If a distribution has an <em>n</em><sup>th</sup> moment, it also has a <em>k</em><sup>th</sup> moment for any <em>k</em> in the interval [1, <em>n</em>).</p>
 
-<p>For any estimation algorithm, the <em>relative error</em> is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
+<p>For any estimation algorithm, the <em>relative error</em> is abs(<em>est</em>/<em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</p>
 
 <p><a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a></p>
 
@@ -249,7 +249,7 @@
 <p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
-<li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
+<li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), or the <em>inverse modulus of continuity</em>, which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
 
 <ul>
 <li>Loosely speaking, a modulus of continuity shows the maximum range of <em>f</em> in a window of size <em>&eta;</em>.</li>
@@ -268,7 +268,7 @@
 <li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>&mu;</em>.  Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>If the stream is <strong>unbounded</strong> (can take on any real number) and its distribution has a <strong>known upper bound on the standard deviation</strong> <em>&sigma;</em> (or the variance <em>&sigma;</em><sup>2</sup>), then a similar algorithm follows from Chebyshev&#39;s inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, but is adapted to find the mean for <em>f</em>(<em>x</em>), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers. The algorithm, called <strong>Algorithm F</strong> in this document, follows.</p>
+<p>If the stream is <strong>unbounded</strong> (can take on any real number) and its distribution has a <strong>known upper bound on the standard deviation</strong> <em>&sigma;</em> (<strong>or the variance</strong> <em>&sigma;</em><sup>2</sup>), then a similar algorithm follows from Chebyshev&#39;s inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, but is adapted to find the mean for <em>f</em>(<em>x</em>), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers. The algorithm, called <strong>Algorithm F</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>

@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract**: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&A site.  The topics included generating uniform random numbers, unique random values, choosing one or more random items, shuffling, and querying random records from a database.
+**Abstract**: This article goes over some of the most common topics involving randomization in programming, and serves as a guide to programmers looking to solve their randomization problems.  They were based on the most commonly pointed-to questions involving randomization on a Q&A site.  The topics included generating uniform random variates, unique random values, choosing one or more random items, shuffling, and querying random records from a database.
 
 <a id=Introduction></a>
 ## Introduction
@@ -16,10 +16,10 @@ The analysis showed the following topics were among the most commonly asked:
 - Generating uniform random integers in a range.
 - Generating uniform random floating-point numbers in a range.
 - Generating unique random integers in a range.
-- Choosing a random item from a list.
+- Choosing an item at random from a list.
 - Choosing several unique items from a list.
 - Choosing items with separate probabilities.
-- Choosing random records from a database.
+- Choosing records at random from a database.
 - Shuffling.
 - Generating a random text string of characters selected from a restricted character set (such as only A to Z, a to z, 0 to 9).
 
@@ -52,7 +52,7 @@ All the randomization methods presented on this page assume we have a source of 
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most random number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases as a random bit generator.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -71,10 +71,10 @@ For algorithms on generating uniform random _integers_ in a range, see [**"Unifo
       }
     }
 
-Many common programming languages have no convenient or correct way to generate random numbers in a range.  For example:
+Many common programming languages have no convenient or correct way to generate numbers in a range at random.  For example:
 
 - Java's `java.util.Random` until version 8 had methods to produce `int`s in the interval [0, n) (`nextInt`), but not `long`s in that interval or integers in an arbitrary interval [a, b).   Additional methods named `longs` and `ints` were later provided that offer this functionality, but even so, they are often not as convenient as the existing `nextInt` method.
-- JavaScript until recently has only one API for random number generation, namely `Math.random()`, and no built-in method for random integer generation or shuffling, among other things.  Naïve solutions such as `Math.floor(Math.random()*x)+y` are not guaranteed to work reliably, in part because JavaScript doesn't require any particular implementation for `Math.random`.
+- JavaScript until recently has only one API that exposes a random number generator, namely `Math.random()`, and no built-in method for shuffling or producing integers at random, among other things.  Naïve solutions such as `Math.floor(Math.random()*x)+y` are not guaranteed to work reliably, in part because JavaScript doesn't require any particular implementation for `Math.random`.
 - C's `rand` function produces random integers in a predetermined range (\[0, `RAND_MAX`\]) that is not within the application's control.  This is just one of a [**host of issues with `rand`**](https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465), by the way (unspecified algorithm, yet is initializable with "srand" for repeatability; non-thread-safety; unspecified distribution; historical implementations had weak low bits; etc.).
 
 For algorithms on generating uniform random _floating-point numbers_ in a range, see [**"For Floating-Point Number Formats"**](https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats).  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., `Math.random()*x` in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard 2020<sup>[**(2)**](#Note2)</sup>).
@@ -109,13 +109,13 @@ An algorithm to randomize (_shuffle_) the order of a list is given in [**"Shuffl
 <a id=Random_Records_from_a_Database></a>
 ## Random Records from a Database
 
-Querying random records (_rows_) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to generate random numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.
+Querying random records (_rows_) from a database usually involves the database language SQL.  However, SQL is implemented very differently in practice between database management systems (DBMSs), so that even trivial SQL statements are not guaranteed to work the same from one DBMS to another.  Moreover, SQL has no loops, no branches, and no standard way to produce randomly generated or pseudorandom numbers.  Thus, the correct way to query random records from a database will vary from DBMS to DBMS.
 
 With that said, the following specific situations tend to come up in random record queries.
 
 - Querying one random record from a database.
 - Querying a specified number of random records from a database.
-- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random number in (0, 1)) (see also (Arratia 2002)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
+- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
 
 <a id=Random_Character_Strings></a>
 ## Random Character Strings
@@ -155,8 +155,8 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 - Generating a number that follows the [**normal distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
 - Generating a number that follows an [**arbitrary distribution**](https://peteroupc.github.io/randomfunc.html#Random_Numbers_from_an_Arbitrary_Distribution).
 - [**Random colors**](https://peteroupc.github.io/colorgen.html#Generating_a_Random_Color).
-- Random [**numbers with a given sum**](https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum).
-- Random [**dates and times**](https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times).
+- Randomly generating [**numbers with a given sum**](https://peteroupc.github.io/randomfunc.html#Random_Integers_with_a_Given_Positive_Sum).
+- Randomly generating [**dates and times**](https://peteroupc.github.io/randomfunc.html#Random_Dates_and_Times).
 - Stratified sampling (per-group sampling).
 - Generating a [**random point inside a circle**](https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone).
 
