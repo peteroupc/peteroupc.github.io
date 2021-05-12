@@ -5,7 +5,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-This page presents general-purpose algorithms for estimating the mean value of a stream of random numbers, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
+This page presents general-purpose algorithms for estimating the mean value of a stream of random variates, or estimating the mean value of a function of those numbers.  The estimates are either _unbiased_ (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.
 
 The algorithms are described to make them easy to implement by programmers.
 
@@ -14,19 +14,19 @@ The algorithms are described to make them easy to implement by programmers.
 
 The following concepts are used in this document.
 
-Each algorithm takes a stream of random numbers.  These numbers follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
+Each algorithm takes a stream of random variates (numbers).  These numbers follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
 
-- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a random number from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as _n_ gets large.
+- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as _n_ gets large.
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.  In other words, take random samples, raise them to the power _n_, then take their average.  The average will approach the _n_<sup>th</sup> moment as _n_ gets large.
 - An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
 - An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
 
-Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the random numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
+Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
 
 For any estimation algorithm, the _relative error_ is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
-<a id=A_Relative_Error_Algorithm_for_Bernoulli_Random_Numbers></a>
-## A Relative-Error Algorithm for Bernoulli Random Numbers
+<a id=A_Relative_Error_Algorithm_for_a_Bernoulli_Stream></a>
+## A Relative-Error Algorithm for a Bernoulli Stream
 
 The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm's relative error is independent of that probability, however, and the algorithm produces _unbiased_ estimates.  Specifically, the stream of numbers has the following properties:
 
@@ -36,7 +36,7 @@ The following algorithm from Huber (2017)<sup>[**(1)**](#Note1)</sup> estimates 
 
 The algorithm, also known as _Gamma Bernoulli Approximation Scheme_, has the following parameters:
 
-- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 3/4 or less, and _&delta;_ must be 1 or less.
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 3/4 or less, and _&delta;_ must be less than 1.
 
 With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.  However, the estimate can be higher than 1 with probability greater than 0.
 
@@ -48,18 +48,18 @@ The algorithm, called **Algorithm A** in this document, follows.
 
 > **Note**:
 >
-> 1. As noted in Huber 2017, if we have a stream of random numbers that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;
+> 1. As noted in Huber 2017, if we have a stream of random variates that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;
 >
 >    1. generating a uniform(0, 1) random variate _u_, then
 >    2. changing that number to 1 if _u_ is less than that number, or 0 otherwise,
 >
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
-> 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random numbers follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
+> 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
 
-<a id=A_Relative_Error_Algorithm_for_Bounded_Random_Numbers></a>
-## A Relative-Error Algorithm for Bounded Random Numbers
+<a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
+## A Relative-Error Algorithm for a Bounded Stream
 
-The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random numbers with the following properties:
+The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)</sup>; see also Huber (2017)<sup>[**(4)**](#Note4)</sup>.  It estimates the expected value of a stream of random variates with the following properties:
 
 - The numbers in the stream lie in the closed interval [0, 1].
 - The stream of numbers can't take on the value 0 with probability 1.
@@ -67,7 +67,7 @@ The following algorithm comes from Huber and Jones (2019)<sup>[**(3)**](#Note3)<
 
 The algorithm has the following parameters:
 
-- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 1/8 or less, and _&delta;_ must be 1 or less.  The relative error is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&epsilon;_ must be 1/8 or less, and _&delta;_ must be less than 1.  The relative error is abs(_est_, _trueval_) &minus; 1, where _est_ is the estimate and _trueval_ is the true expected value.
 
 With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.  However, the estimate has a nonzero probability of being higher than 1.
 
@@ -78,7 +78,7 @@ The algorithm, called **Algorithm B** in this document, follows.
 3. (Stage 1: Modified gamma Bernoulli approximation scheme.) While _b_ is less than _k_:
     1. Add 1 to _n_.
     2. Take a sample from the stream, call it _s_.
-    3. Generate a uniform(0, 1) random number, call it _u_.
+    3. Generate a uniform(0, 1) random variate, call it _u_.
     4. If _u_ is less than _s_, add 1 to _b_.
 4. Set _gb_ to _k_ + 2, then divide _gb_ by a gamma(_n_) random variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
@@ -99,33 +99,33 @@ The standard deviation sub-algorithm follows.
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 0.
 2. Get two samples from the stream, call them _x_ and _y_.
-3. Generate a uniform(0, 1) random number, call it _u_.
+3. Generate a uniform(0, 1) random variate, call it _u_.
 4. If _u_ is less than (_x_&minus;_y_)<sup>2</sup>, return 1.  Otherwise, return 0.
 
-> **Note:** As noted in Huber and Jones, if the stream of random numbers takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in _Algorithm B_, and the algorithm will still work.
+> **Note:** As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in _Algorithm B_, and the algorithm will still work.
 
 <a id=An_Absolute_Error_Adaptive_Algorithm></a>
 ## An Absolute-Error Adaptive Algorithm
 
-The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random numbers with the following properties:
+The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random variates with the following properties:
 
 - The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_-moment and _p_-moment, respectively, in this section).
 - The exact _q_-moment and _p_-moment need not be known in advance.
-- The _q_-moment's _q_<sup>th</sup> root is no more than _&kappa;_ times the _p_-moment's _p_<sup>th</sup> root, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
+- The _q_-moment's _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
 
 The algorithm has the following parameters:
 
-- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be 1 or less.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
+- _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
 - _p_: The degree of the _p_-moment that the algorithm will estimate to determine the mean.
 - _q_: The degree of the _q_-moment.  _q_ must be greater than _p_.
 - _&kappa;_: Maximum value allowed for the following value: the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012)<sup>[**(6)**](#Note6)</sup> <sup>[**(7)**](#Note7)</sup>.) _&kappa;_ may not be less than 1.
 
 For example:
 
-- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the random numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
-- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the random numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
+- With parameters _p_ = 1, _q_ = 2, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 2, the algorithm assumes the stream's numbers are distributed so that the standard deviation (_q_=2) divided by the mean deviation (_p_=1) is no more than 2, and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
 
 The algorithm, called **Algorithm C** in this document, follows.
 
@@ -152,19 +152,19 @@ The algorithm, called **Algorithm C** in this document, follows.
 
 > **Notes:**
 >
-> 1. If the stream of random numbers meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
+> 1. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
 > 2. Theorem 3.4 of Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup> shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
->      - works for all streams whose distribution is known only to have finite moments.
+>      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
 >
 > **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
 
 <a id=Estimating_a_Function_of_the_Mean></a>
 ## Estimating a Function of the Mean
 
-_Algorithm C_ can be used to estimate a function of the mean of a stream of random numbers with unknown mean.  Specifically, the goal is to estimate _f_(**E**[**z**]), where:
+_Algorithm C_ can be used to estimate a function of the mean of a stream of random variates with unknown mean.  Specifically, the goal is to estimate _f_(**E**[**z**]), where:
 
-- **z** is a random number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].
+- **z** is a number produced by the stream.  Each number produced by the stream must lie in the interval [0, 1].
 - _f_ is a known continuous function that maps the closed interval [0, 1] to [0, 1].
 - The stream's numbers can take on a single value with probability 1.
 
@@ -188,10 +188,16 @@ A simpler version of _Algorithm D_ was given as an answer to the linked-to quest
 2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_))/(2\*_&gamma;_<sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding's inequality.)
 3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
+If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (or the variance _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup>[**(6)**](#Note6)</sup>, but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
+
+1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
+2. (Calculate the sample size.) Set _n_ to ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)).
+3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
+
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_, and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random number in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
+> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_, and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
 > 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
@@ -218,7 +224,7 @@ The estimate will come within _&epsilon;_ of the true integral with probability 
 
 Unfortunately, these conditions may be hard to verify in practice, especially when the distribution _h_(**z**) is not known.  (In fact, **E**\[_h_(**z**)\], as seen above, is the unknown integral that we seek to estimate.)
 
-For this purpose, each number in the stream of random numbers is generated as follows (see also Kunsch et al.):
+For this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
 
 1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way.
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
@@ -244,9 +250,9 @@ pprint(Max(1,kappa))
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-Let _X_ be an endless stream of random numbers and let _f_(_x_) be a continuous function.
+Let _X_ be an endless stream of random variates and let _f_(_x_) be a continuous function.
 
-1. Is there an algorithm, besides _Algorithm C_, that can find **E**[_X_] (or _f_(**E**[_X_])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
+1. Is there an algorithm, besides _Algorithm C_ or _Algorithm F_, that can find **E**[_X_] (or _f_(**E**[_X_])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
 
     - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
     - following a geometric, exponential, or Poisson distribution, and/or
@@ -255,6 +261,8 @@ Let _X_ be an endless stream of random numbers and let _f_(_x_) be a continuous 
     Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.
 
 2. How can _Algorithm D_ or _Algorithm E_ be adapted to a known discontinuous function _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.
+
+3. Is it true that _Algorithm E_ remains valid when the sample size _n_ is ceil(abs(_M_)/(_&delta;_\*_&gamma;_<sup>_k_</sup>)), given that the stream's distribution is known to have a maximum _k_<sup>th</sup> central moment of _M_?
 
 <a id=Notes></a>
 ## Notes
