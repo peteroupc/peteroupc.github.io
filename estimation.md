@@ -214,7 +214,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 
 Monte Carlo integration is a randomized way to estimate the integral of a function.  _Algorithm C_ can be used to estimate an integral of a function _h_(**z**), with the following properties:
 
-- _h_(**x**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**x**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
+- _h_(**z**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
 - **z** is an _n_-dimensional vector chosen at random in the sampling domain.
 
 The estimate will come within _&epsilon;_ of the true integral with probability 1 &minus; _&delta;_ or greater, as long as the following conditions are met:
@@ -252,7 +252,7 @@ pprint(Max(1,kappa))
 
 Let _X_ be an endless stream of random variates and let _f_(_x_) be a continuous function.
 
-1. Is there an algorithm, besides _Algorithm C_ or _Algorithm F_, that can find **E**[_X_] (or _f_(**E**[_X_])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
+1. Is there an algorithm, besides _Algorithm C_ or _Algorithm F_, that can find **E**\[_X_\] (or _f_(**E**\[_X_\])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
 
     - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
     - following a geometric, exponential, or Poisson distribution, and/or
@@ -262,7 +262,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a continuous
 
 2. How can _Algorithm D_ or _Algorithm E_ be adapted to a known discontinuous function _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.
 
-3. Is it true that _Algorithm E_ remains valid when the sample size _n_ is ceil(abs(_M_)/(_&delta;_\*_&gamma;_<sup>_k_</sup>)), given that the stream's distribution is known to have a maximum _k_<sup>th</sup> central moment of _M_?
+3. Is it true that _Algorithm F_ remains valid when the sample size _n_ is ceil(abs(_M_)/(_&delta;_\*_&gamma;_<sup>_k_</sup>)), given that the stream's distribution is known to have a maximum _k_<sup>th</sup> central moment of _M_?
 
 <a id=Notes></a>
 ## Notes
