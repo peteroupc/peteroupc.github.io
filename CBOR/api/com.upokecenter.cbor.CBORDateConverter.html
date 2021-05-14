@@ -60,6 +60,10 @@ Initializes a new instance of the CBORDateConverter class.</li>
 <h2>Methods</h2>
 
 <ul>
+<li><code>CBORObject DateTimeFieldsToCBORObject​(int year,
+                      int[] lesserFields)</code><br>
+Converts a date/time in the form of a year, month, day, hour, minute,
+second, fractional seconds, and time offset to a CBOR object.</li>
 <li><code>CBORObject DateTimeFieldsToCBORObject​(int smallYear,
                       int month,
                       int day)</code><br>
@@ -296,6 +300,36 @@ conversion type used to create this date converter.</li>
 
 <h3>DateTimeFieldsToCBORObject</h3>
 
+<pre>public CBORObject DateTimeFieldsToCBORObject​(int year, int[] lesserFields)
+</pre>
+
+<p>Converts a date/time in the form of a year, month, day, hour, minute,
+ second, fractional seconds, and time offset to a CBOR object.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><p><code>year</code> - Not documented yet.</p></li>
+<li><p><code>lesserFields</code> - Not documented yet.</p></li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A CBOR object encoding the given date fields according to the
+conversion type used to create this date converter.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigYear</code> or <code>
+lesserFields</code> is null.</p></li>
+<li><p><code>CBORException</code> - An error occurred in conversion.</p></li>
+</ul>
+
+<h3>DateTimeFieldsToCBORObject</h3>
+
 <pre>public CBORObject DateTimeFieldsToCBORObject​(com.upokecenter.numbers.EInteger bigYear, int[] lesserFields)
 </pre>
 
@@ -305,7 +339,7 @@ conversion type used to create this date converter.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>bigYear</code> - The parameter <code>bigYear</code> is a Numbers.EInteger object.</p></li>
+<li><p><code>bigYear</code> - The year.</p></li>
 <li><p><code>lesserFields</code> - An array that will store the fields (other than the
 year) of the date and time. See the TryGetDateTimeFields method for
 information on the &quot;lesserFields&quot; parameter.</p></li>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/13"><meta name="citation_online_date" content="2021/05/13"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/14"><meta name="citation_online_date" content="2021/05/14"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -61,7 +61,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>:</p>
+<p><strong>Notes</strong>:</p>
 
 <ol>
 <li><p>As noted in Huber 2017, if we have a stream of random variates that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;</p>
@@ -148,20 +148,20 @@
 <p>The following algorithm comes from Kunsch et al. (2019)<sup><a href="#Note5"><strong>(5)</strong></a></sup>.  It estimates the mean of a stream of random variates with the following properties:</p>
 
 <ul>
-<li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em>-moment and <em>p</em>-moment, respectively, in this section).</li>
-<li>The exact <em>q</em>-moment and <em>p</em>-moment need not be known in advance.</li>
-<li>The <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater. (Note that the <em>q</em>-moment&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
+<li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m., respectively, in this section).</li>
+<li>The exact <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. need not be known in advance.</li>
+<li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater. (Note that the <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
 
-<p>The algorithm works by first estimating the <em>p</em>-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream&#39;s mean.</p>
+<p>The algorithm works by first estimating the <em>p</em><sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream&#39;s mean.</p>
 
 <p>The algorithm has the following parameters:</p>
 
 <ul>
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be less than 1.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
-<li><em>p</em>: The degree of the <em>p</em>-moment that the algorithm will estimate to determine the mean.</li>
-<li><em>q</em>: The degree of the <em>q</em>-moment.  <em>q</em> must be greater than <em>p</em>.</li>
-<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em>-moment&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em>-moment&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup> <sup><a href="#Note7"><strong>(7)</strong></a></sup>.) <em>&kappa;</em> may not be less than 1.</li>
+<li><em>p</em>: The degree of the <em>p</em><sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.</li>
+<li><em>q</em>: The degree of the <em>q</em><sup>th</sup> c.a.m.  <em>q</em> must be greater than <em>p</em>.</li>
+<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup> <sup><a href="#Note7"><strong>(7)</strong></a></sup>.) <em>&kappa;</em> may not be less than 1.</li>
 </ul>
 
 <p>For example:</p>
@@ -193,14 +193,14 @@
 <ul>
 <li>Set <em>m</em> to ceil(144*<em>&kappa;</em>); set <em>s</em> to 2; set <em>&eta;</em> to 16*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
-<li>(Stage 1: Estimate <em>p</em>-moment to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
+<li>(Stage 1: Estimate <em>p</em><sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
 
 <ol>
 <li>Get <em>m</em> samples from the stream.</li>
 <li>Add the samples and divide by <em>m</em> to get this block&#39;s sample mean, <em>mean</em>.</li>
-<li>Calculate the <em>p</em>-moment estimate for this block, which is: (<em>&sum;</em><sub><em>i</em> = 0, ..., <em>k</em>&minus;1</sub> (<em>block</em>[<em>i</em>] &minus; <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
+<li>Calculate the estimate of the <em>p</em><sup>th</sup> c.a.m. for this block, which is: (<em>&sum;</em><sub><em>i</em> = 0, ..., <em>k</em>&minus;1</sub> (<em>block</em>[<em>i</em>] &minus; <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
 </ol></li>
-<li>(Find the median of the <em>p</em>-moment estimates.)  Sort the <em>p</em>-moment estimates from step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
+<li>(Find the median of the <em>p</em><sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
 <li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>&eta;</em> * <em>median</em><sup><em>s</em></sup>)).</li>
 <li>(Stage 2: Estimate of the sample mean.) Create <em>kp</em> many blocks.  For each block:
 
@@ -224,7 +224,13 @@
 </ul></li>
 </ol>
 
-<p><strong>Example:</strong> To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).</li>
+<li>The kurtosis of a Poisson distribution with mean <em>&mu;</em> is (3 + 1/<em>&mu;</em>).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or greater but otherwise unknown, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (3 + 1/<em>&nu;</em>)<sup>1/4</sup>.</li>
+<li>The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; sqrt(3).</li>
+</ol>
 </blockquote>
 
 <p><a id=Estimating_a_Function_of_the_Mean></a></p>
@@ -281,7 +287,7 @@
 
 <ol>
 <li><em>Algorithm D</em> and <em>Algorithm E</em> won&#39;t work in general when <em>f</em>(<em>x</em>) has jump discontinuities (this happens in general when <em>f</em> is piecewise continuous, or made up of independent continuous pieces that cover all of [0, 1]), at least when <em>&epsilon;</em> is equal to or less than the maximum jump among all the jump discontinuities (see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
-<li><em>Algorithm E</em> can be used to build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the <em>Bernoulli distribution</em>, and <em>f</em> should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running <em>Algorithm E</em> and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.</li>
+<li><em>Algorithm E</em> can be used to build so-called &quot;<a href="https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories"><strong>approximate Bernoulli factories</strong></a>&quot;, or algorithms that approximately sample the probability <em>f</em>(<em>&lambda;</em>) given a coin with probability of heads of <em>&lambda;</em>.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the <em>Bernoulli distribution</em>), and <em>f</em> should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running <em>Algorithm E</em> and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.</li>
 <li><p><em>Algorithm D</em> and <em>Algorithm E</em> can be adapted to apply to streams outputting numbers in a bounded interval [<em>a</em>, <em>b</em>] (where <em>a</em> and <em>b</em> are known rational numbers), but with unknown mean, and with <em>f</em> being a continuous function that maps [<em>a</em>, <em>b</em>] to [<em>a</em>, <em>b</em>], as follows:</p>
 
 <ul>
@@ -296,6 +302,7 @@
 <ol>
 <li>Take <em>f</em>(<em>x</em>) = sin(<em>&pi;</em>*<em>x</em>*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2*<em>&pi;</em>, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/(2*<em>&pi;</em>).  Now, if we have a coin that produces heads with an unknown probability in the interval [<em>&mu;</em>, 1&minus;<em>&mu;</em>], or 0 otherwise, we can run <em>Algorithm D</em> or <em>Algorithm E</em> with <em>q</em> = 4, <em>p</em> = 2, and <em>&kappa;</em> &ge; (1/min(<em>&mu;</em>, 1&minus;<em>&mu;</em>))<sup>1/4</sup> (see the section on <em>Algorithm C</em>).</li>
 <li>Take <em>f</em>(<em>x</em>) = <em>x</em>.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this <em>f</em>, <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/1.</li>
+<li>The variance of a Poisson distribution with mean <em>&mu;</em> is <em>&mu;</em>.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean <em>&nu;</em> or less but otherwise unknown, we can take <em>&sigma;</em> = sqrt(<em>&nu;</em>) so that the sample size <em>n</em> is ceil(<em>&sigma;</em><sup>2</sup>/(<em>&delta;</em>*<em>&epsilon;</em><sup>2</sup>)), in accordance with <em>Algorithm F</em>.</li>
 </ol>
 </blockquote>
 
@@ -347,18 +354,18 @@ pprint(Max(1,kappa))
 
 <h2>Requests and Open Questions</h2>
 
-<p>Let <em>X</em> be an endless stream of random variates and let <em>f</em>(<em>x</em>) be a continuous function.</p>
+<p>Let <em>X</em> be an endless stream of random variates and let <em>f</em>(<em>x</em>) be a known continuous function.</p>
 
 <ol>
 <li><p>Is there an algorithm, besides <em>Algorithm C</em> or <em>Algorithm F</em>, that can find <strong>E</strong>[<em>X</em>] (or <em>f</em>(<strong>E</strong>[<em>X</em>])) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error, when the distribution of <em>X</em> is unbounded, and additional assumptions on the distribution of <em>X</em> apply, such as&mdash;</p>
 
 <ul>
 <li>being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or</li>
-<li>following a geometric, exponential, or Poisson distribution, and/or</li>
+<li>following a geometric distribution, and/or</li>
 <li>having decreasing or nonincreasing probabilities?</li>
 </ul>
 
-<p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.</p></li>
+<p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for <strong>E</strong>[<em>X</em>] for the geometric distribution was given already in a note.</p></li>
 <li><p>How can <em>Algorithm D</em> or <em>Algorithm E</em> be adapted to a known discontinuous function <em>g</em>, so that the algorithm finds <em>g</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error at all points in [0, 1] except at a &quot;negligible&quot; area around <em>g</em>&#39;s discontinuities?  Is it enough to replace <em>g</em> with a continuous function <em>f</em> that equals <em>g</em> everywhere except at that &quot;negligible&quot; area?  Here, the accuracy tolerances for small error, high probability, and &quot;negligible&quot; area are user-specified.</p></li>
 <li><p>Is it true that <em>Algorithm F</em> remains valid when the sample size <em>n</em> is ceil(abs(<em>M</em>)/(<em>&delta;</em>*<em>&gamma;</em><sup><em>k</em></sup>)), given that the stream&#39;s distribution is known to have a maximum <em>k</em><sup>th</sup> central moment of <em>M</em>?</p></li>
 </ol>

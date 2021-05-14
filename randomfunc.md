@@ -131,7 +131,7 @@ In this document:
 - The following notation for intervals is used: [`a`, `b`) means "`a` or greater, but less than `b`".  (`a`, `b`) means "greater than `a`, but less than `b`".  (`a`, `b`] means "greater than `a` and less than or equal to `b`". [`a`, `b`] means "`a` or greater and `b` or less".
 - `log1p(x)` is equivalent to `ln(1 + x)` and is a "robust" alternative to `ln(1 + x)` where `x` is a floating-point number (Pedersen 2018)<sup>[**(1)**](#Note1)</sup>.
 - `MakeRatio(n, d)` creates a rational number with the given numerator `n` and denominator `d`.
-- `Sum(list)` calculates the sum of the numbers in the given list.  Note, however, that summing floating-point numbers naïvely can introduce round-off errors.  [**Kahan summation**](https://en.wikipedia.org/wiki/Kahan_summation_algorithm) along with parallel reductions can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.
+- `Sum(list)` calculates the sum of the numbers in the given list.  Note, however, that summing floating-point numbers naïvely can introduce round-off errors.  Demmel and Nguyen (2013)<sup>[**(105)**](#Note105)</sup> propose a summing method that is reasonably accurate and reproducible.
 
 <a id=Uniform_Random_Integers></a>
 ## Uniform Random Integers
@@ -1163,7 +1163,7 @@ In this document, `Expo(lamda)` is an exponentially-distributed random variate w
           y1=RNDINTEXC(denom)
           y=y1
           accept=true
-          while true // until we return a value
+          while true // until we break
              z=RNDINTEXC(denom)
              if y<=z: break
              accept=not accept
@@ -1211,7 +1211,7 @@ The following method generates a Poisson random variate with mean `mx`/`my`, usi
         while true // until we return a value
           k = 0
           w = nothing
-          while true // until we return a value
+          while true // until we break or return
              // Generate uniforms
              // and determine whether they are sorted
              if ZeroOrOne(mx,my)==0: return k
@@ -1463,12 +1463,12 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one item taken from the sample.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see `MeanAndVariance` in the appendix).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one sample from the distribution.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see `MeanAndVariance` in the appendix).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
 
-    Examples of `EFUNC` include:
+    Examples of expected values include:
 
     - The **`n`th sample raw moment** (a raw moment is a mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
-    - The **sample mean**, if `EFUNC(x)` is `x`.
+    - The **sample mean**, if `EFUNC(x)` is `x` or `pow(x, 1)`.
     - The **`n`th sample central moment** (a central moment is a moment about the mean) if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the mean of the sampled numbers.
     - The (biased) **sample variance**, the second sample central moment.
     - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
@@ -2169,6 +2169,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note102>(102)</sup> See the _Stack Overflow_ question "Uniform sampling (by volume) within a cone", `questions/41749411`. Square and cube roots replaced with maximums.</small>
 - <small><sup id=Note103>(103)</sup> Reference: [**"Sphere Point Picking"**](http://mathworld.wolfram.com/SpherePointPicking.html) in MathWorld (replacing inverse cosine with `atan2` equivalent).</small>
 - <small><sup id=Note104>(104)</sup> For example, see Balcer, V., Vadhan, S., "Differential Privacy on Finite Computers", Dec. 4, 2018; as well as Micciancio, D. and Walter, M., "Gaussian sampling over the integers: Efficient, generic, constant-time", in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small>
+- <small><sup id=Note105>(105)</sup> Demmel, J., Nguyen, H.D., "Fast Reproducible Floating-Point Summation", 2013.</small>
 
 <a id=Appendix></a>
 ## Appendix

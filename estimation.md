@@ -46,7 +46,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 2. Take samples from the stream until _k_ 1's are taken this way.  Let _r_ be the total number of samples taken this way.
 3. Generate _g_, a gamma(_r_) random variate, then return (_k_&minus;1)/_g_.
 
-> **Note**:
+> **Notes**:
 >
 > 1. As noted in Huber 2017, if we have a stream of random variates that take on values in the interval [0, 1], but have unknown mean, we can transform each number by&mdash;
 >
@@ -109,18 +109,18 @@ The standard deviation sub-algorithm follows.
 
 The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</sup>.  It estimates the mean of a stream of random variates with the following properties:
 
-- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_-moment and _p_-moment, respectively, in this section).
-- The exact _q_-moment and _p_-moment need not be known in advance.
-- The _q_-moment's _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (Note that the _q_-moment's _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
+- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m., respectively, in this section).
+- The exact _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. need not be known in advance.
+- The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (Note that the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
-The algorithm works by first estimating the _p_-moment of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
+The algorithm works by first estimating the _p_<sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
 
 The algorithm has the following parameters:
 
 - _&epsilon;_, _&delta;_: Both parameters must be greater than 0, and _&delta;_ must be less than 1.  The algorithm will return an estimate within _&epsilon;_ of the true expected value with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.
-- _p_: The degree of the _p_-moment that the algorithm will estimate to determine the mean.
-- _q_: The degree of the _q_-moment.  _q_ must be greater than _p_.
-- _&kappa;_: Maximum value allowed for the following value: the _q_-moment's  _q_<sup>th</sup> root divided by the _p_-moment's _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012)<sup>[**(6)**](#Note6)</sup> <sup>[**(7)**](#Note7)</sup>.) _&kappa;_ may not be less than 1.
+- _p_: The degree of the _p_<sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.
+- _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
+- _&kappa;_: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012)<sup>[**(6)**](#Note6)</sup> <sup>[**(7)**](#Note7)</sup>.) _&kappa;_ may not be less than 1.
 
 For example:
 
@@ -139,11 +139,11 @@ The algorithm, called **Algorithm C** in this document, follows.
     - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>); set _s_ to 1+1/(_q_&minus;1); set _&eta;_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
 6. If _q_ is greater than 2:
     - Set _m_ to ceil(144\*_&kappa;_); set _s_ to 2; set _&eta;_ to 16\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
-7. (Stage 1: Estimate _p_-moment to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
+7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
     1. Get _m_ samples from the stream.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
-    3. Calculate the _p_-moment estimate for this block, which is: (_&sum;_<sub>_i_ = 0, ..., _k_&minus;1</sub> (_block_\[_i_\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
-8. (Find the median of the _p_-moment estimates.)  Sort the _p_-moment estimates from step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
+    3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: (_&sum;_<sub>_i_ = 0, ..., _k_&minus;1</sub> (_block_\[_i_\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
+8. (Find the median of the _p_<sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
 9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_&eta;_ \* _median_<sup>_s_</sup>)).
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:
     1. Get _mp_ samples from the stream.
@@ -157,7 +157,11 @@ The algorithm, called **Algorithm C** in this document, follows.
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).
 >
-> **Example:** To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
+> **Examples:**
+>
+> 1. To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
+> 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
+> 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; sqrt(3).
 
 <a id=Estimating_a_Function_of_the_Mean></a>
 ## Estimating a Function of the Mean
@@ -197,7 +201,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_, and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
+> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_), and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
 > 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
@@ -208,6 +212,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 >
 > 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or _Algorithm E_ with _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
 > 2. Take _f_(_x_) = _x_.  This is a Lipschitz continuous function with Lipschitz constant 1, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/1.
+> 3. The variance of a Poisson distribution with mean _&mu;_ is _&mu;_.  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or less but otherwise unknown, we can take _&sigma;_ = sqrt(_&nu;_) so that the sample size _n_ is ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&epsilon;_<sup>2</sup>)), in accordance with _Algorithm F_.
 
 <a id=Randomized_Integration></a>
 ## Randomized Integration
@@ -250,15 +255,15 @@ pprint(Max(1,kappa))
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-Let _X_ be an endless stream of random variates and let _f_(_x_) be a continuous function.
+Let _X_ be an endless stream of random variates and let _f_(_x_) be a known continuous function.
 
 1. Is there an algorithm, besides _Algorithm C_ or _Algorithm F_, that can find **E**\[_X_\] (or _f_(**E**\[_X_\])) with either a high probability of a "small" absolute error or one of a "small" relative error, when the distribution of _X_ is unbounded, and additional assumptions on the distribution of _X_ apply, such as&mdash;
 
     - being unimodal (having one peak) and symmetric (mirrored on each side of the peak), and/or
-    - following a geometric, exponential, or Poisson distribution, and/or
+    - following a geometric distribution, and/or
     - having decreasing or nonincreasing probabilities?
 
-    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al.).  Here, the accuracy tolerances for small error and high probability are user-specified.
+    Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019<sup>[**(5)**](#Note5)</sup>).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for **E**\[_X_\] for the geometric distribution was given already in a note.
 
 2. How can _Algorithm D_ or _Algorithm E_ be adapted to a known discontinuous function _g_, so that the algorithm finds _g_(**E**[_X_]) with either a high probability of a "small" absolute error or one of a "small" relative error at all points in [0, 1] except at a "negligible" area around _g_'s discontinuities?  Is it enough to replace _g_ with a continuous function _f_ that equals _g_ everywhere except at that "negligible" area?  Here, the accuracy tolerances for small error, high probability, and "negligible" area are user-specified.
 

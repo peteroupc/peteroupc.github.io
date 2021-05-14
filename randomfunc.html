@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/05/13"><meta name="citation_online_date" content="2021/05/13"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/05/14"><meta name="citation_online_date" content="2021/05/14"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomization and Sampling Methods</h1>
@@ -184,7 +184,7 @@
 <li>The following notation for intervals is used: [<code>a</code>, <code>b</code>) means &quot;<code>a</code> or greater, but less than <code>b</code>&quot;.  (<code>a</code>, <code>b</code>) means &quot;greater than <code>a</code>, but less than <code>b</code>&quot;.  (<code>a</code>, <code>b</code>] means &quot;greater than <code>a</code> and less than or equal to <code>b</code>&quot;. [<code>a</code>, <code>b</code>] means &quot;<code>a</code> or greater and <code>b</code> or less&quot;.</li>
 <li><code>log1p(x)</code> is equivalent to <code>ln(1 + x)</code> and is a &quot;robust&quot; alternative to <code>ln(1 + x)</code> where <code>x</code> is a floating-point number (Pedersen 2018)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
 <li><code>MakeRatio(n, d)</code> creates a rational number with the given numerator <code>n</code> and denominator <code>d</code>.</li>
-<li><code>Sum(list)</code> calculates the sum of the numbers in the given list.  Note, however, that summing floating-point numbers naïvely can introduce round-off errors.  <a href="https://en.wikipedia.org/wiki/Kahan_summation_algorithm"><strong>Kahan summation</strong></a> along with parallel reductions can be a more robust way than the na&iuml;ve approach to compute the sum of three or more floating-point numbers.</li>
+<li><code>Sum(list)</code> calculates the sum of the numbers in the given list.  Note, however, that summing floating-point numbers naïvely can introduce round-off errors.  Demmel and Nguyen (2013)<sup><a href="#Note105"><strong>(105)</strong></a></sup> propose a summing method that is reasonably accurate and reproducible.</li>
 </ul>
 
 <p><a id=Uniform_Random_Integers></a></p>
@@ -1532,7 +1532,7 @@ METHOD ExpoNumerator(denom)
       y1=RNDINTEXC(denom)
       y=y1
       accept=true
-      while true // until we return a value
+      while true // until we break
          z=RNDINTEXC(denom)
          if y&lt;=z: break
          accept=not accept
@@ -1582,7 +1582,7 @@ END METHOD
     while true // until we return a value
       k = 0
       w = nothing
-      while true // until we return a value
+      while true // until we break or return
          // Generate uniforms
          // and determine whether they are sorted
          if ZeroOrOne(mx,my)==0: return k
@@ -1880,13 +1880,13 @@ END METHOD
 <p>Randomization is the core of <strong>Monte Carlo sampling</strong>.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.</p>
 
 <ol>
-<li><p><strong>Estimating expected values.</strong> Monte Carlo sampling can help estimate the <strong>expected value</strong> (mean or average) of a sampling distribution, or of a <em>function</em> of the samples in that distribution.  This function is called <code>EFUNC(x)</code> in this section, where <code>x</code> is one item taken from the sample.  The simplest way to proceed is to take <code>n</code> samples, apply <code>EFUNC(x)</code> to each sample <code>x</code>, add the samples, and divide by <code>n</code> (see <code>MeanAndVariance</code> in the appendix).  However, that procedure won&#39;t work for all distributions, since they may have an infinite expected value, and it also doesn&#39;t allow controlling for the estimate&#39;s error.</p>
+<li><p><strong>Estimating expected values.</strong> Monte Carlo sampling can help estimate the <strong>expected value</strong> (mean or average) of a sampling distribution, or of a <em>function</em> of the samples in that distribution.  This function is called <code>EFUNC(x)</code> in this section, where <code>x</code> is one sample from the distribution.  The simplest way to proceed is to take <code>n</code> samples, apply <code>EFUNC(x)</code> to each sample <code>x</code>, add the samples, and divide by <code>n</code> (see <code>MeanAndVariance</code> in the appendix).  However, that procedure won&#39;t work for all distributions, since they may have an infinite expected value, and it also doesn&#39;t allow controlling for the estimate&#39;s error.</p>
 
-<p>Examples of <code>EFUNC</code> include:</p>
+<p>Examples of expected values include:</p>
 
 <ul>
 <li>The <strong><code>n</code>th sample raw moment</strong> (a raw moment is a mean of <code>n</code>th powers) if <code>EFUNC(x)</code> is <code>pow(x, n)</code>.</li>
-<li>The <strong>sample mean</strong>, if <code>EFUNC(x)</code> is <code>x</code>.</li>
+<li>The <strong>sample mean</strong>, if <code>EFUNC(x)</code> is <code>x</code> or <code>pow(x, 1)</code>.</li>
 <li>The <strong><code>n</code>th sample central moment</strong> (a central moment is a moment about the mean) if <code>EFUNC(x)</code> is <code>pow(x-m, n)</code>, where <code>m</code> is the mean of the sampled numbers.</li>
 <li>The (biased) <strong>sample variance</strong>, the second sample central moment.</li>
 <li>The <strong>probability</strong>, if <code>EFUNC(x)</code> is <code>1</code> if some condition is met or <code>0</code> otherwise.</li>
@@ -2703,6 +2703,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li><small><sup id=Note102>(102)</sup> See the <em>Stack Overflow</em> question &quot;Uniform sampling (by volume) within a cone&quot;, <code>questions/41749411</code>. Square and cube roots replaced with maximums.</small></li>
 <li><small><sup id=Note103>(103)</sup> Reference: <a href="http://mathworld.wolfram.com/SpherePointPicking.html"><strong>&quot;Sphere Point Picking&quot;</strong></a> in MathWorld (replacing inverse cosine with <code>atan2</code> equivalent).</small></li>
 <li><small><sup id=Note104>(104)</sup> For example, see Balcer, V., Vadhan, S., &quot;Differential Privacy on Finite Computers&quot;, Dec. 4, 2018; as well as Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></li>
+<li><small><sup id=Note105>(105)</sup> Demmel, J., Nguyen, H.D., &quot;Fast Reproducible Floating-Point Summation&quot;, 2013.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

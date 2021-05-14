@@ -957,7 +957,7 @@ def approxscheme2(
         data = "* Let _f_(_&lambda;_) = "
         data += "**" + funcstring(func, x) + "**."
     if double:
-        data += " Then, for all _n_ that are powers of 2, starting from 1:\n"
+        data += " Then, for every integer _n_ that's a power of 2, starting from 1:\n"
     else:
         data += " Then:\n"
     schemes = []
