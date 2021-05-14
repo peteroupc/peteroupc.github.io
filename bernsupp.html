@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/05/11"><meta name="citation_online_date" content="2021/05/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/05/14"><meta name="citation_online_date" content="2021/05/14"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -83,7 +83,7 @@
 </ul></li>
 </ul>
 
-<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then for all <em>n</em> that are powers of 2:</p>
+<p>Let <em>m</em> be an upper bound of the highest value of abs(<em>f&prime;&prime;</em>(<em>x</em>)) for any <em>x</em> in [0, 1], where <em>f&prime;&prime;</em> is the &quot;slope-of-slope&quot; function of <em>f</em>.  Then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) if <em>f</em> is concave; otherwise, min(<strong>fbelow</strong>(4,0), <strong>fbelow</strong>(4,1), ..., <strong>fbelow</strong>(4,4)) if <em>n</em> &lt; 4; otherwise,  <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>m</em>/(7*<em>n</em>).</li>
@@ -109,7 +109,7 @@
 </ul></li>
 </ul>
 
-<p>If <em>f</em> in [0, 1] has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere, then <em>f</em> is <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz continuous</em></strong></a>, <em>&alpha;</em> is 1, and <em>m</em> is the highest absolute value of the function&#39;s &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for all <em>n</em> that are powers of 2:</p>
+<p>If <em>f</em> in [0, 1] has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere, then <em>f</em> is <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz continuous</em></strong></a>, <em>&alpha;</em> is 1, and <em>m</em> is the highest absolute value of the function&#39;s &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><em>&delta;</em>(<em>n</em>) = <em>m</em>*(2/7)<sup><em>&alpha;</em>/2</sup>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</li>
@@ -135,7 +135,7 @@
 <li><em>h</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
 <li><em>h</em>(0) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 0.)</li>
 <li>1 &ge; <em>h</em>(1) &ge; <em>f</em>(1) &ge; 0.</li>
-<li>1 &gt; <em>h</em>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>1 &gt; <em>h</em>(<em>&lambda;</em>) &gt; <em>f</em>(<em>&lambda;</em>) &gt; 0 for every <em>&lambda;</em> in the open interval (0, 1).</li>
 <li>If <em>f</em>(1) = 0, then <em>h</em>(1) = 0. (This is required to ensure correctness in case <em>&lambda;</em> is 1.)</li>
 </ul>
 
@@ -195,7 +195,7 @@
 <ul>
 <li><em>&omega;</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
 <li><em>&omega;</em>(0) = 0 and <em>&omega;</em>(1) = 1.</li>
-<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 for all <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>1 &gt; <em>f</em>(<em>&lambda;</em>) &gt; <em>&omega;</em>(<em>&lambda;</em>) &gt; 0 for every <em>&lambda;</em> in the open interval (0, 1).</li>
 </ul></li>
 <li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&omega;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>).</li>
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
@@ -263,7 +263,7 @@
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
-<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, let <em>f</em> be a C<sup>2</sup> continuous function (a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions) in [0, 1].  Then for all <em>n</em>&ge;1:</p>
+<p><strong>First scheme.</strong> In this scheme (Powell 1981)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, let <em>f</em> be a C<sup>2</sup> continuous function (a function with continuous &quot;slope&quot; and &quot;slope-of-slope&quot; functions) in [0, 1].  Then for every <em>n</em>&ge;1:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>M</em> / (8*<em>n</em>).</li>
@@ -291,7 +291,7 @@
 
 <p><em>The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail.</em></p>
 
-<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for all <em>n</em>&ge;2:</p>
+<p><strong>Second scheme.</strong> In this scheme, let <em>f</em> be a Lipschitz continuous function in [0, 1] (that is, a continuous function in [0, 1] that has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for every <em>n</em>&ge;2:</p>
 
 <ul>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + <em>L</em>*(5/4) / sqrt(<em>n</em>).</li>
@@ -412,7 +412,7 @@
 <td>Only if <em>f</em> is Lipschitz continuous (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.<br/>Whenever <em>f</em> admits a fast simulation (Mendo 2019)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for all <em>&lambda;</em>.</td>
+<td>Number of flips required, raised to power of <em>r</em>, is finite on average and has a tail that drops off uniformly for every <em>&lambda;</em>.</td>
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (has <em>r</em> or more continuous derivatives, or &quot;slope&quot; functions) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
@@ -464,7 +464,7 @@
 <p>The following are approximation schemes and hints to simulate a coin of probability <em>f</em>(<em>&lambda;</em>) given an input coin with probability of heads of <em>&lambda;</em>.  The schemes were generated automatically using <code>approxscheme2</code> and have not been rigorously verified for correctness.</p>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/2, <em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/2, <em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -483,7 +483,7 @@
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 1</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -501,7 +501,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&la
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>) &minus; 3/4</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be convex and twice differentiable, leading to:
@@ -520,7 +520,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/4 if <em>&lambda;</em> = 0; -(cosh(<em>&la
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -539,7 +539,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&l
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -557,7 +557,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(3*<em>&lambda;</em>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(3*<em>&lambda;</em>)/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be concave and twice differentiable, leading to:
@@ -575,7 +575,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(&minus;<em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>exp(&minus;<em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be convex and twice differentiable, leading to:
@@ -593,7 +593,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -609,7 +609,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*sin(sqrt(3)*sqrt(sin(2*<em>&lambda;</em>)))/4 + 1/50</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -625,7 +625,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 6389170731/(3200000000*n<sup>1/4</sup>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -641,7 +641,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be concave and twice differentiable, leading to:
@@ -660,7 +660,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/8 if <em>&lambda;</em> = 0; -(exp(<em>&lam
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(<em>&lambda;</em>)</strong>.  Then simulate <em>f</em> by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -677,7 +677,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1 &minus; <em>&lambda;</em><sup>2</sup></strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be convex and twice differentiable, leading to:
@@ -696,7 +696,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for a
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>)</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>))/<em>&lambda;</em><sup>2</sup> otherwise. Then, for all <em>n</em> that are powers of 2, starting from 1:
+Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>))/<em>&lambda;</em><sup>2</sup> otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -712,7 +712,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cos(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cos(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be twice differentiable, leading to:
@@ -730,7 +730,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>*sin(7*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>*sin(7*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be twice differentiable using numerical methods, which may be inaccurate:
@@ -748,7 +748,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be twice differentiable, leading to:
@@ -766,7 +766,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(6*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(6*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be twice differentiable, leading to:
@@ -784,7 +784,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(2*<em>&lambda;</em>)/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(2*<em>&lambda;</em>)/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be concave and twice differentiable, leading to:
@@ -802,7 +802,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(4*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>The function was detected to be twice differentiable, leading to:
@@ -820,7 +820,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em><sup>2</sup>/2 + 1/10 if <em>&lambda;</em> &le; 1/2; <em>&lambda;</em>/2 &minus; 1/40 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
@@ -838,7 +838,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1/2; (4*<em>&lambda;</em> &minus; 1)/(8*<em>&lambda;</em>) otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and twice differentiable using numerical methods, which may be inaccurate:
@@ -856,7 +856,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/2 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/2 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/2 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/2 + 1/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -872,7 +872,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 10820491941/(12800000000*n<sup>1/4</sup>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -889,7 +889,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/2 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/12 &minus; 1/12 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/2 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/12 &minus; 1/12 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -905,7 +905,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/4 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/4 + 1/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -922,7 +922,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/8 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/8 + 1/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1/2 &minus; sqrt(1 &minus; 2*<em>&lambda;</em>)/8 if <em>&lambda;</em> &lt; 1/2; sqrt(2*<em>&lambda;</em> &minus; 1)/8 + 1/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
@@ -940,7 +940,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/4 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &lt; 0; <em>&lambda;</em>/4 + (2*<em>&lambda;</em> &minus; 1)<sup>3/2</sup>/24 + 5/24 if <em>&lambda;</em> &ge; 1/2; <em>&lambda;</em>/4 + (1 &minus; 2*<em>&lambda;</em>)<sup>3/2</sup>/24 + 5/24 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be convex and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -958,7 +958,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*<em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 3/2 &minus; 3*<em>&lambda;</em>/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3*<em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 3/2 &minus; 3*<em>&lambda;</em>/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -976,7 +976,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>9*<em>&lambda;</em>/5 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 9/5 &minus; 9*<em>&lambda;</em>/5 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>9*<em>&lambda;</em>/5 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 9/5 &minus; 9*<em>&lambda;</em>/5 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -992,7 +992,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) + 8710551/(5000000*sqrt(n)).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(<em>&lambda;</em>, 1 &minus; <em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -1010,7 +1010,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 1/2 &minus; <em>&lambda;</em>/2 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>/2 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 1/2 &minus; <em>&lambda;</em>/2 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -1028,7 +1028,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>19*<em>&lambda;</em>/20 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 19/20 &minus; 19*<em>&lambda;</em>/20 otherwise</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>19*<em>&lambda;</em>/20 if <em>&lambda;</em> &le; 1 &minus; <em>&lambda;</em>; 19/20 &minus; 19*<em>&lambda;</em>/20 otherwise</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -1046,7 +1046,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/8, 3*<em>&lambda;</em>)</strong>. Then, for all <em>n</em> that are powers of 2, starting from 1:
+<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>min(1/8, 3*<em>&lambda;</em>)</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
 <li>Detected to be concave and Lipschitz continuous using numerical methods, which may be inaccurate:
@@ -1072,7 +1072,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
-<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for all <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
+<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
 <li><small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</small></li>
 <li><small><sup id=Note4>(4)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
 <li><small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
@@ -1108,7 +1108,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
 <li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(x) &minus; f(y)) &le; &omega;(abs(x&minus;y)) for all x in [0, 1] and all y in [0, 1].  Loosely speaking, the modulus of continuity <em>&omega;</em>(<em>h</em>) gives <em>f</em>&#39;s maximum range in a window of size <em>h</em>.</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; &omega;(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, the modulus of continuity <em>&omega;</em>(<em>h</em>) gives <em>f</em>&#39;s maximum range in a window of size <em>h</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
@@ -1123,33 +1123,33 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>Let &omega;(x) be a modulus of continuity of f.  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(<strong>E</strong>[f(X/n)] &minus; f(k/(2*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;</em>
 
 <ul>
-<li><em>&omega;(sqrt(1/(8*n&minus;4))), for all n&ge;1 that are integer powers of 2,</em></li>
-<li><em>&omega;(sqrt(1/(7*n))), for all n&ge;4 that are integer powers of 2,</em></li>
-<li><em>&omega;(sqrt(1/(2*n))), for all n&ge;1 that are integer powers of 2, and</em></li>
-<li><em>&omega;(sqrt( (k/(2*n)) * (1&minus;k/(2*n)) / (2*n&minus;1) )), for all n&ge;1 that are integer powers of 2.</em></li>
+<li><em>&omega;(sqrt(1/(8*n&minus;4))), for every integer n&ge;1 that&#39;s a power of 2,</em></li>
+<li><em>&omega;(sqrt(1/(7*n))), for every integer n&ge;4 that&#39;s a power of 2,</em></li>
+<li><em>&omega;(sqrt(1/(2*n))), for every integer n&ge;1 that&#39;s a power of 2, and</em></li>
+<li><em>&omega;(sqrt( (k/(2*n)) * (1&minus;k/(2*n)) / (2*n&minus;1) )), for every n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
 <li><em>If f is &alpha;-Hölder continuous with Hölder constant M and with &alpha; in the interval (0, 1], then the expression (1) is bounded from above by&mdash;</em>
 
 <ul>
-<li><em>M*(1/(2*n))<sup>&alpha;/2</sup>, for all n&ge;1 that are integer powers of 2,</em></li>
-<li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for all n&ge;4 that are integer powers of 2, and</em></li>
-<li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for all integers n&ge;1 that are integer powers of 2.</em></li>
+<li><em>M*(1/(2*n))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2,</em></li>
+<li><em>M*(1/(7*n))<sup>&alpha;/2</sup>, for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
+<li><em>M*(1/(8*n&minus;4))<sup>&alpha;/2</sup>, for every integer n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
 <li><em>If f has a second derivative whose absolute value is defined in all of [0, 1] and bounded from above by M, then the expression (1) is bounded from above by&mdash;</em>
 
 <ul>
-<li><em>(M/2)*(1/(7*n)), for all n&ge;4 that are integer powers of 2, and</em></li>
-<li><em>(M/2)*(1/(8*n&minus;4)), for all n&ge;1 that are integer powers of 2.</em></li>
+<li><em>(M/2)*(1/(7*n)), for every integer n&ge;4 that&#39;s a power of 2, and</em></li>
+<li><em>(M/2)*(1/(8*n&minus;4)), for every integer n&ge;1 that&#39;s a power of 2.</em></li>
 </ul></li>
-<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by <strong>E</strong>[f(Y/n)] for all n&ge;1 that are integer powers of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
+<li><em>If f is convex, nondecreasing, and bounded from below by 0, then the expression (1) is bounded from above by <strong>E</strong>[f(Y/n)] for every integer n&ge;1 that&#39;s a power of 2, where Y is a hypergeometric(2*n, n, n) random variable.</em></li>
 </ol>
 
 <p><em>Proof.</em></p>
 
 <ol>
-<li><em>&omega;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for all <em>n</em>&ge;4 that are integer powers of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
+<li><em>&omega;</em> is assumed to be non-negative because absolute values are non-negative.  To prove the first and second bounds: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <strong>E</strong>[abs(<em>f</em>(<em>X</em>/<em>n</em>) &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))] &le; <strong>E</strong>[<em>&omega;</em>(abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))] &le; <em>&omega;</em>(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]) (by Jensen&#39;s inequality and because <em>&omega;</em> is concave) &le; <em>&omega;</em>(sqrt(<strong>E</strong>[abs(<em>X</em>/<em>n</em> &minus; <em>k</em>/(2 * <em>n</em>))]<sup>2</sup>)) = <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) = <em>&omega;</em>(sqrt((<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt((1/(8*<em>n</em>&minus;4)))) = <em>&rho;</em>, and for every <em>n</em>&ge;4 that are integer powers of 2, <em>&rho;</em> &le; <em>&omega;</em>(sqrt(1/(7*<em>n</em>))).  To prove the third bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt(<strong>Var</strong>[<em>X</em>/<em>n</em>])) &le; <em>&omega;</em>(sqrt(1/(2*n))).  To prove the fourth bound: abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; <em>&omega;</em>(sqrt((<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)))) = <em>&omega;</em>(sqrt( (<em>k</em>/(2*<em>n</em>)) * (1&minus;<em>k</em>/(2*<em>n</em>)) / (2*<em>n</em>&minus;1) )).</li>
 <li>By the definition of Hölder continuous functions, take <em>&omega;</em>(<em>x</em>) = <em>M</em>*<em>x</em><sup><em>&alpha;</em></sup>.  Because <em>&omega;</em> is a concave modulus of continuity on [0,1], the result follows from part 1.</li>
-<li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For all <em>n</em>&ge;4 that are integer powers of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
+<li>abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) &le; (<em>M</em>/2)*<strong>Var</strong>[<em>X</em>/<em>n</em>] = (<em>M</em>/2)*(<em>k</em>*(2 * <em>n</em>&minus;<em>k</em>)/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) &le; (<em>M</em>/2)*(<em>n</em><sup>2</sup>/(4*(2 * <em>n</em>&minus;1)*<em>n</em><sup>2</sup>)) = (<em>M</em>/2)*(1/(8*<em>n</em>&minus;4)) = <em>&rho;</em>.  For every integer <em>n</em>&ge;4 that&#39;s a power of 2, <em>&rho;</em> &le;  (<em>M</em>/2)*(1/(7*<em>n</em>)).</li>
 <li>Let <em>X</em><sub><em>m</em></sub> be a hypergeometric(2 * <em>n</em>, <em>m</em>, <em>n</em>) random variable.  By Lemma 1 and the assumption that <em>f</em> is nondecreasing, <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>k</em></sub>/<em>n</em>)] is nondecreasing as <em>k</em> increases, so take <strong>E</strong>[<em>f</em>(<em>X</em><sub><em>n</em></sub>/<em>n</em>)] = <strong>E</strong>[<em>f</em>(<em>Y</em></sub>/<em>n</em>)] as the upper bound.  Then, abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>))) = abs(<strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>])) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<strong>E</strong>[<em>X</em>/<em>n</em>]) (by Jensen&#39;s inequality, because <em>f</em> is convex and bounded by 0) = <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] &minus; <em>f</em>(<em>k</em>/(2 * <em>n</em>)) &le; <strong>E</strong>[<em>f</em>(<em>X</em>/<em>n</em>)] (because <em>f</em> is bounded by 0) &le; <strong>E</strong>[<em>f</em>(<em>Y</em>/<em>n</em>)]. &#x25a1;</li>
 </ol>
 
@@ -1177,14 +1177,14 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p><em>&eta;(n) = &eta;(2<sup>m</sup>) = &sum;<sub>k=m, m+1,...</sub> &phi;(2<sup>k</sup>),</em></p>
 
-<p><em>for all n&ge;1 that are integer powers of 2 (with n=2<sup>m</sup>), where &phi;(n) is either&mdash;</em></p>
+<p><em>for every integer n&ge;1 that&#39;s a power of 2 (with n=2<sup>m</sup>), where &phi;(n) is either&mdash;</em></p>
 
 <ul>
 <li><em>&omega;(sqrt(1/(8*n&minus;4))), or</em></li>
 <li><em>&omega;(sqrt(1/(2*n))).</em></li>
 </ul>
 
-<p><em>If the infinite series &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for all n&ge;1 that are integer powers of 2, by defining <strong>fabove</strong> and <strong>fbelow</strong> as follows:</em></p>
+<p><em>If the infinite series &eta;(n) converges, then the following approximation scheme for f(&lambda;) is valid in the following sense: By forming two sequences of polynomials in Bernstein form with coefficients <strong>fabove</strong>(n, k) for the upper polynomials, and <strong>fbelow</strong>(n, k) for the lower polynomials, then those polynomials meet conditions (i), (iii), and (iv) of Proposition 3 of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, for every integer n&ge;1 that&#39;s a power of 2, by defining <strong>fabove</strong> and <strong>fbelow</strong> as follows:</em></p>
 
 <ul>
 <li><em><strong>fbelow</strong>(n, k) = f(k/n) &minus; &eta;(n).</em></li>
@@ -1199,7 +1199,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Condition (i) says that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> must be bounded by 0 and 1.  This is ensured starting with a large enough value of <em>n</em> greater than 0, call it <em>n</em><sub>0</sub>, as shown next.</p>
 
-<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> converges, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction.  This combined means that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> will eventually be bounded by 0 and 1 for all integers <em>n</em> starting with <em>n</em><sub>0</sub>.</p>
+<p>Let <em>&epsilon;</em> be a positive distance between 0 and the minimum or between 1 and the maximum of <em>f</em>, whichever is smaller.  This <em>&epsilon;</em> exists by the assumption that <em>f</em> is bounded away from 0 and 1. Because the series <em>&eta;</em> converges, <em>&eta;</em>(<em>n</em>) will eventually stay less than <em>&epsilon;</em>.  And the <code>f(k/n)</code> term is bounded by the minimum and maximum of <em>f</em> by construction.  This combined means that the coefficients <strong>fbelow</strong> and <strong>fabove</strong> will eventually be bounded by 0 and 1 for every integer <em>n</em> starting with <em>n</em><sub>0</sub>.</p>
 
 <p>For <em>n</em> less than <em>n</em><sub>0</sub>, condition (i) is ensured by setting <strong>fbelow</strong> and <strong>fabove</strong> to 0 or 1, respectively, whenever a coefficient of the degree-<em>n</em> polynomial would otherwise be outside the bounds.</p>
 
@@ -1285,7 +1285,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em><strong>fabove</strong>(n, k) = (k/n)*<strong>fabove</strong>(n&minus;1, max(0, k&minus;1)) + ((n&minus;k)/n)*<strong>fabove</strong>(n&minus;1, min(n&minus;1, k)),</em></li>
 </ul>
 
-<p><em>for all n&ge;1 other than powers of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
+<p><em>for every integer n&ge;1 other than a power of 2. Parts 1 and 2 of this proposition still apply to the modified scheme.</em></p></li>
 </ol>
 
 <p><em>Proof.</em> Parts 1 and 2 follow from Theorems 1 through 4, as the case may be.  For part 1, the lower polynomials are replaced by the degree-<em>n</em> Bernstein approximations of <em>f</em>, and they meet the conditions in those theorems by Jensen&#39;s inequality.  For part 2, the upper polynomials are involved instead of the lower polynomials.  Part 3 also follows from Remark B of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>. &#x25a1;</p>

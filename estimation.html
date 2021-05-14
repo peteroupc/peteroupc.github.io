@@ -91,7 +91,7 @@
 <p>The algorithm has the following parameters:</p>
 
 <ul>
-<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 1/8 or less, and <em>&delta;</em> must be less than 1.  The relative error is abs(<em>est</em>, <em>trueval</em>) &minus; 1, where <em>est</em> is the estimate and <em>trueval</em> is the true expected value.</li>
+<li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&epsilon;</em> must be 1/8 or less, and <em>&delta;</em> must be less than 1.</li>
 </ul>
 
 <p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate has a nonzero probability of being higher than 1.</p>
@@ -367,7 +367,7 @@ pprint(Max(1,kappa))
 
 <p>Notice that merely having finite moments is not enough (Theorem 3.4, Kunsch et al. 2019<sup><a href="#Note5"><strong>(5)</strong></a></sup>).  Here, the accuracy tolerances for small error and high probability are user-specified.  A relative-error algorithm for <strong>E</strong>[<em>X</em>] for the geometric distribution was given already in a note.</p></li>
 <li><p>How can <em>Algorithm D</em> or <em>Algorithm E</em> be adapted to a known discontinuous function <em>g</em>, so that the algorithm finds <em>g</em>(<strong>E</strong>[<em>X</em>]) with either a high probability of a &quot;small&quot; absolute error or one of a &quot;small&quot; relative error at all points in [0, 1] except at a &quot;negligible&quot; area around <em>g</em>&#39;s discontinuities?  Is it enough to replace <em>g</em> with a continuous function <em>f</em> that equals <em>g</em> everywhere except at that &quot;negligible&quot; area?  Here, the accuracy tolerances for small error, high probability, and &quot;negligible&quot; area are user-specified.</p></li>
-<li><p>Is it true that <em>Algorithm F</em> remains valid when the sample size <em>n</em> is ceil(abs(<em>M</em>)/(<em>&delta;</em>*<em>&gamma;</em><sup><em>k</em></sup>)), given that the stream&#39;s distribution is known to have a maximum <em>k</em><sup>th</sup> central moment of <em>M</em>?</p></li>
+<li><p>Is it true that <em>Algorithm F</em> remains valid when the sample size <em>n</em> is ceil(abs(<em>M</em>)/(<em>&delta;</em>*<em>&gamma;</em><sup><em>k</em></sup>)), given that the stream&#39;s distribution is known to have a maximum <em>k</em><sup>th</sup> central absolute moment of <em>M</em>?</p></li>
 </ol>
 
 <p><a id=Notes></a></p>

@@ -1396,7 +1396,7 @@ CLASSES
      |     or a location close to it.  Optional; default is 0.
      |  - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
      |     For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
-     |     y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
+     |     y1 >= max( x*sqrt(pdf(x)) ) for every x.  Optional; the default is y0=-10, y1=10.
      |  - cycles - Number of recursion cycles in which to split tiles
      |     for the ratio-of-uniforms tiling.  Default is 8.
      |
@@ -1542,7 +1542,7 @@ CLASSES
      |  floating-point numbers.
      |
      |  The operations given here are not guaranteed to be "constant-time"
-     |  (non-data-dependent and branchless) for all relevant inputs.
+     |  (non-data-dependent and branchless) for every relevant input.
      |
      |  Any copyright to this file is released to the Public Domain.  In case this is not
      |  possible, this file is also licensed under Creative Commons Zero version 1.0.
@@ -1620,7 +1620,7 @@ CLASSES
      |  cos(a)
      |      Calculates the approximate cosine of the given angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
-     |      1 unit in the last place of the correctly rounded result for all inputs
+     |      1 unit in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
      |      This method's accuracy decreases beyond that range.
      |
@@ -1642,7 +1642,7 @@ CLASSES
      |  sin(a)
      |      Calculates the approximate sine of the given angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
-     |      1 unit in the last place of the correctly rounded result for all inputs
+     |      1 unit in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
      |      This method's accuracy decreases beyond that range.
      |
@@ -1652,7 +1652,7 @@ CLASSES
      |  tan(a)
      |      Calculates the approximate tangent of the given angle; the angle is in radians.
      |      For the fraction size used by this class, this method is accurate to within
-     |      2 units in the last place of the correctly rounded result for all inputs
+     |      2 units in the last place of the correctly rounded result for every input
      |      in the range [-pi*2, pi*2].
      |      This method's accuracy decreases beyond that range.
      |

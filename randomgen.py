@@ -4436,7 +4436,7 @@ class RatioOfUniformsTiling:
        or a location close to it.  Optional; default is 0.
     - y0, y1: Bounding coordinates for the ratio-of-uniforms tiling.
        For this class to work, y0 <= min( x*sqrt(pdf(x)) ) and
-       y1 >= max( x*sqrt(pdf(x)) ) for all x.  Optional; the default is y0=-10, y1=10.
+       y1 >= max( x*sqrt(pdf(x)) ) for every x.  Optional; the default is y0=-10, y1=10.
     - cycles - Number of recursion cycles in which to split tiles
        for the ratio-of-uniforms tiling.  Default is 8.
 
