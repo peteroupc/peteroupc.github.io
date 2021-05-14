@@ -2,7 +2,7 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode for many of these methods.
+**Abstract:** This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods.
 
 **2020 Mathematics Subject Classification:** 68W20.
 
@@ -1463,7 +1463,7 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that process or distribution.  This function is called `EFUNC(x)` in this section, where `x` is one item taken from the sample.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see `MeanAndVariance` in the appendix).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one item taken from the sample.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see `MeanAndVariance` in the appendix).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
 
     Examples of `EFUNC` include:
 
@@ -1477,7 +1477,7 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 
     For Monte Carlo estimators with accuracy guarantees, see "[**Randomized Estimation Algorithms**](https://peteroupc.github.io/estimation.html)".
 
-2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is usually a special case of Monte Carlo estimation that finds the expected value of a multidimensional integral in a sampling domain; here, `EFUNC(z)` is the function to find the integral of, where `z` is a randomly chosen point in the sampling domain (such as 1 if the point is in the true volume and 0 if not).
+2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is usually a special case of Monte Carlo estimation that approximates a multidimensional integral over a sampling domain; here, `EFUNC(z)` is the function to find the integral of, where `z` is a randomly chosen point in the sampling domain (such as 1 if the point is in the true volume and 0 if not).
 
 3. [**Stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html). This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(65)**](#Note65)</sup>).
 
@@ -1671,7 +1671,7 @@ The following method samples from a distribution via inversion, with an accuracy
        end
     end
 
-Some applications need to convert a pregenerated number in \[0, 1\] (usually a number sampled from a uniform distribution) to a non-uniform distribution via quantiles.  Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
+Some applications need to convert a pregenerated number in \[0, 1\] (usually a number sampled from a uniform distribution), called `u01` below, to a non-uniform distribution via quantiles. Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
 
 - Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(19)**](#Note19)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 
@@ -2245,7 +2245,7 @@ There are other kinds of norms besides the &#x2113;<sub>2</sub> norm.  More gene
 2. **Query languages such as SQL** have no procedural elements such as loops and branches.  Moreover, standard SQL has no way to choose a number at random, but popular SQL dialects often do &mdash; with idiosyncratic behavior &mdash; and describing differences between SQL dialects is outside the scope of this document. Whenever possible, the methods in this document should not be implemented in SQL, especially if information security is a goal.
 3. **Stateless PRNGs.** Most designs of pseudorandom number generators (PRNGs) in common use maintain an internal state and update that state each time a number is sampled at random.  But for [**_stateless_ PRNG designs**](https://peteroupc.github.io/random.html#Designs_for_PRNGs) (including so-called "splittable" PRNGs), `RNDINT()`, `NEXTRAND()`, and other random sampling methods in this document may have to be adjusted accordingly (usually by adding an additional parameter).
 4. **Multithreading.** Multithreading can serve as a fast way to generate multiple random variates at once; it is not reflected in the pseudocode given in this page.  In general, this involves dividing a block of memory into chunks, assigning each chunk to a thread, giving each thread its own instance of a pseudorandom number generator (or another program that simulates a "source of random numbers"), and letting each thread fill its assigned chunk with random variates.  For an example, see "[**Multithreaded Generation**](https://docs.scipy.org/doc/numpy/reference/random/multithreading.html)".
-5. **Fixed amount of "randomness".** Given a _k_-bit unsigned integer _n_ (which lies in the interval \[0, 2<sup>_k_</sup>) and is chosen uniformly at random), values that approximate a probability distribution (e.g., `Poisson`, `Normal`) can be generated with the integer _n_ either by [**inversion with the number _n_/2<sup>_k_</sup>**](#Inverse_Transform_Sampling) or by treating _n_ as a seed for a local PRNG and using the PRNG to generate a sample from that distribution. An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ amount of "randomness", unless the number of different outcomes for _n_ is a power of 2.)
+5. **Fixed amount of "randomness".** Given a _k_-bit unsigned integer _n_ (which lies in the interval \[0, 2<sup>_k_</sup>) and is chosen uniformly at random), values that approximate a probability distribution (e.g., `Poisson`, `Normal`) can be generated with the integer _n_ either by [**inversion with the number (_n_+1)/2<sup>_k_+2</sup>**](#Inverse_Transform_Sampling) or by treating _n_ as a seed for a local PRNG and using the PRNG to generate a sample from that distribution. An application should use this suggestion only if it wants to ensure a fixed amount of "randomness" per sampled outcome is ultimately drawn, because the sampling method can return one of only 2<sup>_k_</sup> different outcomes this way. (In general, _n_ can't be chosen uniformly at random with a _fixed_ number of randomly chosen bits, unless the number of different outcomes for _n_ is a power of 2.)
 
 <a id=Security_Considerations></a>
 ### Security Considerations
