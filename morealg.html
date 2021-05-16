@@ -36,7 +36,6 @@
 <li><a href="#cosh___lambda___minus_1"><strong>cosh(<em>&lambda;</em>) &minus; 1</strong></a></li>
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
-<li><a href="#Algorithm_for_1__x__minus_2_2"><strong>Algorithm for 1/(<em>x</em>&minus;2)<sup>2</sup></strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Non_Negative_Factories"><strong>Non-Negative Factories</strong></a></li>
 </ul></li>
@@ -274,17 +273,6 @@
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 4.</li>
 </ol>
-
-<p><a id=Algorithm_for_1__x__minus_2_2></a></p>
-
-<h3>Algorithm for 1/(<em>x</em>&minus;2)<sup>2</sup></h3>
-
-<ol>
-<li>Flip the input coin twice, and let <em>heads</em> be the number of times the coin returned 1 this way.</li>
-<li>Depending on <em>heads</em>, choose 0, 1, or 2 with probability proportional to the following weights: <em>heads</em>=0 &rarr; [3/4, 1/4, 0]; <em>heads</em>=1 &rarr; [1/2, 1/2, 1]; <em>heads</em>=2 &rarr; [0, 1/4, 1/2].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.</li>
-</ol>
-
-<p>Derivation: The function is a rational function, in this case a ratio of two polynomials that are both non-negative on the interval [0, 1].  Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree); divide both polynomials by 4 so that they map [0, 1] to [0, 1].  The result is: the numerator&#39;s coefficients are (1/4, 1/2, 1/4); the denominator&#39;s are (1, 1, 1/4). Then the algorithm follows from the section &quot;Certain Rational Functions&quot; in &quot;Bernoulli Factory Algorithms&quot;.</p>
 
 <p><a id=Certain_Piecewise_Linear_Functions></a></p>
 

@@ -26,7 +26,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
-    - [**Algorithm for 1/(_x_&minus;2)<sup>2</sup>**](#Algorithm_for_1__x__minus_2_2)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Non-Negative Factories**](#Non_Negative_Factories)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
@@ -198,14 +197,6 @@ The algorithm is then as follows:
 6. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _t_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _t_.
 7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 8. Add 1 to _n_ and go to step 4.
-
-<a id=Algorithm_for_1__x__minus_2_2></a>
-### Algorithm for 1/(_x_&minus;2)<sup>2</sup>
-
-1. Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.
-2. Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; [3/4, 1/4, 0]; _heads_=1 &rarr; [1/2, 1/2, 1]; _heads_=2 &rarr; [0, 1/4, 1/2].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.
-
-Derivation: The function is a rational function, in this case a ratio of two polynomials that are both non-negative on the interval [0, 1].  Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree); divide both polynomials by 4 so that they map [0, 1] to [0, 1].  The result is: the numerator's coefficients are (1/4, 1/2, 1/4); the denominator's are (1, 1, 1/4). Then the algorithm follows from the section "Certain Rational Functions" in "Bernoulli Factory Algorithms".
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
