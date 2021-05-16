@@ -203,9 +203,9 @@ The algorithm is then as follows:
 ### Algorithm for 1/(_x_&minus;2)<sup>2</sup>
 
 1. Flip the input coin twice, and let _heads_ be the number of times the coin returned 1 this way.
-2. Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; [3/4, 1/4, 0]; _heads_=1 &rarr; [1/4, 1/4, 3/2]; _heads_=2 &rarr; [0, 1/4, 3/4].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.
+2. Depending on _heads_, choose 0, 1, or 2 with probability proportional to the following weights: _heads_=0 &rarr; [3/4, 1/4, 0]; _heads_=1 &rarr; [1/2, 1/2, 1]; _heads_=2 &rarr; [0, 1/4, 1/2].  If 0 or 1 is chosen this way, return it.  Otherwise, go to step 1.
 
-Derivation: The function is a rational function, in this case a ratio of two polynomials that are both non-negative on the interval [0, 1].  Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree); divide both polynomials by 4 so that they map [0, 1] to [0, 1].  The result is: the numerator's coefficients are (1, 1, 1/2); the denominator's are (1/4, 1/2, 1/4). Then the algorithm follows from the section "Certain Rational Functions" in "Bernoulli Factory Algorithms".
+Derivation: The function is a rational function, in this case a ratio of two polynomials that are both non-negative on the interval [0, 1].  Rewrite the numerator and denominator into homogeneous polynomials (polynomials whose terms have the same degree); divide both polynomials by 4 so that they map [0, 1] to [0, 1].  The result is: the numerator's coefficients are (1/4, 1/2, 1/4); the denominator's are (1, 1, 1/4). Then the algorithm follows from the section "Certain Rational Functions" in "Bernoulli Factory Algorithms".
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
