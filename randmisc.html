@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/05/15"><meta name="citation_online_date" content="2021/05/15"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/05/16"><meta name="citation_online_date" content="2021/05/16"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Miscellaneous Observations on Randomization</h1>
@@ -39,13 +39,13 @@
 <li>With probability choose(<em>n</em>, <em>ret</em>)*<em>m</em>*2<sup>(<em>k</em>&minus;<em>n</em>)+2</sup>, return <em>ret</em>.  Otherwise, go to step 3. (Here, choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.<sup><a href="#Note2"><strong>(2)</strong></a></sup>)</li>
 </ol>
 
-<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random number can be generated, negated, and compared with that logarithm to determine whether the step succeeds.</p>
+<p>This algorithm has an acceptance rate of 1/16 regardless of the value of <em>n</em>.  However, step 7 will generally require a growing amount of storage and time to exactly calculate the given probability as <em>n</em> gets larger, notably due to the inherent factorial in the binomial coefficient.  The Bringmann paper suggests approximating this factorial via Spouge&#39;s approximation; however, it seems hard to do so without using floating-point arithmetic, which the paper ultimately resorts to. Alternatively, the logarithm of that probability can be calculated that is much more economical in terms of storage than the full exact probability.  Then, an exponential random variate can be generated, negated, and compared with that logarithm to determine whether the step succeeds.</p>
 
 <p>More specifically, step 7 can be changed as follows:</p>
 
 <ul>
 <li>(7.) Let <em>p</em> be loggamma(<em>n</em>+1)&minus;loggamma(<em>ret</em>+1)&minus;loggamma((<em>n</em>&minus;<em>ret</em>)+1)+ln(<em>m</em>)+ln(2)*((<em>k</em>&minus;<em>n</em>)+2) (where loggamma(<em>x</em>) is the logarithm of the gamma function).</li>
-<li>(7a.) Generate an exponential random number with rate 1 (which is the negative natural logarithm of a uniform(0,1) random number).  Set <em>&eta;</em> to 0 minus that number.</li>
+<li>(7a.) Generate an exponential random variate with rate 1 (which is the negative natural logarithm of a uniform(0,1) random variate).  Set <em>&eta;</em> to 0 minus that number.</li>
 <li>(7b.) If <em>h</em> is greater than <em>p</em>, go to step 3.  Otherwise, return <em>ret</em>. (This step can be replaced by calculating lower and upper bounds that converge to <em>p</em>.  In that case, go to step 3 if <em>h</em> is greater than the upper bound, or return <em>ret</em> if <em>h</em> is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.)</li>
 </ul>
 
@@ -57,12 +57,12 @@
 <p><strong>Notes:</strong></p>
 
 <ul>
-<li>A binomial(<em>n</em>, 1/2) random number, where <em>n</em> is odd, can be generated by adding an unbiased random bit&#39;s value (either zero or one with equal probability) to a binomial(<em>n</em>&minus;1, 1/2) random number.</li>
-<li>As pointed out by Farach-Colton and Tsai (2015)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, a binomial(<em>n</em>, <em>p</em>) random number, where <em>p</em> is in the interval (0, 1), can be generated using binomial(<em>n</em>, 1/2) numbers using a procedure equivalent to the following:
+<li>A binomial(<em>n</em>, 1/2) random variate, where <em>n</em> is odd, can be generated by adding an unbiased random bit&#39;s value (either zero or one with equal probability) to a binomial(<em>n</em>&minus;1, 1/2) random variate.</li>
+<li>As pointed out by Farach-Colton and Tsai (2015)<sup><a href="#Note6"><strong>(6)</strong></a></sup>, a binomial(<em>n</em>, <em>p</em>) random variate, where <em>p</em> is in the interval (0, 1), can be generated using binomial(<em>n</em>, 1/2) numbers using a procedure equivalent to the following:
 
 <ol>
 <li>Set <em>k</em> to 0 and <em>ret</em> to 0.</li>
-<li>If the binary digit at position <em>k</em> after the point in <em>p</em>&#39;s binary expansion (that is, 0.bbbb... where each b is a zero or one) is 1, add a binomial(<em>n</em>, 1/2) random number to <em>ret</em> and subtract the same random number from <em>n</em>; otherwise, set <em>n</em> to a binomial(<em>n</em>, 1/2) random number.</li>
+<li>If the binary digit at position <em>k</em> after the point in <em>p</em>&#39;s binary expansion (that is, 0.bbbb... where each b is a zero or one) is 1, add a binomial(<em>n</em>, 1/2) random variate to <em>ret</em> and subtract the same variate from <em>n</em>; otherwise, set <em>n</em> to a binomial(<em>n</em>, 1/2) random variate.</li>
 <li>If <em>n</em> is greater than 0, add 1 to <em>k</em> and go to step 2; otherwise, return <em>ret</em>. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.)</li>
 </ol></li>
 </ul>
@@ -72,7 +72,7 @@
 
 <h2>On a Geometric Sampler</h2>
 
-<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random number expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>. (Note that the terminology &quot;geometric random number&quot; has conflicting meanings in academic works.  Note also that the algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.)</p>
+<p>The following algorithm is equivalent to the geometric(<em>px</em>/<em>py</em>) sampler that appeared in (Bringmann and Friedrich 2013)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(<em>p</em>) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability <em>p</em>. (Note that the terminology &quot;geometric random variate&quot; has conflicting meanings in academic works.  Note also that the algorithm uses the rational number <em>px</em>/<em>py</em>, not an arbitrary real number <em>p</em>; some of the notes in this section indicate how to adapt the algorithm to an arbitrary <em>p</em>.)</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, and <em>d</em> to 0.</li>
@@ -112,7 +112,7 @@
 <li>Run the first sub-algorithm with <em>n</em> = <em>m</em>, except in step 1 of that sub-algorithm, set <em>r</em> to the value of <em>r</em> built up by this algorithm, rather than 0, and set <em>i</em> to 2<sup><em>k</em></sup>, rather than 2.  If that sub-algorithm returns 1, return <em>m</em> (and, if requested, the number &minus;1).  Otherwise, return &minus;1 (and, if requested, an arbitrary value).</li>
 </ol>
 
-<p>As used in the Bringmann paper, a bounded geometric(<em>p</em>, <em>n</em>) random number is a geometric(<em>p</em>) random number or <em>n</em> (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.</p>
+<p>As used in the Bringmann paper, a bounded geometric(<em>p</em>, <em>n</em>) random variate is a geometric(<em>p</em>) random variate or <em>n</em> (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.</p>
 
 <ol>
 <li>Set <em>pn</em> to <em>px</em>, <em>k</em> to 0, <em>d</em> to 0, and <em>m2</em> to the smallest power of 2 that is greater than <em>n</em> (or equivalently, 2<sup><em>bits</em></sup> where <em>bits</em> is the minimum number of bits needed to store <em>n</em>).</li>
@@ -133,7 +133,7 @@
 
 <h2>Sampling Unbounded Monotone Density Functions</h2>
 
-<p>This section shows a preprocessing algorithm to generate a random number in [0, 1] from a distribution whose probability density function (PDF)&mdash;</p>
+<p>This section shows a preprocessing algorithm to generate a random variate in [0, 1] from a distribution whose probability density function (PDF)&mdash;</p>
 
 <ul>
 <li>is continuous in the interval [0, 1],</li>
@@ -147,50 +147,50 @@
 <li>Set <em>i</em> to 1.</li>
 <li>Calculate the cumulative probability of the interval [0, 2<sup>&minus;<em>i</em></sup>] and that of [0, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>], call them <em>p</em> and <em>t</em>, respectively.</li>
 <li>With probability <em>p</em>/<em>t</em>, add 1 to <em>i</em> and go to step 2. (Alternatively, if <em>i</em> is equal to or higher than the desired number of fractional bits in the result, return 0 instead of adding 1 and going to step 2.)</li>
-<li>At this point, the PDF at [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>) is bounded from above, so sample a random number in this interval using any appropriate algorithm, including rejection sampling.  Because the PDF is monotonically decreasing, the peak of the PDF at this interval is located at 2<sup>&minus;<em>i</em></sup>, so that rejection sampling becomes trivial.</li>
+<li>At this point, the PDF at [2<sup>&minus;<em>i</em></sup>, 2<sup>&minus;(<em>i</em> &minus; 1)</sup>) is bounded from above, so sample a random variate in this interval using any appropriate algorithm, including rejection sampling.  Because the PDF is monotonically decreasing, the peak of the PDF at this interval is located at 2<sup>&minus;<em>i</em></sup>, so that rejection sampling becomes trivial.</li>
 </ol>
 
 <p>It is relatively straightforward to adapt this algorithm for monotonically increasing PDFs with the unbounded peak at 1, or to PDFs with a different domain than [0, 1].</p>
 
 <p>This algorithm is similar to the &quot;inversion&ndash;rejection&quot; algorithm mentioned in section 4.4 of chapter 7 of Devroye&#39;s <em>Non-Uniform Random Variate Generation</em> (1986)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.  I was unaware of that algorithm at the time I started writing the text that became this section (Jul. 25, 2020).  The difference here is that it assumes the whole distribution (including its PDF and cumulative distribution function) can take on any value in the interval [0, 1] and only those values (that is, its <em>support</em> is [0, 1]), while the algorithm presented in this article doesn&#39;t make that assumption (e.g., the interval [0, 1] can cover only part of the PDF&#39;s support).</p>
 
-<p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random number, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Even so, the algorithm I have come up with in this note may be of independent interest.</p>
+<p>By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers</strong></a>.  Even so, the algorithm I have come up with in this note may be of independent interest.</p>
 
-<p>In the case of powers of a uniform [0, 1] random number <em>X</em>, namely <em>X</em><sup><em>n</em></sup>, the ratio <em>p</em>/<em>t</em> in this algorithm has a very simple form, namely (1/2)<sup>1/<em>n</em></sup>, which is possible to simulate using a so-called <em>Bernoulli factory</em> algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of <em>i</em>.  This is found by taking the PDF f(<em>x</em>) = <em>x</em><sup>1/<em>n</em></sup>/(<em>x</em> * <em>n</em>)</sup> and finding the appropriate <em>p</em>/<em>t</em> ratios by integrating <em>f</em> over the two intervals mentioned in step 2 of the algorithm.</p>
+<p>In the case of powers of a uniform [0, 1] random variate <em>X</em>, namely <em>X</em><sup><em>n</em></sup>, the ratio <em>p</em>/<em>t</em> in this algorithm has a very simple form, namely (1/2)<sup>1/<em>n</em></sup>, which is possible to simulate using a so-called <em>Bernoulli factory</em> algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of <em>i</em>.  This is found by taking the PDF f(<em>x</em>) = <em>x</em><sup>1/<em>n</em></sup>/(<em>x</em> * <em>n</em>)</sup> and finding the appropriate <em>p</em>/<em>t</em> ratios by integrating <em>f</em> over the two intervals mentioned in step 2 of the algorithm.</p>
 
 <p><a id=Certain_Families_of_Distributions></a></p>
 
 <h2>Certain Families of Distributions</h2>
 
-<p>This section is a note on certain families of univariate (one-variable) distributions of random numbers, with
-emphasis on sampling random numbers from them.  Some of these families are described in Ahmad et al. (2019)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</p>
+<p>This section is a note on certain families of univariate (one-variable) probability distributions, with
+emphasis on sampling random variates from them.  Some of these families are described in Ahmad et al. (2019)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</p>
 
 <p>The following definitions are used:</p>
 
 <ul>
-<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random numbers in the closed interval [0, 1] to numbers that follow the distribution.</li>
+<li>A distribution&#39;s <em>quantile function</em> (also known as <em>inverse cumulative distribution function</em> or <em>inverse CDF</em>) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.</li>
 <li>A distribution&#39;s <em>support</em> is the set of values the distribution can take on.  For example, the beta distribution&#39;s support is the interval [0, 1], and the normal distribution&#39;s support is the entire real line.</li>
 </ul>
 
-<p>In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)<sup><a href="#Note9"><strong>(9)</strong></a></sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval [0, 1] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random number following a distribution from this kind of family:</p>
+<p>In general, families of the form &quot;X-G&quot; (such as &quot;beta-G&quot; (Eugene et al., 2002)<sup><a href="#Note9"><strong>(9)</strong></a></sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval [0, 1] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:</p>
 
 <ol>
-<li>Generate a random number that follows the distribution X. (Or generate a uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random number (PSRN)</strong></a> that follows the distribution X.)  Call the number <em>x</em>.</li>
+<li>Generate a random variate that follows the distribution X. (Or generate a uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random number (PSRN)</strong></a> that follows the distribution X.)  Call the number <em>x</em>.</li>
 <li>Calculate the quantile for G of <em>x</em>, and return that quantile. (If <em>x</em> is a uniform PSRN, see the note at the end of this section.)</li>
 </ol>
 
 <p>Certain special cases of the &quot;X-G&quot; families, such as the following, use a specially designed distribution for X:</p>
 
 <ul>
-<li>The <em>alpha power</em> or <em>alpha power transformed</em> family (Mahdavi and Kundu 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>. The family uses a shape parameter <em>&alpha;</em> &gt; 0; step 1 is modified to read: &quot;Generate a uniform(0, 1) random number <em>U</em>, then set <em>x</em> to ln((<em>&alpha;</em>&minus;1)*<em>U</em> + 1)/ln(<em>&alpha;</em>) if <em>&alpha;</em> != 1, and <em>U</em> otherwise.&quot;</li>
-<li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)<sup><a href="#Note11"><strong>(11)</strong></a></sup>. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate a uniform(0, 1) random number <em>u</em>, then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
-<li>The <em>transmuted-G</em> family (described, for example, by Tahir and Cordeiro (2016)<sup><a href="#Note12"><strong>(12)</strong></a></sup>). The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random number in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup><a href="#Note3"><strong>(3)</strong></a></sup>: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform(0, 1) random number. Otherwise, generate two uniform(0, 1) random numbers, set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;.</li>
+<li>The <em>alpha power</em> or <em>alpha power transformed</em> family (Mahdavi and Kundu 2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup>. The family uses a shape parameter <em>&alpha;</em> &gt; 0; step 1 is modified to read: &quot;Generate a uniform(0, 1) random variate <em>U</em>, then set <em>x</em> to ln((<em>&alpha;</em>&minus;1)*<em>U</em> + 1)/ln(<em>&alpha;</em>) if <em>&alpha;</em> != 1, and <em>U</em> otherwise.&quot;</li>
+<li>The <em>exponentiated</em> family (Mudholkar and Srivastava 1993)<sup><a href="#Note11"><strong>(11)</strong></a></sup>. The family uses a shape parameter <em>a</em> &gt; 1; step 1 is modified to read: &quot;Generate a uniform(0, 1) random variate <em>u</em>, then set <em>x</em> to <em>u</em><sup>1/<em>a</em></sup>.&quot;</li>
+<li>The <em>transmuted-G</em> family (described, for example, by Tahir and Cordeiro (2016)<sup><a href="#Note12"><strong>(12)</strong></a></sup>). The family uses a shape parameter <em>&eta;</em> in the interval [&minus;1, 1]; step 1 is modified to read: &quot;Generate a piecewise linear random variate in [0, 1] with weight 1&minus;<em>&eta;</em> at 0 and weight 1+<em>&eta;</em> at 1, call the number <em>x</em>. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup><a href="#Note3"><strong>(3)</strong></a></sup>: With probability min(1&minus;<em>&eta;</em>, 1+<em>&eta;</em>), generate <em>x</em>, a uniform(0, 1) random variate. Otherwise, generate two uniform(0, 1) random variates, set <em>x</em> to the higher of the two, then if <em>&eta;</em> is less than 0, set <em>x</em> to 1&minus;<em>x</em>.)&quot;.</li>
 </ul>
 
-<p>In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup> that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary continuous distribution, G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function, and <em>W</em> is a nondecreasing function that maps a number in [0, 1] to a number with the same support as X and meets certain other conditions.  The following algorithm samples a random number from this kind of family:</p>
+<p>In fact, the &quot;X-G&quot; families are a special case of the so-called &quot;transformed&ndash;transformer&quot; family of distributions introduced by Alzaatreh et al. (2013)<sup><a href="#Note13"><strong>(13)</strong></a></sup> that uses two distributions, X and G, where X (the &quot;transformed&quot;) is an arbitrary continuous distribution, G (the &quot;transformer&quot;) is a distribution with an easy-to-compute quantile function, and <em>W</em> is a nondecreasing function that maps a number in [0, 1] to a number with the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:</p>
 
 <ol>
-<li>Generate a random number that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
+<li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
 <li>Calculate the quantile for G of <em>W</em><sup>&minus;1</sup>(<em>x</em>) (where <em>W</em><sup>&minus;1</sup>(.) is the inverse of <em>W</em>), and return that quantile. (If <em>x</em> is a uniform PSRN, see the note at the end of this section.)</li>
 </ol>
 
@@ -210,31 +210,31 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <p>A family very similar to the &quot;transformed&ndash;transformer&quot; family uses a <em>decreasing</em> <em>W</em>.  When distribution X&#39;s support is [0, &infin;), one such <em>W</em> that has been proposed is <em>W</em>(<em>x</em>) = &minus;ln(<em>x</em>) (<em>W</em><sup>&minus;1</sup>(<em>x</em>) = exp(&minus;<em>x</em>); examples include the &quot;Rayleigh-G&quot; family or &quot;Rayleigh&ndash;Rayleigh&quot; distribution (Al Noor and Assi 2020)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, as well as the &quot;generalized gamma-G&quot; family, where &quot;generalized gamma&quot; refers to the Stacy distribution (Boshi et al. 2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup>).</p>
 
-<p>A <em>compound distribution</em> is simply the minimum of <em>N</em> random numbers distributed as <em>X</em>, where <em>N</em> &gt;= 1 is an integer distributed as the discrete distribution <em>Y</em> (Tahir and Cordeiro 2016)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  For example, the &quot;beta-G-geometric&quot; family represents the minimum of <em>N</em> beta-G random numbers, where <em>N</em> is a random number expressing 1 plus the number of failures before the first success, with each success having the same probability.</p>
+<p>A <em>compound distribution</em> is simply the minimum of <em>N</em> random variates distributed as <em>X</em>, where <em>N</em> &gt;= 1 is an integer distributed as the discrete distribution <em>Y</em> (Tahir and Cordeiro 2016)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  For example, the &quot;beta-G-geometric&quot; family represents the minimum of <em>N</em> beta-G random variates, where <em>N</em> is a random variate expressing 1 plus the number of failures before the first success, with each success having the same probability.</p>
 
-<p>A <em>complementary compound distribution</em> is the maximum of <em>N</em> random numbers distributed as <em>X</em>, where <em>N</em> &gt;= 1 is an integer distributed as the discrete distribution <em>Y</em>.  An example is the &quot;geometric zero-truncated Poisson distribution&quot;, where <em>X</em> is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and <em>Y</em> is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p>A <em>complementary compound distribution</em> is the maximum of <em>N</em> random variates distributed as <em>X</em>, where <em>N</em> &gt;= 1 is an integer distributed as the discrete distribution <em>Y</em>.  An example is the &quot;geometric zero-truncated Poisson distribution&quot;, where <em>X</em> is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and <em>Y</em> is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 
-<p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random number distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random number (Keller and Kamath 1982)<sup><a href="#Note20"><strong>(20)</strong></a></sup> is the reciprocal of an exponential(1) random number (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform(0, 1) random number) and may be scaled by a parameter <em>&theta;</em> &gt; 0.</p>
+<p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)<sup><a href="#Note20"><strong>(20)</strong></a></sup> is the reciprocal of an exponential(1) random variate (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform(0, 1) random variate) and may be scaled by a parameter <em>&theta;</em> &gt; 0.</p>
 
 <p>A <em>weight-biased X</em> or <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
 
 <ol>
-<li>Generate a random number that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
+<li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
 <li>With probability <em>w</em>(<em>x</em>), return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>To generate an <em>inflated X</em> random number with parameters <em>c</em> and <em>&alpha;</em>, generate&mdash;</p>
+<p>To generate an <em>inflated X</em> random variate with parameters <em>c</em> and <em>&alpha;</em>, generate&mdash;</p>
 
 <ul>
 <li><em>c</em> with probability <em>&alpha;</em>, and</li>
-<li>a random number distributed as X otherwise.</li>
+<li>a random variate distributed as X otherwise.</li>
 </ul>
 
-<p>For example, a <em>zero-inflated beta</em> random number is 0 with probability <em>&alpha;</em> and a beta random number otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)<sup><a href="#Note21"><strong>(21)</strong></a></sup>  A zero-and-one inflated X distribution is 0 or 1 with probability <em>&alpha;</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random number (with parameters <em>&alpha;</em>, <em>&theta;</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)<sup><a href="#Note22"><strong>(22)</strong></a></sup>:</p>
+<p>For example, a <em>zero-inflated beta</em> random variate is 0 with probability <em>&alpha;</em> and a beta random variate otherwise (the parameter <em>c</em> is 0) (Ospina and Ferrari 2010)<sup><a href="#Note21"><strong>(21)</strong></a></sup>  A zero-and-one inflated X distribution is 0 or 1 with probability <em>&alpha;</em> and distributed as X otherwise.  For example, to generate a <em>zero-and-one-inflated unit Lindley</em> random variate (with parameters <em>&alpha;</em>, <em>&theta;</em>, and <em>p</em>) (Chakraborty and Bhattacharjee 2021)<sup><a href="#Note22"><strong>(22)</strong></a></sup>:</p>
 
 <ol>
 <li>With probability <em>&alpha;</em>, return a number that is 0 with probability <em>p</em> and 1 otherwise.</li>
-<li>Generate a unit Lindley(<em>&theta;</em>) random number, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random number</strong></a>.</li>
+<li>Generate a unit Lindley(<em>&theta;</em>) random variate, that is, generate <em>x</em>/(1+<em>x</em>) where <em>x</em> is a <a href="https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley(<em>&theta;</em>) random variate</strong></a>.</li>
 </ol>
 
 <blockquote>
@@ -245,7 +245,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <h2>Certain Distributions</h2>
 
-<p>In the table below, <em>U</em> is a uniform(0, 1) random number.</p>
+<p>In the table below, <em>U</em> is a uniform(0, 1) random variate.</p>
 
 <table><thead>
 <tr>
@@ -318,7 +318,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <p>Let G be a distribution for which the quantile is wanted, and let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile.</p>
 
-<p>When a random number <em>x</em> is a uniform PSRN in [0, 1], then the following algorithm transforms that number to a random variate for the distribution associated with the quantile function, with a desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)<sup><a href="#Note26"><strong>(26)</strong></a></sup>):</p>
+<p>When a random variate <em>x</em> is a uniform PSRN in [0, 1], then the following algorithm transforms that number to a random variate for the distribution associated with the quantile function, with a desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)<sup><a href="#Note26"><strong>(26)</strong></a></sup>):</p>
 
 <ol>
 <li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of the quantile of <em>f</em>(<em>a</em>) and an upper bound of the quantile of <em>f</em>(<em>b</em>) differ by no more than 2*<em>&epsilon;</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
@@ -345,7 +345,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 <h2>ExpoExact</h2>
 
-<p>This algorithm <code>ExpoExact</code>, samples an exponential random number given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)<sup><a href="#Note29"><strong>(29)</strong></a></sup>; Canonne et al. (2020)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.</p>
+<p>This algorithm <code>ExpoExact</code>, samples an exponential random variate given the rate <code>rx</code>/<code>ry</code> with an error tolerance of 2<sup><code>-precision</code></sup>; for more information, see &quot;<a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers</strong></a>&quot;; see also Morina et al. (2019)<sup><a href="#Note29"><strong>(29)</strong></a></sup>; Canonne et al. (2020)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  In this section, <code>RNDINT(1)</code> generates an independent unbiased random bit.</p>
 
 <pre>METHOD ZeroOrOneExpMinus(x, y)
   if y &lt;= 0 or x&lt;0: return error
@@ -382,7 +382,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random number, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup><a href="#Note31"><strong>(31)</strong></a></sup></p>
+<p><strong>Note:</strong> After <code>ExpoExact</code> is used to generate a random variate, an application can append additional binary digits (such as <code>RNDINT(1)</code>) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup><a href="#Note31"><strong>(31)</strong></a></sup></p>
 </blockquote>
 
 <p><a id=Notes></a></p>

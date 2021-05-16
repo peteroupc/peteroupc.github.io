@@ -289,7 +289,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
 - <small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v2)", arXiv:1208.4318v2 [math.ST], 2012.</small>
 - <small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small>
-- <small><sup id=Note8>(8)</sup> Kunsch, R.J., Rudolf, D., "[Optimal confidence for Monte Carlo integration of smooth functions](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
+- <small><sup id=Note8>(8)</sup> Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
 
 <a id=License></a>
 ## License
