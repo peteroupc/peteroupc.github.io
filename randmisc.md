@@ -128,7 +128,7 @@ emphasis on sampling random numbers from them.  Some of these families are descr
 
 The following definitions are used:
 
-- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a function that maps uniform random numbers in the closed interval [0, 1] to numbers that follow the distribution.
+- A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random numbers in the closed interval [0, 1] to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on.  For example, the beta distribution's support is the interval [0, 1], and the normal distribution's support is the entire real line.
 
 In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002)<sup>[**(9)**](#Note9)</sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval \[0, 1\] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random number following a distribution from this kind of family:
@@ -189,7 +189,7 @@ In the table below, _U_ is a uniform(0, 1) random number.
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
-| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(23)**](#Note23)</sup>. | Minimum of _N_ power function(_b_, _c_) random variables, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
+| Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(23)**](#Note23)</sup>. | Minimum of _N_ power function(_b_, _c_) random variates, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
 | Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(24)**](#Note24)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
 | Marshall&ndash;Olkin(_&alpha;_). | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |

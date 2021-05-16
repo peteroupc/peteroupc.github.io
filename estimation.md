@@ -161,7 +161,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 >
 > 1. To estimate the probability of heads of a coin that produces either 1 with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (Kunsch et al. 2019, Lemma 3.6).
 > 2. The kurtosis of a Poisson distribution with mean _&mu;_ is (3 + 1/_&mu;_).  Thus, for example, to estimate the mean of a stream of Poisson variates with mean _&nu;_ or greater but otherwise unknown, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (3 + 1/_&nu;_)<sup>1/4</sup>.
-> 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; sqrt(3).
+> 3. The kurtosis of an exponential distribution is 9 regardless of its rate.  Thus, to estimate the mean of a stream of exponential variates with unknown mean, we can take _q_ = 4, _p_ = 2, and _&kappa;_ &ge; 9<sup>1/4</sup> = sqrt(3).
 
 <a id=Estimating_a_Function_of_the_Mean></a>
 ## Estimating a Function of the Mean
@@ -231,7 +231,7 @@ Unfortunately, these conditions may be hard to verify in practice, especially wh
 
 For this purpose, each number in the stream of random variates is generated as follows (see also Kunsch et al.):
 
-1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way.
+1. Set **z** to an _n_-dimensional vector (list of _n_ numbers) chosen at random in the sampling domain, independently of any other choice.  Usually, **z** is chosen _uniformly_ at random this way (see note later in this section).
 2. Calculate _h_(**z**), and set the next number in the stream to that value.
 
 Alternatively, if _h_(**z**) can take on only numbers in the closed interval [0, 1], the much simpler _Algorithm E_ can be used on the newly generated stream (taking _f_(_x_) = _x_), rather than _Algorithm C_.
@@ -251,6 +251,16 @@ q = S(4) # Degree of q-moment
 kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
+
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf)<sup>[**(8)**](#Note8)</sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+>
+> 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
+> 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
+>     1. For each dimension _j_ in \[1, _d_], set _p\[j]_ to a number in \[_i\[j]_/_m_, (_i\[j]_+1)/_m_) chosen uniformly at random.
+>     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
+> 3. Return _s_/_m_<sup>_d_</sup>.
+>
+> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)).
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -279,6 +289,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
 - <small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v2)", arXiv:1208.4318v2 [math.ST], 2012.</small>
 - <small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small>
+- <small><sup id=Note8>(8)</sup> Kunsch, R.J., Rudolf, D., "[Optimal confidence for Monte Carlo integration of smooth functions](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
 
 <a id=License></a>
 ## License
