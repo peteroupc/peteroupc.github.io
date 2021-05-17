@@ -116,7 +116,6 @@ The randomization methods presented on this page assume we have an endless sourc
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Sources of Random Numbers**](#Sources_of_Random_Numbers)
-    - [**Mean and Variance Calculation**](#Mean_and_Variance_Calculation)
     - [**Norm Calculation**](#Norm_Calculation)
     - [**Implementation Considerations**](#Implementation_Considerations)
     - [**Security Considerations**](#Security_Considerations)
@@ -1463,7 +1462,7 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one sample from the distribution.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see `MeanAndVariance` in the appendix).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one sample from the distribution.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see note below).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
 
     Examples of expected values include:
 
@@ -1480,6 +1479,8 @@ Randomization is the core of **Monte Carlo sampling**.  There are three main use
 2. [**Monte Carlo integration**](https://en.wikipedia.org/wiki/Monte_Carlo_integration).  This is usually a special case of Monte Carlo estimation that approximates a multidimensional integral over a sampling domain; here, `EFUNC(z)` is the function to find the integral of, where `z` is a randomly chosen point in the sampling domain (such as 1 if the point is in the true volume and 0 if not).
 
 3. [**Stochastic optimization**](http://mathworld.wolfram.com/StochasticOptimization.html). This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include [**_simulated annealing_**](https://en.wikipedia.org/wiki/Simulated_annealing) and [**_simultaneous perturbation stochastic approximation_**](https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation) (see also (Spall 1998)<sup>[**(66)**](#Note66)</sup>).
+
+> **Note:** Assuming the true population has a mean and variance, the _sample mean_ is an unbiased estimator of the mean, but the _sample variance_ is generally a biased estimator of variance for any sample smaller than the whole population.  The following pseudocode returns a two-item list containing the sample mean and an [**unbiased estimator of the variance**](http://mathworld.wolfram.com/Variance.html), in that order, of a list of real numbers (`list`), using the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python's `statistics.stdev`).  For the usual (biased) sample variance, replace `(size(list)-1)` with `size(list)` in the pseudocode shown next.  The pseudocode follows: `if size(list)==0: return [0, 0]; if size(list)==1: return [list[0], 0]; xm=list[0]; xs=0; i=1; while i < size(list); c = list[i]; i = i + 1; cxm = (c - xm); xm = xm + cxm *1.0/ i; xs = xs + cxm * (c - xm); end; return [xm, xs*1.0/(size(list)-1)]`.
 
 <a id=Low_Discrepancy_Sequences></a>
 ### Low-Discrepancy Sequences
@@ -1545,7 +1546,7 @@ Generating random data points based on how a list of data points is distributed 
 
 > **Notes:**
 >
-> 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best _predictive accuracy_ for the data set (e.g., _goodness of fit_, precision, recall) should be chosen.
+> 1. Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best _predictive accuracy_ for the data set (e.g., information criteria, precision, recall) should be chosen.
 > 2. If the existing data points each belong in one of several _categories_, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see "[**Weighted Choice**](#Weighted_Choice)").
 > 3. If the existing data points each belong in one of several _categories_, choosing a random data point _and_ its category could be done&mdash;
 >     1. by choosing a random data point based on all the existing data points, then finding its category (e.g., via machine learning models known as _classification models_), or
@@ -2196,29 +2197,6 @@ The randomization methods in this document are deterministic (that is, they prod
 
 - The methods do not "know" what numbers will be produced next by the "source of random numbers" (or by whatever is simulating that source).
 - A few methods read lines from files of unknown size; they won't "know" the contents of those lines before reading them.
-
-<a id=Mean_and_Variance_Calculation></a>
-### Mean and Variance Calculation
-
-The following method calculates the (sample) mean and an [**unbiased estimator of the sample variance**](http://mathworld.wolfram.com/Variance.html) of a list of real numbers, using the [**Welford method**](https://www.johndcook.com/blog/standard_deviation/) presented by J. D. Cook.  The method returns a two-item list containing that kind of mean and that kind of variance in that order.  (Sample mean and sample variance are the estimated mean and variance of a population or distribution assuming `list` is a random sample of that population or distribution.)  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python's `statistics.stdev`).
-
-    METHOD MeanAndVariance(list)
-        if size(list)==0: return [0, 0]
-        if size(list)==1: return [list[0], 0]
-        xm=list[0]
-        xs=0
-        i=1
-        while i < size(list)
-            c = list[i]
-            i = i + 1
-            cxm = (c - xm)
-            xm = xm + cxm *1.0/ i
-            xs = xs + cxm * (c - xm)
-        end
-        return [xm, xs*1.0/(size(list)-1)]
-    END METHOD
-
-> **Note:** The population variance (or biased sample variance) is found by dividing by `size(list)` rather than `(size(list)-1)`, and the standard deviation of the population is the population variance's square root.
 
 <a id=Norm_Calculation></a>
 ### Norm Calculation

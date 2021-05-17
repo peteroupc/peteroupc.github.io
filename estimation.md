@@ -252,15 +252,15 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
 
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf)<sup>[**(8)**](#Note8)</sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018)<sup>[**(8)**](#Note8)</sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
->     1. For each dimension _j_ in \[1, _d_], set _p\[j]_ to a number in \[_i\[j]_/_m_, (_i\[j]_+1)/_m_) chosen uniformly at random.
+>     1. For each dimension _j_ in \[1, _d_], set _p\[j]_ to a number in the half-open interval \[_i\[j]_/_m_, (_i\[j]_+1)/_m_) chosen uniformly at random.
 >     2. Add _f_((_p\[1]_, _p\[2]_, ..., _p\[j]_)) to _s_.
 > 3. Return _s_/_m_<sup>_d_</sup>.
 >
-> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)).
+> The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

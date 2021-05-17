@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/16"><meta name="citation_online_date" content="2021/05/16"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/17"><meta name="citation_online_date" content="2021/05/17"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -351,20 +351,20 @@ pprint(Max(1,kappa))
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
 <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
 <li>For each <em>i[1]</em> in [0, <em>m</em>), do: For each <em>i[2]</em> in [0, <em>m</em>), do: ..., For each <em>i[d]</em> in [0, <em>m</em>), do:
 
 <ol>
-<li>For each dimension <em>j</em> in [1, <em>d</em>], set <em>p[j]</em> to a number in [<em>i[j]</em>/<em>m</em>, (<em>i[j]</em>+1)/<em>m</em>) chosen uniformly at random.</li>
+<li>For each dimension <em>j</em> in [1, <em>d</em>], set <em>p[j]</em> to a number in the half-open interval [<em>i[j]</em>/<em>m</em>, (<em>i[j]</em>+1)/<em>m</em>) chosen uniformly at random.</li>
 <li>Add <em>f</em>((<em>p[1]</em>, <em>p[2]</em>, ..., <em>p[j]</em>)) to <em>s</em>.</li>
 </ol></li>
 <li>Return <em>s</em>/<em>m</em><sup><em>d</em></sup>.</li>
 </ol>
 
-<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <strong>z</strong><sup><em>&beta;</em></sup>) and is defined on [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)).</p>
+<p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <strong>z</strong><sup><em>&beta;</em></sup>) and is defined on [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
 <p><a id=Requests_and_Open_Questions></a></p>

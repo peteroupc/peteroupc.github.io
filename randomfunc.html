@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/05/15"><meta name="citation_online_date" content="2021/05/15"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/05/17"><meta name="citation_online_date" content="2021/05/17"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomization and Sampling Methods</h1>
@@ -165,7 +165,6 @@
 
 <ul>
 <li><a href="#Sources_of_Random_Numbers"><strong>Sources of Random Numbers</strong></a></li>
-<li><a href="#Mean_and_Variance_Calculation"><strong>Mean and Variance Calculation</strong></a></li>
 <li><a href="#Norm_Calculation"><strong>Norm Calculation</strong></a></li>
 <li><a href="#Implementation_Considerations"><strong>Implementation Considerations</strong></a></li>
 <li><a href="#Security_Considerations"><strong>Security Considerations</strong></a></li>
@@ -1880,7 +1879,7 @@ END METHOD
 <p>Randomization is the core of <strong>Monte Carlo sampling</strong>.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.</p>
 
 <ol>
-<li><p><strong>Estimating expected values.</strong> Monte Carlo sampling can help estimate the <strong>expected value</strong> (mean or average) of a sampling distribution, or of a <em>function</em> of the samples in that distribution.  This function is called <code>EFUNC(x)</code> in this section, where <code>x</code> is one sample from the distribution.  The simplest way to proceed is to take <code>n</code> samples, apply <code>EFUNC(x)</code> to each sample <code>x</code>, add the samples, and divide by <code>n</code> (see <code>MeanAndVariance</code> in the appendix).  However, that procedure won&#39;t work for all distributions, since they may have an infinite expected value, and it also doesn&#39;t allow controlling for the estimate&#39;s error.</p>
+<li><p><strong>Estimating expected values.</strong> Monte Carlo sampling can help estimate the <strong>expected value</strong> (mean or average) of a sampling distribution, or of a <em>function</em> of the samples in that distribution.  This function is called <code>EFUNC(x)</code> in this section, where <code>x</code> is one sample from the distribution.  The simplest way to proceed is to take <code>n</code> samples, apply <code>EFUNC(x)</code> to each sample <code>x</code>, add the samples, and divide by <code>n</code> (see note below).  However, that procedure won&#39;t work for all distributions, since they may have an infinite expected value, and it also doesn&#39;t allow controlling for the estimate&#39;s error.</p>
 
 <p>Examples of expected values include:</p>
 
@@ -1898,6 +1897,10 @@ END METHOD
 <li><p><a href="https://en.wikipedia.org/wiki/Monte_Carlo_integration"><strong>Monte Carlo integration</strong></a>.  This is usually a special case of Monte Carlo estimation that approximates a multidimensional integral over a sampling domain; here, <code>EFUNC(z)</code> is the function to find the integral of, where <code>z</code> is a randomly chosen point in the sampling domain (such as 1 if the point is in the true volume and 0 if not).</p></li>
 <li><p><a href="http://mathworld.wolfram.com/StochasticOptimization.html"><strong>Stochastic optimization</strong></a>. This uses randomness to help find the minimum or maximum value of a function with one or more variables; examples include <a href="https://en.wikipedia.org/wiki/Simulated_annealing"><strong><em>simulated annealing</em></strong></a> and <a href="https://en.wikipedia.org/wiki/Simultaneous_perturbation_stochastic_approximation"><strong><em>simultaneous perturbation stochastic approximation</em></strong></a> (see also (Spall 1998)<sup><a href="#Note66"><strong>(66)</strong></a></sup>).</p></li>
 </ol>
+
+<blockquote>
+<p><strong>Note:</strong> Assuming the true population has a mean and variance, the <em>sample mean</em> is an unbiased estimator of the mean, but the <em>sample variance</em> is generally a biased estimator of variance for any sample smaller than the whole population.  The following pseudocode returns a two-item list containing the sample mean and an <a href="http://mathworld.wolfram.com/Variance.html"><strong>unbiased estimator of the variance</strong></a>, in that order, of a list of real numbers (<code>list</code>), using the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python&#39;s <code>statistics.stdev</code>).  For the usual (biased) sample variance, replace <code>(size(list)-1)</code> with <code>size(list)</code> in the pseudocode shown next.  The pseudocode follows: <code>if size(list)==0: return [0, 0]; if size(list)==1: return [list[0], 0]; xm=list[0]; xs=0; i=1; while i &lt; size(list); c = list[i]; i = i + 1; cxm = (c - xm); xm = xm + cxm *1.0/ i; xs = xs + cxm * (c - xm); end; return [xm, xs*1.0/(size(list)-1)]</code>.</p>
+</blockquote>
 
 <p><a id=Low_Discrepancy_Sequences></a></p>
 
@@ -2737,33 +2740,6 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 <li>The methods do not &quot;know&quot; what numbers will be produced next by the &quot;source of random numbers&quot; (or by whatever is simulating that source).</li>
 <li>A few methods read lines from files of unknown size; they won&#39;t &quot;know&quot; the contents of those lines before reading them.</li>
 </ul>
-
-<p><a id=Mean_and_Variance_Calculation></a></p>
-
-<h3>Mean and Variance Calculation</h3>
-
-<p>The following method calculates the (sample) mean and an <a href="http://mathworld.wolfram.com/Variance.html"><strong>unbiased estimator of the sample variance</strong></a> of a list of real numbers, using the <a href="https://www.johndcook.com/blog/standard_deviation/"><strong>Welford method</strong></a> presented by J. D. Cook.  The method returns a two-item list containing that kind of mean and that kind of variance in that order.  (Sample mean and sample variance are the estimated mean and variance of a population or distribution assuming <code>list</code> is a random sample of that population or distribution.)  The square root of the variance calculated here is what many APIs call a standard deviation (e.g. Python&#39;s <code>statistics.stdev</code>).</p>
-
-<pre>METHOD MeanAndVariance(list)
-    if size(list)==0: return [0, 0]
-    if size(list)==1: return [list[0], 0]
-    xm=list[0]
-    xs=0
-    i=1
-    while i &lt; size(list)
-        c = list[i]
-        i = i + 1
-        cxm = (c - xm)
-        xm = xm + cxm *1.0/ i
-        xs = xs + cxm * (c - xm)
-    end
-    return [xm, xs*1.0/(size(list)-1)]
-END METHOD
-</pre>
-
-<blockquote>
-<p><strong>Note:</strong> The population variance (or biased sample variance) is found by dividing by <code>size(list)</code> rather than <code>(size(list)-1)</code>, and the standard deviation of the population is the population variance&#39;s square root.</p>
-</blockquote>
 
 <p><a id=Norm_Calculation></a></p>
 
