@@ -1318,18 +1318,18 @@ END METHOD
 
 <p>As an example, <a href="http://www.redblobgames.com/articles/probability/damage-rolls.html"><strong>&quot;Probability and Games: Damage Rolls&quot;</strong></a> by Red Blob Games includes interactive graphics showing score distributions for lowest-of, highest-of, drop-the-lowest, and reroll game mechanics.<sup><a href="#Note49"><strong>(49)</strong></a></sup>  These and similar distributions can be generalized as follows.</p>
 
-<p>Generate one or more random variates, each with a separate probability distribution, then:</p>
+<p>Generate one or more random variates (numbers), each with a separate probability distribution, then:</p>
 
 <ol>
-<li><strong>Highest-of:</strong>  Choose the highest generated number.</li>
-<li><strong>Drop-the-lowest:</strong>  Add all generated numbers except the lowest.</li>
-<li><strong>Reroll-the-lowest:</strong>  Add all generated numbers except the lowest, then add a number generated randomly by a separate probability distribution.</li>
+<li><strong>Highest-of:</strong>  Choose the highest generated variate.</li>
+<li><strong>Drop-the-lowest:</strong>  Add all generated variates except the lowest.</li>
+<li><strong>Reroll-the-lowest:</strong>  Add all generated variates except the lowest, then add a number generated randomly by a separate probability distribution.</li>
 <li><strong>Lowest-of:</strong>  Choose the lowest generated number.</li>
-<li><strong>Drop-the-highest:</strong>  Add all generated numbers except the highest.</li>
-<li><strong>Reroll-the-highest:</strong>  Add all generated numbers except the highest, then add a number generated randomly by a separate probability distribution.</li>
-<li><strong>Sum:</strong> Add all generated numbers.</li>
-<li><strong>Mean:</strong> Find the mean of all generated numbers.</li>
-<li><strong>Geometric transformation:</strong> Treat the numbers as an <em>n</em>-dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note50"><strong>(50)</strong></a></sup>, to that point.</li>
+<li><strong>Drop-the-highest:</strong>  Add all generated variates except the highest.</li>
+<li><strong>Reroll-the-highest:</strong>  Add all generated variates except the highest, then add a number generated randomly by a separate probability distribution.</li>
+<li><strong>Sum:</strong> Add all generated variates.</li>
+<li><strong>Mean:</strong> Add all generated variates, then divide the sum by the number of variates.</li>
+<li><strong>Geometric transformation:</strong> Treat the variates as an <em>n</em>-dimensional point, then apply a geometric transformation, such as a rotation or other <em>affine transformation</em><sup><a href="#Note50"><strong>(50)</strong></a></sup>, to that point.</li>
 </ol>
 
 <p>If the probability distributions are the same, then strategies 1 to 3 make higher numbers more likely, and strategies 4 to 6, lower numbers.</p>
@@ -1886,7 +1886,7 @@ END METHOD
 <ul>
 <li>The <strong><code>n</code>th sample raw moment</strong> (a raw moment is a mean of <code>n</code>th powers) if <code>EFUNC(x)</code> is <code>pow(x, n)</code>.</li>
 <li>The <strong>sample mean</strong>, if <code>EFUNC(x)</code> is <code>x</code> or <code>pow(x, 1)</code>.</li>
-<li>The <strong><code>n</code>th sample central moment</strong> (a central moment is a moment about the mean) if <code>EFUNC(x)</code> is <code>pow(x-m, n)</code>, where <code>m</code> is the mean of the sampled numbers.</li>
+<li>The <strong><code>n</code>th sample central moment</strong> (a central moment is a moment about the mean) if <code>EFUNC(x)</code> is <code>pow(x-m, n)</code>, where <code>m</code> is the sample mean.</li>
 <li>The (biased) <strong>sample variance</strong>, the second sample central moment.</li>
 <li>The <strong>probability</strong>, if <code>EFUNC(x)</code> is <code>1</code> if some condition is met or <code>0</code> otherwise.</li>
 </ul>
@@ -1988,7 +1988,7 @@ number in the sequence.</li>
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best <em>predictive accuracy</em> for the data set (e.g., <em>goodness of fit</em>, precision, recall) should be chosen.</li>
+<li>Usually, more than one kind of data model and/or machine learning model is a possible choice to fit to a given data set (e.g., multiple kinds of density estimation models, regression models, parametric distributions, and/or decision trees).  If several kinds of model are fitting choices, then the kind showing the best <em>predictive accuracy</em> for the data set (e.g., information criterion, precision, recall) should be chosen.</li>
 <li>If the existing data points each belong in one of several <em>categories</em>, choosing a random category could be done by choosing a number at random with probability proportional to the number of data points in each category (see &quot;<a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>&quot;).</li>
 <li>If the existing data points each belong in one of several <em>categories</em>, choosing a random data point <em>and</em> its category could be done&mdash;
 
@@ -2097,7 +2097,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> In addition, some discrete (and continuous) distributions are known only through an <em>oracle</em> (or &quot;black box&quot;) that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (average) of the new variates equal the oracle&#39;s, the algorithm is called an <em>unbiased estimator</em> (because in a way, it &quot;estimates&quot; some aspect of the oracle&#39;s numbers).  One example is the Bernoulli factory (see my article &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), which takes flips of a biased &quot;coin&quot; (the oracle) and produces the flip of a new &quot;coin&quot; biased a different way.  Another example is the &quot;Bernoulli race&quot; described in <a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>.</p>
+<p><strong>Note:</strong> In addition, some discrete (and continuous) distributions are known only through an <em>oracle</em> (or &quot;black box&quot;) that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (average) of the new variates equals the oracle&#39;s, the algorithm is called an <em>unbiased estimator</em> (because in a way, it &quot;estimates&quot; some aspect of the oracle&#39;s numbers).  One example is the Bernoulli factory (see my article &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), which takes flips of a biased &quot;coin&quot; (the oracle) and produces the flip of a new &quot;coin&quot; biased a different way.  Another example is the &quot;Bernoulli race&quot; described in <a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>.</p>
 </blockquote>
 
 <p><a id=Inverse_Transform_Sampling></a></p>

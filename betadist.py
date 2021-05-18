@@ -23,12 +23,26 @@ def psrn_fill(rg, psrn, precision=53, digits=2):
     aint = psrn[1]
     if asign != -1 and asign != 1:
         raise ValueError
-    for i in range(precision + 1):
-        if i >= len(afrac):
-            afrac.append(rg.rndint(digits - 1))
-        if afrac[i] == None:
-            afrac[i] = rg.rndint(digits - 1)
-        af = af * digits + afrac[i]
+    hasNoneDigits = False
+    for d in afrac:
+        if d == None:
+            hasNoneDigits = True
+    if (not hasNoneDigits) and digits == 2:
+        diglen = (precision + 1) - len(afrac)
+        if diglen > 0:
+            rest = rg.rndint((1 << diglen) - 1)
+            for i in range(diglen):
+                afrac.append(rest & 1)
+                rest >>= 1
+        for i in range(precision + 1):
+            af = af * digits + afrac[i]
+    else:
+        for i in range(precision + 1):
+            if i >= len(afrac):
+                afrac.append(rg.rndint(digits - 1))
+            if afrac[i] == None:
+                afrac[i] = rg.rndint(digits - 1)
+            af = af * digits + afrac[i]
     if af % digits >= digits - digits // 2:
         # round up
         return (

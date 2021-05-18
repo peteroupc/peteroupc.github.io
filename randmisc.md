@@ -221,7 +221,7 @@ This note is about generating random variates from a continuous distribution via
 
 Let G be a distribution for which the quantile is wanted, and let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
 
-When a random variate _x_ is a uniform PSRN in \[0, 1\], then the following algorithm transforms that number to a random variate for the distribution associated with the quantile function, with a desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
+When a random variate _x_ is a uniform PSRN in the closed interval \[0, 1\], then the following algorithm transforms that number to a random variate for the distribution associated with the quantile function, with a desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
 
 1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of the quantile of _f_(_a_) and an upper bound of the quantile of _f_(_b_) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
@@ -236,7 +236,17 @@ This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>
 
 > **Note:** I suspect that if the quantile function is continuous, has a minimum and maximum, and admits a modulus of continuity _&omega;_(_h_) that is monotone increasing, then _d_ in step 1 above can be calculated as ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_)), where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>)
 
-Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed, which requires knowing distribution G's probability density function or a function proportional to it, and that the density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).  This involves calculating lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively) and applying an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)) to the distribution G limited to the interval \[_alow_, _bhigh_\] and accepting the resulting PSRN if it clearly lies in \[_ahigh_, _blow_\] or rejecting it if it clearly lies outside \[_alow_, _bhigh_\].  When neither of these is the case, then it gets more complicated; more digits of the input or output PSRN have to be generated (uniformly at random) until it's clear whether to accept or reject the output PSRN.
+Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
+
+- distribution G's probability density function, or a function proportional to it, must be known, and
+- that function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).
+
+Here is a sketch of how this rejection sampler might work:
+
+1. Let _x_ be as described in either algorithm given earlier in this section (so that _a_ and _b_ are _x_'s upper and lower bounds).  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
+2. Sample a uniform PSRN, _y_, using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)), on the distribution G limited to the interval \[_alow_, _bhigh_\].
+3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
+4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
 
 <a id=ExpoExact></a>
 ## ExpoExact
