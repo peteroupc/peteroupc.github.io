@@ -245,7 +245,7 @@ Here is a sketch of how this rejection sampler might work:
 
 1. Let _x_ be as described in either algorithm given earlier in this section (so that _a_ and _b_ are _x_'s upper and lower bounds).  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
 2. Sample a uniform PSRN, _y_, using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)), on the distribution G limited to the interval \[_alow_, _bhigh_\].
-3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
+3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow_, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
 4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
 
 <a id=ExpoExact></a>

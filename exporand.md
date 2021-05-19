@@ -824,50 +824,7 @@ def _fill_geometric_bag(b, bag, precision):
               ret=(ret<<1)|bag[i]
         if len(bag) < precision:
            diff=precision-len(bag)
-           ret=(ret << diff)|random.randint(0,(1 << diff)-1)
-        # Now we have a number that is a multiple of
-        # 2^-precision.
-        return _toreal(ret, precision)
-```
-
-The following Python code implements the exponential sampler described earlier.  In the Python code below, note that `zero_or_one` uses `random.randint` which does not necessarily use only random bits, even though it's called only to return either zero or one.  The reference in `zero_or_one_exp_minus` below is (Canonne et al. 2020)<sup>[**(20)**](#Note20)</sup>.
-
-```
-import random
-
-def logisticexp(ln, ld, prec):
-        """ Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). """
-        denom=ld*2**prec
-        while True:
-           if zero_or_one(1, 2)==0: return 0
-           if zero_or_one_exp_minus(ln, denom) == 1: return 1
-
-def exprandnew(lamdanum=1, lamdaden=1):
-     """ Returns an object to serve as a partially-sampled
-          exponential random number with the given
-          rate 'lamdanum'/'lamdaden'.  The object is a list of five numbers
-          as given in the prose.  Default for 'lamdanum'
-          and 'lamdaden' is 1.
-          The number created by this method will be "empty"
-          (no bits sampled yet).
-          """
-     return [0, 0, -1, lamdanum, lamdaden]
-
-def exprandfill(a, bits):
-    """ Fills the unsampled bits of the given exponential random number
-           'a' as necessary to make a number whose fractional part
-           has 'bits' many bits.  If the number's fractional part already has
-           that many bits or more, the number is rounded using the round-to-nearest,
-           ties to even rounding rule.  Returns the resulting number as a
-           multiple of 2^'bits'. """
-    # Fill the integer if necessary.
-    if a[2]==-1:
-        a[2]=0
-        while zero_or_one_exp_minus(a[3], a[4]) == 1:
-            a[2]+=1
-    if a[1] > bits:
-        # Shifting bits beyond the first excess bit.
-        aa = a[0] >> (a[1] - bits - 1)
+           ret=(ret   (a[1] - bits - 1)
         # Check the excess bit; if odd, round up.
         ret=aa >> 1 if (aa & 1) == 0 else (aa >> 1) + 1
         return ret|(a[2]<<bits)

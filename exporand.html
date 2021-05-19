@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/05/14"><meta name="citation_online_date" content="2021/05/14"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/05/19"><meta name="citation_online_date" content="2021/05/19"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -1063,49 +1063,7 @@ def _fill_geometric_bag(b, bag, precision):
               ret=(ret&lt;&lt;1)|bag[i]
         if len(bag) &lt; precision:
            diff=precision-len(bag)
-           ret=(ret &lt;&lt; diff)|random.randint(0,(1 &lt;&lt; diff)-1)
-        # Now we have a number that is a multiple of
-        # 2^-precision.
-        return _toreal(ret, precision)
-</pre>
-
-<p>The following Python code implements the exponential sampler described earlier.  In the Python code below, note that <code>zero_or_one</code> uses <code>random.randint</code> which does not necessarily use only random bits, even though it&#39;s called only to return either zero or one.  The reference in <code>zero_or_one_exp_minus</code> below is (Canonne et al. 2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup>.</p>
-
-<pre>import random
-
-def logisticexp(ln, ld, prec):
-        &quot;&quot;&quot; Returns 1 with probability 1/(1+exp(ln/(ld*2^prec))). &quot;&quot;&quot;
-        denom=ld*2**prec
-        while True:
-           if zero_or_one(1, 2)==0: return 0
-           if zero_or_one_exp_minus(ln, denom) == 1: return 1
-
-def exprandnew(lamdanum=1, lamdaden=1):
-     &quot;&quot;&quot; Returns an object to serve as a partially-sampled
-          exponential random number with the given
-          rate &#39;lamdanum&#39;/&#39;lamdaden&#39;.  The object is a list of five numbers
-          as given in the prose.  Default for &#39;lamdanum&#39;
-          and &#39;lamdaden&#39; is 1.
-          The number created by this method will be &quot;empty&quot;
-          (no bits sampled yet).
-          &quot;&quot;&quot;
-     return [0, 0, -1, lamdanum, lamdaden]
-
-def exprandfill(a, bits):
-    &quot;&quot;&quot; Fills the unsampled bits of the given exponential random number
-           &#39;a&#39; as necessary to make a number whose fractional part
-           has &#39;bits&#39; many bits.  If the number&#39;s fractional part already has
-           that many bits or more, the number is rounded using the round-to-nearest,
-           ties to even rounding rule.  Returns the resulting number as a
-           multiple of 2^&#39;bits&#39;. &quot;&quot;&quot;
-    # Fill the integer if necessary.
-    if a[2]==-1:
-        a[2]=0
-        while zero_or_one_exp_minus(a[3], a[4]) == 1:
-            a[2]+=1
-    if a[1] &gt; bits:
-        # Shifting bits beyond the first excess bit.
-        aa = a[0] &gt;&gt; (a[1] - bits - 1)
+           ret=(ret   (a[1] - bits - 1)
         # Check the excess bit; if odd, round up.
         ret=aa &gt;&gt; 1 if (aa &amp; 1) == 0 else (aa &gt;&gt; 1) + 1
         return ret|(a[2]&lt;&lt;bits)
