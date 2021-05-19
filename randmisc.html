@@ -17,7 +17,7 @@
 <li><a href="#Certain_Families_of_Distributions"><strong>Certain Families of Distributions</strong></a></li>
 <li><a href="#Certain_Distributions"><strong>Certain Distributions</strong></a></li>
 <li><a href="#Batching_Random_Samples_via_Randomness_Extraction"><strong>Batching Random Samples via Randomness Extraction</strong></a></li>
-<li><a href="#Randomization_via_Quantiles"><strong>Randomization via Quantiles</strong></a></li>
+<li><a href="#Random_Variate_Generation_via_Quantiles"><strong>Random Variate Generation via Quantiles</strong></a></li>
 <li><a href="#ExpoExact"><strong>ExpoExact</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
@@ -310,9 +310,9 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <li>Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.</li>
 </ol>
 
-<p><a id=Randomization_via_Quantiles></a></p>
+<p><a id=Random_Variate_Generation_via_Quantiles></a></p>
 
-<h2>Randomization via Quantiles</h2>
+<h2>Random Variate Generation via Quantiles</h2>
 
 <p>This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  See &quot;Certain Families of Distributions&quot; for a definition of quantile functions.  A <em>uniform PSRN</em> is ultimately a number that lies in an interval [<em>a</em>, <em>b</em>]; it contains a sign, an integer part, and a fractional part made up of base-<em>&beta;</em> digits.</p>
 

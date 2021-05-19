@@ -12,7 +12,7 @@
 - [**Certain Families of Distributions**](#Certain_Families_of_Distributions)
 - [**Certain Distributions**](#Certain_Distributions)
 - [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
-- [**Randomization via Quantiles**](#Randomization_via_Quantiles)
+- [**Random Variate Generation via Quantiles**](#Random_Variate_Generation_via_Quantiles)
 - [**ExpoExact**](#ExpoExact)
 - [**Notes**](#Notes)
 - [**License**](#License)
@@ -214,8 +214,8 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 2. If _z_ is greater than 0, feed the bits of _z_ from most significant to least significant to a queue of extractor inputs.
 3. Now, when the sampler consumes a random bit, it checks the input queue.  As long as 64 bits or more are in the input queue, the sampler dequeues 64 bits from it, runs the extractor on those bits, and adds the extracted bits to an output queue. (The number 64 can instead be any even number greater than 2.)  Then, if the output queue is not empty, the sampler dequeues a bit from that queue and uses that bit; otherwise it generates an unbiased random bit as usual.
 
-<a id=Randomization_via_Quantiles></a>
-## Randomization via Quantiles
+<a id=Random_Variate_Generation_via_Quantiles></a>
+## Random Variate Generation via Quantiles
 
 This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  See "Certain Families of Distributions" for a definition of quantile functions.  A _uniform PSRN_ is ultimately a number that lies in an interval \[_a_, _b_\]; it contains a sign, an integer part, and a fractional part made up of base-_&beta;_ digits.
 
