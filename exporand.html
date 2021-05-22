@@ -2124,13 +2124,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note24>(24)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
 <li><small><sup id=Note25>(25)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
 <li><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
-<li><small><sup id=Note27>(27)</sup> bag[i]
-    if len(bag) &lt; precision:
-       diff=precision-len(bag)
-       ret=(ret   (a[1] - bits - 1)
-    # Check the excess bit; if odd, round up.
-    ret=aa</small></li>
-<li><small><sup id=Note28>(28)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to <em>Lebesgue measure</em>, which, roughly speaking, measures sets of real numbers according to their &quot;length&quot;.</small></li>
+<li><small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to <em>Lebesgue measure</em>, which, roughly speaking, measures sets of real numbers according to their &quot;length&quot;.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2180,7 +2174,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
 
-<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion (starting with <em>j</em> = 1 for the first digit after the point), where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note28"><strong>(28)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary expansion&#39;s digits become less and less biased as they move farther and farther from the binary point.</p>
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion (starting with <em>j</em> = 1 for the first digit after the point), where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note27"><strong>(27)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary expansion&#39;s digits become less and less biased as they move farther and farther from the binary point.</p>
 
 <p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.</p>
 
