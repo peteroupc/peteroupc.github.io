@@ -217,33 +217,54 @@ Unfortunately, _P_(_X_ | _Y_) is not easy to calculate when the number of values
 <a id=Random_Variate_Generation_via_Quantiles></a>
 ## Random Variate Generation via Quantiles
 
-This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  See "Certain Families of Distributions" for a definition of quantile functions.  A _uniform PSRN_ is ultimately a number that lies in an interval \[_a_, _b_\]; it contains a sign, an integer part, and a fractional part made up of base-_&beta;_ digits.
+This note is about generating random variates from a continuous distribution via inverse transform sampling (or via quantiles), using uniform [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  See "Certain Families of Distributions" for a definition of quantile functions.  A _uniform PSRN_ is ultimately a number that lies in an interval; it contains a sign, an integer part, and a fractional part made up of digits sampled on demand.
 
-Let G be a distribution for which the quantile is wanted, and let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
+Take the following situation:
 
-When a random variate _x_ is a uniform PSRN in the closed interval \[0, 1\], then the following algorithm transforms that number to a random variate for the distribution associated with the quantile function, with a desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
+- Let G be a distribution for which the quantile is wanted.
+- Let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
+- Let _Q_(_z_) be the quantile function for the desired distribution.
+- Let _x_ be a random variate in the form of a uniform PSRN with a positive sign and an integer part of 0.  As a result, this PSRN will lie in the interval \[_a_, _b_\], which is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.
+- Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 
-1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of the quantile of _f_(_a_) and an upper bound of the quantile of _f_(_b_) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
+Then the following algorithm transforms that number to a random variate for the distribution associated with _Q_, with a desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
+
+1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of the quantile of _f_(_a_) and an upper bound of _Q_(_f_(_b_)) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
 
-If _f_(_t_) = _t_ and the quantile function is _Lipschitz continuous_, which roughly means that it's a continuous function whose slope doesn't tend to a vertical slope anywhere, then the following algorithm generates a quantile with error tolerance _&epsilon;_:
+In some cases, it may be possible to calculate the needed digit size in advance.
+
+As one example, if _f_(_t_) = _t_ and the quantile function is _Lipschitz continuous_ on the interval \[_a_, _b_\], which roughly means that it's a continuous function with no vertical slope on that interval, then the following algorithm generates a quantile with error tolerance _&epsilon;_:
 
 1. Let _d_ be ceil((ln(max(1,_L_)) &minus; ln(_&epsilon;_)) / ln(_&beta;_)), where _L_ is an upper bound of the quantile function's maximum slope (also known as the _Lipschitz constant_). For each digit among the first _d_ digits in _x_'s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.
-2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of the quantiles of _a_ and _b_, respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
+2. The PSRN _x_ now lies in the interval \[_a_, _b_\].  Calculate lower and upper bounds of _Q_(_a_) and _Q_(_b_), respectively, that are within _&epsilon;_/2 of the true quantiles, call the bounds _low_ and _high_, respectively.
 3. Return _low_+(_high_&minus;_low_)/2.
 
 This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020<sup>[**(26)**](#Note26)</sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.
 
-> **Note:** If the quantile function is continuous, has a minimum and maximum, and admits a modulus of continuity _&omega;_(_h_) that is continuous and monotone increasing, then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(32)**](#Note32)</sup>
+A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz continuous.
 
-Both algorithms have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
+Specifically, if&mdash;
+
+- _f_(_t_) = _t_,
+- _Q_ is continuous and has a minimum and maximum on the interval \[_a_, _b_\], and
+- _Q_ admits a modulus of continuity _&omega;_(_h_) that is continuous and monotone increasing on the interval \[_a_, _b_\],
+
+then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(29)**](#Note29)</sup>
+
+For example, if _Q_&mdash;
+
+- is Lipschitz continuous on \[_a_, _b_\], then _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_ where _L_ is the Lipschitz constant.
+- is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+
+The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
 - Distribution G's probability density function, or a function proportional to it, must be known.
 - That function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).
 
 Here is a sketch of how this rejection sampler might work:
 
-1. Let _x_ be as described in either algorithm given earlier in this section (so that _a_ and _b_ are _x_'s upper and lower bounds).  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
+1. After using one of the algorithms given earlier in this section to sample digits of _x_ as needed, let _a_ and _b_ be _x_'s upper and lower bounds.  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
 2. Sample a uniform PSRN, _y_, using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)), on the distribution G limited to the interval \[_alow_, _bhigh_\].
 3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow_, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
 4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
@@ -251,7 +272,7 @@ Here is a sketch of how this rejection sampler might work:
 <a id=ExpoExact></a>
 ## ExpoExact
 
-This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(29)**](#Note29)</sup>; Canonne et al. (2020)<sup>[**(30)**](#Note30)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
+This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(30)**](#Note30)</sup>; Canonne et al. (2020)<sup>[**(31)**](#Note31)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
       if y <= 0 or x<0: return error
@@ -286,7 +307,7 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
        return ret
     END METHOD
 
-> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(31)**](#Note31)</sup>
+> **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(32)**](#Note32)</sup>
 
 <a id=Notes></a>
 ## Notes
@@ -319,10 +340,10 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 - <small><sup id=Note26>(26)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note27>(27)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 - <small><sup id=Note28>(28)</sup> Ker-I Ko makes heavy use of the inverse modulus of continuity in his complexity theory, e.g., "Computational complexity of roots of real functions." In _30th Annual Symposium on Foundations of Computer Science_, pp. 204-209. IEEE Computer Society, 1989.</small>
-- <small><sup id=Note29>(29)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
-- <small><sup id=Note30>(30)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
-- <small><sup id=Note31>(31)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note32>(32)</sup> Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval [0, 1], it's uniformly continuous there.  For this reason, there is a function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that abs(_Q_(_x_)&minus;_Q_(_y_)) &lt; _&epsilon;_ whenever abs(_x_&minus;_y_) &lt; _&omega;_<sup>&minus;1</sup>(_&epsilon;_), for every _&epsilon;_&gt;0 and for any _x_ and _y_ in [0, 1].  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on [0, 1] to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.</small>
+- <small><sup id=Note29>(29)</sup> Here is a sketch of the proof: Because the quantile function _Q_(_x_) is continuous on a closed interval, it's uniformly continuous there.  For this reason, there is a positive function _&omega;_<sup>&minus;1</sup>(_&epsilon;_) such that _Q_(_x_) is less than _&epsilon;_-away from &minus;_Q_(_y_) whenever _x_ is less than _&omega;_<sup>&minus;1</sup>(_&epsilon;_)-away from _y_, for every _&epsilon;_&gt;0 and for any _x_ and _y_ in that interval.  The inverse modulus of continuity is one such function, which is formed by inverting a modulus of continuity admitted by _Q_, as long as that modulus is continuous and monotone increasing on that interval to make that modulus invertible.  Finally, max(0, ceil(&minus;ln(_z_)/ln(_&beta;_))) is an upper bound on the number of base-_&beta;_ fractional digits needed to store 1/_z_ with an error of at most _&epsilon;_.</small>
+- <small><sup id=Note30>(30)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
+- <small><sup id=Note31>(31)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
+- <small><sup id=Note32>(32)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 
 <a id=License></a>
 ## License
