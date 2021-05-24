@@ -221,15 +221,14 @@ This note is about generating random variates from a continuous distribution via
 
 Take the following situation:
 
-- Let G be a distribution for which the quantile is wanted.
 - Let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
 - Let _Q_(_z_) be the quantile function for the desired distribution.
-- Let _x_ be a random variate in the form of a uniform PSRN with a positive sign and an integer part of 0.  As a result, this PSRN will lie in the interval \[_a_, _b_\], which is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.
+- Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_, the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.
 - Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 
 Then the following algorithm transforms that number to a random variate for the distribution associated with _Q_, with a desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>):
 
-1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of the quantile of _f_(_a_) and an upper bound of _Q_(_f_(_b_)) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
+1. Generate additional digits of _x_ uniformly at random&mdash;thus shortening the interval \[_a_, _b_\]&mdash;until a lower bound of _Q_(_f_(_a_)) and an upper bound of _Q_(_f_(_b_)) differ by no more than 2\*_&epsilon;_.  Call the two bounds _low_ and _high_, respectively.
 2. Return _low_+(_high_&minus;_low_)/2.
 
 In some cases, it may be possible to calculate the needed digit size in advance.
@@ -259,13 +258,13 @@ For example, if _Q_&mdash;
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
-- Distribution G's probability density function, or a function proportional to it, must be known.
-- That function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).
+- The target distribution's probability density function, or a function proportional to it, must be known.  This is called the density function in the rest of this section.
+- The density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(26)**](#Note26)</sup>).
 
 Here is a sketch of how this rejection sampler might work:
 
 1. After using one of the algorithms given earlier in this section to sample digits of _x_ as needed, let _a_ and _b_ be _x_'s upper and lower bounds.  Calculate lower and upper bounds of the quantiles of _f_(_a_) and _f_(_b_) (the bounds are \[_alow_, _ahigh_\] and \[_blow_, _bhigh_\] respectively).
-2. Sample a uniform PSRN, _y_, using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)), on the distribution G limited to the interval \[_alow_, _bhigh_\].
+2. Given the density function, sample a uniform PSRN, _y_, in the interval \[_alow_, _bhigh_\] using an arbitrary-precision rejection sampler such as Oberhoff's method (described in an [**appendix to the PSRN article**](https://peteroupc.github.io/exporand.html#Oberhoff_s_Exact_Rejection_Sampling_Method)).
 3. Accept _y_ (and return it) if it clearly lies in \[_ahigh_, _blow_\].  Reject _y_ (and go to the previous step) if it clearly lies outside \[_alow_, _bhigh_\].  If _y_ clearly lies in \[_alow_, _ahigh_\] or in \[_blow_, _bhigh_\], generate more digits of _x_, uniformly at random, and go to the first step.
 4. If _y_ doesn't clearly fall in any of the cases in the previous step, generate more digits of _y_, uniformly at random, and go to the previous step.
 
