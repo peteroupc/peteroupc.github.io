@@ -246,8 +246,8 @@ A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz
 Specifically, if&mdash;
 
 - _f_(_t_) = _t_,
-- _Q_ is continuous and has a minimum and maximum on the interval \[_a_, _b_\], and
-- _Q_ admits a modulus of continuity _&omega;_(_h_) that is continuous and monotone increasing on the interval \[_a_, _b_\],
+- _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
+- _Q_ on \[_a_, _b_\] admits a function _&omega;_(_h_) (called a _modulus of continuity_) that is continuous and monotone increasing,
 
 then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(29)**](#Note29)</sup>
 
