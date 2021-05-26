@@ -241,20 +241,20 @@ As one example, if _f_(_t_) = _t_ and the quantile function is _Lipschitz contin
 
 This algorithm chooses a random interval of size equal to _&beta;_<sup>_d_</sup>, and because the quantile function is Lipschitz continuous, the values at the interval's bounds are guaranteed to vary by no more than 2*_&epsilon;_ (actually _&epsilon;_, but the calculation in step 2 adds an additional error of at most _&epsilon;_), which is needed to meet the tolerance _&epsilon;_ (see also Devroye and Gravel 2020<sup>[**(26)**](#Note26)</sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.
 
-A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz continuous.
+A similar algorithm can exist even if the quantile function _Q_ is not Lipschitz continuous on the interval \[_a_, _b_\].
 
 Specifically, if&mdash;
 
 - _f_(_t_) = _t_,
 - _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
-- _Q_ on \[_a_, _b_\] admits a function _&omega;_(_h_) (called a _modulus of continuity_) that is continuous and monotone increasing,
+- _Q_ on \[_a_, _b_\] admits a continuous and monotone increasing function _&omega;_(_h_) as a _modulus of continuity_,
 
 then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(29)**](#Note29)</sup>
 
-For example, if _Q_&mdash;
+For example&mdash;
 
-- is Lipschitz continuous on \[_a_, _b_\], then _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_ where _L_ is the Lipschitz constant.
-- is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+- if _Q_is Lipschitz continuous with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than _&omega;_(_h_) = _L_\*_h_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
+- if _Q_is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than _&omega;_(_h_) = _M_\*_h_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
@@ -312,7 +312,7 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: _Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP'14)_, 2014.</small>
-- <small><sup id=Note2>(2)</sup> choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in the interval \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.</small>
+- <small><sup id=Note2>(2)</sup> choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in the interval \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "[**Binomial coefficient computation: recursion or iteration?**](https://doi.org/10.1145/820127.820168)", SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.</small>
 - <small><sup id=Note3>(3)</sup> Devroye, L., [**_Non-Uniform Random Variate Generation_**](http://luc.devroye.org/rnbookindex.html), 1986.</small>
 - <small><sup id=Note4>(4)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
 - <small><sup id=Note5>(5)</sup> R. Schumacher, "[**Rapidly Convergent Summation Formulas involving Stirling Series**](https://arxiv.org/abs/1602.00336v1)", arXiv:1602.00336v1 [math.NT], 2016.</small>

@@ -177,7 +177,8 @@ This section shows implementation notes that apply to the algorithms in this art
 In the following algorithms:
 
 - _&lambda;_ is the unknown probability of heads of the input coin.
--  choose(_n_, _k_) = _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  Note that for every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+-  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  Note that for every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+- _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
     - by creating a [**uniform partially-sampled random variate (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate),
     - by generating a uniform random variate in the half-open interval [**0, 1) (e.g., `RNDRANGEMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate), or

@@ -344,23 +344,23 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>This algorithm chooses a random interval of size equal to <em>&beta;</em><sup><em>d</em></sup>, and because the quantile function is Lipschitz continuous, the values at the interval&#39;s bounds are guaranteed to vary by no more than 2*<em>&epsilon;</em> (actually <em>&epsilon;</em>, but the calculation in step 2 adds an additional error of at most <em>&epsilon;</em>), which is needed to meet the tolerance <em>&epsilon;</em> (see also Devroye and Gravel 2020<sup><a href="#Note26"><strong>(26)</strong></a></sup>).  A Lipschitz continuous quantile function usually means that the distribution takes on only values in a bounded interval.</p>
 
-<p>A similar algorithm can exist even if the quantile function <em>Q</em> is not Lipschitz continuous.</p>
+<p>A similar algorithm can exist even if the quantile function <em>Q</em> is not Lipschitz continuous on the interval [<em>a</em>, <em>b</em>].</p>
 
 <p>Specifically, if&mdash;</p>
 
 <ul>
 <li><em>f</em>(<em>t</em>) = <em>t</em>,</li>
 <li><em>Q</em> on the interval [<em>a</em>, <em>b</em>] is continuous and has a minimum and maximum, and</li>
-<li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a function <em>&omega;</em>(<em>h</em>) (called a <em>modulus of continuity</em>) that is continuous and monotone increasing,</li>
+<li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and monotone increasing function <em>&omega;</em>(<em>h</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
 
 <p>then <em>d</em> in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(<em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>))/ln(<em>&beta;</em>))),<br/>where <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>h</em>) gives the quantile function&#39;s maximum range in a window of size <em>h</em>, and the inverse modulus <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) finds a window small enough that the quantile function differs by no more than <em>&epsilon;</em> in the window.<sup><a href="#Note28"><strong>(28)</strong></a></sup>).<sup><a href="#Note29"><strong>(29)</strong></a></sup></p>
 
-<p>For example, if <em>Q</em>&mdash;</p>
+<p>For example&mdash;</p>
 
 <ul>
-<li>is Lipschitz continuous on [<em>a</em>, <em>b</em>], then <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em> where <em>L</em> is the Lipschitz constant.</li>
-<li>is <em>&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
+<li>if <em>Q_is Lipschitz continuous with Lipschitz constant _L</em> on [<em>a</em>, <em>b</em>], then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>h</em>) = <em>L</em>*<em>h</em>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em>, and</li>
+<li>if <em>Q_is _&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>h</em>) = <em>M</em>*<em>h</em><sup><em>&alpha;</em></sup>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
 </ul>
 
 <p>The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:</p>
@@ -429,7 +429,7 @@ END METHOD
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
-<li><small><sup id=Note2>(2)</sup> choose(<em>n</em>, <em>k</em>) = <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</small></li>
+<li><small><sup id=Note2>(2)</sup> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</small></li>
 <li><small><sup id=Note3>(3)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
 <li><small><sup id=Note4>(4)</sup> Daumas, M., Lester, D., Muñoz, C., &quot;<a href="https://arxiv.org/abs/0708.3721"><strong>Verified Real Number Calculations: A Library for Interval Arithmetic</strong></a>&quot;, arXiv:0708.3721 [cs.MS], 2007.</small></li>
 <li><small><sup id=Note5>(5)</sup> R. Schumacher, &quot;<a href="https://arxiv.org/abs/1602.00336v1"><strong>Rapidly Convergent Summation Formulas involving Stirling Series</strong></a>&quot;, arXiv:1602.00336v1 [math.NT], 2016.</small></li>

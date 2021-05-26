@@ -136,15 +136,15 @@ The algorithm, called **Algorithm C** in this document, follows.
 3. Set _kp_ to _k_.
 4. Set _&kappa;_ to _&kappa;_<sup>(_p_\*_q_/(_q_&minus;_p_))</sup>.
 5. If _q_ is 2 or less:
-    - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>); set _s_ to 1+1/(_q_&minus;1); set _&eta;_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
+    - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
 6. If _q_ is greater than 2:
-    - Set _m_ to ceil(144\*_&kappa;_); set _s_ to 2; set _&eta;_ to 16\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
+    - Set _m_ to ceil(144\*_&kappa;_); set _s_ to 2; set _h_ to 16\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
 7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
     1. Get _m_ samples from the stream.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
     3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: (_&sum;_<sub>_i_ = 0, ..., _k_&minus;1</sub> (_block_\[_i_\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
 8. (Find the median of the _p_<sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
-9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_&eta;_ \* _median_<sup>_s_</sup>)).
+9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_h_ \* _median_<sup>_s_</sup>)).
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:
     1. Get _mp_ samples from the stream.
     2. Add the samples and divide by _mp_ to get this block's sample mean.
@@ -179,9 +179,9 @@ The following algorithm takes the following parameters:
 
 The algorithm, like _Algorithm C_, works only if the stream's distribution has the following technical property: The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater.  The algorithm, called **Algorithm D** in this document, follows.
 
-1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_&eta;_), and solving the equation _&omega;_(_&eta;_) = _&epsilon;_ for _&eta;_.
-    - Loosely speaking, a modulus of continuity shows the maximum range of _f_ in a window of size _&eta;_.
-    - For example, if _f_'s slope is continuous at every point and never vertical, then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_&eta;_) = _M_\*_&eta;_, where _M_ is the Lipschitz constant, which in this case is the maximum absolute value of _f_'s "slope function".  The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
+1. Calculate _&gamma;_ as a number equal to or less than _&psi;_(_&epsilon;_), or the _inverse modulus of continuity_, which is found by taking the so-called _modulus of continuity_ of _f_(_x_), call it _&omega;_(_h_), and solving the equation _&omega;_(_h_) = _&epsilon;_ for _h_.
+    - Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the maximum range of _f_ in a window of size _h_.
+    - For example, if _f_'s slope is never vertical and _f_ has only finitely many "sharp turns", then _f_ is _Lipschitz continuous_ and its modulus of continuity is _&omega;_(_h_) = _M_\*_h_, where _M_ is the Lipschitz constant, which in this case is the maximum absolute value of _f_'s "slope function".  The solution for _&psi;_ is then _&psi;_(_&epsilon;_) = _&epsilon;_/_M_.
     - Because _f_ is continuous on a closed interval, it's guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).

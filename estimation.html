@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/17"><meta name="citation_online_date" content="2021/05/17"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/05/25"><meta name="citation_online_date" content="2021/05/25"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -186,12 +186,12 @@
 <li>If <em>q</em> is 2 or less:
 
 <ul>
-<li>Set <em>m</em> to ceil(3*<em>&kappa;</em>*48<sup>1/(<em>q</em>&minus;1)</sup>); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>&eta;</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
+<li>Set <em>m</em> to ceil(3*<em>&kappa;</em>*48<sup>1/(<em>q</em>&minus;1)</sup>); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>h</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
 <li>If <em>q</em> is greater than 2:
 
 <ul>
-<li>Set <em>m</em> to ceil(144*<em>&kappa;</em>); set <em>s</em> to 2; set <em>&eta;</em> to 16*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
+<li>Set <em>m</em> to ceil(144*<em>&kappa;</em>); set <em>s</em> to 2; set <em>h</em> to 16*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
 <li>(Stage 1: Estimate <em>p</em><sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create <em>k</em> many blocks.  For each block:
 
@@ -201,7 +201,7 @@
 <li>Calculate the estimate of the <em>p</em><sup>th</sup> c.a.m. for this block, which is: (<em>&sum;</em><sub><em>i</em> = 0, ..., <em>k</em>&minus;1</sub> (<em>block</em>[<em>i</em>] &minus; <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
 </ol></li>
 <li>(Find the median of the <em>p</em><sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
-<li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>&eta;</em> * <em>median</em><sup><em>s</em></sup>)).</li>
+<li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>h</em> * <em>median</em><sup><em>s</em></sup>)).</li>
 <li>(Stage 2: Estimate of the sample mean.) Create <em>kp</em> many blocks.  For each block:
 
 <ol>
@@ -255,11 +255,11 @@
 <p>The algorithm, like <em>Algorithm C</em>, works only if the stream&#39;s distribution has the following technical property: The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater.  The algorithm, called <strong>Algorithm D</strong> in this document, follows.</p>
 
 <ol>
-<li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), or the <em>inverse modulus of continuity</em>, which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>&eta;</em>), and solving the equation <em>&omega;</em>(<em>&eta;</em>) = <em>&epsilon;</em> for <em>&eta;</em>.
+<li>Calculate <em>&gamma;</em> as a number equal to or less than <em>&psi;</em>(<em>&epsilon;</em>), or the <em>inverse modulus of continuity</em>, which is found by taking the so-called <em>modulus of continuity</em> of <em>f</em>(<em>x</em>), call it <em>&omega;</em>(<em>h</em>), and solving the equation <em>&omega;</em>(<em>h</em>) = <em>&epsilon;</em> for <em>h</em>.
 
 <ul>
-<li>Loosely speaking, a modulus of continuity shows the maximum range of <em>f</em> in a window of size <em>&eta;</em>.</li>
-<li>For example, if <em>f</em>&#39;s slope is continuous at every point and never vertical, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>&eta;</em>) = <em>M</em>*<em>&eta;</em>, where <em>M</em> is the Lipschitz constant, which in this case is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.  The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
+<li>Loosely speaking, a modulus of continuity <em>&omega;</em>(<em>h</em>) gives the maximum range of <em>f</em> in a window of size <em>h</em>.</li>
+<li>For example, if <em>f</em>&#39;s slope is never vertical and <em>f</em> has only finitely many &quot;sharp turns&quot;, then <em>f</em> is <em>Lipschitz continuous</em> and its modulus of continuity is <em>&omega;</em>(<em>h</em>) = <em>M</em>*<em>h</em>, where <em>M</em> is the Lipschitz constant, which in this case is the maximum absolute value of <em>f</em>&#39;s &quot;slope function&quot;.  The solution for <em>&psi;</em> is then <em>&psi;</em>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>M</em>.</li>
 <li>Because <em>f</em> is continuous on a closed interval, it&#39;s guaranteed to have a modulus of continuity (by the Heine&ndash;Cantor theorem; see also a <a href="https://stats.stackexchange.com/questions/522429"><strong>related question</strong></a>).</li>
 </ul></li>
 <li>Run <em>Algorithm C</em> with the given parameters <em>p</em>, <em>q</em>, <em>&kappa;</em>, and <em>&delta;</em>, but with <em>&epsilon;</em> = <em>&gamma;</em>.  Let <em>&mu;</em> be the result.</li>
