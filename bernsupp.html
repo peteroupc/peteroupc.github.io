@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/05/24"><meta name="citation_online_date" content="2021/05/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/05/26"><meta name="citation_online_date" content="2021/05/26"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -434,7 +434,12 @@
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average unless <em>f</em> is <em>C</em><sup>2</sup> continuous.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average unless <em>f</em> is <em>C</em><sup>2</sup> continuous.</li>
+<li>If a function is constant on some open interval in its domain, but is not constant on the whole domain, then it can&#39;t be real analytic.</li>
+</ol>
 </blockquote>
 
 <p><a id=Complexity></a></p>
@@ -1108,7 +1113,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ul>
 <li>A <em>strictly bounded factory function</em> means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.</li>
 <li>A function <em>f</em>(<em>&lambda;</em>) is <em>polynomially bounded</em> if both <em>f</em>(<em>&lambda;</em>) and 1&minus;<em>f</em>(<em>&lambda;</em>) are bounded from below by min(<em>&lambda;</em><sup><em>n</em></sup>, (1&minus;<em>&lambda;</em>)<sup><em>n</em></sup>) for some integer <em>n</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</li>
-<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; &omega;(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, the modulus of continuity <em>&omega;</em>(<em>h</em>) gives <em>f</em>&#39;s maximum range in a window of size <em>h</em>.</li>
+<li>A <em>modulus of continuity</em> of a function <em>f</em> means a non-negative and nondecreasing function on the interval [0, 1], for which <em>&omega;</em>(0) = 0, and for which abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>&omega;</em>(abs(<em>x</em>&minus;<em>y</em>)) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1].  Loosely speaking, the modulus of continuity <em>&omega;</em>(<em>h</em>) gives <em>f</em>&#39;s maximum range in a window of size <em>h</em>.</li>
 </ul>
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>

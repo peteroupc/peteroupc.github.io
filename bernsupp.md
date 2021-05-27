@@ -294,7 +294,10 @@ The following table summarizes the rate of simulation (in terms of the number of
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>. |
 
-> **Note:** By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average unless _f_ is _C_<sup>2</sup> continuous.
+> **Notes:**
+>
+> 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average unless _f_ is _C_<sup>2</sup> continuous.
+> 2. If a function is constant on some open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
 
 <a id=Complexity></a>
 ## Complexity
@@ -649,7 +652,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
-- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which &omega;(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; &omega;(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_h_) gives _f_'s maximum range in a window of size _h_.
+- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_h_) gives _f_'s maximum range in a window of size _h_.
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
