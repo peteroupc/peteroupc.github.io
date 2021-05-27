@@ -309,8 +309,10 @@ conversion type used to create this date converter.</li>
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><p><code>year</code> - Not documented yet.</p></li>
-<li><p><code>lesserFields</code> - Not documented yet.</p></li>
+<li><p><code>year</code> - The year.</p></li>
+<li><p><code>lesserFields</code> - An array that will store the fields (other than the
+year) of the date and time. See the TryGetDateTimeFields method for
+information on the &quot;lesserFields&quot; parameter.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -323,8 +325,7 @@ conversion type used to create this date converter.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>bigYear</code> or <code>
-lesserFields</code> is null.</p></li>
+<li><p><code>java.lang.NullPointerException</code> - The parameter <code>lesserFields</code> is null.</p></li>
 <li><p><code>CBORException</code> - An error occurred in conversion.</p></li>
 </ul>
 
