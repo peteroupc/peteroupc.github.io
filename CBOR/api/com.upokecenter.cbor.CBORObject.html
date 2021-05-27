@@ -127,6 +127,8 @@ Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 use the first number&#39;s.Add() method.
 Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 use the first number&#39;s.Add() method.</li>
+<li><code>CBORObject ApplyJSONPatch​(CBORObject patch)</code><br>
+Not documented yet.</li>
 <li><code>boolean AsBoolean()</code><br>
 Returns false if this object is a CBOR false, null, or undefined value
 (whether or not the object has tags); otherwise, true.</li>
@@ -209,6 +211,8 @@ Converts this object to a CBOR number.</li>
 Converts this object to a 32-bit floating point number.</li>
 <li><code>java.lang.String AsString()</code><br>
 Gets the value of this object as a text string.</li>
+<li><code>CBORObject AtJSONPointer​(java.lang.String pointer)</code><br>
+Not documented yet.</li>
 <li><code>long CalcEncodedSize() EncodeToBytes()</code><br>
 Calculates the number of bytes this CBOR object takes when serialized as a
 byte array using the EncodeToBytes() method.</li>
@@ -5250,6 +5254,38 @@ false</code> if the given key is not found or this object is not a map.</li>
 
 <ul>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>options</code> is null.</li>
+</ul>
+
+<h3>AtJSONPointer</h3>
+
+<pre>public CBORObject AtJSONPointer​(java.lang.String pointer)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>pointer</code> - Not documented yet.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>pointer</code> is null.</li>
+</ul>
+
+<h3>ApplyJSONPatch</h3>
+
+<pre>public CBORObject ApplyJSONPatch​(CBORObject patch)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>patch</code> - Not documented yet.</li>
 </ul>
 
 <h3>equals</h3>
