@@ -1,7 +1,6 @@
 /*
  Any copyright to this file is released to the Public Domain.
- In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): http://creativecommons.org/publicdomain/zero/1.0/
-
+ In case this is not possible, this file is also licensed under Creative Commons Zero (CC0): https://creativecommons.org/publicdomain/zero/1.0/
 */
 /* exported simpsonRec */
 function simpsonRec(func, mn, mx, dir, depth, f1value, f3value, f5value) {
