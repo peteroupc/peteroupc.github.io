@@ -213,6 +213,9 @@ Converts this object to a 32-bit floating point number.</li>
 Gets the value of this object as a text string.</li>
 <li><code>CBORObject AtJSONPointer​(java.lang.String pointer)</code><br>
 Not documented yet.</li>
+<li><code>CBORObject AtJSONPointer​(java.lang.String pointer,
+         CBORObject defaultValue)</code><br>
+Not documented yet.</li>
 <li><code>long CalcEncodedSize() EncodeToBytes()</code><br>
 Calculates the number of bytes this CBOR object takes when serialized as a
 byte array using the EncodeToBytes() method.</li>
@@ -5269,17 +5272,12 @@ false</code> if the given key is not found or this object is not a map.</li>
 <li><code>pointer</code> - Not documented yet.</li>
 </ul>
 
-<p><strong>Returns:</strong></p>
+<h3>AtJSONPointer</h3>
 
-<ul>
-<li>The return value is not documented yet.</li>
-</ul>
+<pre>public CBORObject AtJSONPointer​(java.lang.String pointer, CBORObject defaultValue)
+</pre>
 
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>pointer</code> is null.</li>
-</ul>
+<p>Not documented yet.</p>
 
 <h3>ApplyJSONPatch</h3>
 
@@ -5292,12 +5290,6 @@ false</code> if the given key is not found or this object is not a map.</li>
 
 <ul>
 <li><code>patch</code> - Not documented yet.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The return value is not documented yet.</li>
 </ul>
 
 <h3>equals</h3>
@@ -6629,13 +6621,8 @@ try { if (ms != null) { ms.close(); } } catch (java.io.IOException ex) {}
 <li><a href="/">Back to start site.</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io">This site's repository (source code)</a>
 <li><a href="https://github.com/peteroupc/peteroupc.github.io/issues">Post an issue or comment</a></ul>
-<p>
-If you like this software, you should consider donating to me, Peter O., at the link below:</p>
-<p class="printonly"><b>peteroupc.github.io</b></p>
+
 <div class="noprint">
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=56E5T4FH7KD2S">
-<img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif"
-name="submit" border="2" alt="PayPal - The safer, easier way to pay online!"></a>
 <p>
 <a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
