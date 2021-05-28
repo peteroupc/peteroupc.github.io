@@ -79,15 +79,15 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 If _f_ in \[0, 1] has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere, then _f_ is [**_Lipschitz continuous_**](https://en.wikipedia.org/wiki/Lipschitz_continuity), _&alpha;_ is 1, and _m_ is the highest absolute value of the function's "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(2)**](#Note2)</sup>  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
 
-- _&delta;_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
-- **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _&delta;_(_n_).
-- **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _&delta;_(_n_).
+- _D_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
+- **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _D_(_n_).
+- **fabove**(_n_, _k_) = _f_(_k_/_n_) if _f_ is convex; otherwise, max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) + _D_(_n_).
 
 > **Note:**
 >
 > 1. Some functions _f_ are not _&alpha;_-Hölder continuous for any _&alpha;_ greater than 0.  These functions have a slope that's steeper than any "nth" root, and can't be handled by this method.  One example is _f_(_&lambda;_) = 1/10 if _&lambda;_ is 0 and &minus;1/(2\*ln(_&lambda;_/2)) + 1/10 otherwise, which has a slope near 0 that's steeper than any "nth" root.
-> 2. In the Lipschitz case (_&alpha;_ = 1), _&delta;_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
-> 3. In the case _&alpha;_ = 1/2, _&delta;_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
+> 2. In the Lipschitz case (_&alpha;_ = 1), _D_(_n_) can be _m_\*322613/(250000\*sqrt(_n_)), which is an upper bound.
+> 3. In the case _&alpha;_ = 1/2, _D_(_n_) can be _m_\*154563/(40000\*_n_<sup>1/4</sup>), which is an upper bound.
 
 **Certain functions that equal 0 at 0.** This approach involves transforming the function _f_ so that it no longer equals 0 at the point 0.  This can be done by dividing _f_ by a function (_h_(_&lambda;_)) that "dominates" _f_ at every point in the interval [0, 1].  Unlike for the original function, there might be an approximation scheme described earlier in this section for the transformed function.
 
@@ -652,7 +652,7 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
-- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_h_) gives _f_'s maximum range in a window of size _h_.
+- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_&delta;_) gives _f_'s maximum range in a window of size _&delta;_.
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
@@ -733,11 +733,11 @@ Condition (iv) is the _consistency requirement_ described earlier in this page. 
 - _**fbelow**(n, k) = f(k/n) &minus; &delta;(n)._
 - _**fabove**(n, k) = f(k/n) + &delta;(n)._
 
-_Where &delta;(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
+_Where D(n) = M/((2<sup>&alpha;/2</sup>&minus;1)\*n<sup>&alpha;/2</sup>)._
 
 _Proof._ Follows from Theorem 1 by using the _&omega;_ given in part 2 of Lemma 2, and by using _&phi;_(_n_) = _&omega;_(sqrt(1/(2\*_n_))). &#x25a1;
 
-> **Note:** For specific values of _&alpha;_, the equation _&delta;_(_n_) = _&delta;_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
+> **Note:** For specific values of _&alpha;_, the equation _D_(_n_) = _D_(2 \* _n_) + _&phi;_(_n_) can be solved via linear recurrences; an example for _&alpha;_ = 1/2 is the following SymPy code: `rsolve(Eq(f(n),f(n+1)+z*(1/(2*2**n))**((S(1)/2)/2)),f(n)).subs(n,ln(n,2)).simplify()`.  Trying different values of _&alpha;_ suggested the following formula for Hölder continuous functions with _&alpha;_ of 1/_j_ or greater: (_M_\* &sum;<sub>_i_ = 0,...,(_j_\*2)&minus;1</sub> 2<sup>_i_/(2\*_j_)</sup>)/_n_<sup>1/(2\*_j_)</sup> = _M_ / ((2<sup>1/(2\*_j_)</sup>&minus;1)\*_n_<sup>1/(2\*_j_)</sup>); and generalizing the latter expression led to the term in the theorem.
 
 **Corollary 2.** _Let f(&lambda;) be a strictly bounded factory function.  If f is Lipschitz continuous with Lipschitz constant M, then the following approximation scheme determined by **fbelow** and **fabove** is valid in the sense of Theorem 1, subject to the bounding note:_
 

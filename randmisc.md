@@ -35,7 +35,7 @@ This algorithm has an acceptance rate of 1/16 regardless of the value of _n_.  H
 More specifically, step 7 can be changed as follows:
 
 - (7.) Let _p_ be loggamma(_n_+1)&minus;loggamma(_ret_+1)&minus;loggamma((_n_&minus;_ret_)+1)+ln(_m_)+ln(2)\*((_k_&minus;_n_)+2) (where loggamma(_x_) is the logarithm of the gamma function).
-- (7a.) Generate an exponential random variate with rate 1 (which is the negative natural logarithm of a uniform(0,1) random variate).  Set _&eta;_ to 0 minus that number.
+- (7a.) Generate an exponential random variate with rate 1 (which is the negative natural logarithm of a uniform(0,1) random variate).  Set _h_ to 0 minus that number.
 - (7b.) If _h_ is greater than _p_, go to step 3.  Otherwise, return _ret_. (This step can be replaced by calculating lower and upper bounds that converge to _p_.  In that case, go to step 3 if _h_ is greater than the upper bound, or return _ret_ if _h_ is less than the lower bound, or compute better bounds and repeat this step otherwise.  See also chapter 4 of (Devroye 1986)<sup>[**(3)**](#Note3)</sup>.)
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula for the factorial's natural logarithm (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
@@ -247,14 +247,14 @@ Specifically, if&mdash;
 
 - _f_(_t_) = _t_,
 - _Q_ on the interval \[_a_, _b_\] is continuous and has a minimum and maximum, and
-- _Q_ on \[_a_, _b_\] admits a continuous and monotone increasing function _&omega;_(_h_) as a _modulus of continuity_,
+- _Q_ on \[_a_, _b_\] admits a continuous and monotone increasing function _&omega;_(_&delta;_) as a _modulus of continuity_,
 
-then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_h_) gives the quantile function's maximum range in a window of size _h_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(29)**](#Note29)</sup>
+then _d_ in step 1 above can be calculated as&mdash;<br/>&nbsp;&nbsp;max(0, ceil(&minus;ln(_&omega;_<sup>&minus;1</sup>(_&epsilon;_))/ln(_&beta;_))),<br/>where _&omega;_<sup>&minus;1</sup>(_&epsilon;_) is the inverse of the modulus of continuity.  (Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) gives the quantile function's maximum range in a window of size _&delta;_, and the inverse modulus _&omega;_<sup>&minus;1</sup>(_&epsilon;_) finds a window small enough that the quantile function differs by no more than _&epsilon;_ in the window.<sup>[**(28)**](#Note28)</sup>).<sup>[**(29)**](#Note29)</sup>
 
 For example&mdash;
 
-- if _Q_is Lipschitz continuous with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than _&omega;_(_h_) = _L_\*_h_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
-- if _Q_is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than _&omega;_(_h_) = _M_\*_h_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
+- if _Q_is Lipschitz continuous with Lipschitz constant _L_ on \[_a_, _b_\], then the function is no "steeper" than _&omega;_(_&delta;_) = _L_\*_&delta;_, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = _&epsilon;_/_L_, and
+- if _Q_is _&alpha;_-Hölder continuous with Hölder constant _M_ on that interval, then the function is no "steeper" than _&omega;_(_&delta;_) = _M_\*_&delta;_<sup>_&alpha;_</sup>, so _&omega;_<sup>&minus;1</sup>(_&epsilon;_) = (_&epsilon;_/_M_)<sup>1/_&alpha;_</sup>.
 
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
