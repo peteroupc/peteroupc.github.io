@@ -44,6 +44,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Cauchy Distribution**](#Cauchy_Distribution)
     - [Exponential Distribution with Unknown Rate _&lambda;_, Lying in (0, 1\]](#Exponential_Distribution_with_Unknown_Rate___lambda___Lying_in_0_1)
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
+    - [**Symmetric Geometric Distribution**](#Symmetric_Geometric_Distribution)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
@@ -570,19 +571,32 @@ The second subalgorithm samples the probability (_x_&minus;2<sup>_b_</sup>)/2<su
 1. Subtract 2<sup>_b_</sup> from _x_'s integer part, then create _y_ as **RandUniformFromReal**(2<sup>_b_</sup>), then run **URandLessThanReal**(_x_, _y_), then add 2<sup>_b_</sup> back to _x_'s integer part.
 2. Return the result of **URandLessThanReal** from step 1.
 
+<a id=Symmetric_Geometric_Distribution></a>
+### Symmetric Geometric Distribution
+
+Samples from the symmetric geometric distribution from (Ghosh et al. 2012)<sup>[**(14)**](#Note14)</sup>, with parameter _&lambda;_, in the form of an input coin with unknown probability of heads of _&lambda;_.
+
+1. Flip the input coin until it returns 0.  Set _n_ to the number of times the coin returned 1 this way.
+2. Run a **Bernoulli factory algorithm for 1/(2&minus;&lambda;)**, using the input coin.  If the run returns 1, return _n_.  Otherwise, return &minus;1 &minus; _n_.
+
+This is similar to an algorithm mentioned in an appendix in Li (2021)<sup>[**(15)**](#Note15)</sup>, in which the input coin&mdash;
+
+- has _&lambda;_ = 1&minus;exp(&minus;_&epsilon;_), and
+- can be built as follows using another input coin with probability of heads _&epsilon;_: "Run a **Bernoulli factory algorithm for exp(&minus;_&lambda;_) using the _&epsilon;_ input coin, then return 1 minus the result."
+
 <a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a>
 ### Lindley Distribution and Lindley-Like Mixtures
 
-A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(14)**](#Note14)</sup> with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
+A random number that follows the Lindley distribution (Lindley 1958)<sup>[**(16)**](#Note16)</sup> with parameter _&theta;_ (a real number greater than 0) can be generated as follows:
 
 1. With probability _w_ = _&theta;_/(1+_&theta;_), generate an exponential random number with a rate of _&theta;_ via **ExpRand** or **ExpRand2** (described in my article on PSRNs) and return that number.
 2. Otherwise, generate two exponential random numbers with a rate of _&theta;_ via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm, then return that sum.
 
-For the Garima distribution (Shanker 2016)<sup>[**(15)**](#Note15)</sup>, _w_ = (1+_&theta;_)/(2+_&theta;_).
+For the Garima distribution (Shanker 2016)<sup>[**(17)**](#Note17)</sup>, _w_ = (1+_&theta;_)/(2+_&theta;_).
 
-For the i-Garima distribution (Singh and Das 2020)<sup>[**(16)**](#Note16)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
+For the i-Garima distribution (Singh and Das 2020)<sup>[**(18)**](#Note18)</sup>, _w_ = (2+_&theta;_)/(3+_&theta;_).
 
-For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup>[**(17)**](#Note17)</sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.
+For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup>[**(19)**](#Note19)</sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
@@ -611,21 +625,23 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note11>(11)</sup> Harlow, J., Sainudiin, R., Tucker, W., "Mapped Regular Pavings", _Reliable Computing_ 16 (2012).</small>
 - <small><sup id=Note12>(12)</sup> Bringmann, K. and Friedrich, T., 2013, July. "Exact and efficient generation of geometric random variates and random graphs", in _International Colloquium on Automata, Languages, and Programming_ (pp. 267-278).</small>
 - <small><sup id=Note13>(13)</sup> Ahrens, J.H., and Dieter, U., "Computer methods for sampling from the exponential and normal distributions", _Communications of the ACM_ 15, 1972.</small>
-- <small><sup id=Note14>(14)</sup> Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.</small>
-- <small><sup id=Note15>(15)</sup> Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.</small>
-- <small><sup id=Note16>(16)</sup> Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.</small>
-- <small><sup id=Note17>(17)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small>
-- <small><sup id=Note18>(18)</sup> Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.</small>
-- <small><sup id=Note19>(19)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
-- <small><sup id=Note20>(20)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
-- <small><sup id=Note21>(21)</sup> I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.</small>
-- <small><sup id=Note22>(22)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092) .</small>
-- <small><sup id=Note23>(23)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.</small>
-- <small><sup id=Note24>(24)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
-- <small><sup id=Note25>(25)</sup> Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.</small>
-- <small><sup id=Note26>(26)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
-- <small><sup id=Note27>(27)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
-- <small><sup id=Note28>(28)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note14>(14)</sup> Ghosh, A., Roughgarden, T., and Sundararajan, M., "Universally Utility-Maximizing Privacy Mechanisms", _SIAM Journal on Computing_ 41(6), 2012.</small>
+- <small><sup id=Note15>(15)</sup> Li, L., 2021. Bayesian Inference on Ratios Subject to Differentially Private Noise (Doctoral dissertation, Duke University).</small>
+- <small><sup id=Note16>(16)</sup> Lindley, D.V., "Fiducial distributions and Bayes' theorem", _Journal of the Royal Statistical Society Series B_, 1958.</small>
+- <small><sup id=Note17>(17)</sup> Shanker, R., "Garima distribution and its application to model behavioral science data", _Biom Biostat Int J._ 4(7), 2016.</small>
+- <small><sup id=Note18>(18)</sup> Singh, B.P., Das, U.D., "[**On an Induced Distribution and its Statistical Properties**](https://arxiv.org/abs/2010.15078)", arXiv:2010.15078 [stat.ME], 2020.</small>
+- <small><sup id=Note19>(19)</sup> Iqbal, T. and Iqbal, M.Z., 2020. On the Mixture Of Weighted Exponential and Weighted Gamma Distribution. International Journal of Analysis and Applications, 18(3), pp.396-408.</small>
+- <small><sup id=Note20>(20)</sup> Kinderman, A.J., Monahan, J.F., "Computer generation of random variables using the ratio of uniform deviates", _ACM Transactions on Mathematical Software_ 3(3), pp. 257-260, 1977.</small>
+- <small><sup id=Note21>(21)</sup> Daumas, M., Lester, D., Muñoz, C., "[**Verified Real Number Calculations: A Library for Interval Arithmetic**](https://arxiv.org/abs/0708.3721)", arXiv:0708.3721 [cs.MS], 2007.</small>
+- <small><sup id=Note22>(22)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note23>(23)</sup> I thank D. Eisenstat from the _Stack Overflow_ community for leading me to this insight.</small>
+- <small><sup id=Note24>(24)</sup> Brassard, G., Devroye, L., Gravel, C., "Remote Sampling with Applications to General Entanglement Simulation", _Entropy_ 2019(21)(92), [**https://doi.org/10.3390/e21010092**](https://doi.org/10.3390/e21010092) .</small>
+- <small><sup id=Note25>(25)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6 [cs.IT], 2020.</small>
+- <small><sup id=Note26>(26)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
+- <small><sup id=Note27>(27)</sup> Wästlund, J., "[**Functions arising by coin flipping**](http://www.math.chalmers.se/~wastlund/coinFlip.pdf)", 1999.</small>
+- <small><sup id=Note28>(28)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
+- <small><sup id=Note29>(29)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note30>(30)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -635,7 +651,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 <a id=Ratio_of_Uniforms></a>
 ### Ratio of Uniforms
 
-The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(18)**](#Note18)</sup>.  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(19)**](#Note19)</sup>, is less elegant than, say, the normal distribution sampler by Karney (2014)<sup>[**(20)**](#Note20)</sup>, which doesn't require calculating logarithms or other transcendental functions.
+The Cauchy sampler given earlier demonstrates the _ratio-of-uniforms_ technique for sampling a distribution (Kinderman and Monahan 1977)<sup>[**(20)**](#Note20)</sup>.  It involves transforming the distribution's density function (PDF) into a compact shape.  The ratio-of-uniforms method appears here in the appendix, particularly since it can involve calculating upper and lower bounds of transcendental functions which, while it's possible to achieve in rational arithmetic (Daumas et al., 2007)<sup>[**(21)**](#Note21)</sup>, is less elegant than, say, the normal distribution sampler by Karney (2014)<sup>[**(22)**](#Note22)</sup>, which doesn't require calculating logarithms or other transcendental functions.
 
 This algorithm works for any univariate (one-variable) distribution as long as&mdash;
 
@@ -677,7 +693,7 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _MAYBE_ in any other case, or if the function is unsure.
 
     In the case of two-dimensional shapes, the shape's corners are (_c1_/_S_, _c2_/_S_), ((_c1_+1)/_S_, _c2_/_S_), (_c1_,(_c2_+1)/_S_), and ((_c1_+1)/_S_, (_c2_+1)/_S_).  However, checking for box/shape intersections this way is non-trivial to implement robustly, especially if interval arithmetic is not used.
-3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup>[**(19)**](#Note19)</sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals<sup>[**(21)**](#Note21)</sup> with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
+3. If the shape is given as an inequality of the form _f_(_t1_, ..., _tN_) &le; 0, **InShape** should use rational interval arithmetic (such as the one given in (Daumas et al., 2007)<sup>[**(21)**](#Note21)</sup>), where the two bounds of each interval are rational numbers with arbitrary-precision numerators and denominators.  Then, **InShape** should build one interval for each dimension of the box and evaluate _f_ using those intervals<sup>[**(23)**](#Note23)</sup> with an accuracy that increases as _S_ increases.  Then, **InShape** can return&mdash;
     - _YES_ if the interval result of _f_ has an upper bound less than or equal to 0;
     - _NO_ if the interval result of _f_ has a lower bound greater than 0; and
     - _MAYBE_ in any other case.
@@ -705,11 +721,11 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
 <a id=Probability_Transformations></a>
 ### Probability Transformations
 
-The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(22)**](#Note22)</sup>, (Devroye 1986, p. 769)<sup>[**(10)**](#Note10)</sup>, (Devroye and Gravel 2020)<sup>[**(23)**](#Note23)</sup>.  In the algorithm:
+The following algorithm takes a uniform partially-sampled random number (PSRN) as a "coin" and flips that "coin" using **SampleGeometricBag** (a method described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html)).  Given that "coin" and a function _f_ as described below, the algorithm returns 1 with probability _f_(_U_), where _U_ is the number built up by the uniform PSRN (see also (Brassard et al., 2019)<sup>[**(24)**](#Note24)</sup>, (Devroye 1986, p. 769)<sup>[**(10)**](#Note10)</sup>, (Devroye and Gravel 2020)<sup>[**(25)**](#Note25)</sup>.  In the algorithm:
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
 - For correctness, _f_(_U_) must meet the following conditions:
-    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the interval \[0, 1\] (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(24)**](#Note24)</sup>).
+    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the interval \[0, 1\] (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(26)**](#Note26)</sup>).
     - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere except at a countable number of points.
 
     The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)<sup>[**(2)**](#Note2)</sup>.
@@ -834,12 +850,12 @@ revealing that the function is a [**convex combination**](https://peteroupc.gith
 - _g_(_k_) = choose(2\*_k_,_k_)/((2\*_k_&minus;1)\*2<sup>2*_k_</sup>), and
 - _h_<sub>_k_</sub>(_&lambda;_) = (4\*_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> / 2 = (_&lambda;_\*(1&minus;_&lambda;_))<sup>_k_</sup> * 4<sup>_k_</sup> / 2
 
-(see also Wästlund (1999)<sup>[**(25)**](#Note25)</sup>; Dale et al. (2015)<sup>[**(26)**](#Note26)</sup>).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
+(see also Wästlund (1999)<sup>[**(27)**](#Note27)</sup>; Dale et al. (2015)<sup>[**(28)**](#Note28)</sup>).  The right-hand side of _h_, which is the polynomial built in step 3 of the algorithm, is a polynomial of degree _k_\*2 with Bernstein coefficients&mdash;
 
 - _z_ = (4<sup>_v_</sup>/2) / choose(_v_*2,_v_) at _v_=_k_, and
 - 0 elsewhere.
 
-Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup>[**(27)**](#Note27)</sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
+Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be simulated, as is, using the Bernoulli factory algorithm for [**polynomials in Bernstein form**](https://peteroupc.github.io/bernoulli.html#Certain_Polynomials_in_Bernstein_Form).  Fortunately, the polynomial's degree can be elevated to bring the Bernstein coefficients to 1 or less (for degree elevation and other algorithms, see (Tsai and Farouki 2001)<sup>[**(29)**](#Note29)</sup>).  Moreover, due to the special form of the Bernstein coefficients in this case, the degree elevation process can be greatly simplified.  Given an even degree _d_ as well as _z_ (as defined above), the degree elevation is as follows:
 
 1. Set _r_ to floor(_d_/3) + 1. (This starting value is because when this routine finishes, _r_/_d_ appears to converge to 1/3 as _d_ gets large, for the polynomial in question.)  Let _c_ be choose(_d_,_d_/2).
 2. Create a list of _d_+_r_+1 Bernstein coefficients, all zeros.
@@ -850,17 +866,17 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 <a id=More_Algorithms_for_Non_Negative_Factories></a>
 ### More Algorithms for Non-Negative Factories
 
-**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ has a finite minimum and maximum and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(28)**](#Note28)</sup>:
+**Algorithm 2.** Say we have an _oracle_ that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  This is possible whenever _f_ has a finite minimum and maximum and the mean of _f_(_X_) is not less than _&delta;_, where _&delta;_ is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup>[**(30)**](#Note30)</sup>:
 
 1. Let _m_ be a rational number equal to or greater than the maximum value of abs(_f_(_&mu;_)) anywhere.  Create a _&nu;_ input coin that does the following: "Generate a random number from the oracle, call it _x_.  With probability abs(_f_(_x_))/_m_, return a number that is 1 if _f_(_x_) < 0 and 0 otherwise.  Otherwise, repeat this process."
 2. Use one of the [**linear Bernoulli factories**](https://peteroupc.github.io/bernoulli.html#lambda____x___y__linear_Bernoulli_factories) to simulate 2\*_&nu;_ (2 times the _&nu;_ coin's probability of heads), using the _&nu;_ input coin, with _&#x03F5;_ = _&delta;_/_m_.  If the factory returns 1, return 0.  Otherwise, generate a random number from the oracle, call it _&xi;_, and return abs(_f_(_&xi;_)).
 
-> **Example:** An example from Lee et al. (2014)<sup>[**(28)**](#Note28)</sup>.  Say the oracle produces uniform random numbers in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random numbers that average to that mean.
+> **Example:** An example from Lee et al. (2014)<sup>[**(30)**](#Note30)</sup>.  Say the oracle produces uniform random numbers in [0, 3\*_&pi;_], and let _f_(_&nu;_) = sin(_&nu;_).  Then the mean of _f_(_X_) is 2/(3\*_&pi;_), which is greater than 0 and found in SymPy by `sympy.stats.E(sin(sympy.stats.Uniform('U',0,3*pi)))`, so the algorithm can produce non-negative random numbers that average to that mean.
 >
 > **Notes:**
 >
 > 1. Averaging to the mean of _f_(_X_) (that is, **E**\[_f_(_X_)] where **E**\[.] means expected or average value) is not the same as averaging to _f_(_&mu;_) where _&mu;_ is the mean of the oracle's numbers (that is, _f_(**E**\[_X_])).  For example, if _X_ is 0 or 1 with equal probability, and _f_(_&nu;_) = exp(&minus;_&nu;_), then **E**\[_f_(_X_)] = exp(0) + (exp(&minus;1) &minus; exp(0))\*(1/2), and _f_(**E**\[_X_]) = _f_(1/2) = exp(&minus;1/2).
-> 2. (Lee et al. 2014, Corollary 4)<sup>[**(28)**](#Note28)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
+> 2. (Lee et al. 2014, Corollary 4)<sup>[**(30)**](#Note30)</sup>: If _f_(_&mu;_) is known to return only values in the interval [_a_, _c_], the mean of _f_(_X_) is not less than _&delta;_, _&delta;_ > _b_, and _&delta;_ and _b_ are known numbers, then Algorithm 2 can be modified as follows:
 >
 >     - Use _f_(_&nu;_) = _f_(_&nu;_) &minus; _b_, and use _&delta;_ = _&delta;_ &minus; _b_.
 >     - _m_ is taken as max(_b_&minus;_a_, _c_&minus;_b_).

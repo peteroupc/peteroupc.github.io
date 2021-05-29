@@ -61,6 +61,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**_&lambda;_/(1+_&lambda;_)**](#lambda___1___lambda)
+        - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
         - [**_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))**](#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
         - [**(_d_ + _&lambda;_) / _c_**](#d____lambda____c)
@@ -810,13 +811,21 @@ An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
 
 This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup>[**(41)**](#Note41)</sup> and is uniformly fast.  It will be called the **two-coin special case** in this document.<sup>[**(42)**](#Note42)</sup>
 
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
 
 <a id=lambda___1___lambda></a>
 #### _&lambda;_/(1+_&lambda;_)
 
 Return 1 minus the result of the **algorithm for 1/(1+_&lambda;_)**.
+
+<a id=1_2_minus___lambda></a>
+#### 1/(2 &minus; _&lambda;_)
+
+Modified from the two-coin special case.
+
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
+2. Flip the input coin.  **If it returns 0**, return 0.  Otherwise, go to step 1.
 
 <a id=c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d></a>
 #### _c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))

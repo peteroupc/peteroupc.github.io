@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/05/28"><meta name="citation_online_date" content="2021/05/28"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/05/29"><meta name="citation_online_date" content="2021/05/29"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -84,6 +84,7 @@
 <li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)*(<em>k</em> + <em>&lambda;</em>)) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda___1___lambda"><strong><em>&lambda;</em>/(1+<em>&lambda;</em>)</strong></a></li>
+<li><a href="#1_2_minus___lambda"><strong>1/(2 &minus; <em>&lambda;</em>)</strong></a></li>
 <li><a href="#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d"><strong><em>c</em> * <em>&lambda;</em> * <em>&beta;</em> / (<em>&beta;</em> * (<em>c</em> * <em>&lambda;</em> + <em>d</em> * <em>&mu;</em>) &minus; (<em>&beta;</em> &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda"><strong><em>c</em> * <em>&lambda;</em> / (<em>c</em> * <em>&lambda;</em> + <em>d</em>) or (<em>c</em>/<em>d</em>) * <em>&lambda;</em> / (1 + (<em>c</em>/<em>d</em>) * <em>&lambda;</em>))</strong></a></li>
 <li><a href="#d____lambda____c"><strong>(<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong></a></li>
@@ -1135,7 +1136,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalves et al., 2017)<sup><a href="#Note41"><strong>(41)</strong></a></sup> and is uniformly fast.  It will be called the <strong>two-coin special case</strong> in this document.<sup><a href="#Note42"><strong>(42)</strong></a></sup></p>
 
 <ol>
-<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1. (For example, generate either 0 or 1 with equal probability, that is, an unbiased random bit, and return 1 if that bit is 1.)</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
@@ -1144,6 +1145,17 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <h4><em>&lambda;</em>/(1+<em>&lambda;</em>)</h4>
 
 <p>Return 1 minus the result of the <strong>algorithm for 1/(1+<em>&lambda;</em>)</strong>.</p>
+
+<p><a id=1_2_minus___lambda></a></p>
+
+<h4>1/(2 &minus; <em>&lambda;</em>)</h4>
+
+<p>Modified from the two-coin special case.</p>
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
+<li>Flip the input coin.  <strong>If it returns 0</strong>, return 0.  Otherwise, go to step 1.</li>
+</ol>
 
 <p><a id=c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d></a></p>
 
@@ -2587,7 +2599,7 @@ def valid_perm(f, x, n):
 
 <div class="noprint">
 <p>
-<a href="//twitter.com/share">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
+<a href="//twitter.com/intent/tweet">Share via Twitter</a>, <a href="//www.facebook.com/sharer/sharer.php" id="sharer">Share via Facebook</a>
 </p>
 </div>
 </nav><script>
