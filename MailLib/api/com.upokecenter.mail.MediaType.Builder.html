@@ -1,93 +1,88 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.MediaTypeBuilder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>com.upokecenter.mail.MediaType.Builder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>com.upokecenter.mail.MediaTypeBuilder</h1>
+<h1>com.upokecenter.mail.MediaType.Builder</h1>
 
-<h1>com.upokecenter.mail.MediaTypeBuilder</h1>
+<h1>com.upokecenter.mail.MediaType.Builder</h1>
 
-<pre>@Deprecated public final class MediaTypeBuilder extends java.lang.Object
+<pre>public static final class MediaType.Builder extends java.lang.Object
 </pre>
 
-<p>Deprecated.
-Use MediaType.Builder instead.</p>
+<p>A mutable data type that allows a media type object to be built.</p>
 
 <h2>Methods</h2>
 
 <ul>
-<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class, using the type
+<li><code>Builder()</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class, using the type
 &quot;application/octet-stream&quot; .</li>
-<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class using the data from
+<li><code>Builder​(MediaType mt)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class using the data from
 another media type.</li>
-<li><code>MediaTypeBuilder​(java.lang.String type,
-            java.lang.String subtype) MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class.</li>
+<li><code>Builder​(java.lang.String type,
+   java.lang.String subtype)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class.</li>
 <li><code>java.lang.String getSubType()</code><br>
-Deprecated. Gets this value&#39;s subtype.</li>
+Gets this value&#39;s subtype.</li>
 <li><code>java.lang.String getTopLevelType()</code><br>
-Deprecated. Gets this value&#39;s top-level type.</li>
-<li><code>boolean isMultipart()</code><br>
-Deprecated.
-Instead of using this property, use the TopLevelType property and compare
-the result with the exact String &#39;multipart&#39;.
-Instead of using this property, use the TopLevelType property and compare
-the result with the exact String &#39;multipart&#39;.</li>
-<li><code>boolean isText()</code><br>
-Deprecated.
-Instead of using this property, use the TopLevelType property and compare
-the result with the exact String &#39;text&#39;.
-Instead of using this property, use the TopLevelType property and compare
-the result with the exact String &#39;text&#39;.</li>
-<li><code>MediaTypeBuilder RemoveParameter​(java.lang.String name)</code><br>
-Deprecated. Removes a parameter from this builder object.</li>
-<li><code>MediaTypeBuilder SetParameter​(java.lang.String name,
+Gets this value&#39;s top-level type.</li>
+<li><code>MediaType.Builder RemoveParameter​(java.lang.String name)</code><br>
+Removes a parameter from this builder object.</li>
+<li><code>MediaType.Builder SetParameter​(java.lang.String name,
         java.lang.String value)</code><br>
-Deprecated. Sets a parameter&#39;s name and value for this media type.</li>
-<li><code>void setSubType​(java.lang.String value)</code><br>
-Deprecated.</li>
-<li><code>MediaTypeBuilder SetSubType​(java.lang.String str)</code><br>
-Deprecated. Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
-<li><code>void setTopLevelType​(java.lang.String value)</code><br>
-Deprecated.</li>
-<li><code>MediaTypeBuilder SetTopLevelType​(java.lang.String str)</code><br>
-Deprecated. Sets this media type&#39;s top-level type.</li>
+Sets a parameter&#39;s name and value for this media type.</li>
+<li><code>void setSubType​(java.lang.String value)</code><br></li>
+<li><code>MediaType.Builder SetSubType​(java.lang.String str)</code><br>
+Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
+<li><code>void setTopLevelType​(java.lang.String value)</code><br></li>
+<li><code>MediaType.Builder SetTopLevelType​(java.lang.String str)</code><br>
+Sets this media type&#39;s top-level type.</li>
 <li><code>MediaType ToMediaType()</code><br>
-Deprecated. Converts this builder to an immutable media type object.</li>
+Converts this builder to an immutable media type object.</li>
 <li><code>java.lang.String toString() MediaType.toString</code><br>
-Deprecated. Converts this object to a text string of the media type it represents, in
+Converts this object to a text string of the media type it represents, in
 the same form as MediaType.toString.</li>
 </ul>
 
 <h2>Constructors</h2>
 
 <ul>
-<li><code>MediaTypeBuilder() MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class, using the type
+<li><code>Builder()</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class, using the type
 &quot;application/octet-stream&quot; .</li>
-<li><code>MediaTypeBuilder​(MediaType mt) MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class using the data from
+<li><code>Builder​(MediaType mt)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class using the data from
 another media type.</li>
-<li><code>MediaTypeBuilder​(java.lang.String type,
-            java.lang.String subtype) MediaTypeBuilder</code><br>
-Deprecated. Initializes a new instance of the MediaTypeBuilder class.</li>
+<li><code>Builder​(java.lang.String type,
+   java.lang.String subtype)</code><br>
+Initializes a new instance of the {@link
+com.upokecenter.mail.MediaType.getBuilder()} class.</li>
 </ul>
 
 <h2>Method Details</h2>
 
-<h3>MediaTypeBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public MediaTypeBuilder()
+<pre>public Builder()
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the {@link
+ com.upokecenter.mail.MediaType.getBuilder()} class, using the type
+  &quot;application/octet-stream&quot; .</p>
 
-<h3>MediaTypeBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public MediaTypeBuilder​(MediaType mt)
+<pre>public Builder​(MediaType mt)
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the {@link
+ com.upokecenter.mail.MediaType.getBuilder()} class using the data from
+ another media type.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -101,12 +96,13 @@ Deprecated. Initializes a new instance of the MediaTypeBuilder class.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>mt</code> is null.</li>
 </ul>
 
-<h3>MediaTypeBuilder</h3>
+<h3>Builder</h3>
 
-<pre>public MediaTypeBuilder​(java.lang.String type, java.lang.String subtype)
+<pre>public Builder​(java.lang.String type, java.lang.String subtype)
 </pre>
 
-<p>Deprecated.</p>
+<p>Initializes a new instance of the {@link
+ com.upokecenter.mail.MediaType.getBuilder()} class.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -120,7 +116,7 @@ Deprecated. Initializes a new instance of the MediaTypeBuilder class.</li>
 <pre>public final java.lang.String getTopLevelType()
 </pre>
 
-<p>Deprecated.</p>
+<p>Gets this value&#39;s top-level type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -143,14 +139,12 @@ syntactically invalid for a top-level type.</p></li>
 <pre>public final void setTopLevelType​(java.lang.String value)
 </pre>
 
-<p>Deprecated.</p>
-
 <h3>getSubType</h3>
 
 <pre>public final java.lang.String getSubType()
 </pre>
 
-<p>Deprecated.</p>
+<p>Gets this value&#39;s subtype.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -173,45 +167,12 @@ syntactically invalid for a subtype.</p></li>
 <pre>public final void setSubType​(java.lang.String value)
 </pre>
 
-<p>Deprecated.</p>
-
-<h3>isText</h3>
-
-<pre>@Deprecated public final boolean isText()
-</pre>
-
-<p>Deprecated.
-Instead of using this property, use the TopLevelType property and compare
- the result with the exact String &#39;text&#39;.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
-</ul>
-
-<h3>isMultipart</h3>
-
-<pre>@Deprecated public final boolean isMultipart()
-</pre>
-
-<p>Deprecated.
-Instead of using this property, use the TopLevelType property and compare
- the result with the exact String &#39;multipart&#39;.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li><code>true</code> If this is a multipart media type; otherwise, <code>
-false</code>.</li>
-</ul>
-
 <h3>ToMediaType</h3>
 
 <pre>public MediaType ToMediaType()
 </pre>
 
-<p>Deprecated.</p>
+<p>Converts this builder to an immutable media type object.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -221,10 +182,13 @@ false</code>.</li>
 
 <h3>SetTopLevelType</h3>
 
-<pre>public MediaTypeBuilder SetTopLevelType​(java.lang.String str)
+<pre>public MediaType.Builder SetTopLevelType​(java.lang.String str)
 </pre>
 
-<p>Deprecated.</p>
+<p>Sets this media type&#39;s top-level type. This method enables the pattern of
+ method chaining (e.g., <code>new...().getSet()...().getSet()...()</code>) unlike
+ with the TopLevelType property in.NET or the setTopLevelType method
+ (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -249,10 +213,11 @@ for a top-level type.</p></li>
 
 <h3>RemoveParameter</h3>
 
-<pre>public MediaTypeBuilder RemoveParameter​(java.lang.String name)
+<pre>public MediaType.Builder RemoveParameter​(java.lang.String name)
 </pre>
 
-<p>Deprecated.</p>
+<p>Removes a parameter from this builder object. Does nothing if the
+ parameter&#39;s name doesn&#39;t exist.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -278,10 +243,10 @@ lower-case letters.).</li>
 
 <h3>SetParameter</h3>
 
-<pre>public MediaTypeBuilder SetParameter​(java.lang.String name, java.lang.String value)
+<pre>public MediaType.Builder SetParameter​(java.lang.String name, java.lang.String value)
 </pre>
 
-<p>Deprecated.</p>
+<p>Sets a parameter&#39;s name and value for this media type.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -311,10 +276,13 @@ syntactically invalid.</p></li>
 
 <h3>SetSubType</h3>
 
-<pre>public MediaTypeBuilder SetSubType​(java.lang.String str)
+<pre>public MediaType.Builder SetSubType​(java.lang.String str)
 </pre>
 
-<p>Deprecated.</p>
+<p>Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; . This method
+ enables the pattern of method chaining (e.g.,
+ <code>new...().getSet()...().getSet()...()</code>) unlike with the SubType property
+ in.NET or the setSubType method (with small s) in Java.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -341,7 +309,8 @@ syntactically invalid.</p></li>
 <pre>public java.lang.String toString()
 </pre>
 
-<p>Deprecated.</p>
+<p>Converts this object to a text string of the media type it represents, in
+ the same form as <code>MediaType.toString</code>.</p>
 
 <p><strong>Overrides:</strong></p>
 
