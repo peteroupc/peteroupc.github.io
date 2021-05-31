@@ -2182,7 +2182,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 All the randomization methods presented on this page assume that we have an endless source of numbers such that&mdash;
 
-- each number is _equally likely to occur_, and
+- the numbers follow a _uniform distribution_, and
 - each number is _chosen independently of any other choice_.
 
 That is, the methods assume we have a **"source of (uniform) random numbers"**. (Thus, none of these methods _generate_ random numbers themselves, strictly speaking, but rather, they assume we have a source of them already.)

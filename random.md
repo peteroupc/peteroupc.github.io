@@ -83,7 +83,7 @@ so that as a result, many applications use RNGs, especially built-in RNGs, that 
 
 In this document:
 
-- **Random number generator (RNG)** means software and/or hardware that seeks to generate numbers with the property that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
+- **Random number generator (RNG)** means software and/or hardware that seeks to generate integers in a bounded range such that each possible outcome is as likely as any other without influence by anything else<sup>[**(4)**](#Note4)</sup>.
 - **Pseudorandom number generator (PRNG)** means a random number generator that produces numbers by an algorithm that mathematically expands its input.
 - **Seed** means arbitrary data serving as a PRNG's input.
 - **Information security** means keeping information safe from attacks that could access, use, delay, or manipulate that information.<sup>[**(5)**](#Note5)</sup>
@@ -546,7 +546,7 @@ I acknowledge&mdash;
 - <small><sup id=Note1>(1)</sup> See also the question titled "Matlab rand and c++ rand()" on _Stack Overflow_.</small>
 - <small><sup id=Note2>(2)</sup> A distinction between _cryptographic_ and _noncryptographic_ RNGs seems natural, because many programming languages offer a general-purpose RNG (such as C's `rand` or Java's `java.util.Random`) and sometimes an RNG intended for information security purposes (such as Ruby's `SecureRandom`).</small>
 - <small><sup id=Note3>(3)</sup> For example, see F. Dörre and V. Klebanov, "Practical Detection of Entropy Loss in Pseudo-Random Number Generators", 2016.</small>
-- <small><sup id=Note4>(4)</sup> Items that produce numbers or signals that follow a non-uniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.)  Many of these items, however, typically serve as sources from which uniform random-behaving numbers can be derived through _randomness extraction_ techniques (see "[**Seed Generation**](#Seed_Generation)").</small>
+- <small><sup id=Note4>(4)</sup> Items that produce numbers or signals that follow a non-uniform distribution are not considered RNGs in this document. (For example, Gaussian and similar noise generators are not considered RNGs.) Many of these items, however, typically serve as sources from which uniform random-behaving integers can be derived through _randomness extraction_ techniques (see "[**Seed Generation**](#Seed_Generation)").<br>Likewise, items that produce floating-point numbers are not considered RNGs here, even if they sample from a uniform distribution.  An example is the dSFMT algorithm, which ultimately uses a generator of pseudorandom integers.</small>
 - <small><sup id=Note5>(5)</sup> See also the FIPS 200 definition ("The protection of information and information systems from unauthorized access, use, disclosure, disruption, modification, or destruction in order to provide confidentiality, integrity, and availability") and ISO/IEC 27000.</small>
 - <small><sup id=Note6>(6)</sup> However, some versions of GLSL (notably GLSL ES 1.0, as used by WebGL 1.0) might support integers with a restricted range (as low as -1024 to 1024) rather than 32-bit or bigger integers as are otherwise common, making it difficult to write hash functions for generating pseudorandom numbers.  An application ought to choose hash functions that deliver acceptable "random" numbers regardless of the kinds of numbers supported.
 
