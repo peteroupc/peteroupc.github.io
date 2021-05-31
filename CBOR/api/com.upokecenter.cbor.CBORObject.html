@@ -5288,10 +5288,11 @@ array or map).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>CBORException</code> - Thrown if the pointer is null, or if the pointer is
-invalid, or if there is no object at the given pointer, or the
-special key &quot;-&quot; appears in the pointer, or if the pointer is
-non-empty and this object has a CBOR type other than array or map.</li>
+<li><code>CBORException</code> - Thrown if the pointer is null, or
+if the pointer is invalid, or if there is no object at the given
+pointer, or the special key &quot;-&quot; appears in the pointer, or if the
+pointer is non-empty and this object has a CBOR type other than
+array or map.</li>
 </ul>
 
 <h3>AtJSONPointer</h3>
@@ -5318,7 +5319,8 @@ non-empty and this object has a CBOR type other than array or map.</li>
 
 <ul>
 <li><p><code>pointer</code> - A JSON pointer according to RFC 6901.</p></li>
-<li><p><code>defaultValue</code> -</p></li>
+<li><p><code>defaultValue</code> - The parameter <code>defaultValue</code> is a Cbor.CBORObject
+object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5374,8 +5376,8 @@ summarized in the remarks.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>CBORException</code> - The parameter &quot;patch&quot; is null or the patch operation
-failed.</li>
+<li><code>CBORException</code> - The parameter <code>patch</code> is
+null or the patch operation failed.</li>
 </ul>
 
 <h3>equals</h3>
