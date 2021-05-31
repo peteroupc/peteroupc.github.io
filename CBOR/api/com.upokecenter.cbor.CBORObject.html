@@ -128,7 +128,8 @@ use the first number&#39;s.Add() method.
 Instead, convert both CBOR objects to numbers (with .AsNumber()), and
 use the first number&#39;s.Add() method.</li>
 <li><code>CBORObject ApplyJSONPatch​(CBORObject patch)</code><br>
-Not documented yet.</li>
+Returns a copy of this object after applying the operations in a JSON patch,
+in the form of a CBOR object.</li>
 <li><code>boolean AsBoolean()</code><br>
 Returns false if this object is a CBOR false, null, or undefined value
 (whether or not the object has tags); otherwise, true.</li>
@@ -1277,7 +1278,9 @@ integer, even a negative one.).</li>
 <ul>
 <li>The CBOR object referred to by index or key in this array or map. If
 this is a CBOR map, returns <code>null</code> (not <code>
-CBORObject.Null</code>) if an item with the given key doesn&#39;t exist.</li>
+CBORObject.Null</code>) if an item with the given key doesn&#39;t exist (but
+this behavior may change to throwing an exception in version 5.0 or
+later).</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
@@ -5303,18 +5306,42 @@ false</code> if the given key is not found or this object is not a map.</li>
 <pre>public CBORObject ApplyJSONPatch​(CBORObject patch)
 </pre>
 
-<p>Not documented yet.</p>
+<p>Returns a copy of this object after applying the operations in a JSON patch,
+ in the form of a CBOR object. JSON patches are specified in RFC 6902
+ and their format is summarized in the remarks below.<p><b>Remarks:</b>
+ A JSON patch is an array with one or more maps. Each map has the
+  following keys: </p><ul> <li>&quot;op&quot; - Required. This key&#39;s value is the
+  patch operation and must be &quot;add&quot;, &quot;remove&quot;, &quot;move&quot;, &quot;copy&quot;, &quot;test&quot;,
+  or &quot;replace&quot;, in lower case and no other case combination.</li>
+  <li>&quot;value&quot; - Required if the operation is &quot;add&quot;, &quot;replace&quot;, or &quot;test&quot;
+ and specifies the item to add (insert), or that will replace the
+ existing item, or to check an existing item for equality,
+  respectively. (For &quot;test&quot;, the operation fails if the existing item
+  doesn&#39;t match the specified value.)</li> <li>&quot;path&quot; - Required for all
+ operations. A JSON Pointer (RFC 6901) specifying the target path in
+  the CBOR object for the operation.</li> <li>&quot;from&quot; - Required if the
+  operation is &quot;move&quot; or &quot;copy&quot;. A JSON Pointer (RFC 6901) specifying
+ the target path in the CBOR object where the source value is
+ located.</li></ul></p>
 
 <p><strong>Parameters:</strong></p>
 
 <ul>
-<li><code>patch</code> - Not documented yet.</li>
+<li><code>patch</code> - A JSON patch in the form of a CBOR object; it has the form
+summarized in the remarks.</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
 
 <ul>
-<li>The return value is not documented yet.</li>
+<li>The result of the patch operation.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>CBORException</code> - The parameter &quot;patch&quot; is null or the patch operation
+failed.</li>
 </ul>
 
 <h3>equals</h3>
