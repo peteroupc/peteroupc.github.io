@@ -662,7 +662,7 @@ Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied t
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
-1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
+1. _Let &omega;(x) be a modulus of continuity of f.  If &omega; is continuous and concave on [0, 1], then the expression&mdash;<br>abs(**E**[f(X/n)] &minus; f(k/(2\*n))),&nbsp;&nbsp;&nbsp;(1)<br>is bounded from above by&mdash;_
     - _&omega;(sqrt(1/(8\*n&minus;4))), for every integer n&ge;1 that's a power of 2,_
     - _&omega;(sqrt(1/(7\*n))), for every integer n&ge;4 that's a power of 2,_
     - _&omega;(sqrt(1/(2\*n))), for every integer n&ge;1 that's a power of 2, and_
