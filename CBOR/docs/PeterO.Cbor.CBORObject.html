@@ -2373,7 +2373,7 @@ is other than 2, 4, or 8.</li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><i>bytes</i>: A byte array in JSON format. The entire byte array must contain a single JSON object and not multiple objects. The byte array may begin with a byte-order mark (U+FEFF). The byte array can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</li>
+<li><i>bytes</i>: A byte array in JSON format. The entire byte array must contain a single JSON object and not multiple objects. The byte array may begin with a byte-order mark (U+FEFF). The byte array can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.)</li>
 </ul>
 
 <p><b>Return Value:</b></p>
@@ -2409,7 +2409,7 @@ The byte array contains invalid encoding or is not in JSON format.</p></li>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</p></li>
+<li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.)</p></li>
 <li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
 begins.</p></li>
 <li><p><i>count</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
@@ -2455,7 +2455,7 @@ is less than  <i>count</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</p></li>
+<li><p><i>bytes</i>: A byte array, the specified portion of which is in JSON format. The specified portion of the byte array must contain a single JSON object and not multiple objects. The portion may begin with a byte-order mark (U+FEFF). The portion can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.)</p></li>
 <li><p><i>offset</i>: An index, starting at 0, showing where the desired portion of  <i>bytes</i>
 begins.</p></li>
 <li><p><i>count</i>: The length, in bytes, of the desired portion of  <i>bytes</i>
@@ -2501,7 +2501,7 @@ is less than  <i>count</i>
 <p><b>Parameters:</b></p>
 
 <ul>
-<li><p><i>bytes</i>: A byte array in JSON format. The entire byte array must contain a single JSON object and not multiple objects. The byte array may begin with a byte-order mark (U+FEFF). The byte array can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F).</p></li>
+<li><p><i>bytes</i>: A byte array in JSON format. The entire byte array must contain a single JSON object and not multiple objects. The byte array may begin with a byte-order mark (U+FEFF). The byte array can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.)</p></li>
 <li><p><i>jsonoptions</i>: Specifies options to control how the JSON data is decoded to CBOR. See the JSONOptions class.</p></li>
 </ul>
 
@@ -4438,7 +4438,7 @@ There was an error in reading or parsing the data.</p></li>
     System.IO.Stream stream);
 </pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.).</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4507,7 +4507,7 @@ The data stream contains invalid encoding or is not in JSON format.</p></li>
     PeterO.Cbor.JSONOptions jsonoptions);
 </pre>
 
-<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.).</p>
+<p>Generates a CBOR object from a data stream in JavaScript Object Notation (JSON) format, using the specified options to control the decoding process. The JSON stream may begin with a byte-order mark (U+FEFF). Since version 2.0, the JSON stream can be in UTF-8, UTF-16, or UTF-32 encoding; the encoding is detected by assuming that the first character read must be a byte-order mark or a nonzero basic character (U+0001 to U+007F). (In previous versions, only UTF-8 was allowed.). (This behavior may change to supporting only UTF-8, with or without a byte order mark, in version 5.0 or later, perhaps with an option to restore the previous behavior of also supporting UTF-16 and UTF-32.).</p>
 
 <p><b>Parameters:</b></p>
 
@@ -4926,22 +4926,22 @@ is null.</li>
 <p>The example code given below (originally written in C# for the.NET version) can be used to write out certain keys of a CBOR map in a given order to a JSON string.</p>
 
 <pre>/* Generates a JSON string of &#39;mapObj&#39; whose keys are in the order
-            given
-            in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
-            &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
-            IList&lt;CBORObject&gt; keys) { if (mapObj == null) { throw new
-            ArgumentNullException)nameof(mapObj));}
-            if (keys == null) { throw new
-            ArgumentNullException)nameof(keys));}
-            if (obj.Type != CBORType.Map) {
-            throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
-            builder = new StringBuilder(); var first = true; builder.Append(&quot;{&quot;);
-            for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) { if
-            (!first) {builder.Append(&quot;, &quot;);} var keyString=(key.CBORType ==
-            CBORType.String) ? key.AsString() : key.ToJSONString();
-            builder.Append(CBORObject.FromObject(keyString) .ToJSONString())
-            .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString()); first=false; } } return
-            builder.Append(&quot;}&quot;).ToString(); }
+             given
+             in &#39;keys&#39; . Only keys found in &#39;keys&#39; will be written if they exist in
+             &#39;mapObj&#39;. */ private static string KeysToJSONMap(CBORObject mapObj,
+             IList&lt;CBORObject&gt; keys) { if (mapObj == null) { throw new
+             ArgumentNullException)nameof(mapObj));}
+             if (keys == null) { throw new
+             ArgumentNullException)nameof(keys));}
+             if (obj.Type != CBORType.Map) {
+             throw new ArgumentException(&quot;&#39;obj&#39; is not a map.&quot;); } StringBuilder
+             builder = new StringBuilder(); var first = true; builder.Append(&quot;{&quot;);
+             for (CBORObject key in keys) { if (mapObj.ContainsKey(key)) { if
+             (!first) {builder.Append(&quot;, &quot;);} var keyString=(key.CBORType ==
+             CBORType.String) ? key.AsString() : key.ToJSONString();
+             builder.Append(CBORObject.FromObject(keyString) .ToJSONString())
+             .Append(&quot;:&quot;).Append(mapObj[key].ToJSONString()); first=false; } } return
+             builder.Append(&quot;}&quot;).ToString(); }
 </pre>
 
 <p>.</p>

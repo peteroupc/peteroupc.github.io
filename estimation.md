@@ -186,13 +186,13 @@ The algorithm, like _Algorithm C_, works only if the stream's distribution has t
 2. Run _Algorithm C_ with the given parameters _p_, _q_, _&kappa;_, and _&delta;_, but with _&epsilon;_ = _&gamma;_.  Let _&mu;_ be the result.
 3. Return _f_(_&mu;_).
 
-A simpler version of _Algorithm D_ was given as an answer to the linked-to question.  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
+A simpler version of _Algorithm D_ was given as an answer to the linked-to question; see also Jiang and Hickernell (2014)<sup>[**(8)**](#Note8)</sup>.  As with _Algorithm D_, this algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will be in the interval [0, 1].  The algorithm, called **Algorithm E** in this document, follows.
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(ln(2/_&delta;_))/(2\*_&gamma;_<sup>2</sup>). (As the answer notes, this sample size is based on Hoeffding's inequality.)
 3. (Calculate the sample mean.) Get _n_ samples from the stream, sum them, then divide the sum by _n_, then call the result _&mu;_.  Return _f_(_&mu;_).
 
-If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012)<sup>[**(6)**](#Note6)</sup>, but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
+If the stream is **unbounded** (can take on any real number) and its distribution has a **known upper bound on the standard deviation** _&sigma;_ (**or the variance** _&sigma;_<sup>2</sup>), then a similar algorithm follows from Chebyshev's inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013)<sup>[**(6)**](#Note6)</sup>, but is adapted to find the mean for _f_(_x_), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within _&epsilon;_ of _f_(**E**[**z**]) with probability 1 &minus; _&delta;_ or greater, and the estimate will not go beyond the bounds of the stream's numbers. The algorithm, called **Algorithm F** in this document, follows.
 
 1. Calculate _&gamma;_ as given in step 1 of _Algorithm D_.
 2. (Calculate the sample size.) Set _n_ to ceil(_&sigma;_<sup>2</sup>/(_&delta;_\*_&gamma;_<sup>2</sup>)).
@@ -201,7 +201,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 > **Notes:**
 >
 > 1. _Algorithm D_ and _Algorithm E_ won't work in general when _f_(_x_) has jump discontinuities (this happens in general when _f_ is piecewise continuous, or made up of independent continuous pieces that cover all of \[0, 1\]), at least when _&epsilon;_ is equal to or less than the maximum jump among all the jump discontinuities (see also a [**related question**](https://stats.stackexchange.com/questions/522429)).
-> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_), and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random variate in [0, 1), then return 1 the number is less than the estimate, or 0 otherwise.
+> 2. _Algorithm E_ can be used to build so-called "[**approximate Bernoulli factories**](https://peteroupc.github.io/bernsupp.html#Approximate_Bernoulli_Factories)", or algorithms that approximately sample the probability _f_(_&lambda;_) given a coin with probability of heads of _&lambda;_.  In this case, the stream of numbers should produce only zeros and ones (and thus follow the _Bernoulli distribution_), and _f_ should also be a continuous function.  The approximate Bernoulli factory would work as follows: After running _Algorithm E_ and getting an estimate, generate a uniform random variate in [0, 1), then return 1 if the number is less than the estimate, or 0 otherwise.
 > 3. _Algorithm D_ and _Algorithm E_ can be adapted to apply to streams outputting numbers in a bounded interval \[_a_, _b_\] (where _a_ and _b_ are known rational numbers), but with unknown mean, and with _f_ being a continuous function that maps [_a_, _b_] to [_a_, _b_], as follows:
 >
 >     - For each number in the stream, subtract _a_ from it, then divide it by (_b_ &minus; _a_).
@@ -252,7 +252,7 @@ kappa = E(Abs(func-emean)**q)**(1/q) / E(Abs(func-emean)**p)**(1/p)
 pprint(Max(1,kappa))
 ```
 
-> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018)<sup>[**(8)**](#Note8)</sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
+> **Note:** As an alternative to the usual process of choosing a point uniformly in the _whole_ sampling domain, _stratified sampling_ (Kunsch and Rudolf 2018)<sup>[**(9)**](#Note9)</sup>, which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the _d_-dimensional hypercube [0, 1]<sup>_d_</sup>):
 >
 > 1. For a sample size _n_, set _m_ to floor(_n_<sup>1/_d_</sup>), where _d_ is the number of dimensions in the sampling domain (number of components of each point).  Set _s_ to 0.
 > 2. For each _i\[1]_ in \[0, _m_), do: For each _i\[2]_ in \[0, _m_), do: ..., For each _i\[d]_ in \[0, _m_), do:
@@ -287,9 +287,10 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 - <small><sup id=Note3>(3)</sup> Huber, Mark, and Bo Jones. "Faster estimates of the mean of bounded random variables." Mathematics and Computers in Simulation 161 (2019): 93-101.</small>
 - <small><sup id=Note4>(4)</sup> Huber, Mark, "[**An optimal(_&epsilon;_, _&delta;_)-approximation scheme for the mean of random variables with bounded relative variance**](https://arxiv.org/abs/1706.01478)", arXiv:1706.01478, 2017.</small>
 - <small><sup id=Note5>(5)</sup> Kunsch, Robert J., Erich Novak, and Daniel Rudolf. "Solvable integration problems and optimal sample size selection." Journal of Complexity 53 (2019): 40-67.  Also in [**https://arxiv.org/pdf/1805.08637.pdf**](https://arxiv.org/pdf/1805.08637.pdf) .</small>
-- <small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v2)", arXiv:1208.4318v2 [math.ST], 2012.</small>
+- <small><sup id=Note6>(6)</sup> Hickernell, F.J., Jiang, L., et al., "[**Guaranteed Conservative Fixed Width Intervals via Monte Carlo Sampling**](https://arxiv.org/abs/1208.4318v3)", arXiv:1208.4318v3 [math.ST], 2012/2013.</small>
 - <small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small>
-- <small><sup id=Note8>(8)</sup> Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
+- <small><sup id=Note8>(8)</sup> Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.</small>
+- <small><sup id=Note9>(9)</sup> Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
 
 <a id=License></a>
 ## License

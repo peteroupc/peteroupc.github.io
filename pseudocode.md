@@ -63,7 +63,7 @@ A _list_ can be expressed by wrapping items in brackets; for example, `[0, 1, 2]
 * `floor(a)` is the highest integer that is less than or equal to `a`.
 * `round(a)` is the closest integer to `a` or, if two integers are tied for closest, the integer among them that is farther from 0.
 * `ln(a)` is the natural logarithm of `a`.  It corresponds to the `Math.log` method in Java and JavaScript.
-* `exp(a)` is the number _e_ (base of natural logarithms) raised to the power `a`.
+* `exp(a)` is the inverse natural logarithm of `a`.  Also known as the base of natural logarithms raised to the power `a`, so that `exp(1)` is the base of natural logarithms commonly denoted _e_.
 * `rem(a, b)` is the part of `b` that does not divide evenly into `a`, where the result has the sign of `b`.  This operation is equivalent to `a - floor(a / b) * b`.
 * `min(a, b)` is the smaller of `a` and `b`.
 * `max(a, b)` is the larger of `a` and `b`.
