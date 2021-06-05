@@ -14,6 +14,8 @@
 - [**Batching Random Samples via Randomness Extraction**](#Batching_Random_Samples_via_Randomness_Extraction)
 - [**Random Variate Generation via Quantiles**](#Random_Variate_Generation_via_Quantiles)
 - [**ExpoExact**](#ExpoExact)
+- [**A sampler for distributions with nonincreasing weights**](#A_sampler_for_distributions_with_nonincreasing_weights)
+- [**A sampler for unimodal distributions of weights**](#A_sampler_for_unimodal_distributions_of_weights)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -308,6 +310,38 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 
 > **Note:** After `ExpoExact` is used to generate a random variate, an application can append additional binary digits (such as `RNDINT(1)`) to the end of that number while remaining accurate to the given precision (Karney 2014)<sup>[**(32)**](#Note32)</sup>
 
+<a id=A_sampler_for_distributions_with_nonincreasing_weights></a>
+## A sampler for distributions with nonincreasing weights
+
+An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in nonincreasing order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021)<sup>[**(33)**](#Note33)</sup>.  It has a logarithmic time complexity in terms of setup and sampling.
+
+- Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.
+    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2.
+    3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
+- Sampling:
+    1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the  chosen integer _k_.
+    2. Set _x_ to an integer chosen uniformly at random in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
+    3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
+
+For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follows instead:
+
+- Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.
+    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2.
+    3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;1&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;1&minus;_j_\] and multiply _j_ by 2.
+- The sampling is the same as for the previous algorithm.
+
+<a id=A_sampler_for_unimodal_distributions_of_weights></a>
+## A sampler for unimodal distributions of weights
+
+The following is an algorithm for sampling an integer in the interval \[_a_, _b_\) with probability proportional to a _unimodal distribution_ of weights (that is, nondecreasing on the left and nonincreasing on the right) (Chewi et al. 2021)<sup>[**(34)**](#Note34)</sup>.  It assumes the mode (the point with the highest weight) is known.  An example is \[1, 3, 9, 4, 4\] when _a_ = 0 and _b_ = 5, and the _mode_ is 2, which corresponds to the weight 9.  It has a logarithmic time complexity in terms of setup and sampling.
+
+- Setup:
+    1. Find the point with the highest weight, such as via binary search.  Call this point _mode_.
+    2. Run the setup for _nondecreasing_ weights on the interval [_a_, _mode_), then run the setup for _nonincreasing_ weights on the interval [_mode_, _b_).  Both setups are described in the previous section.  Then, concatenate the two _q_ lists into one, the two _r_ lists into one, and the two _D_ lists into one.
+- The sampling is the same as for the algorithms in the previous section.
+
 <a id=Notes></a>
 ## Notes
 
@@ -343,6 +377,8 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 - <small><sup id=Note30>(30)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229v1)", arXiv:1912.09229v1 [math.PR], 2019.</small>
 - <small><sup id=Note31>(31)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
 - <small><sup id=Note32>(32)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
+- <small><sup id=Note33>(33)</sup> Chewi, S., Gerber, P., et al., "[Rejection sampling from shape-constrained distributions in sublinear time](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021</small>
+- <small><sup id=Note34>(34)</sup> Chewi, S., Gerber, P., et al., "[Rejection sampling from shape-constrained distributions in sublinear time](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021</small>
 
 <a id=License></a>
 ## License
