@@ -316,19 +316,19 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
 An algorithm for sampling an integer in the interval \[_a_, _b_) with probability proportional to weights listed in _nonincreasing_ order (example: \[10, 3, 2, 1, 1\] when _a_ = 0 and _b_ = 5) can be implemented as follows (Chewi et al. 2021)<sup>[**(33)**](#Note33)</sup>.  It has a logarithmic time complexity in terms of setup and sampling.
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
-    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.
-    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2.
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
+    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _q_\[0\], then set _j_ to 1 and _m_ to 1, then while _j_ &lt; _b_&minus;_a_, append _q_\[_m_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2 and add 1 to _m_.  The list _r_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
-    1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the  chosen integer _k_.
+    1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
     2. Set _x_ to an integer chosen uniformly at random in the half-open interval \[_D_\[_k_\]\[0\], _D_\[_k_\]\[1\]).
     3. With probability _w_\[_x_\] / _q_\[_k_\], return _x_.  Otherwise, go to step 1.
 
 For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follows instead:
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
-    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.
-    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2.
+    1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_b_&minus;1\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append _w_\[_b_&minus;1&minus;_j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
+    2. (Envelope chunk weights.) Build a list _r_ as given in step 2 of the previous algorithm's setup.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
 

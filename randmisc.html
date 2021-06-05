@@ -435,14 +435,14 @@ END METHOD
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
 
 <ol>
-<li>(Envelope weights.) Build a list <em>q</em> as follows: The first item is <em>w</em>[<em>a</em>], then set <em>j</em> to 1, then while <em>j</em> &lt; <em>b</em>&minus;<em>a</em>, append <em>w</em>[<em>a</em> + <em>j</em>] and multiply <em>j</em> by 2.</li>
-<li>(Envelope chunk weights.) Build a list <em>r</em> as follows: The first item is <em>w</em>[<em>a</em>], then set <em>j</em> to 1, then while <em>j</em> &lt; <em>b</em>&minus;<em>a</em>, append <em>w</em>[<em>a</em> + <em>j</em>]*min((<em>b</em>&minus;<em>a</em>) &minus; <em>j</em>, <em>j</em>) and multiply <em>j</em> by 2.</li>
+<li>(Envelope weights.) Build a list <em>q</em> as follows: The first item is <em>w</em>[<em>a</em>], then set <em>j</em> to 1, then while <em>j</em> &lt; <em>b</em>&minus;<em>a</em>, append <em>w</em>[<em>a</em> + <em>j</em>] and multiply <em>j</em> by 2.  The list <em>q</em>&#39;s items should be rational numbers that equal the true values, if possible, or overestimate them if not.</li>
+<li>(Envelope chunk weights.) Build a list <em>r</em> as follows: The first item is <em>q</em>[0], then set <em>j</em> to 1 and <em>m</em> to 1, then while <em>j</em> &lt; <em>b</em>&minus;<em>a</em>, append <em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>) &minus; <em>j</em>, <em>j</em>) and multiply <em>j</em> by 2 and add 1 to <em>m</em>.  The list <em>r</em>&#39;s items should be rational numbers that equal the true values, if possible, or overestimate them if not.</li>
 <li>(Start and end points of each chunk.) Build a list <em>D</em> as follows: The first item is the list [<em>a</em>, <em>a</em>+1], then set <em>j</em> to 1, then while <em>j</em> &lt; <em>n</em>, append the list [<em>j</em>, <em>j</em> + min((<em>b</em>&minus;<em>a</em>) &minus; <em>j</em>, <em>j</em>)] and multiply <em>j</em> by 2.</li>
 </ol></li>
 <li>Sampling:
 
 <ol>
-<li>Choose an integer in [0, <em>s</em>) with probability proportional to the weights in <em>r</em>, where <em>s</em> is the number of items in <em>r</em>.  Call the  chosen integer <em>k</em>.</li>
+<li>Choose an integer in [0, <em>s</em>) with probability proportional to the weights in <em>r</em>, where <em>s</em> is the number of items in <em>r</em>.  Call the chosen integer <em>k</em>.</li>
 <li>Set <em>x</em> to an integer chosen uniformly at random in the half-open interval [<em>D</em>[<em>k</em>][0], <em>D</em>[<em>k</em>][1]).</li>
 <li>With probability <em>w</em>[<em>x</em>] / <em>q</em>[<em>k</em>], return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol></li>
@@ -454,8 +454,8 @@ END METHOD
 <li>Setup:  Let <em>w</em>[<em>i</em>] be the weight for integer <em>i</em> (with <em>i</em> starting at <em>a</em>).
 
 <ol>
-<li>(Envelope weights.) Build a list <em>q</em> as follows: The first item is <em>w</em>[<em>b</em>&minus;1], then set <em>j</em> to 1, then while <em>j</em> &lt; (<em>b</em>&minus;<em>a</em>), append <em>w</em>[<em>b</em>&minus;1&minus;<em>j</em>] and multiply <em>j</em> by 2.</li>
-<li>(Envelope chunk weights.) Build a list <em>r</em> as follows: The first item is <em>w</em>[<em>b</em>&minus;1], then set <em>j</em> to 1, then while <em>j</em> &lt; (<em>b</em>&minus;<em>a</em>), append <em>w</em>[<em>b</em>&minus;1&minus;<em>j</em>]*min((<em>b</em>&minus;<em>a</em>) &minus; <em>j</em>, <em>j</em>) and multiply <em>j</em> by 2.</li>
+<li>(Envelope weights.) Build a list <em>q</em> as follows: The first item is <em>w</em>[<em>b</em>&minus;1], then set <em>j</em> to 1, then while <em>j</em> &lt; (<em>b</em>&minus;<em>a</em>), append <em>w</em>[<em>b</em>&minus;1&minus;<em>j</em>] and multiply <em>j</em> by 2.  The list <em>q</em>&#39;s items should be rational numbers that equal the true values, if possible, or overestimate them if not.</li>
+<li>(Envelope chunk weights.) Build a list <em>r</em> as given in step 2 of the previous algorithm&#39;s setup.</li>
 <li>(Start and end points of each chunk.) Build a list <em>D</em> as follows: The first item is the list [<em>b</em>&minus;1, <em>b</em>], then set <em>j</em> to 1, then while <em>j</em> &lt; (<em>b</em>&minus;<em>a</em>), append the list [(<em>b</em>&minus;<em>j</em>) &minus; min((<em>b</em>&minus;<em>a</em>) &minus; <em>j</em>, <em>j</em>), <em>b</em>&minus;<em>j</em>] and multiply <em>j</em> by 2.</li>
 </ol></li>
 <li>The sampling is the same as for the previous algorithm.</li>
