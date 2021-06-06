@@ -164,7 +164,7 @@ A _compound distribution_ is simply the minimum of _N_ random variates distribut
 
 A _complementary compound distribution_ is the maximum of _N_ random variates distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(19)**](#Note19)</sup>.
 
-An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(20)**](#Note20)</sup> is the reciprocal of an exponential(1) random variate (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be scaled by a parameter _&theta;_ > 0.
+An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(20)**](#Note20)</sup> is the reciprocal of an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be scaled by a parameter _&theta;_ > 0.
 
 A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
@@ -192,7 +192,7 @@ In the table below, _U_ is a uniform(0, 1) random variate.
  --- | --- | --- |
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
 | Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(23)**](#Note23)</sup>. | Minimum of _N_ power function(_b_, _c_) random variates, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
-| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(24)**](#Note24)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential(_&beta;_). |
+| Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(24)**](#Note24)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate _&beta;_. |
 | Marshall&ndash;Olkin(_&alpha;_). | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016)<sup>[**(25)**](#Note25)</sup>. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
@@ -331,6 +331,8 @@ For _nondecreasing_ rather than nonincreasing weights, the algorithm is as follo
     2. (Envelope chunk weights.) Build a list _r_ as given in step 2 of the previous algorithm's setup.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_b_&minus;1, _b_\], then set _j_ to 1, then while _j_ &lt; (_b_&minus;_a_), append the list \[(_b_&minus;_j_) &minus; min((_b_&minus;_a_) &minus; _j_, _j_), _b_&minus;_j_\] and multiply _j_ by 2.
 - The sampling is the same as for the previous algorithm.
+
+> **Note:** The weights can be base-_&beta;_ logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace "_q_\[_m_\]\*min((_b_&minus;_a_)" with "_q_\[_m_\]+ln(min((_b_&minus;_a_))/ln(_&beta;_)" (which is generally inexact unless _&beta;_ is 2); in sampling step 1, use an algorithm that takes base-_&beta;_ logarithms as weights; and replace sampling step 3 with "Generate an exponential random variate with rate ln(_&beta;_).  If that variate is greater than _q_\[_x_\] minus _w_\[_x_\], return _x_.  Otherwise, go to step 1."  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).
 
 <a id=A_sampler_for_unimodal_distributions_of_weights></a>
 ## A sampler for unimodal distributions of weights

@@ -600,7 +600,7 @@ Samples from the symmetric geometric distribution from (Ghosh et al. 2012)<sup>[
 This is similar to an algorithm mentioned in an appendix in Li (2021)<sup>[**(15)**](#Note15)</sup>, in which the input coin&mdash;
 
 - has _&lambda;_ = 1&minus;exp(&minus;_&epsilon;_), and
-- can be built as follows using another input coin with probability of heads _&epsilon;_: "Run a **Bernoulli factory algorithm for exp(&minus;_&lambda;_) using the _&epsilon;_ input coin, then return 1 minus the result."
+- can be built as follows using another input coin with probability of heads _&epsilon;_: "Run a **Bernoulli factory algorithm for exp(&minus;_&lambda;_)** using the _&epsilon;_ input coin, then return 1 minus the result."
 
 <a id=Lindley_Distribution_and_Lindley_Like_Mixtures></a>
 ### Lindley Distribution and Lindley-Like Mixtures

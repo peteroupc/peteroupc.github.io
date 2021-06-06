@@ -216,7 +216,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>A <em>complementary compound distribution</em> is the maximum of <em>N</em> random variates distributed as <em>X</em>, where <em>N</em> &gt;= 1 is an integer distributed as the discrete distribution <em>Y</em>.  An example is the &quot;geometric zero-truncated Poisson distribution&quot;, where <em>X</em> is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and <em>Y</em> is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
 
-<p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)<sup><a href="#Note20"><strong>(20)</strong></a></sup> is the reciprocal of an exponential(1) random variate (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform(0, 1) random variate) and may be scaled by a parameter <em>&theta;</em> &gt; 0.</p>
+<p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)<sup><a href="#Note20"><strong>(20)</strong></a></sup> is the reciprocal of an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform(0, 1) random variate) and may be scaled by a parameter <em>&theta;</em> &gt; 0.</p>
 
 <p>A <em>weight-biased X</em> or <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
 
@@ -269,7 +269,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <tr>
 <td>Lehmann Weibull(<em>a1</em>, <em>a2</em>, <em>&beta;</em>) (Elgohari and Yousof 2020)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.</td>
 <td>(ln(1/<em>U</em>)/<em>&beta;</em>)<sup>1/<em>a1</em></sup>/<em>a2</em> or <em>E</em><sup>1/<em>a1</em></sup>/<em>a2</em></td>
-<td><em>a1</em>, <em>a2</em>, <em>&beta;</em> &gt; 0. <em>E</em> is exponential(<em>&beta;</em>).</td>
+<td><em>a1</em>, <em>a2</em>, <em>&beta;</em> &gt; 0. <em>E</em> is exponential with rate <em>&beta;</em>.</td>
 </tr>
 <tr>
 <td>Marshall&ndash;Olkin(<em>&alpha;</em>).</td>
@@ -460,6 +460,10 @@ END METHOD
 </ol></li>
 <li>The sampling is the same as for the previous algorithm.</li>
 </ul>
+
+<blockquote>
+<p><strong>Note:</strong> The weights can be base-<em>&beta;</em> logarithms, especially since logarithms preserve order, but in this case the algorithm requires changes.  In the setup step 2, replace &quot;<em>q</em>[<em>m</em>]*min((<em>b</em>&minus;<em>a</em>)&quot; with &quot;<em>q</em>[<em>m</em>]+ln(min((<em>b</em>&minus;<em>a</em>))/ln(<em>&beta;</em>)&quot; (which is generally inexact unless <em>&beta;</em> is 2); in sampling step 1, use an algorithm that takes base-<em>&beta;</em> logarithms as weights; and replace sampling step 3 with &quot;Generate an exponential random variate with rate ln(<em>&beta;</em>).  If that variate is greater than <em>q</em>[<em>x</em>] minus <em>w</em>[<em>x</em>], return <em>x</em>.  Otherwise, go to step 1.&quot;  These modifications can introduce numerical errors unless care is taken, such as by using partially-sampled random numbers (PSRNs).</p>
+</blockquote>
 
 <p><a id=A_sampler_for_unimodal_distributions_of_weights></a></p>
 
