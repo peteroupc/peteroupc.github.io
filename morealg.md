@@ -24,6 +24,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
     - [**Derivative (slope) of arctan(_&lambda;_)**](#Derivative_slope_of_arctan___lambda)
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
+    - [**exp(_&lambda;_)/3**](#exp___lambda___3)
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
@@ -148,6 +149,15 @@ Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following ser
 
 - _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;2</sup> if _n_&ge;2, or 0 otherwise, and
 - _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&ge;2 and _n_ is even, or 0 otherwise.
+
+<a id=exp___lambda___3></a>
+### exp(_&lambda;_)/3
+
+1. ("Geometric" random number _n_.)  Generate unbiased random bits until a zero is generated this way.  Set _n_ to the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
+2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  With probability 1/(3\*2<sup>_n_&minus;1</sup>\*(_n_!)), go to the next step.  (This probability is 2/3 if _n_ is 0, and 1/3 if _n_ is 1.)  Otherwise, return 0.
+3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
+
+Derivation: Follows from rewriting exp(_&lambda;_)/3 in a similar manner to cosh(_&lambda;_)&minus;1, where this time, _g_(_n_) is (1/2)\*(1/2)<sup>_n_</sup> (the "geometric" probabilities"), and _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the Taylor series of exp(_&lambda;_)/3.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2

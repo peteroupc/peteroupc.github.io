@@ -317,7 +317,7 @@ An algorithm for sampling an integer in the interval \[_a_, _b_) with probabilit
 
 - Setup:  Let _w_\[_i_\] be the weight for integer _i_ (with _i_ starting at _a_).
     1. (Envelope weights.) Build a list _q_ as follows: The first item is _w_\[_a_\], then set _j_ to 1, then while _j_ &lt; _b_&minus;_a_, append _w_\[_a_ + _j_\] and multiply _j_ by 2.  The list _q_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
-    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _q_\[0\], then set _j_ to 1 and _m_ to 1, then while _j_ &lt; _b_&minus;_a_, append _q_\[_m_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2 and add 1 to _m_.  The list _r_'s items should be rational numbers that equal the true values, if possible, or overestimate them if not.
+    2. (Envelope chunk weights.) Build a list _r_ as follows: The first item is _q_\[0\], then set _j_ to 1 and _m_ to 1, then while _j_ &lt; _b_&minus;_a_, append _q_\[_m_\]\*min((_b_&minus;_a_) &minus; _j_, _j_) and multiply _j_ by 2 and add 1 to _m_.
     3. (Start and end points of each chunk.) Build a list _D_ as follows: The first item is the list \[_a_, _a_+1\], then set _j_ to 1, then while _j_ &lt; _n_, append the list \[_j_, _j_ + min((_b_&minus;_a_) &minus; _j_, _j_)\] and multiply _j_ by 2.
 - Sampling:
     1. Choose an integer in [0, _s_) with probability proportional to the weights in _r_, where _s_ is the number of items in _r_.  Call the chosen integer _k_.
