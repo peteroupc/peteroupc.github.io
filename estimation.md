@@ -44,7 +44,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 
 1. Calculate the minimum number of samples _k_.  There are two suggestions.  The simpler one is _k_ = ceil(&minus;6\*ln(2/_&delta;_)/(_&epsilon;_<sup>2</sup>\*(4\*_&epsilon;_&minus;3))).  A more complicated one is the smallest integer _k_ such that gammainc(_k_,(_k_&minus;1)/(1+_&epsilon;_)) + (1 &minus; gammainc(_k_,(_k_&minus;1)/(1&minus;_&epsilon;_))) &le; _&delta;_, where gammainc is the regularized lower incomplete gamma function.
 2. Take samples from the stream until _k_ 1's are taken this way.  Let _r_ be the total number of samples taken this way.
-3. Generate _g_, a gamma(_r_) random variate, then return (_k_&minus;1)/_g_.
+3. Generate _g_, a gamma random variate with shape parameter _r_ and scale 1, then return (_k_&minus;1)/_g_.
 
 > **Notes**:
 >
@@ -54,7 +54,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 >    2. changing that number to 1 if _u_ is less than that number, or 0 otherwise,
 >
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
-> 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), and add a gamma(_r_) random variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, and add a gamma(_r_) random variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
+> 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
 
 <a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
 ## A Relative-Error Algorithm for a Bounded Stream
@@ -80,9 +80,9 @@ The algorithm, called **Algorithm B** in this document, follows.
     2. Take a sample from the stream, call it _s_.
     3. Generate a uniform(0, 1) random variate, call it _u_.
     4. If _u_ is less than _s_, add 1 to _b_.
-4. Set _gb_ to _k_ + 2, then divide _gb_ by a gamma(_n_) random variate.
+4. Set _gb_ to _k_ + 2, then generate a gamma random variate with shape parameter _n_ and scale 1, then divide _gb_ by that variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
-6. Set _n_ to a Poisson(_c1_/(_&epsilon;_\*_gb_)) random variate.
+6. Generate a Poisson random variate with mean _c1_/(_&epsilon;_\*_gb_), call it _n_.
 7. Run the standard deviation sub-algorithm (given later) _n_ times.  Set _A_ to the number of 1's returned by that sub-algorithm this way.
 8. Set _csquared_ to (_A_ / _c1_ + 1 / 2 + sqrt(_A_ / _c1_ + 1 / 4)) * (1 + _&epsilon;_<sup>1 / 3</sup>)<sup>2</sup>\*_&epsilon;_/_gb_.
 9. Set _n_ to ceil((2\*ln(6/_&delta;_)/_&epsilon;_<sup>2</sup>)/(1&minus;_&epsilon;_<sup>1/3</sup>)).

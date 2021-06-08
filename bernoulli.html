@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/06/02"><meta name="citation_online_date" content="2021/06/02"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/06/07"><meta name="citation_online_date" content="2021/06/07"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -77,6 +77,7 @@
 
 <ul>
 <li><a href="#exp_minus___lambda"><strong>exp(&minus;<em>&lambda;</em>)</strong></a></li>
+<li><a href="#exp___lambda___minus_1_exp_minus___lambda"><strong>(exp(<em>&lambda;</em>)&minus;1)/exp(&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
 <li><a href="#exp_minus___lambda____m___k"><strong>exp(&minus;(<em>&lambda;</em> + <em>m</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
@@ -497,7 +498,7 @@ functions, or functions in general.</p>
 <p>(Here, the <em>k</em><sup>th</sup> coefficient of OGF(<em>x</em>) corresponds to W(<em>k</em>).)  The algorithm follows.</p>
 
 <ol>
-<li>Flip the input coin repeatedly, until it returns 0.  Set <em>g</em> to the number of times the coin returned 1 this way.</li>
+<li>Flip the input coin repeatedly until it returns 0.  Set <em>g</em> to the number of times the coin returned 1 this way.</li>
 <li>Return a number that is 1 with probability W(<em>g</em>)/<em>&beta;</em><sup><em>g</em></sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a <em>g</em>-letter word uniformly at random and &quot;parsing&quot; that word using a binary stochastic grammar to determine whether that word can be produced by that grammar.  Note that this determination can be made this way as each of the word&#39;s &quot;letters&quot; is generated.)</li>
 </ol>
 
@@ -565,11 +566,11 @@ functions, or functions in general.</p>
 
 <p>(Łatuszyński et al. 2009/2011)<sup><a href="#Note25"><strong>(25)</strong></a></sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.</p>
 
-<p>One of these constructs is an alternating series of the form&mdash;</p>
+<p>One of these cases is when <em>f</em>(<em>&lambda;</em>) can be written as&mdash;</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<em>d[0]</em> &minus; <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> &minus; ...,</p>
+<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> &minus; <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> &minus; ...,</p>
 
-<p>where <em>d</em>[<em>i</em>] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients.</p>
+<p>which is an alternating series where <em>d</em>[<em>i</em>] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and <em>f</em>(1) must converge to a number in [0, 1).</p>
 
 <p>The following is the general algorithm for this kind of series, called the <strong>general martingale algorithm</strong>.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.</p>
 
@@ -582,11 +583,11 @@ functions, or functions in general.</p>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
 
-<p>If the alternating series has the form&mdash;</p>
+<p>Another case is when <em>f_is when _f</em>(<em>&lambda;</em>) can be written as&mdash;</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<em>d[0]</em> &minus; <em>d[1]</em> * <em>&lambda;</em><sup>2</sup> + <em>d[2]</em> * <em>&lambda;</em><sup>4</sup> &minus; ...,</p>
+<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> &minus; <em>d[1]</em> * <em>&lambda;</em><sup>2</sup> + <em>d[2]</em> * <em>&lambda;</em><sup>4</sup> &minus; ...,</p>
 
-<p>then modify the general martingale algorithm by adding the following after step 3: &quot;3a. Repeat step 3 once.&quot;  (Examples of this kind of series are found in sin(<em>&lambda;</em>) and cos(<em>&lambda;</em>).)</p>
+<p>which, again, is an alternating series where <em>d</em>[<em>i</em>] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and <em>f</em>(1) must converge to a number in [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: &quot;3a. Repeat step 3 once.&quot;  (Examples of this kind of series are found in sin(<em>&lambda;</em>) and cos(<em>&lambda;</em>).)</p>
 
 <p>(Nacu and Peres 2005, proposition 16)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.  This algorithm simulates a function of the form&mdash;</p>
 
@@ -842,7 +843,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If <em>intinf</em> is greater than 0, generate unbiased random bits until a zero bit or <em>intinf</em> bits were generated this way.  If a zero was generated this way, return 0.</li>
 <li>Generate an exponential random variate <em>E</em> with rate ln(2).  This can be done, for example, by using the algorithm given in &quot;<a href="https://peteroupc.github.io/morealg.html"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a>&quot;. (We take advantage of the exponential distribution&#39;s <em>memoryless property</em>: given that an exponential random variate <em>E</em> is greater than <em>intinf</em>, <em>E</em> minus <em>intinf</em> has the same distribution.)</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Do the following process repeatedly, until the algorithm returns a value:
+<li>Do the following process repeatedly until the algorithm returns a value:
 
 <ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
@@ -856,7 +857,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ol>
 <li>Generate an exponential random variate <em>E</em> (with rate 1).</li>
 <li>Set <em>n</em> to 0.</li>
-<li>Do the following process repeatedly, until the algorithm returns a value:
+<li>Do the following process repeatedly until the algorithm returns a value:
 
 <ol>
 <li>Set <em>inf</em> to max(0, <em>a</em>[<em>n</em>]), then set <em>sup</em> to min(0, <em>inf</em>+<em>err</em>[<em>n</em>]).</li>
@@ -1009,15 +1010,39 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>exp(&minus;<em>&lambda;</em>)</h4>
 
-<p>This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is <em>uniformly fast</em>, meaning the average running time is finite for every choice of <em>&lambda;</em> and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.<sup><a href="#Note40"><strong>(40)</strong></a></sup>) This algorithm is adapted from the general martingale algorithm (in &quot;Certain Power Series&quot;, above), and makes use of the fact that exp(&minus;<em>&lambda;</em>) can be rewritten as 1 &minus; <em>&lambda;</em> + <em>&lambda;</em><sup>2</sup>/2 &minus; <em>&lambda;</em><sup>3</sup>/6 + <em>&lambda;</em><sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....</p>
+<p>This algorithm is adapted from the general martingale algorithm (in &quot;Certain Power Series&quot;, above), and makes use of the fact that exp(&minus;<em>&lambda;</em>) can be rewritten as 1 &minus; <em>&lambda;</em> + <em>&lambda;</em><sup>2</sup>/2 &minus; <em>&lambda;</em><sup>3</sup>/6 + <em>&lambda;</em><sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), .... This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is <em>uniformly fast</em>, meaning the average running time is finite for every choice of <em>&lambda;</em> and other parameters (Devroye 1986, esp. p. 717)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.<sup><a href="#Note40"><strong>(40)</strong></a></sup>)</p>
 
 <ol>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> <strong>to 1</strong>.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
+<li>Do the following process repeatedly until this algorithm returns a value:
+
+<ol>
 <li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em> and go to step 3.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next substep.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Add 1 to <em>n</em>.</li>
+</ol></li>
+</ol>
+
+<p><a id=exp___lambda___minus_1_exp_minus___lambda></a></p>
+
+<h4>(exp(<em>&lambda;</em>)&minus;1)/exp(&minus;<em>&lambda;</em>)</h4>
+
+<p>This algorithm uses the general martingale algorithm; this function can be rewritten as <em>&lambda;</em>*(1 &minus; <em>&lambda;</em>/2 + <em>&lambda;</em><sup>2</sup>/6 &minus; <em>&lambda;</em><sup>3</sup>/24 + ...), which includes an alternating series whose coefficients are 1, 1/(2!), 1/(3!), 1/(4!), ....</p>
+
+<ol>
+<li>Flip the input coin.  If it returns 0, return 0.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> <strong>to 2</strong>.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
+<li>Do the following process repeatedly until this algorithm returns a value:
+
+<ol>
+<li>If <em>w</em> is not 0, flip the input coin, multiply <em>w</em> by the result of the flip, and divide <em>w</em> by <em>n</em>. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next substep.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Add 1 to <em>n</em>.</li>
+</ol></li>
 </ol>
 
 <p><a id=exp_minus___lambda___k___c></a></p>

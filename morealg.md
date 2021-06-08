@@ -175,11 +175,12 @@ This algorithm involves an application of the general martingale algorithm to th
 1. Flip the input coin.  If it returns 0, return 0.
 2. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 1/2 (the first term is added already), and set _n_ to 1.
 3. Generate a uniform(0, 1) random number _ret_.
-4. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
-5. If _w_ is 0, set _u_ to _&#x2113;_ and go to step 7. (No more terms are added here.)
-6. Let _m_ be (_n_\*2+1), let _&alpha;_ be 1/(_m_!\*2) (a term of the Taylor series), and let _err_ be 1/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
-7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-8. Add 1 to _n_ and go to step 4.
+4. Do the following process repeatedly, until this algorithm returns a value:
+    1. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this substep again.
+    2. If _w_ is 0, set _u_ to _&#x2113;_ and go to the fourth substep. (No more terms are added here.)
+    3. Let _m_ be (_n_\*2+1), let _&alpha;_ be 1/(_m_!\*2) (a term of the Taylor series), and let _err_ be 1/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
+    4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+    5. Add 1 to _n_.
 
 <a id=tanh___lambda></a>
 ### tanh(_&lambda;_)

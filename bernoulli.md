@@ -54,6 +54,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**Generalized Bernoulli Race**](#Generalized_Bernoulli_Race)
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
+        - [**(exp(_&lambda;_)&minus;1)/exp(&minus;_&lambda;_)**](#exp___lambda___minus_1_exp_minus___lambda)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
         - [**exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)**](#exp_minus___lambda____m___k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
@@ -345,7 +346,7 @@ where&mdash;
 
 (Here, the _k_<sup>th</sup> coefficient of OGF(_x_) corresponds to W(_k_).)  The algorithm follows.
 
-1. Flip the input coin repeatedly, until it returns 0.  Set _g_ to the number of times the coin returned 1 this way.
+1. Flip the input coin repeatedly until it returns 0.  Set _g_ to the number of times the coin returned 1 this way.
 2. Return a number that is 1 with probability W(_g_)/_&beta;_<sup>_g_</sup>, and 0 otherwise.  (In the Flajolet paper, this is done by generating a _g_-letter word uniformly at random and "parsing" that word using a binary stochastic grammar to determine whether that word can be produced by that grammar.  Note that this determination can be made this way as each of the word's "letters" is generated.)
 
 An extension to this algorithm, not mentioned in the Flajolet paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and _&beta;_ is 3 in the algorithm above.  In general, for <em>_&beta;_-ary stochastic grammars</em>, the alphabet size is _&beta;_, which can be any integer 2 or greater.
@@ -397,11 +398,11 @@ In the first two cases, replace "let _result_ be 1" in the algorithm with "let _
 
 (Łatuszyński et al. 2009/2011)<sup>[**(25)**](#Note25)</sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.
 
-One of these constructs is an alternating series of the form&mdash;
+One of these cases is when _f_(_&lambda;_) can be written as&mdash;
 
-&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ &minus; _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
+_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
 
-where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients.
+which is an alternating series where _d_\[_i_\] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in [0, 1).
 
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
 
@@ -412,11 +413,11 @@ The following is the general algorithm for this kind of series, called the **gen
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-If the alternating series has the form&mdash;
+Another case is when _f_is when _f_(_&lambda;_) can be written as&mdash;
 
-&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...,
+_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...,
 
-then modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
+which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
 
 (Nacu and Peres 2005, proposition 16)<sup>[**(17)**](#Note17)</sup>.  This algorithm simulates a function of the form&mdash;
 
@@ -602,7 +603,7 @@ If _a_, given above, is instead a sequence that converges to the _base-2 logarit
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
 3. Generate an exponential random variate _E_ with rate ln(2).  This can be done, for example, by using the algorithm given in "[**More Algorithms for Arbitrary-Precision Sampling**](https://peteroupc.github.io/morealg.html)". (We take advantage of the exponential distribution's _memoryless property_: given that an exponential random variate _E_ is greater than _intinf_, _E_ minus _intinf_ has the same distribution.)
 4. Set _n_ to 0.
-5. Do the following process repeatedly, until the algorithm returns a value:
+5. Do the following process repeatedly until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If neither is the case, return 1.
     3. Set _n_ to 1.
@@ -611,7 +612,7 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 
 1. Generate an exponential random variate _E_ (with rate 1).
 2. Set _n_ to 0.
-3. Do the following process repeatedly, until the algorithm returns a value:
+3. Do the following process repeatedly until the algorithm returns a value:
     1. Set _inf_ to max(0, _a_\[_n_\]), then set _sup_ to min(0, _inf_+_err_\[_n_\]).
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If  neither is the case, return 1.
     3. Set _n_ to 1.
@@ -718,14 +719,29 @@ This section describes algorithms for specific functions, especially when they h
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for every choice of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(29)**](#Note29)</sup>.<sup>[**(40)**](#Note40)</sup>) This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), ....
+This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), .... This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for every choice of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(29)**](#Note29)</sup>.<sup>[**(40)**](#Note40)</sup>)
 
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ **to 1**.
 2. Generate a uniform(0, 1) random variate _ret_.
-3. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_ and go to step 3.
+3. Do the following process repeatedly until this algorithm returns a value:
+    1. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
+    2. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
+    3. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+    4. Add 1 to _n_.
+
+<a id=exp___lambda___minus_1_exp_minus___lambda></a>
+#### (exp(_&lambda;_)&minus;1)/exp(&minus;_&lambda;_)
+
+This algorithm uses the general martingale algorithm; this function can be rewritten as _&lambda;_\*(1 &minus; _&lambda;_/2 + _&lambda;_<sup>2</sup>/6 &minus; _&lambda;_<sup>3</sup>/24 + ...), which includes an alternating series whose coefficients are 1, 1/(2!), 1/(3!), 1/(4!), ....
+
+1. Flip the input coin.  If it returns 0, return 0.
+2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ **to 2**.
+3. Generate a uniform(0, 1) random variate _ret_.
+4. Do the following process repeatedly until this algorithm returns a value:
+    1. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
+    2. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
+    3. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+    4. Add 1 to _n_.
 
 <a id=exp_minus___lambda___k___c></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))

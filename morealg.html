@@ -248,11 +248,15 @@
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 1/2 (the first term is added already), and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
-<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
-<li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to step 7. (No more terms are added here.)</li>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this substep again.</li>
+<li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to the fourth substep. (No more terms are added here.)</li>
 <li>Let <em>m</em> be (<em>n</em>*2+1), let <em>&alpha;</em> be 1/(<em>m</em>!*2) (a term of the Taylor series), and let <em>err</em> be 1/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em> and go to step 4.</li>
+<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next substep.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Add 1 to <em>n</em>.</li>
+</ol></li>
 </ol>
 
 <p><a id=tanh___lambda></a></p>

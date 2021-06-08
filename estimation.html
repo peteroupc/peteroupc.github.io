@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/06/04"><meta name="citation_online_date" content="2021/06/04"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/06/07"><meta name="citation_online_date" content="2021/06/07"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -57,7 +57,7 @@
 <ol>
 <li>Calculate the minimum number of samples <em>k</em>.  There are two suggestions.  The simpler one is <em>k</em> = ceil(&minus;6*ln(2/<em>&delta;</em>)/(<em>&epsilon;</em><sup>2</sup>*(4*<em>&epsilon;</em>&minus;3))).  A more complicated one is the smallest integer <em>k</em> such that gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1+<em>&epsilon;</em>)) + (1 &minus; gammainc(<em>k</em>,(<em>k</em>&minus;1)/(1&minus;<em>&epsilon;</em>))) &le; <em>&delta;</em>, where gammainc is the regularized lower incomplete gamma function.</li>
 <li>Take samples from the stream until <em>k</em> 1&#39;s are taken this way.  Let <em>r</em> be the total number of samples taken this way.</li>
-<li>Generate <em>g</em>, a gamma(<em>r</em>) random variate, then return (<em>k</em>&minus;1)/<em>g</em>.</li>
+<li>Generate <em>g</em>, a gamma random variate with shape parameter <em>r</em> and scale 1, then return (<em>k</em>&minus;1)/<em>g</em>.</li>
 </ol>
 
 <blockquote>
@@ -72,7 +72,7 @@
 </ol>
 
 <p>and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.</p></li>
-<li>As can be seen in Feng et al. (2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), and add a gamma(<em>r</em>) random variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, and add a gamma(<em>r</em>) random variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
+<li>As can be seen in Feng et al. (2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
 </ol>
 </blockquote>
 
@@ -109,9 +109,9 @@
 <li>Generate a uniform(0, 1) random variate, call it <em>u</em>.</li>
 <li>If <em>u</em> is less than <em>s</em>, add 1 to <em>b</em>.</li>
 </ol></li>
-<li>Set <em>gb</em> to <em>k</em> + 2, then divide <em>gb</em> by a gamma(<em>n</em>) random variate.</li>
+<li>Set <em>gb</em> to <em>k</em> + 2, then generate a gamma random variate with shape parameter <em>n</em> and scale 1, then divide <em>gb</em> by that variate.</li>
 <li>(Find the sample size for the next stage.) Set <em>c1</em> to 2*ln(3/<em>&delta;</em>).</li>
-<li>Set <em>n</em> to a Poisson(<em>c1</em>/(<em>&epsilon;</em>*<em>gb</em>)) random variate.</li>
+<li>Generate a Poisson random variate with mean <em>c1</em>/(<em>&epsilon;</em>*<em>gb</em>), call it <em>n</em>.</li>
 <li>Run the standard deviation sub-algorithm (given later) <em>n</em> times.  Set <em>A</em> to the number of 1&#39;s returned by that sub-algorithm this way.</li>
 <li>Set <em>csquared</em> to (<em>A</em> / <em>c1</em> + 1 / 2 + sqrt(<em>A</em> / <em>c1</em> + 1 / 4)) * (1 + <em>&epsilon;</em><sup>1 / 3</sup>)<sup>2</sup>*<em>&epsilon;</em>/<em>gb</em>.</li>
 <li>Set <em>n</em> to ceil((2*ln(6/<em>&delta;</em>)/<em>&epsilon;</em><sup>2</sup>)/(1&minus;<em>&epsilon;</em><sup>1/3</sup>)).</li>
