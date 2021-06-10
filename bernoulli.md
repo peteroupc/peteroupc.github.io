@@ -413,15 +413,15 @@ The following is the general algorithm for this kind of series, called the **gen
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-Another case is when _f_is when _f_(_&lambda;_) can be written as&mdash;
+Another case is when _f_(_&lambda;_) can be written as&mdash;
 
 _f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...,
 
 which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
 
-(Nacu and Peres 2005, proposition 16)<sup>[**(17)**](#Note17)</sup>.  This algorithm simulates a function of the form&mdash;
+(Nacu and Peres 2005, proposition 16)<sup>[**(17)**](#Note17)</sup>.  The algorithm below simulates a function of the form&mdash;
 
-&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
+&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
 
 where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&#x03F5;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&#x03F5;_.
 

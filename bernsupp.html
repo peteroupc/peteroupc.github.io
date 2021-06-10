@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/01"><meta name="citation_online_date" content="2021/06/01"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/09"><meta name="citation_online_date" content="2021/06/09"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -395,7 +395,12 @@
 
 <p>In general, the number of input coin flips needed by any Bernoulli factory algorithm for a factory function <em>f</em>(<em>&lambda;</em>) depends on how &quot;smooth&quot; the function <em>f</em> is.</p>
 
-<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads, <em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.  In the table below, <em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;bounded from above by <em>h</em>(<em>n</em>) times a constant&quot;.)</p>
+<p>The following table summarizes the rate of simulation (in terms of the number of input coin flips needed) that can be achieved <em>in theory</em> depending on <em>f</em>(<em>&lambda;</em>), assuming the unknown probability of heads.  In the table below:</p>
+
+<ul>
+<li><em>&lambda;</em>, lies in the interval [<em>&epsilon;</em>, 1&minus;<em>&epsilon;</em>] for some <em>&epsilon;</em> &gt; 0.</li>
+<li><em>&Delta;</em>(<em>n</em>, <em>r</em>, <em>&lambda;</em>) = <em>O</em>(max(sqrt(<em>&lambda;</em>*(1&minus;<em>&lambda;</em>)/<em>n</em>),1/<em>n</em>)<sup><em>r</em></sup>), that is, <em>O</em>((1/<em>n</em>)<sup><em>r</em></sup>) near <em>&lambda;</em> = 0 or 1, and <em>O</em>((1/<em>n</em>)<sup><em>r</em>/2</sup>) elsewhere. (<em>O</em>(<em>h</em>(<em>n</em>)) roughly means &quot;bounded from above by <em>h</em>(<em>n</em>) times a constant&quot;.)</li>
+</ul>
 
 <table><thead>
 <tr>
@@ -421,7 +426,7 @@
 </tr>
 <tr>
 <td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and all <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
-<td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</td>
+<td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note12"><strong>(12)</strong></a></sup>. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
 <td>&quot;Fast simulation&quot; (requires more than <em>n</em> flips with a probability that decays exponentially as <em>n</em> gets large).  Also known as &quot;strongly realizable&quot; by Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</td>

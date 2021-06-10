@@ -134,7 +134,7 @@ Noncryptographic PRNGs can be _automatically seeded_ (a new seed is generated up
 - See "[**When to Use a Manually-Seeded PRNG**](#When_to_Use_a_Manually_Seeded_PRNG)" to learn which kind of seeding to use.
 - See "[**Seed Generation for Noncryptographic PRNGs**](#Seed_Generation_for_Noncryptographic_PRNGs)" for advice on how to seed.
 - See "[**Existing RNG APIs in Programming Languages**](#Existing_RNG_APIs_in_Programming_Languages)" for existing APIs.
-- For automatically-seeded PRNGs, an application should use only one thread-safe instance of the RNG for the entire application to use.
+- For automatically-seeded PRNGs, an application should use only one instance of the generator and pass it around to parts of the application that need it.
 
 <a id=Manually_Seeded_PRNGs></a>
 ## Manually-Seeded PRNGs
