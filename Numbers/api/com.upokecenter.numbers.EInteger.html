@@ -242,8 +242,11 @@ Gets the number zero as an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
 <li><code>EInteger Imp​(EInteger second)</code><br>
-Does an OR NOT operation (or implication or IMP operation) between this
-arbitrary-precision integer and another one.</li>
+Deprecated.
+Does the incorrect implication operation.
+Does the incorrect implication operation.</li>
+<li><code>EInteger Imply​(EInteger second)</code><br>
+Not documented yet.</li>
 <li><code>EInteger Increment()</code><br>
 Returns one added to this arbitrary-precision integer.</li>
 <li><code>boolean isEven()</code><br>
@@ -301,8 +304,8 @@ Returns an arbitrary-precision integer with every bit flipped from this one
 Does an OR operation between this arbitrary-precision integer and another
 one.</li>
 <li><code>EInteger OrNot​(EInteger second)</code><br>
-Does an OR NOT operation (or implication or IMP operation) between this
-arbitrary-precision integer and another one.</li>
+Does an OR NOT operation between this arbitrary-precision integer and
+another one.</li>
 <li><code>EInteger Pow​(int powerSmall)</code><br>
 Raises an arbitrary-precision integer to a power.</li>
 <li><code>EInteger Pow​(long longPower)</code><br>
@@ -2805,11 +2808,9 @@ the two&#39;s complement form of negative integers (see <code>EDecimal</code>). 
 <pre>public EInteger OrNot​(EInteger second)
 </pre>
 
-<p>Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.<p>Each
- arbitrary-precision integer is treated as a two&#39;s-complement form
-  (see <code>&quot;Forms of numbers&quot;</code>)
- for the purposes of this operator.</p></p>
+<p>Does an OR NOT operation between this arbitrary-precision integer and
+ another one.<p>Each arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2838,14 +2839,11 @@ uses the two&#39;s complement form of negative integers (see <code>EDecimal</cod
 
 <h3>Imp</h3>
 
-<pre>public EInteger Imp​(EInteger second)
+<pre>@Deprecated public EInteger Imp​(EInteger second)
 </pre>
 
-<p>Does an OR NOT operation (or implication or IMP operation) between this
- arbitrary-precision integer and another one.<p>Each
- arbitrary-precision integer is treated as a two&#39;s-complement form
-  (see <code>&quot;Forms of numbers&quot;</code>)
- for the purposes of this operator.</p></p>
+<p>Deprecated.
+Does the incorrect implication operation. Use Imply instead.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2864,6 +2862,25 @@ OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method
 uses the two&#39;s complement form of negative integers (see <code>EDecimal</code>). For example, in binary,
 ...11101110 OR NOT 01011 =...11111110 (or in decimal, -18 OR 11 =
 -2).</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
+</ul>
+
+<h3>Imply</h3>
+
+<pre>public EInteger Imply​(EInteger second)
+</pre>
+
+<p>Not documented yet.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>second</code> - Not documented yet.</li>
 </ul>
 
 <p><strong>Throws:</strong></p>
