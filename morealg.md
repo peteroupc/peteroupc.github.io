@@ -29,6 +29,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Non-Negative Factories**](#Non_Negative_Factories)
+    - [**Pushdown Automaton for Square-Root-Like Functions**](#Pushdown_Automaton_for_Square_Root_Like_Functions)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
@@ -294,6 +295,27 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
 **Algorithm 2.** This algorithm takes an oracle and produces non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, _f_) to a potentially irrational number.
+
+<a id=Pushdown_Automaton_for_Square_Root_Like_Functions></a>
+### Pushdown Automaton for Square-Root-Like Functions
+
+The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup>[**(31)**](#Note31)</sup>, takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
+
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_)/sqrt(4\*_&lambda;_\*_g_(_&lambda;_)\*(_g_(_&lambda;_) &minus; 1) + 1, or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))<sup>_n_</sup>\*choose(2\*_n_, _n_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> (_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_)))<sup>_n_</sup>\*choose(2\*_n_, _n_), or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* OGF(_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))),
+
+and 0 otherwise, where&mdash;
+
+- _g_(_&lambda;_) is a continuous and polynomially bounded function that maps [0, 1] to the half-open interval (0, 1/2], and
+- OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function.
+
+If _g_ is a rational function (ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(32)**](#Note32)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+
+1. Set _d_ to 0.
+2. Do the following process repeatedly until this run of the algorithm returns a value:
+    1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
+    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
@@ -661,6 +683,8 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note28>(28)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
 - <small><sup id=Note29>(29)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 - <small><sup id=Note30>(30)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note31>(31)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010</small>
+- <small><sup id=Note32>(32)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</small>
 
 <a id=Appendix></a>
 ## Appendix

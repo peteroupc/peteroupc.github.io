@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/06/06"><meta name="citation_online_date" content="2021/06/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/06/12"><meta name="citation_online_date" content="2021/06/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -39,6 +39,7 @@
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Non_Negative_Factories"><strong>Non-Negative Factories</strong></a></li>
+<li><a href="#Pushdown_Automaton_for_Square_Root_Like_Functions"><strong>Pushdown Automaton for Square-Root-Like Functions</strong></a></li>
 </ul></li>
 <li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
 
@@ -432,6 +433,37 @@
 </blockquote>
 
 <p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+
+<p><a id=Pushdown_Automaton_for_Square_Root_Like_Functions></a></p>
+
+<h3>Pushdown Automaton for Square-Root-Like Functions</h3>
+
+<p>The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup><a href="#Note31"><strong>(31)</strong></a></sup>, takes an input coin with probability of heads <em>&lambda;</em>, and returns 1 with probability&mdash;</p>
+
+<ul>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>)/sqrt(4*<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(<em>g</em>(<em>&lambda;</em>) &minus; 1) + 1, or equivalently,</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup><em>n</em></sup>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> (<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>)))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>), or equivalently,</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * OGF(<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))),</li>
+</ul>
+
+<p>and 0 otherwise, where&mdash;</p>
+
+<ul>
+<li><em>g</em>(<em>&lambda;</em>) is a continuous and polynomially bounded function that maps [0, 1] to the half-open interval (0, 1/2], and</li>
+<li>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</li>
+</ul>
+
+<p>If <em>g</em> is a rational function (ratio of two polynomials), then <em>f</em> is an algebraic function and can be simulated by a <em>pushdown automaton</em> (a machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup><a href="#Note32"><strong>(32)</strong></a></sup>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</p>
+
+<ol>
+<li>Set <em>d</em> to 0.</li>
+<li>Do the following process repeatedly until this run of the algorithm returns a value:
+
+<ol>
+<li>Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if <em>d</em> is 0, or 0 otherwise.</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1, add 1 to <em>d</em>.  Otherwise, subtract 1 from <em>d</em>.  Do this substep again.</li>
+</ol></li>
+</ol>
 
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
 
@@ -917,6 +949,8 @@
 <li><small><sup id=Note28>(28)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</small></li>
 <li><small><sup id=Note29>(29)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 <li><small><sup id=Note30>(30)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
+<li><small><sup id=Note31>(31)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</small></li>
+<li><small><sup id=Note32>(32)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
