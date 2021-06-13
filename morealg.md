@@ -330,7 +330,7 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 
 The following algorithm simulates the probability&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_n_&minus;_m_)\*_W_(_n_, _m_)),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*_W_(_n_, _m_)),
 
 where _g_ has the same meaning as earlier; _W_(_n_, _m_) is choose(_n_, _m_) if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise (this is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning); and _H_&ge;1 and _T_&ge;1 are integers.  However, this formula is not so easy to put into a closed form.
 
