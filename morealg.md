@@ -29,7 +29,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Non-Negative Factories**](#Non_Negative_Factories)
-    - [**Pushdown Automaton for Square-Root-Like Functions**](#Pushdown_Automaton_for_Square_Root_Like_Functions)
+    - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
@@ -296,8 +296,8 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 
 **Algorithm 2.** This algorithm takes an oracle and produces non-negative random numbers that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, _f_) to a potentially irrational number.
 
-<a id=Pushdown_Automaton_for_Square_Root_Like_Functions></a>
-### Pushdown Automaton for Square-Root-Like Functions
+<a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
+### Pushdown Automata for Square-Root-Like Functions
 
 The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup>[**(8)**](#Note8)</sup>, takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
 
@@ -307,10 +307,10 @@ The following algorithm extends the square-root construction of Flajolet et al. 
 
 and 0 otherwise, where&mdash;
 
-- _g_(_&lambda;_) is a continuous and polynomially bounded function that maps [0, 1] to the half-open interval (0, 1/2], and
+- _g_(_&lambda;_) is a continuous function that maps [0, 1] to the half-open interval (0, 1/2] and admits a Bernoulli factory, and
 - OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function.
 
-If _g_ is a rational function (ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+If _g_ is a rational function (ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -319,14 +319,25 @@ If _g_ is a rational function (ratio of two polynomials), then _f_ is an algebra
 
 For the following algorithm, which extends Note 1 of the Flajolet paper, the probability is&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_t_\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_t_&minus;1)\*_n_</sup>\*choose(_t_\*_n_, _n_),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_H_\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_H_&minus;1)\*_n_</sup>\*choose(_H_\*_n_, _n_),
 
-where _t_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
+where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
-    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_t_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.
+    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.
+
+The following algorithm simulates the probability&mdash;
+
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_n_&minus;_m_)\*_W_(_n_, _m_)),
+
+where _g_ has the same meaning as earlier; _W_(_n_, _m_) is choose(_n_, _m_) if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise (this is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning); and _H_&ge;1 and _T_&ge;1 are integers.  However, this formula is not so easy to put into a closed form.
+
+1. Set _d_ to 0.
+2. Do the following process repeatedly until this run of the algorithm returns a value:
+    1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
+    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
