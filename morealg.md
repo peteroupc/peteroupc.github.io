@@ -301,9 +301,9 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 
 The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup>[**(8)**](#Note8)</sup>, takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_)/sqrt(4\*_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(_g_(_&lambda;_) &minus; 1) + 1), or equivalently,
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>2\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_</sup>\*choose(2\*_n_, _n_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> (_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_)))<sup>_n_</sup>\*choose(2\*_n_, _n_), or equivalently,
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* OGF(_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_)/sqrt(1 + 4\*_&lambda;_\*_g_(_&lambda;_)\*(_g_(_&lambda;_) &minus; 1)), or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_</sup>\*choose(2\*_n_, _n_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> (_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_)))<sup>_n_</sup>\*choose(2\*_n_, _n_), or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* OGF(_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))),
 
 and 0 otherwise, where&mdash;
 
@@ -317,7 +317,7 @@ If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algeb
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
 
-For the following algorithm, which extends Note 1 of the Flajolet paper and the previous algorithm, the probability is&mdash;
+For the following algorithm, which extends the end of Note 1 of the Flajolet paper and, the probability is&mdash;
 
 - _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_H_\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_H_&minus;1)\*_n_</sup>\*choose(_H_\*_n_, _n_),
 
@@ -326,7 +326,7 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
-    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.
+    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.  (Note that this substep is not done again.)
 
 The following algorithm simulates the probability&mdash;
 
@@ -337,7 +337,7 @@ where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
-    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.
+    2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.  (Note that this substep is not done again.)
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
