@@ -453,7 +453,7 @@
 <li>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</li>
 </ul>
 
-<p>If <em>g</em> is a rational function (ratio of two polynomials), then <em>f</em> is an algebraic function and can be simulated by a <em>pushdown automaton</em> (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</p>
+<p>If <em>g</em> is a rational function (a ratio of two polynomials), then <em>f</em> is an algebraic function and can be simulated by a <em>pushdown automaton</em> (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>
@@ -486,10 +486,10 @@
 <p>The following algorithm simulates the probability&mdash;</p>
 
 <ul>
-<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup><em>n</em></sup>* (&sum;<sub><em>m</em>=0,1,...,<em>n</em></sub> <em>g</em>(<em>&lambda;</em>)<sup><em>m</em></sup>*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup><em>n</em>&minus;<em>m</em></sup>*<em>W</em>(<em>n</em>, <em>m</em>)),</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup><em>n</em></sup>* (&sum;<sub><em>m</em>=0,1,...,<em>n</em></sub> <em>W</em>(<em>n</em>, <em>m</em>)*<em>g</em>(<em>&lambda;</em>)<sup><em>m</em></sup>*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup><em>n</em>&minus;<em>m</em></sup>*choose(<em>n</em>, <em>m</em>)),</li>
 </ul>
 
-<p>where <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is choose(<em>n</em>, <em>m</em>) if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise (this is the number of <em>n</em>-letter words with <em>m</em> heads but only if these words describe a walk that ends at the beginning); and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers.  However, this formula is not so easy to put into a closed form.</p>
+<p>where <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise (this is the number of <em>n</em>-letter words with <em>m</em> heads but only if these words describe a walk that ends at the beginning); and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (Notice that the sum in parentheses is a polynomial in Bernstein form, in the variable <em>g</em>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.)</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>

@@ -310,7 +310,7 @@ and 0 otherwise, where&mdash;
 - _g_(_&lambda;_) is a continuous function that maps [0, 1] to the half-open interval (0, 1/2] and admits a Bernoulli factory, and
 - OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function.
 
-If _g_ is a rational function (ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -330,9 +330,9 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 
 The following algorithm simulates the probability&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*_W_(_n_, _m_)),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _W_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*choose(_n_, _m_)),
 
-where _g_ has the same meaning as earlier; _W_(_n_, _m_) is choose(_n_, _m_) if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise (this is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning); and _H_&ge;1 and _T_&ge;1 are integers.  However, this formula is not so easy to put into a closed form.
+where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise (this is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning); and _H_&ge;1 and _T_&ge;1 are integers. (Notice that the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.)
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
