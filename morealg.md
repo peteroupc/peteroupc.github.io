@@ -301,13 +301,13 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 
 The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup>[**(8)**](#Note8)</sup>, takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_)/sqrt(4\*_&lambda;_\*_g_(_&lambda;_)\*(_g_(_&lambda;_) &minus; 1) + 1), or equivalently,
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))<sup>_n_</sup>\*choose(2\*_n_, _n_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> (_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_)))<sup>_n_</sup>\*choose(2\*_n_, _n_), or equivalently,
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* OGF(_&lambda;_\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_)/sqrt(4\*_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(_g_(_&lambda;_) &minus; 1) + 1), or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>2\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_</sup>\*choose(2\*_n_, _n_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> (_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_)))<sup>_n_</sup>\*choose(2\*_n_, _n_), or equivalently,
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* OGF(_&lambda;_<sup>2</sup>\*_g_(_&lambda;_)\*(1 &minus; _g_(_&lambda;_))),
 
 and 0 otherwise, where&mdash;
 
-- _g_(_&lambda;_) is a continuous function that maps [0, 1] to the half-open interval (0, 1/2] and admits a Bernoulli factory, and
+- _g_(_&lambda;_) is a continuous function that maps the half-open interval \[0, 1\) to the closed interval \[0, 1\] and admits a Bernoulli factory, and
 - OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function.
 
 If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
@@ -317,7 +317,7 @@ If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algeb
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
 
-For the following algorithm, which extends Note 1 of the Flajolet paper, the probability is&mdash;
+For the following algorithm, which extends Note 1 of the Flajolet paper and the previous algorithm, the probability is&mdash;
 
 - _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_H_\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_H_&minus;1)\*_n_</sup>\*choose(_H_\*_n_, _n_),
 

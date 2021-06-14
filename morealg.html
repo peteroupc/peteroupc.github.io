@@ -441,15 +441,15 @@
 <p>The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, takes an input coin with probability of heads <em>&lambda;</em>, and returns 1 with probability&mdash;</p>
 
 <ul>
-<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>)/sqrt(4*<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(<em>g</em>(<em>&lambda;</em>) &minus; 1) + 1), or equivalently,</li>
-<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup><em>n</em></sup>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> (<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>)))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>), or equivalently,</li>
-<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * OGF(<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))),</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>)/sqrt(4*<em>&lambda;</em><sup>2</sup>*<em>g</em>(<em>&lambda;</em>)*(<em>g</em>(<em>&lambda;</em>) &minus; 1) + 1), or equivalently,</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup>2*<em>n</em></sup>*<em>g</em>(<em>&lambda;</em>)<sup><em>n</em></sup>*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> (<em>&lambda;</em><sup>2</sup>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>)))<sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>), or equivalently,</li>
+<li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * OGF(<em>&lambda;</em><sup>2</sup>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))),</li>
 </ul>
 
 <p>and 0 otherwise, where&mdash;</p>
 
 <ul>
-<li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps [0, 1] to the half-open interval (0, 1/2] and admits a Bernoulli factory, and</li>
+<li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps the half-open interval [0, 1) to the closed interval [0, 1] and admits a Bernoulli factory, and</li>
 <li>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</li>
 </ul>
 
@@ -465,7 +465,7 @@
 </ol></li>
 </ol>
 
-<p>For the following algorithm, which extends Note 1 of the Flajolet paper, the probability is&mdash;</p>
+<p>For the following algorithm, which extends Note 1 of the Flajolet paper and the previous algorithm, the probability is&mdash;</p>
 
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * &sum;<sub><em>n</em>=0,1,...</sub> <em>&lambda;</em><sup><em>H</em>*<em>n</em></sup>*<em>g</em>(<em>&lambda;</em>)<sup><em>n</em></sup>*(1 &minus; <em>g</em>(<em>&lambda;</em>))<sup>(<em>H</em>&minus;1)*<em>n</em></sup>*choose(<em>H</em>*<em>n</em>, <em>n</em>),</li>
