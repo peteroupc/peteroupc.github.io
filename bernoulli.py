@@ -34,8 +34,7 @@ class Bernoulli:
     - Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte
     Carlo likelihood-based inference for jump-diffusion processes.
     - Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. Efficient
-    Bernoulli factory MCMC for intractable likelihoods, arXiv:2004.07471v1
-    [stat.CO], 2020.
+    Bernoulli factory MCMC for intractable posteriors, Biometrika, 2021.
     - Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain
     functions that can be expressed as power series." Stochastic Processes and their
     Applications 129, no. 11 (2019): 4366-4384.
