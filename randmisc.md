@@ -136,7 +136,7 @@ The following definitions are used:
 In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002)<sup>[**(9)**](#Note9)</sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval \[0, 1\] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform [**partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) that follows the distribution X.)  Call the number _x_.
-2. Calculate the quantile for G of _x_, and return that quantile. (If _x_ is a uniform PSRN, see the note at the end of this section.)
+2. Calculate the quantile for G of _x_, and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 
 Certain special cases of the "X-G" families, such as the following, use a specially designed distribution for X:
 
@@ -148,7 +148,7 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013)<sup>[**(14)**](#Note14)</sup> that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
-2. Calculate the quantile for G of _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), and return that quantile. (If _x_ is a uniform PSRN, see the note at the end of this section.)
+2. Calculate the quantile for G of _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 
 The following are special cases of the "transformed&ndash;transformer" family:
 
@@ -181,8 +181,6 @@ For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha
 
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
 2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
-
-> **Note**: For more on quantile generation, see "Randomization via Quantiles" later on this page.
 
 <a id=Certain_Distributions></a>
 ## Certain Distributions

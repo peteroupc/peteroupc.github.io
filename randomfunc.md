@@ -1462,15 +1462,13 @@ The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as fol
 
 Randomization is the core of **Monte Carlo sampling**.  There are three main uses of Monte Carlo sampling: estimation, integration, and optimization.
 
-1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one sample from the distribution.  The simplest way to proceed is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see note below).  However, that procedure won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.
-
-    Examples of expected values include:
+1. **Estimating expected values.** Monte Carlo sampling can help estimate the **expected value** (mean or average) of a sampling distribution, or of a _function_ of the samples in that distribution.  This function is called `EFUNC(x)` in this section, where `x` is one sample from the distribution.  Algorithms to estimate expected values are called _estimators_; one such estimator is to take `n` samples, apply `EFUNC(x)` to each sample `x`, add the samples, and divide by `n` (see note below).  However, this estimator won't work for all distributions, since they may have an infinite expected value, and it also doesn't allow controlling for the estimate's error.  This estimator is called:
 
     - The **`n`th sample raw moment** (a raw moment is a mean of `n`th powers) if `EFUNC(x)` is `pow(x, n)`.
     - The **sample mean**, if `EFUNC(x)` is `x` or `pow(x, 1)`.
     - The **`n`th sample central moment** (a central moment is a moment about the mean) if `EFUNC(x)` is `pow(x-m, n)`, where `m` is the sample mean.
     - The (biased) **sample variance**, the second sample central moment.
-    - The **probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
+    - The **sample probability**, if `EFUNC(x)` is `1` if some condition is met or `0` otherwise.
 
     There are two sources of error in Monte Carlo estimators: bias and variance. An estimator is _unbiased_ (has bias 0) if multiple independent samples of any fixed size `k` (from the same distribution) are expected to average to the true expected value (Halmos 1946)<sup>[**(65)**](#Note65)</sup>.  For example, any `n`th sample _raw_ moment is an unbiased estimator provided `k` >= `n`, but the sample variance is not unbiased, and neither is one for any sample _central_ moment other than the first (Halmos 1946)<sup>[**(65)**](#Note65)</sup>.  Unlike with bias, there are ways to reduce variance, which are outside the scope of this document.  An estimator's _mean squared error_ equals variance plus square of bias.
 
