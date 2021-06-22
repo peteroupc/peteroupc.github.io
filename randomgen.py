@@ -2286,6 +2286,7 @@ class RandomGen:
                 if psrn_less(self, y, z) == 0:
                     accept = not accept
                     y = z
+                    continue
                 break
             if accept:
                 y1[1] = count

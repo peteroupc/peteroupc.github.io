@@ -15,6 +15,7 @@
 - [**Examples of Bernoulli Factory Approximation Schemes**](#Examples_of_Bernoulli_Factory_Approximation_Schemes)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
+    - [**Which functions admit a Bernoulli factory?**](#Which_functions_admit_a_Bernoulli_factory)
     - [**Proofs for Function Approximation Schemes**](#Proofs_for_Function_Approximation_Schemes)
     - [**Example of Approximation Scheme**](#Example_of_Approximation_Scheme)
 - [**License**](#License)
@@ -292,8 +293,8 @@ The following table summarizes the rate of simulation (in terms of the number of
 | Requires no more than _n_ input coin flips. | If and only if _f_ can be written as a polynomial in Bernstein form of degree _n_ with coefficients in \[0, 1] (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>. |
 | Requires a finite number of flips on average. Also known as "realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | Only if _f_ is Lipschitz continuous (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.<br/>Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>.  |
 | Number of flips required, raised to power of _r_, is finite on average and has a tail that drops off uniformly for every _&lambda;_.  | Only if _f_ is _C_<sup>_r_</sup> continuous (has _r_ or more continuous derivatives, or "slope" functions) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and all _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(12)**](#Note12)</sup>. |
-| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and all _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(12)**](#Note12)</sup>. Assumes _f_ is bounded away from 0 and 1. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _r_ + 1, _&lambda;_), for integer _r_ &ge; 0 and every _&lambda;_. (The greater _r_ is, the faster the simulation.) | Only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup>[**(12)**](#Note12)</sup>. |
+| Requires more than _n_ flips with probability _&Delta;_(_n_, _&alpha;_, _&lambda;_), for non-integer _&alpha;_ &gt; 0 and every _&lambda;_. (The greater _&alpha;_ is, the faster the simulation.) | If and only if _f_ is _C_<sup>_r_</sup> continuous and the _r_<sup>th</sup> derivative is (_&alpha;_ &minus; _r_)-Hölder continuous, where _r_ = floor(_&alpha;_) (Holtz et al. 2011)<sup>[**(12)**](#Note12)</sup>. Assumes _f_ is bounded away from 0 and 1. |
 | "Fast simulation" (requires more than _n_ flips with a probability that decays exponentially as _n_ gets large).  Also known as "strongly realizable" by Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup>. | If and only if _f_ is real analytic (is _C_<sup>&infin;</sup> continuous, or has continuous _k_<sup>th</sup> derivative for every _k_, and agrees with its Taylor series "near" every point) (Nacu and Peres 2005)<sup>[**(1)**](#Note1)</sup>.   |
 | Average number of flips bounded from below by (_f&prime;_(_&lambda;_))<sup>2</sup>\*_&lambda;_\*(1&minus;_&lambda;_)/(_f_(_&lambda;_)\*(1&minus;_f_(_&lambda;_))), where _f&prime;_ is the first derivative of _f_.  | Whenever _f_ admits a fast simulation (Mendo 2019)<sup>[**(11)**](#Note11)</sup>. |
 
@@ -645,6 +646,25 @@ The following are approximation schemes and hints to simulate a coin of probabil
 ## Appendix
 
 &nbsp;
+
+<a id=Which_functions_admit_a_Bernoulli_factory></a>
+### Which functions admit a Bernoulli factory?
+
+In general, _f_(_&lambda;_) admits a Bernoulli factory for any _&lambda;_ on \[0, 1\] if and only if _f_ is continuous, maps \[0, 1\] to \[0, 1\], and is _polynomially bounded_, as defined later (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
+
+If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory:
+
+- _f_(_&lambda;_) is continuous on the closed interval [0, 1].
+- _f_(_&lambda;_) has a minimum of greater than 0 and a maximum of less than 1.
+
+If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (has no slope steeper than an _n_<sup>th</sup> root's):
+
+- _f_(_&lambda;_) is continuous.
+- _f_(_&lambda;_) maps the closed interval \[0, 1\] to \[0, 1\].
+- _f_(_&lambda;_) equals neither 0 nor 1 on the open interval (0, 1).
+- _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0).
+
+A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by showing that _f_ is a _semialgebraic function_, so that by a known inequality, it satisfies abs(f(_x_) &minus; f(_y_)) &le; _M_\*(abs(_x_&minus;_y_))<sup>_&alpha;_</sup> for some _&alpha;_ > 0 and some _M_ > 0 (which is the definition of being Hölder continuous), as well as meeting the definition of polynomially bounded given later.
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes

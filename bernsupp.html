@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/09"><meta name="citation_online_date" content="2021/06/09"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/22"><meta name="citation_online_date" content="2021/06/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -25,6 +25,7 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
+<li><a href="#Which_functions_admit_a_Bernoulli_factory"><strong>Which functions admit a Bernoulli factory?</strong></a></li>
 <li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
 <li><a href="#Example_of_Approximation_Scheme"><strong>Example of Approximation Scheme</strong></a></li>
 </ul></li>
@@ -421,11 +422,11 @@
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous (has <em>r</em> or more continuous derivatives, or &quot;slope&quot; functions) (Nacu and Peres 2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and all <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
+<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>r</em> + 1, <em>&lambda;</em>), for integer <em>r</em> &ge; 0 and every <em>&lambda;</em>. (The greater <em>r</em> is, the faster the simulation.)</td>
 <td>Only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is in the Zygmund class (has no vertical slope) (Holtz et al. 2011)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</td>
 </tr>
 <tr>
-<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and all <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
+<td>Requires more than <em>n</em> flips with probability <em>&Delta;</em>(<em>n</em>, <em>&alpha;</em>, <em>&lambda;</em>), for non-integer <em>&alpha;</em> &gt; 0 and every <em>&lambda;</em>. (The greater <em>&alpha;</em> is, the faster the simulation.)</td>
 <td>If and only if <em>f</em> is <em>C</em><sup><em>r</em></sup> continuous and the <em>r</em><sup>th</sup> derivative is (<em>&alpha;</em> &minus; <em>r</em>)-Hölder continuous, where <em>r</em> = floor(<em>&alpha;</em>) (Holtz et al. 2011)<sup><a href="#Note12"><strong>(12)</strong></a></sup>. Assumes <em>f</em> is bounded away from 0 and 1.</td>
 </tr>
 <tr>
@@ -1106,6 +1107,30 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <h2>Appendix</h2>
 
 <p>&nbsp;</p>
+
+<p><a id=Which_functions_admit_a_Bernoulli_factory></a></p>
+
+<h3>Which functions admit a Bernoulli factory?</h3>
+
+<p>In general, <em>f</em>(<em>&lambda;</em>) admits a Bernoulli factory for any <em>&lambda;</em> on [0, 1] if and only if <em>f</em> is continuous, maps [0, 1] to [0, 1], and is <em>polynomially bounded</em>, as defined later (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
+
+<p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory:</p>
+
+<ul>
+<li><em>f</em>(<em>&lambda;</em>) is continuous on the closed interval [0, 1].</li>
+<li><em>f</em>(<em>&lambda;</em>) has a minimum of greater than 0 and a maximum of less than 1.</li>
+</ul>
+
+<p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory and is Hölder continuous (has no slope steeper than an <em>n</em><sup>th</sup> root&#39;s):</p>
+
+<ul>
+<li><em>f</em>(<em>&lambda;</em>) is continuous.</li>
+<li><em>f</em>(<em>&lambda;</em>) maps the closed interval [0, 1] to [0, 1].</li>
+<li><em>f</em>(<em>&lambda;</em>) equals neither 0 nor 1 on the open interval (0, 1).</li>
+<li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0).</li>
+</ul>
+
+<p>A <a href="https://mathoverflow.net/a/395018/171320"><strong>proof by Reid Barton</strong></a> begins by showing that <em>f</em> is a <em>semialgebraic function</em>, so that by a known inequality, it satisfies abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>M</em>*(abs(<em>x</em>&minus;<em>y</em>))<sup><em>&alpha;</em></sup> for some <em>&alpha;</em> &gt; 0 and some <em>M</em> &gt; 0 (which is the definition of being Hölder continuous), as well as meeting the definition of polynomially bounded given later.</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 

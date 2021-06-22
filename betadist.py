@@ -1809,9 +1809,23 @@ if __name__ == "__main__":
                 dobucket(sample1)
                 dobucket(sample2)
 
+    def psrn_expo_test(rg):
+        sample1 = [random.expovariate(1) for i in range(10000)]
+        sample2 = [psrn_fill(rg, psrnexpo(rg)) for i in range(10000)]
+        ks = st.ks_2samp(sample1, sample2)
+        # dobucket(sample1)
+        # dobucket(sample2)
+        if ks.pvalue < 1e-6:
+            print("    psrn_expo_test()")
+            print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
+            print("    # act. range about %s - %s" % (min(sample2), max(sample2)))
+            dobucket(sample1)
+            dobucket(sample2)
+
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
     _test_rand_extraction(lambda rg: psrnexpo(rg))
+    psrn_expo_test(rg)
 
     sample1 = []
     sample2 = []
