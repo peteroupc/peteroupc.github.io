@@ -16,6 +16,7 @@
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Which functions admit a Bernoulli factory?**](#Which_functions_admit_a_Bernoulli_factory)
+    - [**Which functions don't require outside randomness to simulate?**](#Which_functions_don_t_require_outside_randomness_to_simulate)
     - [**Proofs for Function Approximation Schemes**](#Proofs_for_Function_Approximation_Schemes)
     - [**Example of Approximation Scheme**](#Example_of_Approximation_Scheme)
 - [**License**](#License)
@@ -641,6 +642,8 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note16>(16)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
 - <small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
 - <small><sup id=Note18>(18)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
+- <small><sup id=Note19>(19)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
+- <small><sup id=Note20>(20)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -650,7 +653,9 @@ The following are approximation schemes and hints to simulate a coin of probabil
 <a id=Which_functions_admit_a_Bernoulli_factory></a>
 ### Which functions admit a Bernoulli factory?
 
-In general, _f_(_&lambda;_) admits a Bernoulli factory for any _&lambda;_ on \[0, 1\] if and only if _f_ is continuous, maps \[0, 1\] to \[0, 1\], and is _polynomially bounded_, as defined later (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
+Let _f_(_&lambda;_) be a function whose domain is the _closed_ interval [0, 1] or a subset of it, and maps its domain to [0, 1].  The domain of _f_ gives the allowable values of _&lambda;_, which is the input coin's probability of heads.
+
+In general, _f_ admits a Bernoulli factory if and only if _f_ is constant on its domain, or is continuous and _polynomially bounded_ on its domain, as defined in the section "Proofs for Function Approximation Schemes" (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
 
 If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory:
 
@@ -664,7 +669,55 @@ If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli fact
 - _f_(_&lambda;_) equals neither 0 nor 1 on the open interval (0, 1).
 - _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0).
 
-A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by showing that _f_ is a _semialgebraic function_, so that by a known inequality, it satisfies abs(f(_x_) &minus; f(_y_)) &le; _M_\*(abs(_x_&minus;_y_))<sup>_&alpha;_</sup> for some _&alpha;_ > 0 and some _M_ > 0 (which is the definition of being Hölder continuous), as well as meeting the definition of polynomially bounded given later.
+A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by showing that _f_ is a _semialgebraic function_, so that by a known inequality and the other conditions, it meets the definitions of being Hölder continuous and polynomially bounded.
+
+<a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
+### Which functions don't require outside randomness to simulate?
+
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory that uses only the input coin and no outside randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
+
+A function _f_ is strongly simulable only if&mdash;
+
+1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
+2. _f_ maps the closed interval [0, 1] or a subset of it, and
+3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
+4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
+
+Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
+
+This shows, for example, that if _f_'s domain is the open interval (0, 1) or a subset of it, then _f_ is strongly simulable (since the input coin then has a positive chance of returning either 0 or 1).
+
+By showing that a Bernoulli factory for _f_ must flip the input coin and get 0 and 1 before it uses any outside randomness, it can be shown that _f_ is strongly simulable on its domain.
+
+**Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
+
+_Proof:_ Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(19)**](#Note19)</sup>.
+
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+2. If _j_ is 0, return _f_(0).  If _j_ is _n_, return _f_(_n_).
+3. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
+
+Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(20)**](#Note20)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
+
+**Proposition 2.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) and f(0) is either 0 or 1, then f is strongly simulable._
+
+_Proof:_ If _f_(0) = 1, then in the rest of the proof, take _f_ = 1 &minus; _f_ and whenever the input coin would return 0, return 1 instead and vice versa.
+
+Let _M_ be the Lipschitz constant of _f_ (e.g., its derivative's maximum absolute value).  Now, define _g_(_&lambda;_) as a function with the following properties:
+
+- _g_ is a polynomial of degree ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater).
+- _g_ is written in Bernstein form, and all its coefficients are in the interval [0, 1].
+- _g_'s first and last coefficients are 0.
+- For every _&lambda;_ in the domain of _f_, _g_(_&lambda;_) &ge; _f_(_&lambda;_).
+
+Then, let _h_(_&lambda;_) = _f_(_&lambda;_)/_g_(_&lambda;_) (so that _f_(_&lambda;_) = _g_(_&lambda;_)\*_h_(_&lambda;_)).  If _h_ is identically 0, then we return 0 and we're done.
+
+Then, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.  Otherwise, we know that the input coin's probability of heads is neither 0 nor 1, and:
+
+- If _h_ is identically 1, we return 1.
+- Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
+
+Thus, _f_ admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes

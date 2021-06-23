@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/22"><meta name="citation_online_date" content="2021/06/22"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/23"><meta name="citation_online_date" content="2021/06/23"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -26,6 +26,7 @@
 
 <ul>
 <li><a href="#Which_functions_admit_a_Bernoulli_factory"><strong>Which functions admit a Bernoulli factory?</strong></a></li>
+<li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
 <li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
 <li><a href="#Example_of_Approximation_Scheme"><strong>Example of Approximation Scheme</strong></a></li>
 </ul></li>
@@ -1100,6 +1101,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><small><sup id=Note16>(16)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
 <li><small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 <li><small><sup id=Note18>(18)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note19>(19)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
+<li><small><sup id=Note20>(20)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1112,7 +1115,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <h3>Which functions admit a Bernoulli factory?</h3>
 
-<p>In general, <em>f</em>(<em>&lambda;</em>) admits a Bernoulli factory for any <em>&lambda;</em> on [0, 1] if and only if <em>f</em> is continuous, maps [0, 1] to [0, 1], and is <em>polynomially bounded</em>, as defined later (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the <em>closed</em> interval [0, 1] or a subset of it, and maps its domain to [0, 1].  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
+
+<p>In general, <em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined in the section &quot;Proofs for Function Approximation Schemes&quot; (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
 
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory:</p>
 
@@ -1130,7 +1135,64 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0).</li>
 </ul>
 
-<p>A <a href="https://mathoverflow.net/a/395018/171320"><strong>proof by Reid Barton</strong></a> begins by showing that <em>f</em> is a <em>semialgebraic function</em>, so that by a known inequality, it satisfies abs(f(<em>x</em>) &minus; f(<em>y</em>)) &le; <em>M</em>*(abs(<em>x</em>&minus;<em>y</em>))<sup><em>&alpha;</em></sup> for some <em>&alpha;</em> &gt; 0 and some <em>M</em> &gt; 0 (which is the definition of being Hölder continuous), as well as meeting the definition of polynomially bounded given later.</p>
+<p>A <a href="https://mathoverflow.net/a/395018/171320"><strong>proof by Reid Barton</strong></a> begins by showing that <em>f</em> is a <em>semialgebraic function</em>, so that by a known inequality and the other conditions, it meets the definitions of being Hölder continuous and polynomially bounded.</p>
+
+<p><a id=Which_functions_don_t_require_outside_randomness_to_simulate></a></p>
+
+<h3>Which functions don&#39;t require outside randomness to simulate?</h3>
+
+<p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory that uses only the input coin and no outside randomness (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.</p>
+
+<p>A function <em>f</em> is strongly simulable only if&mdash;</p>
+
+<ol>
+<li><em>f</em> is constant on its domain, or is continuous and polynomially bounded on its domain, and</li>
+<li><em>f</em> maps the closed interval [0, 1] or a subset of it, and</li>
+<li><em>f</em>(0) equals 0 or 1 whenever 0 is in the domain of <em>f</em>, and</li>
+<li><em>f</em>(1) equals 0 or 1 whenever 1 is in the domain of <em>f</em>,</li>
+</ol>
+
+<p>Conditions 3 and 4 are required because <em>&lambda;</em> (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a &quot;degenerate&quot; coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for <em>f</em> must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.</p>
+
+<p>This shows, for example, that if <em>f</em>&#39;s domain is the open interval (0, 1) or a subset of it, then <em>f</em> is strongly simulable (since the input coin then has a positive chance of returning either 0 or 1).</p>
+
+<p>By showing that a Bernoulli factory for <em>f</em> must flip the input coin and get 0 and 1 before it uses any outside randomness, it can be shown that <em>f</em> is strongly simulable on its domain.</p>
+
+<p><strong>Proposition 1.</strong> <em>If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable.</em></p>
+
+<p><em>Proof:</em> Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+
+<ol>
+<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
+<li>If <em>j</em> is 0, return <em>f</em>(0).  If <em>j</em> is <em>n</em>, return <em>f</em>(<em>n</em>).</li>
+<li>Generate a uniform(0, 1) random variate, then return 1 if that variate is less than <em>a</em>[<em>j</em>] (<em>a</em>[<em>j</em>] is the coefficient <em>j</em> of the polynomial written in Bernstein form), or 0 otherwise.</li>
+</ol>
+
+<p>Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note20"><strong>(20)</strong></a></sup>), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
+
+<p><strong>Proposition 2.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) and f(0) is either 0 or 1, then f is strongly simulable.</em></p>
+
+<p><em>Proof:</em> If <em>f</em>(0) = 1, then in the rest of the proof, take <em>f</em> = 1 &minus; <em>f</em> and whenever the input coin would return 0, return 1 instead and vice versa.</p>
+
+<p>Let <em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its derivative&#39;s maximum value).  Now, define <em>g</em>(<em>&lambda;</em>) as a polynomial with the following properties:</p>
+
+<ul>
+<li><em>g</em> is a polynomial of degree ceil(<em>M</em>) or greater (so that <em>g</em>&#39;s Lipschitz constant is <em>M</em> or greater).</li>
+<li><em>g</em> is written in Bernstein form, and all its coefficients are in the interval [0, 1].</li>
+<li><em>g</em>&#39;s first and last coefficients are 0.</li>
+<li>For every <em>&lambda;</em> in the domain of <em>f</em>, <em>g</em>(<em>&lambda;</em>) &ge; <em>f</em>(<em>&lambda;</em>).</li>
+</ul>
+
+<p>Then, let <em>h</em>(<em>&lambda;</em>) = <em>f</em>(<em>&lambda;</em>)/<em>g</em>(<em>&lambda;</em>) (so that <em>f</em>(<em>&lambda;</em>) = <em>g</em>(<em>&lambda;</em>)*<em>h</em>(<em>&lambda;</em>)).  If <em>h</em> is identically 0, then we return 0 and we&#39;re done.</p>
+
+<p>Then, use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0.  Otherwise, we know that the input coin&#39;s probability of heads is neither 0 nor 1, and:</p>
+
+<ul>
+<li>If <em>h</em> is identically 1, we return 1.</li>
+<li>Otherwise, we run a Bernoulli factory algorithm for <em>h</em>(<em>&lambda;</em>) that uses the input coin (and possibly outside randomness).  Since <em>h</em> is continuous and polynomially bounded and the input coin&#39;s probability of heads is neither 0 nor 1, <em>h</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</li>
+</ul>
+
+<p>Thus, <em>f</em> admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 

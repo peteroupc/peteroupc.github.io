@@ -330,9 +330,9 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 
 The following algorithm simulates the probability&mdash;
 
-- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _W_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*choose(_n_, _m_)),
+- _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _W_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*choose(_n_, _m_))<br>&nbsp;&nbsp;&nbsp;= (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _V_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>),
 
-where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise (this is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning); and _H_&ge;1 and _T_&ge;1 are integers. (Notice that the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.)
+where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning.)
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -790,7 +790,7 @@ The following algorithm takes a uniform partially-sampled random number (PSRN) a
 
 -  The uniform PSRN's sign must be positive and its integer part must be 0.
 - For correctness, _f_(_U_) must meet the following conditions:
-    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the interval \[0, 1\] (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(28)**](#Note28)</sup>).
+    - If the algorithm will be run multiple times with the same PSRN, _f_(_U_) must be the constant 0 or 1, or be continuous and polynomially bounded on the open interval (0, 1) (polynomially bounded means that both _f_(_U_) and 1&minus;_f_(_U_) are bounded from below by min(_U_<sup>_n_</sup>, (1&minus;_U_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(28)**](#Note28)</sup>).
     - Otherwise, _f_(_U_) must map the interval \[0, 1] to \[0, 1] and be continuous everywhere except at a countable number of points.
 
     The first set of conditions is the same as those for the Bernoulli factory problem (see "[**About Bernoulli Factories**](https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories)) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)<sup>[**(2)**](#Note2)</sup>.

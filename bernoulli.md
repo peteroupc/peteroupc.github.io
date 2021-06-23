@@ -140,7 +140,11 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.  The unknown probability of heads is called _&lambda;_ in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).
 
-A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the closed interval [0, 1] or a subset of [0, 1], and returns a probability in [0, 1].  There are certain requirements for factory functions.  As shown by Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup>, a function _f_(_&lambda;_) can serve as a factory function if and only if&mdash;
+A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].
+
+Many Bernoulli factories also have access to outside randomness (such as a source of unbiased random bits).  A factory function is _strongly simulable_ if it admits a Bernoulli factory that uses only the input coin and no outside randomness.
+
+Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup> showed that _f_ admits a Bernoulli factory if and only if&mdash;
 
 - _f_ is constant on its domain, or
 - _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
@@ -159,6 +163,14 @@ The following shows some functions that are factory functions and some that are 
 | min(2 * _&lambda;_, 1 &minus; _&#x03F5;_) | [0, 1] | Yes; continuous and polynomially bounded on domain (Huber 2014, introduction)<sup>[**(4)**](#Note4)</sup>. |
 | 0 if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) otherwise | [0, 1] | No; not polynomially bounded since it moves away from 0 more slowly than any polynomial. |
 | &#x03F5; if _&lambda;_ = 0, or exp(&minus;1/_&lambda;_) + &#x03F5; otherwise | [0, 1] | Yes; continuous and bounded away from 0 and 1. |
+
+If _f_'s domain includes 0 and/or 1 (so that the input coin is allowed to return 0 every time or 1 every time, respectively), then _f_ can be a factory function only if&mdash;
+
+1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
+2. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
+3. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
+
+unless outside randomness (besides the input coin) is available.
 
 <a id=Algorithms></a>
 ## Algorithms
@@ -1618,8 +1630,6 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(22)**](#Note22)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(50)**](#Note50)</sup>.
 
-A non-randomized algorithm doesn't work whenever the probability of heads of any of the input coins can be 0 or 1. (More generally, it doesn't work whenever it's possible for the input coin, or the "black box" from which samples are taken, to produce the same value with probability 1.)
-
 In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(51)**](#Note51)</sup>, (Peres 1992)<sup>[**(52)**](#Note52)</sup>) and is calculated as&mdash;
 
 - ((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) / ((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
@@ -1627,6 +1637,8 @@ In fact, there is a lower bound on the average number of coin flips needed to tu
 For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin strongly leans towards heads or tails (the probability of heads is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
 
 For certain values of _&lambda;_, Kozen (2014)<sup>[**(32)**](#Note32)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
+
+A function _f_(_&lambda;_) is _strongly simulable_ (Keane and O'Brien 1994)<sup>[**(22)**](#Note22)</sup> if it admits a non-randomized Bernoulli factory algorithm.  One notable case of being strongly simulable is if the input coin's probability of heads (_&lambda;_) can be neither 0 nor 1.
 
 <a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
 ### Simulating Probabilities vs. Estimating Probabilities
