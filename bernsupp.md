@@ -673,7 +673,7 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 <a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory that uses only the input coin and no outside randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses only the input coin and no outside randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.
 
 A function _f_ is strongly simulable only if&mdash;
 
@@ -682,55 +682,53 @@ A function _f_ is strongly simulable only if&mdash;
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
 
-Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
+Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
-This shows, for example, that if _f_'s domain is the open interval (0, 1) or a subset of it, then _f_ is strongly simulable (since the input coin then has a positive chance of returning either 0 or 1).
-
-By showing that a Bernoulli factory for _f_ must flip the input coin and get 0 and 1 before it uses any outside randomness, it can be shown that _f_ is strongly simulable on its domain.
+We can show that _f_ is strongly simulable on its domain showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
 **Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
 
 _Proof:_ Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-2. If _j_ is 0, return _f_(0).  If _j_ is _n_, return _f_(_n_).
-3. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
+2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0).
+3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1).
+4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
-Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
+Step 4 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
 
 **Proposition 2.** _If f meets conditions 1 through 4 and is Lipschitz continuous, then f is strongly simulable._
 
-The proof will use two lemmas.
+The proof will use several lemmas.
 
-**Lemma 1.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) = 0, then f is strongly simulable._
+**Lemma 1.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
 
-_Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its derivative's maximum absolute value).  Now, define _g_(_&lambda;_) as a function with the following properties:
+1. _f(0) = f(1) = 0._
+2. _There is a polynomial g(&lambda;) in Bernstein form whose coefficients are in the interval [0, 1]._
+3. _If 0 is in the domain of f, g's first coefficient is 0._
+4. _If 1 is in the domain of f, g's last coefficient is 0._
+5. _For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;)._
 
-- _g_ is a polynomial of degree ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater).
-- _g_ is written in Bernstein form, and all its coefficients are in the interval [0, 1].
-- _g_'s first and last coefficients are 0.
-- For every _&lambda;_ in the domain of _f_, _g_(_&lambda;_) &ge; _f_(_&lambda;_).
+_Proof:_ Let _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_).
 
-Then, let _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_).  If _h_ is identically 0, then we return 0 and we're done.
-
-Then, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.  Otherwise, we know that the input coin's probability of heads is neither 0 nor 1, and:
-
-- If _h_ is identically 1, we return 1.
-- Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
+1. If _h_ is identically 0, return 0.
+2. Otherwise, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0. (If 0 is in the domain of _f_, _g_(0) will be 0, and if 1 is in the domain, _g_(1) will be 0, so that in either case, 0 will be returned if _&lambda;_ is either 0 or 1.)
+3. Now, we know that the input coin's probability of heads is neither 0 nor 1.
+4. If _h_ is identically 1, return 1.
+5. Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
 
 Thus, _f_ admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;
 
-**Lemma 2.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1, then f is strongly simulable._
+**Lemma 2.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
 
-_Proof:_ Let _M_ be the Lipschitz constant of _f_, and define _g_(_&lambda;_) and _&gamma;_(_&lambda;_) as functions with the following properties:
+1. _f(0) = 0 and f(1) = 1._
+2. _There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials have the same degree and their coefficients are all in the interval [0, 1]._
+3. _If 0 is in the domain of f, each polynomial's first coefficient is 0._
+4. _If 1 is in the domain of f, each polynomial's last coefficient is 1._
+5. _For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;)._
+6. _For every &lambda; in the domain of f, &omega;(&lambda;) &le; f(&lambda;)._
 
-- _g_ and _&omega;_ are polynomials of degree ceil(_M_) or greater.
-- _g_ and _&omega;_ are written in Bernstein form, and all its coefficients are in the interval [0, 1].
-- For both _g_ and _&omega;_, the first coefficient is 0 and the last coefficient is 1.
-- For every _&lambda;_ in the domain of _f_, _g_(_&lambda;_) &ge; _f_(_&lambda;_).
-- For every _&lambda;_ in the domain of _f_, _&omega;_(_&lambda;_) &le; _f_(_&lambda;_).
-
-Then, let&mdash;
+_Proof:_ Let&mdash;
 
 - _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_),
 - _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&omega;_(_&nu;_)/_h_(_&nu;_), and
@@ -748,13 +746,27 @@ Then:
 
 Thus, _f_ admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;
 
-_Proof of Proposition 2:_  There are five cases:
+**Lemma 3.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0, then f is strongly simulable._
+
+_Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value).
+
+To build _g_, take its degree as ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater and _g_ has ceil(_M_) + 1 coefficients), then set the first coefficient as 0, the last coefficient as 0, and the remaining coefficients as 1.  Then _g_ will meet the additional conditions for Lemma 1 and the result follows from that lemma. &#x25a1;
+
+**Lemma 4.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1, then f is strongly simulable._
+
+_Proof:_ Let _M_ be the Lipschitz constant of _f_.
+
+To build _g_ and _&omega;_, take their degree as ceil(_M_) or greater (so that their Lipschitz constant is _M_ or greater and each polynomial has ceil(_M_) + 1 coefficients), then for each polynomial, set its first coefficient as 0 and the last coefficient as 1. The remaining coefficients of _g_ are set as 1 and the remaining coefficients of _&omega;_ are set as 0.  Then _g_ and _&omega;_ will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;
+
+_Proof of Proposition 2:_  There are seven cases:
 
 1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
-2. _f_(0) = _f_(1) = 0: Apply Lemma 1.
-3. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
-4. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
-5. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+2. If 1 but not 0 is in the domain of _f_, extend _f_ by defining _f_(_y_) = lim<sub>_x_&rarr;_B_</sub> _f_(_x_), for every _y_ in the interval \[0, _B_\], where _B_ is the greatest lower bound of the domain of _f_. Then reapply this proposition.  Note that the redefined _f_ remains Lipschitz continuous.
+3. If 0 but not 1 is in the domain of _f_, extend _f_ by defining _f_(_y_) = lim<sub>_x_&rarr;_B_</sub> _f_(_x_), for every _y_ in the interval \[_B_, 1\], where _B_ is the least upper bound of the domain of _f_. Then reapply this proposition.  Note that the redefined _f_ remains Lipschitz continuous.
+4. _f_(0) = _f_(1) = 0: Apply Lemma 3.
+5. _f_(0) = _f_(1) = 1: Apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+6. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 4.
+7. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 4, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
 
 &#x25a1;
 
