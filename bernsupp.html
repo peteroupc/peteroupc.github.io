@@ -1185,7 +1185,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ol>
 <li>If <em>h</em> is identically 0, return 0.</li>
-<li>Otherwise, use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0. (By conditions 2 and 3, if 0 is in the domain of <em>f</em>, <em>g</em>(0) will be 0, and if 1 is in the domain, <em>g</em>(1) will be 0, so that in either case, 0 will be returned if <em>&lambda;</em> is either 0 or 1.)</li>
+<li>Otherwise, use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0. (By additional conditions 2 and 3, if 0 is in the domain of <em>f</em>, <em>g</em>(0) will be 0, and if 1 is in the domain, <em>g</em>(1) will be 0, so that in either case, 0 will be returned if <em>&lambda;</em> is either 0 or 1.)</li>
 <li>Now, we know that the input coin&#39;s probability of heads is neither 0 nor 1.</li>
 <li>If <em>h</em> is identically 1, return 1.</li>
 <li>Otherwise, we run a Bernoulli factory algorithm for <em>h</em>(<em>&lambda;</em>) that uses the input coin (and possibly outside randomness).  Since <em>h</em> is continuous and polynomially bounded and the input coin&#39;s probability of heads is neither 0 nor 1, <em>h</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</li>
@@ -1198,9 +1198,10 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ol>
 <li><em>There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials have the same degree and their coefficients are all in the interval [0, 1].</em></li>
 <li><em>If 0 is in the domain of f, each polynomial&#39;s first coefficient is 0.</em></li>
-<li><em>If 1 is in the domain of f, each polynomial&#39;s last coefficient is 1.</em></li>
+<li><em>Each polynomial&#39;s last coefficient is 1.</em></li>
 <li><em>For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;).</em></li>
 <li><em>For every &lambda; in the domain of f, &omega;(&lambda;) &le; f(&lambda;).</em></li>
+<li><em>f(1) = 1, and 1 is in the domain of f.</em></li>
 </ol>
 
 <p><em>Proof:</em> Let&mdash;</p>
@@ -1215,7 +1216,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ol>
 <li>If <em>h</em> is identically 0, return 0.</li>
-<li>Use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0.   (By conditions 2 and 3, if 0 is in the domain of <em>f</em>, <em>g</em>(0) will be 0, and if 1 is in the domain, <em>g</em>(1) will be 0, so that <em>g</em>(0) or <em>g</em>(1) will be returned if <em>&lambda;</em> is 0 or 1, respectively.)</li>
+<li>Use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0.   (By additional conditions 2, 3, and 6, if 0 is in the domain of <em>f</em>, <em>g</em>(0) will be 0, and also <em>g</em>(1) = <em>f</em>(1) = 1, so that <em>g</em>(0) or <em>g</em>(1) will be returned if <em>&lambda;</em> is 0 or 1, respectively.)</li>
 <li>By now we know that the input coin&#39;s probability of heads is not 0, since step 2 returned 1 which can only happen if the input coin didn&#39;t return all zeros.</li>
 <li>If <em>h</em> is identically 1, return 1.</li>
 <li>Use the algorithm given in Proposition 1 to simulate <em>q</em>(<em>&lambda;</em>).  If the algorithm returns 1, return 1.</li>
@@ -1240,25 +1241,45 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ol>
 <li><em>f(0) equals 0 whenever 0 is in the domain of f.</em></li>
-<li><em>f(1) equals 1 whenever 1 is in the domain of f.</em></li>
+<li><em>f(1) = 1, and 1 is in the domain of f.</em></li>
 </ol>
 
-<p><em>Proof:</em> Let <em>M</em>, <em>l</em>, and <em>u</em> be as in Lemma 3.</p>
+<p><em>Proof:</em> Let <em>M</em> and <em>l</em> be as in Lemma 3.</p>
 
-<p>To build <em>g</em> and <em>&omega;</em>, take their degree as ceil(<em>M</em>) or greater (so that their Lipschitz constant is <em>M</em> or greater and each polynomial has ceil(<em>M</em>) + 1 coefficients), then for each polynomial, set its first coefficient as <em>l</em> and the last coefficient as <em>u</em>. The remaining coefficients of <em>g</em> are set as 1 and the remaining coefficients of <em>&omega;</em> are set as 0.  Then <em>g</em> and <em>&omega;</em> will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;</p>
+<p>To build <em>g</em> and <em>&omega;</em>, take their degree as ceil(<em>M</em>) or greater (so that their Lipschitz constant is <em>M</em> or greater and each polynomial has ceil(<em>M</em>) + 1 coefficients), then for each polynomial, set its first coefficient as <em>l</em> and the last coefficient as 1. The remaining coefficients of <em>g</em> are set as 1 and the remaining coefficients of <em>&omega;</em> are set as 0.  Then <em>g</em> and <em>&omega;</em> will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;</p>
 
 <p><em>Proof of Proposition 2:</em>  The following cases can occur:</p>
 
 <ol>
 <li>If neither 0 nor 1 are in the domain of <em>f</em>, then <em>f</em> is strongly simulable by the discussion above.</li>
-<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) is 0: Apply Lemma 3.</li>
-<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) is 1: Apply Lemma 3, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
-<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) is 0: Apply Lemma 3.</li>
-<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) is 1: Apply Lemma 4.</li>
+<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) = 0: Apply Lemma 3.</li>
+<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) = 1: Apply Lemma 3, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
+<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) = 0: Apply Lemma 3.</li>
+<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) = 1: Apply Lemma 4.</li>
 <li><em>f</em>(0) = <em>f</em>(1) = 0: Apply Lemma 3.</li>
 <li><em>f</em>(0) = <em>f</em>(1) = 1: Apply Lemma 3, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
 <li><em>f</em>(0) = 0 and <em>f</em>(1) = 1: Apply Lemma 4.</li>
 <li><em>f</em>(0) = 1 and <em>f</em>(1) = 0: Apply Lemma 4, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
+</ol>
+
+<p><strong>Proposition 3.</strong> <em>If f meets conditions 1 through 4, and meets the additional condition below, then f is strongly simulable.</em></p>
+
+<ul>
+<li><em>If 1 is in the domain of f and f(1) = 1, then the additional conditions in Lemma 2 are met. Otherwise, the additional conditions in Lemma 1 are met.</em></li>
+</ul>
+
+<p><em>Proof:</em>  The following cases can occur:</p>
+
+<ol>
+<li>If neither 0 nor 1 are in the domain of <em>f</em>, then <em>f</em> is strongly simulable by the discussion above.</li>
+<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) = 0: Apply Lemma 1.</li>
+<li>If 0 but not 1 is in the domain of <em>f</em> and <em>f</em>(0) = 1: Apply Lemma 1, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm. (This will bring <em>f</em>(0) = 0 and satisfy the lemma.)</li>
+<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) = 0: Apply Lemma 1.</li>
+<li>If 1 but not 0 is in the domain of <em>f</em> and <em>f</em>(1) = 1: Apply Lemma 2.</li>
+<li><em>f</em>(0) = <em>f</em>(1) = 0: Apply Lemma 1.</li>
+<li><em>f</em>(0) = <em>f</em>(1) = 1: Apply Lemma 1, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm. (This will bring <em>f</em>(0) = <em>f</em>(1) = 0 and satisfy the lemma.)</li>
+<li><em>f</em>(0) = 0 and <em>f</em>(1) = 1: Apply Lemma 2.</li>
+<li><em>f</em>(0) = 1 and <em>f</em>(1) = 0: Apply Lemma 2, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm. (This will bring <em>f</em>(0) = 0 and <em>f</em>(0) = 1 and satisfy the lemma.)</li>
 </ol>
 
 <p>&#x25a1;</p>
