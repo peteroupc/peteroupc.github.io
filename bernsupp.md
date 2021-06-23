@@ -637,13 +637,12 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note11>(11)</sup> Mendo, Luis. "An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series." Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small>
 - <small><sup id=Note12>(12)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
 - <small><sup id=Note13>(13)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
-- <small><sup id=Note14>(14)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
-- <small><sup id=Note15>(15)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
-- <small><sup id=Note16>(16)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
-- <small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
-- <small><sup id=Note18>(18)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
-- <small><sup id=Note19>(19)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small>
-- <small><sup id=Note20>(20)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note14>(14)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note15>(15)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
+- <small><sup id=Note16>(16)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note17>(17)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
+- <small><sup id=Note18>(18)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
+- <small><sup id=Note19>(19)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -683,7 +682,7 @@ A function _f_ is strongly simulable only if&mdash;
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
 
-Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
+Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
 This shows, for example, that if _f_'s domain is the open interval (0, 1) or a subset of it, then _f_ is strongly simulable (since the input coin then has a positive chance of returning either 0 or 1).
 
@@ -691,26 +690,28 @@ By showing that a Bernoulli factory for _f_ must flip the input coin and get 0 a
 
 **Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
 
-_Proof:_ Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(19)**](#Note19)</sup>.
+_Proof:_ Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If _j_ is 0, return _f_(0).  If _j_ is _n_, return _f_(_n_).
 3. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
-Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(20)**](#Note20)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
+Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
 
-**Proposition 2.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) and f(0) is either 0 or 1, then f is strongly simulable._
+**Proposition 2.** _If f meets conditions 1 through 4 and is Lipschitz continuous, then f is strongly simulable._
 
-_Proof:_ If _f_(0) = 1, then in the rest of the proof, take _f_ = 1 &minus; _f_ and whenever the input coin would return 0, return 1 instead and vice versa.
+The proof will use two lemmas.
 
-Let _M_ be the Lipschitz constant of _f_ (e.g., its derivative's maximum absolute value).  Now, define _g_(_&lambda;_) as a function with the following properties:
+**Lemma 1.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) = 0, then f is strongly simulable._
+
+_Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its derivative's maximum absolute value).  Now, define _g_(_&lambda;_) as a function with the following properties:
 
 - _g_ is a polynomial of degree ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater).
 - _g_ is written in Bernstein form, and all its coefficients are in the interval [0, 1].
 - _g_'s first and last coefficients are 0.
 - For every _&lambda;_ in the domain of _f_, _g_(_&lambda;_) &ge; _f_(_&lambda;_).
 
-Then, let _h_(_&lambda;_) = _f_(_&lambda;_)/_g_(_&lambda;_) (so that _f_(_&lambda;_) = _g_(_&lambda;_)\*_h_(_&lambda;_)).  If _h_ is identically 0, then we return 0 and we're done.
+Then, let _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_).  If _h_ is identically 0, then we return 0 and we're done.
 
 Then, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.  Otherwise, we know that the input coin's probability of heads is neither 0 nor 1, and:
 
@@ -718,6 +719,44 @@ Then, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If 
 - Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
 
 Thus, _f_ admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;
+
+**Lemma 2.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1, then f is strongly simulable._
+
+_Proof:_ Let _M_ be the Lipschitz constant of _f_, and define _g_(_&lambda;_) and _&gamma;_(_&lambda;_) as functions with the following properties:
+
+- _g_ and _&omega;_ are polynomials of degree ceil(_M_) or greater.
+- _g_ and _&omega;_ are written in Bernstein form, and all its coefficients are in the interval [0, 1].
+- For both _g_ and _&omega;_, the first coefficient is 0 and the last coefficient is 1.
+- For every _&lambda;_ in the domain of _f_, _g_(_&lambda;_) &ge; _f_(_&lambda;_).
+- For every _&lambda;_ in the domain of _f_, _&omega;_(_&lambda;_) &le; _f_(_&lambda;_).
+
+Then, let&mdash;
+
+- _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_),
+- _q_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _&omega;_(_&nu;_)/_h_(_&nu;_), and
+- _r_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> (1&minus;_g_(_&nu;_))/(1&minus;_q_(_&nu;_)).
+
+Then:
+
+1. If _h_ is identically 0, return 0.
+2. Use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.
+3. By now we know that the input coin's probability of heads is not 0, since step 2 returned 1 which can only happen if the input coin didn't return all zeros.
+4. If _h_ is identically 1, return 1.
+5. Use the algorithm given in Proposition 1 to simulate _q_(_&lambda;_).  If the algorithm returns 1, return 1.
+6. By now we know that the input coin's probability of heads is neither 0 nor 1, both from step 2 and because step 5 returned 0 which can only happen if the input coin didn't return all ones.
+7. Run a Bernoulli factory algorithm for _r_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _r_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _r_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
+
+Thus, _f_ admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;
+
+_Proof of Proposition 2:_  There are five cases:
+
+1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
+2. _f_(0) = _f_(1) = 0: Apply Lemma 1.
+3. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+4. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
+5. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+
+&#x25a1;
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
@@ -732,7 +771,7 @@ In the following results:
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(14)**](#Note14)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(15)**](#Note15)</sup>. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(15)**](#Note15)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(16)**](#Note16)</sup>. &#x25a1;
 
 Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions with no slope "steeper" than any "nth" root.
 
@@ -766,11 +805,11 @@ _Proof._
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 > 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
->     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(16)**](#Note16)</sup>; (Gal 1995)<sup>[**(17)**](#Note17)</sup>.
->     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(16)**](#Note16)</sup>; (Gal 1995)<sup>[**(17)**](#Note17)</sup>.
+>     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(17)**](#Note17)</sup>; (Gal 1995)<sup>[**(18)**](#Note18)</sup>.
+>     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(17)**](#Note17)</sup>; (Gal 1995)<sup>[**(18)**](#Note18)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(18)**](#Note18)</sup>.
+>     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(19)**](#Note19)</sup>.
 
 **Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;_
 

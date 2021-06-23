@@ -1096,13 +1096,12 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><small><sup id=Note11>(11)</sup> Mendo, Luis. &quot;An asymptotically optimal Bernoulli factory for certain functions that can be expressed as power series.&quot; Stochastic Processes and their Applications 129, no. 11 (2019): 4366-4384.</small></li>
 <li><small><sup id=Note12>(12)</sup> Holtz, O., Nazarov, F., Peres, Y., &quot;New Coins from Old, Smoothly&quot;, <em>Constructive Approximation</em> 33 (2011).</small></li>
 <li><small><sup id=Note13>(13)</sup> Keane,  M.  S.,  and  O&#39;Brien,  G.  L., &quot;A Bernoulli factory&quot;, <em>ACM Transactions on Modeling and Computer Simulation</em> 4(2), 1994.</small></li>
-<li><small><sup id=Note14>(14)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
-<li><small><sup id=Note15>(15)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
-<li><small><sup id=Note16>(16)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
-<li><small><sup id=Note17>(17)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
-<li><small><sup id=Note18>(18)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
-<li><small><sup id=Note19>(19)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
-<li><small><sup id=Note20>(20)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note14>(14)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note15>(15)</sup> Levy, H., <em>Stochastic dominance</em>, 1998.</small></li>
+<li><small><sup id=Note16>(16)</sup> Henry (<a href="https://math.stackexchange.com/users/6460/henry">https://math.stackexchange.com/users/6460/henry</a>), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): <a href="https://math.stackexchange.com/q/4033573"><strong>https://math.stackexchange.com/q/4033573</strong></a> .</small></li>
+<li><small><sup id=Note17>(17)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
+<li><small><sup id=Note18>(18)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
+<li><small><sup id=Note19>(19)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1152,7 +1151,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>f</em>(1) equals 0 or 1 whenever 1 is in the domain of <em>f</em>,</li>
 </ol>
 
-<p>Conditions 3 and 4 are required because <em>&lambda;</em> (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a &quot;degenerate&quot; coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for <em>f</em> must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.</p>
+<p>Keane and O&#39;Brien already showed that <em>f</em> is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of <em>f</em>.  Conditions 3 and 4 are required because <em>&lambda;</em> (the probability of heads) can be 0 or 1 and so the input coin can return 0 or 1, respectively, every time.  This is called a &quot;degenerate&quot; coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for <em>f</em> must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.</p>
 
 <p>This shows, for example, that if <em>f</em>&#39;s domain is the open interval (0, 1) or a subset of it, then <em>f</em> is strongly simulable (since the input coin then has a positive chance of returning either 0 or 1).</p>
 
@@ -1160,7 +1159,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p><strong>Proposition 1.</strong> <em>If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable.</em></p>
 
-<p><em>Proof:</em> Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</p>
+<p><em>Proof:</em> Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup><a href="#Note10"><strong>(10)</strong></a></sup>.</p>
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
@@ -1168,13 +1167,15 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Generate a uniform(0, 1) random variate, then return 1 if that variate is less than <em>a</em>[<em>j</em>] (<em>a</em>[<em>j</em>] is the coefficient <em>j</em> of the polynomial written in Bernstein form), or 0 otherwise.</li>
 </ol>
 
-<p>Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note20"><strong>(20)</strong></a></sup>), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
+<p>Step 3 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 3 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
-<p><strong>Proposition 2.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) and f(0) is either 0 or 1, then f is strongly simulable.</em></p>
+<p><strong>Proposition 2.</strong> <em>If f meets conditions 1 through 4 and is Lipschitz continuous, then f is strongly simulable.</em></p>
 
-<p><em>Proof:</em> If <em>f</em>(0) = 1, then in the rest of the proof, take <em>f</em> = 1 &minus; <em>f</em> and whenever the input coin would return 0, return 1 instead and vice versa.</p>
+<p>The proof will use two lemmas.</p>
 
-<p>Let <em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its derivative&#39;s maximum value).  Now, define <em>g</em>(<em>&lambda;</em>) as a polynomial with the following properties:</p>
+<p><strong>Lemma 1.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = f(1) = 0, then f is strongly simulable.</em></p>
+
+<p><em>Proof:</em> Let <em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its derivative&#39;s maximum absolute value).  Now, define <em>g</em>(<em>&lambda;</em>) as a function with the following properties:</p>
 
 <ul>
 <li><em>g</em> is a polynomial of degree ceil(<em>M</em>) or greater (so that <em>g</em>&#39;s Lipschitz constant is <em>M</em> or greater).</li>
@@ -1183,7 +1184,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>For every <em>&lambda;</em> in the domain of <em>f</em>, <em>g</em>(<em>&lambda;</em>) &ge; <em>f</em>(<em>&lambda;</em>).</li>
 </ul>
 
-<p>Then, let <em>h</em>(<em>&lambda;</em>) = <em>f</em>(<em>&lambda;</em>)/<em>g</em>(<em>&lambda;</em>) (so that <em>f</em>(<em>&lambda;</em>) = <em>g</em>(<em>&lambda;</em>)*<em>h</em>(<em>&lambda;</em>)).  If <em>h</em> is identically 0, then we return 0 and we&#39;re done.</p>
+<p>Then, let <em>h</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>g</em>(<em>&nu;</em>).  If <em>h</em> is identically 0, then we return 0 and we&#39;re done.</p>
 
 <p>Then, use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0.  Otherwise, we know that the input coin&#39;s probability of heads is neither 0 nor 1, and:</p>
 
@@ -1193,6 +1194,52 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ul>
 
 <p>Thus, <em>f</em> admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;</p>
+
+<p><strong>Lemma 2.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1, then f is strongly simulable.</em></p>
+
+<p><em>Proof:</em> Let <em>M</em> be the Lipschitz constant of <em>f</em>, and define <em>g</em>(<em>&lambda;</em>) and <em>&gamma;</em>(<em>&lambda;</em>) as functions with the following properties:</p>
+
+<ul>
+<li><em>g</em> and <em>&omega;</em> are polynomials of degree ceil(<em>M</em>) or greater.</li>
+<li><em>g</em> and <em>&omega;</em> are written in Bernstein form, and all its coefficients are in the interval [0, 1].</li>
+<li>For both <em>g</em> and <em>&omega;</em>, the first coefficient is 0 and the last coefficient is 1.</li>
+<li>For every <em>&lambda;</em> in the domain of <em>f</em>, <em>g</em>(<em>&lambda;</em>) &ge; <em>f</em>(<em>&lambda;</em>).</li>
+<li>For every <em>&lambda;</em> in the domain of <em>f</em>, <em>&omega;</em>(<em>&lambda;</em>) &le; <em>f</em>(<em>&lambda;</em>).</li>
+</ul>
+
+<p>Then, let&mdash;</p>
+
+<ul>
+<li><em>h</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>g</em>(<em>&nu;</em>),</li>
+<li><em>q</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>&omega;</em>(<em>&nu;</em>)/<em>h</em>(<em>&nu;</em>), and</li>
+<li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
+</ul>
+
+<p>Then:</p>
+
+<ol>
+<li>If <em>h</em> is identically 0, return 0.</li>
+<li>Use the algorithm given in Proposition 1 to simulate <em>g</em>(<em>&lambda;</em>).  If the algorithm returns 0, return 0.</li>
+<li>By now we know that the input coin&#39;s probability of heads is not 0, since step 2 returned 1 which can only happen if the input coin didn&#39;t return all zeros.</li>
+<li>If <em>h</em> is identically 1, return 1.</li>
+<li>Use the algorithm given in Proposition 1 to simulate <em>q</em>(<em>&lambda;</em>).  If the algorithm returns 1, return 1.</li>
+<li>By now we know that the input coin&#39;s probability of heads is neither 0 nor 1, both from step 2 and because step 5 returned 0 which can only happen if the input coin didn&#39;t return all ones.</li>
+<li>Run a Bernoulli factory algorithm for <em>r</em>(<em>&lambda;</em>) that uses the input coin (and possibly outside randomness).  Since <em>r</em> is continuous and polynomially bounded and the input coin&#39;s probability of heads is neither 0 nor 1, <em>r</em> is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.</li>
+</ol>
+
+<p>Thus, <em>f</em> admits an algorithm that uses only the input coin and no outside randomness, and so is strongly simulable. &#x25a1;</p>
+
+<p><em>Proof of Proposition 2:</em>  There are five cases:</p>
+
+<ol>
+<li>If neither 0 nor 1 are in the domain of <em>f</em>, then <em>f</em> is strongly simulable by the discussion above.</li>
+<li><em>f</em>(0) = <em>f</em>(1) = 0: Apply Lemma 1.</li>
+<li><em>f</em>(0) = <em>f</em>(1) = 1: Apply Lemma 1, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
+<li><em>f</em>(0) = 0 and <em>f</em>(1) = 1: Apply Lemma 2.</li>
+<li><em>f</em>(0) = 1 and <em>f</em>(1) = 0: Apply Lemma 2, but take <em>f</em> = 1 &minus; <em>f</em> and return 1 minus the output of the lemma&#39;s algorithm.</li>
+</ol>
+
+<p>&#x25a1;</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 
@@ -1210,7 +1257,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p><strong>Lemma 1.</strong> <em>Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2*n] .  Then <strong>E</strong>[f(X<sub>k</sub>/n)] is nondecreasing as k increases.</em></p>
 
-<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note15"><strong>(15)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof.</em> This is equivalent to verifying whether <em>X</em><sub><em>m</em>+1</sub>/<em>n</em> &succeq; <em>X</em><sub><em>m</em></sub>/<em>n</em> (and, obviously by extension, <em>X</em><sub><em>m</em>+1</sub> &succeq; <em>X</em><sub><em>m</em></sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.   This means that the probability that (<em>X</em><sub><em>m</em>+1</sub> &le; <em>j</em>) is less than or equal to that for <em>X</em><sub><em>m</em></sub> for each <em>j</em> in the interval [0, <em>n</em>].  A proof of this was given by the user &quot;Henry&quot; of the <em>Mathematics Stack Exchange</em> community<sup><a href="#Note16"><strong>(16)</strong></a></sup>. &#x25a1;</p>
 
 <p>Lemma 6(i) of Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes <em>Hölder continuous</em> functions, namely continuous functions with no slope &quot;steeper&quot; than any &quot;nth&quot; root.</p>
 
@@ -1261,11 +1308,11 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if <em>&omega;</em>(0) &gt; 0, because the bounds proved remain correct even if <em>&omega;</em> is overestimated.  The following functions have a simple <em>&omega;</em> that satisfies the lemma:
 
 <ol>
-<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note16"><strong>(16)</strong></a></sup>; (Gal 1995)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</li>
-<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note16"><strong>(16)</strong></a></sup>; (Gal 1995)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone increasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1) &minus; <em>f</em>(1&minus;<em>x</em>) (Gal 1990)<sup><a href="#Note17"><strong>(17)</strong></a></sup>; (Gal 1995)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
+<li>If <em>f</em> is monotone decreasing and convex, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(0) &minus; <em>f</em>(<em>x</em>) (Gal 1990)<sup><a href="#Note17"><strong>(17)</strong></a></sup>; (Gal 1995)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
 <li>If <em>f</em> is monotone increasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(<em>x</em>) &minus; <em>f</em>(0) (by symmetry with 2).</li>
 <li>If <em>f</em> is monotone decreasing and concave, <em>&omega;</em>(<em>x</em>) can equal <em>f</em>(1&minus;<em>x</em>) &minus; <em>f</em>(1) (by symmetry with 1).</li>
-<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.</li>
+<li>If <em>f</em> is concave and is monotone increasing then monotone decreasing, then <em>&omega;</em>(<em>h</em>) can equal (<em>f</em>(min(<em>h</em>, <em>&sigma;</em>))+(<em>f</em>(1&minus;min(<em>h</em>, 1&minus;<em>&sigma;</em>))&minus;<em>f</em>(1)), where <em>&sigma;</em> is the point where <em>f</em> stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
 </ol></li>
 </ol>
 </blockquote>
