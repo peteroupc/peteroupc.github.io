@@ -673,14 +673,14 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 <a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[Randomized vs. Non-Randomized Algorithms](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
 
 A function _f_ is strongly simulable only if&mdash;
 
 1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 2. _f_ maps the closed interval [0, 1] or a subset of it, and
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
-4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_,
+4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
 
 Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
@@ -688,12 +688,14 @@ We can show that _f_ is strongly simulable on its domain showing that there is a
 
 **Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
 
-_Proof:_ Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
+_Proof:_ Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0).
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1).
 4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
+
+(By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
 
 Step 4 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
 
@@ -701,17 +703,14 @@ Step 4 can be done, for example, by first generating unbiased bits (such as with
 
 The proof will use several lemmas.
 
-**Lemma 1.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
+**Lemma 1.** _If f meets conditions 1 through 4, and meets the additional condition below, then f is strongly simulable._
 
-1. _There is a polynomial g(&lambda;) in Bernstein form whose coefficients are in the interval [0, 1]._
-2. _If 0 is in the domain of f, g's first coefficient is 0._
-3. _If 1 is in the domain of f, g's last coefficient is 0._
-4. _For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;)._
+- _There is a polynomial g(&lambda;) in Bernstein form whose coefficients are in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &ge; f(&lambda;) for every &lambda; in the domain of f._
 
 _Proof:_ Let _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_).
 
 1. If _h_ is identically 0, return 0.
-2. Otherwise, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0. (By additional conditions 2 and 3, if 0 is in the domain of _f_, _g_(0) will be 0, and if 1 is in the domain, _g_(1) will be 0, so that in either case, 0 will be returned if _&lambda;_ is either 0 or 1.)
+2. Otherwise, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0. (By additional condition, 0 will be returned if _&lambda;_ is either 0 or 1.)
 3. Now, we know that the input coin's probability of heads is neither 0 nor 1.
 4. If _h_ is identically 1, return 1.
 5. Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
@@ -720,12 +719,11 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 
 **Lemma 2.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
 
-1. _There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials have the same degree and their coefficients are all in the interval [0, 1]._
-2. _If 0 is in the domain of f, each polynomial's first coefficient is 0._
-3. _Each polynomial's last coefficient is 1._
+1. _There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials' coefficients are all in the interval [0, 1]._
+2. _g(0) = &omega;(0) = f(0) = 0 (so that 0 is in the domain of f)._
+3. _g(1) = &omega;(1) = f(1) = 1 (so that 1 is in the domain of f)._
 4. _For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;)._
 5. _For every &lambda; in the domain of f, &omega;(&lambda;) &le; f(&lambda;)._
-6. _f(1) = 1, and 1 is in the domain of f._
 
 _Proof:_ Let&mdash;
 
@@ -736,7 +734,7 @@ _Proof:_ Let&mdash;
 Then:
 
 1. If _h_ is identically 0, return 0.
-2. Use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.   (By additional conditions 2, 3, and 6, if 0 is in the domain of _f_, _g_(0) will be 0, and also _g_(1) = _f_(1) = 1, so that _g_(0) or _g_(1) will be returned if _&lambda;_ is 0 or 1, respectively.)
+2. Use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.   (By additional conditions 2, and 3, _g_(0) or _g_(1) will be returned if _&lambda;_ is 0 or 1, respectively.)
 3. By now we know that the input coin's probability of heads is not 0, since step 2 returned 1 which can only happen if the input coin didn't return all zeros.
 4. If _h_ is identically 1, return 1.
 5. Use the algorithm given in Proposition 1 to simulate _q_(_&lambda;_).  If the algorithm returns 1, return 1.
@@ -752,12 +750,9 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 
 _Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value), let _l_ be the value of _f_ at the greatest lower bound of _f_'s domain, and let _u_ be the value of _f_ at the least upper bound of _f_'s domain.
 
-To build _g_, take its degree as ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater and _g_ has ceil(_M_) + 1 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1.  Then _g_ will meet the additional conditions for Lemma 1 and the result follows from that lemma. &#x25a1;
+To build _g_, take its degree as ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater and _g_ has ceil(_M_) + 1 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1.  Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
 
-**Lemma 4.** _If f meets conditions 1 through 4, is Lipschitz continuous, and meets the additional conditions below, then f is strongly simulable._
-
-1. _f(0) equals 0 whenever 0 is in the domain of f._
-2. _f(1) = 1, and 1 is in the domain of f._
+**Lemma 4.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable._
 
 _Proof:_ Let _M_ and _l_ be as in Lemma 3.
 
@@ -766,32 +761,31 @@ To build _g_ and _&omega;_, take their degree as ceil(_M_) or greater (so that t
 _Proof of Proposition 2:_  The following cases can occur:
 
 1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
-2. If 0 but not 1 is in the domain of _f_ and _f_(0) = 0: Apply Lemma 3.
-3. If 0 but not 1 is in the domain of _f_ and _f_(0) = 1: Apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
-4. If 1 but not 0 is in the domain of _f_ and _f_(1) = 0: Apply Lemma 3.
-5. If 1 but not 0 is in the domain of _f_ and _f_(1) = 1: Apply Lemma 4.
-6. _f_(0) = _f_(1) = 0: Apply Lemma 3.
-7. _f_(0) = _f_(1) = 1: Apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
-8. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 4.
-9. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 4, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+2. If 0 but not 1 is in the domain of _f_: If _f_(0) = 0, apply Lemma 3.  If _f_(0) = 1, apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(0) = 0 and satisfy the lemma.)
+3. If 1 but not 0 is in the domain of _f_: If _f_(1) = 0, apply Lemma 3.  If _f_(1) = 1, apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(1) = 0 and satisfy the lemma.)
+4. _f_(0) = _f_(1) = 0: Apply Lemma 3.
+5. _f_(0) = _f_(1) = 1: Apply Lemma 3, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
+6. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 4.
+7. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 4, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
 
-**Proposition 3.** _If f meets conditions 1 through 4, and meets the additional condition below, then f is strongly simulable._
+**Proposition 3.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
 
-- _If 1 is in the domain of f and f(1) = 1, then the additional conditions in Lemma 2 are met. Otherwise, the additional conditions in Lemma 1 are met._
+1. _If f(0) = 0 or f(1) = 0 or both, then f is bounded above by a polynomial g(x) in Bernstein form whose coefficients are in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f._
+2. _If f(0) = 1 or f(1) = 1 or both, then f is bounded below by another polynomial just described._
 
 _Proof:_  The following cases can occur:
 
 1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
-2. If 0 but not 1 is in the domain of _f_ and _f_(0) = 0: Apply Lemma 1.
-3. If 0 but not 1 is in the domain of _f_ and _f_(0) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = 0 and satisfy the lemma.)
-4. If 1 but not 0 is in the domain of _f_ and _f_(1) = 0: Apply Lemma 1.
-5. If 1 but not 0 is in the domain of _f_ and _f_(1) = 1: Apply Lemma 2.
-6. _f_(0) = _f_(1) = 0: Apply Lemma 1.
-7. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = _f_(1) = 0 and satisfy the lemma.)
-8. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
-9. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = 0 and _f_(0) = 1 and satisfy the lemma.)
+2. If 0 but not 1 is in the domain of _f_: If _f_(0) = 0, apply Lemma 1.  If _f_(0) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(0) = 0 and satisfy the lemma.)
+3. If 1 but not 0 is in the domain of _f_: If _f_(1) = 0, apply Lemma 1.  If _f_(1) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(1) = 0 and satisfy the lemma.)
+4. _f_(0) = _f_(1) = 0: Apply Lemma 1.
+5. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = _f_(1) = 0 and satisfy the lemma.)
+6. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
+7. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = 0 and _f_(0) = 1 and satisfy the lemma.)
 
 &#x25a1;
+
+It is suspected that the conditions in Proposition 3 are necessary and sufficient for _f_(_&lambda;_) to be strongly simulable.
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
