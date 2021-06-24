@@ -768,22 +768,14 @@ _Proof of Proposition 2:_  The following cases can occur:
 6. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 4.
 7. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 4, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm.
 
+&#x25a1;
+
+Replacing Lemma 3 and Lemma 4 in the proof of Proposition 2 with Lemma 1 and Lemma 2, respectively, leads to:
+
 **Proposition 3.** _If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable._
 
 1. _If f(0) = 0 or f(1) = 0 or both, then f is bounded above by a polynomial g(x) in Bernstein form whose coefficients are in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f._
 2. _If f(0) = 1 or f(1) = 1 or both, then f is bounded below by another polynomial just described._
-
-_Proof:_  The following cases can occur:
-
-1. If neither 0 nor 1 are in the domain of _f_, then _f_ is strongly simulable by the discussion above.
-2. If 0 but not 1 is in the domain of _f_: If _f_(0) = 0, apply Lemma 1.  If _f_(0) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(0) = 0 and satisfy the lemma.)
-3. If 1 but not 0 is in the domain of _f_: If _f_(1) = 0, apply Lemma 1.  If _f_(1) = 1, apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm (this will bring _f_(1) = 0 and satisfy the lemma.)
-4. _f_(0) = _f_(1) = 0: Apply Lemma 1.
-5. _f_(0) = _f_(1) = 1: Apply Lemma 1, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = _f_(1) = 0 and satisfy the lemma.)
-6. _f_(0) = 0 and _f_(1) = 1: Apply Lemma 2.
-7. _f_(0) = 1 and _f_(1) = 0: Apply Lemma 2, but take _f_ = 1 &minus; _f_ and return 1 minus the output of the lemma's algorithm. (This will bring _f_(0) = 0 and _f_(0) = 1 and satisfy the lemma.)
-
-&#x25a1;
 
 It is suspected that the conditions in Proposition 3 are necessary and sufficient for _f_(_&lambda;_) to be strongly simulable.
 
