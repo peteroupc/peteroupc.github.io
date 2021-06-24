@@ -625,7 +625,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
-- <small><sup id=Note2>(2)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_, _y_ pairs, where _x_ and _y_ are each in \[0, 1\] and _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
+- <small><sup id=Note2>(2)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
 - <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.</small>
 - <small><sup id=Note4>(4)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
 - <small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
@@ -673,12 +673,12 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 <a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[Randomized vs. Non-Randomized Algorithms](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
 
 A function _f_ is strongly simulable only if&mdash;
 
 1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
-2. _f_ maps the closed interval [0, 1] or a subset of it, and
+2. _f_ maps the closed interval [0, 1] or a subset of it to [0, 1], and
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
 
@@ -691,8 +691,8 @@ We can show that _f_ is strongly simulable on its domain showing that there is a
 _Proof:_ Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
-2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0).
-3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1).
+2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
+3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(0) must be either 0 or 1.)
 4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
 (By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
@@ -743,10 +743,7 @@ Then:
 
 Thus, _f_ admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;
 
-**Lemma 3.** _If f meets conditions 1 through 4, is Lipschitz continuous, and meets the additional conditions below, then f is strongly simulable._
-
-1. _f(0) equals 0 whenever 0 is in the domain of f._
-2. _f(1) equals 0 whenever 1 is in the domain of f._
+**Lemma 3.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable._
 
 _Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value), let _l_ be the value of _f_ at the greatest lower bound of _f_'s domain, and let _u_ be the value of _f_ at the least upper bound of _f_'s domain.
 

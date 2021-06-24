@@ -1084,7 +1084,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
-<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em>, <em>y</em> pairs, where <em>x</em> and <em>y</em> are each in [0, 1] and <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
+<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
 <li><small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</small></li>
 <li><small><sup id=Note4>(4)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
 <li><small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
@@ -1161,8 +1161,8 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ol>
 <li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
-<li>If 0 is in the domain of <em>f</em> and if <em>j</em> is 0, return <em>f</em>(0).</li>
-<li>If 1 is in the domain of <em>f</em> and if <em>j</em> is <em>n</em>, return <em>f</em>(1).</li>
+<li>If 0 is in the domain of <em>f</em> and if <em>j</em> is 0, return <em>f</em>(0). (By condition 3, <em>f</em>(0) must be either 0 or 1.)</li>
+<li>If 1 is in the domain of <em>f</em> and if <em>j</em> is <em>n</em>, return <em>f</em>(1). (By condition 4, <em>f</em>(0) must be either 0 or 1.)</li>
 <li>Generate a uniform(0, 1) random variate, then return 1 if that variate is less than <em>a</em>[<em>j</em>] (<em>a</em>[<em>j</em>] is the coefficient <em>j</em> of the polynomial written in Bernstein form), or 0 otherwise.</li>
 </ol>
 
@@ -1224,12 +1224,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;</p>
 
-<p><strong>Lemma 3.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and meets the additional conditions below, then f is strongly simulable.</em></p>
-
-<ol>
-<li><em>f(0) equals 0 whenever 0 is in the domain of f.</em></li>
-<li><em>f(1) equals 0 whenever 1 is in the domain of f.</em></li>
-</ol>
+<p><strong>Lemma 3.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable.</em></p>
 
 <p><em>Proof:</em> Let <em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its &quot;slope&quot; function&#39;s maximum absolute value), let <em>l</em> be the value of <em>f</em> at the greatest lower bound of <em>f</em>&#39;s domain, and let <em>u</em> be the value of <em>f</em> at the least upper bound of <em>f</em>&#39;s domain.</p>
 
