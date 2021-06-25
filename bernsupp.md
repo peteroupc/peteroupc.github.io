@@ -673,7 +673,7 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 <a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[Randomized vs. Non-Randomized Algorithms](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
 
 A function _f_ is strongly simulable only if&mdash;
 
@@ -684,7 +684,7 @@ A function _f_ is strongly simulable only if&mdash;
 
 Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
-We can show that _f_ is strongly simulable on its domain showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
+We can show that _f_ is strongly simulable on its domain by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
 **Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
 
@@ -692,7 +692,7 @@ _Proof:_ Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
-3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(0) must be either 0 or 1.)
+3. If 1 is in the domain of _f_ and if _j_ is _n_, return _f_(1). (By condition 4, _f_(1) must be either 0 or 1.)
 4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _a_\[_j_\] (_a_\[_j_\] is the coefficient _j_ of the polynomial written in Bernstein form), or 0 otherwise.
 
 (By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
@@ -710,7 +710,7 @@ The proof will use several lemmas.
 _Proof:_ Let _h_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_g_(_&nu;_).
 
 1. If _h_ is identically 0, return 0.
-2. Otherwise, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0. (By additional condition, 0 will be returned if _&lambda;_ is either 0 or 1.)
+2. Otherwise, use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0. (By the additional condition, 0 will be returned if _&lambda;_ is either 0 or 1.)
 3. Now, we know that the input coin's probability of heads is neither 0 nor 1.
 4. If _h_ is identically 1, return 1.
 5. Otherwise, we run a Bernoulli factory algorithm for _h_(_&lambda;_) that uses the input coin (and possibly outside randomness).  Since _h_ is continuous and polynomially bounded and the input coin's probability of heads is neither 0 nor 1, _h_ is strongly simulable; we can replace the outside randomness in the algorithm with unbiased random bits via the von Neumann trick.
@@ -734,7 +734,7 @@ _Proof:_ Let&mdash;
 Then:
 
 1. If _h_ is identically 0, return 0.
-2. Use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.   (By additional conditions 2, and 3, _g_(0) or _g_(1) will be returned if _&lambda;_ is 0 or 1, respectively.)
+2. Use the algorithm given in Proposition 1 to simulate _g_(_&lambda;_).  If the algorithm returns 0, return 0.   (By additional conditions 2 and 3, _g_(0) or _g_(1) will be returned if _&lambda;_ is 0 or 1, respectively.)
 3. By now we know that the input coin's probability of heads is not 0, since step 2 returned 1 which can only happen if the input coin didn't return all zeros.
 4. If _h_ is identically 1, return 1.
 5. Use the algorithm given in Proposition 1 to simulate _q_(_&lambda;_).  If the algorithm returns 1, return 1.
