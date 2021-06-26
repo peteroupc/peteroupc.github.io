@@ -55,6 +55,7 @@ The algorithm, called **Algorithm A** in this document, follows.
 >
 >    and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.
 > 2. As can be seen in Feng et al. (2016)<sup>[**(2)**](#Note2)</sup>, the following is equivalent to steps 2 and 3 of _Algorithm A_: "Let G be 0. Do this _k_ times: 'Flip a coin until it shows heads, let _r_ be the number of flips (including the last), generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated probability of heads is then (_k_&minus;1)/G.", and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) "geometric" distribution with unknown mean: "Let G be 0. Do this _k_ times: 'Take a sample from the stream, call it _r_, generate a gamma random variate with shape parameter _r_ and scale 1, and add that variate to G.' The estimated mean is then (_k_&minus;1)/G." (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like _Algorithm A_.
+> 3. The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.
 
 <a id=A_Relative_Error_Algorithm_for_a_Bounded_Stream></a>
 ## A Relative-Error Algorithm for a Bounded Stream
@@ -78,14 +79,13 @@ The algorithm, called **Algorithm B** in this document, follows.
 3. (Stage 1: Modified gamma Bernoulli approximation scheme.) While _b_ is less than _k_:
     1. Add 1 to _n_.
     2. Take a sample from the stream, call it _s_.
-    3. Generate a uniform(0, 1) random variate, call it _u_.
-    4. If _u_ is less than _s_, add 1 to _b_.
+    3. With probability _s_ (for example, if a newly generated uniform(0, 1) random variate is less than _s_), add 1 to _b_.
 4. Set _gb_ to _k_ + 2, then generate a gamma random variate with shape parameter _n_ and scale 1, then divide _gb_ by that variate.
 5. (Find the sample size for the next stage.) Set _c1_ to 2\*ln(3/_&delta;_).
 6. Generate a Poisson random variate with mean _c1_/(_&epsilon;_\*_gb_), call it _n_.
 7. Run the standard deviation sub-algorithm (given later) _n_ times.  Set _A_ to the number of 1's returned by that sub-algorithm this way.
 8. Set _csquared_ to (_A_ / _c1_ + 1 / 2 + sqrt(_A_ / _c1_ + 1 / 4)) * (1 + _&epsilon;_<sup>1 / 3</sup>)<sup>2</sup>\*_&epsilon;_/_gb_.
-9. Set _n_ to ceil((2\*ln(6/_&delta;_)/_&epsilon;_<sup>2</sup>)/(1&minus;_&epsilon;_<sup>1/3</sup>)).
+9. Set _n_ to ceil((2\*ln(6/_&delta;_)/_&epsilon;_<sup>2</sup>)/(1&minus;_&epsilon;_<sup>1/3</sup>)), or an integer greater than this.
 10. (Stage 2: Light-tailed sample average.)  Set _e0_ to _&epsilon;_<sup>1/3</sup>.
 11. Set _mu0_ to _gb_/(1&minus;_e0_<sup>2</sup>).
 12. Set _alpha_ to _&epsilon;_/(_csquared_\*_mu0_).
@@ -102,7 +102,10 @@ The standard deviation sub-algorithm follows.
 3. Generate a uniform(0, 1) random variate, call it _u_.
 4. If _u_ is less than (_x_&minus;_y_)<sup>2</sup>, return 1.  Otherwise, return 0.
 
-> **Note:** As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in _Algorithm B_, and the algorithm will still work.
+> **Notes:**
+>
+> 1. As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, _m_], where _m_ is a known number, we can divide the stream's numbers by _m_ before using them in _Algorithm B_, and the algorithm will still work.
+> 2. While this algorithm is exact in theory (assuming computers can store real numbers of any precision), practical implementations of it can cause numerical errors, such as rounding and cancellations, unless care is taken.
 
 <a id=An_Absolute_Error_Adaptive_Algorithm></a>
 ## An Absolute-Error Adaptive Algorithm
@@ -122,6 +125,8 @@ The algorithm has the following parameters:
 - _q_: The degree of the _q_<sup>th</sup> c.a.m.  _q_ must be greater than _p_.
 - _&kappa;_: Maximum value allowed for the following value: the _q_<sup>th</sup> c.a.m.'s  _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root.  (If _p_ = 2 and _q_ = 4, this is the maximum value allowed for the kurtosis's 4th root (Hickernell et al. 2012)<sup>[**(6)**](#Note6)</sup> <sup>[**(7)**](#Note7)</sup>.) _&kappa;_ may not be less than 1.
 
+Both _p_ and _q_ must be 1 or greater and are usually integers.
+
 For example:
 
 - With parameters _p_ = 2, _q_ = 4, _&epsilon;_ = 1/10, _&delta;_ = 1/16, _&kappa;_ = 1.1, the algorithm assumes the stream's numbers are distributed so that the kurtosis's 4th root, that is, the 4th c.a.m.'s 4th root (_q_=4) divided by the standard deviation (_p_=2), is no more than 1.1 (or alternatively, the kurtosis is no more than 1.1<sup>4</sup> = 1.4641), and will return an estimate that's within 1/10 of the true mean with probability at least (1 &minus; 1/16) or 15/16.
@@ -130,13 +135,13 @@ For example:
 The algorithm, called **Algorithm C** in this document, follows.
 
 1. If _&kappa;_ is 1:
-    1. Set _n_ to ceil(ln(1/_&delta;_)/ln(2))+1.
+    1. Set _n_ to ceil(ln(1/_&delta;_)/ln(2))+1 (or an integer greater than this).
     2. Get _n_ samples from the stream and return (_mn_ + _mx_)/2, where _mx_ is the highest sample and _mn_ is the lowest.
 2. Set _k_ to ceil((2*ln(1/_&delta;_))/ln(4/3)).  If _k_ is even, add 1 to _k_.
 3. Set _kp_ to _k_.
 4. Set _&kappa;_ to _&kappa;_<sup>(_p_\*_q_/(_q_&minus;_p_))</sup>.
 5. If _q_ is 2 or less:
-    - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
+    - Set _m_ to ceil(3\*_&kappa;_\*48<sup>1/(_q_&minus;1)</sup>) (or an integer greater than this); set _s_ to 1+1/(_q_&minus;1); set _h_ to 16<sup>1/(_q_&minus;1)</sup>\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
 6. If _q_ is greater than 2:
     - Set _m_ to ceil(144\*_&kappa;_); set _s_ to 2; set _h_ to 16\*_&kappa;_/_&epsilon;_<sup>_s_</sup>.
 7. (Stage 1: Estimate _p_<sup>th</sup> c.a.m. to determine number of samples for stage 2.)  Create _k_ many blocks.  For each block:
@@ -144,7 +149,7 @@ The algorithm, called **Algorithm C** in this document, follows.
     2. Add the samples and divide by _m_ to get this block's sample mean, _mean_.
     3. Calculate the estimate of the _p_<sup>th</sup> c.a.m. for this block, which is: (_&sum;_<sub>_i_ = 0, ..., _k_&minus;1</sub> (_block_\[_i_\] &minus; _mean_)<sup>_p_</sup>)/_m_, where _block_\[_i_\] is the sample at position _i_ of the block (positions start at 0).
 8. (Find the median of the _p_<sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set _median_ to the value in the middle of the sorted list (at position floor(_k_/2) with positions starting at 0); this works because _k_ is odd.
-9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_h_ \* _median_<sup>_s_</sup>)).
+9. (Calculate sample size for the next stage.)  Set _mp_ to max(1, ceil(_h_ \* _median_<sup>_s_</sup>)), or an integer greater than this.
 10. (Stage 2: Estimate of the sample mean.) Create _kp_ many blocks.  For each block:
     1. Get _mp_ samples from the stream.
     2. Add the samples and divide by _mp_ to get this block's sample mean.

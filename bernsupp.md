@@ -673,7 +673,7 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 <a id=Which_functions_don_t_require_outside_randomness_to_simulate></a>
 ### Which functions don't require outside randomness to simulate?
 
-The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms).
+The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms)".
 
 A function _f_ is strongly simulable only if&mdash;
 
@@ -682,7 +682,7 @@ A function _f_ is strongly simulable only if&mdash;
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
 
-Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1 when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
+Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
 We can show that _f_ is strongly simulable on its domain by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 

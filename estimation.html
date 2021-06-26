@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/06/17"><meta name="citation_online_date" content="2021/06/17"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/06/26"><meta name="citation_online_date" content="2021/06/26"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -73,6 +73,7 @@
 
 <p>and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.</p></li>
 <li>As can be seen in Feng et al. (2016)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
+<li>The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.</li>
 </ol>
 </blockquote>
 
@@ -106,15 +107,14 @@
 <ol>
 <li>Add 1 to <em>n</em>.</li>
 <li>Take a sample from the stream, call it <em>s</em>.</li>
-<li>Generate a uniform(0, 1) random variate, call it <em>u</em>.</li>
-<li>If <em>u</em> is less than <em>s</em>, add 1 to <em>b</em>.</li>
+<li>With probability <em>s</em> (for example, if a newly generated uniform(0, 1) random variate is less than <em>s</em>), add 1 to <em>b</em>.</li>
 </ol></li>
 <li>Set <em>gb</em> to <em>k</em> + 2, then generate a gamma random variate with shape parameter <em>n</em> and scale 1, then divide <em>gb</em> by that variate.</li>
 <li>(Find the sample size for the next stage.) Set <em>c1</em> to 2*ln(3/<em>&delta;</em>).</li>
 <li>Generate a Poisson random variate with mean <em>c1</em>/(<em>&epsilon;</em>*<em>gb</em>), call it <em>n</em>.</li>
 <li>Run the standard deviation sub-algorithm (given later) <em>n</em> times.  Set <em>A</em> to the number of 1&#39;s returned by that sub-algorithm this way.</li>
 <li>Set <em>csquared</em> to (<em>A</em> / <em>c1</em> + 1 / 2 + sqrt(<em>A</em> / <em>c1</em> + 1 / 4)) * (1 + <em>&epsilon;</em><sup>1 / 3</sup>)<sup>2</sup>*<em>&epsilon;</em>/<em>gb</em>.</li>
-<li>Set <em>n</em> to ceil((2*ln(6/<em>&delta;</em>)/<em>&epsilon;</em><sup>2</sup>)/(1&minus;<em>&epsilon;</em><sup>1/3</sup>)).</li>
+<li>Set <em>n</em> to ceil((2*ln(6/<em>&delta;</em>)/<em>&epsilon;</em><sup>2</sup>)/(1&minus;<em>&epsilon;</em><sup>1/3</sup>)), or an integer greater than this.</li>
 <li>(Stage 2: Light-tailed sample average.)  Set <em>e0</em> to <em>&epsilon;</em><sup>1/3</sup>.</li>
 <li>Set <em>mu0</em> to <em>gb</em>/(1&minus;<em>e0</em><sup>2</sup>).</li>
 <li>Set <em>alpha</em> to <em>&epsilon;</em>/(<em>csquared</em>*<em>mu0</em>).</li>
@@ -138,7 +138,12 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, <em>m</em>], where <em>m</em> is a known number, we can divide the stream&#39;s numbers by <em>m</em> before using them in <em>Algorithm B</em>, and the algorithm will still work.</p>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>As noted in Huber and Jones, if the stream of random variates takes on values in the interval [0, <em>m</em>], where <em>m</em> is a known number, we can divide the stream&#39;s numbers by <em>m</em> before using them in <em>Algorithm B</em>, and the algorithm will still work.</li>
+<li>While this algorithm is exact in theory (assuming computers can store real numbers of any precision), practical implementations of it can cause numerical errors, such as rounding and cancellations, unless care is taken.</li>
+</ol>
 </blockquote>
 
 <p><a id=An_Absolute_Error_Adaptive_Algorithm></a></p>
@@ -164,6 +169,8 @@
 <li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)<sup><a href="#Note6"><strong>(6)</strong></a></sup> <sup><a href="#Note7"><strong>(7)</strong></a></sup>.) <em>&kappa;</em> may not be less than 1.</li>
 </ul>
 
+<p>Both <em>p</em> and <em>q</em> must be 1 or greater and are usually integers.</p>
+
 <p>For example:</p>
 
 <ul>
@@ -177,7 +184,7 @@
 <li>If <em>&kappa;</em> is 1:
 
 <ol>
-<li>Set <em>n</em> to ceil(ln(1/<em>&delta;</em>)/ln(2))+1.</li>
+<li>Set <em>n</em> to ceil(ln(1/<em>&delta;</em>)/ln(2))+1 (or an integer greater than this).</li>
 <li>Get <em>n</em> samples from the stream and return (<em>mn</em> + <em>mx</em>)/2, where <em>mx</em> is the highest sample and <em>mn</em> is the lowest.</li>
 </ol></li>
 <li>Set <em>k</em> to ceil((2*ln(1/<em>&delta;</em>))/ln(4/3)).  If <em>k</em> is even, add 1 to <em>k</em>.</li>
@@ -186,7 +193,7 @@
 <li>If <em>q</em> is 2 or less:
 
 <ul>
-<li>Set <em>m</em> to ceil(3*<em>&kappa;</em>*48<sup>1/(<em>q</em>&minus;1)</sup>); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>h</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
+<li>Set <em>m</em> to ceil(3*<em>&kappa;</em>*48<sup>1/(<em>q</em>&minus;1)</sup>) (or an integer greater than this); set <em>s</em> to 1+1/(<em>q</em>&minus;1); set <em>h</em> to 16<sup>1/(<em>q</em>&minus;1)</sup>*<em>&kappa;</em>/<em>&epsilon;</em><sup><em>s</em></sup>.</li>
 </ul></li>
 <li>If <em>q</em> is greater than 2:
 
@@ -201,7 +208,7 @@
 <li>Calculate the estimate of the <em>p</em><sup>th</sup> c.a.m. for this block, which is: (<em>&sum;</em><sub><em>i</em> = 0, ..., <em>k</em>&minus;1</sub> (<em>block</em>[<em>i</em>] &minus; <em>mean</em>)<sup><em>p</em></sup>)/<em>m</em>, where <em>block</em>[<em>i</em>] is the sample at position <em>i</em> of the block (positions start at 0).</li>
 </ol></li>
 <li>(Find the median of the <em>p</em><sup>th</sup> c.a.m. estimates.)  Sort the estimates calculated by step 7 in ascending order, and set <em>median</em> to the value in the middle of the sorted list (at position floor(<em>k</em>/2) with positions starting at 0); this works because <em>k</em> is odd.</li>
-<li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>h</em> * <em>median</em><sup><em>s</em></sup>)).</li>
+<li>(Calculate sample size for the next stage.)  Set <em>mp</em> to max(1, ceil(<em>h</em> * <em>median</em><sup><em>s</em></sup>)), or an integer greater than this.</li>
 <li>(Stage 2: Estimate of the sample mean.) Create <em>kp</em> many blocks.  For each block:
 
 <ol>
