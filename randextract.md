@@ -56,8 +56,8 @@ I maintain [**source code of this extractor and the Peres extractor**](https://g
 
 Pae's "entropy-preserving" binarization (Pae 2020)<sup>[**(13)**](#Note13)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
 
-1. Let _f_ be a number in the interval \[0, _n_) that was previously randomly generated.  If _f_ is greater than 0, output a 1 (and go to step 2).
-2. If _f_ is less than _n_ &minus; 1, output a 0 _x_ times, where _x_ is (_n_ &minus; 1) &minus; _f_.
+1. Let _f_ be a number in the interval \[0, _n_) that was previously randomly generated.  If _f_ is greater than 0, write a 1 (and go to step 2).
+2. If _f_ is less than _n_ &minus; 1, write a 0 _x_ times, where _x_ is (_n_ &minus; 1) &minus; _f_.
 
 Some additional notes:
 

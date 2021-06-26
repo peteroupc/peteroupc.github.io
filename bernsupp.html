@@ -42,7 +42,7 @@
 <p>The algorithms for <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory functions</strong></a>, described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function <em>f</em>(<em>&lambda;</em>), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:</p>
 
 <ol>
-<li>Generate a uniform(0, 1) random number, <em>U</em>.</li>
+<li>Generate a uniform(0, 1) random variate, <em>U</em>.</li>
 <li>Flip the input coin, then build an upper and lower bound for <em>f</em>(<em>&lambda;</em>), based on the outcomes of the flips so far.</li>
 <li>If <em>U</em> is less than or equal to the lower bound, return 1. If <em>U</em> is greater than the upper bound, return 0.  Otherwise, go to step 2.</li>
 </ol>
@@ -172,7 +172,7 @@
 <li><em>f&prime;</em>(<em>&lambda;</em>), the &quot;slope&quot; function of <em>f</em>, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,</li>
 </ul>
 
-<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random number <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup> (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
+<p>then step 2 can be implemented by taking <em>g</em> as <em>f&prime;</em>, except: (A) a uniform(0, 1) random variate <em>u</em> is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: &quot;Flip the input coin, then <a href="https://peteroupc.github.io/bernoulli.html#Algorithms"><strong>sample from the number <em>u</em></strong></a>. Return 1 if both the call and the flip return 1, and return 0 otherwise.&quot;<br/>This is the &quot;<strong>integral method</strong>&quot; of Flajolet et al. (2010)<sup><a href="#Note3"><strong>(3)</strong></a></sup> (the modified step 2 simulates 1/<em>&lambda;</em> times the <em>integral</em> of <em>f</em>.).</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>

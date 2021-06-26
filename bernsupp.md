@@ -28,7 +28,7 @@ As a reminder, the _Bernoulli factory problem_ is: Given a coin with unknown pro
 
 The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions), described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:
 
-1. Generate a uniform(0, 1) random number, _U_.
+1. Generate a uniform(0, 1) random variate, _U_.
 2. Flip the input coin, then build an upper and lower bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
 3. If _U_ is less than or equal to the lower bound, return 1. If _U_ is greater than the upper bound, return 0.  Otherwise, go to step 2.
 
@@ -124,7 +124,7 @@ then _f_ can be simulated using the following algorithm:
 >     - _h_(_&lambda;_) = _&lambda;_, and
 >     - _f&prime;_(_&lambda;_), the "slope" function of _f_, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
 >
->     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random number _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup> (the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
+>     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random variate _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010)<sup>[**(3)**](#Note3)</sup> (the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
 >
 > **Examples:**
 >
