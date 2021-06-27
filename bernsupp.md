@@ -686,9 +686,11 @@ Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 
 
 We can show that _f_ is strongly simulable on its domain by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
-**Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial, it is strongly simulable._
+**Proposition 1.** _If f meets conditions 1 through 4 and is a polynomial with computable coefficients, it is strongly simulable._
 
-_Proof:_ Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
+_Proof:_ If _f_ is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.
+
+Otherwise: Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in Bernstein form.  Consider the following algorithm, modified from (Goyal and Sigman 2012)<sup>[**(10)**](#Note10)</sup>.
 
 1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If 0 is in the domain of _f_ and if _j_ is 0, return _f_(0). (By condition 3, _f_(0) must be either 0 or 1.)
@@ -697,7 +699,7 @@ _Proof:_ Let _a_\[_j_\] be the _j_<sup>th</sup> coefficient of the polynomial in
 
 (By the properties of the Bernstein form, _a_\[0\] will equal _f_(0) and _a_\[_n_\] will equal _f_(1) whenever 0 or 1 is in the domain of _f_, respectively.)
 
-Step 4 can be done, for example, by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
+Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(14)**](#Note14)</sup>), then using the algorithm in "[**Digit Expansions**](https://peteroupc.github.io/bernoulli.html#Digit_Expansion)" to produce the probability _a_\[_j_\].  The algorithm computes _a_\[_j_\] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn't degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that _f_ is strongly simulable. &#x25a1;
 
 **Proposition 2.** _If f meets conditions 1 through 4 and is Lipschitz continuous, then f is strongly simulable._
 
@@ -745,15 +747,19 @@ Thus, _f_ admits an algorithm that uses nothing but the input coin as a source o
 
 **Lemma 3.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable._
 
-_Proof:_ Let _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value), let _l_ be the value of _f_ at the greatest lower bound of _f_'s domain, and let _u_ be the value of _f_ at the least upper bound of _f_'s domain.
+_Proof:_ Let&mdash;
 
-To build _g_, take its degree as ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater and _g_ has ceil(_M_) + 1 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1.  Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
+- _M_ be the Lipschitz constant of _f_ (e.g., its "slope" function's maximum absolute value), or a computable number greater than this.
+- _l_ be either 0 if 0 is in the domain of _f_, or 1 otherwise, and
+- _u_ be either 0 if 1 is in the domain of _f_, or 1 otherwise.
+
+To build _g_, take its degree as ceil(_M_) or greater (so that _g_'s Lipschitz constant is _M_ or greater and _g_ has ceil(_M_) + 1 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1. (As a result, the polynomial _g_ will have computable coefficients.) Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
 
 **Lemma 4.** _If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable._
 
 _Proof:_ Let _M_ and _l_ be as in Lemma 3.
 
-To build _g_ and _&omega;_, take their degree as ceil(_M_) or greater (so that their Lipschitz constant is _M_ or greater and each polynomial has ceil(_M_) + 1 coefficients), then for each polynomial, set its first coefficient as _l_ and the last coefficient as 1. The remaining coefficients of _g_ are set as 1 and the remaining coefficients of _&omega;_ are set as 0.  Then _g_ and _&omega;_ will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;
+To build _g_ and _&omega;_, take their degree as ceil(_M_) or greater (so that their Lipschitz constant is _M_ or greater and each polynomial has ceil(_M_) + 1 coefficients), then for each polynomial, set its first coefficient as _l_ and the last coefficient as 1. The remaining coefficients of _g_ are set as 1 and the remaining coefficients of _&omega;_ are set as 0.  (As a result, the polynomial _g_ will have computable coefficients.)  Then _g_ and _&omega;_ will meet the additional conditions for Lemma 2 and the result follows from that lemma. &#x25a1;
 
 _Proof of Proposition 2:_  The following cases can occur:
 
