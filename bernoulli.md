@@ -179,7 +179,7 @@ This section will show algorithms for a number of factory functions, allowing di
 
 The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.
 
-The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But it's possible to implement these algorithms using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
+The algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the [**appendix**](#Randomized_vs_Non_Randomized_Algorithms) for details.
 
 Bernoulli factory algorithms that sample the probability _f_(_&lambda;_) act as unbiased estimators of _f_(_&lambda;_). See the [**appendix**](#Simulating_Probabilities_vs_Estimating_Probabilities) for details.
 
@@ -257,7 +257,7 @@ And here is another optimized algorithm:
 
 &nbsp;
 
-**Multiple coins.** Niazadeh et al. (2020)<sup>[**(13)**](#Note13)</sup> describes monomials (involving one or more coins) of the form &prod;<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] &ge; 0 and _b_\[_i_\] &ge; 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
+**Multiple coins.** Niazadeh et al. (2021)<sup>[**(13)**](#Note13)</sup> describes monomials (involving one or more coins) of the form &prod;<sub>_i_ = 1, ..., _n_</sub> _&lambda;_\[_i_]<sup>_a_\[_i_\]</sup> \* (1&minus;_&lambda;_\[_i_])<sup>_b_\[_i_\]</sup>, where there are _n_ coins, _&lambda;_\[_i_] is the probability of heads of coin _i_, and _a_\[_i_\] &ge; 0 and _b_\[_i_\] &ge; 0 are parameters for coin _i_ (specifically, of _a_+_b_ flips, the first _a_ flips must return heads and the rest must return tails to succeed).
 
 1. For each _i_ in \[1, _n_\]:
      1. Flip the _&lambda;_\[_i_] input coin _a_\[_i_\] times.  If any of the flips returns 0, return 0.
@@ -416,7 +416,7 @@ One of these cases is when _f_(_&lambda;_) can be written as&mdash;
 
 _f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
 
-which is an alternating series where _d_\[_i_\] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in [0, 1).
+which is an alternating series where _d_\[_i_\] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
 
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
 
@@ -431,7 +431,7 @@ Another case is when _f_(_&lambda;_) can be written as&mdash;
 
 _f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...,
 
-which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
+which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
 
 (Nacu and Peres 2005, proposition 16)<sup>[**(15)**](#Note15)</sup>.  The algorithm below simulates a function of the form&mdash;
 
@@ -516,7 +516,7 @@ But on the other hand, probabilities that are _rational_ constants are trivial t
 <a id=Digit_Expansions></a>
 #### Digit Expansions
 
-Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).  The following algorithm returns 1 with probability `p` and 0 otherwise, where `p` is a probability in the interval [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated "on-the-fly".
+Probabilities can be expressed as a digit expansion (of the form `0.dddddd...`).  The following algorithm returns 1 with probability `p` and 0 otherwise, where `p` is a probability in the half-open interval [0, 1).  Note that the number 0 is also an infinite digit expansion of zeros, and the number 1 is also an infinite digit expansion of base-minus-ones.  Irrational numbers always have infinite digit expansions, which must be calculated "on-the-fly".
 
 In the algorithm (see also (Brassard et al., 2019)<sup>[**(26)**](#Note26)</sup>, (Devroye 1986, p. 769)<sup>[**(27)**](#Note27)</sup>), `BASE` is the digit base, such as 2 for binary or 10 for decimal.
 
@@ -1574,7 +1574,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note10>(10)</sup> Thomas, A.C., Blanchet, J., "[**A Practical Implementation of the Bernoulli Factory**](https://arxiv.org/abs/1106.2508v3)", arXiv:1106.2508v3  [stat.AP], 2012.</small>
 - <small><sup id=Note11>(11)</sup> S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", Reliable Computing 17(1), 2012.</small>
 - <small><sup id=Note12>(12)</sup> And this shows that the polynomial couldn't be simulated if _c_ were allowed to be 1, since the required degree would be infinity; in fact, the polynomial would touch 1 at the point 0.5 in this case, ruling out its simulation by any algorithm (see "About Bernoulli Factories", earlier).</small>
-- <small><sup id=Note13>(13)</sup> Niazadeh, R., Leme, R.P., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://arxiv.org/abs/2011.03865v1)", arXiv:2011.03865v1 [cs.DS], Nov. 7, 2020.</small>
+- <small><sup id=Note13>(13)</sup> Niazadeh, R., Leme, R.P., Schneider, J., "[**Combinatorial Bernoulli Factories: Matchings, Flows, and Polytopes**](https://dl.acm.org/doi/10.1145/3406325.3451072)", in _Proceedings of the 53rd Annual ACM SIGACT Symposium on Theory of Computing_, pp. 833-846, June 2021; also at [**https://arxiv.org/abs/2011.03865.pdf**](https://arxiv.org/abs/2011.03865).</small>
 - <small><sup id=Note14>(14)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</small>
 - <small><sup id=Note15>(15)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
 - <small><sup id=Note16>(16)</sup> Morina, G., Łatuszyński, K., et al., "[**From the Bernoulli Factory to a Dice Enterprise via Perfect Sampling of Markov Chains**](https://arxiv.org/abs/1912.09229)", arXiv:1912.09229 [math.PR], 2019/2020.</small>
