@@ -10,6 +10,7 @@
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
         - [**Beta Distribution**](#Beta_Distribution)
+    - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
@@ -154,6 +155,22 @@ The following method samples a number from a _beta distribution_, in the interva
     END METHOD
 
 I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
+
+<a id=Noncentral_Hypergeometric_Distributions></a>
+### Noncentral Hypergeometric Distributions
+
+The following variants of the hypergeometric distribution are described in detail by Agner Fog in "[**Biased Urn Theory**](https://cran.r-project.org/web/packages/BiasedUrn/vignettes/UrnTheory.pdf)".
+
+Let there be _m_ balls that each have one of two or more colors.  For each color, assign each ball of that color the same weight (0 or greater).  Then:
+
+1. **Wallenius's hypergeometric distribution:** Choose one ball not yet chosen, with probability equal to its weight divided by the sum of weights of balls not yet chosen.  Repeat until exactly _n_ items are chosen this way.  Then for each color, count the number of items of that color chosen this way.
+2. **Fisher's hypergeometric distribution:** For each ball, choose it with probability equal to its weight divided by the sum of weights of all balls.  (Thus, each ball is independently chosen or not chosen depending on its weight.)  If exactly _n_ items were chosen this way, stop.  Otherwise, start over.  Then for each color, count the number of items of that color chosen this way.
+
+For both distributions, if there are two colors, there are four parameters: _m_, _ones_, _n_, _weight_, such that&mdash;
+
+- for the first color, there are _ones_ many balls each with weight _weight_;
+- for the second color, there are (_m_&minus;_ones_) many balls each with weight 1; and
+- the random variate is the number of chosen balls of the first color.
 
 <a id=von_Mises_Distribution></a>
 #### von Mises Distribution

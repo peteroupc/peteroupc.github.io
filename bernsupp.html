@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/27"><meta name="citation_online_date" content="2021/06/27"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/06/29"><meta name="citation_online_date" content="2021/06/29"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -1142,7 +1142,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
 
-<p>A function <em>f</em> is strongly simulable only if&mdash;</p>
+<p><strong>Strong Simulability Statement.</strong> A function <em>f</em> is strongly simulable only if&mdash;</p>
 
 <ol>
 <li><em>f</em> is constant on its domain, or is continuous and polynomially bounded on its domain, and</li>
@@ -1155,7 +1155,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>We can show that <em>f</em> is strongly simulable on its domain by showing that there is a Bernoulli factory for <em>f</em> that must flip the input coin and get 0 and 1 before it uses any outside randomness.</p>
 
-<p><strong>Proposition 1.</strong> <em>If f meets conditions 1 through 4 and is a polynomial with computable coefficients, it is strongly simulable.</em></p>
+<p><strong>Proposition 1.</strong> <em>If f is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable.</em></p>
 
 <p><em>Proof:</em> If <em>f</em> is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.</p>
 
@@ -1172,17 +1172,18 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
-<p><strong>Proposition 2.</strong> <em>If f meets conditions 1 through 4 and is Lipschitz continuous, then f is strongly simulable.</em></p>
+<p><strong>Proposition 2.</strong> <em>If f is described in the strong simulability statement and is Lipschitz continuous, then f is strongly simulable.</em></p>
 
 <p>The proof will use several lemmas.</p>
 
-<p><strong>Lemma 1.</strong> <em>If f meets conditions 1 through 4, and meets the additional condition below, then f is strongly simulable.</em></p>
+<p><strong>Lemma 1.</strong> <em>If f is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable.</em></p>
 
-<ul>
+<ol>
 <li><em>There is a polynomial g(&lambda;) in Bernstein form whose coefficients are in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &ge; f(&lambda;) for every &lambda; in the domain of f.</em></li>
-</ul>
+<li><em>There is &epsilon; &gt; 0 such that f is differentiable on the interval (0, &epsilon;) if 0 is in the domain of f, and such that (1&minus;&epsilon;, 1) if 1 is the domain of f.</em></li>
+</ol>
 
-<p><em>Proof:</em> Let <em>h</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>g</em>(<em>&nu;</em>).</p>
+<p><em>Proof:</em> Let <em>h</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> <em>f</em>(<em>&nu;</em>)/<em>g</em>(<em>&nu;</em>).  This limit exists by condition</p>
 
 <ol>
 <li>If <em>h</em> is identically 0, return 0.</li>
@@ -1194,7 +1195,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;</p>
 
-<p><strong>Lemma 2.</strong> <em>If f meets conditions 1 through 4, and meets the additional conditions below, then f is strongly simulable.</em></p>
+<p><strong>Lemma 2.</strong> <em>If f is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable.</em></p>
 
 <ol>
 <li><em>There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials&#39; coefficients are all in the interval [0, 1].</em></li>
@@ -1202,6 +1203,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>g(1) = &omega;(1) = f(1) = 1 (so that 1 is in the domain of f).</em></li>
 <li><em>For every &lambda; in the domain of f, g(&lambda;) &ge; f(&lambda;).</em></li>
 <li><em>For every &lambda; in the domain of f, &omega;(&lambda;) &le; f(&lambda;).</em></li>
+<li><em>There is &epsilon; &gt; 0 such that f is differentiable on the intervals (0, &epsilon;) and (1&minus;&epsilon;, 1).</em></li>
 </ol>
 
 <p><em>Proof:</em> Let&mdash;</p>
@@ -1212,7 +1214,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>r</em>(<em>&lambda;</em>) = lim<sub><em>&nu;</em>&rarr;<em>&lambda;</em></sub> (1&minus;<em>g</em>(<em>&nu;</em>))/(1&minus;<em>q</em>(<em>&nu;</em>)).</li>
 </ul>
 
-<p>Then:</p>
+<p>These limits exist by condition 6 and L&#39;Hôpital&#39;s rule.  Then:</p>
 
 <ol>
 <li>If <em>h</em> is identically 0, return 0.</li>
@@ -1226,9 +1228,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;</p>
 
-<p><strong>Lemma 3.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable.</em></p>
+<p><strong>Lemma 3.</strong> <em>If f is described in the strong simulability statement, meets condition 2 of Lemma 1, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable.</em></p>
 
-<p><em>Proof:</em> Let&mdash;</p>
+<p><em>Proof:</em> <em>f</em> is Lipschitz continuous, so by a result of Rademacher, <em>f</em> is differentiable almost everywhere, and thus me Let&mdash;</p>
 
 <ul>
 <li><em>M</em> be the Lipschitz constant of <em>f</em> (e.g., its &quot;slope&quot; function&#39;s maximum absolute value), or a computable number greater than this.</li>
@@ -1238,7 +1240,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>To build <em>g</em>, take its degree as ceil(<em>M</em>) or greater (so that <em>g</em>&#39;s Lipschitz constant is <em>M</em> or greater and <em>g</em> has ceil(<em>M</em>) + 1 coefficients), then set the first coefficient as <em>l</em>, the last coefficient as <em>u</em>, and the remaining coefficients as 1. (As a result, the polynomial <em>g</em> will have computable coefficients.) Then <em>g</em> will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;</p>
 
-<p><strong>Lemma 4.</strong> <em>If f meets conditions 1 through 4, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable.</em></p>
+<p><strong>Lemma 4.</strong> <em>If f is described in the strong simulability statement, meets condition 2 of Lemma 1, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable.</em></p>
 
 <p><em>Proof:</em> Let <em>M</em> and <em>l</em> be as in Lemma 3.</p>
 
@@ -1265,6 +1267,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ol>
 <li><em>If f(0) = 0 or f(1) = 0 or both, then f is bounded above by a polynomial g(x) in Bernstein form whose coefficients are in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f.</em></li>
 <li><em>If f(0) = 1 or f(1) = 1 or both, then f is bounded below by another polynomial just described.</em></li>
+<li><em>f meets condition 2 of Lemma 1.</em></li>
 </ol>
 
 <p>It is suspected that the conditions in Proposition 3 are necessary and sufficient for <em>f</em>(<em>&lambda;</em>) to be strongly simulable.</p>
