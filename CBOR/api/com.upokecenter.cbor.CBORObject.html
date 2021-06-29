@@ -3791,7 +3791,7 @@ assuming that the first character read must be a byte-order mark or
 a nonzero basic character (U+0001 to U+007F). (This behavior may
 change to supporting only UTF-8, with or without a byte order mark,
 in version 5.0 or later, perhaps with an option to restore the
-previous behavior of also supporting UTF-16 and UTF-32.)</li>
+previous behavior of also supporting UTF-16 and UTF-32.).</li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -3832,7 +3832,7 @@ assuming that the first character read must be a byte-order mark or
 a nonzero basic character (U+0001 to U+007F). (This behavior may
 change to supporting only UTF-8, with or without a byte order mark,
 in version 5.0 or later, perhaps with an option to restore the
-previous behavior of also supporting UTF-16 and UTF-32.)</p></li>
+previous behavior of also supporting UTF-16 and UTF-32.).</p></li>
 <li><p><code>jsonoptions</code> - Specifies options to control how the JSON data is decoded
 to CBOR. See the JSONOptions class.</p></li>
 </ul>
@@ -3878,7 +3878,7 @@ character read must be a byte-order mark or a nonzero basic
 character (U+0001 to U+007F). (This behavior may change to
 supporting only UTF-8, with or without a byte order mark, in version
 5.0 or later, perhaps with an option to restore the previous
-behavior of also supporting UTF-16 and UTF-32.)</p></li>
+behavior of also supporting UTF-16 and UTF-32.).</p></li>
 <li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
 <code>bytes</code> begins.</p></li>
 <li><p><code>count</code> - The length, in bytes, of the desired portion of <code>bytes</code>
@@ -3927,7 +3927,7 @@ character read must be a byte-order mark or a nonzero basic
 character (U+0001 to U+007F). (This behavior may change to
 supporting only UTF-8, with or without a byte order mark, in version
 5.0 or later, perhaps with an option to restore the previous
-behavior of also supporting UTF-16 and UTF-32.)</p></li>
+behavior of also supporting UTF-16 and UTF-32.).</p></li>
 <li><p><code>offset</code> - An index, starting at 0, showing where the desired portion of
 <code>bytes</code> begins.</p></li>
 <li><p><code>count</code> - The length, in bytes, of the desired portion of <code>bytes</code>
@@ -5306,10 +5306,11 @@ array or map).</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>CBORException</code> - Thrown if the pointer is null, or if the pointer is
-invalid, or if there is no object at the given pointer, or the
-special key &quot;-&quot; appears in the pointer, or if the pointer is
-non-empty and this object has a CBOR type other than array or map.</li>
+<li><code>CBORException</code> - Thrown if the pointer is null, or
+if the pointer is invalid, or if there is no object at the given
+pointer, or the special key &quot;-&quot; appears in the pointer, or if the
+pointer is non-empty and this object has a CBOR type other than
+array or map.</li>
 </ul>
 
 <h3>AtJSONPointer</h3>
@@ -5336,7 +5337,8 @@ non-empty and this object has a CBOR type other than array or map.</li>
 
 <ul>
 <li><p><code>pointer</code> - A JSON pointer according to RFC 6901.</p></li>
-<li><p><code>defaultValue</code> -</p></li>
+<li><p><code>defaultValue</code> - The parameter <code>defaultValue</code> is a Cbor.CBORObject
+object.</p></li>
 </ul>
 
 <p><strong>Returns:</strong></p>
@@ -5392,8 +5394,8 @@ summarized in the remarks.</li>
 <p><strong>Throws:</strong></p>
 
 <ul>
-<li><code>CBORException</code> - The parameter &quot;patch&quot; is null or the patch operation
-failed.</li>
+<li><code>CBORException</code> - The parameter <code>patch</code> is
+null or the patch operation failed.</li>
 </ul>
 
 <h3>equals</h3>
