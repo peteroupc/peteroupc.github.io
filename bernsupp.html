@@ -1155,7 +1155,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>We can show that <em>f</em> is strongly simulable on its domain by showing that there is a Bernoulli factory for <em>f</em> that must flip the input coin and get 0 and 1 before it uses any outside randomness.</p>
 
-<p><strong>Proposition 1.</strong> <em>If f is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable.</em></p>
+<p><strong>Proposition 1.</strong> <em>If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable.</em></p>
 
 <p><em>Proof:</em> If <em>f</em> is the constant 0 or 1, the proof is trivial: simply return 0 or 1, respectively.</p>
 
@@ -1172,17 +1172,17 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Step 4 is done by first generating unbiased bits (such as with the von Neumann trick of flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note14"><strong>(14)</strong></a></sup>), then using the algorithm in &quot;<a href="https://peteroupc.github.io/bernoulli.html#Digit_Expansion"><strong>Digit Expansions</strong></a>&quot; to produce the probability <em>a</em>[<em>j</em>].  The algorithm computes <em>a</em>[<em>j</em>] bit by bit and compares the computed value with the generated bits.  Since the coin returned both 0 and 1 in step 1 earlier in the algorithm, we know the coin isn&#39;t degenerate, so that step 4 will finish with probability 1.  Now, since the Bernoulli factory used only the input coin for randomness, this shows that <em>f</em> is strongly simulable. &#x25a1;</p>
 
-<p><strong>Proposition 2.</strong> <em>If f is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable.</em></p>
+<p><strong>Proposition 2.</strong> <em>If f(&lambda;) is described in the strong simulability statement, and if either f is constant on its domain or f meets the additional conditions below, then f is strongly simulable.</em></p>
 
 <ol>
-<li><em>If f(0) = 0 or f(1) = 0 or both, then either f is identically 0 or identically 1, or there is a polynomial g(x) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f.</em></li>
-<li><em>If f(0) = 1 or f(1) = 1 or both, then either f is identically 0 or identically 1, or there is a polynomial h(x) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that h(0) = f(0) and h(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that h(&lambda;) &lt; f(&lambda;) for every &lambda; in the domain of f.</em></li>
+<li><em>If f(0) = 0 or f(1) = 0 or both, then there is a polynomial g(&lambda;) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1.</em></li>
+<li><em>If f(0) = 1 or f(1) = 1 or both, then there is a polynomial h(&lambda;) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that h(0) = f(0) and h(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that h(&lambda;) &lt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1.</em></li>
 </ol>
 
-<p><strong>Lemma 1.</strong> <em>If f is described in the strong simulability statement and meets the additional condition below, then f is strongly simulable.</em></p>
+<p><strong>Lemma 1.</strong> <em>If f(&lambda;) is described in the strong simulability statement and meets the additional condition below, then f is strongly simulable.</em></p>
 
 <ul>
-<li><em>There is a polynomial g(&lambda;) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &ge; f(&lambda;) for every &lambda; in the domain of f.</em></li>
+<li><em>There is a polynomial g(&lambda;) in Bernstein form whose coefficients are computable and in the interval [0, 1], such that g(0) = f(0) and g(1) = f(1) whenever 0 or 1, respectively, is in the domain of f, and such that g(&lambda;) &gt; f(&lambda;) for every &lambda; in the domain of f, except at 0 and 1.</em></li>
 </ul>
 
 <p><em>Proof:</em>  Consider the following algorithm.</p>
@@ -1202,7 +1202,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Thus, <em>f</em> admits an algorithm that uses nothing but the input coin as a source of randomness, and so is strongly simulable. &#x25a1;</p>
 
-<p><strong>Lemma 2.</strong> <em>If f is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable.</em></p>
+<p><strong>Lemma 2.</strong> <em>If f(&lambda;) is described in the strong simulability statement and meets the additional conditions below, then f is strongly simulable.</em></p>
 
 <ol>
 <li><em>There are two polynomials g(&lambda;) and &omega;(&lambda;) in Bernstein form, such that both polynomials&#39; coefficients are computable and all in the interval [0, 1].</em></li>
@@ -1246,9 +1246,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>&#x25a1;</p>
 
-<p><strong>Proposition 3.</strong> <em>If f is described in the strong simulability statement and is Lipschitz continuous, then f is strongly simulable.</em></p>
+<p><strong>Proposition 3.</strong> <em>If f(&lambda;) is described in the strong simulability statement and is Lipschitz continuous, then f is strongly simulable.</em></p>
 
-<p><strong>Lemma 3.</strong> <em>If f is described in the strong simulability statement, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable.</em></p>
+<p><strong>Lemma 3.</strong> <em>If f(&lambda;) is described in the strong simulability statement, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 0 whenever 0 or 1, respectively, is in the domain of f, then f is strongly simulable.</em></p>
 
 <p><em>Proof:</em> If <em>f</em> is 0 everywhere in its domain or 1 everywhere in its domain: Return 0 or 1, respectively.  Otherwise, let&mdash;</p>
 
@@ -1260,7 +1260,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>To build <em>g</em>, take its degree as ceil(<em>M</em>)+1 or greater (so that <em>g</em>&#39;s Lipschitz constant is greater than <em>M</em> and <em>g</em> has ceil(<em>M</em>) + 2 coefficients), then set the first coefficient as <em>l</em>, the last coefficient as <em>u</em>, and the remaining coefficients as 1. (As a result, the polynomial <em>g</em> will have computable coefficients.) Then <em>g</em> will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;</p>
 
-<p><strong>Lemma 4.</strong> <em>If f is described in the strong simulability statement, is Lipschitz continuous, meets the third condition of Proposition 2, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable.</em></p>
+<p><strong>Lemma 4.</strong> <em>If f(&lambda;) is described in the strong simulability statement, is Lipschitz continuous, meets the third condition of Proposition 2, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable.</em></p>
 
 <p><em>Proof:</em> Let <em>M</em> and <em>l</em> be as in Lemma 3.</p>
 
@@ -1268,7 +1268,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p><em>Proof of Proposition 3:</em> In the proof of proposition 2, replace Lemma 1 and Lemma 2 with Lemma 3 and Lemma 4, respectively. &#x25a1;</p>
 
-<p>It is suspected that the conditions in Proposition 3 are necessary and sufficient for <em>f</em>(<em>&lambda;</em>) to be strongly simulable.</p>
+<p>It is suspected that the conditions in Proposition 2 are necessary and sufficient for <em>f</em>(<em>&lambda;</em>) to be strongly simulable.</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 
