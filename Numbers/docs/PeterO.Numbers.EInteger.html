@@ -105,7 +105,7 @@
 <li><code><a href="#GetUnsignedBitLength">GetUnsignedBitLength()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</li>
 <li><code><a href="#GetUnsignedBitLengthAsEInteger">GetUnsignedBitLengthAsEInteger()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value, and returns that number of bits as an arbitrary-precision integer.</li>
 <li><code><a href="#GetUnsignedBitLengthAsInt64">GetUnsignedBitLengthAsInt64()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value, and returns that number of bits as a 64-bit signed integer.</li>
-<li><code><a href="#Imp_PeterO_Numbers_EInteger">Imp(PeterO.Numbers.EInteger)</a></code> - <b>Deprecated:</b> Does the incorrect implication operation. Use Imply instead.</li>
+<li><code><a href="#Imp_PeterO_Numbers_EInteger">Imp(PeterO.Numbers.EInteger)</a></code> - Does an OR NOT operation between this arbitrary-precision integer and another one.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_byte">implicit operator PeterO.Numbers.EInteger(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_int">implicit operator PeterO.Numbers.EInteger(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_long">implicit operator PeterO.Numbers.EInteger(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
@@ -114,7 +114,6 @@
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_uint">implicit operator PeterO.Numbers.EInteger(uint)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_ulong">implicit operator PeterO.Numbers.EInteger(ulong)</a></code> - Converts a 64-bit unsigned integer to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_ushort">implicit operator PeterO.Numbers.EInteger(ushort)</a></code> - Converts a 16-bit unsigned integer to an arbitrary-precision integer.</li>
-<li><code><a href="#Imply_PeterO_Numbers_EInteger">Imply(PeterO.Numbers.EInteger)</a></code> - Not documented yet.</li>
 <li><code><a href="#Increment">Increment()</a></code> - Returns one added to this arbitrary-precision integer.</li>
 <li><code><a href="#IsEven">IsEven</a></code> - Gets a value indicating whether this value is even.</li>
 <li><code><a href="#IsPowerOfTwo">IsPowerOfTwo</a></code> - Gets a value indicating whether this object&#39;s value is a power of two, and greater than 0.</li>
@@ -1979,8 +1978,6 @@ The return value would exceed the range of a 32-bit signed integer.</li>
     PeterO.Numbers.EInteger second);
 </pre>
 
-<p><b>Deprecated.</b> Does the incorrect implication operation. Use Imply instead.</p>
-
 <p>Does an OR NOT operation between this arbitrary-precision integer and another one.</p>
 
 <p>Each arbitrary-precision integer is treated as a two&#39;s-complement form (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ) for the purposes of this operator.</p>
@@ -1994,36 +1991,6 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision integer in which each bit is set if the corresponding bit of this integer is set, the other integer&#39;s corresponding bit is <i>not</i> set, or both. For example, in binary, 10110 OR NOT 11010 = 00100 (or in decimal, 22 OR NOT 26 = 23). This method uses the two&#39;s complement form of negative integers (see <a href="PeterO.Numbers.EDecimal.html">&#x22;Forms of numbers&#x22;</a>&quot;Forms of numbers&quot; ). For example, in binary, ...11101110 OR NOT 01011 = ...11111110 (or in decimal, -18 OR 11 = -2).</p>
-
-<p><b>Exceptions:</b></p>
-
-<ul>
-<li>System.ArgumentNullException:
-The parameter  <i>second</i>
-is null.</li>
-</ul>
-
-<p><a id="Imply_PeterO_Numbers_EInteger"></a></p>
-
-<h3>Imply</h3>
-
-<pre>public PeterO.Numbers.EInteger Imply(
-    PeterO.Numbers.EInteger second);
-</pre>
-
-<p>Not documented yet.</p>
-
-<p>Not documented yet.</p>
-
-<p><b>Parameters:</b></p>
-
-<ul>
-<li><i>second</i>: Not documented yet.</li>
-</ul>
-
-<p><b>Return Value:</b></p>
-
-<p>The return value is not documented yet.</p>
 
 <p><b>Exceptions:</b></p>
 
