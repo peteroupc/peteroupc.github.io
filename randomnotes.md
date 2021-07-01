@@ -157,7 +157,7 @@ The following method samples a number from a _beta distribution_, in the interva
 I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html) for the beta distribution (when `a` and `b` are both 1 or greater) in a separate page.
 
 <a id=Noncentral_Hypergeometric_Distributions></a>
-### Noncentral Hypergeometric Distributions
+#### Noncentral Hypergeometric Distributions
 
 The following variants of the hypergeometric distribution are described in detail by Agner Fog in "[**Biased Urn Theory**](https://cran.r-project.org/web/packages/BiasedUrn/vignettes/UrnTheory.pdf)".
 
