@@ -242,8 +242,9 @@ Gets the number zero as an arbitrary-precision integer.</li>
 <li><code>int hashCode()</code><br>
 Returns the hash code for this instance.</li>
 <li><code>EInteger Imp​(EInteger second)</code><br>
-Does an OR NOT operation between this arbitrary-precision integer and
-another one.</li>
+Deprecated.
+Does the incorrect implication operation.
+Does the incorrect implication operation.</li>
 <li><code>EInteger Increment()</code><br>
 Returns one added to this arbitrary-precision integer.</li>
 <li><code>boolean isEven()</code><br>
@@ -2836,12 +2837,11 @@ uses the two&#39;s complement form of negative integers (see <code>EDecimal</cod
 
 <h3>Imp</h3>
 
-<pre>public EInteger Imp​(EInteger second)
+<pre>@Deprecated public EInteger Imp​(EInteger second)
 </pre>
 
-<p>Does an OR NOT operation between this arbitrary-precision integer and
- another one.<p>Each arbitrary-precision integer is treated as a
- two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
+<p>Deprecated.
+Does the incorrect implication operation. Use Imply instead.</p>
 
 <p><strong>Parameters:</strong></p>
 

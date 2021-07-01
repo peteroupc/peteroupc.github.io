@@ -10,7 +10,7 @@
         - [**Normal (Gaussian) Distribution**](#Normal_Gaussian_Distribution)
         - [**Gamma Distribution**](#Gamma_Distribution)
         - [**Beta Distribution**](#Beta_Distribution)
-    - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
+        - [**Noncentral Hypergeometric Distributions**](#Noncentral_Hypergeometric_Distributions)
         - [**von Mises Distribution**](#von_Mises_Distribution)
         - [**Stable Distribution**](#Stable_Distribution)
         - [**Multivariate Normal (Multinormal) Distribution**](#Multivariate_Normal_Multinormal_Distribution)
