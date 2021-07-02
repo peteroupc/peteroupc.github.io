@@ -776,7 +776,7 @@ _Proof:_ If _f_ is 0 everywhere in its domain or 1 everywhere in its domain: Ret
 
 To build _g_, take its degree as ceil(_M_)+1 or greater (so that _g_'s Lipschitz constant is greater than _M_ and _g_ has ceil(_M_) + 2 coefficients), then set the first coefficient as _l_, the last coefficient as _u_, and the remaining coefficients as 1. (As a result, the polynomial _g_ will have computable coefficients.) Then _g_ will meet the additional condition for Lemma 1 and the result follows from that lemma. &#x25a1;
 
-**Lemma 4.** _If f(&lambda;) is described in the strong simulability statement, is Lipschitz continuous, meets the third condition of Proposition 2, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable._
+**Lemma 4.** _If f(&lambda;) is described in the strong simulability statement, is Lipschitz continuous, and is such that f(0) = 0 and f(1) = 1 (so that 0 and 1 are in the domain of f), then f is strongly simulable._
 
 _Proof:_ Let _M_ and _l_ be as in Lemma 3.
 
