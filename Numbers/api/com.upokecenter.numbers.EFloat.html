@@ -311,10 +311,6 @@ encoded in the IEEE 754 binary64 format.</li>
 <li><code>static EFloat FromEInteger​(EInteger bigint)</code><br>
 Converts an arbitrary-precision integer to the same value as a binary
 floating-point number.</li>
-<li><code>static EFloat FromHalfBits​(short value)</code><br>
-Creates a binary floating-point number from a binary floating-point number
-encoded in the IEEE 754 binary16 format (also known as a
-&quot;half-precision&quot; floating-point number).</li>
 <li><code>static EFloat FromInt16​(short inputInt16)</code><br>
 Converts a 16-bit signed integer to an arbitrary-precision binary
 floating-point number.</li>
@@ -703,10 +699,6 @@ the value of that decimal&#39;s ToEngineeringString method.</li>
 Deprecated.
 Renamed to ToEDecimal.
 Renamed to ToEDecimal.</li>
-<li><code>short ToHalfBits()</code><br>
-Converts this value to its closest equivalent as a binary floating-point
-number, expressed as an integer in the IEEE 754 binary16 format
-(also known as a &quot;half-precision&quot; floating-point number).</li>
 <li><code>short ToInt16Checked()</code><br>
 Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
 16-bit signed integer after converting it to an integer by
@@ -1188,18 +1180,7 @@ floating-point number encoded in <code>dblBits</code>.</li>
 <p>Creates a binary floating-point number from a 32-bit floating-point number.
  This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the
- floating point number to a string first. <p>The input value can be a
- not-a-number (NaN) value (such as <code>Float.NaN</code> in DotNet or
- Float.NaN in Java); however, NaN values have multiple forms that are
- equivalent for many applications&#39; purposes, and <code>Float.NaN</code> /
- <code>Float.NaN</code> is only one of these equivalent forms. In fact,
- <code>EFloat.FromSingle(Float.NaN)</code> or
- <code>EFloat.FromSingle(Float.NaN)</code> could produce an object that is
- represented differently between DotNet and Java, because
- <code>Float.NaN</code> / <code>Float.NaN</code> may have a different form in
- DotNet and Java (for example, the NaN value&#39;s sign may be negative
- in DotNet, but positive in Java). Use <code>IsNaN()</code> to determine whether
- an object from this class stores a NaN value of any form.</p></p>
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1221,17 +1202,7 @@ floating-point number encoded in <code>dblBits</code>.</li>
 <p>Creates a binary floating-point number from a 64-bit floating-point number.
  This method computes the exact value of the floating point number,
  not an approximation, as is often the case by converting the
- floating point number to a string first. <p>The input value can be a
- not-a-number (NaN) value (such as <code>Double.NaN</code>); however, NaN
- values have multiple forms that are equivalent for many
- applications&#39; purposes, and <code>Double.NaN</code> is only one of these
- equivalent forms. In fact, <code>EFloat.FromDouble(Double.NaN)</code>
- could produce an object that is represented differently between
- DotNet and Java, because <code>Double.NaN</code> may have a different form
- in DotNet and Java (for example, the NaN value&#39;s sign may be
- negative in DotNet, but positive in Java). Use <code>IsNaN()</code> to
- determine whether an object from this class stores a NaN value of
- any form.</p></p>
+ floating point number to a string first.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -1263,6 +1234,31 @@ floating-point number encoded in <code>dblBits</code>.</li>
 
 <ul>
 <li>An arbitrary-precision binary floating-point number.</li>
+</ul>
+
+<h3>FromSingleBits</h3>
+
+<pre>public static EFloat FromSingleBits​(int value)
+</pre>
+
+<p>Creates a binary floating-point number from a 32-bit floating-point number
+ encoded in the IEEE 754 binary32 format. This method computes the
+ exact value of the floating point number, not an approximation, as
+ is often the case by converting the floating point number to a
+ string first.</p>
+
+<p><strong>Parameters:</strong></p>
+
+<ul>
+<li><code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
+binary32 format.</li>
+</ul>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A binary floating-point number with the same floating-point value as
+<code>value</code>.</li>
 </ul>
 
 <h3>FromString</h3>
@@ -5139,57 +5135,6 @@ infinity or negative infinity if this value exceeds the range of a
 64-bit floating point number.</li>
 </ul>
 
-<h3>FromSingleBits</h3>
-
-<pre>public static EFloat FromSingleBits​(int value)
-</pre>
-
-<p>Creates a binary floating-point number from a 32-bit floating-point number
- encoded in the IEEE 754 binary32 format. This method computes the
- exact value of the floating point number, not an approximation, as
- is often the case by converting the floating point number to a
- string first.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>value</code> - A 32-bit binary floating-point number encoded in the IEEE 754
-binary32 format.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A binary floating-point number with the same floating-point value as
-<code>value</code>.</li>
-</ul>
-
-<h3>FromHalfBits</h3>
-
-<pre>public static EFloat FromHalfBits​(short value)
-</pre>
-
-<p>Creates a binary floating-point number from a binary floating-point number
- encoded in the IEEE 754 binary16 format (also known as a
-  &quot;half-precision&quot; floating-point number). This method computes the
- exact value of the floating point number, not an approximation, as
- is often the case by converting the floating point number to a
- string first.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>value</code> - A binary floating-point number encoded in the IEEE 754 binary16
-format.</li>
-</ul>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>A binary floating-point number with the same floating-point value as
-<code>value</code>.</li>
-</ul>
-
 <h3>ToSingleBits</h3>
 
 <pre>public int ToSingleBits()
@@ -5212,31 +5157,6 @@ format.</li>
 expressed as an integer in the IEEE 754 binary32 format. The return
 value can be positive infinity or negative infinity if this value
 exceeds the range of a 32-bit floating point number.</li>
-</ul>
-
-<h3>ToHalfBits</h3>
-
-<pre>public short ToHalfBits()
-</pre>
-
-<p>Converts this value to its closest equivalent as a binary floating-point
- number, expressed as an integer in the IEEE 754 binary16 format
-  (also known as a &quot;half-precision&quot; floating-point number). The
- half-even rounding mode is used. <p>If this value is a NaN, sets the
- high bit of the binary16 number&#39;s significand area for a quiet NaN,
- and clears it for a signaling NaN. Then the other bits of the
- significand area are set to the lowest bits of this object&#39;s
- unsigned significand, and the next-highest bit of the significand
- area is set if those bits are all zeros and this is a signaling
- NaN.</p></p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>The closest binary floating-point number to this value, expressed as
-an integer in the IEEE 754 binary16 format. The return value can be
-positive infinity or negative infinity if this value exceeds the
-range of a floating-point number in the binary16 format.</li>
 </ul>
 
 <h3>ToDoubleBits</h3>
