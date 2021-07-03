@@ -1001,7 +1001,7 @@ where _state2_ is a final state of _F_ associated with output 1, replace that ru
 
 where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. &#x25a1;
 
-**Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;))._
+**Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)) or f&#x25cb;g(&lambda;)._
 
 Let _F_ be the pushdown automaton for _f_, let _G_ be that for _g_, and assume that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
 
@@ -1033,11 +1033,11 @@ _Proof:_ These functions can be simulated by a finite-state machine (Mossel and 
 
 _Proof:_ See (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>. &#x25a1;
 
-**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>_m_/(2<sup>_n_</sup>)</sup>, where n &ge; 1 is an integer and where _m_ &ge; 1 is an integer, can be simulated by a pushdown automaton._
+**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>_n_</sup>)</sup>, where n &ge; 1 is an integer and where _m_ &ge; 1 is an integer, can be simulated by a pushdown automaton._
 
-_Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#25cb;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can _f_.
+_Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#x25cb;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can _f_.
 
-For general _m_ and _n_, write _f_ as (sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can _f_.  &#x25a1;
+For general _m_ and _n_, write _f_ as (sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can _f_.  &#x25a1;
 
 <a id=License></a>
 ## License
