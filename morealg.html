@@ -1361,7 +1361,7 @@ calc_linear_func(count=8)
 
 <p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. &#x25a1;</p>
 
-<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)) or f&#x25cb;g(&lambda;).</em></p>
+<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)) or f&#x26ac;g(&lambda;).</em></p>
 
 <p>Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
 
@@ -1395,11 +1395,11 @@ calc_linear_func(count=8)
 
 <p><em>Proof:</em> See (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>. &#x25a1;</p>
 
-<p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>_n</em></sup>)</sup>, where n &ge; 1 is an integer and where <em>m</em> &ge; 1 is an integer, can be simulated by a pushdown automaton._</p>
+<p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where _m</em> &ge; 1 is an integer, can be simulated by a pushdown automaton._</p>
 
-<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x25cb;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
+<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x26ac;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
 
-<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x25cb;sqrt&#x25cb;...&#x25cb;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
+<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
 
 <p><a id=License></a></p>
 
