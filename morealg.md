@@ -317,7 +317,7 @@ If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algeb
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
 
-For the following algorithm, which extends the end of Note 1 of the Flajolet paper and, the probability is&mdash;
+For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash;
 
 - _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_H_\*_n_</sup>\*_g_(_&lambda;_)<sup>_n_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>(_H_&minus;1)\*_n_</sup>\*choose(_H_\*_n_, _n_),
 
@@ -328,11 +328,31 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.  (Note that this substep is not done again.)
 
+As a pushdown automaton, this algorithm can be given as follows. Let the stack have the single symbol EMPTY, and start at the state POSITIVE-STEP1.  Based on the current state, the symbol on the top of the stack, and the last coin flip (HEADS or TAILS), set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transitions_ can be written as follows:
+
+- (POSITIVE-STEP1, HEADS, _any_) &rarr; (POSITIVE-STEP2, {_any_}).
+- (NEGATIVE-STEP1, HEADS, _any_) &rarr; (NEGATIVE-STEP2, {_any_}).
+- (POSITIVE-STEP1, TAILS, EMPTY) &rarr; (ONE, {}).
+- (NEGATIVE-STEP1, TAILS, EMPTY) &rarr; (ONE, {}).
+- (POSITIVE-STEP1, TAILS, X) &rarr; (ZERO, {}).
+- (NEGATIVE-STEP1, TAILS, X) &rarr; (ZERO, {}).
+- (ZERO, _any_, _any_) &rarr; (ZERO, {}).
+- (POSITIVE-STEP2, _any_, _any_) &rarr; Add enough transitions to the automaton to simulate _g_(_&lambda;_) by a finite-state machine.  Transition to POSITIVE-STEP2-ZERO if the machine outputs 0, or POSITIVE-STEP2-ONE if the machine outputs 1.
+- (NEGATIVE-STEP2, _any_, _any_) &rarr; Add enough transitions to the automaton to simulate _g_(_&lambda;_) by a finite-state machine.  Transition to NEGATIVE-STEP2-ZERO if the machine outputs 0, or NEGATIVE-STEP2-ONE if the machine outputs 1.
+- (POSITIVE-STEP2-ONE, _any_, _any_) &rarr; (POSITIVE-STEP1, {_any_, X}).
+- (POSITIVE-STEP2-ZERO, _any_, EMPTY) &rarr; (NEGATIVE-STEP1, {EMPTY, X}).
+- (POSITIVE-STEP2-ZERO, _any_, X) &rarr; (POSITIVE-STEP1, {}).
+- (NEGATIVE-STEP2-ZERO, _any_, _any_) &rarr; (NEGATIVE-STEP1, {_any_, X}).
+- (NEGATIVE-STEP2-ONE, _any_, EMPTY) &rarr; (POSITIVE-STEP1, {EMPTY, X}).
+- (NEGATIVE-STEP2-ONE, _any_, X) &rarr; (NEGATIVE-STEP1, {}).
+
+The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
+
 The following algorithm simulates the probability&mdash;
 
 - _f_(_&lambda;_) = (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _W_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>\*choose(_n_, _m_))<br>&nbsp;&nbsp;&nbsp;= (1 &minus; _&lambda;_) \* &sum;<sub>_n_=0,1,...</sub> _&lambda;_<sup>_n_</sup>\* (&sum;<sub>_m_=0,1,...,_n_</sub> _V_(_n_, _m_)\*_g_(_&lambda;_)<sup>_m_</sup>\*(1 &minus; _g_(_&lambda;_))<sup>_n_&minus;_m_</sup>),
 
-where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words with _m_ heads but only if these words describe a walk that ends at the beginning.)
+where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:

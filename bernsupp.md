@@ -675,7 +675,7 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 
 The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms)".
 
-**Strong Simulability Statement.** A function _f_ is strongly simulable only if&mdash;
+**Strong Simulability Statement.** A function _f_(&lambda;) is strongly simulable only if&mdash;
 
 1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 2. _f_ maps the closed interval [0, 1] or a subset of it to [0, 1], and

@@ -1113,7 +1113,7 @@ is an arbitrary object.</li>
     double flt);
 </pre>
 
-<p>Converts a 64-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+<p>Converts a 64-bit floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string. The input value can be a not-a-number (NaN) value (such as  <code>Double.NaN</code>  ); however, NaN values have multiple forms that are equivalent for many applications&#39; purposes, and  <code>Double.NaN</code>  is only one of these equivalent forms. In fact,  <code>ERational.FromDouble(Double.NaN)</code>  could produce an object that is represented differently between DotNet and Java, because  <code>Double.NaN</code>  may have a different form in DotNet and Java (for example, the NaN value&#39;s sign may be negative in DotNet, but positive in Java). Use <code>IsNaN()</code> to determine whether an object from this class stores a NaN value of any form.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -1171,9 +1171,11 @@ is a 64-bit floating-point number.</li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>ef</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+doesn&#39;t satisfy den.Sign &gt;= 0.</p></li>
 </ul>
 
 <p><a id="FromEFloat_PeterO_Numbers_EFloat"></a></p>
@@ -1380,7 +1382,7 @@ is null.</li>
     float flt);
 </pre>
 
-<p>Converts a 32-bit binary floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+<p>Converts a 32-bit binary floating-point number to a rational number. This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string. The input value can be a not-a-number (NaN) value (such as  <code>Single.NaN</code>  in DotNet or Float.NaN in Java); however, NaN values have multiple forms that are equivalent for many applications&#39; purposes, and  <code>Single.NaN</code>  /  <code>Float.NaN</code>  is only one of these equivalent forms. In fact,  <code>ERational.FromSingle(Single.NaN)</code>  or  <code>ERational.FromSingle(Float.NaN)</code>  could produce an object that is represented differently between DotNet and Java, because  <code>Single.NaN</code>  /  <code>Float.NaN</code>  may have a different form in DotNet and Java (for example, the NaN value&#39;s sign may be negative in DotNet, but positive in Java). Use <code>IsNaN()</code> to determine whether an object from this class stores a NaN value of any form.</p>
 
 <p><b>Parameters:</b></p>
 
