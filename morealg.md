@@ -310,12 +310,32 @@ and 0 otherwise, where&mdash;
 - _g_(_&lambda;_) is a continuous function that maps the half-open interval \[0, 1\) to the closed interval \[0, 1\] and admits a Bernoulli factory, and
 - OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function.
 
-If _g_ is a rational function (a ratio of two polynomials), then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+If _g_ is a rational function (a ratio of two polynomials) with rational coefficients, then _f_ is an algebraic function and can be simulated by a _pushdown automaton_ (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
+
+As a pushdown automaton, this algorithm can be given as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transitions_ can be written as follows:
+
+- (POS-S1, HEADS, _topsymbol_) &rarr; (POS-S2, {_topsymbol_}) (set state to POS-S2, keep _topsymbol_ on the stack).
+- (NEG-S1, HEADS, _topsymbol_) &rarr; (NEG-S2, {_topsymbol_}).
+- (POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (pop the top symbol from the stack).
+- (NEG-S1, TAILS, EMPTY) &rarr; (ONE, {}).
+- (POS-S1, TAILS, X) &rarr; (ZERO, {}).
+- (NEG-S1, TAILS, X) &rarr; (ZERO, {}).
+- (ZERO, _flip_, _topsymbol_) &rarr; (ZERO, {}).
+- (POS-S2, _flip_, _topsymbol_) &rarr; Add enough transitions to the automaton to simulate _g_(_&lambda;_) by a finite-state machine (only possible if _g_ is rational with rational coefficients).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.
+- (NEG-S2, _flip_, _topsymbol_) &rarr; Same as before, but the transitioning states are NEG-S2-ZERO and NEG-S2-ONE, respectively.
+- (POS-S2-ONE, _flip_, _topsymbol_) &rarr; (POS-S1, {_topsymbol_, X}) (replace top stack symbol with _topsymbol_, then push X to the stack).
+- (POS-S2-ZERO, _flip_, EMPTY) &rarr; (NEG-S1, {EMPTY, X}).
+- (POS-S2-ZERO, _flip_, X) &rarr; (POS-S1, {}).
+- (NEG-S2-ZERO, _flip_, _topsymbol_) &rarr; (NEG-S1, {_topsymbol_, X}).
+- (NEG-S2-ONE, _flip_, EMPTY) &rarr; (POS-S1, {EMPTY, X}).
+- (NEG-S2-ONE, _flip_, X) &rarr; (NEG-S1, {}).
+
+The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
 For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash;
 
@@ -327,26 +347,6 @@ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.  (Note that this substep is not done again.)
-
-As a pushdown automaton, this algorithm can be given as follows. Let the stack have the single symbol EMPTY, and start at the state POSITIVE-STEP1.  Based on the current state, the symbol on the top of the stack, and the last coin flip (HEADS or TAILS), set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transitions_ can be written as follows:
-
-- (POSITIVE-STEP1, HEADS, _any_) &rarr; (POSITIVE-STEP2, {_any_}).
-- (NEGATIVE-STEP1, HEADS, _any_) &rarr; (NEGATIVE-STEP2, {_any_}).
-- (POSITIVE-STEP1, TAILS, EMPTY) &rarr; (ONE, {}).
-- (NEGATIVE-STEP1, TAILS, EMPTY) &rarr; (ONE, {}).
-- (POSITIVE-STEP1, TAILS, X) &rarr; (ZERO, {}).
-- (NEGATIVE-STEP1, TAILS, X) &rarr; (ZERO, {}).
-- (ZERO, _any_, _any_) &rarr; (ZERO, {}).
-- (POSITIVE-STEP2, _any_, _any_) &rarr; Add enough transitions to the automaton to simulate _g_(_&lambda;_) by a finite-state machine.  Transition to POSITIVE-STEP2-ZERO if the machine outputs 0, or POSITIVE-STEP2-ONE if the machine outputs 1.
-- (NEGATIVE-STEP2, _any_, _any_) &rarr; Add enough transitions to the automaton to simulate _g_(_&lambda;_) by a finite-state machine.  Transition to NEGATIVE-STEP2-ZERO if the machine outputs 0, or NEGATIVE-STEP2-ONE if the machine outputs 1.
-- (POSITIVE-STEP2-ONE, _any_, _any_) &rarr; (POSITIVE-STEP1, {_any_, X}).
-- (POSITIVE-STEP2-ZERO, _any_, EMPTY) &rarr; (NEGATIVE-STEP1, {EMPTY, X}).
-- (POSITIVE-STEP2-ZERO, _any_, X) &rarr; (POSITIVE-STEP1, {}).
-- (NEGATIVE-STEP2-ZERO, _any_, _any_) &rarr; (NEGATIVE-STEP1, {_any_, X}).
-- (NEGATIVE-STEP2-ONE, _any_, EMPTY) &rarr; (POSITIVE-STEP1, {EMPTY, X}).
-- (NEGATIVE-STEP2-ONE, _any_, X) &rarr; (NEGATIVE-STEP1, {}).
-
-The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
 The following algorithm simulates the probability&mdash;
 
