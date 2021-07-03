@@ -57,6 +57,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**SymPy Code for Piecewise Linear Factory Functions**](#SymPy_Code_for_Piecewise_Linear_Factory_Functions)
     - [**Derivation of My Algorithm for min(_&lambda;_, 1/2)**](#Derivation_of_My_Algorithm_for_min___lambda___1_2)
     - [**More Algorithms for Non-Negative Factories**](#More_Algorithms_for_Non_Negative_Factories)
+    - [**Pushdown automata**](#Pushdown_automata)
 - [**License**](#License)
 
 <a id=Bernoulli_Factories_and_Irrational_Probability_Simulation></a>
@@ -317,11 +318,11 @@ If _g_ is a rational function (a ratio of two polynomials) with rational coeffic
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add 1 to _d_.  Otherwise, subtract 1 from _d_.  Do this substep again.
 
-As a pushdown automaton, this algorithm can be given as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transitions_ can be written as follows:
+As a pushdown automaton, this algorithm can be given as follows (except the "Do this substep again" part). Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These _transitions_ can be written as follows:
 
 - (POS-S1, HEADS, _topsymbol_) &rarr; (POS-S2, {_topsymbol_}) (set state to POS-S2, keep _topsymbol_ on the stack).
 - (NEG-S1, HEADS, _topsymbol_) &rarr; (NEG-S2, {_topsymbol_}).
-- (POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (pop the top symbol from the stack).
+- (POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (set state to ONE, pop the top symbol from the stack).
 - (NEG-S1, TAILS, EMPTY) &rarr; (ONE, {}).
 - (POS-S1, TAILS, X) &rarr; (ZERO, {}).
 - (NEG-S1, TAILS, X) &rarr; (ZERO, {}).
@@ -984,6 +985,59 @@ The algorithm follows.
 Now, assume the oracle's numbers are all less than or equal to _b_ (rather than greater than or equal to _a_), where _b_ is a known rational number.  Then _f_ must be 0 or greater everywhere in (&minus;_&infin;_, _b_\] and be nonincreasing there (Jacob and Thiery 2015)<sup>[**(7)**](#Note7)</sup>, and the algorithm above can be used with the following modifications: (1) In the note on the infinite series, _z_ = _b_ &minus;_&mu;_; (2) in step 2, multiply _prod_ by _b_ &minus; _x_ rather than _x_ &minus; _a_.
 
 > **Note:** This algorithm is exact if the oracle produces only rational numbers _and_ if all _c_\[_i_\] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform PSRNs.  See also note 3 on Algorithm 2.
+
+<a id=Pushdown_automata></a>
+### Pushdown automata
+
+**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their product, namely f(&lambda;)\*g(&lambda;)._
+
+_Proof:_ Let _F_ be the pushdown automaton for _f_, let _G_ be that for _g_, and assume that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
+
+(_state_, _flip_, EMPTY) &rarr; (_state2_, {}),
+
+where _state2_ is a final state of _F_ associated with output 1, replace that rule with&mdash;
+
+(_state_, _flip_, EMPTY) &rarr; (_gstart_, {EMPTY}),
+
+where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. &#x25a1;
+
+**Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;))._
+
+Let _F_ be the pushdown automaton for _f_, let _G_ be that for _g_, and assume that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
+
+(_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
+(_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_)
+
+where _state_ is an arbitrary state and the transitions of the two rules differ, add two new states _state_<sub>0</sub> and _state_<sub>1</sub> that correspond to _state_ and have names different from all other states, and replace that rule with the following rules:
+
+(_state_, HEADS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
+(_state_, TAILS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
+(_state_<sub>0</sub>, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_),<br>
+(_state_<sub>0</sub>, TAILS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_),<br>
+(_state_<sub>1</sub>, HEADS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_), and<br>
+(_state_<sub>1</sub>, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),<br>
+
+where _gstart_ is the starting state for _G_, and copy the rules of the automaton for _G_ onto _F_, but with the following modifications:
+
+- Replace the symbol EMPTY in _G_ with EMPTY&prime;.
+- Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 1, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>1</sub>, {}).
+- Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 0, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>0</sub>, {}).
+
+Then, the final states of the new machine are the same as those for the original machine _F_. &#x25a1;
+
+**Proposition 2:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) can be simulated by a pushdown automaton._
+
+_Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>.  This corresponds to a pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;
+
+**Lemma 1:** _The square root function sqrt(&lambda;) can be simulated by a pushdown automaton._
+
+_Proof:_ See (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>. &#x25a1;
+
+**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>_m_/(2<sup>_n_</sup>)</sup>, where n &ge; 1 is an integer and where _m_ &ge; 1 is an integer, can be simulated by a pushdown automaton._
+
+_Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#25cb;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can _f_.
+
+For general _m_ and _n_, write _f_ as (sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can _f_.  &#x25a1;
 
 <a id=License></a>
 ## License

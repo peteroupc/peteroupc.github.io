@@ -76,6 +76,7 @@
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#More_Algorithms_for_Non_Negative_Factories"><strong>More Algorithms for Non-Negative Factories</strong></a></li>
+<li><a href="#Pushdown_automata"><strong>Pushdown automata</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -465,12 +466,12 @@
 </ol></li>
 </ol>
 
-<p>As a pushdown automaton, this algorithm can be given as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These <em>transitions</em> can be written as follows:</p>
+<p>As a pushdown automaton, this algorithm can be given as follows (except the &quot;Do this substep again&quot; part). Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These <em>transitions</em> can be written as follows:</p>
 
 <ul>
 <li>(POS-S1, HEADS, <em>topsymbol</em>) &rarr; (POS-S2, {<em>topsymbol</em>}) (set state to POS-S2, keep <em>topsymbol</em> on the stack).</li>
 <li>(NEG-S1, HEADS, <em>topsymbol</em>) &rarr; (NEG-S2, {<em>topsymbol</em>}).</li>
-<li>(POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (pop the top symbol from the stack).</li>
+<li>(POS-S1, TAILS, EMPTY) &rarr; (ONE, {}) (set state to ONE, pop the top symbol from the stack).</li>
 <li>(NEG-S1, TAILS, EMPTY) &rarr; (ONE, {}).</li>
 <li>(POS-S1, TAILS, X) &rarr; (ZERO, {}).</li>
 <li>(NEG-S1, TAILS, X) &rarr; (ZERO, {}).</li>
@@ -1343,6 +1344,62 @@ calc_linear_func(count=8)
 <blockquote>
 <p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform PSRNs.  See also note 3 on Algorithm 2.</p>
 </blockquote>
+
+<p><a id=Pushdown_automata></a></p>
+
+<h3>Pushdown automata</h3>
+
+<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
+
+<p><em>Proof:</em> Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
+
+<p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state2</em>, {}),</p>
+
+<p>where <em>state2</em> is a final state of <em>F</em> associated with output 1, replace that rule with&mdash;</p>
+
+<p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}),</p>
+
+<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. &#x25a1;</p>
+
+<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)).</em></p>
+
+<p>Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
+
+<p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>), and<br>
+(<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>)</p>
+
+<p>where <em>state</em> is an arbitrary state and the transitions of the two rules differ, add two new states <em>state</em><sub>0</sub> and <em>state</em><sub>1</sub> that correspond to <em>state</em> and have names different from all other states, and replace that rule with the following rules:</p>
+
+<p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>gstart</em>, {<em>stacksymbol</em>, EMPTY&prime;}),<br>
+(<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>gstart</em>, {<em>stacksymbol</em>, EMPTY&prime;}),<br>
+(<em>state</em><sub>0</sub>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>),<br>
+(<em>state</em><sub>0</sub>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>),<br>
+(<em>state</em><sub>1</sub>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>), and<br>
+(<em>state</em><sub>1</sub>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>),<br></p>
+
+<p>where <em>gstart</em> is the starting state for <em>G</em>, and copy the rules of the automaton for <em>G</em> onto <em>F</em>, but with the following modifications:</p>
+
+<ul>
+<li>Replace the symbol EMPTY in <em>G</em> with EMPTY&prime;.</li>
+<li>Replace each rule in <em>G</em> of the form (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; (<em>state2</em>, {}), where <em>state2</em> is a final state of <em>G</em> associated with output 1, with the rule (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; ( <em>state</em><sub>1</sub>, {}).</li>
+<li>Replace each rule in <em>G</em> of the form (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; (<em>state2</em>, {}), where <em>state2</em> is a final state of <em>G</em> associated with output 0, with the rule (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; ( <em>state</em><sub>0</sub>, {}).</li>
+</ul>
+
+<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. &#x25a1;</p>
+
+<p><strong>Proposition 2:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) can be simulated by a pushdown automaton.</em></p>
+
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  This corresponds to a pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;</p>
+
+<p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) can be simulated by a pushdown automaton.</em></p>
+
+<p><em>Proof:</em> See (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>. &#x25a1;</p>
+
+<p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>_m</em>/(2<sup><em>n</em></sup>)</sup>, where n &ge; 1 is an integer and where <em>m</em> &ge; 1 is an integer, can be simulated by a pushdown automaton._</p>
+
+<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#25cb;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
+
+<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#25cb;sqrt&#25cb;...&#25cb;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
 
 <p><a id=License></a></p>
 
