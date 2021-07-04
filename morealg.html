@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/03"><meta name="citation_online_date" content="2021/07/03"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/04"><meta name="citation_online_date" content="2021/07/04"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -1349,6 +1349,14 @@ calc_linear_func(count=8)
 
 <h3>Pushdown automata</h3>
 
+<p><strong>Proposition 0:</strong> <em>Let A be the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a pushdown automaton.  Then:</em></p>
+
+<ul>
+<li><em>All rational functions with rational coefficients that map (0, 1) to (0, 1) are in A.</em></li>
+<li><em>The square-root function sqrt(&lambda;) is in A.</em></li>
+<li><em>If functions f and g are in A, then so are their product and composition.</em></li>
+</ul>
+
 <p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
 
 <p><em>Proof:</em> Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
@@ -1361,12 +1369,12 @@ calc_linear_func(count=8)
 
 <p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. &#x25a1;</p>
 
-<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)) or f&#x26ac;g(&lambda;).</em></p>
+<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions that can be simulated by a pushdown automaton, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
-<p>Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
+<p><em>Proof:</em> Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
 
 <p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>), and<br>
-(<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>)</p>
+(<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>),</p>
 
 <p>where <em>state</em> is an arbitrary state and the transitions of the two rules differ, add two new states <em>state</em><sub>0</sub> and <em>state</em><sub>1</sub> that correspond to <em>state</em> and have names different from all other states, and replace that rule with the following rules:</p>
 
@@ -1395,11 +1403,11 @@ calc_linear_func(count=8)
 
 <p><em>Proof:</em> See (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>. &#x25a1;</p>
 
-<p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where _m</em> &ge; 1 is an integer, can be simulated by a pushdown automaton._</p>
+<p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, can be simulated by a pushdown automaton.</em></p>
 
-<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x26ac;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
+<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x2218;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
 
-<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x26ac;sqrt&#x26ac;...&#x26ac;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
+<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
 
 <p><a id=License></a></p>
 
