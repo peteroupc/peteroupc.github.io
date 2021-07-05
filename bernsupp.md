@@ -857,7 +857,7 @@ _Except that the following bounding note applies: If **fabove**(n, k) > 1 for a 
 
 _Proof._ Follows from part 1 of Lemma 2 above as well as Remark B and the proof of Proposition 10 of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup>.
 
-We note that for the series _&eta;_(_n_) in the theorem, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
+For the series _&eta;_(_n_) in the theorem, each term of the series is nonnegative making the series nonnegative and, by the assumption that the series converges, _&eta;_(_n_) is nonincreasing with increasing _n_.
 
 Condition (i) says that the coefficients **fbelow** and **fabove** must be bounded by 0 and 1.  This is ensured starting with a large enough value of _n_ greater than 0, call it _n_<sub>0</sub>, as shown next.
 

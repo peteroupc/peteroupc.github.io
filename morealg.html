@@ -502,7 +502,7 @@
 
 <ol>
 <li>Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if <em>d</em> is 0, or 0 otherwise.</li>
-<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1, add (<em>H</em>&minus;1) to <em>d</em>.  Otherwise, subtract 1 from <em>d</em>.  (Note that this substep is not done again.)</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1, add (<em>H</em>&minus;1) to <em>d</em>.  Otherwise, subtract 1 from <em>d</em>.  (Note: This substep is not done again.)</li>
 </ol></li>
 </ol>
 
@@ -520,7 +520,7 @@
 
 <ol>
 <li>Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if <em>d</em> is 0, or 0 otherwise.</li>
-<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1 (&quot;heads&quot;), add <em>H</em> to <em>d</em>.  Otherwise (&quot;tails&quot;), subtract <em>T</em> from <em>d</em>.  (Note that this substep is not done again.)</li>
+<li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1 (&quot;heads&quot;), add <em>H</em> to <em>d</em>.  Otherwise (&quot;tails&quot;), subtract <em>T</em> from <em>d</em>.  (Note: This substep is not done again.)</li>
 </ol></li>
 </ol>
 
@@ -780,7 +780,7 @@
 
 <h3>Arc-Cosine Distribution</h3>
 
-<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  Note that the result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -791,7 +791,7 @@
 <li>If <em>m</em> is even, go to step 1.</li>
 </ol>
 
-<p>And here is Python code that implements this algorithm.  Note that it uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
+<p>And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
 
 <pre>def example_4_2_1(rg, bern, precision=53):
     while True:
@@ -892,7 +892,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random number, which an algorithm of Bringmann and Friedrich (2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup> can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (note that this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random number, which an algorithm of Bringmann and Friedrich (2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup> can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
 </blockquote>
 
 <p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
@@ -980,7 +980,7 @@
 <ul>
 <li><small><sup id=Note1>(1)</sup> Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</small></li>
 <li><small><sup id=Note2>(2)</sup> Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></li>
-<li><small><sup id=Note3>(3)</sup> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</small></li>
+<li><small><sup id=Note3>(3)</sup> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</small></li>
 <li><small><sup id=Note4>(4)</sup> Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</small></li>
 <li><small><sup id=Note5>(5)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 <li><small><sup id=Note6>(6)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
@@ -1333,7 +1333,7 @@ calc_linear_func(count=8)
 
 <ol>
 <li>Set <em>ret</em> to 0, <em>prod</em> to 1, <em>k</em> to 0, and <em>w</em> to 1. (<em>w</em> is the probability of generating <em>k</em> or more random numbers in a single run of the algorithm.)</li>
-<li>If <em>k</em> is greater than 0: Generate a number from the oracle, call it <em>x</em>, and multiply <em>prod</em> by <em>x</em>&minus;<em>a</em>.</li>
+<li>If <em>k</em> is greater than 0: Take a number from the oracle, call it <em>x</em>, and multiply <em>prod</em> by <em>x</em>&minus;<em>a</em>.</li>
 <li>Add <em>c</em>[<em>k</em>]*<em>prod</em>/<em>w</em> to <em>ret</em>.</li>
 <li>Multiply <em>w</em> by <em>&psi;</em> and add 1 to <em>k</em>.</li>
 <li>With probability <em>&psi;</em>, go to step 2.  Otherwise, return <em>ret</em>.</li>
