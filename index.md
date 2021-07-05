@@ -10,32 +10,44 @@ to see this site's source code.
 
 Open-source articles on programming subjects.  Help me on my [**requests and open questions**](./requests.html).
 
-* Random Number Generators
-    * [**Random Number Generator Recommendations for Applications**](./random.html)
-    * [**A Note on Randomness Extraction**](./randextract.html)
-    * [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
-    * [**Examples of High-Quality PRNGs**](./hqprng.html)
-    * [**Notes on Jumping PRNGs Ahead**](./jump.html)
-    * [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
-* Randomization and Exact Sampling
-    * [**Randomization and Sampling Methods**](./randomfunc.html)
-    * [**More Random Sampling Methods**](./randomnotes.html)
-    * [**The Most Common Topics Involving Randomization**](./randomcommon.html)
-    * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
-    * [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers**](./uniformsum.html)
-    * [**Bernoulli Factory Algorithms**](./bernoulli.html)
-    * [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
-    * [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)
-    * [**Miscellaneous Observations on Randomization**](./randmisc.html)
-    * [**Code Generator for Discrete Distributions**](./autodist.html)
-    * [**Randomized Estimation Algorithms**](./estimation.html)
-* Other
-    * [**A Note on Hash Functions**](./hash.html)
-    * [**Pseudocode Conventions**](./pseudocode.html)
-    * [**File Name Support in Applications**](./filenames.html)
-    * [**Color Topics for Programmers**](./colorgen.html)
-    * [**Supplemental Color Topics for Programmers**](./suppcolor.html)
-    * [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
+**Random and Pseudorandom Number Generators**
+
+* [**Random Number Generator Recommendations for Applications**](./random.html)
+* [**A Note on Randomness Extraction**](./randextract.html)
+* [**Testing PRNGs for High-Quality Randomness**](./randomtest.html)
+* [**Examples of High-Quality PRNGs**](./hqprng.html)
+* [**Notes on Jumping PRNGs Ahead**](./jump.html)
+* [**A Note on the Bays&ndash;Durham Shuffle**](./bdshuffle.html)
+
+**Random Variate Generation, Randomization, and Exact Sampling**
+
+* [**Randomization and Sampling Methods**](./randomfunc.html)
+* [**More Random Sampling Methods**](./randomnotes.html)
+* [**The Most Common Topics Involving Randomization**](./randomcommon.html)
+* [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](./exporand.html)
+* [**Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers**](./uniformsum.html)
+* [**Bernoulli Factory Algorithms**](./bernoulli.html)
+* [**Supplemental Notes for Bernoulli Factory Algorithms**](./bernsupp.html)
+* [**More Algorithms for Arbitrary-Precision Sampling**](./morealg.html)
+* [**Miscellaneous Observations on Randomization**](./randmisc.html)
+* [**Code Generator for Discrete Distributions**](./autodist.html)
+* [**Randomized Estimation Algorithms**](./estimation.html)
+
+In the articles above, I put an emphasis on random variate generation that:
+
+- Samples exactly from a discrete distribution (such as Bernoulli factory algorithms).
+- Samples from a continuous distribution with arbitrary precision and a user-specified accuracy.
+- Avoids floating-point arithmetic.
+- Avoids calculating transcendental functions when possible.
+
+**Other Articles**
+
+* [**A Note on Hash Functions**](./hash.html)
+* [**Pseudocode Conventions**](./pseudocode.html)
+* [**File Name Support in Applications**](./filenames.html)
+* [**Color Topics for Programmers**](./colorgen.html)
+* [**Supplemental Color Topics for Programmers**](./suppcolor.html)
+* [**Essentials of SVG**](https://peteroupc.github.io/svg.html)
 
 <a id=PDF_Versions></a>
 #### PDF Versions
