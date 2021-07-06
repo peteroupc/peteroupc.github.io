@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/05"><meta name="citation_online_date" content="2021/07/05"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/06"><meta name="citation_online_date" content="2021/07/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -1010,6 +1010,7 @@
 <li><small><sup id=Note30>(30)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, &quot;Provable quantum advantage in randomness processing&quot;, <em>Nature communications</em> 6(1), pp. 1-4.</small></li>
 <li><small><sup id=Note31>(31)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 <li><small><sup id=Note32>(32)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
+<li><small><sup id=Note33>(33)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1349,17 +1350,16 @@ calc_linear_func(count=8)
 
 <h3>Pushdown automata</h3>
 
-<p><strong>Proposition 0:</strong> <em>Let A be the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a pushdown automaton that terminates with probability 1.  Then:</em></p>
+<p>Define&mdash;</p>
 
 <ul>
-<li><em>All rational functions with rational coefficients that map (0, 1) to (0, 1) are in A.</em></li>
-<li><em>The square-root function sqrt(&lambda;) is in A.</em></li>
-<li><em>If functions f and g are in A, then so are their product and composition.</em></li>
+<li>a <em>full-domain pushdown automaton</em> as a pushdown automaton that, given the flips of a coin with probability of heads <em>&lambda;</em>, terminates with probability 1 for every <em>&lambda;</em> in the open interval (0, 1).</li>
+<li><em>A</em> as the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.</li>
 </ul>
 
 <p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
+<p><em>Proof:</em> Let <em>F</em> be a full-domain pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume without loss of generality that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
 
 <p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state2</em>, {}),</p>
 
@@ -1367,11 +1367,11 @@ calc_linear_func(count=8)
 
 <p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}),</p>
 
-<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. &#x25a1;</p>
+<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>, let <em>G</em> be that for <em>g</em>, and assume without loss of generality that both machines&#39; stacks start with the symbol EMPTY.  First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
 
 <p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>), and<br>
 (<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>),</p>
@@ -1393,11 +1393,29 @@ calc_linear_func(count=8)
 <li>Replace each rule in <em>G</em> of the form (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; (<em>state2</em>, {}), where <em>state2</em> is a final state of <em>G</em> associated with output 0, with the rule (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; ( <em>state</em><sub>0</sub>, {}).</li>
 </ul>
 
-<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. &#x25a1;</p>
+<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
-<p><strong>Proposition 2:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A.</em></p>
+<p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  This corresponds to a pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  This corresponds to a full-domain pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;</p>
+
+<p><strong>Proposition 4:</strong> <em>If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution&#39;s probability generating function is in class A.</em></p>
+
+<p><em>Proof:</em> Let there be a full-domain pushdown automaton <em>F</em>, and assume without loss of generality that <em>F</em>&#39;s stack starts with the symbol EMPTY.  Add one state FAILURE, then augment <em>F</em> with a special &quot;letter-generating&quot; operation as follows.  Add the following rule that pops all symbols from the stack:</p>
+
+<p>(FAILURE, <em>flip</em>, <em>stacksymbol</em>) &rarr; (FAILURE, {}),</p>
+
+<p>and for each rule of the following form that transitions to a letter-generating operation (where S and T are arbitrary states):</p>
+
+<p>(S, <em>flip</em>, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>),</p>
+
+<p>add another state S&prime; (with a name that differs from all other states) and replace that rule with the following rules:</p>
+
+<p>(S, <em>flip</em>, <em>stacksymbol</em>) &rarr; (S&prime;, {<em>stacksymbol</em>}),
+(S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and
+(S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
+
+<p>Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class A.</em></p>
 
@@ -1405,9 +1423,11 @@ calc_linear_func(count=8)
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class A.</em></p>
 
-<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x2218;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can <em>f</em>.</p>
+<p><em>Proof:</em> Start with the case <em>m</em>=1.  If <em>n</em> is 1, write <em>f</em> as sqrt(<em>&lambda;</em>); if <em>n</em> is 2, write <em>f</em> as sqrt&#x2218;sqrt(<em>&lambda;</em>); and for general <em>n</em>, write <em>f</em> as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>), with <em>n</em> instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can <em>f</em>.  &#x25a1;</p>
+<p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
+
+<p>Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=License></a></p>
 

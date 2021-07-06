@@ -728,6 +728,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note30>(30)</sup> Dale, H., Jennings, D. and Rudolph, T., 2015, "Provable quantum advantage in randomness processing", _Nature communications_ 6(1), pp. 1-4.</small>
 - <small><sup id=Note31>(31)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 - <small><sup id=Note32>(32)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
+- <small><sup id=Note33>(33)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -989,15 +990,14 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 <a id=Pushdown_automata></a>
 ### Pushdown automata
 
-**Proposition 0:** _Let A be the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a pushdown automaton that terminates with probability 1.  Then:_
+Define&mdash;
 
-- _All rational functions with rational coefficients that map (0, 1) to (0, 1) are in A._
-- _The square-root function sqrt(&lambda;) is in A._
-- _If functions f and g are in A, then so are their product and composition._
+- a _full-domain pushdown automaton_ as a pushdown automaton that, given the flips of a coin with probability of heads _&lambda;_, terminates with probability 1 for every _&lambda;_ in the open interval (0, 1).
+- _A_ as the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.
 
 **Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
-_Proof:_ Let _F_ be the pushdown automaton for _f_, let _G_ be that for _g_, and assume that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
+_Proof:_ Let _F_ be a full-domain pushdown automaton for _f_, let _G_ be that for _g_, and assume without loss of generality that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
 
 (_state_, _flip_, EMPTY) &rarr; (_state2_, {}),
 
@@ -1005,11 +1005,11 @@ where _state2_ is a final state of _F_ associated with output 1, replace that ru
 
 (_state_, _flip_, EMPTY) &rarr; (_gstart_, {EMPTY}),
 
-where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. &#x25a1;
+where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
 **Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
 
-_Proof:_ Let _F_ be the pushdown automaton for _f_, let _G_ be that for _g_, and assume that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
+_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, let _G_ be that for _g_, and assume without loss of generality that both machines' stacks start with the symbol EMPTY.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
 
 (_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),
@@ -1029,11 +1029,29 @@ where _gstart_ is the starting state for _G_, and copy the rules of the automato
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 1, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>1</sub>, {}).
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 0, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>0</sub>, {}).
 
-Then, the final states of the new machine are the same as those for the original machine _F_. &#x25a1;
+Then, the final states of the new machine are the same as those for the original machine _F_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
-**Proposition 2:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A._
+**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A._
 
-_Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>.  This corresponds to a pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;
+_Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>.  This corresponds to a full-domain pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;
+
+**Proposition 4:** _If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution's probability generating function is in class A._
+
+_Proof:_ Let there be a full-domain pushdown automaton _F_, and assume without loss of generality that _F_'s stack starts with the symbol EMPTY.  Add one state FAILURE, then augment _F_ with a special "letter-generating" operation as follows.  Add the following rule that pops all symbols from the stack:
+
+(FAILURE, _flip_, _stacksymbol_) &rarr; (FAILURE, {}),
+
+and for each rule of the following form that transitions to a letter-generating operation (where S and T are arbitrary states):
+
+(S, _flip_, _stacksymbol_) &rarr; (T, _newstack_),
+
+add another state S&prime; (with a name that differs from all other states) and replace that rule with the following rules:
+
+(S, _flip_, _stacksymbol_) &rarr; (S&prime;, {_stacksymbol_}),
+(S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and
+(S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
+
+Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup>[**(33)**](#Note33)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class A._
 
@@ -1041,9 +1059,11 @@ _Proof:_ See (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup>. &#x25a1;
 
 **Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class A._
 
-_Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#x2218;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a pushdown automaton, so can _f_.
+_Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#x2218;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can _f_.
 
-For general _m_ and _n_, write _f_ as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a pushdown automaton, so can _f_.  &#x25a1;
+For general _m_ and _n_, write _f_ as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can _f_.
+
+Moreover, _f_ is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(9)**](#Note9)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
 <a id=License></a>
 ## License
