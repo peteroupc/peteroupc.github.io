@@ -76,7 +76,7 @@
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#More_Algorithms_for_Non_Negative_Factories"><strong>More Algorithms for Non-Negative Factories</strong></a></li>
-<li><a href="#Pushdown_automata"><strong>Pushdown automata</strong></a></li>
+<li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -439,7 +439,9 @@
 
 <h3>Pushdown Automata for Square-Root-Like Functions</h3>
 
-<p>The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, takes an input coin with probability of heads <em>&lambda;</em>, and returns 1 with probability&mdash;</p>
+<p>A <em>pushdown automaton</em> is a state machine that keeps a stack of symbols.  In this section, the input for this automaton is a stream of flips of a coin that shows heads with probability <em>&lambda;</em>, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  That paper shows that a pushdown automaton, as defined here, can simulate only <em>algebraic functions</em>, that is, functions that can be a solution of a system of polynomial equations.  The <a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>appendix</strong></a> defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.</p>
+
+<p>The following algorithm extends the square-root construction of Flajolet et al. (2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, takes an input coin with probability of heads <em>&lambda;</em>, and returns 1 with probability&mdash;</p>
 
 <ul>
 <li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>)/sqrt(1 + 4*<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(<em>g</em>(<em>&lambda;</em>) &minus; 1)), or equivalently,</li>
@@ -447,14 +449,12 @@
 <li><em>f</em>(<em>&lambda;</em>) = (1 &minus; <em>&lambda;</em>) * OGF(<em>&lambda;</em>*<em>g</em>(<em>&lambda;</em>)*(1 &minus; <em>g</em>(<em>&lambda;</em>))),</li>
 </ul>
 
-<p>and 0 otherwise, where&mdash;</p>
+<p>and 0 otherwise, where:</p>
 
 <ul>
-<li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps the half-open interval [0, 1) to the closed interval [0, 1] and admits a Bernoulli factory, and</li>
-<li>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</li>
+<li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps the half-open interval [0, 1) to the closed interval [0, 1] and admits a Bernoulli factory. If <em>g</em> is a rational function (a ratio of two polynomials) with rational coefficients, then <em>f</em> is algebraic and can be simulated by a <em>pushdown automaton</em>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</li>
+<li><p>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</p></li>
 </ul>
-
-<p>If <em>g</em> is a rational function (a ratio of two polynomials) with rational coefficients, then <em>f</em> is an algebraic function and can be simulated by a <em>pushdown automaton</em> (a state machine that keeps a stack of symbols) (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>
@@ -466,7 +466,7 @@
 </ol></li>
 </ol>
 
-<p>As a pushdown automaton, this algorithm can be given as follows (except the &quot;Do this substep again&quot; part). Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These <em>transitions</em> can be written as follows:</p>
+<p>As a pushdown automaton, this algorithm (except the &quot;Do this substep again&quot; part) can be expressed as follows. Let the stack have the single symbol EMPTY, and start at the state POS-S1.  Based on the current state, the last coin flip (HEADS or TAILS), and the symbol on the top of the stack, set the new state and replace the top stack symbol with zero, one, or two symbols.  These <em>transition rules</em> can be written as follows:</p>
 
 <ul>
 <li>(POS-S1, HEADS, <em>topsymbol</em>) &rarr; (POS-S2, {<em>topsymbol</em>}) (set state to POS-S2, keep <em>topsymbol</em> on the stack).</li>
@@ -476,7 +476,7 @@
 <li>(POS-S1, TAILS, X) &rarr; (ZERO, {}).</li>
 <li>(NEG-S1, TAILS, X) &rarr; (ZERO, {}).</li>
 <li>(ZERO, <em>flip</em>, <em>topsymbol</em>) &rarr; (ZERO, {}).</li>
-<li>(POS-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Add enough transitions to the automaton to simulate <em>g</em>(<em>&lambda;</em>) by a finite-state machine (only possible if <em>g</em> is rational with rational coefficients).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.</li>
+<li>(POS-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Add enough transition rules to the automaton to simulate <em>g</em>(<em>&lambda;</em>) by a finite-state machine (only possible if <em>g</em> is rational with rational coefficients (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>).  Transition to POS-S2-ZERO if the machine outputs 0, or POS-S2-ONE if the machine outputs 1.</li>
 <li>(NEG-S2, <em>flip</em>, <em>topsymbol</em>) &rarr; Same as before, but the transitioning states are NEG-S2-ZERO and NEG-S2-ONE, respectively.</li>
 <li>(POS-S2-ONE, <em>flip</em>, <em>topsymbol</em>) &rarr; (POS-S1, {<em>topsymbol</em>, X}) (replace top stack symbol with <em>topsymbol</em>, then push X to the stack).</li>
 <li>(POS-S2-ZERO, <em>flip</em>, EMPTY) &rarr; (NEG-S1, {EMPTY, X}).</li>
@@ -985,8 +985,8 @@
 <li><small><sup id=Note5>(5)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
 <li><small><sup id=Note6>(6)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
 <li><small><sup id=Note7>(7)</sup> Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</small></li>
-<li><small><sup id=Note8>(8)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</small></li>
-<li><small><sup id=Note9>(9)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</small></li>
+<li><small><sup id=Note8>(8)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724, 2005.</small></li>
+<li><small><sup id=Note9>(9)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010</small></li>
 <li><small><sup id=Note10>(10)</sup> C.T. Li, A. El Gamal, &quot;<a href="https://arxiv.org/abs/1603.05238v1"><strong>A Universal Coding Scheme for Remote Generation of Continuous Random Variables</strong></a>&quot;, arXiv:1603.05238v1  [cs.IT], 2016</small></li>
 <li><small><sup id=Note11>(11)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
 <li><small><sup id=Note12>(12)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
@@ -1011,6 +1011,7 @@
 <li><small><sup id=Note31>(31)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 <li><small><sup id=Note32>(32)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
 <li><small><sup id=Note33>(33)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small></li>
+<li><small><sup id=Note34>(34)</sup>  Icard, Thomas F., &quot;Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy&quot;, <em>Journal of Mathematical Psychology</em> 95 (2020): 102308.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1346,14 +1347,33 @@ calc_linear_func(count=8)
 <p><strong>Note:</strong> This algorithm is exact if the oracle produces only rational numbers <em>and</em> if all <em>c</em>[<em>i</em>] are rational numbers.  If the oracle can produce irrational numbers, then they should be implemented using uniform PSRNs.  See also note 3 on Algorithm 2.</p>
 </blockquote>
 
-<p><a id=Pushdown_automata></a></p>
+<p><a id=Pushdown_Automata_and_Algebraic_Functions></a></p>
 
-<h3>Pushdown automata</h3>
+<h3>Pushdown Automata and Algebraic Functions</h3>
+
+<p>This section has mathematical proofs showing which kinds of algebraic functions (functions that can be a solution of a system of polynomial equations) can be simulated with a pushdown automaton (a state machine with a stack).</p>
+
+<p>A <em>pushdown automaton</em> has a finite set of <em>states</em> and a finite set of <em>stack symbols</em>, one of which is called EMPTY. It starts with a given state and its stack starts with EMPTY.  On each iteration:</p>
+
+<ul>
+<li>The automaton flips the coin.</li>
+<li>Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero, one or two symbols.  Thus, there are three kinds of <em>transition rules</em>:
+
+<ul>
+<li>(<em>state</em>, <em>flip</em>, <em>symbol</em>) &rarr; (<em>state2</em>, {<em>symbol2</em>}): move to <em>state2</em>, replace top stack symbol with same or different one.</li>
+<li>(<em>state</em>, <em>flip</em>, <em>symbol</em>) &rarr; (<em>state2</em>, {<em>symbol2</em>, <em>new</em>}): move to <em>state2</em>, replace top stack symbol with <em>symbol2</em>, then <em>push</em> a new symbol (<em>new</em>) onto the stack.</li>
+<li>(<em>state</em>, <em>flip</em>, <em>symbol</em>) &rarr; (<em>state2</em>, {}): move to <em>state2</em>, <em>pop</em> the top symbol from the stack.</li>
+</ul></li>
+</ul>
+
+<p>When the machine pops EMPTY from the stack, it stops, and returns either 0 or 1 depending on the state it ends up at.</p>
+
+<p>Mossel and Peres (2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> defined pushdown automata to start with a stack of non-empty but <em>arbitrary</em> size, and to allow each rule to replace the top symbol with an <em>arbitrary</em> number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called <em>probabilistic right-linear indexed grammars</em> (Icard 2020)<sup><a href="#Note34"><strong>(34)</strong></a></sup> and are suspected to be equivalent to them.</p>
 
 <p>Define&mdash;</p>
 
 <ul>
-<li>a <em>full-domain pushdown automaton</em> as a pushdown automaton that, given the flips of a coin with probability of heads <em>&lambda;</em>, terminates with probability 1 for every <em>&lambda;</em> in the open interval (0, 1).</li>
+<li>a <em>full-domain pushdown automaton</em> as a pushdown automaton that, given a stream of flips of a coin with probability of heads <em>&lambda;</em>, terminates with probability 1 for every <em>&lambda;</em> in the open interval (0, 1).</li>
 <li><em>A</em> as the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.</li>
 </ul>
 
@@ -1367,7 +1387,7 @@ calc_linear_func(count=8)
 
 <p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}),</p>
 
-<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
@@ -1393,11 +1413,11 @@ calc_linear_func(count=8)
 <li>Replace each rule in <em>G</em> of the form (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; (<em>state2</em>, {}), where <em>state2</em> is a final state of <em>G</em> associated with output 0, with the rule (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; ( <em>state</em><sub>0</sub>, {}).</li>
 </ul>
 
-<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A.</em></p>
 
-<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.  This corresponds to a full-domain pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;</p>
+<p><em>Proof:</em> These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  This corresponds to a full-domain pushdown automaton with no stack symbols other than EMPTY and that never pushes symbols onto the stack, and such that, whenever the machine transitions to a final state of the finite-state machine, it pops the only symbol EMPTY from the stack. &#x25a1;</p>
 
 <p><strong>Proposition 4:</strong> <em>If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution&#39;s probability generating function is in class A.</em></p>
 
@@ -1415,11 +1435,11 @@ calc_linear_func(count=8)
 (S&prime;, HEADS, <em>stacksymbol</em>) &rarr; (T, <em>newstack</em>), and
 (S&prime;, TAILS, <em>stacksymbol</em>) &rarr; (FAILURE, {}).</p>
 
-<p>Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p>Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup><a href="#Note33"><strong>(33)</strong></a></sup>, the machine now simulates the distribution&#39;s probability generating function.  Moreover, the function is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class A.</em></p>
 
-<p><em>Proof:</em> See (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup>. &#x25a1;</p>
+<p><em>Proof:</em> See (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>. &#x25a1;</p>
 
 <p><strong>Corollary 1:</strong> <em>The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class A.</em></p>
 
@@ -1427,7 +1447,7 @@ calc_linear_func(count=8)
 
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
-<p>Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note9"><strong>(9)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Moreover, <em>f</em> is in class A by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
 
 <p><a id=License></a></p>
 
