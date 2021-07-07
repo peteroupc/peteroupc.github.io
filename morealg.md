@@ -729,8 +729,8 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note31>(31)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 - <small><sup id=Note32>(32)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. "[**Perfect simulation using atomic regeneration with application to Sequential Monte Carlo**](https://arxiv.org/abs/1407.5770v1)", arXiv:1407.5770v1  [stat.CO].</small>
 - <small><sup id=Note33>(33)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308.</small>
-- <small><sup id=Note34>(34)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small>
-- <small><sup id=Note35>(35)</sup> Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009.</small>
+- <small><sup id=Note34>(34)</sup> Etessami, K. and Yannakakis, M., "Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations", _Journal of the ACM_ 56(1), pp.1-66, 2009.</small>
+- <small><sup id=Note35>(35)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. "Bernoulli Factories and Black-box Reductions in Mechanism Design." Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -994,7 +994,7 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 This section has mathematical proofs showing which kinds of algebraic functions (functions that can be a solution of a system of polynomial equations) can be simulated with a pushdown automaton (a state machine with a stack).
 
-A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY. It starts with a given state and its stack starts with EMPTY.  On each iteration:
+A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes a biased coin. It starts with a given state and its stack starts with EMPTY.  On each iteration:
 
 - The automaton flips the coin.
 - Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero, one or two symbols.  Thus, there are three kinds of _transition rules_:
@@ -1004,12 +1004,14 @@ A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack s
 
 When the machine pops EMPTY from the stack, it stops, and returns either 0 or 1 depending on the state it ends up at.
 
-Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and are suspected to be equivalent to them.  They are equivalent to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> with transition probabilities that are rational numbers.
+Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and are equivalent to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
 
 In this section:
 
-- A _full-domain pushdown automaton_ is a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
+- A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
 - _A_ is the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.
+
+**Proposition 0** (Mossel and Peres 2005<sup>[**(33)**](#Note33)</sup>, Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is algebraic over the rationals (the polynomial system's coefficients must be rational numbers)._
 
 **Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
@@ -1053,7 +1055,7 @@ _Proof:_ These functions can be simulated by a finite-state machine (Mossel and 
 
 **Proposition 4:** _If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution's probability generating function is in class A._
 
-_Proof:_ Let there be a full-domain pushdown automaton _F_.  Add one state FAILURE, then augment _F_ with a special "letter-generating" operation as follows.  Add the following rule that pops all symbols from the stack:
+_Proof:_ Let _F_ be a full-domain pushdown automaton.  Add one state FAILURE, then augment _F_ with a special "letter-generating" operation as follows.  Add the following rule that pops all symbols from the stack:
 
 (FAILURE, _flip_, _stacksymbol_) &rarr; (FAILURE, {}),
 
@@ -1067,7 +1069,7 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and<br/>
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
-Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup>[**(34)**](#Note34)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
+Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class A._
 

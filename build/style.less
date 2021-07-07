@@ -193,16 +193,23 @@ caption, figcaption {
 h1 {
  .border-divider(@primary);
  .background-text-primary(@primary);
+ code, pre, var, tt { .background-text-primary(@primary); }
 }
 
 h2 {
  .border-divider(@primary400);
  .background-text-primary(@primary400);
+ code, pre, var, tt { .background-text-primary(@primary); }
 }
 
 pre {
  .border-divider(@primary100);
  .background-text-primary(@primary100);
+  code, pre, var, tt { .background-text-primary(@primary100) }
+}
+
+h3 code, h4 code {
+.background-text-primary(@primary50);
 }
 
 button, input.button, input[type="button"],
