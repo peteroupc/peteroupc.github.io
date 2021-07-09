@@ -1004,7 +1004,7 @@ A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack s
 
 When the machine pops EMPTY from the stack, it stops, and returns either 0 or 1 depending on the state it ends up at.
 
-Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and are equivalent to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
+Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
 
 In this section:
 
@@ -1032,7 +1032,7 @@ _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, and let _G_ be t
 (_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),
 
-where _state_ is an arbitrary state and the transitions of the two rules differ, add two new states _state_<sub>0</sub> and _state_<sub>1</sub> that correspond to _state_ and have names different from all other states, and replace that rule with the following rules:
+where _state_ is an arbitrary state and the transitions of the two rules differ, add two new states _state_<sub>0</sub> and _state_<sub>1</sub> that correspond to _state_ and have names different from all other states, and replace those rules with the following rules:
 
 (_state_, HEADS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
