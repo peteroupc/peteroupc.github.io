@@ -1032,7 +1032,7 @@ _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, and let _G_ be t
 (_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),
 
-where _state_ is an arbitrary state and the transitions of the two rules differ, add two new states _state_<sub>0</sub> and _state_<sub>1</sub> that correspond to _state_ and have names different from all other states, and replace those rules with the following rules:
+where _state_ is an arbitrary state and the transitions of the two rules differ, add two new states _state_<sub>0</sub> and _state_<sub>1</sub> that correspond to _state_ and have names different from all other states, and replace that rule with the following rules:
 
 (_state_, HEADS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_gstart_, {_stacksymbol_, EMPTY&prime;}),<br>
@@ -1044,6 +1044,7 @@ where _state_ is an arbitrary state and the transitions of the two rules differ,
 where _gstart_ is the starting state for _G_, and copy the rules of the automaton for _G_ onto _F_, but with the following modifications:
 
 - Replace the symbol EMPTY in _G_ with EMPTY&prime;.
+- Replace each state in _G_ with a name distinct from all other states in _F_.
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 1, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>1</sub>, {}).
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 0, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>0</sub>, {}).
 
@@ -1070,6 +1071,24 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
 Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
+
+Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>):
+
+- _X_ &rarr; _a_ (rewrite _X_ to the letter _a_).
+- _X_ &rarr;<sub>_p_</sub> (_a_, _Y_) (rewrite _X_ with rational probability _p_ to the letter _a_ followed by the nonterminal _Y_).
+- _X_ &rarr; (_Y_, _Z_) (rewrite _X_ to the nonterminals _Y_ and _Z_ in that order).
+
+Instead of _a_, a rule can use _&epsilon;_ (the empty string). (The grammar is _context-free_ because the left hand side has only nonterminals, so that no context from the word is needed to parse it.)
+
+**Proposition 5:** _Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar._
+
+_Proof Sketch:_ In the equivalent pushdown automaton:
+
+- _X_ &rarr; _a_ becomes the two rules&mdash;(START, HEADS, _X_) &rarr; (_letter_, {}), and<br>(START, TAILS, _X_) &rarr; (_letter_, {}).<br>Here, _letter_ is either START or a unique state in _F_ that "detours" to a letter-generating operation for _a_ and sets the state back to START when finished (see Proposition 4).  If _a_ is _&epsilon;_, _letter_ is START and no letter-generating operation is done.
+- _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) (all rules with the same nonterminal _X_) are rewritten to enough rules to transition to a letter-generating operation for _a_<sub>_i_</sub>, and swap the top stack symbol with _Y_<sub>_i_</sub>, with probability _p_<sub>_i_</sub>, which is possible with just a finite-state machine (see Proposition 3) because all the probabilities are rational numbers (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  If _a_<sub>_i_</sub> is _&epsilon;_, no letter-generating operation is done.
+- _X_ &rarr; (_Y_, _Z_) becomes the two rules&mdash;(START, HEADS, _X_) &rarr; (START, {_Y_, _Z_}), and<br>(START, TAILS, _X_) &rarr; (START, {_Y_, _Z_}).
+
+Here, _X_ is the stack symbol EMPTY if _X_ is the grammar's starting nonterminal. Now, assuming the automaton is full-domain, the rest of the result follows easily. &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class A._
 
