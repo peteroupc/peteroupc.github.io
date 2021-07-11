@@ -105,7 +105,7 @@
 <li><code><a href="#GetUnsignedBitLength">GetUnsignedBitLength()</a></code> - <b>Deprecated:</b> This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</li>
 <li><code><a href="#GetUnsignedBitLengthAsEInteger">GetUnsignedBitLengthAsEInteger()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value, and returns that number of bits as an arbitrary-precision integer.</li>
 <li><code><a href="#GetUnsignedBitLengthAsInt64">GetUnsignedBitLengthAsInt64()</a></code> - Finds the minimum number of bits needed to represent this number&#39;s absolute value, and returns that number of bits as a 64-bit signed integer.</li>
-<li><code><a href="#Imp_PeterO_Numbers_EInteger">Imp(PeterO.Numbers.EInteger)</a></code> - Does an OR NOT operation between this arbitrary-precision integer and another one.</li>
+<li><code><a href="#Imp_PeterO_Numbers_EInteger">Imp(PeterO.Numbers.EInteger)</a></code> - <b>Deprecated:</b> Does the incorrect implication operation. Use Imply instead.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_byte">implicit operator PeterO.Numbers.EInteger(byte)</a></code> - Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_int">implicit operator PeterO.Numbers.EInteger(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision integer.</li>
 <li><code><a href="#implicit_operator_PeterO_Numbers_EInteger_long">implicit operator PeterO.Numbers.EInteger(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
@@ -1977,6 +1977,8 @@ The return value would exceed the range of a 32-bit signed integer.</li>
 <pre>public PeterO.Numbers.EInteger Imp(
     PeterO.Numbers.EInteger second);
 </pre>
+
+<p><b>Deprecated.</b> Does the incorrect implication operation. Use Imply instead.</p>
 
 <p>Does an OR NOT operation between this arbitrary-precision integer and another one.</p>
 

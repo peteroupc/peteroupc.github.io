@@ -66,6 +66,7 @@
 <li><code><a href="#FromEInteger_PeterO_Numbers_EInteger">FromEInteger(PeterO.Numbers.EInteger)</a></code> - Converts an arbitrary-precision integer to a rational number.</li>
 <li><code><a href="#FromExtendedDecimal_PeterO_Numbers_EDecimal">FromExtendedDecimal(PeterO.Numbers.EDecimal)</a></code> - <b>Deprecated:</b> Renamed to FromEDecimal.</li>
 <li><code><a href="#FromExtendedFloat_PeterO_Numbers_EFloat">FromExtendedFloat(PeterO.Numbers.EFloat)</a></code> - <b>Deprecated:</b> Renamed to FromEFloat.</li>
+<li><code><a href="#FromHalfBits_short">FromHalfBits(short)</a></code> - Creates a binary rational number from a binary floating-point number encoded in the IEEE 754 binary16 format (also known as a &quot;half-precision&quot; floating-point number).</li>
 <li><code><a href="#FromInt16_short">FromInt16(short)</a></code> - Converts a 16-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromInt32_int">FromInt32(int)</a></code> - Converts a 32-bit signed integer to an arbitrary-precision rational number.</li>
 <li><code><a href="#FromInt64_long">FromInt64(long)</a></code> - Converts a 64-bit signed integer to an arbitrary-precision rational number.</li>
@@ -160,6 +161,7 @@
 <li><code><a href="#ToExtendedFloat">ToExtendedFloat()</a></code> - <b>Deprecated:</b> Renamed to ToEFloat.</li>
 <li><code><a href="#ToExtendedFloat_PeterO_Numbers_EContext">ToExtendedFloat(PeterO.Numbers.EContext)</a></code> - <b>Deprecated:</b> Renamed to ToEFloat.</li>
 <li><code><a href="#ToExtendedFloatExactIfPossible_PeterO_Numbers_EContext">ToExtendedFloatExactIfPossible(PeterO.Numbers.EContext)</a></code> - <b>Deprecated:</b> Renamed to ToEFloatExactIfPossible.</li>
+<li><code><a href="#ToHalfBits">ToHalfBits()</a></code> - Converts this value to its closest equivalent as a binary floating-point number, expressed as an integer in the IEEE 754 binary16 format (also known as a &quot;half-precision&quot; floating-point number).</li>
 <li><code><a href="#ToInt16Checked">ToInt16Checked()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer after converting it to an integer by discarding its fractional part.</li>
 <li><code><a href="#ToInt16IfExact">ToInt16IfExact()</a></code> - Converts this number&#39;s value to a 16-bit signed integer if it can fit in a 16-bit signed integer without rounding to a different numerical value.</li>
 <li><code><a href="#ToInt16Unchecked">ToInt16Unchecked()</a></code> - Converts this number&#39;s value to an integer by discarding its fractional part, and returns the least-significant bits of its two&#39;s-complement form as a 16-bit signed integer.</li>
@@ -1201,9 +1203,11 @@ doesn&#39;t satisfy den.Sign &gt;= 0.</p></li>
 <p><b>Exceptions:</b></p>
 
 <ul>
-<li>System.ArgumentNullException:
+<li><p>System.ArgumentNullException:
 The parameter  <i>ef</i>
-is null.</li>
+is null.</p></li>
+<li><p>System.ArgumentException:
+doesn&#39;t satisfy den.Sign &gt;= 0.</p></li>
 </ul>
 
 <p><a id="FromEInteger_PeterO_Numbers_EInteger"></a></p>
@@ -1269,6 +1273,27 @@ is null.</li>
 <p><b>Return Value:</b></p>
 
 <p>An arbitrary-precision rational number.</p>
+
+<p><a id="FromHalfBits_short"></a></p>
+
+<h3>FromHalfBits</h3>
+
+<pre>public static PeterO.Numbers.ERational FromHalfBits(
+    short value);
+</pre>
+
+<p>Creates a binary rational number from a binary floating-point number encoded in the IEEE 754 binary16 format (also known as a &quot;half-precision&quot; floating-point number). This method computes the exact value of the floating point number, not an approximation, as is often the case by converting the number to a string.</p>
+
+<p><b>Parameters:</b></p>
+
+<ul>
+<li><i>value</i>: A 16-bit integer encoded in the IEEE 754 binary16 format.</li>
+</ul>
+
+<p><b>Return Value:</b></p>
+
+<p>A rational number with the same floating-point value as  <i>value</i>
+.</p>
 
 <p><a id="FromInt16_short"></a></p>
 
@@ -3526,6 +3551,19 @@ This object&#39;s value is infinity or not-a-number (NaN).</li>
 <p><b>Return Value:</b></p>
 
 <p>The exact value of the rational number if possible; otherwise, the rounded version of the result if a context is given. Returns not-a-number (NaN) if the context is null and the result can&#39;t be exact because it has a nonterminating binary expansion.</p>
+
+<p><a id="ToHalfBits"></a></p>
+
+<h3>ToHalfBits</h3>
+
+<pre>public short ToHalfBits();
+</pre>
+
+<p>Converts this value to its closest equivalent as a binary floating-point number, expressed as an integer in the IEEE 754 binary16 format (also known as a &quot;half-precision&quot; floating-point number). The half-even rounding mode is used. If this value is a NaN, sets the high bit of the binary16 number&#39;s significand area for a quiet NaN, and clears it for a signaling NaN. Then the other bits of the significand area are set to the lowest bits of this object&#39;s unsigned significand, and the next-highest bit of the significand area is set if those bits are all zeros and this is a signaling NaN.</p>
+
+<p><b>Return Value:</b></p>
+
+<p>The closest binary floating-point number to this value, expressed as an integer in the IEEE 754 binary16 format. The return value can be positive infinity or negative infinity if this value exceeds the range of a floating-point number in the binary16 format.</p>
 
 <p><a id="ToInt16Checked"></a></p>
 

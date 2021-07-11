@@ -172,7 +172,7 @@ A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a wei
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
-To generate an _inflated X_ random variate with parameters _c_ and _&alpha;_, generate&mdash;
+To generate an _inflated X_ (also called _c-inflated X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 
 - _c_ with probability _&alpha;_, and
 - a random variate distributed as X otherwise.

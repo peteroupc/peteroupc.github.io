@@ -1512,7 +1512,7 @@ FUNCTIONS
     numericalTable(func, x, y, n=100)
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/randomgen.py
 
 ```
 
@@ -1730,7 +1730,7 @@ CLASSES
      |  __hash__ = None
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/fixed.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/fixed.py
 
 ```
 
@@ -2169,7 +2169,7 @@ CLASSES
      |      list of weak references to the object (if defined)
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/bernoulli.py
 
 ```
 
@@ -2321,7 +2321,7 @@ FUNCTIONS
     stirling1(n, k)
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/interval.py
 
 ```
 
@@ -2422,7 +2422,7 @@ CLASSES
      |      list of weak references to the object (if defined)
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/moore.py
 
 ```
 
@@ -2592,6 +2592,6 @@ FUNCTIONS
     psrnexpo(rg)
 
 FILE
-    /home/rooster/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
+    /home/peter/Documents/SharpDevelopProjects/peteroupc.github.io/betadist.py
 
 ```

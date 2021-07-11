@@ -1002,7 +1002,7 @@ A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack s
      - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_, _new_}): move to _state2_, replace top stack symbol with _symbol2_, then _push_ a new symbol (_new_) onto the stack.
      - (_state_, _flip_, _symbol_) &rarr; (_state2_, {}): move to _state2_, _pop_ the top symbol from the stack.
 
-When the machine pops EMPTY from the stack, it stops, and returns either 0 or 1 depending on the state it ends up at.
+When the stack is empty, the machine stops, and returns either 0 or 1 depending on the state it ends up at.
 
 Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
 
@@ -1015,7 +1015,11 @@ In this section:
 
 **Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
-_Proof:_ Let _F_ be a full-domain pushdown automaton for _f_, and let _G_ be that for _g_.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
+_Proof:_ Let _F_ be a full-domain pushdown automaton for _f_, and let _G_ be that for _g_.
+
+Assume that machines _F_ and _G_ stop when they pop EMPTY from the stack.  If this is not the case, transform both machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, _flip_, EMPTY) &rarr; (_start_, {EMPTY&prime;&prime;}) and rule (_state_, _flip_, EMPTY) &rarr; (_state_, {}) for all states other than X0, where _start_ is the starting state of _F_ or _G_, as the case may be.
+
+First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
 
 (_state_, _flip_, EMPTY) &rarr; (_state2_, {}),
 
@@ -1027,7 +1031,7 @@ where _gstart_ is the starting state for _G_.  Then take the final states of the
 
 **Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
 
-_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, and let _G_ be that for _g_.  First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
+_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, and let _G_ be that for _g_. As in Proposition 1, assume that machines _F_ and _G_ stop when they pop EMPTY from the stack. First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
 
 (_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),
@@ -1070,7 +1074,7 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and<br/>
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
-Then if the FAILURE state pops EMPTY from the stack, the result is 0, and if any other state pops EMPTY from the stack, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
+Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>):
 
@@ -1086,7 +1090,7 @@ _Proof Sketch:_ In the equivalent pushdown automaton:
 
 - _X_ &rarr; _a_ becomes the two rules&mdash;(START, HEADS, _X_) &rarr; (_letter_, {}), and<br>(START, TAILS, _X_) &rarr; (_letter_, {}).<br>Here, _letter_ is either START or a unique state in _F_ that "detours" to a letter-generating operation for _a_ and sets the state back to START when finished (see Proposition 4).  If _a_ is _&epsilon;_, _letter_ is START and no letter-generating operation is done.
 - _X_ &rarr;<sub>_p_<sub>_i_</sub></sub> (_a_<sub>_i_</sub>, _Y_<sub>_i_</sub>) (all rules with the same nonterminal _X_) are rewritten to enough rules to transition to a letter-generating operation for _a_<sub>_i_</sub>, and swap the top stack symbol with _Y_<sub>_i_</sub>, with probability _p_<sub>_i_</sub>, which is possible with just a finite-state machine (see Proposition 3) because all the probabilities are rational numbers (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  If _a_<sub>_i_</sub> is _&epsilon;_, no letter-generating operation is done.
-- _X_ &rarr; (_Y_, _Z_) becomes the two rules&mdash;(START, HEADS, _X_) &rarr; (START, {_Y_, _Z_}), and<br>(START, TAILS, _X_) &rarr; (START, {_Y_, _Z_}).
+- _X_ &rarr; (_Y_, _Z_) becomes the two rules&mdash;(START, HEADS, _X_) &rarr; (START, {_Z_, _Y_}), and<br>(START, TAILS, _X_) &rarr; (START, {_Z_, _Y_}).
 
 Here, _X_ is the stack symbol EMPTY if _X_ is the grammar's starting nonterminal. Now, assuming the automaton is full-domain, the rest of the result follows easily. &#x25a1;
 
