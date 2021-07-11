@@ -5,10 +5,7 @@
 
 <h1>com.upokecenter.cbor.CBORDateConverter.ConversionType</h1>
 
-<pre>public static enum CBORDateConverter.ConversionType extends java.lang.Enum&lt;CBORDateConverter.ConversionType&gt;
-</pre>
-
-<p>Conversion type for date-time conversion.</p>
+<h2>Nested Classes</h2>
 
 <h2>Enum Constants</h2>
 
@@ -38,48 +35,15 @@ Returns an array containing the constants of this enum type, in
 the order they are declared.</li>
 </ul>
 
-<h2>Method Details</h2>
-
-<h3>TaggedString</h3>
-
-<pre>public static final CBORDateConverter.ConversionType TaggedString
-</pre>
-
-<h3>TaggedNumber</h3>
-
-<pre>public static final CBORDateConverter.ConversionType TaggedNumber
-</pre>
-
-<h3>UntaggedNumber</h3>
-
-<pre>public static final CBORDateConverter.ConversionType UntaggedNumber
-</pre>
-
-<h3>values</h3>
-
-<pre>public static CBORDateConverter.ConversionType[] values()
-</pre>
-
-<h3>valueOf</h3>
-
-<pre>public static CBORDateConverter.ConversionType valueOf​(java.lang.String name)
-</pre>
-
 <h2>Enum Constant Details</h2>
 
-<h3>TaggedString</h3>
-
-<pre>public static final CBORDateConverter.ConversionType TaggedString
-</pre>
+<h3><a id='TaggedString'>TaggedString</a></h3>
 
 <p>FromCBORObject accepts CBOR objects with tag 0 (date/time strings) and tag 1
  (number of seconds since the start of 1970), and ToCBORObject
  converts date/time objects to CBOR objects of tag 0.</p>
 
-<h3>TaggedNumber</h3>
-
-<pre>public static final CBORDateConverter.ConversionType TaggedNumber
-</pre>
+<h3><a id='TaggedNumber'>TaggedNumber</a></h3>
 
 <p>FromCBORObject accepts objects with tag 0 (date/time strings) and tag 1
  (number of seconds since the start of 1970), and ToCBORObject
@@ -92,10 +56,7 @@ the order they are declared.</li>
  the conversion to binary64 results in positive infinity, negative
  infinity, or not-a-number.</p>
 
-<h3>UntaggedNumber</h3>
-
-<pre>public static final CBORDateConverter.ConversionType UntaggedNumber
-</pre>
+<h3><a id='UntaggedNumber'>UntaggedNumber</a></h3>
 
 <p>FromCBORObject accepts untagged CBOR integer or CBOR floating-point objects
  that give the number of seconds since the start of 1970, and
@@ -108,6 +69,12 @@ the order they are declared.</li>
  otherwise. The ToCBORObject conversion will throw an exception if
  the conversion to binary64 results in positive infinity, negative
  infinity, or not-a-number.</p>
+
+<h2>Method Details</h2>
+
+<h3><a id='values()'>values</a></h3>
+
+<h3><a id='valueOf(java.lang.String)'>valueOf</a></h3>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

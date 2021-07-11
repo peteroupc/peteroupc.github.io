@@ -5,12 +5,6 @@
 
 <h1>com.upokecenter.numbers.EFloats</h1>
 
-<pre>public final class EFloats extends java.lang.Object
-</pre>
-
-<p>A class that implements additional operations on arbitrary-precision binary
- floating-point numbers.</p>
-
 <h2>Methods</h2>
 
 <ul>
@@ -20,19 +14,19 @@ EContext ec)</code><br>
 Performs a logical AND operation on two binary numbers in the form of
 logical operands.</li>
 <li><code>static EFloat BooleanToEFloat​(boolean b,
-           EContext ec)</code><br>
+EContext ec)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
 binary floating-point number.</li>
 <li><code>static EFloat Canonical​(EFloat ed)</code><br>
 Returns a canonical version of the given arbitrary-precision number object.</li>
 <li><code>static int CompareTotal​(EFloat ed,
-        EFloat other,
-        EContext ec)</code><br>
+EFloat other,
+EContext ec)</code><br>
 Compares the values of one arbitrary-precision number object and another
 object, imposing a total ordering on all possible values.</li>
 <li><code>static int CompareTotalMagnitude​(EFloat ed,
-                 EFloat other,
-                 EContext ec)</code><br>
+EFloat other,
+EContext ec)</code><br>
 Compares the absolute values of two arbitrary-precision number objects,
 imposing a total ordering on all possible values (ignoring their
 signs).</li>
@@ -46,15 +40,15 @@ number object&#39;s absolute value).</li>
 Returns an arbitrary-precision number object with the sign reversed from the
 given number object.</li>
 <li><code>static EFloat CopySign​(EFloat ed,
-    EFloat other)</code><br>
+EFloat other)</code><br>
 Returns an arbitrary-precision number object with the same value as the
 first given number object but with a the same sign (positive or
 negative) as the second given number object.</li>
 <li><code>static EFloat Int32ToEFloat​(int i32,
-         EContext ec)</code><br>
+EContext ec)</code><br>
 Creates a binary floating-point number from a 32-bit signed integer.</li>
 <li><code>static EFloat Invert​(EFloat ed1,
-  EContext ec)</code><br>
+EContext ec)</code><br>
 Performs a logical NOT operation on a binary number in the form of a
 logical operand.</li>
 <li><code>static boolean IsCanonical​(EFloat ed)</code><br>
@@ -70,7 +64,7 @@ negative infinity.</li>
 Returns whether the given arbitrary-precision number object is a
 not-a-number (NaN).</li>
 <li><code>static boolean IsNormal​(EFloat ed,
-    EContext ec)</code><br>
+EContext ec)</code><br>
 Returns whether the given number is a normal number.</li>
 <li><code>static boolean IsQuietNaN​(EFloat ed)</code><br>
 Returns whether the given arbitrary-precision number object is a quiet
@@ -83,7 +77,7 @@ Returns whether the given arbitrary-precision number object is negative
 (including negative infinity, negative not-a-number.get(NaN), or
 negative zero).</li>
 <li><code>static boolean IsSubnormal​(EFloat ed,
-       EContext ec)</code><br>
+EContext ec)</code><br>
 Returns whether the given number is a subnormal number.</li>
 <li><code>static boolean IsZero​(EFloat ed)</code><br>
 Returns whether the given arbitrary-precision number object is zero
@@ -94,7 +88,7 @@ Returns the base-2 exponent of an arbitrary-precision binary number (when
 that number is expressed in scientific notation with one nonzero
 digit before the radix point).</li>
 <li><code>static int NumberClass​(EFloat ed,
-       EContext ec)</code><br>
+EContext ec)</code><br>
 Finds the number class for an arbitrary-precision binary number object.</li>
 <li><code>static java.lang.String NumberClassString​(int nc)</code><br>
 Converts a number class identifier (ranging from 0 through 9) to a text
@@ -107,28 +101,28 @@ logical operands.</li>
 <li><code>static EFloat Radix​(EContext ec)</code><br>
 Returns the number 2, the binary radix.</li>
 <li><code>static EFloat Rescale​(EFloat ed,
-   EFloat scale,
-   EContext ec)</code><br>
+EFloat scale,
+EContext ec)</code><br>
 Returns an arbitrary-precision binary number with the same value as this
 object but with the given exponent, expressed as an
 arbitrary-precision binary number.</li>
 <li><code>static EFloat Rotate​(EFloat ed,
-  EFloat ed2,
-  EContext ec)</code><br>
+EFloat ed2,
+EContext ec)</code><br>
 Rotates the bits of an arbitrary-precision binary number&#39;s significand.</li>
 <li><code>static boolean SameQuantum​(EFloat ed1,
-       EFloat ed2)</code><br>
+EFloat ed2)</code><br>
 Returns whether two arbitrary-precision numbers have the same exponent, they
 both are not-a-number (NaN), or they both are infinity (positive
 and/or negative).</li>
 <li><code>static EFloat ScaleB​(EFloat ed,
-  EFloat ed2,
-  EContext ec)</code><br>
+EFloat ed2,
+EContext ec)</code><br>
 Finds an arbitrary-precision binary number whose binary point is moved a
 given number of places.</li>
 <li><code>static EFloat Shift​(EFloat ed,
- EFloat ed2,
- EContext ec)</code><br>
+EFloat ed2,
+EContext ec)</code><br>
 Shifts the bits of an arbitrary-precision binary floating point number&#39;s
 significand.</li>
 <li><code>static EFloat Trim​(EFloat ed1,
@@ -144,10 +138,7 @@ form of logical operands.</li>
 
 <h2>Method Details</h2>
 
-<h3>Radix</h3>
-
-<pre>public static EFloat Radix​(EContext ec)
-</pre>
+<h3><a id='Radix(com.upokecenter.numbers.EContext)'>Radix</a></h3>
 
 <p>Returns the number 2, the binary radix.</p>
 
@@ -165,10 +156,7 @@ null.</li>
 arithmetic context.</li>
 </ul>
 
-<h3>Int32ToEFloat</h3>
-
-<pre>public static EFloat Int32ToEFloat​(int i32, EContext ec)
-</pre>
+<h3><a id='Int32ToEFloat(int,com.upokecenter.numbers.EContext)'>Int32ToEFloat</a></h3>
 
 <p>Creates a binary floating-point number from a 32-bit signed integer.</p>
 
@@ -187,10 +175,7 @@ exponent range of the result. Can be null.</p></li>
 representable value to the given integer.</li>
 </ul>
 
-<h3>BooleanToEFloat</h3>
-
-<pre>public static EFloat BooleanToEFloat​(boolean b, EContext ec)
-</pre>
+<h3><a id='BooleanToEFloat(boolean,com.upokecenter.numbers.EContext)'>BooleanToEFloat</a></h3>
 
 <p>Converts a boolean value (either true or false) to an arbitrary-precision
  binary floating-point number.</p>
@@ -209,10 +194,7 @@ representable value to the given integer.</li>
 result will be rounded as specified by the given context, if any.</li>
 </ul>
 
-<h3>IsCanonical</h3>
-
-<pre>public static boolean IsCanonical​(EFloat ed)
-</pre>
+<h3><a id='IsCanonical(com.upokecenter.numbers.EFloat)'>IsCanonical</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is in a
  canonical form. For the current version of EFloat, all EFloat
@@ -230,10 +212,7 @@ result will be rounded as specified by the given context, if any.</li>
 <li>Always <code>true</code>.</li>
 </ul>
 
-<h3>IsFinite</h3>
-
-<pre>public static boolean IsFinite​(EFloat ed)
-</pre>
+<h3><a id='IsFinite(com.upokecenter.numbers.EFloat)'>IsFinite</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is neither null
  nor infinity nor not-a-number (NaN).</p>
@@ -252,10 +231,7 @@ is neither null nor infinity nor not-a-number (NaN), or <code>
 false</code> otherwise.</li>
 </ul>
 
-<h3>IsInfinite</h3>
-
-<pre>public static boolean IsInfinite​(EFloat ed)
-</pre>
+<h3><a id='IsInfinite(com.upokecenter.numbers.EFloat)'>IsInfinite</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is positive or
  negative infinity.</p>
@@ -273,10 +249,7 @@ false</code> otherwise.</li>
 is positive or negative infinity, or <code>false</code> otherwise.</li>
 </ul>
 
-<h3>IsNaN</h3>
-
-<pre>public static boolean IsNaN​(EFloat ed)
-</pre>
+<h3><a id='IsNaN(com.upokecenter.numbers.EFloat)'>IsNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).</p>
@@ -293,10 +266,7 @@ is positive or negative infinity, or <code>false</code> otherwise.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsNormal</h3>
-
-<pre>public static boolean IsNormal​(EFloat ed, EContext ec)
-</pre>
+<h3><a id='IsNormal(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>IsNormal</a></h3>
 
 <p>Returns whether the given number is a <i>normal</i> number. A <i>subnormal
  number</i> is a nonzero finite number whose Exponent property (or
@@ -330,10 +300,7 @@ false</code> otherwise. Returns <code>true</code> if the given context is null
 or HasExponentRange of the given context is <code>false</code>.</li>
 </ul>
 
-<h3>IsQuietNaN</h3>
-
-<pre>public static boolean IsQuietNaN​(EFloat ed)
-</pre>
+<h3><a id='IsQuietNaN(com.upokecenter.numbers.EFloat)'>IsQuietNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a quiet
  not-a-number (NaN).</p>
@@ -350,10 +317,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsSigned</h3>
-
-<pre>public static boolean IsSigned​(EFloat ed)
-</pre>
+<h3><a id='IsSigned(com.upokecenter.numbers.EFloat)'>IsSigned</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or
@@ -371,10 +335,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsSignalingNaN</h3>
-
-<pre>public static boolean IsSignalingNaN​(EFloat ed)
-</pre>
+<h3><a id='IsSignalingNaN(com.upokecenter.numbers.EFloat)'>IsSignalingNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a signaling
  not-a-number (NaN).</p>
@@ -391,10 +352,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>NumberClassString</h3>
-
-<pre>public static java.lang.String NumberClassString​(int nc)
-</pre>
+<h3><a id='NumberClassString(int)'>NumberClassString</a></h3>
 
 <p>Converts a number class identifier (ranging from 0 through 9) to a text
  string. An arbitrary-precision number object can belong in one of
@@ -422,10 +380,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 than 9.</li>
 </ul>
 
-<h3>NumberClass</h3>
-
-<pre>public static int NumberClass​(EFloat ed, EContext ec)
-</pre>
+<h3><a id='NumberClass(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>NumberClass</a></h3>
 
 <p>Finds the number class for an arbitrary-precision binary number object.</p>
 
@@ -454,10 +409,7 @@ quiet not-a-number (NaN), 9 = signaling NaN.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>IsSubnormal</h3>
-
-<pre>public static boolean IsSubnormal​(EFloat ed, EContext ec)
-</pre>
+<h3><a id='IsSubnormal(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>IsSubnormal</a></h3>
 
 <p>Returns whether the given number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent
@@ -497,10 +449,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>IsZero</h3>
-
-<pre>public static boolean IsZero​(EFloat ed)
-</pre>
+<h3><a id='IsZero(com.upokecenter.numbers.EFloat)'>IsZero</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is zero
  (positive zero or negative zero).</p>
@@ -518,10 +467,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 or negative zero); otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>LogB</h3>
-
-<pre>public static EFloat LogB​(EFloat ed, EContext ec)
-</pre>
+<h3><a id='LogB(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>LogB</a></h3>
 
 <p>Returns the base-2 exponent of an arbitrary-precision binary number (when
  that number is expressed in scientific notation with one nonzero
@@ -552,10 +498,7 @@ positive infinity or negative infinity.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>ScaleB</h3>
-
-<pre>public static EFloat ScaleB​(EFloat ed, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='ScaleB(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>ScaleB</a></h3>
 
 <p>Finds an arbitrary-precision binary number whose binary point is moved a
  given number of places.</p>
@@ -590,10 +533,7 @@ property.</li>
 null.</li>
 </ul>
 
-<h3>Shift</h3>
-
-<pre>public static EFloat Shift​(EFloat ed, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='Shift(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Shift</a></h3>
 
 <p>Shifts the bits of an arbitrary-precision binary floating point number&#39;s
  significand.</p>
@@ -631,10 +571,7 @@ specified in the context.</li>
 null.</li>
 </ul>
 
-<h3>Rotate</h3>
-
-<pre>public static EFloat Rotate​(EFloat ed, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='Rotate(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Rotate</a></h3>
 
 <p>Rotates the bits of an arbitrary-precision binary number&#39;s significand.</p>
 
@@ -677,10 +614,7 @@ specified in the context.</li>
 null.</li>
 </ul>
 
-<h3>CompareTotal</h3>
-
-<pre>public static int CompareTotal​(EFloat ed, EFloat other, EContext ec)
-</pre>
+<h3><a id='CompareTotal(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareTotal</a></h3>
 
 <p>Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
@@ -714,10 +648,7 @@ object is greater or the other object is null. Does not signal flags
 if either value is signaling NaN.</li>
 </ul>
 
-<h3>CompareTotalMagnitude</h3>
-
-<pre>public static int CompareTotalMagnitude​(EFloat ed, EFloat other, EContext ec)
-</pre>
+<h3><a id='CompareTotalMagnitude(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>CompareTotalMagnitude</a></h3>
 
 <p>Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their
@@ -752,10 +683,7 @@ object (ignoring their signs), or 1 if the first object is greater
 flags if either value is signaling NaN.</li>
 </ul>
 
-<h3>Copy</h3>
-
-<pre>public static EFloat Copy​(EFloat ed)
-</pre>
+<h3><a id='Copy(com.upokecenter.numbers.EFloat)'>Copy</a></h3>
 
 <p>Creates a copy of the given arbitrary-precision number object.</p>
 
@@ -777,10 +705,7 @@ flags if either value is signaling NaN.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>Canonical</h3>
-
-<pre>public static EFloat Canonical​(EFloat ed)
-</pre>
+<h3><a id='Canonical(com.upokecenter.numbers.EFloat)'>Canonical</a></h3>
 
 <p>Returns a canonical version of the given arbitrary-precision number object.
  In this method, this method behaves like the Copy method.</p>
@@ -797,10 +722,7 @@ flags if either value is signaling NaN.</li>
 <li>A copy of the parameter <code>ed</code>.</li>
 </ul>
 
-<h3>CopyAbs</h3>
-
-<pre>public static EFloat CopyAbs​(EFloat ed)
-</pre>
+<h3><a id='CopyAbs(com.upokecenter.numbers.EFloat)'>CopyAbs</a></h3>
 
 <p>Returns an arbitrary-precision number object with the same value as the
  given number object but with a nonnegative sign (that is, the given
@@ -825,10 +747,7 @@ given number object but with a nonnegative sign.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>CopyNegate</h3>
-
-<pre>public static EFloat CopyNegate​(EFloat ed)
-</pre>
+<h3><a id='CopyNegate(com.upokecenter.numbers.EFloat)'>CopyNegate</a></h3>
 
 <p>Returns an arbitrary-precision number object with the sign reversed from the
  given number object.</p>
@@ -852,10 +771,7 @@ given number object.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>CopySign</h3>
-
-<pre>public static EFloat CopySign​(EFloat ed, EFloat other)
-</pre>
+<h3><a id='CopySign(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>CopySign</a></h3>
 
 <p>Returns an arbitrary-precision number object with the same value as the
  first given number object but with a the same sign (positive or
@@ -885,10 +801,7 @@ negative) as the second given number object.</li>
 null.</li>
 </ul>
 
-<h3>SameQuantum</h3>
-
-<pre>public static boolean SameQuantum​(EFloat ed1, EFloat ed2)
-</pre>
+<h3><a id='SameQuantum(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat)'>SameQuantum</a></h3>
 
 <p>Returns whether two arbitrary-precision numbers have the same exponent, they
  both are not-a-number (NaN), or they both are infinity (positive
@@ -909,10 +822,7 @@ the same exponent, they both are not-a-number (NaN), or they both
 are infinity (positive and/or negative); otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>Trim</h3>
-
-<pre>public static EFloat Trim​(EFloat ed1, EContext ec)
-</pre>
+<h3><a id='Trim(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Trim</a></h3>
 
 <p>Returns an arbitrary-precision number with the same value as this one but
  with certain trailing zeros removed from its significand. If the
@@ -940,10 +850,7 @@ ed1</code> is not-a-number (NaN) or infinity, it is generally returned
 unchanged.</li>
 </ul>
 
-<h3>Rescale</h3>
-
-<pre>public static EFloat Rescale​(EFloat ed, EFloat scale, EContext ec)
-</pre>
+<h3><a id='Rescale(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Rescale</a></h3>
 
 <p>Returns an arbitrary-precision binary number with the same value as this
  object but with the given exponent, expressed as an
@@ -988,10 +895,7 @@ precision without rounding, or if the arithmetic context defines an
 exponent range and the given exponent is outside that range.</li>
 </ul>
 
-<h3>And</h3>
-
-<pre>public static EFloat And​(EFloat ed1, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='And(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>And</a></h3>
 
 <p>Performs a logical AND operation on two binary numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a non-negative
@@ -1021,10 +925,7 @@ Signals an invalid operation and returns not-a-number (NaN) if
 <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 </ul>
 
-<h3>Invert</h3>
-
-<pre>public static EFloat Invert​(EFloat ed1, EContext ec)
-</pre>
+<h3><a id='Invert(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Invert</a></h3>
 
 <p>Performs a logical NOT operation on a binary number in the form of a
  <i>logical operand</i>. A <code>logical operand</code> is a non-negative
@@ -1056,10 +957,7 @@ Signals an invalid operation and returns not-a-number (NaN) if
 <code>ed1</code> is not a logical operand.</li>
 </ul>
 
-<h3>Xor</h3>
-
-<pre>public static EFloat Xor​(EFloat ed1, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='Xor(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Xor</a></h3>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two binary numbers in the
  form of <i>logical operands</i>. A <code>logical operand</code> is a
@@ -1090,10 +988,7 @@ operand. Signals an invalid operation and returns not-a-number (NaN)
 if <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 </ul>
 
-<h3>Or</h3>
-
-<pre>public static EFloat Or​(EFloat ed1, EFloat ed2, EContext ec)
-</pre>
+<h3><a id='Or(com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EFloat,com.upokecenter.numbers.EContext)'>Or</a></h3>
 
 <p>Performs a logical OR operation on two binary numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a non-negative

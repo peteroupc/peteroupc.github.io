@@ -5,10 +5,7 @@
 
 <h1>com.upokecenter.cbor.CBORType</h1>
 
-<pre>public enum CBORType extends java.lang.Enum&lt;CBORType&gt;
-</pre>
-
-<p>Represents a type that a CBOR object can have.</p>
+<h2>Nested Classes</h2>
 
 <h2>Enum Constants</h2>
 
@@ -50,137 +47,50 @@ Returns an array containing the constants of this enum type, in
 the order they are declared.</li>
 </ul>
 
-<h2>Method Details</h2>
-
-<h3>Number</h3>
-
-<pre>@Deprecated public static final CBORType Number
-</pre>
-
-<h3>Boolean</h3>
-
-<pre>public static final CBORType Boolean
-</pre>
-
-<h3>SimpleValue</h3>
-
-<pre>public static final CBORType SimpleValue
-</pre>
-
-<h3>ByteString</h3>
-
-<pre>public static final CBORType ByteString
-</pre>
-
-<h3>TextString</h3>
-
-<pre>public static final CBORType TextString
-</pre>
-
-<h3>Array</h3>
-
-<pre>public static final CBORType Array
-</pre>
-
-<h3>Map</h3>
-
-<pre>public static final CBORType Map
-</pre>
-
-<h3>Integer</h3>
-
-<pre>public static final CBORType Integer
-</pre>
-
-<h3>FloatingPoint</h3>
-
-<pre>public static final CBORType FloatingPoint
-</pre>
-
-<h3>values</h3>
-
-<pre>public static CBORType[] values()
-</pre>
-
-<h3>valueOf</h3>
-
-<pre>public static CBORType valueOf​(java.lang.String name)
-</pre>
-
 <h2>Enum Constant Details</h2>
 
-<h3>Number</h3>
+<h3><a id='Number'>Number</a></h3>
 
-<pre>@Deprecated public static final CBORType Number
-</pre>
+<p>This property is no longer used.</p>
 
-<p>Deprecated.
-Since version 4.0, CBORObject.Type no longer returns this value for any
- CBOR Object - this is a breaking change from earlier
- versions. Instead, use the IsNumber property of CBORObject to
- determine whether a CBOR Object represents a number, or use the two new
- CBORType values instead. CBORType.Integer covers CBOR objects
- representing integers of major type 0 and 1.
- CBORType.FloatingPoint covers CBOR objects representing 16-, 32-, and
- 64-bit floating-point numbers. CBORType.Number may be removed in version
- 5.0 or later.</p>
-
-<h3>Boolean</h3>
-
-<pre>public static final CBORType Boolean
-</pre>
+<h3><a id='Boolean'>Boolean</a></h3>
 
 <p>The simple values true and false.</p>
 
-<h3>SimpleValue</h3>
-
-<pre>public static final CBORType SimpleValue
-</pre>
+<h3><a id='SimpleValue'>SimpleValue</a></h3>
 
 <p>A &quot;simple value&quot; other than floating point values, true, and false.</p>
 
-<h3>ByteString</h3>
-
-<pre>public static final CBORType ByteString
-</pre>
+<h3><a id='ByteString'>ByteString</a></h3>
 
 <p>An array of bytes.</p>
 
-<h3>TextString</h3>
-
-<pre>public static final CBORType TextString
-</pre>
+<h3><a id='TextString'>TextString</a></h3>
 
 <p>A text string.</p>
 
-<h3>Array</h3>
-
-<pre>public static final CBORType Array
-</pre>
+<h3><a id='Array'>Array</a></h3>
 
 <p>An array of CBOR objects.</p>
 
-<h3>Map</h3>
-
-<pre>public static final CBORType Map
-</pre>
+<h3><a id='Map'>Map</a></h3>
 
 <p>A map of CBOR objects.</p>
 
-<h3>Integer</h3>
-
-<pre>public static final CBORType Integer
-</pre>
+<h3><a id='Integer'>Integer</a></h3>
 
 <p>An integer in the interval [-(2^64), 2^64 - 1], or an integer of major type
  0 and 1.</p>
 
-<h3>FloatingPoint</h3>
-
-<pre>public static final CBORType FloatingPoint
-</pre>
+<h3><a id='FloatingPoint'>FloatingPoint</a></h3>
 
 <p>A 16-, 32-, or 64-bit binary floating-point number.</p>
+
+<h2>Method Details</h2>
+
+<h3><a id='values()'>values</a></h3>
+
+<h3><a id='valueOf(java.lang.String)'>valueOf</a></h3>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>

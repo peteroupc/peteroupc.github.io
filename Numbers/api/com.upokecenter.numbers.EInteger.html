@@ -5,31 +5,6 @@
 
 <h1>com.upokecenter.numbers.EInteger</h1>
 
-<pre>public final class EInteger extends java.lang.Object implements java.lang.Comparable&lt;EInteger&gt;
-</pre>
-
-<p>Represents an arbitrary-precision integer. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.) <p>Instances
- of this class are immutable, so they are inherently safe for use by
- multiple threads. Multiple instances of this object with the same
- value are interchangeable, but they should be compared using the
-  &quot;Equals&quot; method rather than the &quot;==&quot; operator.</p> <p><b>Security
- note</b></p> <p>It is not recommended to implement security-sensitive
- algorithms using the methods in this class, for several reasons:</p>
- <ul> <li><code>EInteger</code> objects are immutable, so they can&#39;t be
- modified, and the memory they occupy is not guaranteed to be cleared
- in a timely fashion due to garbage collection. This is relevant for
- applications that use many-bit-long numbers as secret parameters.</li>
- <li>The methods in this class (especially those that involve
-  arithmetic) are not guaranteed to be &quot;constant-time&quot;
- (non-data-dependent) for all relevant inputs. Certain attacks that
- involve encrypted communications have exploited the timing and other
- aspects of such communications to derive keying material or cleartext
- indirectly.</li></ul> <p>Applications should instead use dedicated
- security libraries to handle big numbers in security-sensitive
- algorithms.</p></p>
-
 <h2>Methods</h2>
 
 <ul>
@@ -111,12 +86,12 @@ Converts a boolean value (true or false) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromByte​(byte inputByte)</code><br>
 Converts a byte (from 0 to 255) to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromBytes​(byte[] bytes,
-     boolean littleEndian)</code><br>
+boolean littleEndian)</code><br>
 Initializes an arbitrary-precision integer from an array of bytes.</li>
 <li><code>static EInteger FromBytes​(byte[] bytes,
-     int offset,
-     int length,
-     boolean littleEndian)</code><br>
+int offset,
+int length,
+boolean littleEndian)</code><br>
 Initializes an arbitrary-precision integer from a portion of an array of
 bytes.</li>
 <li><code>static EInteger FromInt16​(short inputInt16)</code><br>
@@ -129,32 +104,32 @@ Converts a 64-bit signed integer to an arbitrary-precision integer.</li>
 Converts an unsigned integer expressed as a 64-bit signed integer to an
 arbitrary-precision integer.</li>
 <li><code>static EInteger FromRadixString​(byte[] bytes,
-           int radix)</code><br>
+int radix)</code><br>
 Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
 integer in a given radix.</li>
 <li><code>static EInteger FromRadixString​(char[] cs,
-           int radix) char</code><br>
+int radix) char</code><br>
 Converts a sequence of char s to an arbitrary-precision integer in a
 given radix.</li>
 <li><code>static EInteger FromRadixString​(java.lang.String str,
-           int radix)</code><br>
+int radix)</code><br>
 Converts a string to an arbitrary-precision integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring​(byte[] bytes,
-              int radix,
-              int index,
-              int endIndex)</code><br>
+int radix,
+int index,
+int endIndex)</code><br>
 Converts a portion of a sequence of bytes (interpreted as text) to an
 arbitrary-precision integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring​(char[] cs,
-              int radix,
-              int index,
-              int endIndex) char</code><br>
+int radix,
+int index,
+int endIndex) char</code><br>
 Converts a portion of a sequence of char s to an arbitrary-precision
 integer in a given radix.</li>
 <li><code>static EInteger FromRadixSubstring​(java.lang.String str,
-              int radix,
-              int index,
-              int endIndex)</code><br>
+int radix,
+int index,
+int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer in a given
 radix.</li>
 <li><code>static EInteger FromString​(byte[] bytes)</code><br>
@@ -165,18 +140,18 @@ Converts a sequence of char s to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromString​(java.lang.String str)</code><br>
 Converts a string to an arbitrary-precision integer.</li>
 <li><code>static EInteger FromSubstring​(byte[] bytes,
-         int index,
-         int endIndex)</code><br>
+int index,
+int endIndex)</code><br>
 Converts a portion of a sequence of bytes (interpreted as text) to an
 arbitrary-precision integer.</li>
 <li><code>static EInteger FromSubstring​(char[] cs,
-         int index,
-         int endIndex) char</code><br>
+int index,
+int endIndex) char</code><br>
 Converts a portion of a sequence of char s to an arbitrary-precision
 integer.</li>
 <li><code>static EInteger FromSubstring​(java.lang.String str,
-         int index,
-         int endIndex)</code><br>
+int index,
+int endIndex)</code><br>
 Converts a portion of a string to an arbitrary-precision integer.</li>
 <li><code>EInteger Gcd​(EInteger bigintSecond)</code><br>
 Returns the greatest common divisor of this integer and the given integer.</li>
@@ -264,14 +239,14 @@ Extracts the lowest bits of this integer.</li>
 EInteger second)</code><br>
 Returns the greater of two arbitrary-precision integers.</li>
 <li><code>static EInteger MaxMagnitude​(EInteger first,
-        EInteger second)</code><br>
+EInteger second)</code><br>
 Of two arbitrary-precision integers, returns the one with the greater
 absolute value.</li>
 <li><code>static EInteger Min​(EInteger first,
 EInteger second)</code><br>
 Returns the smaller of two arbitrary-precision integers.</li>
 <li><code>static EInteger MinMagnitude​(EInteger first,
-        EInteger second)</code><br>
+EInteger second)</code><br>
 Of two arbitrary-precision integers, returns the one with the smaller
 absolute value.</li>
 <li><code>EInteger Mod​(int smallDivisor)</code><br>
@@ -281,7 +256,7 @@ the value of another integer.</li>
 Finds the modulus remainder that results when this instance is divided by
 the value of an arbitrary-precision integer.</li>
 <li><code>EInteger ModPow​(EInteger pow,
-  EInteger mod)</code><br>
+EInteger mod)</code><br>
 Calculates the remainder when this arbitrary-precision integer raised to a
 certain power is divided by another arbitrary-precision integer.</li>
 <li><code>EInteger Multiply​(int intValue)</code><br>
@@ -396,10 +371,7 @@ and another one.</li>
 
 <h2>Method Details</h2>
 
-<h3>getOne</h3>
-
-<pre>public static EInteger getOne()
-</pre>
+<h3><a id='getOne()'>getOne</a></h3>
 
 <p>Gets the number 1 as an arbitrary-precision integer.</p>
 
@@ -409,10 +381,7 @@ and another one.</li>
 <li>The number 1 as an arbitrary-precision integer.</li>
 </ul>
 
-<h3>getTen</h3>
-
-<pre>public static EInteger getTen()
-</pre>
+<h3><a id='getTen()'>getTen</a></h3>
 
 <p>Gets the number 10 as an arbitrary-precision integer.</p>
 
@@ -422,10 +391,7 @@ and another one.</li>
 <li>The number 10 as an arbitrary-precision integer.</li>
 </ul>
 
-<h3>getZero</h3>
-
-<pre>public static EInteger getZero()
-</pre>
+<h3><a id='getZero()'>getZero</a></h3>
 
 <p>Gets the number zero as an arbitrary-precision integer.</p>
 
@@ -435,10 +401,7 @@ and another one.</li>
 <li>The number zero as an arbitrary-precision integer.</li>
 </ul>
 
-<h3>isEven</h3>
-
-<pre>public final boolean isEven()
-</pre>
+<h3><a id='isEven()'>isEven</a></h3>
 
 <p>Gets a value indicating whether this value is even.</p>
 
@@ -448,10 +411,7 @@ and another one.</li>
 <li><code>true</code> if this value is even; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isPowerOfTwo</h3>
-
-<pre>public final boolean isPowerOfTwo()
-</pre>
+<h3><a id='isPowerOfTwo()'>isPowerOfTwo</a></h3>
 
 <p>Gets a value indicating whether this object&#39;s value is a power of two, and
  greater than 0.</p>
@@ -463,10 +423,7 @@ and another one.</li>
 than 0; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isZero</h3>
-
-<pre>public final boolean isZero()
-</pre>
+<h3><a id='isZero()'>isZero</a></h3>
 
 <p>Gets a value indicating whether this value is 0.</p>
 
@@ -476,10 +433,7 @@ than 0; otherwise, <code>false</code>.</li>
 <li><code>true</code> if this value is 0; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>signum</h3>
-
-<pre>public final int signum()
-</pre>
+<h3><a id='signum()'>signum</a></h3>
 
 <p>Gets the sign of this object&#39;s value.</p>
 
@@ -489,10 +443,7 @@ than 0; otherwise, <code>false</code>.</li>
 <li>The sign of this object&#39;s value.</li>
 </ul>
 
-<h3>FromBytes</h3>
-
-<pre>public static EInteger FromBytes​(byte[] bytes, boolean littleEndian)
-</pre>
+<h3><a id='FromBytes(byte[],boolean)'>FromBytes</a></h3>
 
 <p>Initializes an arbitrary-precision integer from an array of bytes.</p>
 
@@ -522,10 +473,7 @@ is 0.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</li>
 </ul>
 
-<h3>FromBytes</h3>
-
-<pre>public static EInteger FromBytes​(byte[] bytes, int offset, int length, boolean littleEndian)
-</pre>
+<h3><a id='FromBytes(byte[],int,int,boolean)'>FromBytes</a></h3>
 
 <p>Initializes an arbitrary-precision integer from a portion of an array of
  bytes. The portion of the byte array is encoded using the following
@@ -580,10 +528,7 @@ than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
-<h3>FromBoolean</h3>
-
-<pre>public static EInteger FromBoolean​(boolean boolValue)
-</pre>
+<h3><a id='FromBoolean(boolean)'>FromBoolean</a></h3>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision integer.</p>
 
@@ -599,10 +544,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 <li>The number 1 if <code>boolValue</code> is true; otherwise, 0.</li>
 </ul>
 
-<h3>FromInt32</h3>
-
-<pre>public static EInteger FromInt32​(int intValue)
-</pre>
+<h3><a id='FromInt32(int)'>FromInt32</a></h3>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision integer.</p>
 
@@ -619,10 +561,7 @@ length minus <code>offset</code> is less than <code>length</code>.</p></li>
 number.</li>
 </ul>
 
-<h3>FromInt64AsUnsigned</h3>
-
-<pre>public static EInteger FromInt64AsUnsigned​(long longerValue)
-</pre>
+<h3><a id='FromInt64AsUnsigned(long)'>FromInt64AsUnsigned</a></h3>
 
 <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
  arbitrary-precision integer.</p>
@@ -644,10 +583,7 @@ is less than 0, the return value will store 2^64 plus this value
 instead.</li>
 </ul>
 
-<h3>FromInt64</h3>
-
-<pre>public static EInteger FromInt64​(long longerValue)
-</pre>
+<h3><a id='FromInt64(long)'>FromInt64</a></h3>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision integer.</p>
 
@@ -665,10 +601,7 @@ integer.</li>
 number.</li>
 </ul>
 
-<h3>FromRadixString</h3>
-
-<pre>public static EInteger FromRadixString​(java.lang.String str, int radix)
-</pre>
+<h3><a id='FromRadixString(java.lang.String,int)'>FromRadixString</a></h3>
 
 <p>Converts a string to an arbitrary-precision integer in a given radix.</p>
 
@@ -698,10 +631,7 @@ string.</li>
 <li><p><code>java.lang.NumberFormatException</code> - The string is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>FromRadixSubstring</h3>
-
-<pre>public static EInteger FromRadixSubstring​(java.lang.String str, int radix, int index, int endIndex)
-</pre>
+<h3><a id='FromRadixSubstring(java.lang.String,int,int,int)'>FromRadixSubstring</a></h3>
 
 <p>Converts a portion of a string to an arbitrary-precision integer in a given
  radix.</p>
@@ -740,10 +670,7 @@ string portion.</li>
 <li><p><code>java.lang.NumberFormatException</code> - The string portion is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>FromSubstring</h3>
-
-<pre>public static EInteger FromSubstring​(char[] cs, int index, int endIndex)
-</pre>
+<h3><a id='FromSubstring(char[],int,int)'>FromSubstring</a></h3>
 
 <p>Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
  integer.</p>
@@ -780,10 +707,7 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static EInteger FromString​(char[] cs)
-</pre>
+<h3><a id='FromString(char[])'>FromString</a></h3>
 
 <p>Converts a sequence of <code>char</code> s to an arbitrary-precision integer.</p>
 
@@ -812,10 +736,7 @@ sequence of <code>char</code> s.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>cs</code> is null.</p></li>
 </ul>
 
-<h3>FromRadixString</h3>
-
-<pre>public static EInteger FromRadixString​(char[] cs, int radix)
-</pre>
+<h3><a id='FromRadixString(char[],int)'>FromRadixString</a></h3>
 
 <p>Converts a sequence of <code>char</code> s to an arbitrary-precision integer in a
  given radix.</p>
@@ -849,10 +770,7 @@ sequence of <code>char</code> s.</li>
 invalid format.</p></li>
 </ul>
 
-<h3>FromRadixSubstring</h3>
-
-<pre>public static EInteger FromRadixSubstring​(char[] cs, int radix, int index, int endIndex)
-</pre>
+<h3><a id='FromRadixSubstring(char[],int,int,int)'>FromRadixSubstring</a></h3>
 
 <p>Converts a portion of a sequence of <code>char</code> s to an arbitrary-precision
  integer in a given radix.</p>
@@ -893,10 +811,7 @@ sequence&#39;s portion.</li>
 <li><p><code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>FromSubstring</h3>
-
-<pre>public static EInteger FromSubstring​(byte[] bytes, int index, int endIndex)
-</pre>
+<h3><a id='FromSubstring(byte[],int,int)'>FromSubstring</a></h3>
 
 <p>Converts a portion of a sequence of bytes (interpreted as text) to an
  arbitrary-precision integer. Each byte in the sequence has to be a
@@ -937,10 +852,7 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static EInteger FromString​(byte[] bytes)
-</pre>
+<h3><a id='FromString(byte[])'>FromString</a></h3>
 
 <p>Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
  integer. Each byte in the sequence has to be a code point in the
@@ -972,10 +884,7 @@ sequence of bytes.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>bytes</code> is null.</p></li>
 </ul>
 
-<h3>FromRadixString</h3>
-
-<pre>public static EInteger FromRadixString​(byte[] bytes, int radix)
-</pre>
+<h3><a id='FromRadixString(byte[],int)'>FromRadixString</a></h3>
 
 <p>Converts a sequence of bytes (interpreted as text) to an arbitrary-precision
  integer in a given radix. Each byte in the sequence has to be a
@@ -1011,10 +920,7 @@ sequence of bytes.</li>
 or in an invalid format.</p></li>
 </ul>
 
-<h3>FromRadixSubstring</h3>
-
-<pre>public static EInteger FromRadixSubstring​(byte[] bytes, int radix, int index, int endIndex)
-</pre>
+<h3><a id='FromRadixSubstring(byte[],int,int,int)'>FromRadixSubstring</a></h3>
 
 <p>Converts a portion of a sequence of bytes (interpreted as text) to an
  arbitrary-precision integer in a given radix. Each byte in the
@@ -1062,10 +968,7 @@ sequence&#39;s portion.</li>
 <li><p><code>java.lang.NumberFormatException</code> - The portion is empty or in an invalid format.</p></li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static EInteger FromString​(java.lang.String str)
-</pre>
+<h3><a id='FromString(java.lang.String)'>FromString</a></h3>
 
 <p>Converts a string to an arbitrary-precision integer.</p>
 
@@ -1094,10 +997,7 @@ string.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
-<h3>FromSubstring</h3>
-
-<pre>public static EInteger FromSubstring​(java.lang.String str, int index, int endIndex)
-</pre>
+<h3><a id='FromSubstring(java.lang.String,int,int)'>FromSubstring</a></h3>
 
 <p>Converts a portion of a string to an arbitrary-precision integer.</p>
 
@@ -1132,10 +1032,7 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>str</code> is null.</p></li>
 </ul>
 
-<h3>Abs</h3>
-
-<pre>public EInteger Abs()
-</pre>
+<h3><a id='Abs()'>Abs</a></h3>
 
 <p>Returns the absolute value of this object&#39;s value.</p>
 
@@ -1145,10 +1042,7 @@ length, or <code>endIndex</code> is less than <code>index</code>.</p></li>
 <li>This object&#39;s value with the sign removed.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public EInteger Add​(EInteger bigintAugend)
-</pre>
+<h3><a id='Add(com.upokecenter.numbers.EInteger)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision integer and another arbitrary-precision
  integer and returns the result.</p>
@@ -1172,13 +1066,10 @@ integer plus another arbitrary-precision integer.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigintAugend</code> is null.</li>
 </ul>
 
-<h3>AsInt32Checked</h3>
+<h3><a id='AsInt32Checked()'>AsInt32Checked</a></h3>
 
-<pre>@Deprecated public int AsInt32Checked()
-</pre>
-
-<p>Deprecated.
-Renamed to ToInt32Checked.</p>
+<p>Converts this object&#39;s value to a 32-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1186,13 +1077,12 @@ Renamed to ToInt32Checked.</p>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>AsInt32Unchecked</h3>
+<h3><a id='AsInt32Unchecked()'>AsInt32Unchecked</a></h3>
 
-<pre>@Deprecated public int AsInt32Unchecked()
-</pre>
-
-<p>Deprecated.
-Renamed to ToInt32Unchecked.</p>
+<p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
+ fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1200,13 +1090,10 @@ Renamed to ToInt32Unchecked.</p>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>AsInt64Checked</h3>
+<h3><a id='AsInt64Checked()'>AsInt64Checked</a></h3>
 
-<pre>@Deprecated public long AsInt64Checked()
-</pre>
-
-<p>Deprecated.
-Renamed to ToInt64Checked.</p>
+<p>Converts this object&#39;s value to a 64-bit signed integer, throwing an
+ exception if it can&#39;t fit.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1214,13 +1101,12 @@ Renamed to ToInt64Checked.</p>
 <li>A 64-bit signed integer.</li>
 </ul>
 
-<h3>AsInt64Unchecked</h3>
+<h3><a id='AsInt64Unchecked()'>AsInt64Unchecked</a></h3>
 
-<pre>@Deprecated public long AsInt64Unchecked()
-</pre>
-
-<p>Deprecated.
-Renamed to ToInt64Unchecked.</p>
+<p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
+ fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) (in which case the return value might have a
+ different sign than this object&#39;s value).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1228,10 +1114,7 @@ Renamed to ToInt64Unchecked.</p>
 <li>A 64-bit signed integer.</li>
 </ul>
 
-<h3>CanFitInInt32</h3>
-
-<pre>public boolean CanFitInInt32()
-</pre>
+<h3><a id='CanFitInInt32()'>CanFitInInt32</a></h3>
 
 <p>Returns whether this object&#39;s value can fit in a 32-bit signed integer.</p>
 
@@ -1242,10 +1125,7 @@ Renamed to ToInt64Unchecked.</p>
 2147483647; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanFitInInt64</h3>
-
-<pre>public boolean CanFitInInt64()
-</pre>
+<h3><a id='CanFitInInt64()'>CanFitInInt64</a></h3>
 
 <p>Returns whether this object&#39;s value can fit in a 64-bit signed integer.</p>
 
@@ -1256,10 +1136,7 @@ Renamed to ToInt64Unchecked.</p>
 through 9223372036854775807; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(EInteger other)
-</pre>
+<h3><a id='compareTo(com.upokecenter.numbers.EInteger)'>compareTo</a></h3>
 
 <p>Compares an arbitrary-precision integer with this instance.</p>
 
@@ -1283,10 +1160,7 @@ less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>Max</h3>
-
-<pre>public static EInteger Max​(EInteger first, EInteger second)
-</pre>
+<h3><a id='Max(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>Max</a></h3>
 
 <p>Returns the greater of two arbitrary-precision integers.</p>
 
@@ -1310,10 +1184,7 @@ implementation returns a positive number if.</li>
 is null.</li>
 </ul>
 
-<h3>Min</h3>
-
-<pre>public static EInteger Min​(EInteger first, EInteger second)
-</pre>
+<h3><a id='Min(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>Min</a></h3>
 
 <p>Returns the smaller of two arbitrary-precision integers.</p>
 
@@ -1337,10 +1208,7 @@ is null.</li>
 is null.</li>
 </ul>
 
-<h3>MaxMagnitude</h3>
-
-<pre>public static EInteger MaxMagnitude​(EInteger first, EInteger second)
-</pre>
+<h3><a id='MaxMagnitude(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>MaxMagnitude</a></h3>
 
 <p>Of two arbitrary-precision integers, returns the one with the greater
  absolute value. If both integers have the same absolute value, this
@@ -1366,10 +1234,7 @@ is null.</li>
 is null.</li>
 </ul>
 
-<h3>MinMagnitude</h3>
-
-<pre>public static EInteger MinMagnitude​(EInteger first, EInteger second)
-</pre>
+<h3><a id='MinMagnitude(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>MinMagnitude</a></h3>
 
 <p>Of two arbitrary-precision integers, returns the one with the smaller
  absolute value. If both integers have the same absolute value, this
@@ -1395,10 +1260,7 @@ is null.</li>
 is null.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public EInteger Add​(int intValue)
-</pre>
+<h3><a id='Add(int)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision integer and a 32-bit signed integer and
  returns the result.</p>
@@ -1416,10 +1278,7 @@ is null.</li>
 integer plus a 32-bit signed integer.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public EInteger Subtract​(int intValue)
-</pre>
+<h3><a id='Subtract(int)'>Subtract</a></h3>
 
 <p>Subtracts a 32-bit signed integer from this arbitrary-precision integer and
  returns the result.</p>
@@ -1437,9 +1296,9 @@ integer plus a 32-bit signed integer.</li>
 arbitrary-precision integer minus a 32-bit signed integer.</li>
 </ul>
 
-<h3>Multiply</h3>
+<h3><a id='Multiply(int)'>Multiply</a></h3>
 
-<pre>public EInteger Multiply​(int intValue)
+<pre>EInteger result = EInteger.FromString(&quot;5&quot;).Multiply(200);
 </pre>
 
 <p>Multiplies this arbitrary-precision integer by a 32-bit signed integer and
@@ -1458,10 +1317,7 @@ arbitrary-precision integer minus a 32-bit signed integer.</li>
 integer times a 32-bit signed integer.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public EInteger Divide​(int intValue)
-</pre>
+<h3><a id='Divide(int)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision integer by a 32-bit signed integer and
  returns the result. The result of the division is rounded down (the
@@ -1495,10 +1351,7 @@ negative.</li>
 <li><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public EInteger Remainder​(int intValue)
-</pre>
+<h3><a id='Remainder(int)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 32-bit signed integer. The remainder is the
@@ -1527,10 +1380,7 @@ integer is divided by a 32-bit signed integer.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>intValue</code> is null.</p></li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(int intValue)
-</pre>
+<h3><a id='compareTo(int)'>compareTo</a></h3>
 
 <p>Compares an arbitrary-precision integer with this instance.</p>
 
@@ -1547,10 +1397,7 @@ integer is divided by a 32-bit signed integer.</li>
 less, or a positive number if this instance is greater.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public EInteger Divide​(EInteger bigintDivisor)
-</pre>
+<h3><a id='Divide(com.upokecenter.numbers.EInteger)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision integer by another arbitrary-precision
  integer and returns the result. The result of the division is
@@ -1585,10 +1432,7 @@ or both are negative.</li>
 <li><p><code>java.lang.ArithmeticException</code> - Attempted to divide by zero.</p></li>
 </ul>
 
-<h3>DivRem</h3>
-
-<pre>public EInteger[] DivRem​(int intDivisor)
-</pre>
+<h3><a id='DivRem(int)'>DivRem</a></h3>
 
 <p>Divides this arbitrary-precision integer by a 32-bit signed integer and
  returns a two-item array containing the result of the division and
@@ -1624,10 +1468,7 @@ result of the Remainder method on the two operands.</li>
 <li><code>java.lang.ArithmeticException</code> - The parameter <code>intDivisor</code> is 0.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public EInteger Add​(long longValue)
-</pre>
+<h3><a id='Add(long)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision integer and a 64-bit signed integer and
  returns the result.</p>
@@ -1645,10 +1486,7 @@ result of the Remainder method on the two operands.</li>
 integer plus a 64-bit signed integer.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public EInteger Subtract​(long longValue)
-</pre>
+<h3><a id='Subtract(long)'>Subtract</a></h3>
 
 <p>Subtracts a 64-bit signed integer from this arbitrary-precision integer and
  returns the result.</p>
@@ -1666,10 +1504,7 @@ integer plus a 64-bit signed integer.</li>
 arbitrary-precision integer minus a 64-bit signed integer.</li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public EInteger Multiply​(long longValue)
-</pre>
+<h3><a id='Multiply(long)'>Multiply</a></h3>
 
 <p>Multiplies this arbitrary-precision integer by a 64-bit signed integer and
  returns the result.</p>
@@ -1687,10 +1522,7 @@ arbitrary-precision integer minus a 64-bit signed integer.</li>
 integer times a 64-bit signed integer.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public EInteger Divide​(long longValue)
-</pre>
+<h3><a id='Divide(long)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision integer by a 64-bit signed integer and
  returns the result. The result of the division is rounded down (the
@@ -1718,10 +1550,7 @@ versa, and will be positive if both are positive or both are
 negative.</li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public EInteger Remainder​(long longValue)
-</pre>
+<h3><a id='Remainder(long)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  integer is divided by a 64-bit signed integer. The remainder is the
@@ -1743,10 +1572,7 @@ negative.</li>
 integer is divided by a 64-bit signed integer.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(long longValue)
-</pre>
+<h3><a id='compareTo(long)'>compareTo</a></h3>
 
 <p>Compares an arbitrary-precision integer with this instance.</p>
 
@@ -1763,10 +1589,7 @@ integer is divided by a 64-bit signed integer.</li>
 less, or a positive number if this instance is greater.</li>
 </ul>
 
-<h3>DivRem</h3>
-
-<pre>public EInteger[] DivRem​(long intDivisor)
-</pre>
+<h3><a id='DivRem(long)'>DivRem</a></h3>
 
 <p>Divides this arbitrary-precision integer by a 64-bit signed integer and
  returns a two-item array containing the result of the division and
@@ -1797,10 +1620,7 @@ the Divide method on the two operands, and the remainder is the
 result of the Remainder method on the two operands.</li>
 </ul>
 
-<h3>DivRem</h3>
-
-<pre>public EInteger[] DivRem​(EInteger divisor)
-</pre>
+<h3><a id='DivRem(com.upokecenter.numbers.EInteger)'>DivRem</a></h3>
 
 <p>Divides this arbitrary-precision integer by another arbitrary-precision
  integer and returns a two-item array containing the result of the
@@ -1838,10 +1658,7 @@ result of the Remainder method on the two operands.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
-<h3>equals</h3>
-
-<pre>public boolean equals​(java.lang.Object obj)
-</pre>
+<h3><a id='equals(java.lang.Object)'>equals</a></h3>
 
 <p>Determines whether this object and another object are equal and have the
  same type.</p>
@@ -1865,10 +1682,7 @@ result of the Remainder method on the two operands.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>Gcd</h3>
-
-<pre>public EInteger Gcd​(EInteger bigintSecond)
-</pre>
+<h3><a id='Gcd(com.upokecenter.numbers.EInteger)'>Gcd</a></h3>
 
 <p>Returns the greatest common divisor of this integer and the given integer.
  The greatest common divisor (GCD) is also known as the greatest
@@ -1895,10 +1709,7 @@ result of the Remainder method on the two operands.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - BigPower is negative.</p></li>
 </ul>
 
-<h3>GetDigitCountAsEInteger</h3>
-
-<pre>public EInteger GetDigitCountAsEInteger()
-</pre>
+<h3><a id='GetDigitCountAsEInteger()'>GetDigitCountAsEInteger</a></h3>
 
 <p>Returns the number of decimal digits used by this integer, in the form of an
  arbitrary-precision integer.</p>
@@ -1910,13 +1721,9 @@ result of the Remainder method on the two operands.</li>
 if this number is 0.</li>
 </ul>
 
-<h3>GetDigitCount</h3>
+<h3><a id='GetDigitCount()'>GetDigitCount</a></h3>
 
-<pre>@Deprecated public int GetDigitCount()
-</pre>
-
-<p>Deprecated.
-This method may overflow. Use GetDigitCountAsEInteger instead.</p>
+<p>Returns the number of decimal digits used by this integer.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1932,10 +1739,7 @@ if this number is 0.</li>
 32-bit signed integer.</li>
 </ul>
 
-<h3>GetDigitCountAsInt64</h3>
-
-<pre>public long GetDigitCountAsInt64()
-</pre>
+<h3><a id='GetDigitCountAsInt64()'>GetDigitCountAsInt64</a></h3>
 
 <p>Returns the number of decimal digits used by this integer, in the form of a
  64-bit signed integer.</p>
@@ -1950,10 +1754,7 @@ is 2^63 - 1 or greater. (Use <code>GetDigitCountAsEInteger</code> instead
 if the application relies on the exact number of decimal digits.).</li>
 </ul>
 
-<h3>hashCode</h3>
-
-<pre>public int hashCode()
-</pre>
+<h3><a id='hashCode()'>hashCode</a></h3>
 
 <p>Returns the hash code for this instance. No application or process IDs are
  used in the hash code calculation.</p>
@@ -1970,13 +1771,11 @@ if the application relies on the exact number of decimal digits.).</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>GetLowBit</h3>
+<h3><a id='GetLowBit()'>GetLowBit</a></h3>
 
-<pre>@Deprecated public int GetLowBit()
-</pre>
-
-<p>Deprecated.
-This method may overflow. Use GetLowBitAsEInteger instead.</p>
+<p>Gets the bit position of the lowest set bit in this number&#39;s absolute value.
+ (This will also be the position of the lowest set bit in the
+ number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>).).</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -1985,10 +1784,7 @@ This method may overflow. Use GetLowBitAsEInteger instead.</p>
 value, starting at 0. Returns -1 if this value is 0.</li>
 </ul>
 
-<h3>GetLowBitAsInt64</h3>
-
-<pre>public long GetLowBitAsInt64()
-</pre>
+<h3><a id='GetLowBitAsInt64()'>GetLowBitAsInt64</a></h3>
 
 <p>Gets the bit position of the lowest set bit in this number&#39;s absolute value,
  in the form of a 64-bit signed integer. (This will also be the
@@ -2008,10 +1804,7 @@ the application relies on the exact value of the lowest set bit
 position.).</li>
 </ul>
 
-<h3>GetLowBitAsEInteger</h3>
-
-<pre>public EInteger GetLowBitAsEInteger()
-</pre>
+<h3><a id='GetLowBitAsEInteger()'>GetLowBitAsEInteger</a></h3>
 
 <p>Gets the bit position of the lowest set bit in this number&#39;s absolute value,
  in the form of an arbitrary-precision integer. (This will also be
@@ -2026,10 +1819,7 @@ position.).</li>
 value, starting at 0. Returns -1 if this value is 0 or odd.</li>
 </ul>
 
-<h3>GetSignedBit</h3>
-
-<pre>public boolean GetSignedBit​(EInteger bigIndex)
-</pre>
+<h3><a id='GetSignedBit(com.upokecenter.numbers.EInteger)'>GetSignedBit</a></h3>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
  object&#39;s value.</p>
@@ -2056,10 +1846,7 @@ value; otherwise, <code>false</code>.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.</li>
 </ul>
 
-<h3>GetSignedBit</h3>
-
-<pre>public boolean GetSignedBit​(int index)
-</pre>
+<h3><a id='GetSignedBit(int)'>GetSignedBit</a></h3>
 
 <p>Returns whether a bit is set in the two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) of this
  object&#39;s value.</p>
@@ -2080,10 +1867,7 @@ on.</li>
 value; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>GetSignedBitLengthAsEInteger</h3>
-
-<pre>public EInteger GetSignedBitLengthAsEInteger()
-</pre>
+<h3><a id='GetSignedBitLengthAsEInteger()'>GetSignedBitLengthAsEInteger</a></h3>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
  except for its sign, and returns that number of bits as an
@@ -2104,10 +1888,7 @@ other integers have a signed bit length of greater than 63.</li>
 Returns 0 if this object&#39;s value is 0 or negative 1.</li>
 </ul>
 
-<h3>GetSignedBitLengthAsInt64</h3>
-
-<pre>public long GetSignedBitLengthAsInt64()
-</pre>
+<h3><a id='GetSignedBitLengthAsInt64()'>GetSignedBitLengthAsInt64</a></h3>
 
 <p>Finds the minimum number of bits needed to represent this object&#39;s value,
  except for its sign, and returns that number of bits as a 64-bit
@@ -2129,13 +1910,15 @@ or <code>Long.MAX_VALUE</code> in Java), returns 2^63 - 1 instead. (Use
 application relies on the exact number of bits.).</li>
 </ul>
 
-<h3>GetSignedBitLength</h3>
+<h3><a id='GetSignedBitLength()'>GetSignedBitLength</a></h3>
 
-<pre>@Deprecated public int GetSignedBitLength()
-</pre>
-
-<p>Deprecated.
-This method may overflow. Use GetSignedBitLengthAsEInteger instead.</p>
+<p>Finds the minimum number of bits needed to represent this object&#39;s value,
+ except for its sign. If the value is negative, finds the number of
+ bits in the value equal to this object&#39;s absolute value minus 1. For
+ example, all integers in the interval [-(2^63), (2^63) - 1], which
+ is the same as the range of integers in Java&#39;s and.NET&#39;s <code>long</code>
+ type, have a signed bit length of 63 or less, and all other integers
+ have a signed bit length of greater than 63.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2151,10 +1934,7 @@ Returns 0 if this object&#39;s value is 0 or negative 1.</li>
 32-bit signed integer.</li>
 </ul>
 
-<h3>GetUnsignedBit</h3>
-
-<pre>public boolean GetUnsignedBit​(EInteger bigIndex)
-</pre>
+<h3><a id='GetUnsignedBit(com.upokecenter.numbers.EInteger)'>GetUnsignedBit</a></h3>
 
 <p>Returns whether a bit is set in this number&#39;s absolute value.</p>
 
@@ -2179,10 +1959,7 @@ value.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigIndex</code> is null.</li>
 </ul>
 
-<h3>GetUnsignedBit</h3>
-
-<pre>public boolean GetUnsignedBit​(int index)
-</pre>
+<h3><a id='GetUnsignedBit(int)'>GetUnsignedBit</a></h3>
 
 <p>Returns whether a bit is set in this number&#39;s absolute value.</p>
 
@@ -2201,10 +1978,7 @@ on.</li>
 value.</li>
 </ul>
 
-<h3>GetUnsignedBitLengthAsEInteger</h3>
-
-<pre>public EInteger GetUnsignedBitLengthAsEInteger()
-</pre>
+<h3><a id='GetUnsignedBitLengthAsEInteger()'>GetUnsignedBitLengthAsEInteger</a></h3>
 
 <p>Finds the minimum number of bits needed to represent this number&#39;s absolute
  value, and returns that number of bits as an arbitrary-precision
@@ -2221,10 +1995,7 @@ value.</li>
 this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 </ul>
 
-<h3>GetUnsignedBitLengthAsInt64</h3>
-
-<pre>public long GetUnsignedBitLengthAsInt64()
-</pre>
+<h3><a id='GetUnsignedBitLengthAsInt64()'>GetUnsignedBitLengthAsInt64</a></h3>
 
 <p>Finds the minimum number of bits needed to represent this number&#39;s absolute
  value, and returns that number of bits as a 64-bit signed integer.
@@ -2246,13 +2017,14 @@ instead of this method if the application relies on the exact number
 of bits.).</li>
 </ul>
 
-<h3>GetUnsignedBitLength</h3>
+<h3><a id='GetUnsignedBitLength()'>GetUnsignedBitLength</a></h3>
 
-<pre>@Deprecated public int GetUnsignedBitLength()
-</pre>
-
-<p>Deprecated.
-This method may overflow. Use GetUnsignedBitLengthAsEInteger instead.</p>
+<p>Finds the minimum number of bits needed to represent this number&#39;s absolute
+ value. For example, all integers in the interval [-((2^63) - 1),
+ (2^63) - 1] have an unsigned bit length of 63 or less, and all other
+ integers have an unsigned bit length of greater than 63. This
+ interval is not the same as the range of integers in Java&#39;s
+ and.NET&#39;s <code>long</code> type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2268,10 +2040,7 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 32-bit signed integer.</li>
 </ul>
 
-<h3>Mod</h3>
-
-<pre>public EInteger Mod​(EInteger divisor)
-</pre>
+<h3><a id='Mod(com.upokecenter.numbers.EInteger)'>Mod</a></h3>
 
 <p>Finds the modulus remainder that results when this instance is divided by
  the value of an arbitrary-precision integer. The modulus remainder
@@ -2298,10 +2067,7 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
-<h3>Mod</h3>
-
-<pre>public EInteger Mod​(int smallDivisor)
-</pre>
+<h3><a id='Mod(int)'>Mod</a></h3>
 
 <p>Finds the modulus remainder that results when this instance is divided by
  the value of another integer. The modulus remainder is the same as
@@ -2326,10 +2092,7 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>smallDivisor</code> is less than 0.</li>
 </ul>
 
-<h3>ModPow</h3>
-
-<pre>public EInteger ModPow​(EInteger pow, EInteger mod)
-</pre>
+<h3><a id='ModPow(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>ModPow</a></h3>
 
 <p>Calculates the remainder when this arbitrary-precision integer raised to a
  certain power is divided by another arbitrary-precision integer.</p>
@@ -2354,10 +2117,7 @@ this object&#39;s value is 0, and returns 1 if the value is negative 1.</li>
 null.</li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public EInteger Multiply​(EInteger bigintMult)
-</pre>
+<h3><a id='Multiply(com.upokecenter.numbers.EInteger)'>Multiply</a></h3>
 
 <p>Multiplies this arbitrary-precision integer by another arbitrary-precision
  integer and returns the result.</p>
@@ -2381,10 +2141,7 @@ integer times another arbitrary-precision integer.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigintMult</code> is null.</li>
 </ul>
 
-<h3>Negate</h3>
-
-<pre>public EInteger Negate()
-</pre>
+<h3><a id='Negate()'>Negate</a></h3>
 
 <p>Gets the value of this object with the sign reversed.</p>
 
@@ -2394,10 +2151,7 @@ integer times another arbitrary-precision integer.</li>
 <li>This object&#39;s value with the sign reversed.</li>
 </ul>
 
-<h3>Pow</h3>
-
-<pre>public EInteger Pow​(long longPower)
-</pre>
+<h3><a id='Pow(long)'>Pow</a></h3>
 
 <p>Raises an arbitrary-precision integer to a power.</p>
 
@@ -2419,10 +2173,7 @@ integer times another arbitrary-precision integer.</li>
 <li><code>java.lang.IllegalArgumentException</code> - BigPower is negative.</li>
 </ul>
 
-<h3>Pow</h3>
-
-<pre>public EInteger Pow​(EInteger bigPower)
-</pre>
+<h3><a id='Pow(com.upokecenter.numbers.EInteger)'>Pow</a></h3>
 
 <p>Raises an arbitrary-precision integer to a power.</p>
 
@@ -2445,10 +2196,7 @@ integer times another arbitrary-precision integer.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - BigPower is negative.</p></li>
 </ul>
 
-<h3>Pow</h3>
-
-<pre>public EInteger Pow​(int powerSmall)
-</pre>
+<h3><a id='Pow(int)'>Pow</a></h3>
 
 <p>Raises an arbitrary-precision integer to a power.</p>
 
@@ -2464,13 +2212,10 @@ integer times another arbitrary-precision integer.</li>
 <li>The result. Returns 1 if <code>powerSmall</code> is 0.</li>
 </ul>
 
-<h3>PowBigIntVar</h3>
+<h3><a id='PowBigIntVar(com.upokecenter.numbers.EInteger)'>PowBigIntVar</a></h3>
 
-<pre>@Deprecated public EInteger PowBigIntVar​(EInteger power)
-</pre>
-
-<p>Deprecated.
-Use Pow instead.</p>
+<p>Raises an arbitrary-precision integer to a power, which is given as another
+ arbitrary-precision integer.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2491,10 +2236,7 @@ Use Pow instead.</p>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>power</code> is null.</p></li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public EInteger Remainder​(EInteger divisor)
-</pre>
+<h3><a id='Remainder(com.upokecenter.numbers.EInteger)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  integer is divided by another arbitrary-precision integer. The
@@ -2523,10 +2265,7 @@ integer is divided by another arbitrary-precision integer.</li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>divisor</code> is null.</p></li>
 </ul>
 
-<h3>ShiftRight</h3>
-
-<pre>public EInteger ShiftRight​(EInteger eshift)
-</pre>
+<h3><a id='ShiftRight(com.upokecenter.numbers.EInteger)'>ShiftRight</a></h3>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
@@ -2553,10 +2292,7 @@ parameter.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.</li>
 </ul>
 
-<h3>ShiftLeft</h3>
-
-<pre>public EInteger ShiftLeft​(EInteger eshift)
-</pre>
+<h3><a id='ShiftLeft(com.upokecenter.numbers.EInteger)'>ShiftLeft</a></h3>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits given as an arbitrary-precision integer. A value of
@@ -2583,10 +2319,7 @@ parameter.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>eshift</code> is null.</li>
 </ul>
 
-<h3>ShiftLeft</h3>
-
-<pre>public EInteger ShiftLeft​(int numberBits)
-</pre>
+<h3><a id='ShiftLeft(int)'>ShiftLeft</a></h3>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the left by
  a number of bits. A value of 1 doubles this value, a value of 2
@@ -2607,10 +2340,7 @@ parameter.</li>
 <li>An arbitrary-precision integer.</li>
 </ul>
 
-<h3>Not</h3>
-
-<pre>public EInteger Not()
-</pre>
+<h3><a id='Not()'>Not</a></h3>
 
 <p>Returns an arbitrary-precision integer with every bit flipped from this one
  (also called an inversion or NOT operation).</p>
@@ -2629,10 +2359,7 @@ example, in binary, NOT 10100 =...11101011 (or in decimal, NOT 20 =
 25).</li>
 </ul>
 
-<h3>LowBits</h3>
-
-<pre>public EInteger LowBits​(long longBitCount)
-</pre>
+<h3><a id='LowBits(long)'>LowBits</a></h3>
 
 <p>Extracts the lowest bits of this integer. This is equivalent to
  <code>And(2^longBitCount - 1)</code>, but is more efficient when this
@@ -2651,10 +2378,7 @@ this integer.</li>
 <li>A value equivalent to <code>And(2^longBitCount - 1)</code>.</li>
 </ul>
 
-<h3>LowBits</h3>
-
-<pre>public EInteger LowBits​(int bitCount)
-</pre>
+<h3><a id='LowBits(int)'>LowBits</a></h3>
 
 <p>Extracts the lowest bits of this integer. This is equivalent to
  <code>And(2^bitCount - 1)</code>, but is more efficient when this integer
@@ -2673,10 +2397,7 @@ integer.</li>
 <li>A value equivalent to <code>And(2^bitCount - 1)</code>.</li>
 </ul>
 
-<h3>LowBits</h3>
-
-<pre>public EInteger LowBits​(EInteger bigBitCount)
-</pre>
+<h3><a id='LowBits(com.upokecenter.numbers.EInteger)'>LowBits</a></h3>
 
 <p>Extracts the lowest bits of this integer. This is equivalent to
  <code>And(2^bigBitCount - 1)</code>, but is more efficient when this
@@ -2701,10 +2422,7 @@ this integer.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigBitCount</code> is null.</li>
 </ul>
 
-<h3>And</h3>
-
-<pre>public EInteger And​(EInteger other)
-</pre>
+<h3><a id='And(com.upokecenter.numbers.EInteger)'>And</a></h3>
 
 <p>Does an AND operation between this arbitrary-precision integer and another
  one.<p>Each arbitrary-precision integer is treated as a
@@ -2735,10 +2453,7 @@ method uses the two&#39;s complement form of negative integers (see
 <li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
-<h3>Or</h3>
-
-<pre>public EInteger Or​(EInteger second)
-</pre>
+<h3><a id='Or(com.upokecenter.numbers.EInteger)'>Or</a></h3>
 
 <p>Does an OR operation between this arbitrary-precision integer and another
  one.<p>Each arbitrary-precision integer is treated as a
@@ -2768,10 +2483,7 @@ two&#39;s complement form of negative integers (see <code>EDecimal</code>). For 
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>AndNot</h3>
-
-<pre>public EInteger AndNot​(EInteger second)
-</pre>
+<h3><a id='AndNot(com.upokecenter.numbers.EInteger)'>AndNot</a></h3>
 
 <p>Does an AND NOT operation between this arbitrary-precision integer and
  another one.<p>Each arbitrary-precision integer is treated as a
@@ -2801,10 +2513,7 @@ the two&#39;s complement form of negative integers (see <code>EDecimal</code>). 
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>OrNot</h3>
-
-<pre>public EInteger OrNot​(EInteger second)
-</pre>
+<h3><a id='OrNot(com.upokecenter.numbers.EInteger)'>OrNot</a></h3>
 
 <p>Does an OR NOT operation between this arbitrary-precision integer and
  another one.<p>Each arbitrary-precision integer is treated as a
@@ -2835,13 +2544,11 @@ uses the two&#39;s complement form of negative integers (see <code>EDecimal</cod
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>Imp</h3>
+<h3><a id='Imp(com.upokecenter.numbers.EInteger)'>Imp</a></h3>
 
-<pre>@Deprecated public EInteger Imp​(EInteger second)
-</pre>
-
-<p>Deprecated.
-Does the incorrect implication operation. Use Imply instead.</p>
+<p>Does an OR NOT operation between this arbitrary-precision integer and
+ another one.<p>Each arbitrary-precision integer is treated as a
+ two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>) for the purposes of this operator.</p></p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2868,10 +2575,7 @@ uses the two&#39;s complement form of negative integers (see <code>EDecimal</cod
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>XorNot</h3>
-
-<pre>public EInteger XorNot​(EInteger second)
-</pre>
+<h3><a id='XorNot(com.upokecenter.numbers.EInteger)'>XorNot</a></h3>
 
 <p>Does an XOR NOT operation (or equivalence operation, EQV operation, or
  exclusive-OR NOT operation) between this arbitrary-precision integer
@@ -2904,10 +2608,7 @@ This method uses the two&#39;s complement form of negative integers (see
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>Eqv</h3>
-
-<pre>public EInteger Eqv​(EInteger second)
-</pre>
+<h3><a id='Eqv(com.upokecenter.numbers.EInteger)'>Eqv</a></h3>
 
 <p>Does an XOR NOT operation (or equivalence operation, EQV operation, or
  exclusive-OR NOT operation) between this arbitrary-precision integer
@@ -2940,10 +2641,7 @@ This method uses the two&#39;s complement form of negative integers (see
 <li><code>java.lang.NullPointerException</code> - The parameter <code>second</code> is null.</li>
 </ul>
 
-<h3>Xor</h3>
-
-<pre>public EInteger Xor​(EInteger other)
-</pre>
+<h3><a id='Xor(com.upokecenter.numbers.EInteger)'>Xor</a></h3>
 
 <p>Does an exclusive OR (XOR) operation between this arbitrary-precision
  integer and another one.</p>
@@ -2973,10 +2671,7 @@ decimal, -19 XOR 3 = -18).</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
-<h3>ShiftRight</h3>
-
-<pre>public EInteger ShiftRight​(int numberBits)
-</pre>
+<h3><a id='ShiftRight(int)'>ShiftRight</a></h3>
 
 <p>Returns an arbitrary-precision integer with the bits shifted to the right.
  For this operation, the arbitrary-precision integer is treated as a
@@ -2997,10 +2692,7 @@ parameter.</li>
 <li>An arbitrary-precision integer.</li>
 </ul>
 
-<h3>Sqrt</h3>
-
-<pre>public EInteger Sqrt()
-</pre>
+<h3><a id='Sqrt()'>Sqrt</a></h3>
 
 <p>Finds the square root of this instance&#39;s value, rounded down.</p>
 
@@ -3011,10 +2703,7 @@ parameter.</li>
 or less.</li>
 </ul>
 
-<h3>SqrtRem</h3>
-
-<pre>public EInteger[] SqrtRem()
-</pre>
+<h3><a id='SqrtRem()'>SqrtRem</a></h3>
 
 <p>Calculates the square root and the remainder.</p>
 
@@ -3027,10 +2716,7 @@ and the square of the first integer. Returns two zeros if this value
 is 0 or less, or one and zero if this value equals 1.</li>
 </ul>
 
-<h3>Root</h3>
-
-<pre>public EInteger Root​(EInteger root)
-</pre>
+<h3><a id='Root(com.upokecenter.numbers.EInteger)'>Root</a></h3>
 
 <p>Finds the nth root of this instance&#39;s value, rounded down.</p>
 
@@ -3054,10 +2740,7 @@ or less.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>root</code> is null.</li>
 </ul>
 
-<h3>RootRem</h3>
-
-<pre>public EInteger[] RootRem​(EInteger root)
-</pre>
+<h3><a id='RootRem(com.upokecenter.numbers.EInteger)'>RootRem</a></h3>
 
 <p>Calculates the nth root and the remainder.</p>
 
@@ -3083,10 +2766,7 @@ value is 0 or less, or one and zero if this value equals 1.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>root</code> is null.</li>
 </ul>
 
-<h3>Root</h3>
-
-<pre>public EInteger Root​(int root)
-</pre>
+<h3><a id='Root(int)'>Root</a></h3>
 
 <p>Finds the nth root of this instance&#39;s value, rounded down.</p>
 
@@ -3104,10 +2784,7 @@ method finds the square root; if 3, the cube root, and so on.</li>
 or less.</li>
 </ul>
 
-<h3>RootRem</h3>
-
-<pre>public EInteger[] RootRem​(int root)
-</pre>
+<h3><a id='RootRem(int)'>RootRem</a></h3>
 
 <p>Calculates the nth root and the remainder.</p>
 
@@ -3127,10 +2804,7 @@ and the nth power of the first integer. Returns two zeros if this
 value is 0 or less, or one and zero if this value equals 1.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public EInteger Subtract​(EInteger subtrahend)
-</pre>
+<h3><a id='Subtract(com.upokecenter.numbers.EInteger)'>Subtract</a></h3>
 
 <p>Subtracts an arbitrary-precision integer from this arbitrary-precision
  integer and returns the result.</p>
@@ -3155,10 +2829,7 @@ integer.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>subtrahend</code> is null.</li>
 </ul>
 
-<h3>ToBytes</h3>
-
-<pre>public byte[] ToBytes​(boolean littleEndian)
-</pre>
+<h3><a id='ToBytes(boolean)'>ToBytes</a></h3>
 
 <p>Returns a byte array of this integer&#39;s value. The byte array will take the
  number&#39;s two&#39;s-complement form (see <code>&quot;Forms of numbers&quot;</code>), using the
@@ -3182,10 +2853,7 @@ FromBytes()</code> method.</li>
 single element 0.</li>
 </ul>
 
-<h3>ToInt32Checked</h3>
-
-<pre>public int ToInt32Checked()
-</pre>
+<h3><a id='ToInt32Checked()'>ToInt32Checked</a></h3>
 
 <p>Converts this object&#39;s value to a 32-bit signed integer, throwing an
  exception if it can&#39;t fit.</p>
@@ -3196,10 +2864,7 @@ single element 0.</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>ToInt32Unchecked</h3>
-
-<pre>public int ToInt32Unchecked()
-</pre>
+<h3><a id='ToInt32Unchecked()'>ToInt32Unchecked</a></h3>
 
 <p>Converts this object&#39;s value to a 32-bit signed integer. If the value can&#39;t
  fit in a 32-bit integer, returns the lower 32 bits of this object&#39;s
@@ -3212,10 +2877,7 @@ single element 0.</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>ToInt64Checked</h3>
-
-<pre>public long ToInt64Checked()
-</pre>
+<h3><a id='ToInt64Checked()'>ToInt64Checked</a></h3>
 
 <p>Converts this object&#39;s value to a 64-bit signed integer, throwing an
  exception if it can&#39;t fit.</p>
@@ -3226,10 +2888,7 @@ single element 0.</li>
 <li>A 64-bit signed integer.</li>
 </ul>
 
-<h3>ToInt64Unchecked</h3>
-
-<pre>public long ToInt64Unchecked()
-</pre>
+<h3><a id='ToInt64Unchecked()'>ToInt64Unchecked</a></h3>
 
 <p>Converts this object&#39;s value to a 64-bit signed integer. If the value can&#39;t
  fit in a 64-bit integer, returns the lower 64 bits of this object&#39;s
@@ -3242,10 +2901,7 @@ single element 0.</li>
 <li>A 64-bit signed integer.</li>
 </ul>
 
-<h3>ToRadixString</h3>
-
-<pre>public java.lang.String ToRadixString​(int radix)
-</pre>
+<h3><a id='ToRadixString(int)'>ToRadixString</a></h3>
 
 <p>Generates a string representing the value of this object, in the given
  radix.</p>
@@ -3269,10 +2925,7 @@ letters A to Z (U+0041 to U+005A). For example, 0-9 in radix 10, and
 0-9, then A-F in radix 16.</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Converts this object to a text string in base 10.</p>
 
@@ -3291,10 +2944,7 @@ U+002D). The string will use the basic digits 0 to 9 (U+0030 to
 U+0039).</li>
 </ul>
 
-<h3>Increment</h3>
-
-<pre>public EInteger Increment()
-</pre>
+<h3><a id='Increment()'>Increment</a></h3>
 
 <p>Returns one added to this arbitrary-precision integer.</p>
 
@@ -3304,10 +2954,7 @@ U+0039).</li>
 <li>The given arbitrary-precision integer plus one.</li>
 </ul>
 
-<h3>Decrement</h3>
-
-<pre>public EInteger Decrement()
-</pre>
+<h3><a id='Decrement()'>Decrement</a></h3>
 
 <p>Returns one subtracted from this arbitrary-precision integer.</p>
 
@@ -3317,10 +2964,7 @@ U+0039).</li>
 <li>The given arbitrary-precision integer minus one.</li>
 </ul>
 
-<h3>ToByteChecked</h3>
-
-<pre>public byte ToByteChecked()
-</pre>
+<h3><a id='ToByteChecked()'>ToByteChecked</a></h3>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255).</p>
@@ -3337,10 +2981,7 @@ U+0039).</li>
 <li><code>java.lang.ArithmeticException</code> - This value is less than 0 or greater than 255.</li>
 </ul>
 
-<h3>ToByteUnchecked</h3>
-
-<pre>public byte ToByteUnchecked()
-</pre>
+<h3><a id='ToByteUnchecked()'>ToByteUnchecked</a></h3>
 
 <p>Converts this number to a byte (from 0 to 255), returning the
  least-significant bits of this number&#39;s two&#39;s-complement form.</p>
@@ -3351,10 +2992,7 @@ U+0039).</li>
 <li>This number, converted to a byte (from 0 to 255).</li>
 </ul>
 
-<h3>FromByte</h3>
-
-<pre>public static EInteger FromByte​(byte inputByte)
-</pre>
+<h3><a id='FromByte(byte)'>FromByte</a></h3>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision integer.</p>
 
@@ -3370,10 +3008,7 @@ U+0039).</li>
 <li>This number&#39;s value as an arbitrary-precision integer.</li>
 </ul>
 
-<h3>ToInt16Checked</h3>
-
-<pre>public short ToInt16Checked()
-</pre>
+<h3><a id='ToInt16Checked()'>ToInt16Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer.</p>
@@ -3391,10 +3026,7 @@ U+0039).</li>
 32767.</li>
 </ul>
 
-<h3>ToInt16Unchecked</h3>
-
-<pre>public short ToInt16Unchecked()
-</pre>
+<h3><a id='ToInt16Unchecked()'>ToInt16Unchecked</a></h3>
 
 <p>Converts this number to a 16-bit signed integer, returning the
  least-significant bits of this number&#39;s two&#39;s-complement form.</p>
@@ -3405,10 +3037,7 @@ U+0039).</li>
 <li>This number, converted to a 16-bit signed integer.</li>
 </ul>
 
-<h3>FromInt16</h3>
-
-<pre>public static EInteger FromInt16​(short inputInt16)
-</pre>
+<h3><a id='FromInt16(short)'>FromInt16</a></h3>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision integer.</p>
 

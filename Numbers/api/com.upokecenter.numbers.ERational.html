@@ -5,22 +5,6 @@
 
 <h1>com.upokecenter.numbers.ERational</h1>
 
-<pre>public final class ERational extends java.lang.Object implements java.lang.Comparable&lt;ERational&gt;
-</pre>
-
-<p>Represents an arbitrary-precision rational number. This class can&#39;t be
-  inherited. (The &quot;E&quot; stands for &quot;extended&quot;, meaning that instances of
- this class can be values other than numbers proper, such as infinity
- and not-a-number.) In this class, a rational number consists of a
- numerator and denominator, each an arbitrary-precision integer
- (EInteger), and this class does not automatically convert rational
- numbers to lowest terms. <p><b>Thread safety:</b> Instances of this
- class are immutable, so they are inherently safe for use by multiple
- threads. Multiple instances of this object with the same properties
-  are interchangeable, so they should not be compared using the &quot;==&quot;
- operator (which might only check if each side of the operator is the
- same instance).</p></p>
-
 <h2>Fields</h2>
 
 <ul>
@@ -46,7 +30,7 @@ A rational number for zero.</li>
 
 <ul>
 <li><code>ERational​(EInteger numerator,
-     EInteger denominator)</code><br>
+EInteger denominator)</code><br>
 Deprecated.
 Use the Create method instead.
 Use the Create method instead.</li>
@@ -102,19 +86,19 @@ Creates a copy of this arbitrary-precision rational number.</li>
 Returns a number with the same value as this one, but copying the sign
 (positive or negative) of another number.</li>
 <li><code>static ERational Create​(int numeratorSmall,
-  int denominatorSmall)</code><br>
+int denominatorSmall)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
 <li><code>static ERational Create​(long numeratorLong,
-  long denominatorLong)</code><br>
+long denominatorLong)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
 <li><code>static ERational Create​(EInteger numerator,
-  EInteger denominator)</code><br>
+EInteger denominator)</code><br>
 Creates a rational number with the given numerator and denominator.</li>
 <li><code>static ERational CreateNaN​(EInteger diag)</code><br>
 Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code>static ERational CreateNaN​(EInteger diag,
-     boolean signaling,
-     boolean negative)</code><br>
+boolean signaling,
+boolean negative)</code><br>
 Creates a not-a-number arbitrary-precision rational number.</li>
 <li><code>ERational Decrement()</code><br>
 Subtracts one from an arbitrary-precision rational number.</li>
@@ -180,23 +164,23 @@ in the IEEE 754 binary32 format.</li>
 <li><code>static ERational FromString​(byte[] bytes)</code><br>
 Creates a rational number from a sequence of bytes that represents a number.</li>
 <li><code>static ERational FromString​(byte[] bytes,
-      int offset,
-      int length)</code><br>
+int offset,
+int length)</code><br>
 Creates a rational number from a sequence of bytes that represents a
 number.</li>
 <li><code>static ERational FromString​(char[] chars) char</code><br>
 Creates a rational number from a sequence of char s that represents a
 number.</li>
 <li><code>static ERational FromString​(char[] chars,
-      int offset,
-      int length) char</code><br>
+int offset,
+int length) char</code><br>
 Creates a rational number from a sequence of char s that
 represents a number.</li>
 <li><code>static ERational FromString​(java.lang.String str)</code><br>
 Creates a rational number from a text string that represents a number.</li>
 <li><code>static ERational FromString​(java.lang.String str,
-      int offset,
-      int length)</code><br>
+int offset,
+int length)</code><br>
 Creates a rational number from a text string that represents a
 number.</li>
 <li><code>EInteger getDenominator()</code><br>
@@ -236,13 +220,13 @@ Gets a value indicating whether this object&#39;s value equals 0.</li>
 ERational second)</code><br>
 Gets the greater value between two rational numbers.</li>
 <li><code>static ERational MaxMagnitude​(ERational first,
-        ERational second)</code><br>
+ERational second)</code><br>
 Gets the greater value between two values, ignoring their signs.</li>
 <li><code>static ERational Min​(ERational first,
 ERational second)</code><br>
 Gets the lesser value between two rational numbers.</li>
 <li><code>static ERational MinMagnitude​(ERational first,
-        ERational second)</code><br>
+ERational second)</code><br>
 Gets the lesser value between two values, ignoring their signs.</li>
 <li><code>ERational Multiply​(int v)</code><br>
 Multiplies this arbitrary-precision rational number by a 32-bit signed
@@ -409,68 +393,41 @@ Converts this object to a text string.</li>
 
 <h2>Field Details</h2>
 
-<h3>NaN</h3>
-
-<pre>public static final ERational NaN
-</pre>
+<h3><a id='NaN'>NaN</a></h3>
 
 <p>A not-a-number value.</p>
 
-<h3>NegativeInfinity</h3>
-
-<pre>public static final ERational NegativeInfinity
-</pre>
+<h3><a id='NegativeInfinity'>NegativeInfinity</a></h3>
 
 <p>Negative infinity, less than any other number.</p>
 
-<h3>NegativeZero</h3>
-
-<pre>public static final ERational NegativeZero
-</pre>
+<h3><a id='NegativeZero'>NegativeZero</a></h3>
 
 <p>A rational number for negative zero.</p>
 
-<h3>One</h3>
-
-<pre>public static final ERational One
-</pre>
+<h3><a id='One'>One</a></h3>
 
 <p>The rational number one.</p>
 
-<h3>PositiveInfinity</h3>
-
-<pre>public static final ERational PositiveInfinity
-</pre>
+<h3><a id='PositiveInfinity'>PositiveInfinity</a></h3>
 
 <p>Positive infinity, greater than any other number.</p>
 
-<h3>SignalingNaN</h3>
-
-<pre>public static final ERational SignalingNaN
-</pre>
+<h3><a id='SignalingNaN'>SignalingNaN</a></h3>
 
 <p>A signaling not-a-number value.</p>
 
-<h3>Ten</h3>
-
-<pre>public static final ERational Ten
-</pre>
+<h3><a id='Ten'>Ten</a></h3>
 
 <p>The rational number ten.</p>
 
-<h3>Zero</h3>
-
-<pre>public static final ERational Zero
-</pre>
+<h3><a id='Zero'>Zero</a></h3>
 
 <p>A rational number for zero.</p>
 
 <h2>Method Details</h2>
 
-<h3>Copy</h3>
-
-<pre>public ERational Copy()
-</pre>
+<h3><a id='Copy()'>Copy</a></h3>
 
 <p>Creates a copy of this arbitrary-precision rational number.</p>
 
@@ -480,10 +437,7 @@ Converts this object to a text string.</li>
 <li>An arbitrary-precision rational number.</li>
 </ul>
 
-<h3>getDenominator</h3>
-
-<pre>public final EInteger getDenominator()
-</pre>
+<h3><a id='getDenominator()'>getDenominator</a></h3>
 
 <p>Gets this object&#39;s denominator.</p>
 
@@ -493,10 +447,7 @@ Converts this object to a text string.</li>
 <li>This object&#39;s denominator.</li>
 </ul>
 
-<h3>isFinite</h3>
-
-<pre>public final boolean isFinite()
-</pre>
+<h3><a id='isFinite()'>isFinite</a></h3>
 
 <p>Gets a value indicating whether this object is finite (not infinity or NaN).</p>
 
@@ -507,10 +458,7 @@ Converts this object to a text string.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isNegative</h3>
-
-<pre>public final boolean isNegative()
-</pre>
+<h3><a id='isNegative()'>isNegative</a></h3>
 
 <p>Gets a value indicating whether this object&#39;s value is negative (including
  negative zero).</p>
@@ -523,10 +471,7 @@ zero); otherwise, <code>false</code>. <code>true</code> if this object&#39;s val
 is negative; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isZero</h3>
-
-<pre>public final boolean isZero()
-</pre>
+<h3><a id='isZero()'>isZero</a></h3>
 
 <p>Gets a value indicating whether this object&#39;s value equals 0.</p>
 
@@ -538,10 +483,7 @@ false</code>. <code>true</code> if this object&#39;s value equals 0; otherwise,
 <code>false</code>.</li>
 </ul>
 
-<h3>IsInteger</h3>
-
-<pre>public boolean IsInteger()
-</pre>
+<h3><a id='IsInteger()'>IsInteger</a></h3>
 
 <p>Returns whether this object&#39;s value is an integer.</p>
 
@@ -552,10 +494,7 @@ false</code>. <code>true</code> if this object&#39;s value equals 0; otherwise,
 false</code>.</li>
 </ul>
 
-<h3>getNumerator</h3>
-
-<pre>public final EInteger getNumerator()
-</pre>
+<h3><a id='getNumerator()'>getNumerator</a></h3>
 
 <p>Gets this object&#39;s numerator.</p>
 
@@ -567,10 +506,7 @@ returns the diagnostic information (which will be negative if this
 object is negative).</li>
 </ul>
 
-<h3>signum</h3>
-
-<pre>public final int signum()
-</pre>
+<h3><a id='signum()'>signum</a></h3>
 
 <p>Gets the sign of this rational number.</p>
 
@@ -580,10 +516,7 @@ object is negative).</li>
 <li>The sign of this rational number.</li>
 </ul>
 
-<h3>getUnsignedNumerator</h3>
-
-<pre>public final EInteger getUnsignedNumerator()
-</pre>
+<h3><a id='getUnsignedNumerator()'>getUnsignedNumerator</a></h3>
 
 <p>Gets this object&#39;s numerator with the sign removed.</p>
 
@@ -594,10 +527,7 @@ object is negative).</li>
 returns the diagnostic information.</li>
 </ul>
 
-<h3>Create</h3>
-
-<pre>public static ERational Create​(int numeratorSmall, int denominatorSmall)
-</pre>
+<h3><a id='Create(int,int)'>Create</a></h3>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -620,10 +550,7 @@ returns the diagnostic information.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The denominator is zero.</li>
 </ul>
 
-<h3>Create</h3>
-
-<pre>public static ERational Create​(long numeratorLong, long denominatorLong)
-</pre>
+<h3><a id='Create(long,long)'>Create</a></h3>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -646,10 +573,7 @@ returns the diagnostic information.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The denominator is zero.</li>
 </ul>
 
-<h3>Create</h3>
-
-<pre>public static ERational Create​(EInteger numerator, EInteger denominator)
-</pre>
+<h3><a id='Create(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>Create</a></h3>
 
 <p>Creates a rational number with the given numerator and denominator.</p>
 
@@ -674,10 +598,7 @@ returns the diagnostic information.</li>
 denominator</code> is null.</p></li>
 </ul>
 
-<h3>CreateNaN</h3>
-
-<pre>public static ERational CreateNaN​(EInteger diag)
-</pre>
+<h3><a id='CreateNaN(com.upokecenter.numbers.EInteger)'>CreateNaN</a></h3>
 
 <p>Creates a not-a-number arbitrary-precision rational number.</p>
 
@@ -703,10 +624,7 @@ property.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>diag</code> is less than 0.</li>
 </ul>
 
-<h3>CreateNaN</h3>
-
-<pre>public static ERational CreateNaN​(EInteger diag, boolean signaling, boolean negative)
-</pre>
+<h3><a id='CreateNaN(com.upokecenter.numbers.EInteger,boolean,boolean)'>CreateNaN</a></h3>
 
 <p>Creates a not-a-number arbitrary-precision rational number.</p>
 
@@ -736,10 +654,7 @@ property.</p></li>
 <li><p><code>java.lang.NullPointerException</code> - The parameter <code>diag</code> is null.</p></li>
 </ul>
 
-<h3>FromDouble</h3>
-
-<pre>public static ERational FromDouble​(double flt)
-</pre>
+<h3><a id='FromDouble(double)'>FromDouble</a></h3>
 
 <p>Converts a 64-bit floating-point number to a rational number. This method
  computes the exact value of the floating point number, not an
@@ -767,13 +682,9 @@ property.</p></li>
 <li>A rational number with the same value as <code>flt</code>.</li>
 </ul>
 
-<h3>FromExtendedDecimal</h3>
+<h3><a id='FromExtendedDecimal(com.upokecenter.numbers.EDecimal)'>FromExtendedDecimal</a></h3>
 
-<pre>@Deprecated public static ERational FromExtendedDecimal​(EDecimal ef)
-</pre>
-
-<p>Deprecated.
-Renamed to FromEDecimal.</p>
+<p>Converts an arbitrary-precision decimal number to a rational number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -787,13 +698,10 @@ Renamed to FromEDecimal.</p>
 <li>An arbitrary-precision rational number.</li>
 </ul>
 
-<h3>FromExtendedFloat</h3>
+<h3><a id='FromExtendedFloat(com.upokecenter.numbers.EFloat)'>FromExtendedFloat</a></h3>
 
-<pre>@Deprecated public static ERational FromExtendedFloat​(EFloat ef)
-</pre>
-
-<p>Deprecated.
-Renamed to FromEFloat.</p>
+<p>Converts an arbitrary-precision binary floating-point number to a rational
+ number.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -808,10 +716,7 @@ floating-point number.</li>
 <li>An arbitrary-precision rational number.</li>
 </ul>
 
-<h3>FromEDecimal</h3>
-
-<pre>public static ERational FromEDecimal​(EDecimal ef)
-</pre>
+<h3><a id='FromEDecimal(com.upokecenter.numbers.EDecimal)'>FromEDecimal</a></h3>
 
 <p>Converts an arbitrary-precision decimal number to a rational number.</p>
 
@@ -834,10 +739,7 @@ floating-point number.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - doesn&#39;t satisfy den.signum() &gt;= 0.</p></li>
 </ul>
 
-<h3>FromEFloat</h3>
-
-<pre>public static ERational FromEFloat​(EFloat ef)
-</pre>
+<h3><a id='FromEFloat(com.upokecenter.numbers.EFloat)'>FromEFloat</a></h3>
 
 <p>Converts an arbitrary-precision binary floating-point number to a rational
  number.</p>
@@ -862,10 +764,7 @@ floating-point number.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - doesn&#39;t satisfy den.signum() &gt;= 0.</p></li>
 </ul>
 
-<h3>FromEInteger</h3>
-
-<pre>public static ERational FromEInteger​(EInteger bigint)
-</pre>
+<h3><a id='FromEInteger(com.upokecenter.numbers.EInteger)'>FromEInteger</a></h3>
 
 <p>Converts an arbitrary-precision integer to a rational number.</p>
 
@@ -881,10 +780,7 @@ floating-point number.</li>
 <li>The exact value of the integer as a rational number.</li>
 </ul>
 
-<h3>FromSingle</h3>
-
-<pre>public static ERational FromSingle​(float flt)
-</pre>
+<h3><a id='FromSingle(float)'>FromSingle</a></h3>
 
 <p>Converts a 32-bit binary floating-point number to a rational number. This
  method computes the exact value of the floating point number, not an
@@ -915,10 +811,7 @@ number.</li>
 <li>A rational number with the same value as <code>flt</code>.</li>
 </ul>
 
-<h3>FromSingleBits</h3>
-
-<pre>public static ERational FromSingleBits​(int value)
-</pre>
+<h3><a id='FromSingleBits(int)'>FromSingleBits</a></h3>
 
 <p>Creates a binary rational number from a 32-bit floating-point number encoded
  in the IEEE 754 binary32 format. This method computes the exact
@@ -938,10 +831,7 @@ number.</li>
 value</code>.</li>
 </ul>
 
-<h3>FromHalfBits</h3>
-
-<pre>public static ERational FromHalfBits​(short value)
-</pre>
+<h3><a id='FromHalfBits(short)'>FromHalfBits</a></h3>
 
 <p>Creates a binary rational number from a binary floating-point number encoded
   in the IEEE 754 binary16 format (also known as a &quot;half-precision&quot;
@@ -962,10 +852,7 @@ value</code>.</li>
 value</code>.</li>
 </ul>
 
-<h3>FromDoubleBits</h3>
-
-<pre>public static ERational FromDoubleBits​(long value)
-</pre>
+<h3><a id='FromDoubleBits(long)'>FromDoubleBits</a></h3>
 
 <p>Creates a binary rational number from a 64-bit floating-point number encoded
  in the IEEE 754 binary64 format. This method computes the exact
@@ -985,10 +872,7 @@ value</code>.</li>
 value</code>.</li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(java.lang.String str)
-</pre>
+<h3><a id='FromString(java.lang.String)'>FromString</a></h3>
 
 <p>Creates a rational number from a text string that represents a number. See
  <code>FromString(string, int, int)</code> for more information.</p>
@@ -1013,10 +897,7 @@ given string.</li>
 formatted number string.</li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(java.lang.String str, int offset, int length)
-</pre>
+<h3><a id='FromString(java.lang.String,int,int)'>FromString</a></h3>
 
 <p>Creates a rational number from a text string that represents a
  number.</p> <p>The format of the string generally consists of:</p>
@@ -1063,10 +944,7 @@ than 0 or greater than <code>str</code> &#39;s length, or <code>str</code> &#39;
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(char[] chars)
-</pre>
+<h3><a id='FromString(char[])'>FromString</a></h3>
 
 <p>Creates a rational number from a sequence of <code>char</code> s that represents a
  number. See <code>FromString(string, int, int)</code> for more
@@ -1092,10 +970,7 @@ given sequence of <code>char</code> s.</li>
 formatted sequence of <code>char</code> s.</li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(char[] chars, int offset, int length)
-</pre>
+<h3><a id='FromString(char[],int,int)'>FromString</a></h3>
 
 <p>Creates a rational number from a sequence of <code>char</code> s that
  represents a number.</p> <p>The format of the sequence of
@@ -1145,10 +1020,7 @@ than 0 or greater than <code>chars</code> &#39;s length, or <code>chars</code> &
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(byte[] bytes)
-</pre>
+<h3><a id='FromString(byte[])'>FromString</a></h3>
 
 <p>Creates a rational number from a sequence of bytes that represents a number.
  See <code>FromString(string, int, int)</code> for more information.</p>
@@ -1173,10 +1045,7 @@ given sequence of bytes.</li>
 formatted sequence of bytes.</li>
 </ul>
 
-<h3>FromString</h3>
-
-<pre>public static ERational FromString​(byte[] bytes, int offset, int length)
-</pre>
+<h3><a id='FromString(byte[],int,int)'>FromString</a></h3>
 
 <p>Creates a rational number from a sequence of bytes that represents a
  number.</p> <p>The format of the sequence of bytes generally
@@ -1223,10 +1092,7 @@ than 0 or greater than <code>bytes</code> &#39;s length, or <code>bytes</code> &
 length minus <code>offset</code> is less than <code>length</code>.</p></li>
 </ul>
 
-<h3>CompareToTotalMagnitude</h3>
-
-<pre>public int CompareToTotalMagnitude​(ERational other)
-</pre>
+<h3><a id='CompareToTotalMagnitude(com.upokecenter.numbers.ERational)'>CompareToTotalMagnitude</a></h3>
 
 <p>Compares the absolute values of this object and another object, imposing a
  total ordering on all possible values (ignoring their signs). In
@@ -1255,10 +1121,7 @@ object is less than the other value, or 1 if this object is greater.
 This implementation returns a positive number if.</li>
 </ul>
 
-<h3>CompareToTotal</h3>
-
-<pre>public int CompareToTotal​(ERational other)
-</pre>
+<h3><a id='CompareToTotal(com.upokecenter.numbers.ERational)'>CompareToTotal</a></h3>
 
 <p>Compares the values of this object and another object, imposing a total
  ordering on all possible values. In this method: <ul> <li>For
@@ -1287,10 +1150,7 @@ object is less than the other value, or 1 if this object is greater.
 This implementation returns a positive number if.</li>
 </ul>
 
-<h3>Abs</h3>
-
-<pre>public ERational Abs()
-</pre>
+<h3><a id='Abs()'>Abs</a></h3>
 
 <p>Returns the absolute value of this rational number, that is, a number with
  the same value as this one but as a nonnegative number.</p>
@@ -1301,10 +1161,7 @@ This implementation returns a positive number if.</li>
 <li>An arbitrary-precision rational number.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public ERational Add​(ERational otherValue)
-</pre>
+<h3><a id='Add(com.upokecenter.numbers.ERational)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision rational number and another
  arbitrary-precision rational number and returns the result.</p>
@@ -1328,10 +1185,7 @@ rational number plus another arbitrary-precision rational number.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(ERational other)
-</pre>
+<h3><a id='compareTo(com.upokecenter.numbers.ERational)'>compareTo</a></h3>
 
 <p>Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance. This method currently uses the rules
@@ -1359,10 +1213,7 @@ less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>CompareToValue</h3>
-
-<pre>public int CompareToValue​(ERational other)
-</pre>
+<h3><a id='CompareToValue(com.upokecenter.numbers.ERational)'>CompareToValue</a></h3>
 
 <p>Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance. In this method, NaN values are greater
@@ -1384,10 +1235,7 @@ less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>Max</h3>
-
-<pre>public static ERational Max​(ERational first, ERational second)
-</pre>
+<h3><a id='Max(com.upokecenter.numbers.ERational,com.upokecenter.numbers.ERational)'>Max</a></h3>
 
 <p>Gets the greater value between two rational numbers.</p>
 
@@ -1415,10 +1263,7 @@ same value, returns the one with the smaller denominator.</li>
 is null.</li>
 </ul>
 
-<h3>MaxMagnitude</h3>
-
-<pre>public static ERational MaxMagnitude​(ERational first, ERational second)
-</pre>
+<h3><a id='MaxMagnitude(com.upokecenter.numbers.ERational,com.upokecenter.numbers.ERational)'>MaxMagnitude</a></h3>
 
 <p>Gets the greater value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Max.</p>
@@ -1443,10 +1288,7 @@ is null.</li>
 is null.</li>
 </ul>
 
-<h3>Min</h3>
-
-<pre>public static ERational Min​(ERational first, ERational second)
-</pre>
+<h3><a id='Min(com.upokecenter.numbers.ERational,com.upokecenter.numbers.ERational)'>Min</a></h3>
 
 <p>Gets the lesser value between two rational numbers.</p>
 
@@ -1474,10 +1316,7 @@ the same value, returns the one with the larger denominator.</li>
 is null.</li>
 </ul>
 
-<h3>MinMagnitude</h3>
-
-<pre>public static ERational MinMagnitude​(ERational first, ERational second)
-</pre>
+<h3><a id='MinMagnitude(com.upokecenter.numbers.ERational,com.upokecenter.numbers.ERational)'>MinMagnitude</a></h3>
 
 <p>Gets the lesser value between two values, ignoring their signs. If the
  absolute values are equal, has the same effect as Min.</p>
@@ -1502,10 +1341,7 @@ is null.</li>
 is null.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(int intOther)
-</pre>
+<h3><a id='compareTo(int)'>compareTo</a></h3>
 
 <p>Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance. This method currently uses the rules
@@ -1526,10 +1362,7 @@ is null.</li>
 less, or a positive number if this instance is greater.</li>
 </ul>
 
-<h3>CompareToValue</h3>
-
-<pre>public int CompareToValue​(int intOther)
-</pre>
+<h3><a id='CompareToValue(int)'>CompareToValue</a></h3>
 
 <p>Compares the mathematical value of an arbitrary-precision rational number
  with that of this instance. In this method, NaN values are greater
@@ -1550,10 +1383,7 @@ less, or a positive number if this instance is greater.</li>
 less, or a positive number if this instance is greater.</li>
 </ul>
 
-<h3>CompareToValue</h3>
-
-<pre>public int CompareToValue​(long intOther)
-</pre>
+<h3><a id='CompareToValue(long)'>CompareToValue</a></h3>
 
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. <p>This method is not consistent with the
@@ -1578,10 +1408,7 @@ greater than 0 if this object&#39;s value is greater than the other
 value, or 0 if both values are equal.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(long intOther)
-</pre>
+<h3><a id='compareTo(long)'>compareTo</a></h3>
 
 <p>Compares the mathematical values of this object and another object,
  accepting NaN values. This method currently uses the rules given in
@@ -1603,10 +1430,7 @@ greater than 0 if this object&#39;s value is greater than the other
 value, or 0 if both values are equal.</li>
 </ul>
 
-<h3>CompareToBinary</h3>
-
-<pre>public int CompareToBinary​(EFloat other)
-</pre>
+<h3><a id='CompareToBinary(com.upokecenter.numbers.EFloat)'>CompareToBinary</a></h3>
 
 <p>Compares an arbitrary-precision binary floating-point number with this
  instance. In this method, NaN values are greater than any other
@@ -1627,10 +1451,7 @@ less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>CompareToDecimal</h3>
-
-<pre>public int CompareToDecimal​(EDecimal other)
-</pre>
+<h3><a id='CompareToDecimal(com.upokecenter.numbers.EDecimal)'>CompareToDecimal</a></h3>
 
 <p>Compares an arbitrary-precision decimal number with this instance.</p>
 
@@ -1648,10 +1469,7 @@ less, or a positive number if this instance is greater. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>CopySign</h3>
-
-<pre>public ERational CopySign​(ERational other)
-</pre>
+<h3><a id='CopySign(com.upokecenter.numbers.ERational)'>CopySign</a></h3>
 
 <p>Returns a number with the same value as this one, but copying the sign
  (positive or negative) of another number.</p>
@@ -1674,10 +1492,7 @@ implementation returns a positive number if.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>other</code> is null.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public ERational Divide​(ERational otherValue)
-</pre>
+<h3><a id='Divide(com.upokecenter.numbers.ERational)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision rational number by another
  arbitrary-precision rational number and returns the result.</p>
@@ -1701,10 +1516,7 @@ another arbitrary-precision rational number.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>equals</h3>
-
-<pre>public boolean equals​(java.lang.Object obj)
-</pre>
+<h3><a id='equals(java.lang.Object)'>equals</a></h3>
 
 <p>Determines whether this object&#39;s numerator, denominator, and properties are
  equal to those of another object and that other object is an
@@ -1734,10 +1546,7 @@ this method, two objects are not equal if they don&#39;t have the same
 type or if one is null and the other isn&#39;t.</li>
 </ul>
 
-<h3>equals</h3>
-
-<pre>public boolean equals​(ERational other)
-</pre>
+<h3><a id='equals(com.upokecenter.numbers.ERational)'>equals</a></h3>
 
 <p>Determines whether this object&#39;s numerator, denominator, and properties are
  equal to those of another object. Not-a-number values are considered
@@ -1755,10 +1564,7 @@ type or if one is null and the other isn&#39;t.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>hashCode</h3>
-
-<pre>public int hashCode()
-</pre>
+<h3><a id='hashCode()'>hashCode</a></h3>
 
 <p>Returns the hash code for this instance. No application or process IDs are
  used in the hash code calculation.</p>
@@ -1775,10 +1581,7 @@ type or if one is null and the other isn&#39;t.</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>IsInfinity</h3>
-
-<pre>public boolean IsInfinity()
-</pre>
+<h3><a id='IsInfinity()'>IsInfinity</a></h3>
 
 <p>Gets a value indicating whether this object&#39;s value is infinity.</p>
 
@@ -1789,10 +1592,7 @@ type or if one is null and the other isn&#39;t.</li>
 false</code>.</li>
 </ul>
 
-<h3>IsNaN</h3>
-
-<pre>public boolean IsNaN()
-</pre>
+<h3><a id='IsNaN()'>IsNaN</a></h3>
 
 <p>Returns whether this object is a not-a-number value.</p>
 
@@ -1803,10 +1603,7 @@ false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>IsNegativeInfinity</h3>
-
-<pre>public boolean IsNegativeInfinity()
-</pre>
+<h3><a id='IsNegativeInfinity()'>IsNegativeInfinity</a></h3>
 
 <p>Returns whether this object is negative infinity.</p>
 
@@ -1817,10 +1614,7 @@ false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>IsPositiveInfinity</h3>
-
-<pre>public boolean IsPositiveInfinity()
-</pre>
+<h3><a id='IsPositiveInfinity()'>IsPositiveInfinity</a></h3>
 
 <p>Returns whether this object is positive infinity.</p>
 
@@ -1831,10 +1625,7 @@ false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>IsQuietNaN</h3>
-
-<pre>public boolean IsQuietNaN()
-</pre>
+<h3><a id='IsQuietNaN()'>IsQuietNaN</a></h3>
 
 <p>Returns whether this object is a quiet not-a-number value.</p>
 
@@ -1845,10 +1636,7 @@ false</code>.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>IsSignalingNaN</h3>
-
-<pre>public boolean IsSignalingNaN()
-</pre>
+<h3><a id='IsSignalingNaN()'>IsSignalingNaN</a></h3>
 
 <p>Returns whether this object is a signaling not-a-number value (which causes
  an error if the value is passed to any arithmetic operation in this
@@ -1862,10 +1650,7 @@ causes an error if the value is passed to any arithmetic operation
 in this class); otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public ERational Multiply​(ERational otherValue)
-</pre>
+<h3><a id='Multiply(com.upokecenter.numbers.ERational)'>Multiply</a></h3>
 
 <p>Multiplies this arbitrary-precision rational number by another
  arbitrary-precision rational number and returns the result.</p>
@@ -1889,10 +1674,7 @@ rational number times another arbitrary-precision rational number.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>Negate</h3>
-
-<pre>public ERational Negate()
-</pre>
+<h3><a id='Negate()'>Negate</a></h3>
 
 <p>Returns a rational number with the same value as this one but with the sign
  reversed.</p>
@@ -1903,10 +1685,7 @@ rational number times another arbitrary-precision rational number.</li>
 <li>An arbitrary-precision rational number.</li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public ERational Remainder​(ERational otherValue)
-</pre>
+<h3><a id='Remainder(com.upokecenter.numbers.ERational)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  rational number is divided by another arbitrary-precision rational
@@ -1932,10 +1711,7 @@ number.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public ERational Subtract​(ERational otherValue)
-</pre>
+<h3><a id='Subtract(com.upokecenter.numbers.ERational)'>Subtract</a></h3>
 
 <p>Subtracts an arbitrary-precision rational number from this
  arbitrary-precision rational number and returns the result.</p>
@@ -1960,10 +1736,7 @@ arbitrary-precision rational number.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>otherValue</code> is null.</li>
 </ul>
 
-<h3>ToDouble</h3>
-
-<pre>public double ToDouble()
-</pre>
+<h3><a id='ToDouble()'>ToDouble</a></h3>
 
 <p>Converts this value to a 64-bit floating-point number. The half-even
  rounding mode is used.</p>
@@ -1976,10 +1749,7 @@ value can be positive infinity or negative infinity if this value
 exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
-<h3>ToDoubleBits</h3>
-
-<pre>public long ToDoubleBits()
-</pre>
+<h3><a id='ToDoubleBits()'>ToDoubleBits</a></h3>
 
 <p>Converts this value to its closest equivalent as a 64-bit floating-point
  number, expressed as an integer in the IEEE 754 binary64 format. The
@@ -2000,10 +1770,7 @@ value can be positive infinity or negative infinity if this value
 exceeds the range of a 64-bit floating point number.</li>
 </ul>
 
-<h3>ToSingleBits</h3>
-
-<pre>public int ToSingleBits()
-</pre>
+<h3><a id='ToSingleBits()'>ToSingleBits</a></h3>
 
 <p>Converts this value to its closest equivalent as 32-bit floating-point
  number, expressed as an integer in the IEEE 754 binary32 format. The
@@ -2024,10 +1791,7 @@ value can be positive infinity or negative infinity if this value
 exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
-<h3>ToHalfBits</h3>
-
-<pre>public short ToHalfBits()
-</pre>
+<h3><a id='ToHalfBits()'>ToHalfBits</a></h3>
 
 <p>Converts this value to its closest equivalent as a binary floating-point
  number, expressed as an integer in the IEEE 754 binary16 format
@@ -2049,10 +1813,7 @@ positive infinity or negative infinity if this value exceeds the
 range of a floating-point number in the binary16 format.</li>
 </ul>
 
-<h3>ToLowestTerms</h3>
-
-<pre>public ERational ToLowestTerms()
-</pre>
+<h3><a id='ToLowestTerms()'>ToLowestTerms</a></h3>
 
 <p>Converts this value to its form in lowest terms. For example, (8/4) becomes
  (4/1).</p>
@@ -2073,10 +1834,7 @@ Returns ERational.Zero if this object is a positive zero.</li>
 (NaN).</li>
 </ul>
 
-<h3>ToSizedEInteger</h3>
-
-<pre>public EInteger ToSizedEInteger​(int maxBitLength)
-</pre>
+<h3><a id='ToSizedEInteger(int)'>ToSizedEInteger</a></h3>
 
 <p>Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator, discarding its fractional part, and
@@ -2107,10 +1865,7 @@ fractional part, is less than -(2^maxBitLength) or greater than
 (2^maxBitLength) - 1.</li>
 </ul>
 
-<h3>ToSizedEIntegerIfExact</h3>
-
-<pre>public EInteger ToSizedEIntegerIfExact​(int maxBitLength)
-</pre>
+<h3><a id='ToSizedEIntegerIfExact(int)'>ToSizedEIntegerIfExact</a></h3>
 
 <p>Converts this value to an arbitrary-precision integer, only if this number&#39;s
  value is an exact integer and that integer does not overflow the
@@ -2139,10 +1894,7 @@ greater than (2^maxBitLength) - 1.</li>
 <li><p><code>java.lang.ArithmeticException</code> - This object&#39;s value is not an exact integer.</p></li>
 </ul>
 
-<h3>ToEInteger</h3>
-
-<pre>public EInteger ToEInteger()
-</pre>
+<h3><a id='ToEInteger()'>ToEInteger</a></h3>
 
 <p>Converts this value to an arbitrary-precision integer by dividing the
  numerator by the denominator and discarding the fractional part of
@@ -2161,31 +1913,7 @@ greater than (2^maxBitLength) - 1.</li>
 (NaN).</li>
 </ul>
 
-<h3>ToEIntegerExact</h3>
-
-<pre>@Deprecated public EInteger ToEIntegerExact()
-</pre>
-
-<p>Deprecated.
-Renamed to ToEIntegerIfExact.</p>
-
-<p><strong>Returns:</strong></p>
-
-<ul>
-<li>An arbitrary-precision integer.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
-(NaN).</li>
-</ul>
-
-<h3>ToEIntegerIfExact</h3>
-
-<pre>public EInteger ToEIntegerIfExact()
-</pre>
+<h3><a id='ToEIntegerExact()'>ToEIntegerExact</a></h3>
 
 <p>Converts this value to an arbitrary-precision integer, checking whether the
  value is an exact integer.</p>
@@ -2203,10 +1931,25 @@ Renamed to ToEIntegerIfExact.</p>
 (NaN).</li>
 </ul>
 
-<h3>ToEDecimal</h3>
+<h3><a id='ToEIntegerIfExact()'>ToEIntegerIfExact</a></h3>
 
-<pre>public EDecimal ToEDecimal()
-</pre>
+<p>Converts this value to an arbitrary-precision integer, checking whether the
+ value is an exact integer.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>An arbitrary-precision integer.</li>
+</ul>
+
+<p><strong>Throws:</strong></p>
+
+<ul>
+<li><code>java.lang.ArithmeticException</code> - This object&#39;s value is infinity or not-a-number
+(NaN).</li>
+</ul>
+
+<h3><a id='ToEDecimal()'>ToEDecimal</a></h3>
 
 <p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
@@ -2218,10 +1961,7 @@ result can&#39;t be exact because it has a nonterminating decimal
 expansion.</li>
 </ul>
 
-<h3>ToEDecimal</h3>
-
-<pre>public EDecimal ToEDecimal​(EContext ctx)
-</pre>
+<h3><a id='ToEDecimal(com.upokecenter.numbers.EContext)'>ToEDecimal</a></h3>
 
 <p>Converts this rational number to an arbitrary-precision decimal number and
  rounds the result to the given precision.</p>
@@ -2244,10 +1984,7 @@ Returns not-a-number (NaN) if the context is null and the result
 can&#39;t be exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
-<h3>ToEDecimalExactIfPossible</h3>
-
-<pre>public EDecimal ToEDecimalExactIfPossible​(EContext ctx)
-</pre>
+<h3><a id='ToEDecimalExactIfPossible(com.upokecenter.numbers.EContext)'>ToEDecimalExactIfPossible</a></h3>
 
 <p>Converts this rational number to an arbitrary-precision decimal number, but
  if the result would have a nonterminating decimal expansion, rounds
@@ -2274,13 +2011,9 @@ not-a-number (NaN) if the context is null and the result can&#39;t be
 exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
-<h3>ToExtendedDecimal</h3>
+<h3><a id='ToExtendedDecimal()'>ToExtendedDecimal</a></h3>
 
-<pre>@Deprecated public EDecimal ToExtendedDecimal()
-</pre>
-
-<p>Deprecated.
-Renamed to ToEDecimal.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2290,13 +2023,10 @@ result can&#39;t be exact because it has a nonterminating decimal
 expansion.</li>
 </ul>
 
-<h3>ToExtendedDecimal</h3>
+<h3><a id='ToExtendedDecimal(com.upokecenter.numbers.EContext)'>ToExtendedDecimal</a></h3>
 
-<pre>@Deprecated public EDecimal ToExtendedDecimal​(EContext ctx)
-</pre>
-
-<p>Deprecated.
-Renamed to ToEDecimal.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number and
+ rounds the result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2316,13 +2046,11 @@ Returns not-a-number (NaN) if the context is null and the result
 can&#39;t be exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
-<h3>ToExtendedDecimalExactIfPossible</h3>
+<h3><a id='ToExtendedDecimalExactIfPossible(com.upokecenter.numbers.EContext)'>ToExtendedDecimalExactIfPossible</a></h3>
 
-<pre>@Deprecated public EDecimal ToExtendedDecimalExactIfPossible​(EContext ctx)
-</pre>
-
-<p>Deprecated.
-Renamed to ToEDecimalExactIfPossible.</p>
+<p>Converts this rational number to an arbitrary-precision decimal number, but
+ if the result would have a nonterminating decimal expansion, rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2345,10 +2073,7 @@ not-a-number (NaN) if the context is null and the result can&#39;t be
 exact because it has a nonterminating decimal expansion.</li>
 </ul>
 
-<h3>ToEFloat</h3>
-
-<pre>public EFloat ToEFloat()
-</pre>
+<h3><a id='ToEFloat()'>ToEFloat</a></h3>
 
 <p>Converts this rational number to a binary floating-point number.</p>
 
@@ -2360,10 +2085,7 @@ result can&#39;t be exact because it has a nonterminating binary
 expansion.</li>
 </ul>
 
-<h3>ToEFloat</h3>
-
-<pre>public EFloat ToEFloat​(EContext ctx)
-</pre>
+<h3><a id='ToEFloat(com.upokecenter.numbers.EContext)'>ToEFloat</a></h3>
 
 <p>Converts this rational number to a binary floating-point number and rounds
  that result to the given precision.</p>
@@ -2386,10 +2108,7 @@ Returns not-a-number (NaN) if the context is null and the result
 can&#39;t be exact because it has a nonterminating binary expansion.</li>
 </ul>
 
-<h3>ToEFloatExactIfPossible</h3>
-
-<pre>public EFloat ToEFloatExactIfPossible​(EContext ctx)
-</pre>
+<h3><a id='ToEFloatExactIfPossible(com.upokecenter.numbers.EContext)'>ToEFloatExactIfPossible</a></h3>
 
 <p>Converts this rational number to a binary floating-point number, but if the
  result would have a nonterminating binary expansion, rounds that
@@ -2416,13 +2135,9 @@ not-a-number (NaN) if the context is null and the result can&#39;t be
 exact because it has a nonterminating binary expansion.</li>
 </ul>
 
-<h3>ToExtendedFloat</h3>
+<h3><a id='ToExtendedFloat()'>ToExtendedFloat</a></h3>
 
-<pre>@Deprecated public EFloat ToExtendedFloat()
-</pre>
-
-<p>Deprecated.
-Renamed to ToEFloat.</p>
+<p>Converts this rational number to a binary floating-point number.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -2432,13 +2147,10 @@ result can&#39;t be exact because it has a nonterminating binary
 expansion.</li>
 </ul>
 
-<h3>ToExtendedFloat</h3>
+<h3><a id='ToExtendedFloat(com.upokecenter.numbers.EContext)'>ToExtendedFloat</a></h3>
 
-<pre>@Deprecated public EFloat ToExtendedFloat​(EContext ctx)
-</pre>
-
-<p>Deprecated.
-Renamed to ToEFloat.</p>
+<p>Converts this rational number to a binary floating-point number and rounds
+ that result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2458,13 +2170,11 @@ Returns not-a-number (NaN) if the context is null and the result
 can&#39;t be exact because it has a nonterminating binary expansion.</li>
 </ul>
 
-<h3>ToExtendedFloatExactIfPossible</h3>
+<h3><a id='ToExtendedFloatExactIfPossible(com.upokecenter.numbers.EContext)'>ToExtendedFloatExactIfPossible</a></h3>
 
-<pre>@Deprecated public EFloat ToExtendedFloatExactIfPossible​(EContext ctx)
-</pre>
-
-<p>Deprecated.
-Renamed to ToEFloatExactIfPossible.</p>
+<p>Converts this rational number to a binary floating-point number, but if the
+ result would have a nonterminating binary expansion, rounds that
+ result to the given precision.</p>
 
 <p><strong>Parameters:</strong></p>
 
@@ -2487,10 +2197,7 @@ not-a-number (NaN) if the context is null and the result can&#39;t be
 exact because it has a nonterminating binary expansion.</li>
 </ul>
 
-<h3>ToSingle</h3>
-
-<pre>public float ToSingle()
-</pre>
+<h3><a id='ToSingle()'>ToSingle</a></h3>
 
 <p>Converts this value to a 32-bit binary floating-point number. The half-even
  rounding mode is used.</p>
@@ -2503,10 +2210,7 @@ return value can be positive infinity or negative infinity if this
 value exceeds the range of a 32-bit floating point number.</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Converts this object to a text string.</p>
 
@@ -2525,10 +2229,7 @@ of the <code>EDecimal.toString</code> method. Otherwise, the return value
 has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 </ul>
 
-<h3>Increment</h3>
-
-<pre>public ERational Increment()
-</pre>
+<h3><a id='Increment()'>Increment</a></h3>
 
 <p>Adds one to an arbitrary-precision rational number.</p>
 
@@ -2538,10 +2239,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <li>The given arbitrary-precision rational number plus one.</li>
 </ul>
 
-<h3>Decrement</h3>
-
-<pre>public ERational Decrement()
-</pre>
+<h3><a id='Decrement()'>Decrement</a></h3>
 
 <p>Subtracts one from an arbitrary-precision rational number.</p>
 
@@ -2551,10 +2249,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 <li>The given arbitrary-precision rational number minus one.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public ERational Add​(int v)
-</pre>
+<h3><a id='Add(int)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision rational number and a 32-bit signed integer
  and returns the result.</p>
@@ -2572,10 +2267,7 @@ has the following form: <code>[-]numerator.Divide(denominator)</code>.</li>
 rational number plus a 32-bit signed integer.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public ERational Subtract​(int v)
-</pre>
+<h3><a id='Subtract(int)'>Subtract</a></h3>
 
 <p>Subtracts a 32-bit signed integer from this arbitrary-precision rational
  number and returns the result.</p>
@@ -2593,10 +2285,7 @@ rational number plus a 32-bit signed integer.</li>
 arbitrary-precision rational number minus a 32-bit signed integer.</li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public ERational Multiply​(int v)
-</pre>
+<h3><a id='Multiply(int)'>Multiply</a></h3>
 
 <p>Multiplies this arbitrary-precision rational number by a 32-bit signed
  integer and returns the result.</p>
@@ -2614,10 +2303,7 @@ arbitrary-precision rational number minus a 32-bit signed integer.</li>
 rational number times a 32-bit signed integer.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public ERational Divide​(int v)
-</pre>
+<h3><a id='Divide(int)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision rational number by a 32-bit signed integer
  and returns the result.</p>
@@ -2641,10 +2327,7 @@ rational number times a 32-bit signed integer.</li>
 <li><code>java.lang.ArithmeticException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public ERational Remainder​(int v)
-</pre>
+<h3><a id='Remainder(int)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  rational number is divided by a 32-bit signed integer.</p>
@@ -2668,10 +2351,7 @@ rational number is divided by a 32-bit signed integer.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public ERational Add​(long v)
-</pre>
+<h3><a id='Add(long)'>Add</a></h3>
 
 <p>Adds this arbitrary-precision rational number and a 64-bit signed integer
  and returns the result.</p>
@@ -2689,10 +2369,7 @@ rational number is divided by a 32-bit signed integer.</li>
 rational number plus a 64-bit signed integer.</li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public ERational Subtract​(long v)
-</pre>
+<h3><a id='Subtract(long)'>Subtract</a></h3>
 
 <p>Subtracts a 64-bit signed integer from this arbitrary-precision rational
  number and returns the result.</p>
@@ -2710,10 +2387,7 @@ rational number plus a 64-bit signed integer.</li>
 arbitrary-precision rational number minus a 64-bit signed integer.</li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public ERational Multiply​(long v)
-</pre>
+<h3><a id='Multiply(long)'>Multiply</a></h3>
 
 <p>Multiplies this arbitrary-precision rational number by a 64-bit signed
  integer and returns the result.</p>
@@ -2731,10 +2405,7 @@ arbitrary-precision rational number minus a 64-bit signed integer.</li>
 rational number times a 64-bit signed integer.</li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public ERational Divide​(long v)
-</pre>
+<h3><a id='Divide(long)'>Divide</a></h3>
 
 <p>Divides this arbitrary-precision rational number by a 64-bit signed integer
  and returns the result.</p>
@@ -2758,10 +2429,7 @@ rational number times a 64-bit signed integer.</li>
 <li><code>java.lang.ArithmeticException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public ERational Remainder​(long v)
-</pre>
+<h3><a id='Remainder(long)'>Remainder</a></h3>
 
 <p>Returns the remainder that would result when this arbitrary-precision
  rational number is divided by a 64-bit signed integer.</p>
@@ -2785,10 +2453,7 @@ rational number is divided by a 64-bit signed integer.</li>
 <li><code>java.lang.IllegalArgumentException</code> - The parameter <code>v</code> is zero.</li>
 </ul>
 
-<h3>ToByteChecked</h3>
-
-<pre>public byte ToByteChecked()
-</pre>
+<h3><a id='ToByteChecked()'>ToByteChecked</a></h3>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
@@ -2808,10 +2473,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than 0 or greater than 255.</li>
 </ul>
 
-<h3>ToByteUnchecked</h3>
-
-<pre>public byte ToByteUnchecked()
-</pre>
+<h3><a id='ToByteUnchecked()'>ToByteUnchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer (using ToEInteger), and returns
  the least-significant bits of that integer&#39;s two&#39;s-complement form
@@ -2824,10 +2486,7 @@ part, is less than 0 or greater than 255.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToByteIfExact</h3>
-
-<pre>public byte ToByteIfExact()
-</pre>
+<h3><a id='ToByteIfExact()'>ToByteIfExact</a></h3>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) without rounding to a different numerical
@@ -2846,10 +2505,7 @@ value is infinity or not-a-number.</li>
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
-<h3>FromByte</h3>
-
-<pre>public static ERational FromByte​(byte inputByte)
-</pre>
+<h3><a id='FromByte(byte)'>FromByte</a></h3>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision rational number.</p>
 
@@ -2865,10 +2521,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <li>This number&#39;s value as an arbitrary-precision rational number.</li>
 </ul>
 
-<h3>ToInt16Checked</h3>
-
-<pre>public short ToInt16Checked()
-</pre>
+<h3><a id='ToInt16Checked()'>ToInt16Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
@@ -2888,10 +2541,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than -32768 or greater than 32767.</li>
 </ul>
 
-<h3>ToInt16Unchecked</h3>
-
-<pre>public short ToInt16Unchecked()
-</pre>
+<h3><a id='ToInt16Unchecked()'>ToInt16Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -2904,10 +2554,7 @@ part, is less than -32768 or greater than 32767.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt16IfExact</h3>
-
-<pre>public short ToInt16IfExact()
-</pre>
+<h3><a id='ToInt16IfExact()'>ToInt16IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer without rounding to a different numerical
@@ -2926,10 +2573,7 @@ value is infinity or not-a-number.</li>
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
-<h3>FromInt16</h3>
-
-<pre>public static ERational FromInt16​(short inputInt16)
-</pre>
+<h3><a id='FromInt16(short)'>FromInt16</a></h3>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision rational number.</p>
 
@@ -2945,10 +2589,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <li>This number&#39;s value as an arbitrary-precision rational number.</li>
 </ul>
 
-<h3>ToInt32Checked</h3>
-
-<pre>public int ToInt32Checked()
-</pre>
+<h3><a id='ToInt32Checked()'>ToInt32Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer after converting it to an integer by
@@ -2968,10 +2609,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
-<h3>ToInt32Unchecked</h3>
-
-<pre>public int ToInt32Unchecked()
-</pre>
+<h3><a id='ToInt32Unchecked()'>ToInt32Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -2984,10 +2622,7 @@ part, is less than -2147483648 or greater than 2147483647.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt32IfExact</h3>
-
-<pre>public int ToInt32IfExact()
-</pre>
+<h3><a id='ToInt32IfExact()'>ToInt32IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer without rounding to a different numerical
@@ -3007,10 +2642,7 @@ an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
 
-<h3>FromBoolean</h3>
-
-<pre>public static ERational FromBoolean​(boolean boolValue)
-</pre>
+<h3><a id='FromBoolean(boolean)'>FromBoolean</a></h3>
 
 <p>Converts a boolean value (true or false) to an arbitrary-precision rational
  number.</p>
@@ -3027,10 +2659,7 @@ an exact integer, or is less than -2147483648 or greater than
 <li>The number 1 if <code>boolValue</code> is true; otherwise, 0.</li>
 </ul>
 
-<h3>FromInt32</h3>
-
-<pre>public static ERational FromInt32​(int inputInt32)
-</pre>
+<h3><a id='FromInt32(int)'>FromInt32</a></h3>
 
 <p>Converts a 32-bit signed integer to an arbitrary-precision rational number.</p>
 
@@ -3046,10 +2675,7 @@ an exact integer, or is less than -2147483648 or greater than
 <li>This number&#39;s value as an arbitrary-precision rational number.</li>
 </ul>
 
-<h3>ToInt64Checked</h3>
-
-<pre>public long ToInt64Checked()
-</pre>
+<h3><a id='ToInt64Checked()'>ToInt64Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer after converting it to an integer by
@@ -3070,10 +2696,7 @@ part, is less than -9223372036854775808 or greater than
 9223372036854775807.</li>
 </ul>
 
-<h3>ToInt64Unchecked</h3>
-
-<pre>public long ToInt64Unchecked()
-</pre>
+<h3><a id='ToInt64Unchecked()'>ToInt64Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -3086,10 +2709,7 @@ part, is less than -9223372036854775808 or greater than
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt64IfExact</h3>
-
-<pre>public long ToInt64IfExact()
-</pre>
+<h3><a id='ToInt64IfExact()'>ToInt64IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer without rounding to a different numerical
@@ -3109,10 +2729,7 @@ an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
 
-<h3>FromInt64AsUnsigned</h3>
-
-<pre>public static ERational FromInt64AsUnsigned​(long longerValue)
-</pre>
+<h3><a id='FromInt64AsUnsigned(long)'>FromInt64AsUnsigned</a></h3>
 
 <p>Converts an unsigned integer expressed as a 64-bit signed integer to an
  arbitrary-precision rational number.</p>
@@ -3134,10 +2751,7 @@ longerValue</code> is less than 0, the return value will store 2^64 plus
 this value instead.</li>
 </ul>
 
-<h3>FromInt64</h3>
-
-<pre>public static ERational FromInt64​(long inputInt64)
-</pre>
+<h3><a id='FromInt64(long)'>FromInt64</a></h3>
 
 <p>Converts a 64-bit signed integer to an arbitrary-precision rational number.</p>
 

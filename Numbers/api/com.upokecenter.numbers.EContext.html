@@ -5,25 +5,6 @@
 
 <h1>com.upokecenter.numbers.EContext</h1>
 
-<pre>public final class EContext extends java.lang.Object
-</pre>
-
-<p>Contains parameters for controlling the precision, rounding, and exponent
-  range of arbitrary-precision numbers. (The &quot;E&quot; stands for &quot;extended&quot;,
- and has this prefix to group it with the other classes common to this
- library, particularly EDecimal, EFloat, and ERational.). <p><b>Thread
- safety:</b> With one exception, instances of this class are immutable
- and are safe to use among multiple threads. The one exception involves
- the <code>Flags</code> property. If the context&#39;s <code>HasFlags</code> property
- (a read-only property) is <code>true</code>, the <code>Flags</code> property is
- mutable, thus making the context mutable. This class doesn&#39;t
- synchronize access to such mutable contexts, so applications should
- provide their own synchronization if a context with the
- <code>HasFlags</code> property set to <code>true</code> will be shared among
- multiple threads and at least one of those threads needs to write the
- <code>Flags</code> property (which can happen, for example, by passing the
- context to most methods of <code>EDecimal</code> such as <code>Add</code>).</p></p>
-
 <h2>Fields</h2>
 
 <ul>
@@ -88,17 +69,17 @@ No specific (theoretical) limit on precision.</li>
 
 <ul>
 <li><code>EContext​(int precision,
-    ERounding rounding,
-    int exponentMinSmall,
-    int exponentMaxSmall,
-    boolean clampNormalExponents) EContext</code><br>
+ERounding rounding,
+int exponentMinSmall,
+int exponentMaxSmall,
+boolean clampNormalExponents) EContext</code><br>
 Initializes a new instance of the EContext
 class.</li>
 <li><code>EContext​(EInteger bigintPrecision,
-    ERounding rounding,
-    EInteger exponentMin,
-    EInteger exponentMax,
-    boolean clampNormalExponents) EContext</code><br>
+ERounding rounding,
+EInteger exponentMin,
+EInteger exponentMax,
+boolean clampNormalExponents) EContext</code><br>
 Initializes a new instance of the EContext
 class, .</li>
 </ul>
@@ -115,7 +96,7 @@ arithmetic context.</li>
 Creates a new arithmetic context using the given maximum number of digits,
 an unlimited exponent range, and the HalfUp rounding mode.</li>
 <li><code>static EContext ForPrecisionAndRounding​(int precision,
-                   ERounding rounding)</code><br>
+ERounding rounding)</code><br>
 Creates a new EContext object initialized with an unlimited exponent range,
 and the given rounding mode and maximum precision.</li>
 <li><code>static EContext ForRounding​(ERounding rounding)</code><br>
@@ -168,7 +149,7 @@ Gets a value indicating whether to use a &quot;simplified&quot; arithmetic.</li>
 <li><code>java.lang.String toString()</code><br>
 Returns this object in a text form intended to be read by humans.</li>
 <li><code>&lt;T&gt; T TriggerTraps​(T result,
-        EContext trappableContext)</code><br>
+EContext trappableContext)</code><br>
 Throws trap exceptions if the given context has flags set that also have
 traps enabled for them in this context, and adds the given context&#39;s
 flags to this context if HasFlags for this context is true.</li>
@@ -176,7 +157,7 @@ flags to this context if HasFlags for this context is true.</li>
 Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the
 given value.</li>
 <li><code>EContext WithBigExponentRange​(EInteger exponentMin,
-                EInteger exponentMax)</code><br>
+EInteger exponentMax)</code><br>
 Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code>EContext WithBigPrecision​(EInteger bigintPrecision)</code><br>
 Copies this EContext and gives it a particular precision value.</li>
@@ -187,7 +168,7 @@ Copies this EContext with HasFlags set to true and a Flags value of
 Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot;
 flag to the given value.</li>
 <li><code>EContext WithExponentRange​(int exponentMinSmall,
-             int exponentMaxSmall)</code><br>
+int exponentMaxSmall)</code><br>
 Copies this arithmetic context and sets the copy&#39;s exponent range.</li>
 <li><code>EContext WithNoFlags() HasFlags</code><br>
 Copies this EContext with HasFlags set to false and a Flags value of
@@ -213,128 +194,80 @@ Copies this EContext with an unlimited exponent range.</li>
 
 <h2>Field Details</h2>
 
-<h3>FlagClamped</h3>
-
-<pre>public static final int FlagClamped
-</pre>
+<h3><a id='FlagClamped'>FlagClamped</a></h3>
 
 <p>Signals that the exponent was adjusted to fit the exponent range.</p>
 
-<h3>FlagDivideByZero</h3>
-
-<pre>public static final int FlagDivideByZero
-</pre>
+<h3><a id='FlagDivideByZero'>FlagDivideByZero</a></h3>
 
 <p>Signals a division of a nonzero number by zero.</p>
 
-<h3>FlagInexact</h3>
-
-<pre>public static final int FlagInexact
-</pre>
+<h3><a id='FlagInexact'>FlagInexact</a></h3>
 
 <p>Signals that the result was rounded to a different mathematical value, but
  as close as possible to the original.</p>
 
-<h3>FlagInvalid</h3>
-
-<pre>public static final int FlagInvalid
-</pre>
+<h3><a id='FlagInvalid'>FlagInvalid</a></h3>
 
 <p>Signals an invalid operation.</p>
 
-<h3>FlagLostDigits</h3>
-
-<pre>public static final int FlagLostDigits
-</pre>
+<h3><a id='FlagLostDigits'>FlagLostDigits</a></h3>
 
 <p>Signals that an operand was rounded to a different mathematical value before
  an operation.</p>
 
-<h3>FlagOverflow</h3>
-
-<pre>public static final int FlagOverflow
-</pre>
+<h3><a id='FlagOverflow'>FlagOverflow</a></h3>
 
 <p>Signals that the result is non-zero and the exponent is higher than the
  highest exponent allowed.</p>
 
-<h3>FlagRounded</h3>
-
-<pre>public static final int FlagRounded
-</pre>
+<h3><a id='FlagRounded'>FlagRounded</a></h3>
 
 <p>Signals that the result was rounded to fit the precision; either the value
  or the exponent may have changed from the original.</p>
 
-<h3>FlagSubnormal</h3>
-
-<pre>public static final int FlagSubnormal
-</pre>
+<h3><a id='FlagSubnormal'>FlagSubnormal</a></h3>
 
 <p>Signals that the result&#39;s exponent, before rounding, is lower than the
  lowest exponent allowed.</p>
 
-<h3>FlagUnderflow</h3>
-
-<pre>public static final int FlagUnderflow
-</pre>
+<h3><a id='FlagUnderflow'>FlagUnderflow</a></h3>
 
 <p>Signals that the result&#39;s exponent, before rounding, is lower than the
  lowest exponent allowed, and the result was rounded to a different
  mathematical value, but as close as possible to the original.</p>
 
-<h3>Basic</h3>
-
-<pre>public static final EContext Basic
-</pre>
+<h3><a id='Basic'>Basic</a></h3>
 
 <p>A basic arithmetic context, 9 digits precision, rounding mode half-up,
  unlimited exponent range. The default rounding mode is HalfUp.</p>
 
-<h3>BigDecimalJava</h3>
-
-<pre>public static final EContext BigDecimalJava
-</pre>
+<h3><a id='BigDecimalJava'>BigDecimalJava</a></h3>
 
 <p>An arithmetic context for Java&#39;s BigDecimal format. The default rounding
  mode is HalfUp.</p>
 
-<h3>Binary128</h3>
-
-<pre>public static final EContext Binary128
-</pre>
+<h3><a id='Binary128'>Binary128</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 binary128 format, 113 bits
  precision. The default rounding mode is HalfEven.</p>
 
-<h3>Binary16</h3>
-
-<pre>public static final EContext Binary16
-</pre>
+<h3><a id='Binary16'>Binary16</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 binary16 format, 11 bits
  precision. The default rounding mode is HalfEven.</p>
 
-<h3>Binary32</h3>
-
-<pre>public static final EContext Binary32
-</pre>
+<h3><a id='Binary32'>Binary32</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 binary32 format, 24 bits
  precision. The default rounding mode is HalfEven.</p>
 
-<h3>Binary64</h3>
-
-<pre>public static final EContext Binary64
-</pre>
+<h3><a id='Binary64'>Binary64</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 binary64 format, 53 bits
  precision. The default rounding mode is HalfEven.</p>
 
-<h3>CliDecimal</h3>
-
-<pre>public static final EContext CliDecimal
-</pre>
+<h3><a id='CliDecimal'>CliDecimal</a></h3>
 
 <p>An arithmetic context for the.NET Framework decimal format (see <code>&quot;Forms of numbers&quot;</code>), 96 bits
  precision, and a valid exponent range of -28 to 0. The default
@@ -343,50 +276,32 @@ Copies this EContext with an unlimited exponent range.</li>
  Framework decimal format in version 1, but leaves it unspecified in
  later versions.).</p>
 
-<h3>Decimal128</h3>
-
-<pre>public static final EContext Decimal128
-</pre>
+<h3><a id='Decimal128'>Decimal128</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 decimal128 format. The default
  rounding mode is HalfEven.</p>
 
-<h3>Decimal32</h3>
-
-<pre>public static final EContext Decimal32
-</pre>
+<h3><a id='Decimal32'>Decimal32</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 decimal32 format. The default
  rounding mode is HalfEven.</p>
 
-<h3>Decimal64</h3>
-
-<pre>public static final EContext Decimal64
-</pre>
+<h3><a id='Decimal64'>Decimal64</a></h3>
 
 <p>An arithmetic context for the IEEE-754-2008 decimal64 format. The default
  rounding mode is HalfEven.</p>
 
-<h3>Unlimited</h3>
-
-<pre>public static final EContext Unlimited
-</pre>
+<h3><a id='Unlimited'>Unlimited</a></h3>
 
 <p>No specific (theoretical) limit on precision. Rounding mode HalfUp.</p>
 
-<h3>UnlimitedHalfEven</h3>
-
-<pre>public static final EContext UnlimitedHalfEven
-</pre>
+<h3><a id='UnlimitedHalfEven'>UnlimitedHalfEven</a></h3>
 
 <p>No specific (theoretical) limit on precision. Rounding mode HalfEven.</p>
 
 <h2>Method Details</h2>
 
-<h3>getAdjustExponent</h3>
-
-<pre>public final boolean getAdjustExponent()
-</pre>
+<h3><a id='getAdjustExponent()'>getAdjustExponent</a></h3>
 
 <p>Gets a value indicating whether the EMax and EMin properties refer to the
  number&#39;s Exponent property adjusted to the number&#39;s precision, or
@@ -404,10 +319,7 @@ Exponent property adjusted to the number&#39;s precision, or false if
 they refer to just the number&#39;s Exponent property.</li>
 </ul>
 
-<h3>getClampNormalExponents</h3>
-
-<pre>public final boolean getClampNormalExponents()
-</pre>
+<h3><a id='getClampNormalExponents()'>getClampNormalExponents</a></h3>
 
 <p>Gets a value indicating whether a converted number&#39;s Exponent property will
  not be higher than EMax + 1 - Precision. If a number&#39;s exponent is
@@ -423,10 +335,7 @@ they refer to just the number&#39;s Exponent property.</li>
 than EMax + 1 - Precision.</li>
 </ul>
 
-<h3>getEMax</h3>
-
-<pre>public final EInteger getEMax()
-</pre>
+<h3><a id='getEMax()'>getEMax</a></h3>
 
 <p>Gets the highest exponent possible when a converted number is expressed in
  scientific notation with one nonzero digit before the radix point.
@@ -446,10 +355,7 @@ highest possible Exponent property.) If HasExponentRange is false,
 this value will be 0.</li>
 </ul>
 
-<h3>getEMin</h3>
-
-<pre>public final EInteger getEMin()
-</pre>
+<h3><a id='getEMin()'>getEMin</a></h3>
 
 <p>Gets the lowest exponent possible when a converted number is expressed in
  scientific notation with one nonzero digit before the radix point.
@@ -469,10 +375,7 @@ this property specifies the lowest possible Exponent property
 instead.) If HasExponentRange is false, this value will be 0.</li>
 </ul>
 
-<h3>getFlags</h3>
-
-<pre>public final int getFlags()
-</pre>
+<h3><a id='getFlags()'>getFlags</a></h3>
 
 <p>Gets the flags that are set from converting numbers according to this
  arithmetic context. If <code>HasFlags</code> is false, this value will be</p>
@@ -498,15 +401,9 @@ method. For example: <code>(this.getFlags() &amp;EContext.FlagInexact)
 </ol></li>
 </ul>
 
-<h3>setFlags</h3>
+<h3><a id='setFlags(int)'>setFlags</a></h3>
 
-<pre>public final void setFlags​(int value)
-</pre>
-
-<h3>getHasExponentRange</h3>
-
-<pre>public final boolean getHasExponentRange()
-</pre>
+<h3><a id='getHasExponentRange()'>getHasExponentRange</a></h3>
 
 <p>Gets a value indicating whether this context defines a minimum and maximum
  exponent. If false, converted exponents can have any exponent and
@@ -522,10 +419,7 @@ any exponent and operations can&#39;t cause overflow or underflow.
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>getHasFlags</h3>
-
-<pre>public final boolean getHasFlags()
-</pre>
+<h3><a id='getHasFlags()'>getHasFlags</a></h3>
 
 <p>Gets a value indicating whether this context has a mutable Flags field.</p>
 
@@ -536,10 +430,7 @@ otherwise, <code>false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>getHasMaxPrecision</h3>
-
-<pre>public final boolean getHasMaxPrecision()
-</pre>
+<h3><a id='getHasMaxPrecision()'>getHasMaxPrecision</a></h3>
 
 <p>Gets a value indicating whether this context defines a maximum precision.
  This is the same as whether this context&#39;s Precision property is
@@ -552,10 +443,7 @@ otherwise, <code>false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>isPrecisionInBits</h3>
-
-<pre>public final boolean isPrecisionInBits()
-</pre>
+<h3><a id='isPrecisionInBits()'>isPrecisionInBits</a></h3>
 
 <p>Gets a value indicating whether this context&#39;s Precision property is in
  bits, rather than digits. The default is false.</p>
@@ -569,10 +457,7 @@ true</code> if this context&#39;s Precision property is in bits, rather than
 digits; otherwise, <code>false</code>. The default is false.</li>
 </ul>
 
-<h3>isSimplified</h3>
-
-<pre>public final boolean isSimplified()
-</pre>
+<h3><a id='isSimplified()'>isSimplified</a></h3>
 
 <p>Gets a value indicating whether to use a &quot;simplified&quot; arithmetic. In the
  simplified arithmetic, infinity, not-a-number, and subnormal numbers
@@ -580,10 +465,7 @@ digits; otherwise, <code>false</code>. The default is false.</li>
  zero. For further details, see <code><a href="http://speleotrove.com/decimal/dax3274.html">http://speleotrove.com/decimal/dax3274.html</a></code>
 .</p>
 
-<h3>getPrecision</h3>
-
-<pre>public final EInteger getPrecision()
-</pre>
+<h3><a id='getPrecision()'>getPrecision</a></h3>
 
 <p>Gets the maximum length of a converted number in digits, ignoring the radix
  point and exponent. For example, if precision is 3, a converted
@@ -604,10 +486,7 @@ converted number&#39;s significand can range from 0 to 999 (up to three
 digits long). If 0, converted numbers can have any precision.</li>
 </ul>
 
-<h3>getRounding</h3>
-
-<pre>public final ERounding getRounding()
-</pre>
+<h3><a id='getRounding()'>getRounding</a></h3>
 
 <p>Gets the desired rounding mode when converting numbers that can&#39;t be
  represented in the given precision and exponent range.</p>
@@ -619,10 +498,7 @@ digits long). If 0, converted numbers can have any precision.</li>
 represented in the given precision and exponent range.</li>
 </ul>
 
-<h3>getTraps</h3>
-
-<pre>public final int getTraps()
-</pre>
+<h3><a id='getTraps()'>getTraps</a></h3>
 
 <p>Gets the traps that are set for each flag in the context. Whenever a flag is
  signaled, even if <code>HasFlags</code> is false, and the flag&#39;s trap is
@@ -641,10 +517,7 @@ is enabled, the operation will throw a TrapException. For example,
 if Traps equals.</li>
 </ul>
 
-<h3>ForPrecision</h3>
-
-<pre>public static EContext ForPrecision​(int precision)
-</pre>
+<h3><a id='ForPrecision(int)'>ForPrecision</a></h3>
 
 <p>Creates a new arithmetic context using the given maximum number of digits,
  an unlimited exponent range, and the HalfUp rounding mode.</p>
@@ -661,10 +534,7 @@ if Traps equals.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>ForPrecisionAndRounding</h3>
-
-<pre>public static EContext ForPrecisionAndRounding​(int precision, ERounding rounding)
-</pre>
+<h3><a id='ForPrecisionAndRounding(int,com.upokecenter.numbers.ERounding)'>ForPrecisionAndRounding</a></h3>
 
 <p>Creates a new EContext object initialized with an unlimited exponent range,
  and the given rounding mode and maximum precision.</p>
@@ -682,10 +552,7 @@ if Traps equals.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>ForRounding</h3>
-
-<pre>public static EContext ForRounding​(ERounding rounding)
-</pre>
+<h3><a id='ForRounding(com.upokecenter.numbers.ERounding)'>ForRounding</a></h3>
 
 <p>Creates a new EContext object initialized with an unlimited precision, an
  unlimited exponent range, and the given rounding mode.</p>
@@ -702,10 +569,7 @@ if Traps equals.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>Copy</h3>
-
-<pre>public EContext Copy()
-</pre>
+<h3><a id='Copy()'>Copy</a></h3>
 
 <p>Initializes a new EContext that is a copy of another EContext.</p>
 
@@ -715,10 +579,7 @@ if Traps equals.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>ExponentWithinRange</h3>
-
-<pre>public boolean ExponentWithinRange​(EInteger exponent)
-</pre>
+<h3><a id='ExponentWithinRange(com.upokecenter.numbers.EInteger)'>ExponentWithinRange</a></h3>
 
 <p>Determines whether a number can have the given Exponent property under this
  arithmetic context.</p>
@@ -745,10 +606,7 @@ any exponent less than EMax.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>exponent</code> is null.</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Returns this object in a text form intended to be read by humans. The value
  returned by this method is not intended to be parsed by computer
@@ -767,10 +625,7 @@ any exponent less than EMax.</li>
 <li>A string representation of this object.</li>
 </ul>
 
-<h3>getHasFlagsOrTraps</h3>
-
-<pre>public final boolean getHasFlagsOrTraps()
-</pre>
+<h3><a id='getHasFlagsOrTraps()'>getHasFlagsOrTraps</a></h3>
 
 <p>Gets a value indicating whether this context has a mutable Flags field, one
  or more trap enablers, or both.</p>
@@ -782,10 +637,7 @@ any exponent less than EMax.</li>
 trap enablers, or both; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>WithAdjustExponent</h3>
-
-<pre>public EContext WithAdjustExponent​(boolean adjustExponent)
-</pre>
+<h3><a id='WithAdjustExponent(boolean)'>WithAdjustExponent</a></h3>
 
 <p>Copies this EContext and sets the copy&#39;s &quot;AdjustExponent&quot; property to the
  given value.</p>
@@ -803,10 +655,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithBigExponentRange</h3>
-
-<pre>public EContext WithBigExponentRange​(EInteger exponentMin, EInteger exponentMax)
-</pre>
+<h3><a id='WithBigExponentRange(com.upokecenter.numbers.EInteger,com.upokecenter.numbers.EInteger)'>WithBigExponentRange</a></h3>
 
 <p>Copies this arithmetic context and sets the copy&#39;s exponent range.</p>
 
@@ -830,10 +679,7 @@ copy.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - ExponentMin greater than exponentMax&quot;.</p></li>
 </ul>
 
-<h3>WithNoFlagsOrTraps</h3>
-
-<pre>public EContext WithNoFlagsOrTraps()
-</pre>
+<h3><a id='WithNoFlagsOrTraps()'>WithNoFlagsOrTraps</a></h3>
 
 <p>Copies this EContext with <code>HasFlags</code> set to false, a Traps value of 0,
  and a Flags value of 0.</p>
@@ -844,10 +690,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithBigPrecision</h3>
-
-<pre>public EContext WithBigPrecision​(EInteger bigintPrecision)
-</pre>
+<h3><a id='WithBigPrecision(com.upokecenter.numbers.EInteger)'>WithBigPrecision</a></h3>
 
 <p>Copies this EContext and gives it a particular precision value.</p>
 
@@ -869,10 +712,7 @@ copy.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>bigintPrecision</code> is null.</li>
 </ul>
 
-<h3>WithBlankFlags</h3>
-
-<pre>public EContext WithBlankFlags()
-</pre>
+<h3><a id='WithBlankFlags()'>WithBlankFlags</a></h3>
 
 <p>Copies this EContext with <code>HasFlags</code> set to true and a Flags value of
  0.</p>
@@ -883,10 +723,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithExponentClamp</h3>
-
-<pre>public EContext WithExponentClamp​(boolean clamp)
-</pre>
+<h3><a id='WithExponentClamp(boolean)'>WithExponentClamp</a></h3>
 
 <p>Copies this arithmetic context and sets the copy&#39;s &quot;ClampNormalExponents&quot;
  flag to the given value.</p>
@@ -903,10 +740,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithExponentRange</h3>
-
-<pre>public EContext WithExponentRange​(int exponentMinSmall, int exponentMaxSmall)
-</pre>
+<h3><a id='WithExponentRange(int,int)'>WithExponentRange</a></h3>
 
 <p>Copies this arithmetic context and sets the copy&#39;s exponent range.</p>
 
@@ -923,10 +757,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithNoFlags</h3>
-
-<pre>public EContext WithNoFlags()
-</pre>
+<h3><a id='WithNoFlags()'>WithNoFlags</a></h3>
 
 <p>Copies this EContext with <code>HasFlags</code> set to false and a Flags value of
  0.</p>
@@ -937,10 +768,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithPrecision</h3>
-
-<pre>public EContext WithPrecision​(int precision)
-</pre>
+<h3><a id='WithPrecision(int)'>WithPrecision</a></h3>
 
 <p>Copies this EContext and gives it a particular precision value.</p>
 
@@ -956,10 +784,7 @@ copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithPrecisionInBits</h3>
-
-<pre>public EContext WithPrecisionInBits​(boolean isPrecisionBits)
-</pre>
+<h3><a id='WithPrecisionInBits(boolean)'>WithPrecisionInBits</a></h3>
 
 <p>Copies this EContext and sets the copy&#39;s &quot;IsPrecisionInBits&quot; property to the
  given value.</p>
@@ -977,10 +802,7 @@ the copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithRounding</h3>
-
-<pre>public EContext WithRounding​(ERounding rounding)
-</pre>
+<h3><a id='WithRounding(com.upokecenter.numbers.ERounding)'>WithRounding</a></h3>
 
 <p>Copies this EContext with the specified rounding mode.</p>
 
@@ -996,10 +818,7 @@ the copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithSimplified</h3>
-
-<pre>public EContext WithSimplified​(boolean simplified)
-</pre>
+<h3><a id='WithSimplified(boolean)'>WithSimplified</a></h3>
 
 <p>Copies this EContext and sets the copy&#39;s &quot;IsSimplified&quot; property to the
  given value.</p>
@@ -1016,10 +835,7 @@ the copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithTraps</h3>
-
-<pre>public EContext WithTraps​(int traps)
-</pre>
+<h3><a id='WithTraps(int)'>WithTraps</a></h3>
 
 <p>Copies this EContext with Traps set to the given value. (Also sets HasFlags
  on the copy to <code>True</code>, but this may change in version 2.0 of
@@ -1038,10 +854,7 @@ the copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>WithUnlimitedExponents</h3>
-
-<pre>public EContext WithUnlimitedExponents()
-</pre>
+<h3><a id='WithUnlimitedExponents()'>WithUnlimitedExponents</a></h3>
 
 <p>Copies this EContext with an unlimited exponent range.</p>
 
@@ -1051,10 +864,7 @@ the copy.</li>
 <li>A context object for arbitrary-precision arithmetic settings.</li>
 </ul>
 
-<h3>GetNontrapping</h3>
-
-<pre>public EContext GetNontrapping()
-</pre>
+<h3><a id='GetNontrapping()'>GetNontrapping</a></h3>
 
 <p>Returns this context if it doesn&#39;t set traps, or a context without traps and
  with blank flags if it does, so that the resulting context does not
@@ -1069,10 +879,11 @@ the copy.</li>
 with blank flags if it does.</li>
 </ul>
 
-<h3>TriggerTraps</h3>
+<h3><a id='TriggerTraps(java.lang.Object,com.upokecenter.numbers.EContext)'></h3>
 
-<pre>public &lt;T&gt; T TriggerTraps​(T result, EContext trappableContext)
-</pre>
+<!--   -->
+
+<p></a><a id='TriggerTraps(T,com.upokecenter.numbers.EContext)'>TriggerTraps</a></p>
 
 <p>Throws trap exceptions if the given context has flags set that also have
  traps enabled for them in this context, and adds the given context&#39;s

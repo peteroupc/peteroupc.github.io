@@ -5,15 +5,7 @@
 
 <h1>com.upokecenter.numbers.ERounding</h1>
 
-<pre>public enum ERounding extends java.lang.Enum&lt;ERounding&gt;
-</pre>
-
-<p>Specifies the mode to use when &quot;shortening&quot; numbers that otherwise can&#39;t fit
- a given number of digits, so that the shortened number has about the
-  same value. This &quot;shortening&quot; is known as rounding. (The &quot;E&quot; stands
-  for &quot;extended&quot;, and has this prefix to group it with the other classes
- common to this library, particularly EDecimal, EFloat, and
- ERational.).</p>
+<h2>Nested Classes</h2>
 
 <h2>Enum Constants</h2>
 
@@ -63,166 +55,74 @@ Returns an array containing the constants of this enum type, in
 the order they are declared.</li>
 </ul>
 
-<h2>Method Details</h2>
-
-<h3>None</h3>
-
-<pre>public static final ERounding None
-</pre>
-
-<h3>Up</h3>
-
-<pre>public static final ERounding Up
-</pre>
-
-<h3>Down</h3>
-
-<pre>public static final ERounding Down
-</pre>
-
-<h3>HalfUp</h3>
-
-<pre>public static final ERounding HalfUp
-</pre>
-
-<h3>HalfDown</h3>
-
-<pre>public static final ERounding HalfDown
-</pre>
-
-<h3>HalfEven</h3>
-
-<pre>public static final ERounding HalfEven
-</pre>
-
-<h3>Ceiling</h3>
-
-<pre>public static final ERounding Ceiling
-</pre>
-
-<h3>Floor</h3>
-
-<pre>public static final ERounding Floor
-</pre>
-
-<h3>Odd</h3>
-
-<pre>@Deprecated public static final ERounding Odd
-</pre>
-
-<h3>ZeroFiveUp</h3>
-
-<pre>@Deprecated public static final ERounding ZeroFiveUp
-</pre>
-
-<h3>OddOrZeroFiveUp</h3>
-
-<pre>public static final ERounding OddOrZeroFiveUp
-</pre>
-
-<h3>values</h3>
-
-<pre>public static ERounding[] values()
-</pre>
-
-<h3>valueOf</h3>
-
-<pre>public static ERounding valueOf​(java.lang.String name)
-</pre>
-
 <h2>Enum Constant Details</h2>
 
-<h3>None</h3>
-
-<pre>public static final ERounding None
-</pre>
+<h3><a id='None'>None</a></h3>
 
 <p>Indicates that rounding will not be used. If rounding to an inexact value is
  required, the rounding operation will report an error.</p>
 
-<h3>Up</h3>
-
-<pre>public static final ERounding Up
-</pre>
+<h3><a id='Up'>Up</a></h3>
 
 <p>If there is a fractional part, the number is rounded to the closest
  representable number away from zero.</p>
 
-<h3>Down</h3>
-
-<pre>public static final ERounding Down
-</pre>
+<h3><a id='Down'>Down</a></h3>
 
 <p>The fractional part is discarded (the number is truncated).</p>
 
-<h3>HalfUp</h3>
-
-<pre>public static final ERounding HalfUp
-</pre>
+<h3><a id='HalfUp'>HalfUp</a></h3>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number away from
  zero. This is the most familiar rounding mode for many people.</p>
 
-<h3>HalfDown</h3>
-
-<pre>public static final ERounding HalfDown
-</pre>
+<h3><a id='HalfDown'>HalfDown</a></h3>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, it is
  discarded.</p>
 
-<h3>HalfEven</h3>
-
-<pre>public static final ERounding HalfEven
-</pre>
+<h3><a id='HalfEven'>HalfEven</a></h3>
 
 <p>Rounded to the nearest number; if the fractional part is exactly half, the
  number is rounded to the closest representable number that is even.
   This is sometimes also known as &quot;banker&#39;s rounding&quot;.</p>
 
-<h3>Ceiling</h3>
-
-<pre>public static final ERounding Ceiling
-</pre>
+<h3><a id='Ceiling'>Ceiling</a></h3>
 
 <p>If there is a fractional part, the number is rounded to the highest
  representable number that&#39;s closest to it.</p>
 
-<h3>Floor</h3>
-
-<pre>public static final ERounding Floor
-</pre>
+<h3><a id='Floor'>Floor</a></h3>
 
 <p>If there is a fractional part, the number is rounded to the lowest
  representable number that&#39;s closest to it.</p>
 
-<h3>Odd</h3>
+<h3><a id='Odd'>Odd</a></h3>
 
-<pre>@Deprecated public static final ERounding Odd
-</pre>
+<p>If there is a fractional part and the whole number part is even, the number
+ is rounded to the closest representable odd number away from zero.</p>
 
-<p>Deprecated.
-Consider using ERounding.OddOrZeroFiveUp instead.</p>
+<h3><a id='ZeroFiveUp'>ZeroFiveUp</a></h3>
 
-<h3>ZeroFiveUp</h3>
+<p>If there is a fractional part and if the last digit before rounding is 0 or
+ half the radix, the number is rounded to the closest representable
+ number away from zero; otherwise the fractional part is discarded.
+ In overflow, the fractional part is always discarded.</p>
 
-<pre>@Deprecated public static final ERounding ZeroFiveUp
-</pre>
-
-<p>Deprecated.
-Use ERounding.OddOrZeroFiveUp instead.</p>
-
-<h3>OddOrZeroFiveUp</h3>
-
-<pre>public static final ERounding OddOrZeroFiveUp
-</pre>
+<h3><a id='OddOrZeroFiveUp'>OddOrZeroFiveUp</a></h3>
 
 <p>For binary floating point numbers, this is the same as Odd. For other bases
  (including decimal numbers), this is the same as ZeroFiveUp. This
  rounding mode is useful for rounding intermediate results at a
  slightly higher precision (at least 2 bits more for binary) than the
  final precision.</p>
+
+<h2>Method Details</h2>
+
+<h3><a id='values()'>values</a></h3>
+
+<h3><a id='valueOf(java.lang.String)'>valueOf</a></h3>
 
 <p><a href="/Numbers/">Back to Numbers start page.</a></p>
 </div><nav id="navigation"><ul>

@@ -5,27 +5,19 @@
 
 <h1>com.upokecenter.cbor.JSONOptions</h1>
 
-<pre>public final class JSONOptions extends java.lang.Object
-</pre>
-
-<p>Includes options to control how CBOR objects are converted to JSON.</p>
-
-<h2>Fields</h2>
-
-<ul>
-<li><code>static class  JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
-Specifies how JSON numbers are converted to CBOR objects when decoding JSON
-(such as via FromJSONString or ReadJSON).</li>
-<li><code>static JSONOptions Default</code><br>
-The default options for converting CBOR objects to JSON.</li>
-</ul>
-
 <h2>Nested Classes</h2>
 
 <ul>
 <li><code>static class  JSONOptions.ConversionMode FromJSONString ReadJSON</code><br>
 Specifies how JSON numbers are converted to CBOR objects when decoding JSON
 (such as via FromJSONString or ReadJSON).</li>
+</ul>
+
+<h2>Fields</h2>
+
+<ul>
+<li><code>static JSONOptions Default</code><br>
+The default options for converting CBOR objects to JSON.</li>
 </ul>
 
 <h2>Constructors</h2>
@@ -39,7 +31,7 @@ Deprecated.
 Use the more readable String constructor instead.
 Use the more readable String constructor instead.</li>
 <li><code>JSONOptions​(boolean base64Padding,
-       boolean replaceSurrogates)</code><br>
+boolean replaceSurrogates)</code><br>
 Deprecated.</li>
 <li><code>JSONOptions​(java.lang.String paramString) JSONOptions</code><br>
 Initializes a new instance of the JSONOptions
@@ -73,19 +65,13 @@ Gets the values of this options object&#39;s properties in text form.</li>
 
 <h2>Field Details</h2>
 
-<h3>Default</h3>
-
-<pre>public static final JSONOptions Default
-</pre>
+<h3><a id='Default'>Default</a></h3>
 
 <p>The default options for converting CBOR objects to JSON.</p>
 
 <h2>Method Details</h2>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Gets the values of this options object&#39;s properties in text form.</p>
 
@@ -103,16 +89,12 @@ properties. The format of the string is the same as the one
 described in the string constructor for this class.</li>
 </ul>
 
-<h3>getBase64Padding</h3>
+<h3><a id='getBase64Padding()'>getBase64Padding</a></h3>
 
-<pre>@Deprecated public final boolean getBase64Padding()
-</pre>
-
-<p>Deprecated.
-This property now has no effect. This library now includes  necessary
- padding when writing traditional base64 to JSON and includes no
- padding when writing base64url to JSON, in  accordance with the
- revision of the CBOR specification.</p>
+<p>Gets a value indicating whether the Base64Padding property is true. This
+ property has no effect; in previous versions, this property meant
+ that padding was written out when writing base64url or traditional
+ base64 to JSON.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -120,10 +102,7 @@ This property now has no effect. This library now includes  necessary
 <li>A value indicating whether the Base64Padding property is true.</li>
 </ul>
 
-<h3>getPreserveNegativeZero</h3>
-
-<pre>public final boolean getPreserveNegativeZero()
-</pre>
+<h3><a id='getPreserveNegativeZero()'>getPreserveNegativeZero</a></h3>
 
 <p>Gets a value indicating whether the JSON decoder should preserve the
  distinction between positive zero and negative zero when the decoder
@@ -142,10 +121,7 @@ positive zero and negative zero when decoding JSON. The default is
 true.</li>
 </ul>
 
-<h3>getNumberConversion</h3>
-
-<pre>public final JSONOptions.ConversionMode getNumberConversion()
-</pre>
+<h3><a id='getNumberConversion()'>getNumberConversion</a></h3>
 
 <p>Gets a value indicating how JSON numbers are decoded to CBOR objects. None
  of the conversion modes affects how CBOR objects are later encoded
@@ -158,10 +134,7 @@ true.</li>
 is <code>ConversionMode.Full</code>.</li>
 </ul>
 
-<h3>getAllowDuplicateKeys</h3>
-
-<pre>public final boolean getAllowDuplicateKeys()
-</pre>
+<h3><a id='getAllowDuplicateKeys()'>getAllowDuplicateKeys</a></h3>
 
 <p>Gets a value indicating whether to allow duplicate keys when reading JSON.
  Used only when decoding JSON. If this property is <code>true</code> and a
@@ -175,10 +148,7 @@ is <code>ConversionMode.Full</code>.</li>
 JSON. The default is false.</li>
 </ul>
 
-<h3>getReplaceSurrogates</h3>
-
-<pre>public final boolean getReplaceSurrogates()
-</pre>
+<h3><a id='getReplaceSurrogates()'>getReplaceSurrogates</a></h3>
 
 <p>Gets a value indicating whether surrogate code points not part of a
  surrogate pair (which consists of two consecutive <code>char</code> s

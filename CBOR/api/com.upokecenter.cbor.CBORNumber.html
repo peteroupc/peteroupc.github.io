@@ -5,21 +5,16 @@
 
 <h1>com.upokecenter.cbor.CBORNumber</h1>
 
-<pre>public final class CBORNumber extends java.lang.Object implements java.lang.Comparable&lt;CBORNumber&gt;
-</pre>
-
-<p>An instance of a number that CBOR or certain CBOR tags can represent. For
- this purpose, infinities and not-a-number or NaN values are considered
- numbers. Currently, this class can store one of the following kinds of
- numbers: 64-bit signed integers or binary floating-point numbers; or
- arbitrary-precision integers, decimal numbers, binary numbers, or
- rational numbers.</p>
-
-<h2>Methods</h2>
+<h2>Nested Classes</h2>
 
 <ul>
 <li><code>static class  CBORNumber.NumberKind</code><br>
 Specifies the underlying form of this CBOR number object.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
 <li><code>CBORNumber Abs()</code><br>
 Returns the absolute value of this CBOR number.</li>
 <li><code>CBORNumber Add​(CBORNumber b)</code><br>
@@ -165,19 +160,9 @@ form as a 64-bit signed integer.</li>
 Returns the value of this object in text form.</li>
 </ul>
 
-<h2>Nested Classes</h2>
-
-<ul>
-<li><code>static class  CBORNumber.NumberKind</code><br>
-Specifies the underlying form of this CBOR number object.</li>
-</ul>
-
 <h2>Method Details</h2>
 
-<h3>ToCBORObject</h3>
-
-<pre>public CBORObject ToCBORObject()
-</pre>
+<h3><a id='ToCBORObject()'>ToCBORObject</a></h3>
 
 <p>Converts this object&#39;s value to a CBOR object.</p>
 
@@ -187,10 +172,7 @@ Specifies the underlying form of this CBOR number object.</li>
 <li>A CBOR object that stores this object&#39;s value.</li>
 </ul>
 
-<h3>signum</h3>
-
-<pre>public final int signum()
-</pre>
+<h3><a id='signum()'>signum</a></h3>
 
 <p>Gets this value&#39;s sign: -1 if nonzero and negative; 1 if nonzero and
  positive; 0 if zero. Not-a-number (NaN) values are positive or
@@ -202,10 +184,7 @@ Specifies the underlying form of this CBOR number object.</li>
 <li>This value&#39;s sign.</li>
 </ul>
 
-<h3>FromCBORObject</h3>
-
-<pre>public static CBORNumber FromCBORObject​(CBORObject o)
-</pre>
+<h3><a id='FromCBORObject(com.upokecenter.cbor.CBORObject)'>FromCBORObject</a></h3>
 
 <p>Creates a CBOR number object from a CBOR object representing a number (that
  is, one for which the IsNumber property in.NET or the isNumber()
@@ -224,10 +203,7 @@ Specifies the underlying form of this CBOR number object.</li>
 does not represent a number.</li>
 </ul>
 
-<h3>getKind</h3>
-
-<pre>public final CBORNumber.NumberKind getKind()
-</pre>
+<h3><a id='getKind()'>getKind</a></h3>
 
 <p>Gets the underlying form of this CBOR number object.</p>
 
@@ -237,10 +213,7 @@ does not represent a number.</li>
 <li>The underlying form of this CBOR number object.</li>
 </ul>
 
-<h3>CanTruncatedIntFitInInt32</h3>
-
-<pre>public boolean CanTruncatedIntFitInInt32()
-</pre>
+<h3><a id='CanTruncatedIntFitInInt32()'>CanTruncatedIntFitInInt32</a></h3>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
  its fractional part, would be -(2^31) or greater, and less than
@@ -254,10 +227,7 @@ discarding its fractional part, would be -(2^31) or greater, and
 less than 2^31; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanTruncatedIntFitInInt64</h3>
-
-<pre>public boolean CanTruncatedIntFitInInt64()
-</pre>
+<h3><a id='CanTruncatedIntFitInInt64()'>CanTruncatedIntFitInInt64</a></h3>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
  its fractional part, would be -(2^63) or greater, and less than
@@ -271,10 +241,7 @@ discarding its fractional part, would be -(2^63) or greater, and
 less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanTruncatedIntFitInUInt64</h3>
-
-<pre>public boolean CanTruncatedIntFitInUInt64()
-</pre>
+<h3><a id='CanTruncatedIntFitInUInt64()'>CanTruncatedIntFitInUInt64</a></h3>
 
 <p>Returns whether this object&#39;s value, converted to an integer by discarding
  its fractional part, would be 0 or greater, and less than 2^64.</p>
@@ -287,10 +254,7 @@ discarding its fractional part, would be 0 or greater, and less than
 2^64; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanFitInSingle</h3>
-
-<pre>public boolean CanFitInSingle()
-</pre>
+<h3><a id='CanFitInSingle()'>CanFitInSingle</a></h3>
 
 <p>Returns whether this object&#39;s value can be converted to a 32-bit floating
  point number without its value being rounded to another numerical
@@ -306,10 +270,7 @@ value&#39;s diagnostic information can&#39; t fit in a 32-bit floating point
 number; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanFitInDouble</h3>
-
-<pre>public boolean CanFitInDouble()
-</pre>
+<h3><a id='CanFitInDouble()'>CanFitInDouble</a></h3>
 
 <p>Returns whether this object&#39;s value can be converted to a 64-bit floating
  point number without its value being rounded to another numerical
@@ -325,10 +286,7 @@ value&#39;s diagnostic information can&#39;t fit in a 64-bit floating point
 number; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>IsFinite</h3>
-
-<pre>public boolean IsFinite()
-</pre>
+<h3><a id='IsFinite()'>IsFinite</a></h3>
 
 <p>Gets a value indicating whether this CBOR object represents a finite number.</p>
 
@@ -339,10 +297,7 @@ number; otherwise, <code>false</code>.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>IsInteger</h3>
-
-<pre>public boolean IsInteger()
-</pre>
+<h3><a id='IsInteger()'>IsInteger</a></h3>
 
 <p>Gets a value indicating whether this object represents an integer number,
  that is, a number without a fractional part. Infinity and
@@ -355,10 +310,7 @@ otherwise, <code>false</code>.</li>
 number without a fractional part; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>IsNegative</h3>
-
-<pre>public boolean IsNegative()
-</pre>
+<h3><a id='IsNegative()'>IsNegative</a></h3>
 
 <p>Gets a value indicating whether this object is a negative number.</p>
 
@@ -369,10 +321,7 @@ number without a fractional part; otherwise, <code>false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>IsZero</h3>
-
-<pre>public boolean IsZero()
-</pre>
+<h3><a id='IsZero()'>IsZero</a></h3>
 
 <p>Gets a value indicating whether this object&#39;s value equals 0.</p>
 
@@ -383,10 +332,7 @@ false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>ToEInteger</h3>
-
-<pre>public com.upokecenter.numbers.EInteger ToEInteger()
-</pre>
+<h3><a id='ToEInteger()'>ToEInteger</a></h3>
 
 <p>Converts this object to an arbitrary-precision integer. See the ToObject
  overload taking a type for more information.</p>
@@ -403,10 +349,7 @@ false</code>.</li>
 <li><code>java.lang.ArithmeticException</code> - This value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToEIntegerIfExact</h3>
-
-<pre>public com.upokecenter.numbers.EInteger ToEIntegerIfExact()
-</pre>
+<h3><a id='ToEIntegerIfExact()'>ToEIntegerIfExact</a></h3>
 
 <p>Converts this object to an arbitrary-precision integer if its value is an
  integer.</p>
@@ -424,10 +367,7 @@ false</code>.</li>
 an exact integer.</li>
 </ul>
 
-<h3>ToByteChecked</h3>
-
-<pre>public byte ToByteChecked()
-</pre>
+<h3><a id='ToByteChecked()'>ToByteChecked</a></h3>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) after converting it to an integer by discarding
@@ -447,10 +387,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than 0 or greater than 255.</li>
 </ul>
 
-<h3>ToByteUnchecked</h3>
-
-<pre>public byte ToByteUnchecked()
-</pre>
+<h3><a id='ToByteUnchecked()'>ToByteUnchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -463,10 +400,7 @@ part, is less than 0 or greater than 255.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToByteIfExact</h3>
-
-<pre>public byte ToByteIfExact()
-</pre>
+<h3><a id='ToByteIfExact()'>ToByteIfExact</a></h3>
 
 <p>Converts this number&#39;s value to a byte (from 0 to 255) if it can fit in a
  byte (from 0 to 255) without rounding to a different numerical
@@ -485,10 +419,7 @@ value is infinity or not-a-number.</li>
 an exact integer, or is less than 0 or greater than 255.</li>
 </ul>
 
-<h3>FromByte</h3>
-
-<pre>public static CBORNumber FromByte​(byte inputByte)
-</pre>
+<h3><a id='FromByte(byte)'>FromByte</a></h3>
 
 <p>Converts a byte (from 0 to 255) to an arbitrary-precision decimal number.</p>
 
@@ -504,10 +435,7 @@ an exact integer, or is less than 0 or greater than 255.</li>
 <li>This number&#39;s value as an arbitrary-precision decimal number.</li>
 </ul>
 
-<h3>ToInt16Checked</h3>
-
-<pre>public short ToInt16Checked()
-</pre>
+<h3><a id='ToInt16Checked()'>ToInt16Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer after converting it to an integer by
@@ -527,10 +455,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than -32768 or greater than 32767.</li>
 </ul>
 
-<h3>ToInt16Unchecked</h3>
-
-<pre>public short ToInt16Unchecked()
-</pre>
+<h3><a id='ToInt16Unchecked()'>ToInt16Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -543,10 +468,7 @@ part, is less than -32768 or greater than 32767.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt16IfExact</h3>
-
-<pre>public short ToInt16IfExact()
-</pre>
+<h3><a id='ToInt16IfExact()'>ToInt16IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 16-bit signed integer if it can fit in a
  16-bit signed integer without rounding to a different numerical
@@ -565,10 +487,7 @@ value is infinity or not-a-number.</li>
 an exact integer, or is less than -32768 or greater than 32767.</li>
 </ul>
 
-<h3>FromInt16</h3>
-
-<pre>public static CBORNumber FromInt16​(short inputInt16)
-</pre>
+<h3><a id='FromInt16(short)'>FromInt16</a></h3>
 
 <p>Converts a 16-bit signed integer to an arbitrary-precision decimal number.</p>
 
@@ -584,10 +503,7 @@ an exact integer, or is less than -32768 or greater than 32767.</li>
 <li>This number&#39;s value as an arbitrary-precision decimal number.</li>
 </ul>
 
-<h3>ToInt32Checked</h3>
-
-<pre>public int ToInt32Checked()
-</pre>
+<h3><a id='ToInt32Checked()'>ToInt32Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer after converting it to an integer by
@@ -607,10 +523,7 @@ number, once converted to an integer by discarding its fractional
 part, is less than -2147483648 or greater than 2147483647.</li>
 </ul>
 
-<h3>ToInt32Unchecked</h3>
-
-<pre>public int ToInt32Unchecked()
-</pre>
+<h3><a id='ToInt32Unchecked()'>ToInt32Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -623,10 +536,7 @@ part, is less than -2147483648 or greater than 2147483647.</li>
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt32IfExact</h3>
-
-<pre>public int ToInt32IfExact()
-</pre>
+<h3><a id='ToInt32IfExact()'>ToInt32IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 32-bit signed integer if it can fit in a
  32-bit signed integer without rounding to a different numerical
@@ -646,10 +556,7 @@ an exact integer, or is less than -2147483648 or greater than
 2147483647.</li>
 </ul>
 
-<h3>ToInt64Checked</h3>
-
-<pre>public long ToInt64Checked()
-</pre>
+<h3><a id='ToInt64Checked()'>ToInt64Checked</a></h3>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer after converting it to an integer by
@@ -670,10 +577,7 @@ part, is less than -9223372036854775808 or greater than
 9223372036854775807.</li>
 </ul>
 
-<h3>ToInt64Unchecked</h3>
-
-<pre>public long ToInt64Unchecked()
-</pre>
+<h3><a id='ToInt64Unchecked()'>ToInt64Unchecked</a></h3>
 
 <p>Converts this number&#39;s value to an integer by discarding its fractional
  part, and returns the least-significant bits of its two&#39;s-complement
@@ -686,10 +590,7 @@ part, is less than -9223372036854775808 or greater than
 value is infinity or not-a-number.</li>
 </ul>
 
-<h3>ToInt64IfExact</h3>
-
-<pre>public long ToInt64IfExact()
-</pre>
+<h3><a id='ToInt64IfExact()'>ToInt64IfExact</a></h3>
 
 <p>Converts this number&#39;s value to a 64-bit signed integer if it can fit in a
  64-bit signed integer without rounding to a different numerical
@@ -709,10 +610,7 @@ an exact integer, or is less than -9223372036854775808 or greater
 than 9223372036854775807.</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Returns the value of this object in text form.</p>
 
@@ -728,10 +626,7 @@ than 9223372036854775807.</li>
 <li>A text string representing the value of this object.</li>
 </ul>
 
-<h3>CanFitInInt32</h3>
-
-<pre>public boolean CanFitInInt32()
-</pre>
+<h3><a id='CanFitInInt32()'>CanFitInInt32</a></h3>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^31) or
  greater, and is less than 2^31.</p>
@@ -743,10 +638,7 @@ than 9223372036854775807.</li>
 -(2^31) or greater, and is less than 2^31; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanFitInInt64</h3>
-
-<pre>public boolean CanFitInInt64()
-</pre>
+<h3><a id='CanFitInInt64()'>CanFitInInt64</a></h3>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is -(2^63) or
  greater, and is less than 2^63.</p>
@@ -758,10 +650,7 @@ than 9223372036854775807.</li>
 -(2^63) or greater, and is less than 2^63; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>CanFitInUInt64</h3>
-
-<pre>public boolean CanFitInUInt64()
-</pre>
+<h3><a id='CanFitInUInt64()'>CanFitInUInt64</a></h3>
 
 <p>Returns whether this object&#39;s numerical value is an integer, is 0 or
  greater, and is less than 2^64.</p>
@@ -773,10 +662,7 @@ than 9223372036854775807.</li>
 greater, and is less than 2^64; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>IsInfinity</h3>
-
-<pre>public boolean IsInfinity()
-</pre>
+<h3><a id='IsInfinity()'>IsInfinity</a></h3>
 
 <p>Gets a value indicating whether this object represents infinity.</p>
 
@@ -787,10 +673,7 @@ greater, and is less than 2^64; otherwise, <code>false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>IsPositiveInfinity</h3>
-
-<pre>public boolean IsPositiveInfinity()
-</pre>
+<h3><a id='IsPositiveInfinity()'>IsPositiveInfinity</a></h3>
 
 <p>Gets a value indicating whether this object represents positive infinity.</p>
 
@@ -801,10 +684,7 @@ false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>IsNegativeInfinity</h3>
-
-<pre>public boolean IsNegativeInfinity()
-</pre>
+<h3><a id='IsNegativeInfinity()'>IsNegativeInfinity</a></h3>
 
 <p>Gets a value indicating whether this object represents negative infinity.</p>
 
@@ -815,10 +695,7 @@ false</code>.</li>
 <code>false</code>.</li>
 </ul>
 
-<h3>IsNaN</h3>
-
-<pre>public boolean IsNaN()
-</pre>
+<h3><a id='IsNaN()'>IsNaN</a></h3>
 
 <p>Gets a value indicating whether this object represents a not-a-number value.</p>
 
@@ -829,10 +706,7 @@ false</code>.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>ToEDecimal</h3>
-
-<pre>public com.upokecenter.numbers.EDecimal ToEDecimal()
-</pre>
+<h3><a id='ToEDecimal()'>ToEDecimal</a></h3>
 
 <p>Converts this object to a decimal number.</p>
 
@@ -842,10 +716,7 @@ otherwise, <code>false</code>.</li>
 <li>A decimal number for this object&#39;s value.</li>
 </ul>
 
-<h3>ToEFloat</h3>
-
-<pre>public com.upokecenter.numbers.EFloat ToEFloat()
-</pre>
+<h3><a id='ToEFloat()'>ToEFloat</a></h3>
 
 <p>Converts this object to an arbitrary-precision binary floating point number.
  See the ToObject overload taking a type for more information.</p>
@@ -857,10 +728,7 @@ otherwise, <code>false</code>.</li>
 object&#39;s value.</li>
 </ul>
 
-<h3>ToERational</h3>
-
-<pre>public com.upokecenter.numbers.ERational ToERational()
-</pre>
+<h3><a id='ToERational()'>ToERational</a></h3>
 
 <p>Converts this object to a rational number. See the ToObject overload taking
  a type for more information.</p>
@@ -871,10 +739,7 @@ object&#39;s value.</li>
 <li>A rational number for this object&#39;s value.</li>
 </ul>
 
-<h3>Abs</h3>
-
-<pre>public CBORNumber Abs()
-</pre>
+<h3><a id='Abs()'>Abs</a></h3>
 
 <p>Returns the absolute value of this CBOR number.</p>
 
@@ -884,10 +749,7 @@ object&#39;s value.</li>
 <li>This object&#39;s absolute value without its negative sign.</li>
 </ul>
 
-<h3>Negate</h3>
-
-<pre>public CBORNumber Negate()
-</pre>
+<h3><a id='Negate()'>Negate</a></h3>
 
 <p>Returns a CBOR number with the same value as this one but with the sign
  reversed.</p>
@@ -899,10 +761,7 @@ object&#39;s value.</li>
 reversed.</li>
 </ul>
 
-<h3>Add</h3>
-
-<pre>public CBORNumber Add​(CBORNumber b)
-</pre>
+<h3><a id='Add(com.upokecenter.cbor.CBORNumber)'>Add</a></h3>
 
 <p>Returns the sum of this number and another number.</p>
 
@@ -927,10 +786,7 @@ to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
 
-<h3>Subtract</h3>
-
-<pre>public CBORNumber Subtract​(CBORNumber b)
-</pre>
+<h3><a id='Subtract(com.upokecenter.cbor.CBORNumber)'>Subtract</a></h3>
 
 <p>Returns a number that expresses this number minus another.</p>
 
@@ -955,10 +811,7 @@ to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
 
-<h3>Multiply</h3>
-
-<pre>public CBORNumber Multiply​(CBORNumber b)
-</pre>
+<h3><a id='Multiply(com.upokecenter.cbor.CBORNumber)'>Multiply</a></h3>
 
 <p>Returns a CBOR number expressing the product of this number and the given
  number.</p>
@@ -984,10 +837,7 @@ to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
 
-<h3>Divide</h3>
-
-<pre>public CBORNumber Divide​(CBORNumber b)
-</pre>
+<h3><a id='Divide(com.upokecenter.cbor.CBORNumber)'>Divide</a></h3>
 
 <p>Returns the quotient of this number and another number.</p>
 
@@ -1012,10 +862,7 @@ to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
 
-<h3>Remainder</h3>
-
-<pre>public CBORNumber Remainder​(CBORNumber b)
-</pre>
+<h3><a id='Remainder(com.upokecenter.cbor.CBORNumber)'>Remainder</a></h3>
 
 <p>Returns the remainder when this number is divided by another number.</p>
 
@@ -1040,10 +887,7 @@ to fit in memory (or might require more than 2 gigabytes of memory
 to store).</p></li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(int other)
-</pre>
+<h3><a id='compareTo(int)'>compareTo</a></h3>
 
 <p>Compares this CBOR number with a 32-bit signed integer. In this
  implementation, the two numbers&#39; mathematical values are compared.
@@ -1064,10 +908,7 @@ less than the other object or if the other object is null. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(long other)
-</pre>
+<h3><a id='compareTo(long)'>compareTo</a></h3>
 
 <p>Compares this CBOR number with a 64-bit signed integer. In this
  implementation, the two numbers&#39; mathematical values are compared.
@@ -1088,10 +929,7 @@ less than the other object or if the other object is null. This
 implementation returns a positive number if.</li>
 </ul>
 
-<h3>compareTo</h3>
-
-<pre>public int compareTo​(CBORNumber other)
-</pre>
+<h3><a id='compareTo(com.upokecenter.cbor.CBORNumber)'>compareTo</a></h3>
 
 <p>Compares this CBOR number with another. In this implementation, the two
  numbers&#39; mathematical values are compared. Here, NaN (not-a-number)

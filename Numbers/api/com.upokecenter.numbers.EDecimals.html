@@ -5,13 +5,6 @@
 
 <h1>com.upokecenter.numbers.EDecimals</h1>
 
-<pre>public final class EDecimals extends java.lang.Object
-</pre>
-
-<p>A class that implements additional operations on arbitrary-precision decimal
- numbers. Many of them are listed as miscellaneous operations in the
- General Decimal Arithmetic Specification version 1.70.</p>
-
 <h2>Methods</h2>
 
 <ul>
@@ -21,19 +14,19 @@ EContext ec)</code><br>
 Performs a logical AND operation on two decimal numbers in the form of
 logical operands.</li>
 <li><code>static EDecimal BooleanToEDecimal​(boolean b,
-             EContext ec)</code><br>
+EContext ec)</code><br>
 Converts a boolean value (either true or false) to an arbitrary-precision
 decimal number.</li>
 <li><code>static EDecimal Canonical​(EDecimal ed)</code><br>
 Returns a canonical version of the given arbitrary-precision number object.</li>
 <li><code>static int CompareTotal​(EDecimal ed,
-        EDecimal other,
-        EContext ec)</code><br>
+EDecimal other,
+EContext ec)</code><br>
 Compares the values of one arbitrary-precision number object and another
 object, imposing a total ordering on all possible values.</li>
 <li><code>static int CompareTotalMagnitude​(EDecimal ed,
-                 EDecimal other,
-                 EContext ec)</code><br>
+EDecimal other,
+EContext ec)</code><br>
 Compares the absolute values of two arbitrary-precision number objects,
 imposing a total ordering on all possible values (ignoring their
 signs).</li>
@@ -47,15 +40,15 @@ number object&#39;s absolute value).</li>
 Returns an arbitrary-precision number object with the sign reversed from the
 given number object.</li>
 <li><code>static EDecimal CopySign​(EDecimal ed,
-    EDecimal other)</code><br>
+EDecimal other)</code><br>
 Returns an arbitrary-precision number object with the same value as the
 first given number object but with a the same sign (positive or
 negative) as the second given number object.</li>
 <li><code>static EDecimal Int32ToEDecimal​(int i32,
-           EContext ec)</code><br>
+EContext ec)</code><br>
 Creates an arbitrary-precision decimal number from a 32-bit signed integer.</li>
 <li><code>static EDecimal Invert​(EDecimal ed1,
-  EContext ec)</code><br>
+EContext ec)</code><br>
 Performs a logical NOT operation on an arbitrary-precision decimal number in
 the form of a logical operand.</li>
 <li><code>static boolean IsCanonical​(EDecimal ed)</code><br>
@@ -71,7 +64,7 @@ negative infinity.</li>
 Returns whether the given arbitrary-precision number object is a
 not-a-number (NaN).</li>
 <li><code>static boolean IsNormal​(EDecimal ed,
-    EContext ec)</code><br>
+EContext ec)</code><br>
 Returns whether the given number is a normal number.</li>
 <li><code>static boolean IsQuietNaN​(EDecimal ed)</code><br>
 Returns whether the given arbitrary-precision number object is a quiet
@@ -84,7 +77,7 @@ Returns whether the given arbitrary-precision number object is negative
 (including negative infinity, negative not-a-number.get(NaN), or
 negative zero).</li>
 <li><code>static boolean IsSubnormal​(EDecimal ed,
-       EContext ec)</code><br>
+EContext ec)</code><br>
 Returns whether the given number is a subnormal number.</li>
 <li><code>static boolean IsZero​(EDecimal ed)</code><br>
 Returns whether the given arbitrary-precision number object is zero
@@ -95,7 +88,7 @@ Returns the base-10 exponent of an arbitrary-precision decimal number (when
 that number is expressed in scientific notation with one digit
 before the radix point).</li>
 <li><code>static int NumberClass​(EDecimal ed,
-       EContext ec)</code><br>
+EContext ec)</code><br>
 Finds the number class for an arbitrary-precision decimal number object.</li>
 <li><code>static java.lang.String NumberClassString​(int nc)</code><br>
 Converts a number class identifier (ranging from 0 through 9) to a text
@@ -108,28 +101,28 @@ logical operands.</li>
 <li><code>static EDecimal Radix​(EContext ec)</code><br>
 Returns the number 10, the decimal radix.</li>
 <li><code>static EDecimal Rescale​(EDecimal ed,
-   EDecimal scale,
-   EContext ec)</code><br>
+EDecimal scale,
+EContext ec)</code><br>
 Returns an arbitrary-precision decimal number with the same value as this
 object but with the given exponent, expressed as an
 arbitrary-precision decimal number.</li>
 <li><code>static EDecimal Rotate​(EDecimal ed,
-  EDecimal ed2,
-  EContext ec)</code><br>
+EDecimal ed2,
+EContext ec)</code><br>
 Rotates the digits of an arbitrary-precision decimal number&#39;s significand.</li>
 <li><code>static boolean SameQuantum​(EDecimal ed1,
-       EDecimal ed2)</code><br>
+EDecimal ed2)</code><br>
 Returns whether two arbitrary-precision numbers have the same exponent, they
 both are not-a-number (NaN), or they both are infinity (positive
 and/or negative).</li>
 <li><code>static EDecimal ScaleB​(EDecimal ed,
-  EDecimal ed2,
-  EContext ec)</code><br>
+EDecimal ed2,
+EContext ec)</code><br>
 Finds an arbitrary-precision decimal number whose decimal point is moved a
 given number of places.</li>
 <li><code>static EDecimal Shift​(EDecimal ed,
- EDecimal ed2,
- EContext ec)</code><br>
+EDecimal ed2,
+EContext ec)</code><br>
 Shifts the digits of an arbitrary-precision decimal number&#39;s significand.</li>
 <li><code>static EDecimal Trim​(EDecimal ed1,
 EContext ec)</code><br>
@@ -144,10 +137,7 @@ the form of logical operands.</li>
 
 <h2>Method Details</h2>
 
-<h3>Radix</h3>
-
-<pre>public static EDecimal Radix​(EContext ec)
-</pre>
+<h3><a id='Radix(com.upokecenter.numbers.EContext)'>Radix</a></h3>
 
 <p>Returns the number 10, the decimal radix.</p>
 
@@ -165,10 +155,7 @@ null.</li>
 arithmetic context.</li>
 </ul>
 
-<h3>Int32ToEDecimal</h3>
-
-<pre>public static EDecimal Int32ToEDecimal​(int i32, EContext ec)
-</pre>
+<h3><a id='Int32ToEDecimal(int,com.upokecenter.numbers.EContext)'>Int32ToEDecimal</a></h3>
 
 <p>Creates an arbitrary-precision decimal number from a 32-bit signed integer.</p>
 
@@ -187,10 +174,7 @@ exponent range of the result. Can be null.</p></li>
 value to the given integer.</li>
 </ul>
 
-<h3>BooleanToEDecimal</h3>
-
-<pre>public static EDecimal BooleanToEDecimal​(boolean b, EContext ec)
-</pre>
+<h3><a id='BooleanToEDecimal(boolean,com.upokecenter.numbers.EContext)'>BooleanToEDecimal</a></h3>
 
 <p>Converts a boolean value (either true or false) to an arbitrary-precision
  decimal number.</p>
@@ -209,10 +193,7 @@ value to the given integer.</li>
 result will be rounded as specified by the given context, if any.</li>
 </ul>
 
-<h3>IsCanonical</h3>
-
-<pre>public static boolean IsCanonical​(EDecimal ed)
-</pre>
+<h3><a id='IsCanonical(com.upokecenter.numbers.EDecimal)'>IsCanonical</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is in a
  canonical form. For the current version of EDecimal, all EDecimal
@@ -230,10 +211,7 @@ result will be rounded as specified by the given context, if any.</li>
 <li>Always <code>true</code>.</li>
 </ul>
 
-<h3>IsFinite</h3>
-
-<pre>public static boolean IsFinite​(EDecimal ed)
-</pre>
+<h3><a id='IsFinite(com.upokecenter.numbers.EDecimal)'>IsFinite</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is neither null
  nor infinity nor not-a-number (NaN).</p>
@@ -252,10 +230,7 @@ is neither null nor infinity nor not-a-number (NaN), or <code>
 false</code> otherwise.</li>
 </ul>
 
-<h3>IsInfinite</h3>
-
-<pre>public static boolean IsInfinite​(EDecimal ed)
-</pre>
+<h3><a id='IsInfinite(com.upokecenter.numbers.EDecimal)'>IsInfinite</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is positive or
  negative infinity.</p>
@@ -273,10 +248,7 @@ false</code> otherwise.</li>
 is positive or negative infinity, or <code>false</code> otherwise.</li>
 </ul>
 
-<h3>IsNaN</h3>
-
-<pre>public static boolean IsNaN​(EDecimal ed)
-</pre>
+<h3><a id='IsNaN(com.upokecenter.numbers.EDecimal)'>IsNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a
  not-a-number (NaN).</p>
@@ -293,10 +265,7 @@ is positive or negative infinity, or <code>false</code> otherwise.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsNormal</h3>
-
-<pre>public static boolean IsNormal​(EDecimal ed, EContext ec)
-</pre>
+<h3><a id='IsNormal(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>IsNormal</a></h3>
 
 <p>Returns whether the given number is a <i>normal</i> number. A <i>subnormal
  number</i> is a nonzero finite number whose Exponent property (or
@@ -330,10 +299,7 @@ false</code> otherwise. Returns <code>true</code> if the given context is null
 or HasExponentRange of the given context is <code>false</code>.</li>
 </ul>
 
-<h3>IsQuietNaN</h3>
-
-<pre>public static boolean IsQuietNaN​(EDecimal ed)
-</pre>
+<h3><a id='IsQuietNaN(com.upokecenter.numbers.EDecimal)'>IsQuietNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a quiet
  not-a-number (NaN).</p>
@@ -350,10 +316,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsSigned</h3>
-
-<pre>public static boolean IsSigned​(EDecimal ed)
-</pre>
+<h3><a id='IsSigned(com.upokecenter.numbers.EDecimal)'>IsSigned</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is negative
  (including negative infinity, negative not-a-number.get(NaN), or
@@ -371,10 +334,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>IsSignalingNaN</h3>
-
-<pre>public static boolean IsSignalingNaN​(EDecimal ed)
-</pre>
+<h3><a id='IsSignalingNaN(com.upokecenter.numbers.EDecimal)'>IsSignalingNaN</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is a signaling
  not-a-number (NaN).</p>
@@ -391,10 +351,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li>Either <code>true</code> or <code>false</code>.</li>
 </ul>
 
-<h3>NumberClassString</h3>
-
-<pre>public static java.lang.String NumberClassString​(int nc)
-</pre>
+<h3><a id='NumberClassString(int)'>NumberClassString</a></h3>
 
 <p>Converts a number class identifier (ranging from 0 through 9) to a text
  string. An arbitrary-precision number object can belong in one of
@@ -422,10 +379,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 than 9.</li>
 </ul>
 
-<h3>NumberClass</h3>
-
-<pre>public static int NumberClass​(EDecimal ed, EContext ec)
-</pre>
+<h3><a id='NumberClass(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>NumberClass</a></h3>
 
 <p>Finds the number class for an arbitrary-precision decimal number object.</p>
 
@@ -454,10 +408,7 @@ quiet not-a-number (NaN), 9 = signaling NaN.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>IsSubnormal</h3>
-
-<pre>public static boolean IsSubnormal​(EDecimal ed, EContext ec)
-</pre>
+<h3><a id='IsSubnormal(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>IsSubnormal</a></h3>
 
 <p>Returns whether the given number is a <i>subnormal</i> number. A
  <i>subnormal number</i> is a nonzero finite number whose Exponent
@@ -497,10 +448,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>IsZero</h3>
-
-<pre>public static boolean IsZero​(EDecimal ed)
-</pre>
+<h3><a id='IsZero(com.upokecenter.numbers.EDecimal)'>IsZero</a></h3>
 
 <p>Returns whether the given arbitrary-precision number object is zero
  (positive zero or negative zero).</p>
@@ -518,10 +466,7 @@ or HasExponentRange of the given context is <code>false</code>.</li>
 or negative zero); otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>LogB</h3>
-
-<pre>public static EDecimal LogB​(EDecimal ed, EContext ec)
-</pre>
+<h3><a id='LogB(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>LogB</a></h3>
 
 <p>Returns the base-10 exponent of an arbitrary-precision decimal number (when
  that number is expressed in scientific notation with one digit
@@ -552,10 +497,7 @@ positive infinity or negative infinity.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>ScaleB</h3>
-
-<pre>public static EDecimal ScaleB​(EDecimal ed, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='ScaleB(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>ScaleB</a></h3>
 
 <p>Finds an arbitrary-precision decimal number whose decimal point is moved a
  given number of places.</p>
@@ -590,10 +532,7 @@ property.</li>
 null.</li>
 </ul>
 
-<h3>Shift</h3>
-
-<pre>public static EDecimal Shift​(EDecimal ed, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='Shift(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Shift</a></h3>
 
 <p>Shifts the digits of an arbitrary-precision decimal number&#39;s significand.</p>
 
@@ -629,10 +568,7 @@ specified in the context.</li>
 null.</li>
 </ul>
 
-<h3>Rotate</h3>
-
-<pre>public static EDecimal Rotate​(EDecimal ed, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='Rotate(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Rotate</a></h3>
 
 <p>Rotates the digits of an arbitrary-precision decimal number&#39;s significand.</p>
 
@@ -676,10 +612,7 @@ specified in the context.</li>
 null.</li>
 </ul>
 
-<h3>CompareTotal</h3>
-
-<pre>public static int CompareTotal​(EDecimal ed, EDecimal other, EContext ec)
-</pre>
+<h3><a id='CompareTotal(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>CompareTotal</a></h3>
 
 <p>Compares the values of one arbitrary-precision number object and another
  object, imposing a total ordering on all possible values. In this
@@ -713,10 +646,7 @@ object is greater or the other object is null. Does not signal flags
 if either value is signaling NaN.</li>
 </ul>
 
-<h3>CompareTotalMagnitude</h3>
-
-<pre>public static int CompareTotalMagnitude​(EDecimal ed, EDecimal other, EContext ec)
-</pre>
+<h3><a id='CompareTotalMagnitude(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>CompareTotalMagnitude</a></h3>
 
 <p>Compares the absolute values of two arbitrary-precision number objects,
  imposing a total ordering on all possible values (ignoring their
@@ -751,10 +681,7 @@ value (ignoring their signs), or 1 if the first object is greater
 flags if either value is signaling NaN.</li>
 </ul>
 
-<h3>Copy</h3>
-
-<pre>public static EDecimal Copy​(EDecimal ed)
-</pre>
+<h3><a id='Copy(com.upokecenter.numbers.EDecimal)'>Copy</a></h3>
 
 <p>Creates a copy of the given arbitrary-precision number object.</p>
 
@@ -776,10 +703,7 @@ flags if either value is signaling NaN.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>Canonical</h3>
-
-<pre>public static EDecimal Canonical​(EDecimal ed)
-</pre>
+<h3><a id='Canonical(com.upokecenter.numbers.EDecimal)'>Canonical</a></h3>
 
 <p>Returns a canonical version of the given arbitrary-precision number object.
  In this method, this method behaves like the Copy method.</p>
@@ -796,10 +720,7 @@ flags if either value is signaling NaN.</li>
 <li>A copy of the parameter <code>ed</code>.</li>
 </ul>
 
-<h3>CopyAbs</h3>
-
-<pre>public static EDecimal CopyAbs​(EDecimal ed)
-</pre>
+<h3><a id='CopyAbs(com.upokecenter.numbers.EDecimal)'>CopyAbs</a></h3>
 
 <p>Returns an arbitrary-precision number object with the same value as the
  given number object but with a nonnegative sign (that is, the given
@@ -824,10 +745,7 @@ given number object but with a nonnegative sign.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>CopyNegate</h3>
-
-<pre>public static EDecimal CopyNegate​(EDecimal ed)
-</pre>
+<h3><a id='CopyNegate(com.upokecenter.numbers.EDecimal)'>CopyNegate</a></h3>
 
 <p>Returns an arbitrary-precision number object with the sign reversed from the
  given number object.</p>
@@ -851,10 +769,7 @@ given number object.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>ed</code> is null.</li>
 </ul>
 
-<h3>CopySign</h3>
-
-<pre>public static EDecimal CopySign​(EDecimal ed, EDecimal other)
-</pre>
+<h3><a id='CopySign(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal)'>CopySign</a></h3>
 
 <p>Returns an arbitrary-precision number object with the same value as the
  first given number object but with a the same sign (positive or
@@ -884,10 +799,7 @@ negative) as the second given number object.</li>
 null.</li>
 </ul>
 
-<h3>SameQuantum</h3>
-
-<pre>public static boolean SameQuantum​(EDecimal ed1, EDecimal ed2)
-</pre>
+<h3><a id='SameQuantum(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal)'>SameQuantum</a></h3>
 
 <p>Returns whether two arbitrary-precision numbers have the same exponent, they
  both are not-a-number (NaN), or they both are infinity (positive
@@ -908,10 +820,7 @@ the same exponent, they both are not-a-number (NaN), or they both
 are infinity (positive and/or negative); otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>Trim</h3>
-
-<pre>public static EDecimal Trim​(EDecimal ed1, EContext ec)
-</pre>
+<h3><a id='Trim(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Trim</a></h3>
 
 <p>Returns an arbitrary-precision number with the same value as this one but
  with certain trailing zeros removed from its significand. If the
@@ -939,10 +848,7 @@ ed1</code> is not-a-number (NaN) or infinity, it is generally returned
 unchanged.</li>
 </ul>
 
-<h3>Rescale</h3>
-
-<pre>public static EDecimal Rescale​(EDecimal ed, EDecimal scale, EContext ec)
-</pre>
+<h3><a id='Rescale(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Rescale</a></h3>
 
 <p>Returns an arbitrary-precision decimal number with the same value as this
  object but with the given exponent, expressed as an
@@ -983,10 +889,7 @@ precision without rounding, or if the arithmetic context defines an
 exponent range and the given exponent is outside that range.</li>
 </ul>
 
-<h3>And</h3>
-
-<pre>public static EDecimal And​(EDecimal ed1, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='And(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>And</a></h3>
 
 <p>Performs a logical AND operation on two decimal numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a non-negative
@@ -1017,10 +920,7 @@ Signals an invalid operation and returns not-a-number (NaN) if
 <code>ed1</code>, <code>ed2</code>, or both are not logical operands.</li>
 </ul>
 
-<h3>Invert</h3>
-
-<pre>public static EDecimal Invert​(EDecimal ed1, EContext ec)
-</pre>
+<h3><a id='Invert(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Invert</a></h3>
 
 <p>Performs a logical NOT operation on an arbitrary-precision decimal number in
  the form of a <i>logical operand</i>. A <code>logical operand</code> is a
@@ -1053,10 +953,7 @@ Signals an invalid operation and returns not-a-number (NaN) if
 <code>ed1</code> is not a logical operand.</li>
 </ul>
 
-<h3>Xor</h3>
-
-<pre>public static EDecimal Xor​(EDecimal ed1, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='Xor(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Xor</a></h3>
 
 <p>Performs a logical exclusive-OR (XOR) operation on two decimal numbers in
  the form of <i>logical operands</i>. A <code>logical operand</code> is a
@@ -1085,10 +982,7 @@ precision are discarded. This parameter can be null.</p></li>
 <li>An arbitrary-precision decimal floating-point number.</li>
 </ul>
 
-<h3>Or</h3>
-
-<pre>public static EDecimal Or​(EDecimal ed1, EDecimal ed2, EContext ec)
-</pre>
+<h3><a id='Or(com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EDecimal,com.upokecenter.numbers.EContext)'>Or</a></h3>
 
 <p>Performs a logical OR operation on two decimal numbers in the form of
  <i>logical operands</i>. A <code>logical operand</code> is a non-negative

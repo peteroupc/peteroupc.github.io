@@ -5,13 +5,7 @@
 
 <h1>com.upokecenter.cbor.JSONOptions.ConversionMode</h1>
 
-<pre>public static enum JSONOptions.ConversionMode extends java.lang.Enum&lt;JSONOptions.ConversionMode&gt;
-</pre>
-
-<p>Specifies how JSON numbers are converted to CBOR objects when decoding JSON
- (such as via <code>FromJSONString</code> or <code>ReadJSON</code>). None of
- these conversion modes affects how CBOR objects are later encoded
- (such as via <code>EncodeToBytes</code>).</p>
+<h2>Nested Classes</h2>
 
 <h2>Enum Constants</h2>
 
@@ -54,49 +48,9 @@ Returns an array containing the constants of this enum type, in
 the order they are declared.</li>
 </ul>
 
-<h2>Method Details</h2>
-
-<h3>Full</h3>
-
-<pre>public static final JSONOptions.ConversionMode Full
-</pre>
-
-<h3>Double</h3>
-
-<pre>public static final JSONOptions.ConversionMode Double
-</pre>
-
-<h3>IntOrFloat</h3>
-
-<pre>public static final JSONOptions.ConversionMode IntOrFloat
-</pre>
-
-<h3>IntOrFloatFromDouble</h3>
-
-<pre>public static final JSONOptions.ConversionMode IntOrFloatFromDouble
-</pre>
-
-<h3>Decimal128</h3>
-
-<pre>public static final JSONOptions.ConversionMode Decimal128
-</pre>
-
-<h3>values</h3>
-
-<pre>public static JSONOptions.ConversionMode[] values()
-</pre>
-
-<h3>valueOf</h3>
-
-<pre>public static JSONOptions.ConversionMode valueOf​(java.lang.String name)
-</pre>
-
 <h2>Enum Constant Details</h2>
 
-<h3>Full</h3>
-
-<pre>public static final JSONOptions.ConversionMode Full
-</pre>
+<h3><a id='Full'>Full</a></h3>
 
 <p>JSON numbers are decoded to CBOR using the full precision given in the JSON
  text. The number will be converted to a CBOR object as follows:
@@ -109,10 +63,7 @@ the order they are declared.</li>
  exponent is 0, it&#39;s written as a CBOR floating-point number;
  otherwise the negative zero is written as an EDecimal.</p>
 
-<h3>Double</h3>
-
-<pre>public static final JSONOptions.ConversionMode Double
-</pre>
+<h3><a id='Double'>Double</a></h3>
 
 <p>JSON numbers are decoded to CBOR as their closest-rounded approximation as
  64-bit binary floating-point numbers (using the
@@ -128,10 +79,7 @@ the order they are declared.</li>
   (&quot;single-precision&quot;), or 64-bit (&quot;double-precision&quot;) encoding
  form depending on the value.</p>
 
-<h3>IntOrFloat</h3>
-
-<pre>public static final JSONOptions.ConversionMode IntOrFloat
-</pre>
+<h3><a id='IntOrFloat'>IntOrFloat</a></h3>
 
 <p>A JSON number is decoded to CBOR objects either as a CBOR integer (major
  type 0 or 1) if the JSON number represents an integer at least
@@ -151,10 +99,7 @@ the order they are declared.</li>
   (&quot;half-float&quot;), 32-bit (&quot;single-precision&quot;), or 64-bit
   (&quot;double-precision&quot;) encoding form depending on the value.</p>
 
-<h3>IntOrFloatFromDouble</h3>
-
-<pre>public static final JSONOptions.ConversionMode IntOrFloatFromDouble
-</pre>
+<h3><a id='IntOrFloatFromDouble'>IntOrFloatFromDouble</a></h3>
 
 <p>A JSON number is decoded to CBOR objects either as a CBOR integer (major
  type 0 or 1) if the number&#39;s closest-rounded approximation as a
@@ -175,10 +120,7 @@ the order they are declared.</li>
   (&quot;half-float&quot;), 32-bit (&quot;single-precision&quot;), or 64-bit
   (&quot;double-precision&quot;) encoding form depending on the value.</p>
 
-<h3>Decimal128</h3>
-
-<pre>public static final JSONOptions.ConversionMode Decimal128
-</pre>
+<h3><a id='Decimal128'>Decimal128</a></h3>
 
 <p>JSON numbers are decoded to CBOR as their closest-rounded approximation to
  an IEEE 854 decimal128 value, using the
@@ -188,6 +130,12 @@ the order they are declared.</li>
  numbers extremely close to zero may underflow to zero, and
  numbers of extremely large absolute value may overflow to
  infinity.).</p>
+
+<h2>Method Details</h2>
+
+<h3><a id='values()'>values</a></h3>
+
+<h3><a id='valueOf(java.lang.String)'>valueOf</a></h3>
 
 <p><a href="/CBOR/">Back to CBOR start page.</a></p>
 </div><nav id="navigation"><ul>
