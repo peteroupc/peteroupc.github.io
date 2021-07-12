@@ -1449,13 +1449,13 @@ calc_linear_func(count=8)
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
-<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).</li>
+<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).  For the same nonterminal, all the <em>p</em> must sum to 1.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) (rewrite <em>X</em> to the nonterminals <em>Y</em> and <em>Z</em> in that order).</li>
 </ul>
 
 <p>Instead of <em>a</em>, a rule can use <em>&epsilon;</em> (the empty string). (The grammar is <em>context-free</em> because the left-hand side has only nonterminals, so that no context from the word is needed to parse it.)</p>
 
-<p><strong>Proposition 5:</strong> <em>Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution&#39;s probability generating function is in A.</em></p>
+<p><strong>Proposition 5:</strong> <em>Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution&#39;s probability generating function is in class A.</em></p>
 
 <p><em>Proof Sketch:</em> In the equivalent pushdown automaton:</p>
 
@@ -1465,7 +1465,7 @@ calc_linear_func(count=8)
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) becomes the two rules&mdash;<br>(START, HEADS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}), and<br>(START, TAILS, <em>X</em>) &rarr; (START, {<em>Z</em>, <em>Y</em>}).</li>
 </ul>
 
-<p>Here, <em>X</em> is the stack symbol EMPTY if <em>X</em> is the grammar&#39;s starting nonterminal. Now, assuming the automaton is full-domain, the rest of the result follows easily.   Now, for a single-letter alphabet, the grammar corresponds to a system of polynomial equations, one for each rule in the grammar, as follows:</p>
+<p>Here, <em>X</em> is the stack symbol EMPTY if <em>X</em> is the grammar&#39;s starting nonterminal. Now, assuming the automaton is full-domain, the rest of the result follows easily.   For a single-letter alphabet, the grammar corresponds to a system of polynomial equations, one for each rule in the grammar, as follows:</p>
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> becomes <em>X</em> = 1 if <em>a</em> is the empty string (<em>&epsilon;</em>), or <em>X</em> =  <em>&lambda;</em> otherwise.</li>
@@ -1477,6 +1477,8 @@ calc_linear_func(count=8)
 
 <blockquote>
 <p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+
+<p><strong>Note:</strong> A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010<sup><a href="#Note9"><strong>(9)</strong></a></sup>).  If the starting nonterminal has <em>n</em> rules of probability 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p>
 </blockquote>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class A.</em></p>
