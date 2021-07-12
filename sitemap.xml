@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://peteroupc.github.io/chisqtest.pdf</loc><lastmod>2021-07-05T05:33:35Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/chisqtest.pdf</loc><lastmod></lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/binarymime.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/extended.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/CBOR/langtags.html</loc><lastmod>2021-05-28T19:26:12Z</lastmod></url>
@@ -80,7 +80,7 @@
 <url><loc>https://peteroupc.github.io/pseudocode.html</loc><lastmod>2021-06-04T23:08:24Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/suppcolor.html</loc><lastmod>2021-05-29T07:50:24Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/requests.html</loc><lastmod>2021-06-23T14:13:00Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/extradist.py</loc><lastmod>2021-07-12T03:57:04Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/extradist.py</loc><lastmod>2021-07-12T16:20:09Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.text.Normalizer.html</loc><lastmod>2021-05-29T07:49:58Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.MessageDataException.html</loc><lastmod>2021-05-29T07:49:58Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/MailLib/api/com.upokecenter.mail.transforms.LiberalSevenBitTransform.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
@@ -407,7 +407,7 @@
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Polyhedra.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html3dutil/H3DU.Lights.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/hash.pdf</loc><lastmod>2021-07-05T05:33:50Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/logconcave.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/logconcave.py</loc><lastmod>2021-07-12T16:20:09Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/estimation.pdf</loc><lastmod>2021-07-05T05:33:41Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/exporand.pdf</loc><lastmod>2021-07-05T05:33:47Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/betadistresults.pdf</loc><lastmod>2021-07-05T05:33:33Z</lastmod></url>
@@ -415,7 +415,7 @@
 <url><loc>https://peteroupc.github.io/BigNumber/demo/index.html</loc><lastmod>2021-05-28T19:26:20Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/BigNumber/index.html</loc><lastmod>2021-05-29T07:49:52Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/bernoulli.html</loc><lastmod>2021-07-10T02:20:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/randomgen.py</loc><lastmod>2021-07-12T03:57:09Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/randomgen.py</loc><lastmod>2021-07-12T16:21:19Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/api/com.upokecenter.util.RDFTerm.html</loc><lastmod>2021-05-29T07:50:03Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/api/com.upokecenter.rdf.ParserException.html</loc><lastmod>2021-05-29T07:50:03Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/TurtleParser/api/com.upokecenter.util.NTriplesParser.html</loc><lastmod>2021-05-29T07:50:03Z</lastmod></url>
@@ -474,14 +474,14 @@
 <url><loc>https://peteroupc.github.io/petero-csharp/index.html</loc><lastmod>2021-05-29T07:49:52Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomfunc.html</loc><lastmod>2021-07-05T16:57:08Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randextract.pdf</loc><lastmod>2021-07-05T05:34:00Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/bernoulli.py</loc><lastmod>2021-07-12T03:57:10Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/bernoulli.py</loc><lastmod>2021-07-12T16:21:19Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/filenames.pdf</loc><lastmod>2021-07-05T05:33:48Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/colorpicker/demo.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/colorpicker/index.html</loc><lastmod>2021-05-29T07:49:52Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/colorutil.zip</loc><lastmod>2021-07-12T03:57:10Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/colorutil.zip</loc><lastmod>2021-07-12T16:21:19Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/IdnaJS/index.html</loc><lastmod>2021-05-29T07:49:53Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomnotes.pdf</loc><lastmod>2021-07-05T05:34:17Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/moore.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/moore.py</loc><lastmod>2021-07-12T16:20:09Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/randomtest.pdf</loc><lastmod>2021-07-05T05:34:18Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randmisc.html</loc><lastmod>2021-07-11T13:16:36Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/Numbers/api/com.upokecenter.numbers.ERounding.html</loc><lastmod>2021-07-11T13:45:07Z</lastmod></url>
@@ -527,14 +527,14 @@
 <url><loc>https://peteroupc.github.io/Calculator/index.html</loc><lastmod>2021-05-29T07:49:53Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randextract.html</loc><lastmod>2021-06-26T02:27:50Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/index.html</loc><lastmod>2021-07-05T05:53:39Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/randomgen.zip</loc><lastmod>2021-07-12T03:57:10Z</lastmod><priority>0.5</priority></url>
-<url><loc>https://peteroupc.github.io/fixed.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
-<url><loc>https://peteroupc.github.io/pcaspd.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/randomgen.zip</loc><lastmod>2021-07-12T16:21:19Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/fixed.py</loc><lastmod>2021-07-12T16:20:10Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/pcaspd.py</loc><lastmod>2021-07-12T16:20:10Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/betadist.pdf</loc><lastmod>2021-07-05T05:33:32Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/canvasback/canvasback.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/canvasback/index.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/interval.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
-<url><loc>https://peteroupc.github.io/approxscheme.py</loc><lastmod>2021-07-12T03:57:05Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/interval.py</loc><lastmod>2021-07-12T16:20:10Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/approxscheme.py</loc><lastmod>2021-07-12T16:20:10Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/estimation.html</loc><lastmod>2021-06-26T12:07:25Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomfunc.pdf</loc><lastmod>2021-07-05T05:34:12Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/requests.pdf</loc><lastmod>2021-07-05T05:34:20Z</lastmod></url>
@@ -575,7 +575,7 @@
 <url><loc>https://peteroupc.github.io/html-gears/gears.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/html-gears/index.html</loc><lastmod>2021-05-29T07:49:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/bernsupp.pdf</loc><lastmod>2021-07-05T05:33:31Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/bernoulli.zip</loc><lastmod>2021-07-12T03:57:10Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/bernoulli.zip</loc><lastmod>2021-07-12T16:21:19Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/colorvalidator/api/Home.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/colorvalidator/api/com.upokecenter.util.ColorValidator.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/colorvalidator/api/index.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
@@ -584,13 +584,13 @@
 <url><loc>https://peteroupc.github.io/colorvalidator/docs/PeterO.ColorValidator.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/colorvalidator/index.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomcommon.pdf</loc><lastmod>2021-07-05T05:34:06Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/betadist.py</loc><lastmod>2021-07-12T03:57:07Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/betadist.py</loc><lastmod>2021-07-12T16:20:11Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/randomcommon.html</loc><lastmod>2021-05-29T07:50:23Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/morealg.html</loc><lastmod>2021-07-12T03:57:04Z</lastmod></url>
+<url><loc>https://peteroupc.github.io/morealg.html</loc><lastmod>2021-07-12T16:20:08Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/random.html</loc><lastmod>2021-06-10T04:38:59Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/hqprng.pdf</loc><lastmod>2021-07-05T05:33:51Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/randomnotes.html</loc><lastmod>2021-07-01T18:35:50Z</lastmod></url>
 <url><loc>https://peteroupc.github.io/autodist.html</loc><lastmod>2021-02-15T12:41:19Z</lastmod></url>
-<url><loc>https://peteroupc.github.io/binomial.py</loc><lastmod>2021-07-12T03:57:04Z</lastmod><priority>0.5</priority></url>
+<url><loc>https://peteroupc.github.io/binomial.py</loc><lastmod>2021-07-12T16:20:09Z</lastmod><priority>0.5</priority></url>
 <url><loc>https://peteroupc.github.io/uniformsum.pdf</loc><lastmod>2021-07-05T05:34:25Z</lastmod></url>
 </urlset>
