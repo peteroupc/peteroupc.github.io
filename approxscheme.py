@@ -2,6 +2,7 @@ from sympy import *
 import math
 import sys
 
+
 def upperbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision upper bound of x.
     try:
@@ -10,6 +11,7 @@ def upperbound(x, boundmult=1000000000000000):
     except TypeError:
         return x
 
+
 def lowerbound(x, boundmult=1000000000000000):
     # Calculates a limited-precision lower bound of x.
     try:
@@ -17,6 +19,7 @@ def lowerbound(x, boundmult=1000000000000000):
         return S(int(floor(x * boundmult).n())) / boundmult
     except TypeError:
         return x
+
 
 def funclimit(func, x, v, dir="+"):
     # Work around SymPy bugs involving limits of piecewise functions
@@ -29,6 +32,7 @@ def funclimit(func, x, v, dir="+"):
             return Piecewise(*pieces).subs(x, v)
         else:
             return limit(func, x, v, dir=dir)
+
 
 def degelev(poly, degs):
     # Degree elevation of Bernstein-form polynomials.
@@ -52,6 +56,7 @@ def degelev(poly, degs):
             c += poly[j] * degs_choose_kj * n_choose_j / ndk
         ret.append(c)
     return ret
+
 
 def estimatehoelder(func, x, alpha=S(1), discontpoints=None):
     # Estimate the alpha-Hölder constant for the given
@@ -91,6 +96,7 @@ def estimatehoelder(func, x, alpha=S(1), discontpoints=None):
             if rn != nan:
                 res.append(rn)
     return Max(*res)
+
 
 def hoelderconst(func, x, alpha):
     # Find the Hölder constant of a continuous function in the interval
@@ -136,6 +142,7 @@ def hoelderconst(func, x, alpha):
     )
     return upperbound(estimatehoelder(func, xz, alpha, points), 10000)
 
+
 def c2params(func, x, n):
     """
       This method returns symbolic expressions for parameters needed to apply my approximation scheme for twice differentiable functions (namely: fbelow(n, k) = f(k/n) - m/(7 * n); fabove(n, k) = f(k/n) + m / (7 * n)).  It takes these parameters:
@@ -159,6 +166,7 @@ def c2params(func, x, n):
     bound1 = nm[0] - offset
     bound2 = nm[1] + offset
     return (dd, bound1, bound2)
+
 
 def buildOffset(kind, dd, n):
     if kind == "c2":
@@ -231,9 +239,11 @@ def buildOffset(kind, dd, n):
     else:
         raise ValueError
 
+
 # NOTE: continuous_domain is currently unreliable for Min/Max/Piecewise,
 # but helps improve speed of numerical optimization
 from sympy.calculus.util import continuous_domain
+
 
 def pwminmax(func, x, intv):
     # Finds minimum of certain piecewise functions
@@ -296,6 +306,7 @@ def pwminmax(func, x, intv):
     # print(mn)
     # print(mx)
     return [Min(*mn), Max(*mx)]
+
 
 def nminmax(func, x, warningctx=None):
     # Find minimum and maximum at [0,1].
@@ -362,6 +373,7 @@ def nminmax(func, x, warningctx=None):
     cv = cv2
     return [lowerbound(Min(*cv)), upperbound(Max(*cv))]
 
+
 def buildParam(kind, func, x, warningctx=None):
     if kind == "myhoelderhalf":
         if warningctx:
@@ -420,6 +432,7 @@ def buildParam(kind, func, x, warningctx=None):
     dd = upperbound(dd, 100000)
     return dd
 
+
 def consistencyCheckInner(prevcurve, newcurve, ratio=1, diagnose=False, conc=None):
     n, prevcurve, prevoffset = prevcurve
     n2, newcurve, newoffset = newcurve
@@ -462,6 +475,7 @@ def consistencyCheckInner(prevcurve, newcurve, ratio=1, diagnose=False, conc=Non
             return "incons"
     return True
 
+
 def isinrange(curve, ratio, conc=None):
     n, curve, offset = curve
     offset *= ratio
@@ -471,6 +485,7 @@ def isinrange(curve, ratio, conc=None):
         if (lb < 0 and conc != "concave") or (ub > 1 and conc != "convex"):
             return False
     return True
+
 
 def concavity(func, x, warningctx=None):
     try:
@@ -532,6 +547,7 @@ def concavity(func, x, warningctx=None):
     # is unaffected in this case
     return None
 
+
 def consistencyCheckCore(curvedata, ratio, diagnose=False):
     for i in range(len(curvedata) - 1):
         cons = consistencyCheckInner(
@@ -541,10 +557,13 @@ def consistencyCheckCore(curvedata, ratio, diagnose=False):
             return False
     return True
 
+
 def srepl(s):
     return str(s).replace("&", "&amp;")
 
+
 import re
+
 
 def funcstring(func, x):
     pwfunc = func.subs(x, symbols("lambda")).rewrite(Piecewise)
@@ -614,6 +633,7 @@ def funcstring(func, x):
     data = data.replace("*", "\*")
     return data
 
+
 def bernpoly(a, x):
     # Create a polynomial in Bernstein form using the given
     # array of coefficients and the symbol x.  The polynomial's
@@ -627,6 +647,7 @@ def bernpoly(a, x):
         bino = v[i] if i < len(v) else v[n - i]
         ret += a[i] * bino * pt ** i * (1 - pt) ** (n - i)
     return ret
+
 
 def dominates(func, x, hfunc, warningctx=None):
     # Determine whether hfunc is greater than func
@@ -656,6 +677,7 @@ def dominates(func, x, hfunc, warningctx=None):
                 return False
         return True
 
+
 def findh(func, x, endzero=False, warningctx=None):
     # Finds a polynomial that bounds func from above.
     fdiff = diff(func, x).subs(x, 0)
@@ -671,6 +693,7 @@ def findh(func, x, endzero=False, warningctx=None):
         deg *= 2
     return None
 
+
 def findq(func, x, warningctx=None):
     # Finds a polynomial that bounds func from below.
     deg = 1
@@ -682,6 +705,7 @@ def findq(func, x, warningctx=None):
             return coeffs
         deg *= 2
     return None
+
 
 def approxscheme2(
     func, x, kind=None, lip=None, double=True, levels=9, isdiff=False, warningctx=None

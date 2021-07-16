@@ -3,6 +3,7 @@ import betadist
 from betadist import *
 from betadist import _RGConv
 
+
 def truncated_gamma(rg, bern, ax, ay, precision=53):
     # Văduva's gamma generator truncated to [0, 1],
     # when ax/ay is in (0, 1].  Described in Devroye 1986, p. 180.
@@ -18,6 +19,7 @@ def truncated_gamma(rg, bern, ax, ay, precision=53):
                 break
             w = u
             k += 1
+
 
 def forsythe_prob2(rg, x):
     # Returns 1 with probability x*exp(1-x), where x is in [0, 1].
@@ -43,6 +45,7 @@ def forsythe_prob2(rg, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
 
+
 def forsythe_prob3(rg, x):
     # Returns 1 with probability erf(x)/erf(1), where x is in [0, 1].
     # Implemented with the help of Theorem IV.2.1(iii) given in
@@ -64,6 +67,7 @@ def forsythe_prob3(rg, x):
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, x) == 1 else 0
 
+
 def forsythe_prob(rg, m, n):
     # Returns 1 with probability gamma(m,n)/gamma(m,1),
     # where gamma(.) is the lower incomplete gamma function.
@@ -83,6 +87,7 @@ def forsythe_prob(rg, m, n):
             u = v
         if k % 2 == 1:
             return 1 if psrn_less_than_fraction(rg, ret, n) == 1 else 0
+
 
 def exp_minus_x2y(rg, f, y, pwr=2):
     """ B(x) -> B(exp(-x*x*y)) """
@@ -118,6 +123,7 @@ def exp_minus_x2y(rg, f, y, pwr=2):
         fac *= n
         y *= uy
 
+
 def exp_minus_xy(rg, f, y):
     """ B(x) -> B(exp(-x*y)) """
     if y > 1:
@@ -151,6 +157,7 @@ def exp_minus_xy(rg, f, y):
         fac *= n
         y *= uy
 
+
 def sampleIntPlusBag(rg, psrn, k):
     """Return 1 with probability (x+k)/2^bitlength(k).
     Ignores PSRN's integer part and sign."""
@@ -171,6 +178,7 @@ def sampleIntPlusBag(rg, psrn, k):
         if psrn[2][r] == None:
             psrn[2][r] = rg.randbit()
         return psrn[2][r]
+
 
 def rayleighpsrn(rg, s=1):
     k = 0
@@ -204,6 +212,7 @@ def rayleighpsrn(rg, s=1):
             bag[1] = k
             return bag
 
+
 def size_biased_poisson_ailamujia(rg, eta=1):
     """Hassan, A., Dar, S.A., et al., "On size biased Poisson Ailamujia distribution and its applications",
     Pak. J. Statistics 37(1), 19-38, 2021."""
@@ -218,6 +227,7 @@ def size_biased_poisson_ailamujia(rg, eta=1):
             return z
         cumu -= pr
         z += 1
+
 
 if __name__ == "__main__":
     # The following code tests some of the methods in this module and the betadist module.

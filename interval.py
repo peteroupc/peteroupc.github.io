@@ -17,6 +17,7 @@ from fractions import Fraction
 #  A Library for Interval Arithmetic", arXiv:0708.3721 [cs.MS], 2007.
 #
 
+
 class FInterval:
     """An interval of two Fractions.  x.sup holds the upper bound, and x.inf holds
     the lower bound."""
@@ -589,6 +590,7 @@ class FInterval:
     def __repr__(self):
         return "[%s, %s]" % (float(self.inf), float(self.sup))
 
+
 _BERNNUMBERS = [
     Fraction(1),
     Fraction(-1, 2),
@@ -604,6 +606,7 @@ _BERNNUMBERS = [
     0,
 ]
 _extrabernnumbers = {}
+
 
 def bernoullinum(n):
     # Calculates Bernoulli numbers
@@ -625,7 +628,9 @@ def bernoullinum(n):
     _extrabernnumbers[n] = ret
     return ret
 
+
 _STIRLING1 = {}
+
 
 def stirling1(n, k):
     # Calculates Stirling numbers of the first kind
@@ -639,6 +644,7 @@ def stirling1(n, k):
     _STIRLING1[(n, k)] = ret
     return ret
 
+
 def _polynomialProduct(a, b):
     # Finds the product of two polynomials.  Each polynomial
     # is a list of the following form:
@@ -650,12 +656,14 @@ def _polynomialProduct(a, b):
             ret[i + j] += a[i] * b[j]
     return ret
 
+
 def _polynomialProductA(a, b0, b1):
     ret = [0 for i in range(len(a) + 1)]
     for i in range(len(a)):
         ret[i] += a[i] * b0  # b0 is 0th-order coefficient
         ret[i + 1] += a[i] * b1  # b1 is 1st-order coefficient
     return ret
+
 
 def _polynomialIntegral(p, x=1):
     # Finds the integral of a polynomial at the point x.
@@ -669,8 +677,10 @@ def _polynomialIntegral(p, x=1):
     else:
         return sum(Fraction(p[i] * x ** i, i + 1) for i in range(len(p)))
 
+
 _logpi2cache = {}
 _FRACTION_ZERO = Fraction(0)
+
 
 def loggamma(k, v=4):
     global _logpi2cache
@@ -738,6 +748,7 @@ def loggamma(k, v=4):
     retsup = max(ret.sup + ediff, 0)
     return FInterval(retinf, retsup)
 
+
 def logbinco(n, k, v=4):
     # Log binomial coefficient.
     # v is an accuracy parameter.
@@ -747,6 +758,7 @@ def logbinco(n, k, v=4):
         r = loggamma(n + 1, v) - loggamma(k + 1, v) - loggamma((n - k) + 1, v)
     return r.truncate()
 
+
 def logbinprob(n, k, v=4):
     # Log of binomial probability, that is, the log of the probability
     # that exactly k zeros occur among n unbiased random bits.
@@ -754,10 +766,12 @@ def logbinprob(n, k, v=4):
     divisor = FInterval(2).log(v + 4) * n  # ln(2)*n = ln(2**n)
     return logbinco(n, k, v) - divisor
 
+
 def logpoisson(lamda, n, v=4):
     # Log of the probability that a Poisson(lamda) random number is n.
     # v is an accuracy parameter.
     return FInterval(lamda).log(v + 4) * n - lamda - loggamma(n + 1, v)
+
 
 if __name__ == "__main__":
     print("----")
