@@ -994,32 +994,37 @@ Now, assume the oracle's numbers are all less than or equal to _b_ (rather than 
 
 This section has mathematical proofs showing which kinds of algebraic functions (functions that can be a solution of a system of polynomial equations) can be simulated with a pushdown automaton (a state machine with a stack).
 
-A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes a biased coin. It starts with a given state and its stack starts with EMPTY.  On each iteration:
+The following definitions are used in this section:
 
-- The automaton flips the coin.
-- Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero, one or two symbols.  Thus, there are three kinds of _transition rules_:
-     - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_}): move to _state2_, replace top stack symbol with same or different one.
-     - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_, _new_}): move to _state2_, replace top stack symbol with _symbol2_, then _push_ a new symbol (_new_) onto the stack.
-     - (_state_, _flip_, _symbol_) &rarr; (_state2_, {}): move to _state2_, _pop_ the top symbol from the stack.
+1. A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes a biased coin. It starts with a given state and its stack starts with EMPTY.  On each iteration:
+    - The automaton flips the coin.
+    - Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero, one or two symbols.  Thus, there are three kinds of _transition rules_:
+         - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_}): move to _state2_, replace top stack symbol with same or different one.
+         - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_, _new_}): move to _state2_, replace top stack symbol with _symbol2_, then _push_ a new symbol (_new_) onto the stack.
+         - (_state_, _flip_, _symbol_) &rarr; (_state2_, {}): move to _state2_, _pop_ the top symbol from the stack.
 
-When the stack is empty, the machine stops, and returns either 0 or 1 depending on the state it ends up at.
+    When the stack is empty, the machine stops, and returns either 0 or 1 depending on the state it ends up at.
 
-Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.  Also, these machines are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
+2. A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
+3. **PDA** is the class of functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.
+4. **ALGRAT** is the class of functions that map the open interval (0, 1) to (0, 1), are continuous, and are algebraic over the rational numbers (they satisfy a polynomial system whose coefficients are rational numbers).
 
-In this section:
+> **Notes:**
+>
+> 1. Mossel and Peres (2005)<sup>[**(8)**](#Note8)</sup> defined pushdown automata to start with a non-empty stack of _arbitrary_ size, and to allow each rule to replace the top symbol with an _arbitrary_ number of symbols.  Both cases can be reduced to the definition in this section.
+> 2. Pushdown automata, as defined here, are very similar to so-called _probabilistic right-linear indexed grammars_ (Icard 2020)<sup>[**(33)**](#Note33)</sup> and can be translated to those grammars as well as to _probabilistic pushdown systems_ (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>, as long as those grammars and systems use only transition probabilities that are rational numbers.
 
-- A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
-- _A_ is the class of algebraic functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.
+**Proposition 0** (Mossel and Peres 2005<sup>[**(33)**](#Note33)</sup>, Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is in class **ALGRAT**._
 
-**Proposition 0** (Mossel and Peres 2005<sup>[**(33)**](#Note33)</sup>, Theorem 1.2): _A full-domain pushdown automaton can simulate a function that maps (0, 1) to (0, 1) only if the function is algebraic over the rationals (the polynomial system's coefficients must be rational numbers)._
+It is not known whether **ALGRAT** and **PDA** are equal, but the following can be established about **PDA**:
 
-**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their product, namely f(&lambda;)\*g(&lambda;)._
+**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
 _Proof:_ Let _F_ be a full-domain pushdown automaton for _f_, and let _G_ be that for _g_.
 
 Assume that machines _F_ and _G_ stop when they pop EMPTY from the stack.  If this is not the case, transform both machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, _flip_, EMPTY) &rarr; (_start_, {EMPTY&prime;&prime;}) and rule (_state_, _flip_, EMPTY) &rarr; (_state_, {}) for all states other than X0, where _start_ is the starting state of _F_ or _G_, as the case may be.
 
-First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
+Now, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
 
 (_state_, _flip_, EMPTY) &rarr; (_state2_, {}),
 
@@ -1027,9 +1032,9 @@ where _state2_ is a final state of _F_ associated with output 1, replace that ru
 
 (_state_, _flip_, EMPTY) &rarr; (_gstart_, {EMPTY}),
 
-where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
+where _gstart_ is the starting state for _G_.  Then take the final states of the combined machine as the union of the final states of _F_ and _G_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
-**Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class A, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
+**Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
 
 _Proof:_ Let _F_ be the full-domain pushdown automaton for _f_, and let _G_ be that for _g_. As in Proposition 1, assume that machines _F_ and _G_ stop when they pop EMPTY from the stack. First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in _F_ of the form&mdash;
 
@@ -1052,13 +1057,13 @@ where _gstart_ is the starting state for _G_, and copy the rules of the automato
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 1, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>1</sub>, {}).
 - Replace each rule in _G_ of the form (_state_, _flip_, EMPTY&prime;) &rarr; (_state2_, {}), where _state2_ is a final state of _G_ associated with output 0, with the rule (_state_, _flip_, EMPTY&prime;) &rarr; ( _state_<sub>0</sub>, {}).
 
-Then, the final states of the new machine are the same as those for the original machine _F_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
+Then, the final states of the new machine are the same as those for the original machine _F_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
-**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class A._
+**Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class **PDA**._
 
 _Proof:_ These functions can be simulated by a finite-state machine (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  This corresponds to a full-domain pushdown automaton that has no stack symbols other than EMPTY, never pushes symbols onto the stack, and pops the only symbol EMPTY from the stack whenever it transitions to a final state of the finite-state machine. &#x25a1;
 
-**Proposition 4:** _If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution's probability generating function is in class A._
+**Proposition 4:** _If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution's probability generating function is in class **PDA**._
 
 _Proof:_ Let _F_ be a full-domain pushdown automaton.  Add one state FAILURE, then augment _F_ with a special "letter-generating" operation as follows.  Add the following rule that pops all symbols from the stack:
 
@@ -1074,7 +1079,7 @@ add another state S&prime; (with a name that differs from all other states) and 
 (S&prime;, HEADS, _stacksymbol_) &rarr; (T, _newstack_), and<br/>
 (S&prime;, TAILS, _stacksymbol_) &rarr; (FAILURE, {}).
 
-Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
+Then if the stack is empty upon reaching the FAILURE state, the result is 0, and if the stack is empty upon reaching any other state, the result is 1.  By (Dughmi et al. 2021)<sup>[**(35)**](#Note35)</sup>, the machine now simulates the distribution's probability generating function.  Moreover, the function is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 Define a _stochastic context-free grammar_ as follows.  The grammar consists of a finite set of _nonterminals_ and a finite set of _letters_, and rewrites one nonterminal (the starting nonterminal) into a word.  The grammar has three kinds of rules (in generalized Chomsky Normal Form (Etessami and Yannakakis 2009)<sup>[**(34)**](#Note34)</sup>):
 
@@ -1084,7 +1089,7 @@ Define a _stochastic context-free grammar_ as follows.  The grammar consists of 
 
 Instead of _a_, a rule can use _&epsilon;_ (the empty string). (The grammar is _context-free_ because the left-hand side has only nonterminals, so that no context from the word is needed to parse it.)
 
-**Proposition 5:** _Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution's probability generating function is in class A._
+**Proposition 5:** _Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution's probability generating function is in class **PDA**._
 
 _Proof Sketch:_ In the equivalent pushdown automaton:
 
@@ -1104,27 +1109,27 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >
 > **Note:** A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010<sup>[**(9)**](#Note9)</sup>).  If the starting nonterminal has _n_ rules of probability 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
 
-**Proposition 6:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, it can generate a distribution of such words conditioned on a finite set of word lengths._
+**Proposition 6:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, there is a full-domain pushdown automaton that can generate a distribution of such words conditioned on a finite set of word lengths._
 
-_Proof Sketch:_ As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6} so that only words of length 1, 3, 5, and 6 are allowed), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its starting state be the starting state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its starting state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0. &#x25a1;
+_Proof Sketch:_ As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6} so that only words of length 1, 3, 5, and 6 are allowed), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its start state be the state state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its start state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0. &#x25a1;
 
-**Proposition 7:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, it can generate a distribution of such words conditioned on a periodic infinite set of word lengths._
+**Proposition 7:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, there is a full-domain pushdown automaton that can generate a distribution of such words conditioned on a periodic infinite set of word lengths._
 
-A _periodic infinite set_ is defined by a finite set of integers such as {1}, as well as an integer modulus such as 2, so that in this example, all integers congruent to 1 modulo 2 (that is, all odd integers) are allowed word lengths and belong to the set.
+A _periodic infinite set_ is defined by a set of integers such as {1}, as well as an integer modulus such as 2, so that in this example, all integers congruent to 1 modulo 2 (that is, all odd integers) are allowed word lengths and belong to the set.
 
-_Proof Sketch:_ Follow proposition 6, except: (1) _M_ is equal to the integer modulus minus 1.  (2) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton. &#x25a1;
+_Proof Sketch:_ Follow proposition 6, except as follows: (1) _M_ is equal to the integer modulus minus 1.  (2) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton. &#x25a1;
 
-**Lemma 1:** _The square root function sqrt(&lambda;) is in class A._
+**Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 
 _Proof:_ See (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>. &#x25a1;
 
-**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class A._
+**Corollary 1:** _The function f(&lambda;) = &lambda;<sup>m/(2<sup>n</sup>)</sup>, where n &ge; 1 is an integer and where m &ge; 1 is an integer, is in class **PDA**._
 
 _Proof:_ Start with the case _m_=1.  If _n_ is 1, write _f_ as sqrt(_&lambda;_); if _n_ is 2, write _f_ as sqrt&#x2218;sqrt(_&lambda;_); and for general _n_, write _f_ as sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_), with _n_ instances of sqrt.  Because this is a composition and sqrt can be simulated by a full-domain pushdown automaton, so can _f_.
 
 For general _m_ and _n_, write _f_ as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(_&lambda;_))<sup>_m_</sup>, with _n_ instances of sqrt.  This involves doing _m_ multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can _f_.
 
-Moreover, _f_ is in class _A_ by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
+Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup> because the machine is a full-domain pushdown automaton. &#x25a1;
 
 <a id=License></a>
 ## License
