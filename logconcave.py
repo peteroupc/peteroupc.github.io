@@ -7,7 +7,6 @@
 import math
 import random
 
-
 class TConcaveDiscreteSampler:
     """
     Generates a random number that follows a
@@ -99,7 +98,6 @@ class TConcaveDiscreteSampler:
         ret += "        ret = math.floor(v/u)+%.15g\n" % (self.mode)
         ret += "        if u*u <= %s(ret): return ret\n\n" % (pdfcall)
         return ret
-
 
 class TConcaveSampler:
     """
@@ -233,7 +231,6 @@ class TConcaveSampler:
             if u * u <= self.f(ret):
                 return ret
 
-
 class LogConcaveSampler:
     """
     Generates a random number that follows a distribution
@@ -358,7 +355,6 @@ class LogConcaveSampler:
             elif logchi <= pr:
                 return ret
 
-
 class UnimodalSampler:
     """
     Generates a random number that follows a unimodal distribution
@@ -434,7 +430,6 @@ class UnimodalSampler:
                     self.mode, self.mode + 1, self.modecdf, self.modecdfright
                 )
 
-
 class LogConcaveSampler2:
     """
     Generates a random number that follows a distribution
@@ -490,7 +485,6 @@ class LogConcaveSampler2:
                 ret = self.right.sampleIteration()
                 if ret != None:
                     return ret
-
 
 class LogConcaveSamplerMonotone:
     """
@@ -669,7 +663,6 @@ class LogConcaveSamplerMonotone:
             if ret != None:
                 return ret
 
-
 class NormalDist:
     def __init__(self, mu=0, sigma=1):
         psi = lambda x: -(x * x) / (2 * sigma * sigma)
@@ -678,7 +671,6 @@ class NormalDist:
 
     def sample(self, n):
         return [x + self.mu for x in self.sampler.sample(n)]
-
 
 class GenInvGaussianAlphaBeta:
     def __init__(self, lamda, alpha, beta):
@@ -697,7 +689,6 @@ class GenInvGaussianAlphaBeta:
         return GenInvGaussianAlphaBeta(
             lamda, math.sqrt(psi / chi), math.sqrt(psi * chi)
         )
-
 
 class GammaDist:
     # Devroye 2014
@@ -723,7 +714,6 @@ class GammaDist:
             for x in self.sampler.sample(n)
         ]
 
-
 class GenInvGaussian:
     def __init__(self, lamda, omega):
         # omega>0, lamda>=0. Two-parameter version described in Devroye 2014
@@ -741,7 +731,6 @@ class GenInvGaussian:
 
     def sample(self, n):
         return [self._trans(x) for x in self.sampler.sample(n)]
-
 
 if __name__ == "__main__":
 

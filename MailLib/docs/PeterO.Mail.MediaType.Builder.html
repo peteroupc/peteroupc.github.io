@@ -1,22 +1,18 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.MediaTypeBuilder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>PeterO.Mail.MediaType.Builder</title><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
-<h1>PeterO.Mail.MediaTypeBuilder</h1>
+<h1>PeterO.Mail.MediaType.Builder</h1>
 
-<h2>PeterO.Mail.MediaTypeBuilder</h2>
+<h2>PeterO.Mail.MediaType.Builder</h2>
 
-<pre>public sealed class MediaTypeBuilder
+<pre>public sealed class Builder
 </pre>
 
-<p><b>Deprecated.</b> Use MediaType.Builder instead.</p>
-
-<p>A mutable media type object.</p>
+<p>A mutable data type that allows a media type object to be built.</p>
 
 <h3>Member Summary</h3>
 
 <ul>
-<li><code><a href="#IsMultipart">IsMultipart</a></code> - <b>Deprecated:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string &#39;multipart&#39;.</li>
-<li><code><a href="#IsText">IsText</a></code> - <b>Deprecated:</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string &#39;text&#39;.</li>
 <li><code><a href="#RemoveParameter_string">RemoveParameter(string)</a></code> - Removes a parameter from this builder object.</li>
 <li><code><a href="#SetParameter_string_string">SetParameter(string, string)</a></code> - Sets a parameter&#39;s name and value for this media type.</li>
 <li><code><a href="#SetSubType_string">SetSubType(string)</a></code> - Sets this media type&#39;s subtype, such as &quot;plain&quot; or &quot;xml&quot; .</li>
@@ -29,13 +25,13 @@
 
 <p><a id="Void_ctor_PeterO_Mail_MediaType"></a></p>
 
-<h3>MediaTypeBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public MediaTypeBuilder(
+<pre>public Builder(
     PeterO.Mail.MediaType mt);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class using the data from another media type.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.MediaType.Builder.html">PeterO.Mail.MediaType.Builder</a> class using the data from another media type.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -54,14 +50,14 @@ is null.</li>
 
 <p><a id="Void_ctor_System_String_System_String"></a></p>
 
-<h3>MediaTypeBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public MediaTypeBuilder(
+<pre>public Builder(
     string type,
     string subtype);
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class.</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.MediaType.Builder.html">PeterO.Mail.MediaType.Builder</a> class.</p>
 
 <p><b>Parameters:</b></p>
 
@@ -72,42 +68,12 @@ is null.</li>
 
 <p><a id="Void_ctor"></a></p>
 
-<h3>MediaTypeBuilder Constructor</h3>
+<h3>Builder Constructor</h3>
 
-<pre>public MediaTypeBuilder();
+<pre>public Builder();
 </pre>
 
-<p>Initializes a new instance of the <a href="PeterO.Mail.MediaTypeBuilder.html">PeterO.Mail.MediaTypeBuilder</a> class, using the type &quot;application/octet-stream&quot; .</p>
-
-<p><a id="IsMultipart"></a></p>
-
-<h3>IsMultipart</h3>
-
-<pre>public bool IsMultipart { get; }
-</pre>
-
-<p><b>Deprecated.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string &#39;multipart&#39;.</p>
-
-<p>Gets a value indicating whether this is a multipart media type.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a multipart media type; otherwise,  <code>false</code> .</p>
-
-<p><a id="IsText"></a></p>
-
-<h3>IsText</h3>
-
-<pre>public bool IsText { get; }
-</pre>
-
-<p><b>Deprecated.</b> Instead of using this property, use the TopLevelType property and compare the result with the exact string &#39;text&#39;.</p>
-
-<p>Gets a value indicating whether this is a text media type.</p>
-
-<p><b>Returns:</b></p>
-
-<p><code>true</code>  If this is a text media type; otherwise,  <code>false</code> .</p>
+<p>Initializes a new instance of the <a href="PeterO.Mail.MediaType.Builder.html">PeterO.Mail.MediaType.Builder</a> class, using the type &quot;application/octet-stream&quot; .</p>
 
 <p><a id="SubType"></a></p>
 
@@ -157,7 +123,7 @@ The property is being set and the value is syntactically invalid for a top-level
 
 <h3>RemoveParameter</h3>
 
-<pre>public PeterO.Mail.MediaTypeBuilder RemoveParameter(
+<pre>public PeterO.Mail.MediaType.Builder RemoveParameter(
     string name);
 </pre>
 
@@ -185,7 +151,7 @@ is null.</li>
 
 <h3>SetParameter</h3>
 
-<pre>public PeterO.Mail.MediaTypeBuilder SetParameter(
+<pre>public PeterO.Mail.MediaType.Builder SetParameter(
     string name,
     string value);
 </pre>
@@ -219,7 +185,7 @@ is empty or syntactically invalid.</p></li>
 
 <h3>SetSubType</h3>
 
-<pre>public PeterO.Mail.MediaTypeBuilder SetSubType(
+<pre>public PeterO.Mail.MediaType.Builder SetSubType(
     string str);
 </pre>
 
@@ -250,7 +216,7 @@ is empty or syntactically invalid.</p></li>
 
 <h3>SetTopLevelType</h3>
 
-<pre>public PeterO.Mail.MediaTypeBuilder SetTopLevelType(
+<pre>public PeterO.Mail.MediaType.Builder SetTopLevelType(
     string str);
 </pre>
 

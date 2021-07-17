@@ -12,7 +12,6 @@ from randomgen import RandomGen, FastLoadedDiceRoller
 from fractions import Fraction
 from interval import FInterval
 
-
 class MooreSampler:
     """
     Moore rejection sampler, for generating independent samples
@@ -322,7 +321,6 @@ class MooreSampler:
                         )
                     break
         return [None, trials]
-
 
 if __name__ == "__main__":
 
