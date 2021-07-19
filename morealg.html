@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/18"><meta name="citation_online_date" content="2021/07/18"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/19"><meta name="citation_online_date" content="2021/07/19"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -453,7 +453,7 @@
 
 <ul>
 <li><em>g</em>(<em>&lambda;</em>) is a continuous function that maps the half-open interval [0, 1) to the closed interval [0, 1] and admits a Bernoulli factory. If <em>g</em> is a rational function (a ratio of two polynomials) with rational coefficients, then <em>f</em> is algebraic and can be simulated by a <em>pushdown automaton</em>, as in the algorithm below. But this algorithm will still work even if <em>g</em> is not a rational function.</li>
-<li><p>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function.</p></li>
+<li><p>OGF(<em>x</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>x</em><sup><em>n</em></sup>*choose(2*<em>n</em>, <em>n</em>) is the algorithm&#39;s ordinary generating function (also known as counting generating function).</p></li>
 </ul>
 
 <ol>
@@ -1354,6 +1354,18 @@ calc_linear_func(count=8)
 
 <p>This section has mathematical proofs showing which kinds of algebraic functions (functions that can be a solution of a system of polynomial equations) can be simulated with a pushdown automaton (a state machine with a stack).</p>
 
+<p>The following summarizes what can be established about these algebraic functions:</p>
+
+<ul>
+<li>sqrt(<em>&lambda;</em>) can be simulated.</li>
+<li>Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.</li>
+<li>If <em>f</em>(<em>&lambda;</em>) and <em>g</em>(<em>&lambda;</em>) can be simulated, so can their product and their composition.</li>
+<li>If a full-domain pushdown automaton (defined later) can generate a distribution of lengths of words of the same letter, then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).</li>
+<li>The probability generating function for any stochastic context-free grammar (defined later) that terminates with probability 1 can be simulated.</li>
+</ul>
+
+<hr>
+
 <p>The following definitions are used in this section:</p>
 
 <ol>
@@ -1438,6 +1450,8 @@ calc_linear_func(count=8)
 
 <p><strong>Proposition 4:</strong> <em>If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution&#39;s probability generating function is in class <strong>PDA</strong>.</em></p>
 
+<p>A <em>probability generating function</em> has the form <em>p</em><sub>0</sub>*<em>&lambda;</em><sup>0</sup> + <em>p</em><sub>1</sub>*<em>&lambda;</em><sup>1</sup> + ..., where <em>p</em><sub><em>i</em></sub> (a <em>coefficient</em>) is the probability of getting <em>i</em>.</p>
+
 <p><em>Proof:</em> Let <em>F</em> be a full-domain pushdown automaton.  Add one state FAILURE, then augment <em>F</em> with a special &quot;letter-generating&quot; operation as follows.  Add the following rule that pops all symbols from the stack:</p>
 
 <p>(FAILURE, <em>flip</em>, <em>stacksymbol</em>) &rarr; (FAILURE, {}),</p>
@@ -1462,7 +1476,7 @@ calc_linear_func(count=8)
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) (rewrite <em>X</em> to the nonterminals <em>Y</em> and <em>Z</em> in that order).</li>
 </ul>
 
-<p>Instead of <em>a</em>, a rule can use <em>&epsilon;</em> (the empty string). (The grammar is <em>context-free</em> because the left-hand side has only nonterminals, so that no context from the word is needed to parse it.)</p>
+<p>Instead of <em>a</em>, a rule can use <em>&epsilon;</em> (the empty string). (The grammar is <em>context-free</em> because the left-hand side has only a single nonterminal, so that no context from the word is needed to parse it.)</p>
 
 <p><strong>Proposition 5:</strong> <em>Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution&#39;s probability generating function is in class <strong>PDA</strong>.</em></p>
 
@@ -1485,7 +1499,12 @@ calc_linear_func(count=8)
 <p>Solving this system for the grammar&#39;s starting nonterminal, and applying Proposition 4, leads to the <em>probability generating function</em> for the grammar&#39;s word distribution.  (See also Flajolet et al. 2010<sup><a href="#Note9"><strong>(9)</strong></a></sup>, Icard 2020<sup><a href="#Note33"><strong>(33)</strong></a></sup>.) &#x25a1;</p>
 
 <blockquote>
-<p><strong>Example:</strong> The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</p>
+<p><strong>Examples:</strong></p>
+
+<ol>
+<li>The stochastic context-free grammar&mdash;<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X1</em>),<br><em>X1</em> &rarr; (<em>X</em>, <em>X2</em>),<br><em>X2</em> &rarr; (<em>X</em>, <em>X</em>),<br><em>X</em> &rarr;<sub>1/2</sub> (<em>a</em>, <em>X3</em>),<br><em>X3</em> &rarr; <em>&epsilon;</em>,<br>which encodes ternary trees (Flajolet et al. 2010)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, corresponds to the equation <em>X</em> = (1/2) * <em>&lambda;</em>*<em>X</em>*<em>X</em>*<em>X</em> + (1/2)*<em>&lambda;</em>*1, and solving this equation for <em>X</em> leads to the probability generating function for such trees, which is a complicated expression.</li>
+<li>The s</li>
+</ol>
 
 <p><strong>Note:</strong> A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010<sup><a href="#Note9"><strong>(9)</strong></a></sup>).  If the starting nonterminal has <em>n</em> rules of probability 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p>
 </blockquote>
@@ -1497,11 +1516,12 @@ calc_linear_func(count=8)
 <li><em>a periodic infinite set of word lengths.</em></li>
 </ol>
 
-<p>One example of a finite set of word lengths is {1, 3, 5, 6}, where only words of length 1, 3, 5, or 6 are allowed.  A <em>periodic infinite set</em> is defined by a set of integers such as {1}, as well as an integer modulus such as 2, so that in this example, all integers congruent to 1 modulo 2 (that is, all odd integers) are allowed word lengths and belong to the set.
-<em>Proof Sketch:</em></p>
+<p>One example of a finite set of word lengths is {1, 3, 5, 6}, where only words of length 1, 3, 5, or 6 are allowed.  A <em>periodic infinite set</em> is defined by a finite set of integers such as {1}, as well as an integer modulus such as 2, so that in this example, all integers congruent to 1 modulo 2 (that is, all odd integers) are allowed word lengths and belong to the set.</p>
+
+<p><em>Proof Sketch:</em></p>
 
 <ol>
-<li><p>As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let <em>S</em> be the finite set (e.g., {1, 3, 5, 6}), and let <em>M</em> be the maximum value in the finite set.  For each integer <em>i</em> in [0, <em>M</em>], make a copy of the automaton and append the integer <em>i</em> to the name of each of its states.  Combine the copies into a new automaton <em>F</em>, and let its start state be the state state for copy 0.  Now, whenever <em>F</em> generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2&#39;s version of &quot;XYZ&quot;, namely &quot;2_XYZ&quot;, transition to &quot;3_XYZ&quot; instead), or if the last copy is reached, transition to the last copy&#39;s FAILURE state.  If <em>F</em> would transition to a failure state corresponding to a copy not in <em>S</em> (e.g., &quot;0_FAILURE&quot;, &quot;2_FAILURE&quot;, &quot;3_FAILURE&quot; in this example), first all symbols other than EMPTY are popped from the stack and then <em>F</em> transitions to its start state (this is a so-called &quot;rejection&quot; operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in <em>S</em> (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.</p></li>
+<li><p>As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let <em>S</em> be the finite set (e.g., {1, 3, 5, 6}), and let <em>M</em> be the maximum value in the finite set.  For each integer <em>i</em> in [0, <em>M</em>], make a copy of the automaton and append the integer <em>i</em> to the name of each of its states.  Combine the copies into a new automaton <em>F</em>, and let its start state be the start state for copy 0.  Now, whenever <em>F</em> generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2&#39;s version of &quot;XYZ&quot;, namely &quot;2_XYZ&quot;, transition to &quot;3_XYZ&quot; instead), or if the last copy is reached, transition to the last copy&#39;s FAILURE state.  If <em>F</em> would transition to a failure state corresponding to a copy not in <em>S</em> (e.g., &quot;0_FAILURE&quot;, &quot;2_FAILURE&quot;, &quot;3_FAILURE&quot; in this example), first all symbols other than EMPTY are popped from the stack and then <em>F</em> transitions to its start state (this is a so-called &quot;rejection&quot; operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in <em>S</em> (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.</p></li>
 <li><p>Follow (2), except as follows: (A) <em>M</em> is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;</p></li>
 </ol>
 
