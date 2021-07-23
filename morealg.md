@@ -1099,7 +1099,7 @@ Define a _stochastic context-free grammar_ as follows.  The grammar consists of 
 - _X_ &rarr;<sub>_p_</sub> (_a_, _Y_) (with rational probability _p_, rewrite _X_ to the letter _a_ followed by the nonterminal _Y_).  For the same nonterminal, all the _p_ must sum to 1.
 - _X_ &rarr; (_Y_, _Z_) (rewrite _X_ to the nonterminals _Y_ and _Z_ in that order).
 
-Instead of _a_, a rule can use _&epsilon;_ (the empty string). (The grammar is _context-free_ because the left-hand side has only a single nonterminal, so that no context from the word is needed to parse it.)
+Instead of a letter (such as _a_), a rule can use _&epsilon;_ (the empty string). (The grammar is _context-free_ because the left-hand side has only a single nonterminal, so that no context from the word is needed to parse it.)
 
 **Proposition 5:** _Every stochastic context-free grammar can be transformed into a pushdown automaton.  If the automaton is a full-domain pushdown automaton and the grammar has a one-letter alphabet, the automaton can generate words such that the length of each word follows the same distribution as the grammar, and that distribution's probability generating function is in class **PDA**._
 
@@ -1133,6 +1133,10 @@ _Proof Sketch:_
 1. As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6}), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its start state be the start state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its start state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.
 
 2. Follow (1), except as follows: (A) _M_ is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;
+
+**Proposition 7**: _If a pushdown automaton has a bounded stack size, it can simulate only rational functions._
+
+_Proof Sketch_: Just transform the automaton into a finite-state machine in which each state not only holds the automaton's original state, but also encodes the contents of the stack (which is possible because the stack's size is bounded).  Then, each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.  Because the result is a finite-state machine, it follows that the original automaton can simulate only a rational function. &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 
