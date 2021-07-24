@@ -1122,13 +1122,13 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >
 > **Note:** A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010<sup>[**(9)**](#Note9)</sup>).  If the starting nonterminal has _n_ rules of probability 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
 >
-> **Remark:** The probability generating function is a solution to a special system of equations, built as follows (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  For each state of the full-domain pushdown automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
+> **Remark:** If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
 >
-> - (_st_, _p_, _sy_) &rarr; (_s2_, {}) becomes either _&alpha;_<sub>_sy_,_st_,_en_</sub> = _p_ if _s2_ is _en_, or _&alpha;_<sub>_sy_,_st_,_en_</sub> = 0 otherwise.
-> - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_sy_,_st_,_en_</sub> = _p_ \* _&alpha;_<sub>_sy1_,_s2_,_en_</sub>.
-> - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_, _sy2_}) becomes _&alpha;_<sub>_sy_,_st_,_en_</sub> = _p_ \*  (_&alpha;_<sub>_sy2_,_s2_,_&sigma;[1]_</sub>\*_&alpha;_<sub>_sy1_,_&sigma;[1]_,_en_</sub> + ... + _&alpha;_<sub>_sy2_,_s2_,_&sigma;[n]_</sub>\*_&alpha;_<sub>_sy1_,_&sigma;[n]_,_en_</sub>) where _&sigma;[i]_ is one of the machine's _n_ states.
+> - (_st_, _p_, _sy_) &rarr; (_s2_, {}) becomes either _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ if _s2_ is _en_, or _&alpha;_<sub>_st_,_sy_,_en_</sub> = 0 otherwise.
+> - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.
+> - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_, _sy2_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \*  (_&alpha;_<sub>_s2_,_sy2_,_&sigma;[1]_</sub>\*_&alpha;_<sub>_&sigma;[1]_,_sy1_,_en_</sub> + ... + _&alpha;_<sub>_s2_,_sy2_,_&sigma;[n]_</sub>\*_&alpha;_<sub>_&sigma;[n]_,_sy1_,_en_</sub>) where _&sigma;[i]_ is one of the machine's _n_ states.
 >
-> (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, add together the right-hand sides of all equations with the same left-hand side.  Then, for any variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Finally, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>EMPTY,START,_fs_</sub> (where START is the automaton's starting state), then add these solutions together to get the probability generating function.
+> (Here, _p_ is the probability of using the given transition rule; the special value HEADS becomes _&lambda;_, and the special value TAILS becomes 1&minus;_&lambda;_.)  Now, each time multiple equations have the same left-hand side, combine them into one equation with the same left-hand side, but with the sum of their right-hand sides.  Then, for any variable of the form _&alpha;_<sub>_a_,_b_,_c_</sub> not yet present in the system, include the equation _&alpha;_<sub>_a_,_b_,_c_</sub> = 0.  Then, for each final state _fs_ that returns 1, solve the system for the variable _&alpha;_<sub>START,EMPTY,_fs_</sub> (where START is the automaton's starting state) to get a solution (a function) that maps (0, 1) to (0, 1). (Each solve can produce multiple solutions, but only one of them will map (0, 1) to (0, 1) assuming every _p_ is either HEADS or TAILS.) Finally, add all the solutions to get _f_(_&lambda;_).
 
 **Proposition 6:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, there is a full-domain pushdown automaton that can generate a distribution of such words conditioned on&mdash;_
 
@@ -1143,7 +1143,7 @@ _Proof Sketch:_
 
 2. Follow (1), except as follows: (A) _M_ is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;
 
-**Proposition 7**: _If a pushdown automaton has a bounded stack size, it can simulate only rational functions._
+**Proposition 7**: _If a full-domain pushdown automaton has a bounded stack size, it can simulate only rational functions._
 
 _Proof Sketch_: Just transform the automaton into a finite-state machine in which each state not only holds the automaton's original state, but also encodes the contents of the stack (which is possible because the stack's size is bounded).  Then, each operation that would push, pop, or change the top symbol transitions to a state with the appropriate encoding of the stack instead.  Because the result is a finite-state machine, it follows that the original automaton can simulate only a rational function. &#x25a1;
 
