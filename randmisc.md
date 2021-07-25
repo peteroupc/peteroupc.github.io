@@ -16,6 +16,7 @@
 - [**ExpoExact**](#ExpoExact)
 - [**A sampler for distributions with nonincreasing or nondecreasing weights**](#A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights)
 - [**A sampler for unimodal distributions of weights**](#A_sampler_for_unimodal_distributions_of_weights)
+- [**Log-Uniform Distribution**](#Log_Uniform_Distribution)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
@@ -342,6 +343,17 @@ The following is an algorithm for sampling an integer in the interval \[_a_, _b_
     1. Find the point with the highest weight, such as via binary search.  Call this point _mode_.
     2. Run the setup for _nondecreasing_ weights on the interval [_a_, _mode_), then run the setup for _nonincreasing_ weights on the interval [_mode_, _b_).  Both setups are described in the previous section.  Then, concatenate the two _q_ lists into one, the two _r_ lists into one, and the two _D_ lists into one.
 - The sampling is the same as for the algorithms in the previous section.
+
+<a id=Log_Uniform_Distribution></a>
+## Log-Uniform Distribution
+
+Samples from the so-called "log uniform distribution" as used by the Abseil programming library.  This algorithm takes a maximum _mx_ and a logarithmic base _b_, and chooses an integer in \[0, _mx_\] such that two values are equally likely to be chosen if their base-_b_ logarithms are equal in their integer parts (which roughly means that lower numbers are exponentially more likely to occur).  Although this algorithm works, in principle, for any _b_ > 0, Abseil supports only integer bases _b_.
+
+1. Let _L_ be ceil(ln(_mx_+1)/ln(_b_)). Choose a uniform random integer in the closed interval \[0, _l_\], call it _u_.
+2. If _u_ is 0, return 0.
+3. Set _st_ to min(_mx_, ceil(_b_<sup>_u_&minus;1</sup>)).
+4. Set _en_ to min(_mx_, ceil(_b_<sup>_u_</sup>) &minus; 1).
+5. Choose a uniform random integer in the closed interval [_st_, _en_], and return it.
 
 <a id=Notes></a>
 ## Notes

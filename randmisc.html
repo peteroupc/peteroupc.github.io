@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/07/10"><meta name="citation_online_date" content="2021/07/10"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/07/25"><meta name="citation_online_date" content="2021/07/25"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Miscellaneous Observations on Randomization</h1>
@@ -21,6 +21,7 @@
 <li><a href="#ExpoExact"><strong>ExpoExact</strong></a></li>
 <li><a href="#A_sampler_for_distributions_with_nonincreasing_or_nondecreasing_weights"><strong>A sampler for distributions with nonincreasing or nondecreasing weights</strong></a></li>
 <li><a href="#A_sampler_for_unimodal_distributions_of_weights"><strong>A sampler for unimodal distributions of weights</strong></a></li>
+<li><a href="#Log_Uniform_Distribution"><strong>Log-Uniform Distribution</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -477,6 +478,20 @@ END METHOD
 </ol></li>
 <li>The sampling is the same as for the algorithms in the previous section.</li>
 </ul>
+
+<p><a id=Log_Uniform_Distribution></a></p>
+
+<h2>Log-Uniform Distribution</h2>
+
+<p>Samples from the so-called &quot;log uniform distribution&quot; as used by the Abseil programming library.  This algorithm takes a maximum <em>mx</em> and a logarithmic base <em>b</em>, and chooses an integer in [0, <em>mx</em>] such that two values are equally likely to be chosen if their base-<em>b</em> logarithms are equal in their integer parts (which roughly means that lower numbers are exponentially more likely to occur).  Although this algorithm works, in principle, for any <em>b</em> &gt; 0, Abseil supports only integer bases <em>b</em>.</p>
+
+<ol>
+<li>Let <em>L</em> be ceil(ln(<em>mx</em>+1)/ln(<em>b</em>)). Choose a uniform random integer in the closed interval [0, <em>l</em>], call it <em>u</em>.</li>
+<li>If <em>u</em> is 0, return 0.</li>
+<li>Set <em>st</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em>&minus;1</sup>)).</li>
+<li>Set <em>en</em> to min(<em>mx</em>, ceil(<em>b</em><sup><em>u</em></sup>) &minus; 1).</li>
+<li>Choose a uniform random integer in the closed interval [<em>st</em>, <em>en</em>], and return it.</li>
+</ol>
 
 <p><a id=Notes></a></p>
 
