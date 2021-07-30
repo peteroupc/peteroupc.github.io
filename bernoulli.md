@@ -1546,7 +1546,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     2. Compute the (_n_&minus;1)<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L&prime;_ and _U&prime;_.  (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L&prime;_, _U&prime;_] must equal or entirely contain the interval [_L_, _U_].)
 
     These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions whose coefficients are integers? Rational functions whose coefficients are rational numbers? Arbitrary approximating functions?
-5. Let _f_ be a continuous function that maps (0, 1) to (0, 1).  A _pushdown automaton_ is a state machine that holds a stack of symbols.  According to (Mossel and Peres 2005)<sup>[**(3)**](#Note3)</sup>, this machine can read flips of a coin with unknown probability of heads of _&lambda;_ and simulate a coin with probability of heads of _f_(_&lambda;_) only if _f_ is a solution of a polynomial whose coefficients are rational numbers. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  Are there any results showing whether the converse is true; namely, can a pushdown automaton simulate _any_ _f_ of this kind?  Note that this question is not quite the same as the question of which algebraic functions can be simulated by a context-free grammar (either in general or restricted to those of a certain ambiguity and/or alphabet size), and is not quite the same as the question of which _probability generating functions_ can be simulated by context-free grammars or pushdown automata, although answers to those questions would be nice.  (See also (Icard 2020)<sup>[**(50)**](#Note50)</sup>.  Answering this question might involve ideas from analytic combinatorics; e.g., see the recent works of Cyril Banderier and colleagues.)
+5. A _pushdown automaton_ is a state machine that holds a stack of symbols.  Mossel and Peres (2005)<sup>[**(3)**](#Note3)</sup> investigated which functions (_f_(_&lambda;_)) can be simulated by these machines when they're given an infinite "tape" of flips of a coin that shows heads with probability _&lambda;_.  They showed that pushdown automata can simulate only _algebraic functions_, but perhaps not all of them. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  I have written an [**https://peteroupc.github.io/morealg.html**](article appendix) showing my progress, but are there other results on this question?
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1611,15 +1611,14 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note47>(47)</sup> Forsythe, G.E., "Von Neumann's Comparison Method for Random Sampling from the Normal and Other Distributions", _Mathematics of Computation_ 26(120), October 1972.</small>
 - <small><sup id=Note48>(48)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best _k_-Digit Rational Approximation to a Real Number", _Mediterranean Journal of Mathematics_ 13 (2016).</small>
 - <small><sup id=Note49>(49)</sup> Sondow, Jonathan. “New Vacca-Type Rational Series for Euler's Constant and Its 'Alternating' Analog ln 4/_&pi;_.”, 2005.</small>
-- <small><sup id=Note50>(50)</sup> Icard, Thomas F., "Calibrating generative models: The probabilistic Chomsky–Schützenberger hierarchy", _Journal of Mathematical Psychology_ 95 (2020): 102308.</small>
-- <small><sup id=Note51>(51)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note52>(52)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
-- <small><sup id=Note53>(53)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note54>(54)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.</small>
-- <small><sup id=Note55>(55)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
-- <small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
-- <small><sup id=Note57>(57)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note50>(50)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
+- <small><sup id=Note51>(51)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
+- <small><sup id=Note52>(52)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note53>(53)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.</small>
+- <small><sup id=Note54>(54)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
+- <small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note56>(56)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1629,9 +1628,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 <a id=Randomized_vs_Non_Randomized_Algorithms></a>
 ### Randomized vs. Non-Randomized Algorithms
 
-A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(22)**](#Note22)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>.
+A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(22)**](#Note22)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(50)**](#Note50)</sup>.
 
-In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(52)**](#Note52)</sup>, (Peres 1992)<sup>[**(53)**](#Note53)</sup>) and is calculated as&mdash;
+In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(51)**](#Note51)</sup>, (Peres 1992)<sup>[**(52)**](#Note52)</sup>) and is calculated as&mdash;
 
 - ((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) / ((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
@@ -1651,7 +1650,7 @@ If an algorithm&mdash;
 
 the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(23)**](#Note23)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
 
-1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(54)**](#Note54)</sup>
+1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(53)**](#Note53)</sup>
 2. generating a uniform random variate in [0,1], call it _u_; and
 3. returning 1 if _u_ is less than _v_, or 0 otherwise.
 
@@ -1659,7 +1658,7 @@ In practice, however, this method is prone to numerous errors, and they include 
 
 Only _factory functions_ (as defined in "[**About Bernoulli Factories**](#About_Bernoulli_Factories)) can have unbiased estimation algorithms whose estimates lie in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(23)**](#Note23)</sup>.
 
-Glynn (2016)<sup>[**(55)**](#Note55)</sup> distinguishes between&mdash;
+Glynn (2016)<sup>[**(54)**](#Note54)</sup> distinguishes between&mdash;
 
 - _exact simulation_, or methods that simulate the same _distribution_ as that of _g_(_X_) (same "shape", location, and scale of probabilities) and finish with probability 1, and
 - _exact estimation_, or methods that simulate the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) and finish with probability 1,
@@ -1712,7 +1711,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(56)**](#Note56)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(55)**](#Note55)</sup>.
 
 The following algorithm generates a random variate that follows the von Neumann schema.
 
@@ -1791,8 +1790,8 @@ Then the algorithm's behavior is given in the tables below.
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is less than _x_ given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(27)**](#Note27)</sup>; see also Forsythe 1972<sup>[**(47)**](#Note47)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
-| Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(57)**](#Note57)</sup>).  DPDF and ECDF are as above. |
-| Numbers sorted in descending order | Both uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>. |
+| Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(56)**](#Note56)</sup>).  DPDF and ECDF are as above. |
+| Numbers sorted in descending order | Both uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(50)**](#Note50)</sup>. |
 | Numbers sorted in descending order | _D_ is uniform(0,1); _E_ is max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Notes:**
@@ -1901,7 +1900,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 - their coefficients are all 0 or greater, and
 - the sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
 
-If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(16)**](#Note16)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(58)**](#Note58)</sup>).  It is implemented as follows:
+If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(16)**](#Note16)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(57)**](#Note57)</sup>).  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's coefficient at _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each _j_ in the interval \[max(0, _k_&minus;1), min(_n_, _k_)\], then add them together.  The sum is the new coefficient.
