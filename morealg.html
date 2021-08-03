@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/07/28"><meta name="citation_online_date" content="2021/07/28"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/02"><meta name="citation_online_date" content="2021/08/02"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -76,7 +76,11 @@
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
 <li><a href="#More_Algorithms_for_Non_Negative_Factories"><strong>More Algorithms for Non-Negative Factories</strong></a></li>
-<li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a></li>
+<li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a>
+
+<ul>
+<li><a href="#Finite_State_and_Pushdown_Generators"><strong>Finite-State and Pushdown Generators</strong></a></li>
+</ul></li>
 </ul></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
@@ -1014,6 +1018,8 @@
 <li><small><sup id=Note34>(34)</sup> Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</small></li>
 <li><small><sup id=Note35>(35)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small></li>
 <li><small><sup id=Note36>(36)</sup> Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</small></li>
+<li><small><sup id=Note37>(37)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
+<li><small><sup id=Note38>(38)</sup> Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1558,6 +1564,21 @@ calc_linear_func(count=8)
 <p>For general <em>m</em> and <em>n</em>, write <em>f</em> as (sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt(<em>&lambda;</em>))<sup><em>m</em></sup>, with <em>n</em> instances of sqrt.  This involves doing <em>m</em> multiplications of sqrt&#x2218;sqrt&#x2218;...&#x2218;sqrt, and because this is an integer power of a function that can be simulated by a full-domain pushdown automaton, so can <em>f</em>.</p>
 
 <p>Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+
+<p><a id=Finite_State_and_Pushdown_Generators></a></p>
+
+<h4>Finite-State and Pushdown Generators</h4>
+
+<p>Another interesting class of machines (called <em>pushdown generators</em> here) are similar to pushdown automata, with the following exceptions:</p>
+
+<ol>
+<li>Each transition rule can also, optionally, output a base-<em>N</em> digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) &rarr; (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
+<li>The machine terminates with probability 0, and rules that would empty the stack are not allowed.</li>
+</ol>
+
+<p>The infinite &quot;output&quot; of the machine is now a real number <em>X</em> in the interval [0, 1], in the form of the base-<em>N</em> digit expansion 0.dddddd..., where <code>dddddd...</code> are the digits produced by the machine from left to right.</p>
+
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup><a href="#Note37"><strong>(37)</strong></a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  In this case, let <code>PDF(x)</code> be the probability density function of <em>X</em>.  Then if <code>PDF(x)</code> is &quot;smooth&quot; (has infinitely many &quot;slope&quot; functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Kindler and Romik 2004)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 
