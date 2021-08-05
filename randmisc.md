@@ -168,10 +168,12 @@ A _complementary compound distribution_ is the maximum of _N_ random variates di
 
 An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(22)**](#Note22)</sup> is the reciprocal of an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
 
-A _weight-biased X_ or _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
+A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
+
+Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985)<sup>[**(36)**](#Note36)</sup>.  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their probability density functions are proportional to the original density functions multiplied by _w_(_x_).
 
 To generate an _inflated X_ (also called _c-inflated X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 
@@ -393,6 +395,7 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 - <small><sup id=Note33>(33)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
 - <small><sup id=Note34>(34)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 - <small><sup id=Note35>(35)</sup> Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021</small>
+- <small><sup id=Note36>(36)</sup> Rao, C.R., "Weighted distributions arising out of methods of ascertainment", 1985.</small>
 
 <a id=License></a>
 ## License

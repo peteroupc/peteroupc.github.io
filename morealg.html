@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/02"><meta name="citation_online_date" content="2021/08/02"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/05"><meta name="citation_online_date" content="2021/08/05"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -53,7 +53,7 @@
 
 <ul>
 <li><a href="#Rayleigh_Distribution"><strong>Rayleigh Distribution</strong></a></li>
-<li><a href="#Sum_of_Exponential_Random_Numbers"><strong>Sum of Exponential Random Numbers</strong></a></li>
+<li><a href="#Sum_of_Exponential_Random_Variates"><strong>Sum of Exponential Random Variates</strong></a></li>
 <li><a href="#Hyperbolic_Secant_Distribution"><strong>Hyperbolic Secant Distribution</strong></a></li>
 <li><a href="#Reciprocal_of_Power_of_Uniform"><strong>Reciprocal of Power of Uniform</strong></a></li>
 <li><a href="#Distribution_of__U__1_minus__U"><strong>Distribution of <em>U</em>/(1&minus;<em>U</em>)</strong></a></li>
@@ -146,9 +146,9 @@
 <h3>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>x</em>)/&gamma;(<em>m</em>, 1)).</h3>
 
 <ol>
-<li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.  (Thus, <em>ret</em> is distributed as <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform(0, 1) random number; although <strong>kthsmallest</strong> accepts only integers, this formula works for any <em>m</em> greater than 0.)</li>
+<li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.  (Thus, <em>ret</em> is distributed as <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform(0, 1) random variate; although <strong>kthsmallest</strong> accepts only integers, this formula works for any <em>m</em> greater than 0.)</li>
 <li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
-<li>Generate a uniform(0, 1) random number <em>v</em>.</li>
+<li>Generate a uniform(0, 1) random variate <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
 <li>If <em>k</em> is odd, return a number that is 1 if <em>ret</em> is less than <em>x</em> and 0 otherwise. (If <em>ret</em> is implemented as a uniform partially-sampled random number (PSRN), this comparison should be done via <strong>URandLessThanReal</strong>.)  If <em>k</em> is even, go to step 1.</li>
 </ol>
@@ -157,7 +157,7 @@
 
 <ul>
 <li><code>ECDF(x)</code>  is the uniform(0,1) distribution&#39;s cumulative distribution function, namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
-<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random numbers, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
+<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random variates, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
 </ul>
 
 <p><a id=Derivative_slope_of_arctan___lambda></a></p>
@@ -168,7 +168,7 @@
 
 <ol>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
@@ -185,7 +185,7 @@
 
 <ol>
 <li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
 <li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to step 6.  (The estimate <em>&lambda;</em><sup><em>n</em>*2</sup> is 0, so no more terms are added and we use <em>&#x2113;</em> as the final estimate for cosh(<em>&lambda;</em>)&minus;1.)</li>
 <li>Let <em>m</em> be (<em>n</em>*2), let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series), and let <em>err</em> be 2/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
@@ -198,7 +198,7 @@
 <p>The second algorithm is one I found that takes advantage of the convex combination method.</p>
 
 <ol>
-<li>(&quot;Geometric&quot; random number <em>n</em>.)  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to 2 plus the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
+<li>(&quot;Geometric&quot; random variate <em>n</em>.)  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to 2 plus the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
 <li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  If <em>n</em> is odd, return 0.  Otherwise, with probability 2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!), go to the next step.  Otherwise, return 0.</li>
 <li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
@@ -215,7 +215,7 @@
 <h3>exp(<em>&lambda;</em>/4)/2</h3>
 
 <ol>
-<li>(&quot;Geometric&quot; random number <em>n</em>.)  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
+<li>(&quot;Geometric&quot; random variate <em>n</em>.)  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
 <li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  With probability 1/(2<sup><em>n</em></sup>*(<em>n</em>!)), go to the next step.  Otherwise, return 0.</li>
 <li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
@@ -253,7 +253,7 @@
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 1/2 (the first term is added already), and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
@@ -312,7 +312,7 @@
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random number <em>ret</em>.</li>
+<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
 <li>(Calculate the next term of the alternating series for tanh.) Let <em>m</em> be 2*(<em>n</em>+1).  <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>. Let <em>t</em> be abs(<em>b</em>)*2<sup><em>m</em></sup>*(2<sup><em>m</em></sup>&minus;1)/(<em>m</em>!).</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>t</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>t</em>.</li>
@@ -407,9 +407,9 @@
 
 <h3>Non-Negative Factories</h3>
 
-<p>The Bernoulli factory approach can be extended in two ways to produce random numbers beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
+<p>The Bernoulli factory approach can be extended in two ways to produce random variates beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
 
-<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random numbers in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random numbers that average to <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates that average to <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
@@ -428,16 +428,16 @@
 <blockquote>
 <p><strong>Note:</strong> The check &quot;With probability (<em>x</em>&minus;<em>a</em>)/(<em>b</em>&minus;<em>a</em>)&quot; is exact if the oracle produces only rational numbers.  If the oracle can produce irrational numbers (such as numbers that follow a beta distribution or another continuous distribution), then the code for the oracle should use uniform <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  In that case, the check can be implemented as follows.  Let <em>x</em> be a uniform PSRN representing a number generated by the oracle.  Set <em>y</em> to <strong>RandUniformFromReal</strong>(<em>b</em>&minus;<em>a</em>), then the check succeeds if <strong>URandLess</strong>(<em>y</em>, <strong>UniformAddRational</strong>(<em>x</em>, &minus;<em>a</em>)) returns 1, and fails otherwise.</p>
 
-<p><strong>Example:</strong> Suppose an oracle produces random numbers in the interval [3, 13] with unknown mean <em>&mu;</em>, and we seek to use the oracle to produce non-negative random numbers with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  <em>g</em> can&#39;t be simulated as is, though, but by increasing <em>g</em>&#39;s degree to 3 we get the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so we can proceed with the following algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
+<p><strong>Example:</strong> Suppose an oracle produces random variates in the interval [3, 13] with unknown mean <em>&mu;</em>, and we seek to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>) = &minus;319/100 + <em>&mu;</em>*103/50 &minus; <em>&mu;</em><sup>2</sup>*11/100, which is a polynomial with Bernstein coefficients [2, 9, 5] in the given interval.  Then since 8 is greater than the maximum of <em>f</em> in that interval, <em>g</em>(<em>&lambda;</em>) is a degree-2 polynomial with Bernstein coefficients [2/8, 9/8, 5/8] in the interval [0, 1].  <em>g</em> can&#39;t be simulated as is, though, but by increasing <em>g</em>&#39;s degree to 3 we get the Bernstein coefficients [1/4, 5/6, 23/24, 5/8], which are all less than 1 so we can proceed with the following algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;):</p>
 
 <ol>
 <li>Set <em>heads</em> to 0.</li>
-<li>Generate three random numbers from the oracle (which must produce random numbers in the interval [3, 13]).  For each number <em>x</em>: With probability (<em>x</em>&minus;3)/(10&minus;3), add 1 to <em>heads</em>.</li>
+<li>Generate three random variates from the oracle (which must produce random variates in the interval [3, 13]).  For each number <em>x</em>: With probability (<em>x</em>&minus;3)/(10&minus;3), add 1 to <em>heads</em>.</li>
 <li>Depending on <em>heads</em>, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: <em>heads</em>=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.</li>
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
 
 <p><a id=Pushdown_Automata_for_Square_Root_Like_Functions></a></p>
 
@@ -620,12 +620,12 @@
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
 </ol>
 
-<p>Examples of algorithms that use this skeleton are the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random numbers</strong></a>, as well as the algorithms for the Rayleigh distribution and for the reciprocal of power of uniform, both given later.</p>
+<p>Examples of algorithms that use this skeleton are the algorithm for the <a href="https://peteroupc.github.io/uniformsum.html"><strong>ratio of two uniform random variates</strong></a>, as well as the algorithms for the Rayleigh distribution and for the reciprocal of power of uniform, both given later.</p>
 
 <p>Perhaps the most difficult part of describing an arbitrary-precision sampler with this skeleton is finding the appropriate Bernoulli factory for the probabilities <em>A</em>, <em>B</em>, and <em>C</em>, especially when these probabilities have a non-trivial symbolic form.</p>
 
 <blockquote>
-<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup><a href="#Note12"><strong>(12)</strong></a></sup>; an exception is that instead of generating a uniform random number and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
+<p><strong>Note:</strong> The algorithm skeleton uses ideas similar to the inversion-rejection method described in (Devroye 1986, ch. 7, sec. 4.6)<sup><a href="#Note12"><strong>(12)</strong></a></sup>; an exception is that instead of generating a uniform random variate and comparing it to calculations of a CDF, this algorithm uses conditional probabilities of choosing a given piece, probabilities labeled <em>A</em> and <em>B</em>.  This approach was taken so that the CDF of the distribution in question is never directly calculated in the course of the algorithm, which furthers the goal of sampling with arbitrary precision and without using floating-point arithmetic.</p>
 </blockquote>
 
 <p><a id=Mixtures></a></p>
@@ -709,15 +709,15 @@
 <li>Add 1 to <em>i</em> and go to step 3.</li>
 </ol>
 
-<p><a id=Sum_of_Exponential_Random_Numbers></a></p>
+<p><a id=Sum_of_Exponential_Random_Variates></a></p>
 
-<h3>Sum of Exponential Random Numbers</h3>
+<h3>Sum of Exponential Random Variates</h3>
 
-<p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random numbers (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random numbers, though it is obviously inefficient for large values of <em>n</em>.</p>
+<p>An arbitrary-precision sampler for the sum of <em>n</em> exponential random variates (also known as the Erlang(<em>n</em>) or gamma(<em>n</em>) distribution) is doable via partially-sampled uniform random variates, though it is obviously inefficient for large values of <em>n</em>.</p>
 
 <ol>
-<li>Generate <em>n</em> exponential random numbers with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random numbers via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
-<li>Generate the sum of the random numbers generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
+<li>Generate <em>n</em> exponential random variates with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>partially-sampled random numbers (PSRNs)</strong></a>.  These numbers will be uniform PSRNs; this algorithm won&#39;t work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.</li>
+<li>Generate the sum of the random variates generated in step 1 by applying the <a href="https://peteroupc.github.io/exporand.html#Addition_and_Subtraction"><strong>UniformAdd</strong></a> algorithm given in another document.</li>
 </ol>
 
 <p><a id=Hyperbolic_Secant_Distribution></a></p>
@@ -727,7 +727,7 @@
 <p>The following algorithm adapts the rejection algorithm from p. 472 in (Devroye 1986)<sup><a href="#Note12"><strong>(12)</strong></a></sup> for arbitrary-precision sampling.</p>
 
 <ol>
-<li>Generate <em>ret</em>, an exponential random number with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>PSRNs</strong></a>.  This number will be a uniform PSRN.</li>
+<li>Generate <em>ret</em>, an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm described in my article on <a href="https://peteroupc.github.io/exporand.html"><strong>PSRNs</strong></a>.  This number will be a uniform PSRN.</li>
 <li>Set <em>ip</em> to 1 plus <em>ret</em>&#39;s integer part.</li>
 <li>(The rest of the algorithm accepts <em>ret</em> with probability 1/(1+<em>ret</em>).) With probability <em>ip</em>/(1+<em>ip</em>), generate a number that is 1 with probability 1/<em>ip</em> and 0 otherwise.  If that number is 1, <em>ret</em> was accepted, in which case optionally fill it with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>ret</em>&#39;s sign to positive or negative with equal probability, then return <em>ret</em>.</li>
 <li>Call <strong>SampleGeometricBag</strong> on <em>ret</em>&#39;s fractional part (ignore <em>ret</em>&#39;s integer part and sign).  If the call returns 1, go to step 1.  Otherwise, go to step 3.</li>
@@ -737,7 +737,7 @@
 
 <h3>Reciprocal of Power of Uniform</h3>
 
-<p>The following algorithm generates a PSRN of the form 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random number in [0, 1] and <em>x</em> is an integer greater than 0.</p>
+<p>The following algorithm generates a PSRN of the form 1/<em>U</em><sup>1/<em>x</em></sup>, where <em>U</em> is a uniform random variate in [0, 1] and <em>x</em> is an integer greater than 0.</p>
 
 <ol>
 <li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
@@ -751,7 +751,7 @@
 <p>This algorithm uses the skeleton described earlier in &quot;Building an Arbitrary-Precision Sampler&quot;.  Here, the probabilities <em>A</em>, <em>B</em>,  and <em>C</em> are as follows:</p>
 
 <ul>
-<li><em>A</em> = 0, since the random number can&#39;t lie in the interval [0, 1).</li>
+<li><em>A</em> = 0, since the random variate can&#39;t lie in the interval [0, 1).</li>
 <li><em>B</em> = (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>.</li>
 <li><em>C</em> = (<em>x</em>/(<em>i</em> + <em>&lambda;</em>)<sup><em>x</em>+1</sup>) / <em>M</em>.  Ideally, <em>M</em> is either <em>x</em> if <em>intval</em> is 1, or <em>x</em>/<em>intval</em><sup><em>x</em>+1</sup> otherwise.  Thus, the ideal form for <em>C</em> is <em>intval</em><sup><em>x</em>+1</sup>/(<em>i</em>+<em>&lambda;</em>)<sup><em>x</em>+1</sup>.</li>
 </ul>
@@ -784,7 +784,7 @@
 
 <h3>Arc-Cosine Distribution</h3>
 
-<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The following arbitrary-precision sampler generates a random number from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random number will be in the interval [0, 1].  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random number, as pointed out by Devroye.  The algorithm follows.</p>
+<p>Here we reimplement an example from Devroye&#39;s book <em>Non-Uniform Random Variate Generation</em> (Devroye 1986, pp. 128&ndash;129)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The following arbitrary-precision sampler generates a random variate from a distribution with the following cumulative distribution function (CDF): <code>1 - cos(pi*x/2).</code>  The random variate will be in the interval [0, 1].  This algorithm&#39;s result is the same as applying acos(<em>U</em>)*2/&pi;, where <em>U</em> is a uniform [0, 1] random variate, as pointed out by Devroye.  The algorithm follows.</p>
 
 <ol>
 <li>Call the <strong>kthsmallest</strong> algorithm with <code>n = 2</code> and <code>k = 2</code>, but without filling it with digits at the last step.  Let <em>ret</em> be the result.</li>
@@ -823,7 +823,7 @@
 <ol>
 <li>Set <em>k</em> to 0.</li>
 <li>(Choose a 1-unit-wide piece of the logistic density.) Run the <strong>algorithm for (1+exp(<em>k</em>))/(1+exp(<em>k</em>+1))</strong> described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;).  If the call returns 0, add 1 to <em>k</em> and repeat this step.  Otherwise, go to step 3.</li>
-<li>(The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random number, call it <em>f</em>.</li>
+<li>(The rest of the algorithm samples from the chosen piece.) Generate a uniform(0, 1) random variate, call it <em>f</em>.</li>
 <li>(Steps 4 through 7 succeed with probability exp(&minus;(<em>f</em>+<em>k</em>))/(1+exp(&minus;(<em>f</em>+<em>k</em>)))<sup>2</sup>.) Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>k</em>/1)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), then <strong>sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN).  If any of these calls returns 0, go to step 4.</li>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then set <em>f</em>&#39;s sign to positive or negative with equal probability, then return <em>f</em>.</li>
@@ -854,12 +854,12 @@
 
 <h3>Exponential Distribution with Unknown Rate <em>&lambda;</em>, Lying in (0, 1]</h3>
 
-<p>Exponential random numbers can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can be in the interval (0, 1]), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm follows:</p>
+<p>Exponential random variates can be generated using an input coin of unknown probability of heads of <em>&lambda;</em> (which can be in the interval (0, 1]), by generating arrival times in a <em>Poisson process</em> of rate 1, then <em>thinning</em> the process using the coin.  The arrival times that result will be exponentially distributed with rate <em>&lambda;</em>.  I found the basic idea in the answer to a <a href="https://math.stackexchange.com/questions/3362473/simulating-an-exponential-random-variable-given-bernoulli-uniform"><strong>Mathematics Stack Exchange question</strong></a>, and thinning of Poisson processes is discussed, for example, in Devroye (1986, chapter six)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.  The algorithm follows:</p>
 
 <ol>
-<li>Generate an exponential(1) random number using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
+<li>Generate an exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex</em>.</li>
 <li>(Thinning step.) Flip the input coin.  If it returns 1, return <em>ex</em>.</li>
-<li>Generate another exponential(1) random number using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex2</em>.  Then run <strong>UniformAdd</strong> on <em>ex</em> and <em>ex2</em> and set <em>ex</em> to the result.  Then go to step 2.</li>
+<li>Generate another exponential(1) random variate using the <strong>ExpRand</strong> or <strong>ExpRand2</strong> algorithm (with <em>&lambda;</em> = 1), call it <em>ex2</em>.  Then run <strong>UniformAdd</strong> on <em>ex</em> and <em>ex2</em> and set <em>ex</em> to the result.  Then go to step 2.</li>
 </ol>
 
 <p>Notice that the algorithm&#39;s average running time increases as <em>&lambda;</em> decreases.</p>
@@ -868,7 +868,7 @@
 
 <h3>Exponential Distribution with Rate ln(<em>x</em>)</h3>
 
-<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random number.  This algorithm has two supported cases:</p>
+<p>The following new algorithm generates a partially-sampled random number that follows the exponential distribution with rate ln(<em>x</em>).  This is useful for generating a base-<em>x</em> logarithm of a uniform(0,1) random variate.  This algorithm has two supported cases:</p>
 
 <ul>
 <li><em>x</em> is a rational number that&#39;s greater than 1.  In that case, let <em>b</em> be floor(ln(<em>x</em>)/ln(2)).</li>
@@ -878,7 +878,7 @@
 <p>The algorithm follows.</p>
 
 <ol>
-<li>(Samples the integer part of the random number.) Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise, repeatedly until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way. (This is also known as a &quot;geometric random number&quot;, but this terminology is avoided because it has conflicting meanings in academic works.)
+<li>(Samples the integer part of the random variate.) Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise, repeatedly until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way. (This is also known as a &quot;geometric random variate&quot;, but this terminology is avoided because it has conflicting meanings in academic works.)
 
 <ul>
 <li>If <em>x</em> is a rational number and a power of 2, this step can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits is generated this way, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.</li>
@@ -896,14 +896,14 @@
 </ol>
 
 <blockquote>
-<p><strong>Note</strong>: A <em>bounded exponential</em> random number with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random number, which an algorithm of Bringmann and Friedrich (2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup> can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random number in step 2, a uniform(0,<em>&mu;</em>) random number can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
+<p><strong>Note</strong>: A <em>bounded exponential</em> random variate with rate ln(<em>x</em>) and bounded by <em>m</em> has a similar algorithm to this one.  Step 1 is changed to read as follows: &quot;Do the following <em>m</em> times or until a zero is generated, whichever happens first: &#39;Generate a number that is 1 with probability 1/<em>x</em> and 0 otherwise&#39;. Then set <em>k</em> to the number of ones generated this way. (<em>k</em> is a so-called bounded-geometric(1&minus;1/<em>x</em>, <em>m</em>) random variate, which an algorithm of Bringmann and Friedrich (2013)<sup><a href="#Note14"><strong>(14)</strong></a></sup> can generate as well.  If <em>x</em> is a power of 2, this can be implemented by generating blocks of <em>b</em> unbiased random bits until a <strong>non-zero</strong> block of bits or <em>m</em> blocks of bits are generated this way, whichever comes first, then setting <em>k</em> to the number of <strong>all-zero</strong> blocks of bits generated this way.) If <em>k</em> is <em>m</em>, return <em>m</em> (this <em>m</em> is a constant, not a uniform PSRN; if the algorithm would otherwise return a uniform PSRN, it can return something else in order to distinguish this constant from a uniform PSRN).&quot;  Additionally, instead of generating a uniform(0,1) random variate in step 2, a uniform(0,<em>&mu;</em>) random variate can be generated instead, such as a uniform PSRN generated via <strong>RandUniformFromReal</strong>, to implement an exponential distribution bounded by <em>m</em>+<em>&mu;</em> (where <em>&mu;</em> is a real number in the interval (0, 1)).</p>
 </blockquote>
 
-<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random number. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
+<p>The following generator for the <strong>rate ln(2)</strong> is a special case of the previous algorithm and is useful for generating a base-2 logarithm of a uniform(0,1) random variate. Unlike the similar algorithm of Ahrens and Dieter (1972)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, this one doesn&#39;t require a table of probability values.</p>
 
 <ol>
-<li>(Samples the integer part of the random number.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
-<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random number, call it <em>f</em>.</li>
+<li>(Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
+<li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random variate, call it <em>f</em>.</li>
 <li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
 <li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
@@ -945,18 +945,18 @@
 
 <h3>Lindley Distribution and Lindley-Like Mixtures</h3>
 
-<p>A random number that follows the Lindley distribution (Lindley 1958)<sup><a href="#Note18"><strong>(18)</strong></a></sup> with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
+<p>A random variate that follows the Lindley distribution (Lindley 1958)<sup><a href="#Note18"><strong>(18)</strong></a></sup> with parameter <em>&theta;</em> (a real number greater than 0) can be generated as follows:</p>
 
 <ol>
-<li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate an exponential random number with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs) and return that number.</li>
-<li>Otherwise, generate two exponential random numbers with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
+<li>With probability <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>), generate an exponential random variate with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong> (described in my article on PSRNs) and return that number.</li>
+<li>Otherwise, generate two exponential random variates with a rate of <em>&theta;</em> via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm, then return that sum.</li>
 </ol>
 
 <p>For the Garima distribution (Shanker 2016)<sup><a href="#Note19"><strong>(19)</strong></a></sup>, <em>w</em> = (1+<em>&theta;</em>)/(2+<em>&theta;</em>).</p>
 
 <p>For the i-Garima distribution (Singh and Das 2020)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, <em>w</em> = (2+<em>&theta;</em>)/(3+<em>&theta;</em>).</p>
 
-<p>For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, two exponential random numbers (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.</p>
+<p>For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqbal and Iqbal 2020)<sup><a href="#Note21"><strong>(21)</strong></a></sup>, two exponential random variates (rather than one) are generated in step 1, and three (rather than two) are generated in step 2.</p>
 
 <blockquote>
 <p><strong>Note:</strong> If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</p>
@@ -1018,8 +1018,9 @@
 <li><small><sup id=Note34>(34)</sup> Etessami, K. and Yannakakis, M., &quot;Recursive Markov chains, stochastic grammars, and monotone systems of nonlinear equations&quot;, <em>Journal of the ACM</em> 56(1), pp.1-66, 2009.</small></li>
 <li><small><sup id=Note35>(35)</sup> Dughmi, Shaddin, Jason Hartline, Robert D. Kleinberg, and Rad Niazadeh. &quot;Bernoulli Factories and Black-box Reductions in Mechanism Design.&quot; Journal of the ACM (JACM) 68, no. 2 (2021): 1-30.</small></li>
 <li><small><sup id=Note36>(36)</sup> Elder, Murray, Geoffrey Lee, and Andrew Rechnitzer. &quot;Permutations generated by a depth 2 stack and an infinite stack in series are algebraic.&quot; <em>Electronic Journal of Combinatorics</em> 22(1), 2015.</small></li>
-<li><small><sup id=Note37>(37)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random number generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
+<li><small><sup id=Note37>(37)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random variate generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
 <li><small><sup id=Note38>(38)</sup> Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</small></li>
+<li><small><sup id=Note39>(39)</sup> Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1153,7 +1154,7 @@
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
-<li>(<em>v</em> acts as a uniform(0, 1) random number to compare with <em>f</em>(<em>U</em>).) Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>(<em>v</em> acts as a uniform(0, 1) random variate to compare with <em>f</em>(<em>U</em>).) Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
 <li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
 
 <ol>
@@ -1307,7 +1308,7 @@ calc_linear_func(count=8)
 
 <h3>More Algorithms for Non-Negative Factories</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random numbers that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note32"><strong>(32)</strong></a></sup>:</p>
+<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random variates that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note32"><strong>(32)</strong></a></sup>:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -1315,7 +1316,7 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  Say the oracle produces uniform random numbers in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random numbers that average to that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note32"><strong>(32)</strong></a></sup>.  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates that average to that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -1332,7 +1333,7 @@ calc_linear_func(count=8)
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 3.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown, and whose variance should be finite.  The goal is to use the oracle to produce non-negative random numbers with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  This can be done using the algorithm below.  In the algorithm:</p>
+<p><strong>Algorithm 3.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that are all greater than or equal to <em>a</em> (which is a known rational number), whose mean (<em>&mu;</em>) is unknown, and whose variance should be finite.  The goal is to use the oracle to produce non-negative random variates with mean <em>f</em>(<em>&mu;</em>).  This is possible only if <em>f</em> is 0 or greater everywhere in the interval [<em>a</em>, <em>&infin;</em>) and is nondecreasing in that interval (Jacob and Thiery 2015)<sup><a href="#Note7"><strong>(7)</strong></a></sup>.  This can be done using the algorithm below.  In the algorithm:</p>
 
 <ul>
 <li><em>f</em>(<em>&mu;</em>) must be a function that can be written as the following infinite series expansion: <em>c</em>[0]*<em>z</em><sup>0</sup> + <em>c</em>[1]*<em>z</em><sup>1</sup> + ..., where <em>z</em> = <em>&mu;</em>&minus;<em>a</em> and all <em>c</em>[<em>i</em>] are 0 or greater.</li>
@@ -1342,7 +1343,7 @@ calc_linear_func(count=8)
 <p>The algorithm follows.</p>
 
 <ol>
-<li>Set <em>ret</em> to 0, <em>prod</em> to 1, <em>k</em> to 0, and <em>w</em> to 1. (<em>w</em> is the probability of generating <em>k</em> or more random numbers in a single run of the algorithm.)</li>
+<li>Set <em>ret</em> to 0, <em>prod</em> to 1, <em>k</em> to 0, and <em>w</em> to 1. (<em>w</em> is the probability of generating <em>k</em> or more random variates in a single run of the algorithm.)</li>
 <li>If <em>k</em> is greater than 0: Take a number from the oracle, call it <em>x</em>, and multiply <em>prod</em> by <em>x</em>&minus;<em>a</em>.</li>
 <li>Add <em>c</em>[<em>k</em>]*<em>prod</em>/<em>w</em> to <em>ret</em>.</li>
 <li>Multiply <em>w</em> by <em>&psi;</em> and add 1 to <em>k</em>.</li>
@@ -1367,8 +1368,8 @@ calc_linear_func(count=8)
 <li>sqrt(<em>&lambda;</em>) can be simulated.</li>
 <li>Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.</li>
 <li>If <em>f</em>(<em>&lambda;</em>) and <em>g</em>(<em>&lambda;</em>) can be simulated, so can <em>f</em>(<em>&lambda;</em>)*<em>g</em>(<em>&lambda;</em>), <em>f</em>(<em>g</em>(<em>&lambda;</em>)), and <em>g</em>(<em>f</em>(<em>&lambda;</em>)).</li>
-<li>If a full-domain pushdown automaton (defined later) can generate a distribution of lengths of words of the same letter, then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).</li>
-<li>The probability generating function for any one-letter stochastic context-free grammar (defined later) that terminates with probability 1 can be simulated.</li>
+<li>If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a <em>probability distribution</em> of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).</li>
+<li>If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.</li>
 </ul>
 
 <hr>
@@ -1573,12 +1574,12 @@ calc_linear_func(count=8)
 
 <ol>
 <li>Each transition rule can also, optionally, output a base-<em>N</em> digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) &rarr; (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
-<li>The machine terminates with probability 0, and rules that would empty the stack are not allowed.</li>
+<li>The machine terminates with probability 0 (it eventually goes into an infinite loop), and rules that would pop the last symbol from the stack are not allowed.</li>
 </ol>
 
-<p>The infinite &quot;output&quot; of the machine is now a real number <em>X</em> in the interval [0, 1], in the form of the base-<em>N</em> digit expansion 0.dddddd..., where <code>dddddd...</code> are the digits produced by the machine from left to right.</p>
+<p>The &quot;output&quot; of the machine is now infinite, namely a real number <em>X</em> in the interval [0, 1], in the form of the base-<em>N</em> digit expansion 0.dddddd..., where <code>dddddd...</code> are the digits produced by the machine from left to right.</p>
 
-<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup><a href="#Note37"><strong>(37)</strong></a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  In this case, let <code>PDF(x)</code> be the probability density function of <em>X</em>.  Then if <code>PDF(x)</code> is &quot;smooth&quot; (has infinitely many &quot;slope&quot; functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Kindler and Romik 2004)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
+<p>A <em>finite-state generator</em> (Knuth and Yao 1976)<sup><a href="#Note37"><strong>(37)</strong></a></sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can&#39;t push stack symbols, and only one stack symbol is used.  In this case, let <code>PDF(x)</code> be the probability density function of <em>X</em>.  Then if <code>PDF(x)</code> is &quot;smooth&quot; (has infinitely many &quot;slope&quot; functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup><a href="#Note39"><strong>(39)</strong></a></sup>, (Kindler and Romik 2004)<sup><a href="#Note38"><strong>(38)</strong></a></sup>.</p>
 
 <p><a id=License></a></p>
 

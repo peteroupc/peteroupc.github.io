@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/07/25"><meta name="citation_online_date" content="2021/07/25"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/08/05"><meta name="citation_online_date" content="2021/08/05"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Miscellaneous Observations on Randomization</h1>
@@ -220,12 +220,14 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>An <em>inverse X distribution</em> (or <em>inverted X distribution</em>) is generally the distribution of the reciprocal of a random variate distributed as <em>X</em>.  For example, an <em>inverse exponential</em> random variate (Keller and Kamath 1982)<sup><a href="#Note22"><strong>(22)</strong></a></sup> is the reciprocal of an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(<em>U</em>) where <em>U</em> is a uniform(0, 1) random variate) and may be multiplied by a parameter <em>&theta;</em> &gt; 0.</p>
 
-<p>A <em>weight-biased X</em> or <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
+<p>A <em>weighted X distribution</em> uses a distribution X and a weight function <em>w</em>(<em>x</em>) whose values lie in [0, 1] everywhere in X&#39;s support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup><a href="#Note3"><strong>(3)</strong></a></sup>):</p>
 
 <ol>
 <li>Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number <em>x</em>.</li>
 <li>With probability <em>w</em>(<em>x</em>), return <em>x</em>.  Otherwise, go to step 1.</li>
 </ol>
+
+<p>Some weighted distributions allow any weight function <em>w</em>(<em>x</em>) whose values are non-negative everywhere in X&#39;s support (Rao 1985)<sup><a href="#Note36"><strong>(36)</strong></a></sup>.  (If <em>w</em>(<em>x</em>) = <em>x</em>, the distribution is often called a <em>length-biased</em> or <em>size-biased distribution</em>; if <em>w</em>(<em>x</em>) = <em>x</em><sup>2</sup>, <em>area-biased</em>.)  Their probability density functions are proportional to the original density functions multiplied by <em>w</em>(<em>x</em>).</p>
 
 <p>To generate an <em>inflated X</em> (also called <em>c-inflated X</em>) random variate with parameters <em>c</em> and <em>&alpha;</em>, generate&mdash;</p>
 
@@ -533,6 +535,7 @@ END METHOD
 <li><small><sup id=Note33>(33)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
 <li><small><sup id=Note34>(34)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
 <li><small><sup id=Note35>(35)</sup> Chewi, S., Gerber, P., et al., &quot;<a href="https://arxiv.org/abs/2105.14166"><strong>Rejection sampling from shape-constrained distributions in sublinear time</strong></a>&quot;, arXiv:2105.14166, 2021</small></li>
+<li><small><sup id=Note36>(36)</sup> Rao, C.R., &quot;Weighted distributions arising out of methods of ascertainment&quot;, 1985.</small></li>
 </ul>
 
 <p><a id=License></a></p>
