@@ -267,6 +267,29 @@ pprint(Max(1,kappa))
 >
 > The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
+<a id=Finding_Biased_Coins></a>
+## Finding Biased Coins
+
+Given _m_ coins with unknown probability of heads, the following algorithm finds the _k_ coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
+
+- _k_ is the number of coins to return.
+- _&delta;_ is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; _&delta;_.
+- _D_ is a _gap parameter_ or a lesser number, but must be 0 or greater.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most biased coin and the (_k_+1)<sup>th</sup> most biased coin.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
+- _r_ is the number of rounds to run the algorithm and must be an integer 1 or greater.
+
+In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
+
+Agarwal et al. (2017)<sup>[**(10)**](#Note10)</sup> called this algorithm "aggressive elimination", and it can be described as follows.
+
+1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8*_k_/_&delta;_))\*2/(_D_\*_D_)).
+2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
+3. Sort the _P_\[_i_\] in decreasing order by their values.
+4. If _r_ is 1, return the labels to the first _k_ items in the list _P_, and the algorithm is done.
+5. Set _&mu;_ to ceil(_k_ + _m_/ilog(_m_, _r_&minus; 1)).
+6. Let _C_ be the coins whose labels are given in the first _&mu;_ items in the list (these are the _&mu;_ many coins found to be the most biased by this algorithm).
+6. If _&mu;_ &le; 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = 1.
+7. If _&mu;_ > 2\*_k_, do a recursive run of this algorithm, using only the coins in _C_ and with _&delta;_ = _&delta;_/2 and _r_ = _r_ &minus; 1.
+
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
@@ -296,6 +319,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 - <small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small>
 - <small><sup id=Note8>(8)</sup> Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.</small>
 - <small><sup id=Note9>(9)</sup> Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
+- <small><sup id=Note10>(10)</sup> Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).</small>
 
 <a id=License></a>
 ## License

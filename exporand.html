@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/06/23"><meta name="citation_online_date" content="2021/06/23"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/08/06"><meta name="citation_online_date" content="2021/08/06"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -2125,6 +2125,9 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note25>(25)</sup> Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</small></li>
 <li><small><sup id=Note26>(26)</sup> Efraimidis, P. &quot;<a href="https://arxiv.org/abs/1012.0256v2"><strong>Weighted Random Sampling over Data Streams</strong></a>&quot;, arXiv:1012.0256v2 [cs.DS], 2015.</small></li>
 <li><small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution&#39;s domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to <em>Lebesgue measure</em>, which, roughly speaking, measures sets of real numbers according to their &quot;length&quot;.</small></li>
+<li><small><sup id=Note28>(28)</sup> George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058">https://doi.org/10.1214/aoms/1177693058</a> .</small></li>
+<li><small><sup id=Note29>(29)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small></li>
+<li><small><sup id=Note30>(30)</sup> George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058">https://doi.org/10.1214/aoms/1177693058</a> .</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2174,37 +2177,29 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number&#39;s digits according to those probabilities.  However, there seem to be limits on how practical this approach is.</p>
 
-<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random number&#39;s binary expansion (starting with <em>j</em> = 1 for the first digit after the point), where the random number is in [0, 1] and each digit is independently set.  Then the random number&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note27"><strong>(27)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary expansion&#39;s digits become less and less biased as they move farther and farther from the binary point.</p>
+<p>The following is part of Kakutani&#39;s theorem (Kakutani 1948)<sup><a href="#Note13"><strong>(13)</strong></a></sup>: Let <em>a</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> binary digit probability in a random variate&#39;s binary expansion (starting with <em>j</em> = 1 for the first digit after the point), where the random number is in [0, 1] and each digit is independently set.  Then the random variate&#39;s distribution is <em>absolutely continuous</em><sup><a href="#Note27"><strong>(27)</strong></a></sup> if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary expansion&#39;s digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)<sup><a href="#Note28"><strong>(28)</strong></a></sup>, (Chatterji 1964)<sup><a href="#Note29"><strong>(29)</strong></a></sup>.</p>
 
-<p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.</p>
+<p>An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2.  Then a random variate could be formed by setting to 1, each of its binary digits after the point, with probability equal to the corresponding <em>a</em><sub><em>j</em></sub>.  However, as Marsaglia (1971)<sup><a href="#Note30"><strong>(30)</strong></a></sup> showed, the distribution can only be one of the following:</p>
 
-<p>However, as the following two results show, the resulting distribution will have a discontinuous <em>probability density function</em> (PDF) in general, leaving the uniform and exponential distributions as the only practical distributions that can be formed this way:</p>
-
-<p><strong>Result 1.</strong> <em>For &beta; = 2, the distribution&#39;s PDF will be continuous only if&mdash;</em></p>
-
-<ul>
-<li><em>the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and</em></li>
-<li><em>the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc.</em></li>
-</ul>
-
-<p><strong>Result 2.</strong> <em>The distribution&#39;s PDF will be continuous only if the sequence has the form&mdash;</em></p>
+<ol>
+<li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in [0, 1], without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
+<li><p>The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of [0, 1], and the sequence has the form&mdash;</p>
 
 <p><em>a</em><sub><em>j</em></sub> = exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)/(1 + exp(<em>w</em>/<em>&beta;</em><sup><em>j</em></sup>)),</p>
 
-<p><em>where &beta; = 2 and w is a constant.</em></p>
+<p>where &beta; = 2 and w is a constant.</p></li>
+<li>The PDF is not described in Case 2 above, but is positive on some open interval in [0, 1], so the PDF will be piecewise continuous, and the random variate can be scaled by an integer power of 2 so that the new variate&#39;s distribution has a PDF described in Case 2.</li>
+</ol>
 
-<p>I conjectured both these statements and asked for proof on them on Mathematics Stack Exchange.  The community stepped in and gave such proof; see my <a href="https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits"><strong>Stack Exchange question</strong></a>.</p>
+<p>As Marsaglia also showed, similar results apply when the base of the random digits is other than 2 (binary).  See also my <a href="https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits"><strong>Stack Exchange question</strong></a>.</p>
 
-<p>Special cases of Result 2 include the uniform distribution (<em>w</em> = 0), the truncated exponential(1) distribution (<em>w</em> = &minus;1; (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>), and the more general truncated exponential(<em>&lambda;</em>) distribution (<em>w</em> = &minus;<em>&lambda;</em>).  We also have the special case of 1 minus a truncated exponential(<em>w</em>) random number when <em>w</em> &gt; 0, as well as the special case <em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</p>
-
-<p>I continue to conjecture the following: A similar behavior to Result 1 above applies for <em>&beta;</em> other than 2 (non-base-2 or non-binary cases) as it does to <em>&beta;</em> = 2 (the base-2 or binary case).</p>
-
-<p>For reference, the following calculates the relative probability for <em>x</em> for a given sequence, where <em>x</em> is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:</p>
+<p>Case 2 has several special cases, including:</p>
 
 <ul>
-<li>Let <em>b</em><sub><em>j</em></sub> be the <em>j</em><sup>th</sup> base-<em>&beta;</em> digit after the point (e.g., <code>rem(floor(x*pow(beta, j)), beta)</code> where <code>beta</code> = <em>&beta;</em>).</li>
-<li>Let <em>t</em>(<em>x</em>) = &prod;<sub><em>j</em> = 1, 2, ...</sub> <em>b</em><sub><em>j</em></sub> * <em>a</em><sub><em>j</em></sub> + (1 &minus; <em>b</em><sub><em>j</em></sub>) * (1 &minus; <em>a</em><sub><em>j</em></sub>).</li>
-<li>The relative probability for <em>x</em> is <em>t</em>(<em>x</em>) / (argmax<sub><em>z</em></sub> <em>t</em>(<em>z</em>)).</li>
+<li>The uniform distribution (<em>w</em> = 0), the truncated exponential(1) distribution (<em>w</em> = &minus;1; (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).</li>
+<li>The more general truncated exponential(<em>&lambda;</em>) distribution (<em>w</em> = &minus;<em>&lambda;</em>).</li>
+<li>1 minus a truncated exponential(<em>w</em>) random number when <em>w</em> &gt; 0.</li>
+<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</li>
 </ul>
 
 <p><a id=License></a></p>

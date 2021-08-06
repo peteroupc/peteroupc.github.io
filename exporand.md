@@ -1662,6 +1662,9 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note25>(25)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 - <small><sup id=Note26>(26)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 - <small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to _Lebesgue measure_, which, roughly speaking, measures sets of real numbers according to their "length".</small>
+- <small><sup id=Note28>(28)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [https://doi.org/10.1214/aoms/1177693058](https://doi.org/10.1214/aoms/1177693058) .</small>
+- <small><sup id=Note29>(29)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small>
+- <small><sup id=Note30>(30)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [https://doi.org/10.1214/aoms/1177693058](https://doi.org/10.1214/aoms/1177693058) .</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1699,34 +1702,26 @@ Oberhoff also describes _prefix distributions_ that sample a box that covers the
 
 In principle, a partially-sampled random number is possible by finding a sequence of digit probabilities and setting that number's digits according to those probabilities.  However, there seem to be limits on how practical this approach is.
 
-The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random number's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random number's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary expansion's digits become less and less biased as they move farther and farther from the binary point.
+The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random variate's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random variate's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary expansion's digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)<sup>[**(28)**](#Note28)</sup>, (Chatterji 1964)<sup>[**(29)**](#Note29)</sup>.
 
-An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random number could be formed by setting each of its binary digits after the point to 1 with probability equal to the corresponding _a_<sub>_j_</sub>.
+An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random variate could be formed by setting to 1, each of its binary digits after the point, with probability equal to the corresponding _a_<sub>_j_</sub>.  However, as Marsaglia (1971)<sup>[**(30)**](#Note30)</sup> showed, the distribution can only be one of the following:
 
-However, as the following two results show, the resulting distribution will have a discontinuous _probability density function_ (PDF) in general, leaving the uniform and exponential distributions as the only practical distributions that can be formed this way:
+1. The distribution's probability density function (PDF) is zero somewhere in every open interval in [0, 1], without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
+2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of [0, 1], and the sequence has the form&mdash;
 
-**Result 1.** _For &beta; = 2, the distribution's PDF will be continuous only if&mdash;_
+    _a_<sub>_j_</sub> = exp(_w_/_&beta;_<sup>_j_</sup>)/(1 + exp(_w_/_&beta;_<sup>_j_</sup>)),
 
-- _the probabilities of the first half, interval (0, 1/2), are proportional to those of the second half, interval (1/2, 1), and_
-- _the probabilities of each quarter, eighth, etc. are proportional to those of every other quarter, eighth, etc._
+    where &beta; = 2 and w is a constant.
+3. The PDF is not described in Case 2 above, but is positive on some open interval in [0, 1], so the PDF will be piecewise continuous, and the random variate can be scaled by an integer power of 2 so that the new variate's distribution has a PDF described in Case 2.
 
-**Result 2.** _The distribution's PDF will be continuous only if the sequence has the form&mdash;_
+As Marsaglia also showed, similar results apply when the base of the random digits is other than 2 (binary).  See also my [**Stack Exchange question**](https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits).
 
-_a_<sub>_j_</sub> = exp(_w_/_&beta;_<sup>_j_</sup>)/(1 + exp(_w_/_&beta;_<sup>_j_</sup>)),
+Case 2 has several special cases, including:
 
-_where &beta; = 2 and w is a constant._
-
-I conjectured both these statements and asked for proof on them on Mathematics Stack Exchange.  The community stepped in and gave such proof; see my [**Stack Exchange question**](https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits).
-
-Special cases of Result 2 include the uniform distribution (_w_ = 0), the truncated exponential(1) distribution (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>), and the more general truncated exponential(_&lambda;_) distribution (_w_ = &minus;_&lambda;_).  We also have the special case of 1 minus a truncated exponential(_w_) random number when _w_ > 0, as well as the special case _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
-
-I continue to conjecture the following: A similar behavior to Result 1 above applies for _&beta;_ other than 2 (non-base-2 or non-binary cases) as it does to _&beta;_ = 2 (the base-2 or binary case).
-
-For reference, the following calculates the relative probability for _x_ for a given sequence, where _x_ is in [0, 1), and plotting this function (which is similar to a multiple of the PDF) will often show whether the function is discontinuous:
-
-- Let _b_<sub>_j_</sub> be the _j_<sup>th</sup> base-_&beta;_ digit after the point (e.g., `rem(floor(x*pow(beta, j)), beta)` where `beta` = _&beta;_).
-- Let _t_(_x_) = &prod;<sub>_j_ = 1, 2, ...</sub> _b_<sub>_j_</sub> * _a_<sub>_j_</sub> + (1 &minus; _b_<sub>_j_</sub>) * (1 &minus; _a_<sub>_j_</sub>).
-- The relative probability for _x_ is _t_(_x_) / (argmax<sub>_z_</sub> _t_(_z_)).
+- The uniform distribution (_w_ = 0), the truncated exponential(1) distribution (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>).
+- The more general truncated exponential(_&lambda;_) distribution (_w_ = &minus;_&lambda;_).
+- 1 minus a truncated exponential(_w_) random number when _w_ > 0.
+- _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
 
 <a id=License></a>
 ## License

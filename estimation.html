@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/06/26"><meta name="citation_online_date" content="2021/06/26"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/08/06"><meta name="citation_online_date" content="2021/08/06"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -374,6 +374,34 @@ pprint(Max(1,kappa))
 <p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <strong>z</strong><sup><em>&beta;</em></sup>) and is defined on [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
+<p><a id=Finding_Biased_Coins></a></p>
+
+<h2>Finding Biased Coins</h2>
+
+<p>Given <em>m</em> coins with unknown probability of heads, the following algorithm finds the <em>k</em> coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; <em>&delta;</em>.  It uses the following parameters:</p>
+
+<ul>
+<li><em>k</em> is the number of coins to return.</li>
+<li><em>&delta;</em> is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; <em>&delta;</em>.</li>
+<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be 0 or greater.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most biased coin and the (<em>k</em>+1)<sup>th</sup> most biased coin.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
+<li><em>r</em> is the number of rounds to run the algorithm and must be an integer 1 or greater.</li>
+</ul>
+
+<p>In this section, ilog(<em>a</em>, <em>r</em>) means either <em>a</em> if <em>r</em> is 0, or max(ln(ilog(<em>a</em>, <em>r</em>&minus;1)), 1) otherwise.</p>
+
+<p>Agarwal et al. (2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup> called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
+
+<ol>
+<li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8<em><em>k</em>/<em>&delta;</em>))\</em>2/(<em>D</em>*<em>D</em>)).</li>
+<li>For each integer <em>i</em> in [1, <em>m</em>], flip the coin labeled <em>i</em>, <em>t</em> many times, then set <em>P</em>[<em>i</em>] to a list of two items: first is the number of times coin <em>i</em> showed heads, and second is the label <em>i</em>.</li>
+<li>Sort the <em>P</em>[<em>i</em>] in decreasing order by their values.</li>
+<li>If <em>r</em> is 1, return the labels to the first <em>k</em> items in the list <em>P</em>, and the algorithm is done.</li>
+<li>Set <em>&mu;</em> to ceil(<em>k</em> + <em>m</em>/ilog(<em>m</em>, <em>r</em>&minus; 1)).</li>
+<li>Let <em>C</em> be the coins whose labels are given in the first <em>&mu;</em> items in the list (these are the <em>&mu;</em> many coins found to be the most biased by this algorithm).</li>
+<li>If <em>&mu;</em> &le; 2*<em>k</em>, do a recursive run of this algorithm, using only the coins in <em>C</em> and with <em>&delta;</em> = <em>&delta;</em>/2 and <em>r</em> = 1.</li>
+<li>If <em>&mu;</em> &gt; 2*<em>k</em>, do a recursive run of this algorithm, using only the coins in <em>C</em> and with <em>&delta;</em> = <em>&delta;</em>/2 and <em>r</em> = <em>r</em> &minus; 1.</li>
+</ol>
+
 <p><a id=Requests_and_Open_Questions></a></p>
 
 <h2>Requests and Open Questions</h2>
@@ -408,6 +436,7 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note7>(7)</sup> As used here, kurtosis is the 4th c.a.m. divided by the square of the 2nd c.a.m.</small></li>
 <li><small><sup id=Note8>(8)</sup> Jiang, L., Hickernell, F.J., &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, arXiv:1411.1151 [math.NA], 2014.</small></li>
 <li><small><sup id=Note9>(9)</sup> Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</small></li>
+<li><small><sup id=Note10>(10)</sup> Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</small></li>
 </ul>
 
 <p><a id=License></a></p>
