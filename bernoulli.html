@@ -1720,7 +1720,7 @@ kind of irrational number.</p>
 <li>Do a separate run of the currently running algorithm.  If the separate run returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p>Another algorithm to sample this probability, which appears in French in (Penaud and Roques 2002)<sup><a href="#Note58"><strong>(58)</strong></a></sup>, is iterative but requires arithmetic operations.</p>
+<p>Another algorithm to sample this probability, which appears in French in (Penaud and Roques 2002)<sup><a href="#Note46"><strong>(46)</strong></a></sup>, is iterative but requires arithmetic operations.</p>
 
 <p><a id=sqrt_2_minus_1></a></p>
 
@@ -1854,7 +1854,7 @@ kind of irrational number.</p>
 
 <h4>exp(&minus;<em>x</em>/<em>y</em>)</h4>
 
-<p>This algorithm takes integers <em>x</em> &ge; 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.</p>
+<p>This algorithm takes integers <em>x</em> &ge; 0 and <em>y</em> &gt; 0 and outputs 1 with probability <code>exp(-x/y)</code> or 0 otherwise. It originates from (Canonne et al. 2020)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.</p>
 
 <ol>
 <li>Special case: If <em>x</em> is 0, return 1. (This is because the probability becomes <code>exp(0) = 1</code>.)</li>
@@ -1880,7 +1880,7 @@ kind of irrational number.</p>
 <p>The algorithm is then as follows:</p>
 
 <ul>
-<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;<em>&lambda;</em>)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note46"><strong>(46)</strong></a></sup>.)</li>
+<li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus; <em>LI</em>[<em>i</em>]/1)</strong>, and call the <strong>general martingale algorithm</strong> adapted for <strong>exp(&minus;<em>&lambda;</em>)</strong> using the input coin that simulates  <em>LF</em>[<em>i</em>].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.)</li>
 </ul>
 
 <p><a id=a___b___z></a></p>
@@ -1965,7 +1965,7 @@ kind of irrational number.</p>
 <li>Go to step 1.</li>
 </ol>
 
-<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note47"><strong>(47)</strong></a></sup>.  See the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix for more information.</p>
+<p>In fact, this algorithm takes advantage of a theorem related to the Forsythe method of random sampling (Forsythe 1972)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.  See the section &quot;<a href="#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot; in the appendix for more information.</p>
 
 <blockquote>
 <p><strong>Note:</strong> If the last step in the algorithm reads &quot;Return 0&quot; rather than &quot;Go to step 1&quot;, then the algorithm simulates the probability erf(<em>x</em>)*sqrt(&pi;)/2 instead.</p>
@@ -2005,7 +2005,7 @@ kind of irrational number.</p>
 
 <h4>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</h4>
 
-<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup><a href="#Note23"><strong>(23)</strong></a></sup> in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
+<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note49"><strong>(49)</strong></a></sup>.  Note the use of the methodology in (Łatuszyński et al. 2009/2011, algorithm 2)<sup><a href="#Note23"><strong>(23)</strong></a></sup> in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
 
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
@@ -2022,7 +2022,7 @@ kind of irrational number.</p>
 
 <h4>Euler&ndash;Mascheroni constant <em>&gamma;</em></h4>
 
-<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> is due to Mendo (2020)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  This solves an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.   The series used was given by Sondow (2005)<sup><a href="#Note49"><strong>(49)</strong></a></sup>. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
+<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> is due to Mendo (2020)<sup><a href="#Note30"><strong>(30)</strong></a></sup>.  This solves an open question given in (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.   The series used was given by Sondow (2005)<sup><a href="#Note50"><strong>(50)</strong></a></sup>. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
 
 <ol>
 <li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
@@ -2185,19 +2185,19 @@ kind of irrational number.</p>
 <li><small><sup id=Note43>(43)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
 <li><small><sup id=Note44>(44)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as <em>&lambda;</em> approaches 1.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ...</small></li>
 <li><small><sup id=Note45>(45)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></li>
-<li><small><sup id=Note46>(46)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
-<li><small><sup id=Note47>(47)</sup> Forsythe, G.E., &quot;Von Neumann&#39;s Comparison Method for Random Sampling from the Normal and Other Distributions&quot;, <em>Mathematics of Computation</em> 26(120), October 1972.</small></li>
-<li><small><sup id=Note48>(48)</sup> Citterio, M., Pavani, R., &quot;A Fast Computation of the Best <em>k</em>-Digit Rational Approximation to a Real Number&quot;, <em>Mediterranean Journal of Mathematics</em> 13 (2016).</small></li>
-<li><small><sup id=Note49>(49)</sup> Sondow, Jonathan. “New Vacca-Type Rational Series for Euler&#39;s Constant and Its &#39;Alternating&#39; Analog ln 4/<em>&pi;</em>.”, 2005.</small></li>
-<li><small><sup id=Note50>(50)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
-<li><small><sup id=Note51>(51)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
-<li><small><sup id=Note52>(52)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
-<li><small><sup id=Note53>(53)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.</small></li>
-<li><small><sup id=Note54>(54)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
-<li><small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
-<li><small><sup id=Note56>(56)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
-<li><small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
-<li><small><sup id=Note58>(58)</sup> Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</small></li>
+<li><small><sup id=Note46>(46)</sup> Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</small></li>
+<li><small><sup id=Note47>(47)</sup> Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</small></li>
+<li><small><sup id=Note48>(48)</sup> Forsythe, G.E., &quot;Von Neumann&#39;s Comparison Method for Random Sampling from the Normal and Other Distributions&quot;, <em>Mathematics of Computation</em> 26(120), October 1972.</small></li>
+<li><small><sup id=Note49>(49)</sup> Citterio, M., Pavani, R., &quot;A Fast Computation of the Best <em>k</em>-Digit Rational Approximation to a Real Number&quot;, <em>Mediterranean Journal of Mathematics</em> 13 (2016).</small></li>
+<li><small><sup id=Note50>(50)</sup> Sondow, Jonathan. “New Vacca-Type Rational Series for Euler&#39;s Constant and Its &#39;Alternating&#39; Analog ln 4/<em>&pi;</em>.”, 2005.</small></li>
+<li><small><sup id=Note51>(51)</sup> von Neumann, J., &quot;Various techniques used in connection with random digits&quot;, 1951.</small></li>
+<li><small><sup id=Note52>(52)</sup> Pae, S., &quot;Random number generation using a biased source&quot;, dissertation, University of Illinois at Urbana-Champaign, 2005.</small></li>
+<li><small><sup id=Note53>(53)</sup> Peres, Y., &quot;Iterating von Neumann&#39;s procedure for extracting random bits&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note54>(54)</sup> Estimating <em>&lambda;</em> as <em>&lambda;&prime;</em>, then finding <em>f</em>(<em>&lambda;&prime;</em>), is not necessarily an unbiased estimator of <em>f</em>(<em>&lambda;</em>), even if <em>&lambda;&prime;</em> is an unbiased estimator.</small></li>
+<li><small><sup id=Note55>(55)</sup> Glynn, P.W., &quot;Exact simulation vs exact estimation&quot;, <em>Proceedings of the 2016 Winter Simulation Conference</em>, 2016.</small></li>
+<li><small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
+<li><small><sup id=Note57>(57)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
+<li><small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2210,9 +2210,9 @@ kind of irrational number.</p>
 
 <h3>Randomized vs. Non-Randomized Algorithms</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note50"><strong>(50)</strong></a></sup>.</p>
+<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note22"><strong>(22)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin special case</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note51"><strong>(51)</strong></a></sup>.</p>
 
-<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note51"><strong>(51)</strong></a></sup>, (Peres 1992)<sup><a href="#Note52"><strong>(52)</strong></a></sup>) and is calculated as&mdash;</p>
+<p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note52"><strong>(52)</strong></a></sup>, (Peres 1992)<sup><a href="#Note53"><strong>(53)</strong></a></sup>) and is calculated as&mdash;</p>
 
 <ul>
 <li>((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) / ((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</li>
@@ -2238,7 +2238,7 @@ kind of irrational number.</p>
 <p>the algorithm acts as an <em>unbiased estimator</em> of <em>f</em>(<em>&lambda;</em>) that produces estimates in [0, 1] with probability 1 (Łatuszyński et al. 2009/2011)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  As a result, the probability <em>f</em>(<em>&lambda;</em>) can be simulated in theory by&mdash;</p>
 
 <ol>
-<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note53"><strong>(53)</strong></a></sup></li>
+<li>finding in some way an unbiased estimate of <em>f</em>(<em>&lambda;</em>);<sup><a href="#Note54"><strong>(54)</strong></a></sup></li>
 <li>generating a uniform random variate in [0,1], call it <em>u</em>; and</li>
 <li>returning 1 if <em>u</em> is less than <em>v</em>, or 0 otherwise.</li>
 </ol>
@@ -2247,7 +2247,7 @@ kind of irrational number.</p>
 
 <p>Only <em>factory functions</em> (as defined in &quot;<a href="#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) can have unbiased estimation algorithms whose estimates lie in [0, 1] with probability 1 (Łatuszyński et al. 2009/2011)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p>
 
-<p>Glynn (2016)<sup><a href="#Note54"><strong>(54)</strong></a></sup> distinguishes between&mdash;</p>
+<p>Glynn (2016)<sup><a href="#Note55"><strong>(55)</strong></a></sup> distinguishes between&mdash;</p>
 
 <ul>
 <li><em>exact simulation</em>, or methods that simulate the same <em>distribution</em> as that of <em>g</em>(<em>X</em>) (same &quot;shape&quot;, location, and scale of probabilities) and finish with probability 1, and</li>
@@ -2317,7 +2317,7 @@ kind of irrational number.</p>
 <li>alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>),</li>
 </ul>
 
-<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.</p>
+<p>using the notation in &quot;Analytic Combinatorics&quot; (Flajolet and Sedgewick 2009)<sup><a href="#Note56"><strong>(56)</strong></a></sup>.</p>
 
 <p>The following algorithm generates a random variate that follows the von Neumann schema.</p>
 
@@ -2438,17 +2438,17 @@ def valid_perm(f, x, n):
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Each arbitrary</td>
-<td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note27"><strong>(27)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note47"><strong>(47)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function (CDF) of <em>E</em>.<br>If <em>x</em> is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
+<td>Odd is <em>&psi;</em>(<em>x</em>) = (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(<em>z</em>)) * DPDF(<em>z</em>) <em>dz</em>) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup><a href="#Note27"><strong>(27)</strong></a></sup>; see also Forsythe 1972<sup><a href="#Note48"><strong>(48)</strong></a></sup>).  Here, DPDF is the probability density function (PDF) of <em>D</em>, and ECDF is the cumulative distribution function (CDF) of <em>E</em>.<br>If <em>x</em> is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> <em>&psi;</em>(<em>z</em>) <em>dz</em>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Each arbitrary</td>
-<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note56"><strong>(56)</strong></a></sup>).  DPDF and ECDF are as above.</td>
+<td>Even is (&int;<sub>(&minus;&infin;, <em>x</em>)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(<em>z</em>))) * DPDF(<em>z</em>) <em>dz</em>) (Formula 2; see also Monahan 1979<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  DPDF and ECDF are as above.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
 <td>Both uniform(0,1)</td>
-<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note50"><strong>(50)</strong></a></sup>.</td>
+<td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)<sup><a href="#Note51"><strong>(51)</strong></a></sup>.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2502,7 +2502,7 @@ def valid_perm(f, x, n):
 
 <h3>Calculating Bounds for exp(1)</h3>
 
-<p>The following implements the parts of Citterio and Pavani&#39;s algorithm (2016)<sup><a href="#Note48"><strong>(48)</strong></a></sup> needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.</p>
+<p>The following implements the parts of Citterio and Pavani&#39;s algorithm (2016)<sup><a href="#Note49"><strong>(49)</strong></a></sup> needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.</p>
 
 <p>Define the following operations:</p>
 
@@ -2613,7 +2613,7 @@ def valid_perm(f, x, n):
 <li>the sum of <em>j</em><sup>th</sup> coefficients is greater than 0, for each <em>j</em> starting at 0 and ending at <em>n</em>, except that the list of sums may begin and/or end with zeros.</li>
 </ul>
 
-<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note57"><strong>(57)</strong></a></sup>).  It is implemented as follows:</p>
+<p>If those conditions are not met, then each polynomial can be <em>augmented</em> as often as necessary to meet the conditions (Morina et al., 2019)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup><a href="#Note58"><strong>(58)</strong></a></sup>).  It is implemented as follows:</p>
 
 <ul>
 <li>Let <em>n</em> be the polynomial&#39;s old degree.  For each <em>k</em> in [0, <em>n</em>+1], the new polynomial&#39;s coefficient at <em>k</em> is found as follows:

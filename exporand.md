@@ -141,7 +141,10 @@ PSRNs of other distributions can be implemented via rejection from the uniform d
 - The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)<sup>[**(11)**](#Note11)</sup>.
 - Sampling uniform distributions in \[0, _n_\) (not just \[0, 1\]), is described later in "[**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)".)
 
-For these distributions (and others that are continuous almost everywhere and bounded from above), Oberhoff (2018)<sup>[**(12)**](#Note12)</sup> proved that unsampled trailing bits of the PSRN converge to the uniform distribution (see also (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>).
+For all these distributions, the PSRN's unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous density function (or more generally, to so-called "absolutely continuous" distributions) (Oberhoff 2018)<sup>[**(12)**](#Note12)</sup>, (Hill and Schürger 2005, Corollary 4.4)<sup>[**(30)**](#Note30)</sup>.
+
+For these distributions (and other so-called "absolutely continuous" distributions)
+For these distributions (and others that are continuous almost everywhere and bounded from above),  proved that unsampled trailing bits of the PSRN converge to the uniform distribution (see also (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>).
 
 PSRNs could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 
@@ -1662,9 +1665,9 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note25>(25)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 - <small><sup id=Note26>(26)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
 - <small><sup id=Note27>(27)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to _Lebesgue measure_, which, roughly speaking, measures sets of real numbers according to their "length".</small>
-- <small><sup id=Note28>(28)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [https://doi.org/10.1214/aoms/1177693058](https://doi.org/10.1214/aoms/1177693058) .</small>
+- <small><sup id=Note28>(28)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .</small>
 - <small><sup id=Note29>(29)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small>
-- <small><sup id=Note30>(30)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [https://doi.org/10.1214/aoms/1177693058](https://doi.org/10.1214/aoms/1177693058) .</small>
+- <small><sup id=Note30>(30)</sup> Hill, T.P. and Schürger, K., 2005. Regularity of digits and significant digits of random variables. _Stochastic processes and their applications_, 115(10), pp.1723-1743.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1704,7 +1707,7 @@ In principle, a partially-sampled random number is possible by finding a sequenc
 
 The following is part of Kakutani's theorem (Kakutani 1948)<sup>[**(13)**](#Note13)</sup>: Let _a_<sub>_j_</sub> be the _j_<sup>th</sup> binary digit probability in a random variate's binary expansion (starting with _j_ = 1 for the first digit after the point), where the random number is in \[0, 1\] and each digit is independently set.  Then the random variate's distribution is _absolutely continuous_<sup>[**(27)**](#Note27)</sup> if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary expansion's digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)<sup>[**(28)**](#Note28)</sup>, (Chatterji 1964)<sup>[**(29)**](#Note29)</sup>.
 
-An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random variate could be formed by setting to 1, each of its binary digits after the point, with probability equal to the corresponding _a_<sub>_j_</sub>.  However, as Marsaglia (1971)<sup>[**(30)**](#Note30)</sup> showed, the distribution can only be one of the following:
+An absolutely continuous distribution of the kind just mentioned can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2.  Then a random variate could be formed by setting to 1, each of its binary digits after the point, with probability equal to the corresponding _a_<sub>_j_</sub>.  However, as Marsaglia (1971)<sup>[**(28)**](#Note28)</sup> showed, the distribution can only be one of the following:
 
 1. The distribution's probability density function (PDF) is zero somewhere in every open interval in [0, 1], without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
 2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of [0, 1], and the sequence has the form&mdash;
