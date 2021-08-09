@@ -30,6 +30,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Non-Negative Factories**](#Non_Negative_Factories)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
+    - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
     - [**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
@@ -360,6 +361,14 @@ where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.  (Note: This substep is not done again.)
+
+<a id=Euler_ndash_Mascheroni_Constant___gamma></a>
+### Euler&ndash;Mascheroni Constant _&gamma;_
+
+As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional part of 1/_U_, where _U_ is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant.  This leads to the following algorithm to sample a probability equal to this constant:
+
+1. Generate a PSRN for the reciprocal of a uniform random variate, as described in [**another page of mine**](https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number).
+2. Set the PSRN's integer part to 0, then run **SampleGeometricBag** on that PSRN.  Return 0 if the run returns 1, or 1 otherwise.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
@@ -736,6 +745,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note37>(37)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random variate generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 - <small><sup id=Note38>(38)</sup> Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.</small>
 - <small><sup id=Note39>(39)</sup> Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.</small>
+- <small><sup id=Note40>(40)</sup> Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In _Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science_, 2004. (pp. 12-21). IEEE.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1130,7 +1140,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >
 > 1. A stochastic context-free grammar in which all the probabilities are 1/2 is called a _binary stochastic grammar_ (Flajolet et al. 2010<sup>[**(9)**](#Note9)</sup>).  If the starting nonterminal has _n_ rules of probability 1/_n_, then the grammar can be called an "_n_-ary stochastic grammar".  It is even possible for a nonterminal to have two rules of probability _&lambda;_ and (1&minus; _&lambda;_), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.
 >
-> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>.  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
+> 2. If a pushdown automaton simulates the function _f_(_&lambda;_), then _f_ corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup>[**(8)**](#Note8)</sup>; see also (Esparza et al. 2004)<sup>[**(40)**](#Note40)</sup>.  For each state of the automaton (call the state _en_), include the following equations in the system based on the automaton's transition rules:
 >
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {}) becomes either _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ if _s2_ is _en_, or _&alpha;_<sub>_st_,_sy_,_en_</sub> = 0 otherwise.
 >     - (_st_, _p_, _sy_) &rarr; (_s2_, {_sy1_}) becomes _&alpha;_<sub>_st_,_sy_,_en_</sub> = _p_ \* _&alpha;_<sub>_s2_,_sy1_,_en_</sub>.

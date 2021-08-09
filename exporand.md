@@ -141,7 +141,7 @@ PSRNs of other distributions can be implemented via rejection from the uniform d
 - The standard normal distribution, as shown in (Karney 2014)<sup>[**(1)**](#Note1)</sup> by running Karney's Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)<sup>[**(11)**](#Note11)</sup>.
 - Sampling uniform distributions in \[0, _n_\) (not just \[0, 1\]), is described later in "[**Sampling Uniform PSRNs**](#Sampling_Uniform_PSRNs)".)
 
-For all these distributions, the PSRN's unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous density function (or more generally, to so-called "absolutely continuous"<sup>[**(12)**](#Note12)</sup> distributions) (Oberhoff 2018)<sup>[**(13)**](#Note13)</sup>, (Hill and Schürger 2005, Corollary 4.4)<sup>[**(14)**](#Note14)</sup>.
+For all these distributions, the PSRN's unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or more generally, to so-called "absolutely continuous"<sup>[**(12)**](#Note12)</sup> distributions) (Oberhoff 2018)<sup>[**(13)**](#Note13)</sup>, (Hill and Schürger 2005, Corollary 4.4)<sup>[**(14)**](#Note14)</sup>.
 
 PSRNs could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.
 

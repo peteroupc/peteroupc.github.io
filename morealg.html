@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/06"><meta name="citation_online_date" content="2021/08/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/09"><meta name="citation_online_date" content="2021/08/09"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -40,6 +40,7 @@
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Non_Negative_Factories"><strong>Non-Negative Factories</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
+<li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
 </ul></li>
 <li><a href="#General_Arbitrary_Precision_Samplers"><strong>General Arbitrary-Precision Samplers</strong></a>
 
@@ -526,6 +527,17 @@
 <li>Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if <em>d</em> is 0, or 0 otherwise.</li>
 <li>Run a Bernoulli factory algorithm for <em>g</em>(<em>&lambda;</em>).  If the run returns 1 (&quot;heads&quot;), add <em>H</em> to <em>d</em>.  Otherwise (&quot;tails&quot;), subtract <em>T</em> from <em>d</em>.  (Note: This substep is not done again.)</li>
 </ol></li>
+</ol>
+
+<p><a id=Euler_ndash_Mascheroni_Constant___gamma></a></p>
+
+<h3>Euler&ndash;Mascheroni Constant <em>&gamma;</em></h3>
+
+<p>As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant.  This leads to the following algorithm to sample a probability equal to this constant:</p>
+
+<ol>
+<li>Generate a PSRN for the reciprocal of a uniform random variate, as described in <a href="https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number"><strong>another page of mine</strong></a>.</li>
+<li>Set the PSRN&#39;s integer part to 0, then run <strong>SampleGeometricBag</strong> on that PSRN.  Return 0 if the run returns 1, or 1 otherwise.</li>
 </ol>
 
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
@@ -1021,6 +1033,7 @@
 <li><small><sup id=Note37>(37)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random variate generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
 <li><small><sup id=Note38>(38)</sup> Vatan, F., &quot;Distribution functions of probabilistic automata&quot;, in <em>Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC &#39;01)</em>, pp. 684-693, 2001.</small></li>
 <li><small><sup id=Note39>(39)</sup> Kindler, Guy and D. Romik, &quot;On distributions computable by random walks on graphs,&quot; <em>SIAM Journal on Discrete Mathematics</em> 17 (2004): 624-633.</small></li>
+<li><small><sup id=Note40>(40)</sup> Esparza, J., Kučera, A. and Mayr, R., 2004, July. Model checking probabilistic pushdown automata. In <em>Proceedings of the 19th Annual IEEE Symposium on Logic in Computer Science</em>, 2004. (pp. 12-21). IEEE.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1517,7 +1530,7 @@ calc_linear_func(count=8)
 
 <ol>
 <li><p>A stochastic context-free grammar in which all the probabilities are 1/2 is called a <em>binary stochastic grammar</em> (Flajolet et al. 2010<sup><a href="#Note9"><strong>(9)</strong></a></sup>).  If the starting nonterminal has <em>n</em> rules of probability 1/<em>n</em>, then the grammar can be called an &quot;<em>n</em>-ary stochastic grammar&quot;.  It is even possible for a nonterminal to have two rules of probability <em>&lambda;</em> and (1&minus; <em>&lambda;</em>), which are used when the input coin returns 1 (HEADS) or 0 (TAILS), respectively.</p></li>
-<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
+<li><p>If a pushdown automaton simulates the function <em>f</em>(<em>&lambda;</em>), then <em>f</em> corresponds to a special system of equations, built as follows (Mossel and Peres 2005)<sup><a href="#Note8"><strong>(8)</strong></a></sup>; see also (Esparza et al. 2004)<sup><a href="#Note40"><strong>(40)</strong></a></sup>.  For each state of the automaton (call the state <em>en</em>), include the following equations in the system based on the automaton&#39;s transition rules:</p>
 
 <ul>
 <li>(<em>st</em>, <em>p</em>, <em>sy</em>) &rarr; (<em>s2</em>, {}) becomes either <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = <em>p</em> if <em>s2</em> is <em>en</em>, or <em>&alpha;</em><sub><em>st</em>,<em>sy</em>,<em>en</em></sub> = 0 otherwise.</li>
