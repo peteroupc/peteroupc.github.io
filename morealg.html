@@ -553,7 +553,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-x*x); c=integrate(p,(x,0,1)); print(integrate(x*p/c,(x,0,1)));</code>.</p>
+<p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
 
 <p><a id=General_Arbitrary_Precision_Samplers></a></p>
