@@ -379,7 +379,7 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 1. Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see "Uniform Distribution Inside N-Dimensional Shapes" below, as well as the examples).
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
-> **Note:** The mean value of 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1-_z_\*_z_)/_c_, where _z_ is in the interval [0, 1] and _c_ = _&pi;_/4 is chosen so that the area under the graph is 1.  Now find the area under the graph of _z_\*_p_(_z_).  The result is the mean value 4/(3\*_&pi;_).
+> **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-x*x); c=integrate(p,(x,0,1)); print(integrate(x*p/c,(x,0,1)));`.
 
 <a id=General_Arbitrary_Precision_Samplers></a>
 ## General Arbitrary-Precision Samplers
@@ -1206,7 +1206,7 @@ The "output" of the machine is now infinite, namely a real number _X_ in the int
 - `CDF(x)` is the cumulative distribution function of _X_, or the probability that _X_ is _x_ or less.
 - `PDF(x)` is the probability density function of _X_, or the "slope" function of `CDF(x)`, or the relative probability of choosing a number "close" to _x_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(x)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>.  Because of exception 2, `CDF(x)` is continuous (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
+A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(x)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  Because of exception 2, `CDF(x)` is continuous for finite-state generators (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
 
 <a id=License></a>
 ## License
