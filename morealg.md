@@ -1024,6 +1024,7 @@ This section has mathematical proofs showing which kinds of algebraic functions 
 The following summarizes what can be established about these algebraic functions:
 
 - sqrt(_&lambda;_) can be simulated.
+- Every quadratic irrational in (0, 1) can be simulated.
 - Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.
 - If _f_(_&lambda;_) and _g_(_&lambda;_) can be simulated, so can _f_(_&lambda;_)\*_g_(_&lambda;_), _f_(_g_(_&lambda;_)), and _g_(_f_(_&lambda;_)).
 - If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a _probability distribution_ of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).
@@ -1033,7 +1034,7 @@ The following summarizes what can be established about these algebraic functions
 
 The following definitions are used in this section:
 
-1. A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes a biased coin. It starts with a given state and its stack starts with EMPTY.  On each iteration:
+1. A _pushdown automaton_ has a finite set of _states_ and a finite set of _stack symbols_, one of which is called EMPTY, and takes a biased coin. It starts at a given state and its stack starts with EMPTY.  On each iteration:
     - The automaton flips the coin.
     - Based on the coin flip (HEADS or TAILS), the current state, and the top stack symbol, it moves to a new state (or keeps it unchanged) and replaces the top stack symbol with zero, one or two symbols.  Thus, there are three kinds of _transition rules_:
          - (_state_, _flip_, _symbol_) &rarr; (_state2_, {_symbol2_}): move to _state2_, replace top stack symbol with same or different one.
@@ -1179,6 +1180,26 @@ _Proof Sketch:_
 1. As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6}), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its start state be the start state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its start state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.
 
 2. Follow (1), except as follows: (A) _M_ is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;
+
+**Proposition 7:** _Every constant function equal to a quadratic irrational number in the interval (0, 1) is in class **PDA**._
+
+_Proof:_ A _continued fraction_ is one way to write a real number.  For purposes of this proof, every real number in (0, 1) has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial numerator_, is an integer greater than 0.
+
+A well-known fact states that quadratic irrational numbers have continued fraction expansions that are eventually periodic; the expansion can be described using a finite number of partial numerators.  The following example describes a periodic continued fraction expansion: \[1, 2, (1, 2, 3)\], which is the same as \[1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...\].  In this example, the size of the period is 3, and the size of the non-period is 2.
+
+Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> can be described as follows.  Let _p_ be the period size, and let _n_ be the non-period size.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
+
+- From E: Go to N with probability _x_, or to the box's call port with probability 1 &minus; _x_.
+- From N: Go to X1 with probability _y_, or to X0 with probability 1 &minus; _y_.
+- From B0: Go to E with probability 1.
+- From B1: Go to X0 with probability 1.
+
+Now the recursive Markov chain to be built has _n_+_p_ components:
+
+- For each _i_ in \[1, _n_\], there is a non-period component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1.
+- For each _i_ in \[_n_+1, _n_+_p_\], there is a period component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1, _except_ that for component _n_+_p_, the component's single box goes to the component labeled _n_+1.
+
+According to Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that's left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component never recurses more likely than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 
