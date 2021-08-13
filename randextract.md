@@ -54,7 +54,7 @@ A streaming algorithm, which builds something like an "extractor tree", is anoth
 
 I maintain [**source code of this extractor and the Peres extractor**](https://github.com/peteroupc/peteroupc.github.io/blob/master/rextract.rb), which also includes additional notes on randomness extraction.
 
-Pae's "entropy-preserving" binarization (Pae 2020)<sup>[**(13)**](#Note13)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
+Pae's "entropy-preserving" binarization (Pae 2018)<sup>[**(13)**](#Note13)</sup>, given below, is meant to be used in other extractor algorithms such as the ones mentioned above.  It assumes the number of possible values, _n_, is known. However, it is obviously not efficient if _n_ is a large number.
 
 1. Let _f_ be a number in the interval \[0, _n_) that was previously randomly generated.  If _f_ is greater than 0, write a 1 (and go to step 2).
 2. If _f_ is less than _n_ &minus; 1, write a 0 _x_ times, where _x_ is (_n_ &minus; 1) &minus; _f_.
@@ -84,7 +84,7 @@ Devroye and Gravel (2020)<sup>[**(15)**](#Note15)</sup> suggest a special random
 - <small><sup id=Note10>(10)</sup> It follows from this definition that an extracting function must map an all-X string (such as an all-zeros string) to the empty string, since there is only one empty string but more than one string of any other length.  Thus, no reversible function can be extracting, and a function that never returns an empty string (including nearly all hash functions) can't be extracting, either.</small>
 - <small><sup id=Note11>(11)</sup> Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.</small>
 - <small><sup id=Note12>(12)</sup> Zhou, H. and Bruck, J., "[**Streaming algorithms for optimal generation of random bits**](https://arxiv.org/abs/1209.0730)", arXiv:1209.0730 [cs.IT], 2012.</small>
-- <small><sup id=Note13>(13)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS].</small>
+- <small><sup id=Note13>(13)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.</small>
 - <small><sup id=Note14>(14)</sup> Kozen, D., [**"Optimal Coin Flipping"**](http://www.cs.cornell.edu/~kozen/Papers/Coinflip.pdf), 2014.</small>
 - <small><sup id=Note15>(15)</sup> Devroye, L., Gravel, C., "[**Random variate generation using only finitely many unbiased, independently and identically distributed random bits**](https://arxiv.org/abs/1502.02539v6)", arXiv:1502.02539v6  [cs.IT], 2020.</small>
 - <small><sup id=Note16>(16)</sup> Montes Gutiérrez, I., "Comparison of alternatives under uncertainty and imprecision", doctoral thesis, Universidad de Oviedo, 2014.</small>

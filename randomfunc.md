@@ -1575,7 +1575,7 @@ If the distribution **is discrete**, numbers that closely follow it can be sampl
 
 If&mdash;
 
-- the discrete distribution has a **known PDF-like function** (`PDF(x)`),
+- the discrete distribution has a **known PDF-like function** `PDF(x)`, where `x` must be an integer,
 - the interval [`mini`, `maxi`] covers all the distribution, and
 - the function's values are all rational numbers (numbers of the form `y/z` where `y` and `z` are integers),
 
@@ -1594,7 +1594,7 @@ END METHOD
 
 If&mdash;
 
-- the discrete distribution has a **known CDF** (`CDF(x)`),
+- the discrete distribution has a **known CDF** `CDF(x)`, where `x` must be an integer,
 - the interval [`mini`, `maxi`] covers all the distribution, and
 - the CDF's values are all rational numbers,
 
@@ -1672,11 +1672,11 @@ The following method samples from a distribution via inversion, with an accuracy
 
 Some applications need to convert a pregenerated number in \[0, 1\] (usually a number sampled from a uniform distribution), called `u01` below, to a non-uniform distribution via quantiles. Notable cases include copula methods, order statistics, and Monte Carlo methods involving low-discrepancy sequences. The following way to compute quantiles is exact in theory:
 
-- Distribution is **discrete, with known PMF**: Sequential search (Devroye 1986, p. 85)<sup>[**(20)**](#Note20)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
+- Distribution is **discrete, with known PMF** (and the distribution takes on integers): Sequential search (Devroye 1986, p. 85)<sup>[**(20)**](#Note20)</sup>: `i = 0; p = PMF(i); while u01 > p; u01 = u01 - p; i = i + 1; p = PMF(i); end; return p`, but this is not always fast. (This works only if `PMF`'s values sum to 1, which is why a PMF and not a PDF-like function is allowed here.)
 
 In addition, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete, with known PDF-like function**: If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(78)**](#Note78)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
+- Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(78)**](#Note78)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - Distribution is **continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020)<sup>[**(12)**](#Note12)</sup>. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(79)**](#Note79)</sup>, (Devroye and Gravel 2020)<sup>[**(12)**](#Note12)</sup> in the Python sample code <sup>[**(80)**](#Note80)</sup>.
 - Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
 
@@ -1731,7 +1731,7 @@ See also (von Neumann 1951)<sup>[**(55)**](#Note55)</sup>; (Devroye 1986)<sup>[*
 
 > **Examples:**
 >
-> 1. To sample a random variate in the interval [`low`, `high`) from a PDF-like function with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete**, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
+> 1. To sample a random variate in the interval [`low`, `high`) from a PDF-like function with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete** and integer-valued, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
 > 2. A PDF-like function for a custom distribution, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's, `PDF2`, is `exp(-x)`.  The exponential PDF-like function `PDF2` "dominates" `PDF` (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
 > 3. The normal distribution's upside-down bell curve has the PDF-like function `1-exp(-(x*x))`, and the highest point for this function is `peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))`. Sampling this distribution then uses the algorithm in example 1.
 >
@@ -2135,7 +2135,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 - <small><sup id=Note72>(72)</sup> Saucier, R. "Computer Generation of Statistical Distributions", March 2000.</small>
 - <small><sup id=Note73>(73)</sup> Other references on density estimation include [**a Wikipedia article on multiple-variable kernel density estimation**](https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation), and a [**blog post by M. Kay**](https://web.archive.org/web/20160501200206/http://mark-kay.net/2013/12/24/kernel-density-estimation).</small>
 - <small><sup id=Note74>(74)</sup> "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.</small>
-- <small><sup id=Note75>(75)</sup> A _discrete distribution_ is a distribution that associates one or more items with a separate probability. This page assumes (without loss of generality) that these items are integers.  A discrete distribution can produce non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
+- <small><sup id=Note75>(75)</sup> A _discrete distribution_ is a distribution that associates a countable number of items with a separate probability. These items are usually integers, but they need not be.  For example, the items can be non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.</small>
 - <small><sup id=Note76>(76)</sup> This includes integers if `FPExponent` is limited to 0, and fixed-point numbers if `FPExponent` is limited to a single exponent less than 0.</small>

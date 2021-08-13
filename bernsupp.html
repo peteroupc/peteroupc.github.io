@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/07/05"><meta name="citation_online_date" content="2021/07/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/08/13"><meta name="citation_online_date" content="2021/08/13"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -27,6 +27,7 @@
 <ul>
 <li><a href="#Which_functions_admit_a_Bernoulli_factory"><strong>Which functions admit a Bernoulli factory?</strong></a></li>
 <li><a href="#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>Which functions don&#39;t require outside randomness to simulate?</strong></a></li>
+<li><a href="#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a></li>
 <li><a href="#Proofs_for_Function_Approximation_Schemes"><strong>Proofs for Function Approximation Schemes</strong></a></li>
 <li><a href="#Example_of_Approximation_Scheme"><strong>Example of Approximation Scheme</strong></a></li>
 </ul></li>
@@ -1102,6 +1103,11 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><small><sup id=Note17>(17)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
 <li><small><sup id=Note18>(18)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 <li><small><sup id=Note19>(19)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note20>(20)</sup> Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note21>(21)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. &quot;The complexity of nonuniform random variate generation&quot;, in <em>Algorithms and Complexity: New Directions and Recent Results</em>, 1976.</small></li>
+<li><small><sup id=Note22>(22)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small></li>
+<li><small><sup id=Note23>(23)</sup> Peres, Y., &quot;<a href="https://projecteuclid.org/euclid.aos/1176348543"><strong>Iterating von Neumann&#39;s procedure for extracting random bits</strong></a>&quot;, Annals of Statistics 1992,20,1, p. 590-597.</small></li>
+<li><small><sup id=Note24>(24)</sup> S. Pae, &quot;<a href="https://arxiv.org/abs/1602.06058v2"><strong>Binarization Trees and Random Number Generation</strong></a>&quot;, arXiv:1602.06058v2 [cs.DS], 2018.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1269,6 +1275,81 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <p><em>Proof of Proposition 3:</em> In the proof of proposition 2, replace Lemma 1 and Lemma 2 with Lemma 3 and Lemma 4, respectively. &#x25a1;</p>
 
 <p>It is suspected that the conditions in Proposition 2 are necessary and sufficient for <em>f</em>(<em>&lambda;</em>) to be strongly simulable.</p>
+
+<p><a id=Multiple_Output_Bernoulli_Factory></a></p>
+
+<h3>Multiple-Output Bernoulli Factory</h3>
+
+<p>A related topic is a Bernoulli factory that takes a coin with unknown probability of heads <em>&lambda;</em> and produces one or more samples of the probability <em>f</em>(<em>&lambda;</em>).  This section calls it a <em>multiple-output Bernoulli factory</em>.</p>
+
+<p>Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times.  But for some functions <em>f</em>, there may be a more efficient algorithm in terms of input coin flips.</p>
+
+<p>Let <em>J</em> be a closed interval on (0, 1), such as [1/100, 99/100].  Define the <em>entropy bound</em> as <em>h</em>(<em>f</em>(<em>&lambda;</em>))/<em>h</em>(<em>&lambda;</em>) where <em>h</em>(<em>x</em>) = &minus;<em>x</em>*ln(<em>x</em>)&minus;(1&minus;<em>x</em>)*ln(1&minus;<em>x</em>) is the Shannon entropy function.  The question is:</p>
+
+<p><em>When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&amp;lambda) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Does the answer change if the factory can also use a separate source of unbiased random bits?</em></p>
+
+<p>So far, the answer is yes for the following functions:</p>
+
+<ul>
+<li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
+<li>Constants in [0, 1].  As Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> already showed, any such constant <em>c</em> admits a multiple-output Bernoulli factory; generate unbiased random bits using the von Neumann trick (or Peres&#39;s iterated von Neumann extractor (Peres 1992)<sup><a href="#Note20"><strong>(20)</strong></a></sup>), then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup><a href="#Note21"><strong>(21)</strong></a></sup>.</li>
+<li>The function <em>&lambda;</em>/2.  As Yuval Peres (Jun. 24, 2021) told me, the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</li>
+</ul>
+
+<p>It is easy to see that if a factory of the kind given in the question exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
+
+<p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed that is suspected to be a multiple-output Bernoulli factory asked for in the question.  It works for any rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
+
+<ul>
+<li><em>D</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>k</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>k</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
+<li><em>E</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>k</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>k</em> &minus; <em>i</em></sup> * <em>e</em>[<em>i</em>],</li>
+<li>every <em>d</em>[<em>i</em>] is less than or equal to the corresponding <em>e</em>[<em>i</em>], and</li>
+<li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is an integer in the interval [0, choose(<em>n</em>, <em>i</em>)].</li>
+</ul>
+
+<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)<sup><a href="#Note22"><strong>(22)</strong></a></sup>, which also &quot;extracts&quot; residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+
+<ol>
+<li>Set <em>iter</em> to 0.</li>
+<li>Flip the input coin <em>k</em> times.  Then build a bitstring <em>B1</em> consisting of the coin flip results in the order they occurred.  Let <em>i</em> be the number of ones in <em>B1</em>.</li>
+<li>Flip <em>a fair coin</em> 2*<em>r</em> times (see below).  (The input coin is not flipped here, unlike in the algorithm of Proposition 2.5.)  Then build a bitstring <em>B2</em> consisting of the coin flip results in the order they occurred.</li>
+<li>If the number of ones in <em>B2</em> is other than <em>r</em>, then translate <em>B1</em> + <em>B2</em> to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)<sup><a href="#Note24"><strong>(24)</strong></a></sup>), then add 1 to <em>iter</em>, then go to step 2.</li>
+<li>Translate <em>B1</em> + <em>B2</em> to an integer under bijection 2, call the integer <em>&beta;</em>.  If <em>&beta;</em> &lt; <em>d</em>[<em>i</em>], pass <em>&beta;</em> to extractor 3, then pass <em>iter</em> to extractor 4, then output a 1.  Otherwise, if <em>&beta;</em> &lt; <em>e</em>[<em>i</em>], pass <em>&beta;</em> &minus; <em>d</em>[<em>i</em>] to extractor 5, then pass <em>iter</em> to extractor 4, then output a 0.  Otherwise, pass <em>&beta;</em> &minus; <em>e</em>[<em>i</em>] to extractor 6, then add 1 to <em>iter</em>, then go to step 1.</li>
+</ol>
+
+<p>The bijections used in this algorithm are as follows:</p>
+
+<ol>
+<li>A bijection between&mdash;
+
+<ul>
+<li>bitstrings of length <em>k</em> + 2*<em>r</em> with fewer or greater than <em>r</em> ones among the last 2*<em>r</em> bits, and</li>
+<li>the integers in [0, 2<sup><em>k</em></sup> * (2<sup>2*<em>r</em></sup> &minus; choose(2*<em>r</em>, <em>r</em>))).</li>
+</ul></li>
+<li>A bijection between&mdash;
+
+<ul>
+<li>bitstrings of length <em>k</em> + 2*<em>r</em> with exactly <em>i</em> ones among the first <em>k</em> bits and exactly <em>r</em> ones among the remaining bits, and</li>
+<li>the integers in [0, choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>)).</li>
+</ul></li>
+</ol>
+
+<p>In this algorithm, a fair coin is flipped as follows.  Let <em>m</em> be an even integer that is 32 or greater.</p>
+
+<ol>
+<li>Use extractor 1 to extract outputs from floor(<em>n</em>/<em>m</em>) inputs, where <em>n</em> is the number of input bits available to that extractor.  Do the same for the remaining extractors.</li>
+<li>If extractor 2 has at least one unused output bit, take an output and stop.  Otherwise, repeat this step for the remaining extractors, with extractor 1 going last.</li>
+<li>Flip the input coin at least <em>m</em> times, append the coin results to extractor 1&#39;s inputs, and go to step 1.</li>
+</ol>
+
+<p>Now consider the last paragraph of Proposition 2.5.  If the input coin were flipped in step 2, the probability of&mdash;</p>
+
+<ul>
+<li>outputting 1 in step 5 would be <em>P0</em> = <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup>*<em>D</em>(<em>&lambda;</em>).</li>
+<li>outputting either 0 or 1 in step 5 would be <em>P1</em> = <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup>*<em>E</em>(<em>&lambda;</em>),</li>
+</ul>
+
+<p>so that the algorithm would simulate <em>f</em>(<em>&lambda;</em>) = <em>P0</em> / <em>P1</em>.  Observe that the <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup> cancels out in the division.  Thus, we could replace the input coin with a fair coin and still simulate <em>f</em>(<em>&lambda;</em>); the <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup> above would then be (1/2)<sup>2*<em>r</em></sup>.</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 

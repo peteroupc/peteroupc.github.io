@@ -1024,11 +1024,11 @@ This section has mathematical proofs showing which kinds of algebraic functions 
 The following summarizes what can be established about these algebraic functions:
 
 - sqrt(_&lambda;_) can be simulated.
-- Every quadratic irrational in (0, 1) can be simulated.
 - Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.
 - If _f_(_&lambda;_) and _g_(_&lambda;_) can be simulated, so can _f_(_&lambda;_)\*_g_(_&lambda;_), _f_(_g_(_&lambda;_)), and _g_(_f_(_&lambda;_)).
 - If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a _probability distribution_ of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).
 - If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.
+- Every quadratic irrational in (0, 1) can be simulated.
 
 It is not yet known whether the following functions can be simulated: _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2, or min(_&lambda;_, 1&minus;_&lambda;_).
 
@@ -1168,7 +1168,7 @@ Solving this system for the grammar's starting nonterminal, and applying Proposi
 >     2. For each pair (_state_, _stacksymbol_) for _F_, add a set of rules that generate one of the input letters (each letter _i_ generated with probability _f_<sub> _i_</sub>(_&lambda;_), which must be a function in **PDA**), then use the generated letter to perform the transition stated in the corresponding rule for _F_.  If there is no such transition, transition to the FAILURE state instead.
 >     3. When the stack is empty, output 0 if _G_ is in the FAILURE state, or 1 otherwise.
 >
->     Then _G_ returns 1 with the same probability as _F_ accepts an input word with letters randomly generated as in the second step.  Note that one of the _N_ letters can be a so-called "end-of-string" symbol, so that a pushdown automaton can be built that accepts "empty strings"; an example is (Elder et al. 2015)<sup>[**(38)**](#Note38)</sup>.
+>     Then _G_ returns 1 with the same probability as _F_ accepts an input word with letters randomly generated as in the second step.  Also, one of the _N_ letters can be a so-called "end-of-string" symbol, so that a pushdown automaton can be built that accepts "empty strings"; an example is (Elder et al. 2015)<sup>[**(38)**](#Note38)</sup>.
 
 **Proposition 6:** _If a full-domain pushdown automaton can generate a distribution of words with the same letter, there is a full-domain pushdown automaton that can generate a distribution of such words conditioned on&mdash;_
 
@@ -1189,14 +1189,14 @@ A _continued fraction_ is one way to write a real number.  For purposes of the f
 
 _Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[1, 2, (1, 2, 3)\], which is the same as \[1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...\].  In this example, the size of the period is 3, and the size of the non-period is 2.
 
-Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> can be described as follows.  Let _p_ be the period size, and let _n_ be the non-period size.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
+Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> can be described as follows.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
 
 - From E: Go to N with probability _x_, or to the box's call port with probability 1 &minus; _x_.
 - From N: Go to X1 with probability _y_, or to X0 with probability 1 &minus; _y_.
 - From B0: Go to E with probability 1.
 - From B1: Go to X0 with probability 1.
 
-Now the recursive Markov chain to be built has _n_+_p_ components:
+Let _p_ be the period size, and let _n_ be the non-period size.  Now the recursive Markov chain to be built has _n_+_p_ components:
 
 - For each _i_ in \[1, _n_+1\], there is a component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1, _except_ that for component _n_+_p_, the component's single box goes to the component labeled _n_+1.
 
