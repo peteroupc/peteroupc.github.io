@@ -639,16 +639,15 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note12>(12)</sup> Holtz, O., Nazarov, F., Peres, Y., "New Coins from Old, Smoothly", _Constructive Approximation_ 33 (2011).</small>
 - <small><sup id=Note13>(13)</sup> Keane,  M.  S.,  and  O'Brien,  G.  L., "A Bernoulli factory", _ACM Transactions on Modeling and Computer Simulation_ 4(2), 1994.</small>
 - <small><sup id=Note14>(14)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
-- <small><sup id=Note15>(15)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
-- <small><sup id=Note16>(16)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
-- <small><sup id=Note17>(17)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
-- <small><sup id=Note18>(18)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
-- <small><sup id=Note19>(19)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
-- <small><sup id=Note20>(20)</sup> Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note21>(21)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random variate generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
-- <small><sup id=Note22>(22)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
-- <small><sup id=Note23>(23)</sup> Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note24>(24)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.</small>
+- <small><sup id=Note15>(15)</sup> Peres, Y., "[**Iterating von Neumann's procedure for extracting random bits**](https://projecteuclid.org/euclid.aos/1176348543)", Annals of Statistics 1992,20,1, p. 590-597.</small>
+- <small><sup id=Note16>(16)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random variate generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
+- <small><sup id=Note17>(17)</sup> Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.</small>
+- <small><sup id=Note18>(18)</sup> S. Pae, "[**Binarization Trees and Random Number Generation**](https://arxiv.org/abs/1602.06058v2)", arXiv:1602.06058v2 [cs.DS], 2018.</small>
+- <small><sup id=Note19>(19)</sup> Levy, H., _Stochastic dominance_, 1998.</small>
+- <small><sup id=Note20>(20)</sup> Henry (https://math.stackexchange.com/users/6460/henry), Proving stochastic dominance for hypergeometric random variables, URL (version: 2021-02-20): [**https://math.stackexchange.com/q/4033573**](https://math.stackexchange.com/q/4033573) .</small>
+- <small><sup id=Note21>(21)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
+- <small><sup id=Note22>(22)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
+- <small><sup id=Note23>(23)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -801,12 +800,12 @@ Obviously, any single-output Bernoulli factory can produce multiple outputs by r
 
 Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100].  Define the _entropy bound_ as _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is the Shannon entropy function.  The question is:
 
-_When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Does the answer change if the factory can also use a separate source of unbiased random bits?_
+_When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Does the answer change if the factory can also use a separate source of unbiased random bits?_
 
 So far, the answer is yes for the following functions:
 
 - The functions _&lambda;_ and 1 &minus; _&lambda;_.
-- Constants in \[0, 1\].  As Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> already showed, any such constant _c_ admits a multiple-output Bernoulli factory; generate unbiased random bits using the von Neumann trick (or Peres's iterated von Neumann extractor (Peres 1992)<sup>[**(20)**](#Note20)</sup>), then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976)<sup>[**(21)**](#Note21)</sup>.
+- Constants in \[0, 1\].  As Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> already showed, any such constant _c_ admits a multiple-output Bernoulli factory; generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992)<sup>[**(15)**](#Note15)</sup>, then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976)<sup>[**(16)**](#Note16)</sup>.
 - The function _&lambda;_/2.  As Yuval Peres (Jun. 24, 2021) told me, the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.
 
 It is easy to see that if a factory of the kind given in the question exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
@@ -818,13 +817,13 @@ Inspired by Peres's result with _&lambda;_/2, the following algorithm is propose
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is an integer in the interval [0, choose(_n_, _i_)].
 
-The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(22)**](#Note22)</sup>, which also "extracts" residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(23)**](#Note23)</sup>.  Let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
+The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(17)**](#Note17)</sup>, which also "extracts" residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(15)**](#Note15)</sup>.  Let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
 
 1. Set _iter_ to 0.
 2. Flip the input coin _k_ times.  Then build a bitstring _B1_ consisting of the coin flip results in the order they occurred.  Let _i_ be the number of ones in _B1_.
 3. Flip _a fair coin_ 2\*_r_ times (see below).  (The input coin is not flipped here, unlike in the algorithm of Proposition 2.5.)  Then build a bitstring _B2_ consisting of the coin flip results in the order they occurred.
-4. If the number of ones in _B2_ is other than _r_, then translate _B1_ + _B2_ to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(24)**](#Note24)</sup>), then add 1 to _iter_, then go to step 2.
-5. Translate _B1_ + _B2_ to an integer under bijection 2, call the integer _&beta;_.  If _&beta;_ < _d_\[_i_\], pass _&beta;_ to extractor 3, then pass _iter_ to extractor 4, then output a 1.  Otherwise, if _&beta;_ < _e_\[_i_\], pass _&beta;_ &minus; _d_\[_i_\] to extractor 5, then pass _iter_ to extractor 4, then output a 0.  Otherwise, pass _&beta;_ &minus; _e_\[_i_\] to extractor 6, then add 1 to _iter_, then go to step 1.
+4. If the number of ones in _B2_ is other than _r_, then translate _B1_ + _B2_ to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>), then add 1 to _iter_, then go to step 2.
+5. Translate _B1_ + _B2_ to an integer under bijection 2, call the integer _&beta;_.  If _&beta;_ < _d_\[_i_\], pass _&beta;_ to extractor 3, then pass _iter_ to extractor 4, then output a 1.  Otherwise, if _&beta;_ < _e_\[_i_\], pass _&beta;_ &minus; _d_\[_i_\] to extractor 5, then pass _iter_ to extractor 4, then output a 0.  Otherwise, pass _&beta;_ &minus; _e_\[_i_\] to extractor 6, then add 1 to _iter_, then go to step 2.
 
 The bijections used in this algorithm are as follows:
 
@@ -843,10 +842,10 @@ In this algorithm, a fair coin is flipped as follows.  Let _m_ be an even intege
 
 Now consider the last paragraph of Proposition 2.5.  If the input coin were flipped in step 2, the probability of&mdash;
 
-- outputting 1 in step 5 would be _P0_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_D_(_&lambda;_).
-- outputting either 0 or 1 in step 5 would be _P1_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_E_(_&lambda;_),
+- outputting 1 in step 5 would be _P1_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_D_(_&lambda;_).
+- outputting either 0 or 1 in step 5 would be _P01_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_E_(_&lambda;_),
 
-so that the algorithm would simulate _f_(_&lambda;_) = _P0_ / _P1_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with a fair coin and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
+so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with a fair coin and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
@@ -861,7 +860,7 @@ In the following results:
 
 **Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(15)**](#Note15)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(16)**](#Note16)</sup>. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(19)**](#Note19)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(20)**](#Note20)</sup>. &#x25a1;
 
 Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions with no slope "steeper" than any "nth" root.
 
@@ -895,11 +894,11 @@ _Proof._
 > 3. Parts 1 and 2 exploit a tighter bound on **Var**[_X_/_n_] than the bound given in Nacu and Peres (2005, Lemma 6(i) and 6(ii), respectively)<sup>[**(1)**](#Note1)</sup>.  However, for technical reasons, different bounds are proved for different ranges of integers _n_.
 > 4. For part 3, as in Lemma 6(ii) of Nacu and Peres 2005, the second derivative need not be continuous (Y. Peres, pers. comm., 2021).
 > 5. All continuous functions that map the closed interval [0, 1] to [0, 1], including all of them that admit a Bernoulli factory, have a modulus of continuity.  The proof of part 1 remains valid even if _&omega;_(0) > 0, because the bounds proved remain correct even if _&omega;_ is overestimated.  The following functions have a simple _&omega;_ that satisfies the lemma:
->     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(17)**](#Note17)</sup>; (Gal 1995)<sup>[**(18)**](#Note18)</sup>.
->     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(17)**](#Note17)</sup>; (Gal 1995)<sup>[**(18)**](#Note18)</sup>.
+>     1. If _f_ is monotone increasing and convex, _&omega;_(_x_) can equal _f_(1) &minus; _f_(1&minus;_x_) (Gal 1990)<sup>[**(21)**](#Note21)</sup>; (Gal 1995)<sup>[**(22)**](#Note22)</sup>.
+>     2. If _f_ is monotone decreasing and convex, _&omega;_(_x_) can equal _f_(0) &minus; _f_(_x_) (Gal 1990)<sup>[**(21)**](#Note21)</sup>; (Gal 1995)<sup>[**(22)**](#Note22)</sup>.
 >     3. If _f_ is monotone increasing and concave, _&omega;_(_x_) can equal _f_(_x_) &minus; _f_(0) (by symmetry with 2).
 >     4. If _f_ is monotone decreasing and concave, _&omega;_(_x_) can equal _f_(1&minus;_x_) &minus; _f_(1) (by symmetry with 1).
->     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(19)**](#Note19)</sup>.
+>     5. If _f_ is concave and is monotone increasing then monotone decreasing, then _&omega;_(_h_) can equal (_f_(min(_h_, _&sigma;_))+(_f_(1&minus;min(_h_, 1&minus;_&sigma;_))&minus;_f_(1)), where _&sigma;_ is the point where _f_ stops increasing and starts decreasing (Anastassiou and Gal 2012)<sup>[**(23)**](#Note23)</sup>.
 
 **Theorem 1.** _Let &omega;(x) be as described in part 1 of Lemma 2, and let f(&lambda;) be a strictly bounded factory function. Let&mdash;_
 
