@@ -1030,6 +1030,8 @@ The following summarizes what can be established about these algebraic functions
 - If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a _probability distribution_ of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).
 - If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.
 
+It is not yet known whether the following functions can be simulated: _&lambda;_<sup>1/_p_</sup> for prime numbers _p_ greater than 2, or min(_&lambda;_, 1&minus;_&lambda;_).
+
 --------------------------------
 
 The following definitions are used in this section:
@@ -1183,9 +1185,9 @@ _Proof Sketch:_
 
 **Proposition 7:** _Every constant function equal to a quadratic irrational number in the interval (0, 1) is in class **PDA**._
 
-_Proof:_ A _continued fraction_ is one way to write a real number.  For purposes of this proof, every real number in (0, 1) has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial numerator_, is an integer greater than 0.
+A _continued fraction_ is one way to write a real number.  For purposes of the following proof, every real number in (0, 1) has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial denominator_, is an integer greater than 0.  A _quadratic irrational number_ is an irrational number of the form (_b_+sqrt(_c_))/_d_, where _b_, _c_, and _d_ are rational numbers.
 
-A well-known fact states that quadratic irrational numbers have continued fraction expansions that are eventually periodic; the expansion can be described using a finite number of partial numerators.  The following example describes a periodic continued fraction expansion: \[1, 2, (1, 2, 3)\], which is the same as \[1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...\].  In this example, the size of the period is 3, and the size of the non-period is 2.
+_Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[1, 2, (1, 2, 3)\], which is the same as \[1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...\].  In this example, the size of the period is 3, and the size of the non-period is 2.
 
 Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> can be described as follows.  Let _p_ be the period size, and let _n_ be the non-period size.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
 
@@ -1196,10 +1198,9 @@ Given a periodic expansion, and with the aid of an algorithm for simulating [**c
 
 Now the recursive Markov chain to be built has _n_+_p_ components:
 
-- For each _i_ in \[1, _n_\], there is a non-period component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1.
-- For each _i_ in \[_n_+1, _n_+_p_\], there is a period component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1, _except_ that for component _n_+_p_, the component's single box goes to the component labeled _n_+1.
+- For each _i_ in \[1, _n_+1\], there is a component labeled _i_.  It is the same as the template component, except _x_ = _a_\[_i_\]/(1 + _a_\[_i_\]), and _y_ = 1/_a_\[_i_\].  The component's single box goes to the component labeled _i_+1, _except_ that for component _n_+_p_, the component's single box goes to the component labeled _n_+1.
 
-According to Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that's left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component never recurses more likely than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;
+According to Etessami and Yannakakis (2009)<sup>[**(35)**](#Note35)</sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that's left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component is never more likely than not to recurse, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;
 
 **Lemma 1:** _The square root function sqrt(&lambda;) is in class **PDA**._
 

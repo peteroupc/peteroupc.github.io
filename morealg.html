@@ -1403,6 +1403,8 @@ calc_linear_func(count=8)
 <li>If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.</li>
 </ul>
 
+<p>It is not yet known whether the following functions can be simulated: <em>&lambda;</em><sup>1/<em>p</em></sup> for prime numbers <em>p</em> greater than 2, or min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>).</p>
+
 <hr>
 
 <p>The following definitions are used in this section:</p>
@@ -1587,9 +1589,9 @@ calc_linear_func(count=8)
 
 <p><strong>Proposition 7:</strong> <em>Every constant function equal to a quadratic irrational number in the interval (0, 1) is in class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof:</em> A <em>continued fraction</em> is one way to write a real number.  For purposes of this proof, every real number in (0, 1) has the following <em>continued fraction expansion</em>: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))), where each <em>a</em>[<em>i</em>], a <em>partial numerator</em>, is an integer greater than 0.</p>
+<p>A <em>continued fraction</em> is one way to write a real number.  For purposes of the following proof, every real number in (0, 1) has the following <em>continued fraction expansion</em>: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))), where each <em>a</em>[<em>i</em>], a <em>partial denominator</em>, is an integer greater than 0.  A <em>quadratic irrational number</em> is an irrational number of the form (<em>b</em>+sqrt(<em>c</em>))/<em>d</em>, where <em>b</em>, <em>c</em>, and <em>d</em> are rational numbers.</p>
 
-<p>A well-known fact states that quadratic irrational numbers have continued fraction expansions that are eventually periodic; the expansion can be described using a finite number of partial numerators.  The following example describes a periodic continued fraction expansion: [1, 2, (1, 2, 3)], which is the same as [1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...].  In this example, the size of the period is 3, and the size of the non-period is 2.</p>
+<p><em>Proof:</em>  By Lagrange&#39;s continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last &quot;few&quot; of which repeat forever.  The following example describes a periodic continued fraction expansion: [1, 2, (1, 2, 3)], which is the same as [1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...].  In this example, the size of the period is 3, and the size of the non-period is 2.</p>
 
 <p>Given a periodic expansion, and with the aid of an algorithm for simulating <a href="https://peteroupc.github.io/bernoulli.html#Continued_Fractions"><strong>continued fractions</strong></a>, a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup><a href="#Note35"><strong>(35)</strong></a></sup> can be described as follows.  Let <em>p</em> be the period size, and let <em>n</em> be the non-period size.  The chain&#39;s components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one <em>call port</em> as well as two <em>return ports</em> B0 and B1.</p>
 
@@ -1603,11 +1605,10 @@ calc_linear_func(count=8)
 <p>Now the recursive Markov chain to be built has <em>n</em>+<em>p</em> components:</p>
 
 <ul>
-<li>For each <em>i</em> in [1, <em>n</em>], there is a non-period component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1.</li>
-<li>For each <em>i</em> in [<em>n</em>+1, <em>n</em>+<em>p</em>], there is a period component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
+<li>For each <em>i</em> in [1, <em>n</em>+1], there is a component labeled <em>i</em>.  It is the same as the template component, except <em>x</em> = <em>a</em>[<em>i</em>]/(1 + <em>a</em>[<em>i</em>]), and <em>y</em> = 1/<em>a</em>[<em>i</em>].  The component&#39;s single box goes to the component labeled <em>i</em>+1, <em>except</em> that for component <em>n</em>+<em>p</em>, the component&#39;s single box goes to the component labeled <em>n</em>+1.</li>
 </ul>
 
-<p>According to Etessami and Yannakakis 2009)<sup><a href="#Note35"><strong>(35)</strong></a></sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component never recurses more likely than not, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
+<p>According to Etessami and Yannakakis (2009)<sup><a href="#Note35"><strong>(35)</strong></a></sup>, the recursive Markov chain can be translated to a pushdown automaton of the kind used in this section. Now all that&#39;s left is to argue that the recursive Markov chain terminates with probability 1.  For every component in the chain, it goes from its entry to its box with probability 1/2 or less (because each partial numerator must be 1 or greater).  Thus, the component is never more likely than not to recurse, and there are otherwise no probability-1 loops in each component, so the overall chain terminates with probability 1. &#x25a1;</p>
 
 <p><strong>Lemma 1:</strong> <em>The square root function sqrt(&lambda;) is in class <strong>PDA</strong>.</em></p>
 
