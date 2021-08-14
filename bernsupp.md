@@ -800,30 +800,34 @@ Obviously, any single-output Bernoulli factory can produce multiple outputs by r
 
 Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100].  Define the _entropy bound_ as _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is the Shannon entropy function.  The question is:
 
-_When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Does the answer change if the factory can also use a separate source of unbiased random bits?_
+_When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?_
+
+(See Nacu and Peres (2005, Question 2)<sup>[**(1)**](#Note1)</sup>.)
 
 So far, the answer is yes for the following functions:
 
 - The functions _&lambda;_ and 1 &minus; _&lambda;_.
-- Constants in \[0, 1\].  As Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> already showed, any such constant _c_ admits a multiple-output Bernoulli factory; generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992)<sup>[**(15)**](#Note15)</sup>, then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976)<sup>[**(16)**](#Note16)</sup>.
+- Constants in \[0, 1\].  As Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> already showed, any such constant _c_ admits a multiple-output Bernoulli factory: generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992)<sup>[**(15)**](#Note15)</sup>, then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976)<sup>[**(16)**](#Note16)</sup>.
 - The function _&lambda;_/2.  As Yuval Peres (Jun. 24, 2021) told me, the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.
 
 It is easy to see that if a factory of the kind given in the question exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
 
-Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed that is suspected to be a multiple-output Bernoulli factory asked for in the question.  It works for any rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
+Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for any rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
 - _D_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _k_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_k_ &minus; _i_</sup> * _e_\[_i_\],
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
-- each _d_\[_i_\] and each _e_\[_i_\] is an integer in the interval [0, choose(_n_, _i_)].
+- each _d_\[_i_\] and each _e_\[_i_\] is a non-negative integer.
 
-The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(17)**](#Note17)</sup>, which also "extracts" residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(15)**](#Note15)</sup>.  Let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
+The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(17)**](#Note17)</sup>, which also "extracts" residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(15)**](#Note15)</sup>.
+
+In the algorithm, let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
 
 1. Set _iter_ to 0.
 2. Flip the input coin _k_ times.  Then build a bitstring _B1_ consisting of the coin flip results in the order they occurred.  Let _i_ be the number of ones in _B1_.
-3. Flip _a fair coin_ 2\*_r_ times (see below).  (The input coin is not flipped here, unlike in the algorithm of Proposition 2.5.)  Then build a bitstring _B2_ consisting of the coin flip results in the order they occurred.
-4. If the number of ones in _B2_ is other than _r_, then translate _B1_ + _B2_ to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>), then add 1 to _iter_, then go to step 2.
-5. Translate _B1_ + _B2_ to an integer under bijection 2, call the integer _&beta;_.  If _&beta;_ < _d_\[_i_\], pass _&beta;_ to extractor 3, then pass _iter_ to extractor 4, then output a 1.  Otherwise, if _&beta;_ < _e_\[_i_\], pass _&beta;_ &minus; _d_\[_i_\] to extractor 5, then pass _iter_ to extractor 4, then output a 0.  Otherwise, pass _&beta;_ &minus; _e_\[_i_\] to extractor 6, then add 1 to _iter_, then go to step 2.
+3. Generate 2\*_r_ unbiased random bits (see below).  (Rather than flipping the input coin 2\*_r_ times, as in the algorithm of Proposition 2.5.)  Then build a bitstring _B2_ consisting of the coin flip results in the order they occurred.
+4. If the number of ones in _B2_ is other than _r_: Translate _B1_ + _B2_ to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>), then add 1 to _iter_, then go to step 2.
+5. Translate _B1_ + _B2_ to an integer under bijection 2, call the integer _&beta;_.  If _&beta;_ < _d_\[_i_\], pass _&beta;_ to extractor 3, then pass _iter_ to extractor 6, then output a 1.  Otherwise, if _&beta;_ < _e_\[_i_\], pass _&beta;_ &minus; _d_\[_i_\] to extractor 4, then pass _iter_ to extractor 6, then output a 0.  Otherwise, pass _&beta;_ &minus; _e_\[_i_\] to extractor 5, then add 1 to _iter_, then go to step 2.
 
 The bijections used in this algorithm are as follows:
 
@@ -834,18 +838,20 @@ The bijections used in this algorithm are as follows:
     - bitstrings of length _k_ + 2\*_r_ with exactly _i_ ones among the first _k_ bits and exactly _r_ ones among the remaining bits, and
     - the integers in [0, choose(_k_, _i_)\*choose(2\*_r_, _r_)).
 
-In this algorithm, a fair coin is flipped as follows.  Let _m_ be an even integer that is 32 or greater.
+In this algorithm, an unbiased random bit is generated as follows.  Let _m_ be an even integer that is 32 or greater.
 
-1. Use extractor 1 to extract outputs from floor(_n_/_m_) inputs, where _n_ is the number of input bits available to that extractor.  Do the same for the remaining extractors.
+1. Use extractor 1 to extract outputs from floor(_n_/_m_)*_m_ inputs, where _n_ is the number of input bits available to that extractor.  Do the same for the remaining extractors.
 2. If extractor 2 has at least one unused output bit, take an output and stop.  Otherwise, repeat this step for the remaining extractors, with extractor 1 going last.
 3. Flip the input coin at least _m_ times, append the coin results to extractor 1's inputs, and go to step 1.
 
 Now consider the last paragraph of Proposition 2.5.  If the input coin were flipped in step 2, the probability of&mdash;
 
-- outputting 1 in step 5 would be _P1_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_D_(_&lambda;_).
-- outputting either 0 or 1 in step 5 would be _P01_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_E_(_&lambda;_),
+- outputting 1 in the algorithm's last step would be _P1_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_D_(_&lambda;_).
+- outputting either 0 or 1 in that step would be _P01_ = _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup>\*_E_(_&lambda;_),
 
-so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with a fair coin and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
+so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with unbiased random bits and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
+
+The overall algorithm is not believed to be a multiple-output Bernoulli factory asked for in the question, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
