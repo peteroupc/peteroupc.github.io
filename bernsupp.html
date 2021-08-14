@@ -1285,19 +1285,20 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>Let <em>J</em> be a closed interval on (0, 1), such as [1/100, 99/100].  Define the <em>entropy bound</em> as <em>h</em>(<em>f</em>(<em>&lambda;</em>))/<em>h</em>(<em>&lambda;</em>) where <em>h</em>(<em>x</em>) = &minus;<em>x</em>*ln(<em>x</em>)&minus;(1&minus;<em>x</em>)*ln(1&minus;<em>x</em>) is the Shannon entropy function.  The question is:</p>
 
-<p><em>When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?</em></p>
+<p><em>When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an <strong>optimal factory</strong>.</em></p>
 
 <p>(See Nacu and Peres (2005, Question 2)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.)</p>
 
-<p>So far, the answer is yes for the following functions:</p>
+<p>So far, the following functions do admit an <em>optimal factory</em>:</p>
 
 <ul>
 <li>The functions <em>&lambda;</em> and 1 &minus; <em>&lambda;</em>.</li>
-<li>Constants in [0, 1].  As Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> already showed, any such constant <em>c</em> admits a multiple-output Bernoulli factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
-<li>The function <em>&lambda;</em>/2.  As Yuval Peres (Jun. 24, 2021) told me, the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</li>
+<li>Constants in [0, 1].  As Nacu and Peres (2005)<sup><a href="#Note1"><strong>(1)</strong></a></sup> already showed, any such constant <em>c</em> admits an optimal factory: generate unbiased random bits using Peres&#39;s iterated von Neumann extractor (Peres 1992)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, then build a binary tree that generates 1 with probability <em>c</em> and 0 otherwise (Knuth and Yao 1976)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.</li>
 </ul>
 
-<p>It is easy to see that if a factory of the kind given in the question exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.  This algorithm appears to use arbitrarily close to 1 flip per sample, but doesn&#39;t count as an <em>optimal factory</em>.</p>
+
+<p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
 
 <p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for any rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
@@ -1316,20 +1317,20 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>Set <em>iter</em> to 0.</li>
 <li>Flip the input coin <em>k</em> times.  Then build a bitstring <em>B1</em> consisting of the coin flip results in the order they occurred.  Let <em>i</em> be the number of ones in <em>B1</em>.</li>
 <li>Generate 2*<em>r</em> unbiased random bits (see below).  (Rather than flipping the input coin 2*<em>r</em> times, as in the algorithm of Proposition 2.5.)  Then build a bitstring <em>B2</em> consisting of the coin flip results in the order they occurred.</li>
-<li>If the number of ones in <em>B2</em> is other than <em>r</em>: Translate <em>B1</em> + <em>B2</em> to an integer under bijection 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>), then add 1 to <em>iter</em>, then go to step 2.</li>
-<li>Translate <em>B1</em> + <em>B2</em> to an integer under bijection 2, call the integer <em>&beta;</em>.  If <em>&beta;</em> &lt; <em>d</em>[<em>i</em>], pass <em>&beta;</em> to extractor 3, then pass <em>iter</em> to extractor 6, then output a 1.  Otherwise, if <em>&beta;</em> &lt; <em>e</em>[<em>i</em>], pass <em>&beta;</em> &minus; <em>d</em>[<em>i</em>] to extractor 4, then pass <em>iter</em> to extractor 6, then output a 0.  Otherwise, pass <em>&beta;</em> &minus; <em>e</em>[<em>i</em>] to extractor 5, then add 1 to <em>iter</em>, then go to step 2.</li>
+<li>If the number of ones in <em>B2</em> is other than <em>r</em>: Translate <em>B1</em> + <em>B2</em> to an integer under mapping 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>), then add 1 to <em>iter</em>, then go to step 2.</li>
+<li>Translate <em>B1</em> + <em>B2</em> to an integer under mapping 2, call the integer <em>&beta;</em>.  If <em>&beta;</em> &lt; <em>d</em>[<em>i</em>], pass <em>&beta;</em> to extractor 3, then pass <em>iter</em> to extractor 6, then output a 1.  Otherwise, if <em>&beta;</em> &lt; <em>e</em>[<em>i</em>], pass <em>&beta;</em> &minus; <em>d</em>[<em>i</em>] to extractor 4, then pass <em>iter</em> to extractor 6, then output a 0.  Otherwise, pass <em>&beta;</em> &minus; <em>e</em>[<em>i</em>] to extractor 5, then add 1 to <em>iter</em>, then go to step 2.</li>
 </ol>
 
-<p>The bijections used in this algorithm are as follows:</p>
+<p>The mappings used in this algorithm are as follows:</p>
 
 <ol>
-<li>A bijection between&mdash;
+<li>A one-to-one mapping between&mdash;
 
 <ul>
 <li>bitstrings of length <em>k</em> + 2*<em>r</em> with fewer or greater than <em>r</em> ones among the last 2*<em>r</em> bits, and</li>
 <li>the integers in [0, 2<sup><em>k</em></sup> * (2<sup>2*<em>r</em></sup> &minus; choose(2*<em>r</em>, <em>r</em>))).</li>
 </ul></li>
-<li>A bijection between&mdash;
+<li>A one-to-one mapping between&mdash;
 
 <ul>
 <li>bitstrings of length <em>k</em> + 2*<em>r</em> with exactly <em>i</em> ones among the first <em>k</em> bits and exactly <em>r</em> ones among the remaining bits, and</li>
@@ -1337,11 +1338,11 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 </ul></li>
 </ol>
 
-<p>In this algorithm, an unbiased random bit is generated as follows.  Let <em>m</em> be an even integer that is 32 or greater.</p>
+<p>In this algorithm, an unbiased random bit is generated as follows.  Let <em>m</em> be an even integer that is 32 or greater (in general, the greater <em>m</em> is, the more efficient the overall algorithm is in terms of coin flips).</p>
 
 <ol>
 <li>Use extractor 1 to extract outputs from floor(<em>n</em>/<em>m</em>)*<em>m</em> inputs, where <em>n</em> is the number of input bits available to that extractor.  Do the same for the remaining extractors.</li>
-<li>If extractor 2 has at least one unused output bit, take an output and stop.  Otherwise, repeat this step for the remaining extractors, with extractor 1 going last.</li>
+<li>If extractor 2 has at least one unused output bit, take an output and stop.  Otherwise, repeat this step for the remaining extractors.</li>
 <li>Flip the input coin at least <em>m</em> times, append the coin results to extractor 1&#39;s inputs, and go to step 1.</li>
 </ol>
 
@@ -1354,7 +1355,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>so that the algorithm would simulate <em>f</em>(<em>&lambda;</em>) = <em>P1</em> / <em>P01</em>.  Observe that the <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup> cancels out in the division.  Thus, we could replace the input coin with unbiased random bits and still simulate <em>f</em>(<em>&lambda;</em>); the <em>&lambda;</em><sup><em>r</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>r</em></sup> above would then be (1/2)<sup>2*<em>r</em></sup>.</p>
 
-<p>The overall algorithm is not believed to be a multiple-output Bernoulli factory asked for in the question, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps the interval <em>J</em> to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
+<p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps the interval <em>J</em> to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 
