@@ -80,7 +80,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-If _f_ in \[0, 1] has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere, then _f_ is [**_Lipschitz continuous_**](https://en.wikipedia.org/wiki/Lipschitz_continuity), _&alpha;_ is 1, and _m_ is the highest absolute value of the function's "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(2)**](#Note2)</sup>  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
+If _f_ in \[0, 1] has a defined slope at all points or "almost everywhere", and does not tend to a vertical slope anywhere, then _f_ is [**_Lipschitz continuous_**](https://en.wikipedia.org/wiki/Lipschitz_continuity), _&alpha;_ is 1, and _m_ is the highest absolute value of the function's "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(2)**](#Note2)</sup>  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
 
 - _D_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _D_(_n_).
@@ -200,7 +200,7 @@ As we can see, the elevated polynomial's coefficient 0.8208... is less than the 
 
 _The rest of this section will note counterexamples involving other functions and schemes, without demonstrating them in detail._
 
-**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function in [0, 1] that has a defined slope at all points or at all but a countable number of points, and does not tend to a vertical slope anywhere).  Then for every _n_&ge;2:
+**Second scheme.** In this scheme, let _f_ be a Lipschitz continuous function in \[0, 1\] (that is, a continuous function in [0, 1] that has a defined slope at all points or "almost everywhere", and does not tend to a vertical slope anywhere).  Then for every _n_&ge;2:
 
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _L_\*(5/4) / sqrt(_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus;  _L_\*(5/4) / sqrt(_n_).
@@ -809,9 +809,9 @@ So far, the following functions do admit an _optimal factory_:
 - The functions _&lambda;_ and 1 &minus; _&lambda;_.
 - Constants in \[0, 1\].  As Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> already showed, any such constant _c_ admits an optimal factory: generate unbiased random bits using Peres's iterated von Neumann extractor (Peres 1992)<sup>[**(15)**](#Note15)</sup>, then build a binary tree that generates 1 with probability _c_ and 0 otherwise (Knuth and Yao 1976)<sup>[**(16)**](#Note16)</sup>.
 
-Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.  This algorithm appears to use arbitrarily close to 1 flip per sample, but doesn't count as an _optimal factory_.
-
 It is easy to see that if an _optimal factory_ exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
+
+Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0<sup>&dagger;&dagger;</sup>.  This algorithm, though, doesn't count as an _optimal factory_.
 
 Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for any rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -827,7 +827,7 @@ In the algorithm, let _r_ be an integer such that, for every integer _i_ in \[0,
 1. Set _iter_ to 0.
 2. Flip the input coin _k_ times.  Then build a bitstring _B1_ consisting of the coin flip results in the order they occurred.  Let _i_ be the number of ones in _B1_.
 3. Generate 2\*_r_ unbiased random bits (see below).  (Rather than flipping the input coin 2\*_r_ times, as in the algorithm of Proposition 2.5.)  Then build a bitstring _B2_ consisting of the coin flip results in the order they occurred.
-4. If the number of ones in _B2_ is other than _r_: Translate _B1_ + _B2_ to an integer under mapping 1, then pass that number to extractor 2 (e.g., by translating them to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>), then add 1 to _iter_, then go to step 2.
+4. If the number of ones in _B2_ is other than _r_: Translate _B1_ + _B2_ to an integer under mapping 1, then pass that number to extractor 2<sup>&dagger;</sup>, then add 1 to _iter_, then go to step 2.
 5. Translate _B1_ + _B2_ to an integer under mapping 2, call the integer _&beta;_.  If _&beta;_ < _d_\[_i_\], pass _&beta;_ to extractor 3, then pass _iter_ to extractor 6, then output a 1.  Otherwise, if _&beta;_ < _e_\[_i_\], pass _&beta;_ &minus; _d_\[_i_\] to extractor 4, then pass _iter_ to extractor 6, then output a 0.  Otherwise, pass _&beta;_ &minus; _e_\[_i_\] to extractor 5, then add 1 to _iter_, then go to step 2.
 
 The mappings used in this algorithm are as follows:
@@ -853,6 +853,10 @@ Now consider the last paragraph of Proposition 2.5.  If the input coin were flip
 so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe that the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> cancels out in the division.  Thus, we could replace the input coin with unbiased random bits and still simulate _f_(_&lambda;_); the _&lambda;_<sup>_r_</sup>\*(1&minus;_&lambda;_)<sup>_r_</sup> above would then be (1/2)<sup>2\*_r_</sup>.
 
 While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
+
+<sup>&dagger;</sup> For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.
+
+<sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
