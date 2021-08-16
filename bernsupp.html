@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/08/15"><meta name="citation_online_date" content="2021/08/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/08/16"><meta name="citation_online_date" content="2021/08/16"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Supplemental Notes for Bernoulli Factory Algorithms</h1>
@@ -112,7 +112,7 @@
 </ul></li>
 </ul>
 
-<p>If <em>f</em> in [0, 1] has a defined slope at all points or &quot;almost everywhere&quot;, and does not tend to a vertical slope anywhere, then <em>f</em> is <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz continuous</em></strong></a>, <em>&alpha;</em> is 1, and <em>m</em> is the highest absolute value of the function&#39;s &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for every integer <em>n</em> that&#39;s a power of 2:</p>
+<p>If <em>f</em> in [0, 1] has a defined slope at all points or &quot;almost everywhere&quot;<sup><a href="#Note24"><strong>(24)</strong></a></sup>, and does not tend to a vertical slope anywhere, then <em>f</em> is <a href="https://en.wikipedia.org/wiki/Lipschitz_continuity"><strong><em>Lipschitz continuous</em></strong></a>, <em>&alpha;</em> is 1, and <em>m</em> is the highest absolute value of the function&#39;s &quot;slope&quot;.  Otherwise, finding <em>m</em> for a given <em>&alpha;</em> is non-trivial and it requires knowing where <em>f</em>&#39;s vertical slopes are, among other things.<sup><a href="#Note2"><strong>(2)</strong></a></sup>  But assuming <em>m</em> and <em>&alpha;</em> are known, then for every integer <em>n</em> that&#39;s a power of 2:</p>
 
 <ul>
 <li><em>D</em>(<em>n</em>) = <em>m</em>*(2/7)<sup><em>&alpha;</em>/2</sup>/((2<sup><em>&alpha;</em>/2</sup>&minus;1)*<em>n</em><sup><em>&alpha;</em>/2</sup>).</li>
@@ -273,7 +273,7 @@
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) &minus; <em>M</em> / (8*<em>n</em>).</li>
 </ul>
 
-<p>Where <em>M</em> is an upper bound of the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
+<p>Where <em>M</em> is not less than the maximum absolute value of <em>f</em>&#39;s slope-of-slope function (second derivative), and where <em>k</em> is an integer in the interval [0, <em>n</em>].</p>
 
 <p>The counterexample involves the C<sup>2</sup> continuous function <em>g</em>(<em>&lambda;</em>) = sin(<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</p>
 
@@ -1085,7 +1085,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <ul>
 <li><small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small></li>
-<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is an upper bound of abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, this bound can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
+<li><small><sup id=Note2>(2)</sup> Specifically, the constant <em>m</em> is a number equal to or greater than abs(<em>f</em>(<em>x</em>)&minus;<em>f</em>(<em>y</em>))/(abs(<em>x</em>&minus;<em>y</em>)<sup><em>&alpha;</em></sup>) for every <em>x</em> in [0, 1] and every <em>y</em> in [0, 1] such that <em>x</em> != <em>y</em>.  However, <em>m</em> can&#39;t directly be calculated as it would involve checking an infinite number of <em>x</em>, <em>y</em> pairs.</small></li>
 <li><small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560 [math.PR], 2010.</small></li>
 <li><small><sup id=Note4>(4)</sup> Powell, M.J.D., <em>Approximation Theory and Methods</em>, 1981</small></li>
 <li><small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small></li>
@@ -1107,6 +1107,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><small><sup id=Note21>(21)</sup> Gal, S.G., &quot;Calculus of the modulus of continuity for nonconcave functions and applications&quot;, <em>Calcolo</em> 27 (1990)</small></li>
 <li><small><sup id=Note22>(22)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. <em>International Journal of Mathematics and Mathematical Sciences</em> 18(3), pp.443-446.</small></li>
 <li><small><sup id=Note23>(23)</sup> Anastassiou, G.A., Gal, S.G., <em>Approximation Theory: Moduli of Continuity and Global Smoothness Preservation</em>, Birkhäuser, 2012.</small></li>
+<li><small><sup id=Note24>(24)</sup> This means the exceptions make up a zero-volume (Lebesgue measure zero) set of points.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1136,7 +1137,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li><em>f</em>(<em>&lambda;</em>) is continuous.</li>
 <li><em>f</em>(<em>&lambda;</em>) maps the closed interval [0, 1] to [0, 1].</li>
 <li><em>f</em>(<em>&lambda;</em>) equals neither 0 nor 1 on the open interval (0, 1).</li>
-<li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0).</li>
+<li><em>f</em>(<em>&lambda;</em>) is algebraic over rational numbers (that is, there is a nonzero polynomial <em>P</em>(<em>x</em>, <em>y</em>) in two variables and whose coefficients are rational numbers, such that <em>P</em>(<em>x</em>, <em>f</em>(<em>x</em>)) = 0 for every <em>x</em> in the domain of <em>f</em>).</li>
 </ul>
 
 <p>A <a href="https://mathoverflow.net/a/395018/171320"><strong>proof by Reid Barton</strong></a> begins by showing that <em>f</em> is a <em>semialgebraic function</em>, so that by a known inequality and the other conditions, it meets the definitions of being Hölder continuous and polynomially bounded.</p>
@@ -1147,7 +1148,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>The function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O&#39;Brien 1994)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  See &quot;<a href="https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a>&quot;.</p>
 
-<p><strong>Strong Simulability Statement.</strong> A function <em>f</em>(&lambda;) is strongly simulable only if&mdash;</p>
+<p><strong>Strong Simulability Statement.</strong> A function <em>f</em>(<em>&lambda;</em>) is strongly simulable only if&mdash;</p>
 
 <ol>
 <li><em>f</em> is constant on its domain, or is continuous and polynomially bounded on its domain, and</li>
@@ -1298,7 +1299,26 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>It is easy to see that if an <em>optimal factory</em> exists for <em>f</em>(<em>&lambda;</em>), then one also exists for 1 &minus; <em>f</em>(<em>&lambda;</em>): simply change all ones returned by the <em>f</em>(<em>&lambda;</em>) factory into zeros and vice versa.</p>
 
-<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0<sup>&dagger;&dagger;</sup>.  This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>.</p>
+<p>Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for <em>f</em>(<em>&lambda;</em>) = <em>&lambda;</em>/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup><a href="#Note11"><strong>(11)</strong></a></sup>, then multiply each unbiased bit with another input coin flip to get a sample from <em>&lambda;</em>/2.  Given that the sample is equal to 0, there are three possibilities that can &quot;be extracted to produce more fair bits&quot;: either the unbiased bit is 0, or the coin flip is 0, or both are 0.</p>
+
+<p>This algorithm, though, doesn&#39;t count as an <em>optimal factory</em>, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.</p>
+
+<ol>
+<li>If the number of outputs generated so far is divisible by 20, do the following:
+
+<ul>
+<li>Generate an unbiased random bit (see below).  If that bit is zero, output 0, then repeat this step unless the desired number of outputs has been generated.  If the bit is 1, flip the input coin and output the result.</li>
+</ul></li>
+<li>Otherwise, do the following:
+
+<ol>
+<li>Generate an unbiased random bit (see below), call it <em>fc</em>.  Then flip the input coin and call the result <em>bc</em>.</li>
+<li>Output <em>fc</em>*<em>bc</em>.</li>
+<li>(The following steps pass &quot;unused&quot; randomness to the extractor in a specific way to ensure correctness.) If <em>fc</em> is 0, and <em>bc</em> is 1, append 0 to extractor 2&#39;s input bits.</li>
+<li>If <em>fc</em> and <em>bc</em> are both 0, append 1 then 1 to extractor 2&#39;s input bits.</li>
+<li>If <em>fc</em> is 1 and <em>bc</em> is 0, append 1 then 0 to extractor 2&#39;s input bits.</li>
+</ol></li>
+</ol>
 
 <p>Inspired by Peres&#39;s result with <em>&lambda;</em>/2, the following algorithm is proposed.  It works for any rational function of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
@@ -1309,9 +1329,7 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <li>each <em>d</em>[<em>i</em>] and each <em>e</em>[<em>i</em>] is a non-negative integer.</li>
 </ul>
 
-<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, which also &quot;extracts&quot; residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.</p>
-
-<p>In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
+<p>The algorithm is a modified version of the &quot;block simulation&quot; in Mossel and Peres (2005, Proposition 2.5)<sup><a href="#Note17"><strong>(17)</strong></a></sup>, which also &quot;extracts&quot; residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let <em>r</em> be an integer such that, for every integer <em>i</em> in [0, <em>k</em>], <em>e</em>[<em>i</em>] &lt; choose(<em>k</em>, <em>i</em>)*choose(2*<em>r</em>, <em>r</em>).</p>
 
 <ol>
 <li>Set <em>iter</em> to 0.</li>
@@ -1357,9 +1375,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <p>While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if <em>f</em>(<em>&lambda;</em>) maps the interval <em>J</em> to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from <em>f</em>(<em>&lambda;</em>) without flipping the input coin again.</p>
 
-<p><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</p>
+<p><small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae&#39;s entropy-preserving binarization (Pae 2018)<sup><a href="#Note18"><strong>(18)</strong></a></sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every <em>&lambda;</em>.</small></p>
 
-<p><sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.</p>
+<p><small><sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.</small></p>
 
 <p><a id=Proofs_for_Function_Approximation_Schemes></a></p>
 

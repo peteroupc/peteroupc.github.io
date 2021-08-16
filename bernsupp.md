@@ -80,7 +80,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
     - is convex and has a minimum of greater than 0, or
     - is concave and has a maximum of less than 1.
 
-If _f_ in \[0, 1] has a defined slope at all points or "almost everywhere", and does not tend to a vertical slope anywhere, then _f_ is [**_Lipschitz continuous_**](https://en.wikipedia.org/wiki/Lipschitz_continuity), _&alpha;_ is 1, and _m_ is the highest absolute value of the function's "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(2)**](#Note2)</sup>  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
+If _f_ in \[0, 1] has a defined slope at all points or "almost everywhere"<sup>[**(24)**](#Note24)</sup>, and does not tend to a vertical slope anywhere, then _f_ is [**_Lipschitz continuous_**](https://en.wikipedia.org/wiki/Lipschitz_continuity), _&alpha;_ is 1, and _m_ is the highest absolute value of the function's "slope".  Otherwise, finding _m_ for a given _&alpha;_ is non-trivial and it requires knowing where _f_'s vertical slopes are, among other things.<sup>[**(2)**](#Note2)</sup>  But assuming _m_ and _&alpha;_ are known, then for every integer _n_ that's a power of 2:
 
 - _D_(_n_) = _m_\*(2/7)<sup>_&alpha;_/2</sup>/((2<sup>_&alpha;_/2</sup>&minus;1)\*_n_<sup>_&alpha;_/2</sup>).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) if _f_ is concave; otherwise, min(**fbelow**(4,0), **fbelow**(4,1), ..., **fbelow**(4,4)) if _n_ < 4; otherwise, _f_(_k_/_n_) &minus; _D_(_n_).
@@ -183,7 +183,7 @@ The following are approximation schemes with counterexamples to consistency.
 - **fabove**(_n_, _k_) = _f_(_k_/_n_) + _M_ / (8*_n_).
 - **fbelow**(_n_, _k_) = _f_(_k_/_n_) &minus; _M_ / (8*_n_).
 
-Where _M_ is an upper bound of the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
+Where _M_ is not less than the maximum absolute value of _f_'s slope-of-slope function (second derivative), and where _k_ is an integer in the interval [0, _n_].
 
 The counterexample involves the C<sup>2</sup> continuous function _g_(_&lambda;_) = sin(_&pi;_\*_&lambda;_)/4 + 1/2.
 
@@ -626,7 +626,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 ## Notes
 
 - <small><sup id=Note1>(1)</sup> Nacu, Şerban, and Yuval Peres. "[**Fast simulation of new coins from old**](https://projecteuclid.org/euclid.aoap/1106922322)", The Annals of Applied Probability 15, no. 1A (2005): 93-115.</small>
-- <small><sup id=Note2>(2)</sup> Specifically, the constant _m_ is an upper bound of abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, this bound can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
+- <small><sup id=Note2>(2)</sup> Specifically, the constant _m_ is a number equal to or greater than abs(_f_(_x_)&minus;_f_(_y_))/(abs(_x_&minus;_y_)<sup>_&alpha;_</sup>) for every _x_ in \[0, 1\] and every _y_ in \[0, 1\] such that _x_ != _y_.  However, _m_ can't directly be calculated as it would involve checking an infinite number of _x_, _y_ pairs.</small>
 - <small><sup id=Note3>(3)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560 [math.PR], 2010.</small>
 - <small><sup id=Note4>(4)</sup> Powell, M.J.D., _Approximation Theory and Methods_, 1981</small>
 - <small><sup id=Note5>(5)</sup> G. G. Lorentz. Bernstein polynomials. 1986.</small>
@@ -648,6 +648,7 @@ The following are approximation schemes and hints to simulate a coin of probabil
 - <small><sup id=Note21>(21)</sup> Gal, S.G., "Calculus of the modulus of continuity for nonconcave functions and applications", _Calcolo_ 27 (1990)</small>
 - <small><sup id=Note22>(22)</sup> Gal, S.G., 1995. Properties of the modulus of continuity for monotonous convex functions and applications. _International Journal of Mathematics and Mathematical Sciences_ 18(3), pp.443-446.</small>
 - <small><sup id=Note23>(23)</sup> Anastassiou, G.A., Gal, S.G., _Approximation Theory: Moduli of Continuity and Global Smoothness Preservation_, Birkhäuser, 2012.</small>
+- <small><sup id=Note24>(24)</sup> This means the exceptions make up a zero-volume (Lebesgue measure zero) set of points.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -671,7 +672,7 @@ If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli fact
 - _f_(_&lambda;_) is continuous.
 - _f_(_&lambda;_) maps the closed interval \[0, 1\] to \[0, 1\].
 - _f_(_&lambda;_) equals neither 0 nor 1 on the open interval (0, 1).
-- _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0).
+- _f_(_&lambda;_) is algebraic over rational numbers (that is, there is a nonzero polynomial _P_(_x_, _y_) in two variables and whose coefficients are rational numbers, such that _P_(_x_, _f_(_x_)) = 0 for every _x_ in the domain of _f_).
 
 A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by showing that _f_ is a _semialgebraic function_, so that by a known inequality and the other conditions, it meets the definitions of being Hölder continuous and polynomially bounded.
 
@@ -680,7 +681,7 @@ A [**proof by Reid Barton**](https://mathoverflow.net/a/395018/171320) begins by
 
 The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli factory algorithm that uses nothing but the input coin as a source of randomness (Keane and O'Brien 1994)<sup>[**(13)**](#Note13)</sup>.  See "[**Randomized vs. Non-Randomized Algorithms**](https://peteroupc.github.io/bernoulli.html#Randomized_vs_Non_Randomized_Algorithms)".
 
-**Strong Simulability Statement.** A function _f_(&lambda;) is strongly simulable only if&mdash;
+**Strong Simulability Statement.** A function _f_(_&lambda;_) is strongly simulable only if&mdash;
 
 1. _f_ is constant on its domain, or is continuous and polynomially bounded on its domain, and
 2. _f_ maps the closed interval [0, 1] or a subset of it to [0, 1], and
@@ -811,7 +812,18 @@ So far, the following functions do admit an _optimal factory_:
 
 It is easy to see that if an _optimal factory_ exists for _f_(_&lambda;_), then one also exists for 1 &minus; _f_(_&lambda;_): simply change all ones returned by the _f_(_&lambda;_) factory into zeros and vice versa.
 
-Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0<sup>&dagger;&dagger;</sup>.  This algorithm, though, doesn't count as an _optimal factory_.
+Also, as Yuval Peres (Jun. 24, 2021) told me, there is an efficient multiple-output Bernoulli factory for _f_(_&lambda;_) = _&lambda;_/2: the key is to flip the input coin enough times to produce unbiased random bits using his extractor (Peres 1992)<sup>[**(11)**](#Note11)</sup>, then multiply each unbiased bit with another input coin flip to get a sample from _&lambda;_/2.  Given that the sample is equal to 0, there are three possibilities that can "be extracted to produce more fair bits": either the unbiased bit is 0, or the coin flip is 0, or both are 0.
+
+This algorithm, though, doesn't count as an _optimal factory_, and Peres described this algorithm only incompletely.  By simulation and trial and error I found an improved version of the algorithm.  It uses two randomness extractors (extractor 1 and extractor 2) that produce unbiased random bits from biased data (which is done using a method given later in this section).  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(15)**](#Note15)</sup>.  The algorithm consists of doing the following in a loop until the desired number of outputs is generated.
+
+1. If the number of outputs generated so far is divisible by 20, do the following:
+    - Generate an unbiased random bit (see below).  If that bit is zero, output 0, then repeat this step unless the desired number of outputs has been generated.  If the bit is 1, flip the input coin and output the result.
+2. Otherwise, do the following:
+    1. Generate an unbiased random bit (see below), call it _fc_.  Then flip the input coin and call the result _bc_.
+    2. Output _fc_\*_bc_.
+    3. (The following steps pass "unused" randomness to the extractor in a specific way to ensure correctness.) If _fc_ is 0, and _bc_ is 1, append 0 to extractor 2's input bits.
+    4. If _fc_ and _bc_ are both 0, append 1 then 1 to extractor 2's input bits.
+    5. If _fc_ is 1 and _bc_ is 0, append 1 then 0 to extractor 2's input bits.
 
 Inspired by Peres's result with _&lambda;_/2, the following algorithm is proposed.  It works for any rational function of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
@@ -820,9 +832,7 @@ Inspired by Peres's result with _&lambda;_/2, the following algorithm is propose
 - every _d_\[_i_\] is less than or equal to the corresponding _e_\[_i_\], and
 - each _d_\[_i_\] and each _e_\[_i_\] is a non-negative integer.
 
-The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(17)**](#Note17)</sup>, which also "extracts" residual randomness with the help of six randomness extractors that produce unbiased random bits from biased data.  The extractors must be asymptotically optimal; one example is the iterated von Neumann construction in Peres (1992)<sup>[**(15)**](#Note15)</sup>.
-
-In the algorithm, let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
+The algorithm is a modified version of the "block simulation" in Mossel and Peres (2005, Proposition 2.5)<sup>[**(17)**](#Note17)</sup>, which also "extracts" residual randomness with the help of six asymptotically optimal randomness extractors.  In the algorithm, let _r_ be an integer such that, for every integer _i_ in \[0, _k_], _e_\[_i_\] < choose(_k_, _i_)\*choose(2\*_r_, _r_).
 
 1. Set _iter_ to 0.
 2. Flip the input coin _k_ times.  Then build a bitstring _B1_ consisting of the coin flip results in the order they occurred.  Let _i_ be the number of ones in _B1_.
@@ -854,9 +864,9 @@ so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe th
 
 While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
 
-<sup>&dagger;</sup> For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.
+<small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(18)**](#Note18)</sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.</small>
 
-<sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.
+<small><sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.</small>
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes

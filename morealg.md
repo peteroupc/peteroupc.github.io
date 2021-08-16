@@ -758,6 +758,9 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note39>(39)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random variate generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 - <small><sup id=Note40>(40)</sup> Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.</small>
 - <small><sup id=Note41>(41)</sup> Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.</small>
+- <small><sup id=Note42>(42)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
+- <small><sup id=Note43>(43)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines, in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
+- <small><sup id=Note44>(44)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1223,12 +1226,18 @@ Another interesting class of machines (called _pushdown generators_ here) are si
 2. The machine terminates with probability 0 (it eventually goes into an infinite loop).
 3. Rules that would pop the last symbol from the stack are not allowed.
 
-The "output" of the machine is now infinite, namely a real number _X_ in the interval [0, 1], in the form of the base-_N_ digit expansion 0.dddddd..., where `dddddd...` are the digits produced by the machine from left to right.  In the rest of this section:
+The "output" of the machine is now endless, namely a real number _X_ in the interval [0, 1], in the form of the base-_N_ digit expansion `0.dddddd...`, where `dddddd...` are the digits produced by the machine from left to right.  In the rest of this section:
 
-- `CDF(x)` is the cumulative distribution function of _X_, or the probability that _X_ is _x_ or less.
-- `PDF(x)` is the probability density function of _X_, or the "slope" function of `CDF(x)`, or the relative probability of choosing a number "close" to _x_ at random.
+- `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
+- `PDF(z)` is the probability density function of _X_, or the "slope" function of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(x)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  Because of exception 2, `CDF(x)` is continuous for finite-state generators (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
+A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  Because of exception 2, `CDF(z)` is continuous for finite-state generators (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
+
+**Proposition 8.** _A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, if the generator outputs the same digit whenever it transitions out of the same state, each value in the distribution must be either rational or transcendental._
+
+_Proof._ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite state-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup>[**(34)**](#Note34)</sup>.  The branching process outputs no digit, and the "if" part of the proposition follows from Corollary 9 of Icard (2020)<sup>[**(34)**](#Note34)</sup>.  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
+
+To show the last sentence, observe that an arbitrary finite-state generator whose rules each output a digit can be described as a "one-way transducer like machine"; it outputs a sequence of digits that cannot be erased, and it outputs the same digit whenever it transitions out of the same state.  Moreover, because the finite-state generator has a finite number of states, there are two finite sequences of coin flips that end up at the same state by the pigeonhole principle. Thus, by propositions 4.5 and AB of Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (_transcendental_ means the number can't be the root of a polynomial with integer coefficients) (see also Cobham (1968)<sup>[**(43)**](#Note43)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(44)**](#Note44)</sup>).</s>  &#x25a1;
 
 <a id=License></a>
 ## License

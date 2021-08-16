@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/08/07"><meta name="citation_online_date" content="2021/08/07"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/08/16"><meta name="citation_online_date" content="2021/08/16"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -2186,13 +2186,13 @@ def contbernoullidist(b, lamda, precision=53):
 <p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)<sup><a href="#Note29"><strong>(29)</strong></a></sup> showed, the absolutely continuous distribution can only be one of the following:</p>
 
 <ol>
-<li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in [0, 1], without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
-<li><p>The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of [0, 1], and the sequence has the form&mdash;</p>
+<li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
+<li><p>The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of (0, 1), and the sequence has the form&mdash;</p>
 
 <p><em>a</em><sub><em>j</em></sub> = exp(<em>w</em>/2<sup><em>j</em></sup>)/(1 + exp(<em>w</em>/2<sup><em>j</em></sup>)),</p>
 
 <p>where <em>w</em> is a constant.</p></li>
-<li>The PDF is not described in Case 2 above, but is positive on some open interval in [0, 1], so the PDF will be piecewise continuous, and <em>X</em> can be multiplied by an integer power of 2 so that the new variate&#39;s distribution has a PDF described in Case 2.</li>
+<li>The PDF is not described in Case 2 above, but is positive on some open interval in (0, 1), so the PDF will be piecewise continuous, and <em>X</em> can be multiplied by an integer power of 2 so that the new variate&#39;s distribution has a PDF described in Case 2.</li>
 </ol>
 
 <p>As Marsaglia also showed, similar results apply when the base of the random digits is other than 2 (binary).  See also my <a href="https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits"><strong>Stack Exchange question</strong></a>.</p>
@@ -2203,7 +2203,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The uniform distribution (<em>w</em> = 0), the fractional part of an exponential random variate with rate 1 (<em>w</em> = &minus;1; (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>).</li>
 <li>More general, the fractional part of an exponential variate with rate <em>&lambda;</em> (<em>w</em> = &minus;<em>&lambda;</em>).</li>
 <li>1 minus the fractional part of an exponential variate with rate <em>w</em> when <em>w</em> &gt; 0.</li>
-<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/<em>&beta;</em><sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</li>
+<li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/2<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/2<sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</li>
 </ul>
 
 <p><a id=License></a></p>

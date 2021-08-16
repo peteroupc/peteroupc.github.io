@@ -1710,13 +1710,13 @@ Then Kakutani's theorem (Kakutani 1948)<sup>[**(28)**](#Note28)</sup> says that 
 
 This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971)<sup>[**(29)**](#Note29)</sup> showed, the absolutely continuous distribution can only be one of the following:
 
-1. The distribution's probability density function (PDF) is zero somewhere in every open interval in [0, 1], without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
-2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of [0, 1], and the sequence has the form&mdash;
+1. The distribution's probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
+2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of (0, 1), and the sequence has the form&mdash;
 
     _a_<sub>_j_</sub> = exp(_w_/2<sup>_j_</sup>)/(1 + exp(_w_/2<sup>_j_</sup>)),
 
     where _w_ is a constant.
-3. The PDF is not described in Case 2 above, but is positive on some open interval in [0, 1], so the PDF will be piecewise continuous, and _X_ can be multiplied by an integer power of 2 so that the new variate's distribution has a PDF described in Case 2.
+3. The PDF is not described in Case 2 above, but is positive on some open interval in (0, 1), so the PDF will be piecewise continuous, and _X_ can be multiplied by an integer power of 2 so that the new variate's distribution has a PDF described in Case 2.
 
 As Marsaglia also showed, similar results apply when the base of the random digits is other than 2 (binary).  See also my [**Stack Exchange question**](https://math.stackexchange.com/questions/4052024/on-random-variables-made-up-of-independent-random-digits).
 
@@ -1725,7 +1725,7 @@ Case 2 has several special cases, including:
 - The uniform distribution (_w_ = 0), the fractional part of an exponential random variate with rate 1 (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>).
 - More general, the fractional part of an exponential variate with rate _&lambda;_ (_w_ = &minus;_&lambda;_).
 - 1 minus the fractional part of an exponential variate with rate _w_ when _w_ > 0.
-- _a_<sub>_j_</sub> = _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/_&beta;_<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
+- _a_<sub>_j_</sub> = _y_<sup>_v_/2<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/2<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.
 
 <a id=License></a>
 ## License
