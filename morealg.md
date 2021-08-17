@@ -759,7 +759,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note40>(40)</sup> Vatan, F., "Distribution functions of probabilistic automata", in _Proceedings of the thirty-third annual ACM symposium on Theory of computing (STOC '01)_, pp. 684-693, 2001.</small>
 - <small><sup id=Note41>(41)</sup> Kindler, Guy and D. Romik, "On distributions computable by random walks on graphs," _SIAM Journal on Discrete Mathematics_ 17 (2004): 624-633.</small>
 - <small><sup id=Note42>(42)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
-- <small><sup id=Note43>(43)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines, in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
+- <small><sup id=Note43>(43)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note44>(44)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
 
 <a id=Appendix></a>
@@ -1233,18 +1233,34 @@ The "output" of the machine is now endless, namely a real number _X_ in the inte
 
 A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  Because of exception 2, `CDF(z)` is continuous for finite-state generators (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
 
-**Proposition 8.** _A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, if every transition rule of the generator outputs a digit, each value in the distribution must be either rational or transcendental._
+**Lemma 2.** _A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup> section 5.3), for some k equal to 2 or greater._
+
+_Proof:_ There are two cases.
+
+Case 1: If every transition rule of the generator outputs a digit, then _k_ is the number of unique inputs among the generator's transition rules (usually, there are two unique inputs, namely HEADS and TAILS), and the model of a finite-state generator is modified as follows:
+
+1. A _configuration_ of the finite-state generator consists of its current state together with either the last coin flip result or, if the coin wasn't flipped yet, the empty string.
+2. The _output function_ takes a configuration described above and returns a digit.  If the coin wasn't flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).
+
+Case 2: If at least one transition rule does not output a digit, then the generator's rules are rewritten to an equivalent form.  Specifically, for each transition rule of the form&mdash;
+
+(_state1_, _input1_) &mdash; ("", _state2_)&nbsp;&nbsp;&nbsp;(1),
+
+look for transition rules of the form&mdash;
+
+(_state2_, _input2_) &mdash; (_digit_, _state3_),
+
+where _digit_ is not the empty string.  If any exist, then for each rule found, add a rule (_state1_, (_input1_, _input2_)) &mdash; (_digit_, _state3_), and delete the rule of the form (1), then "flatten" all inputs among all rules in the generator (for example, an input of the form (HEADS, (HEADS, TAILS)) becomes (HEADS, HEADS, TAILS)), then let _m_ be the size of the longest input among rules in the generator, then for each rule whose input has fewer than _m_ values, add copies of the rule to the generator where each copy's input is a different permutation of _m_ values (either HEADS or TAILS) that begins with the original rule's input, and delete the original rule.
+
+If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma.   &#x25a1;
+
+**Proposition 8.** _A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, each value in the distribution must be either rational or transcendental._
 
 A real number is _transcendental_ if it can't be a root of a polynomial with integer coefficients.  The second sentence in the proposition thus means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
 
 _Proof:_ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup>[**(34)**](#Note34)</sup>.  The branching process outputs no digit, and the "if" part of the proposition follows from Corollary 9 of Icard (2020)<sup>[**(34)**](#Note34)</sup>.  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
 
-To show the last sentence, observe that an arbitrary finite-state generator whose rules each output a digit can fit the model of a "one-way transducer-like 2-machine" (as defined in Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup> section 5.3).  Specifically, the model of a finite-state generator is modified as follows:
-
-1. A _configuration_ of the finite-state generator consists of its current state together with either the last coin flip result or, if the coin wasn't flipped yet, the empty string.
-2. The _output function_ takes a configuration described above and returns a digit.  If the coin wasn't flipped yet, the function returns an arbitrary digit (which is not used in Proposition 4.6 described below).
-
-Now all that is left is to show that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup>[**(43)**](#Note43)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(44)**](#Note44)</sup>).</s>  &#x25a1;
+To prove the last sentence of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup>[**(43)**](#Note43)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(44)**](#Note44)</sup>).</s>  &#x25a1;
 
 <a id=License></a>
 ## License
