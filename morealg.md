@@ -1223,10 +1223,10 @@ Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>
 Another interesting class of machines (called _pushdown generators_ here) are similar to pushdown automata, with the following exceptions:
 
 1. Each transition rule can also, optionally, output a base-_N_ digit in its right-hand side.  An example is: (_state_, _flip_, _sy_) &rarr; (_digit_, _state2_, {_sy2_}).
-2. The machine terminates with probability 0 (it eventually goes into an infinite loop).
+2. The machine must output infinitely many digits if allowed to run forever.
 3. Rules that would pop the last symbol from the stack are not allowed.
 
-The "output" of the machine is now endless, namely a real number _X_ in the interval [0, 1], in the form of the base-_N_ digit expansion `0.dddddd...`, where `dddddd...` are the digits produced by the machine from left to right.  In the rest of this section:
+The "output" of the machine is now a real number _X_ in the interval [0, 1], in the form of the base-_N_ digit expansion `0.dddddd...`, where `dddddd...` are the digits produced by the machine from left to right.  In the rest of this section:
 
 - `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
 - `PDF(z)` is the probability density function of _X_, or the "slope" function of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
@@ -1244,15 +1244,15 @@ Case 1: If every transition rule of the generator outputs a digit, then _k_ is t
 
 Case 2: If at least one transition rule does not output a digit, then the generator's rules are rewritten to an equivalent form.  Specifically, for each transition rule of the form&mdash;
 
-(_state1_, _input1_) &mdash; ("", _state2_)&nbsp;&nbsp;&nbsp;(1),
+(_state1_, _input1_) &rarr; ("", _state2_)&nbsp;&nbsp;&nbsp;(1),
 
 look for transition rules of the form&mdash;
 
-(_state2_, _input2_) &mdash; (_digit_, _state3_),
+(_state2_, _input2_) &rarr; (_digit_, _state3_),
 
 where _digit_ is not the empty string.  If any exist, then for each rule found, add a rule (_state1_, (_input1_, _input2_)) &mdash; (_digit_, _state3_), and delete the rule of the form (1), then "flatten" all inputs among all rules in the generator (for example, an input of the form (HEADS, (HEADS, TAILS)) becomes (HEADS, HEADS, TAILS)), then let _m_ be the size of the longest input among rules in the generator, then for each rule whose input has fewer than _m_ values, add copies of the rule to the generator where each copy's input is a different permutation of _m_ values (either HEADS or TAILS) that begins with the original rule's input, and delete the original rule.
 
-If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma.   &#x25a1;
+If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma. (This is always possible because of the requirement that the generator must output infinitely many digits if allowed to run forever, thus precluding infinite loops where no digit is produced.)   &#x25a1;
 
 **Proposition 8.** _A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, each value in the distribution must be either rational or transcendental._
 

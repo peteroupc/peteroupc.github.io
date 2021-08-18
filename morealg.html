@@ -1633,11 +1633,11 @@ calc_linear_func(count=8)
 
 <ol>
 <li>Each transition rule can also, optionally, output a base-<em>N</em> digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) &rarr; (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
-<li>The machine terminates with probability 0 (it eventually goes into an infinite loop).</li>
+<li>The machine must output infinitely many digits if allowed to run forever.</li>
 <li>Rules that would pop the last symbol from the stack are not allowed.</li>
 </ol>
 
-<p>The &quot;output&quot; of the machine is now endless, namely a real number <em>X</em> in the interval [0, 1], in the form of the base-<em>N</em> digit expansion <code>0.dddddd...</code>, where <code>dddddd...</code> are the digits produced by the machine from left to right.  In the rest of this section:</p>
+<p>The &quot;output&quot; of the machine is now a real number <em>X</em> in the interval [0, 1], in the form of the base-<em>N</em> digit expansion <code>0.dddddd...</code>, where <code>dddddd...</code> are the digits produced by the machine from left to right.  In the rest of this section:</p>
 
 <ul>
 <li><code>CDF(z)</code> is the cumulative distribution function of <em>X</em>, or the probability that <em>X</em> is <em>z</em> or less.</li>
@@ -1659,15 +1659,15 @@ calc_linear_func(count=8)
 
 <p>Case 2: If at least one transition rule does not output a digit, then the generator&#39;s rules are rewritten to an equivalent form.  Specifically, for each transition rule of the form&mdash;</p>
 
-<p>(<em>state1</em>, <em>input1</em>) &mdash; (&quot;&quot;, <em>state2</em>)&nbsp;&nbsp;&nbsp;(1),</p>
+<p>(<em>state1</em>, <em>input1</em>) &rarr; (&quot;&quot;, <em>state2</em>)&nbsp;&nbsp;&nbsp;(1),</p>
 
 <p>look for transition rules of the form&mdash;</p>
 
-<p>(<em>state2</em>, <em>input2</em>) &mdash; (<em>digit</em>, <em>state3</em>),</p>
+<p>(<em>state2</em>, <em>input2</em>) &rarr; (<em>digit</em>, <em>state3</em>),</p>
 
 <p>where <em>digit</em> is not the empty string.  If any exist, then for each rule found, add a rule (<em>state1</em>, (<em>input1</em>, <em>input2</em>)) &mdash; (<em>digit</em>, <em>state3</em>), and delete the rule of the form (1), then &quot;flatten&quot; all inputs among all rules in the generator (for example, an input of the form (HEADS, (HEADS, TAILS)) becomes (HEADS, HEADS, TAILS)), then let <em>m</em> be the size of the longest input among rules in the generator, then for each rule whose input has fewer than <em>m</em> values, add copies of the rule to the generator where each copy&#39;s input is a different permutation of <em>m</em> values (either HEADS or TAILS) that begins with the original rule&#39;s input, and delete the original rule.</p>
 
-<p>If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma.   &#x25a1;</p>
+<p>If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma. (This is always possible because of the requirement that the generator must output infinitely many digits if allowed to run forever, thus precluding infinite loops where no digit is produced.)   &#x25a1;</p>
 
 <p><strong>Proposition 8.</strong> <em>A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, each value in the distribution must be either rational or transcendental.</em></p>
 
