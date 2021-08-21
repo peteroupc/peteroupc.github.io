@@ -761,6 +761,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note42>(42)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
 - <small><sup id=Note43>(43)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note44>(44)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
+- <small><sup id=Note45>(45)</sup> Vatan (2001) claims that a finite-state generator has a continuous `CDF` (unless it produces a single value with probability 1), but this is not necessarily true if the generator has a state that outputs 0 forever.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1190,7 +1191,7 @@ _Proof Sketch:_
 
 A _continued fraction_ is one way to write a real number.  For purposes of the following proof, every real number in (0, 1) has the following _continued fraction expansion_: 0 + 1 / (_a_[1] + 1 / (_a_[2] + 1 / (_a_[3] + ... ))), where each _a_\[_i_\], a _partial denominator_, is an integer greater than 0.  A _quadratic irrational number_ is an irrational number of the form (_b_+sqrt(_c_))/_d_, where _b_, _c_, and _d_ are rational numbers.
 
-_Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[1, 2, (1, 2, 3)\], which is the same as \[1, 2, 1, 2, 3, 1, 2, 3, 1, 2, 3, ...\].  In this example, the size of the period is 3, and the size of the non-period is 2.
+_Proof:_  By Lagrange's continued fraction theorem, every quadratic irrational number has a continued fraction expansion that is eventually periodic; the expansion can be described using a finite number of partial denominators, the last "few" of which repeat forever.  The following example describes a periodic continued fraction expansion: \[0; 1, 2, (5, 4, 3)\], which is the same as \[0; 1, 2, 5, 4, 3, 5, 4, 3, 5, 4, 3, ...\].  In this example, the partial denominators are the numbers after the semicolon; the size of the period (`(5, 4, 3)`) is 3; and the size of the non-period (`1, 2`) is 2.
 
 Given a periodic expansion, and with the aid of an algorithm for simulating [**continued fractions**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions), a recursive Markov chain for the expansion (Etessami and Yannakakis 2009)<sup>[**(35)**](#Note35)</sup> can be described as follows.  The chain's components are all built on the following template.  The template component has one entry E, one inner node N, one box, and two exits X0 and X1.  The box has one _call port_ as well as two _return ports_ B0 and B1.
 
@@ -1231,7 +1232,17 @@ The "output" of the machine is now a real number _X_ in the interval [0, 1], in 
 - `CDF(z)` is the cumulative distribution function of _X_, or the probability that _X_ is _z_ or less.
 - `PDF(z)` is the probability density function of _X_, or the "slope" function of `CDF(z)`, or the relative probability of choosing a number "close" to _z_ at random.
 
-A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  Because of exception 2, `CDF(z)` is continuous for finite-state generators (unless _X_ takes on a single value with probability 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>.
+A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(39)**](#Note39)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(40)**](#Note40)</sup>, (Kindler and Romik 2004)<sup>[**(41)**](#Note41)</sup>, and it can be shown that the mean of _X_ must be a rational number.  <sup>[**(45)**](#Note45)</sup>
+
+**Proposition 8.** _Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:_
+
+1. _Each value occurs with a rational probability._
+2. _Each value is either rational or transcendental._
+3. _The probabilities are arbitrary, but they must be positive and sum to 1._
+
+A real number is _transcendental_ if it can't be a root of a polynomial with integer coefficients.  The second sentence in the proposition thus means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
+
+Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:
 
 **Lemma 2.** _A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup> section 5.3), for some k equal to 2 or greater._
 
@@ -1250,17 +1261,22 @@ look for transition rules of the form&mdash;
 
 (_state2_, _input2_) &rarr; (_digit_, _state3_),
 
-where _digit_ is not the empty string.  If any exist, then for each rule found, add a rule (_state1_, (_input1_, _input2_)) &mdash; (_digit_, _state3_), and delete the rule of the form (1), then "flatten" all inputs among all rules in the generator (for example, an input of the form (HEADS, (HEADS, TAILS)) becomes (HEADS, HEADS, TAILS)), then let _m_ be the size of the longest input among rules in the generator, then for each rule whose input has fewer than _m_ values, add copies of the rule to the generator where each copy's input is a different permutation of _m_ values (either HEADS or TAILS) that begins with the original rule's input, and delete the original rule.
+where _digit_ is not the empty string.  If any exist, then for each rule found, add a rule (_state1_, (_input1_, _input2_)) &rarr; (_digit_, _state3_), and delete the rule of the form (1), then "flatten" all inputs among all rules in the generator (for example, an input of the form (HEADS, (HEADS, TAILS)) becomes (HEADS, HEADS, TAILS)), then let _m_ be the size of the longest input among rules in the generator, then for each rule whose input has fewer than _m_ values, add copies of the rule to the generator where each copy's input is a different permutation of _m_ values (either HEADS or TAILS) that begins with the original rule's input, and delete the original rule.
 
 If the resulting generator still has transition rules that do not output a digit, repeat this process. Then the new generator falls into case 1 and thus fits the model of a machine asked for in the lemma. (This is always possible because of the requirement that the generator must output infinitely many digits if allowed to run forever, thus precluding infinite loops where no digit is produced.)   &#x25a1;
 
-**Proposition 8.** _A finite-state generator can generate a probability distribution that takes on finitely many values if and only if each value occurs with a rational probability.  Moreover, each value in the distribution must be either rational or transcendental._
+_Proof of Proposition 8:_ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup>[**(34)**](#Note34)</sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup>[**(34)**](#Note34)</sup>.  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
 
-A real number is _transcendental_ if it can't be a root of a polynomial with integer coefficients.  The second sentence in the proposition thus means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
+To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup>[**(43)**](#Note43)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(44)**](#Note44)</sup>).</s>  &#x25a1;
 
-_Proof:_ Let _n_ be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of _n_ finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup>[**(34)**](#Note34)</sup>.  The branching process outputs no digit, and the "if" part of the proposition follows from Corollary 9 of Icard (2020)<sup>[**(34)**](#Note34)</sup>.  The _n_ sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.
+**Questions:**
 
-To prove the last sentence of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup>[**(42)**](#Note42)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup>[**(43)**](#Note43)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(44)**](#Note44)</sup>).</s>  &#x25a1;
+1. Of the probability distributions that a finite-state generator can generate:
+     - What is the exact class of _discrete distributions_ (those that cover a finite or countably infinite set of values)?
+     - What is the exact class of _singular distributions_ (those that cover an uncountable but zero-volume set of values)?
+     - What is the exact class of _absolutely continuous distributions_ (uncountable set, but not singular)?
+     - What is the exact class of absolutely continuous distributions with everywhere continuous probability density functions?
+2. Same question as 1, but for pushdown generators.
 
 <a id=License></a>
 ## License
