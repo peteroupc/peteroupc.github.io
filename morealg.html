@@ -1661,7 +1661,7 @@ calc_linear_func(count=8)
 
 <p><strong>Lemma 2.</strong> <em>A finite-state generator can fit the model of a one-way transducer-like k-machine (as defined in Adamczewski et al. (2020)<sup><a href="#Note43"><strong>(43)</strong></a></sup> section 5.3), for some k equal to 2 or greater.</em></p>
 
-<p><em>Proof:</em> There are two cases.</p>
+<p><em>Proof Sketch:</em> There are two cases.</p>
 
 <p>Case 1: If every transition rule of the generator outputs a digit, then <em>k</em> is the number of unique inputs among the generator&#39;s transition rules (usually, there are two unique inputs, namely HEADS and TAILS), and the model of a finite-state generator is modified as follows:</p>
 
@@ -1670,7 +1670,7 @@ calc_linear_func(count=8)
 <li>The <em>output function</em> takes a configuration described above and returns a digit.  If the coin wasn&#39;t flipped yet, the function returns an arbitrary digit (which is not used in proposition 4.6 of the Adamczewski paper).</li>
 </ol>
 
-<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to an equivalent one whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup><a href="#Note40"><strong>(40)</strong></a></sup>.  (In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.)  &#x25a1;</p>
+<p>Case 2: If at least one transition rule does not output a digit, then the finite-state generator can be transformed to a machine where HEADS/TAILS is replaced with 50% probabilities, then transformed to an equivalent machine whose rules always output one or more digits, as claimed in Lemma 5.2 of Vatan (2001)<sup><a href="#Note40"><strong>(40)</strong></a></sup>.  In case the resulting generator has rules that output more than one digit, additional states and rules can be added so that the generator&#39;s rules output only one digit as desired.  Now at this point the generator&#39;s probabilities will be rational numbers. Now transform the generator from probabilities to inputs of size <em>k</em>, where <em>k</em> is the product of those probabilities, by adding additional rules as desired.  &#x25a1;</p>
 
 <p><em>Proof of Proposition 8:</em> Let <em>n</em> be an integer greater than 0. Take a finite-state generator that starts at state START and branches to one of <em>n</em> finite-state generators (sub-generators) with some probability, which must be rational because the overall generator is a finite-state machine (Icard 2020, Proposition 13)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  The branching process outputs no digit, and part 3 of the proposition follows from Corollary 9 of Icard (2020)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  The <em>n</em> sub-generators are special; each of them generates the binary expansion of a single real number in [0, 1] with probability 1.</p>
 
