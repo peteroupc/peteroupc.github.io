@@ -117,7 +117,6 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
         - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
         - [**Euler&ndash;Mascheroni constant _&gamma;_**](#Euler_ndash_Mascheroni_constant___gamma)
         - [**exp(&minus;_x_/_y_) \* _z_/_t_**](#exp_minus__x___y___z___t)
-        - [**ln(2)**](#ln_2)
         - [**ln(1+_y_/_z_)**](#ln_1__y___z)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Correctness and Performance Charts**](#Correctness_and_Performance_Charts)
@@ -824,7 +823,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an integer 0 or greater, and is useful when this logarithm is very large.
 
 1. If _k_ &gt; 0, generate unbiased random bits until a zero bit or _k_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
-2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
+2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(1+_y_/_z_)** (given later) with _y_/_z_ = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0."
 3. Run the **algorithm for exp(&minus;&mu;)** using the _&mu;_ input coin, and return the result.
 
 <a id=1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m></a>
@@ -833,7 +832,7 @@ This new algorithm uses the base-2 logarithm _k_ + _&lambda;_, where _k_ is an i
 An extension of the previous algorithm.  Here, _m_ is an integer greater than 0.
 
 1. If _k_ &gt; 0, generate unbiased random bits until a zero bit or _k_\*_m_ bits were generated this way, whichever comes first.  If a zero bit was generated this way, return 0.
-2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(2)** (given later).  If both the call and the flip return 1, return 1.  Otherwise, return 0."
+2. Create an input coin _&mu;_ that does the following: "Flip the input coin, then run the **algorithm for ln(1+_y_/_z_)** (given later) with _y_/_z_ = 1/1.  If both the call and the flip return 1, return 1.  Otherwise, return 0."
 3. Run the **algorithm for exp(&minus;&mu;)** _m_ times, using the _&mu;_ input coin.  If any of the calls returns 0, return 0.  Otherwise, return 1.
 
 <a id=1_1___lambda></a>
@@ -1480,7 +1479,7 @@ The following algorithm to simulate the Euler&ndash;Mascheroni constant _&gamma;
 3. If _lamunq_+_&#x03F5;_ &le; _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 4. If _lamunq_ > _lam_ + 1/(2<sup>_k_</sup>), go to step 8.
 5. If _lamunq_ > _lam_ + 1/(2<sup>_k_+1</sup>) and _lamunq_+_&#x03F5;_ < 3/(2<sup>_k_+1</sup>), go to step 8.
-6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to an upper bound on the error that results if the series is truncated after summing this and the previous terms.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest _b_&ge;1 such that _n_ &lt; 2<sup>_b_</sup>).
+6. (This step adds a term of the series for _&gamma;_ to _lamunq_, and sets _&#x03F5;_ to an upper bound on the error that results if the series is truncated after summing this and the previous terms.) If _n_ is 0, add 1/2 to _lamunq_ and set _&#x03F5;_ to 1/2.  Otherwise, add _B_(_n_)/(2\*_n_\*(2\*_n_+1)\*(2\*_n_+2)) to _lamunq_ and set _&#x03F5;_ to min(_prev_, (2+_B_(_n_)+(1/_n_))/(16\*_n_\*_n_)), where _B_(_n_) is the minimum number of bits needed to store _n_ (or the smallest integer _b_&ge;1 such that _n_ &lt; 2<sup>_b_</sup>).
 7. Add 1 to _n_, then set _prev_ to _&#x03F5;_, then go to step 3.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
@@ -1501,19 +1500,10 @@ This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(30)**]
 9. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 10. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 3.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-<a id=ln_2></a>
-#### ln(2)
-
-A special case of the algorithm for ln(1+_&lambda;_) given earlier.
-
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
-3. [**Sample from the number _u_**](#Algorithms).  If the result is 1, return 0.  Otherwise, go to step 1.
-
 <a id=ln_1__y___z></a>
 #### ln(1+_y_/_z_)
 
-See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number in the interval [0, 1].
+See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number in the interval [0, 1].  (Thus, the special case ln(2) results when _y_/_z_ = 1/1.)
 
 1. If _y_/_z_ is 0, return 0.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.

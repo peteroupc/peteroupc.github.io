@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/21"><meta name="citation_online_date" content="2021/08/21"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/22"><meta name="citation_online_date" content="2021/08/22"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -409,7 +409,7 @@
 
 <h3>Non-Negative Factories</h3>
 
-<p>The Bernoulli factory approach can be extended in two ways to produce random variates beyond the interval [0, 1].  Both algorithms use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
+<p>The Bernoulli factory approach can be extended in a number of ways to produce random variates beyond the interval [0, 1].  The algorithms in this section use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
 
 <p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates that average to <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
@@ -440,6 +440,20 @@
 </blockquote>
 
 <p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+
+<p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
+
+<p><strong>Algorithm 4.</strong> Say there is an oracle that produces independent uniform integers in the half-open interval [0, <em>n</em>), where <em>n</em>&ge;2 is unknown.  In this case, it&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.</p>
+
+<p>Using the oracle, there is an algorithm, given below, to generate a binomial(<em>n</em>, 1/<em>n</em>) random variate (Duvignau 2015, Algorithm 20)<sup><a href="#Note46"><strong>(46)</strong></a></sup>:</p>
+
+<ol>
+<li>Take items from the oracle until the same item is taken twice.  Let <em>m</em> be the number of items taken this way, other than the last.</li>
+<li>Create an <em>m</em>-item list consisting of the numbers 0, 1, ..., (<em>m</em>&minus;1), in that order.  Then shuffle the list.</li>
+<li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
+</ol>
+
+<p>Duvignau 2015 also includes an improved algorithm as well as an algorithm to generate a binomial(<em>n</em>, <em>k</em>/<em>n</em>) variate given the oracle, but they&#39;re not as trivial.</p>
 
 <p><a id=Pushdown_Automata_for_Square_Root_Like_Functions></a></p>
 
@@ -913,10 +927,10 @@
 <li>If <em>x</em> is a uniform PSRN, this step is implemented as follows: Run the first subalgorithm (later in this section) repeatedly until a run returns 0.  Set <em>k</em> to the number of runs that returned 1 this way.</li>
 </ul></li>
 <li>(The rest of the algorithm samples the fractional part.) Create <em>f</em>, a uniform PSRN with a positive sign, an empty fractional part, and an integer part of 0.</li>
-<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)   Then:
+<li>Create a <em>&mu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = 1/1.  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)   Then:
 
 <ul>
-<li>If <em>x</em> is a rational number, but not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
+<li>If <em>x</em> is a rational number, but not a power of 2, also create a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>y</em>/<em>z</em>)</strong> with <em>y</em>/<em>z</em> = (<em>x</em>&minus;2<sup><em>b</em></sup>)/2<sup><em>b</em></sup>.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
 <li>If <em>x</em> is a uniform PSRN, also create a <em>&rho;</em> input coin that does the following: &quot;Return the result of the second subalgorithm (later in this section), given <em>x</em> and <em>b</em>&quot;, and a <em>&nu;</em> input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong>, then run the <strong>algorithm for ln(1 + <em>&lambda;</em>)</strong>, using the <em>&rho;</em> input coin.  If both calls return 1, return 1.  Otherwise, return 0.&quot;</li>
 </ul></li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;) <em>b</em> times, using the <em>&mu;</em> input coin.  If a <em>&nu;</em> input coin was created in step 3, run the same algorithm once, using the <em>&nu;</em> input coin.  If all these calls return 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
@@ -932,7 +946,7 @@
 <ol>
 <li>(Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set <em>k</em> to the number of ones generated this way.</li>
 <li>(The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random variate, call it <em>f</em>.</li>
-<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(2)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;).  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
+<li>Create an input coin that does the following: &quot;<strong>Sample from the number <em>f</em></strong> (e.g., call <strong>SampleGeometricBag</strong> on <em>f</em> if <em>f</em> is implemented as a uniform PSRN), then run the <strong>algorithm for ln(1+<em>y</em>/<em>z</em>)</strong> (given in &quot;Bernoulli Factory Algorithms&quot;) with <em>y</em>/<em>z</em> = 1/1.  If both calls return 1, return 1.  Otherwise, return 0.&quot; (This simulates the probability <em>&lambda;</em> = <em>f</em>*ln(2).)</li>
 <li>Run the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong> (described in &quot;Bernoulli Factory Algorithms&quot;), using the input coin from the previous step.  If the call returns 1, accept <em>f</em>.  If <em>f</em> is accepted this way, set <em>f</em>&#39;s integer part to <em>k</em>, then optionally fill <em>f</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>f</em>.</li>
 <li>If <em>f</em> was not accepted by the previous step, go to step 2.</li>
 </ol>
@@ -1055,6 +1069,7 @@
 <li><small><sup id=Note43>(43)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small></li>
 <li><small><sup id=Note44>(44)</sup> Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</small></li>
 <li><small><sup id=Note45>(45)</sup> Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</small></li>
+<li><small><sup id=Note46>(46)</sup> Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1683,9 +1698,9 @@ calc_linear_func(count=8)
 
 <ul>
 <li>What is the exact class of <em>discrete distributions</em> (those that cover a finite or countably infinite set of values)?</li>
-<li>What is the exact class of <em>singular distributions</em> (those that cover an uncountable but zero-volume set of values)?</li>
-<li>What is the exact class of <em>absolutely continuous distributions</em> (uncountable set, but not singular)?</li>
-<li>What is the exact class of absolutely continuous distributions with everywhere continuous probability density functions?</li>
+<li>What is the exact class of <em>absolutely continuous distributions</em> (those with a probability density function)?</li>
+<li>What is the exact class of <em>singular distributions</em> (covering an uncountable but zero-volume set)?</li>
+<li>What is the exact class of absolutely continuous distributions with <em>continuous</em> density functions?</li>
 </ul></li>
 <li>Same question as 1, but for pushdown generators.</li>
 </ol>

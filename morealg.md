@@ -276,7 +276,7 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 <a id=Non_Negative_Factories></a>
 ### Non-Negative Factories
 
-The Bernoulli factory approach can be extended in two ways to produce random variates beyond the interval [0, 1].  Both algorithms use a different _oracle_ (black box) than coins that output heads or tails.
+The Bernoulli factory approach can be extended in a number of ways to produce random variates beyond the interval [0, 1].  The algorithms in this section use a different _oracle_ (black box) than coins that output heads or tails.
 
 **Algorithm 1.** Say we have an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random variates that average to _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
@@ -299,6 +299,18 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 > 3. Depending on _heads_, return 8 (that is, 1 times the upper bound) with the given probability, or 0 otherwise: _heads_=0 &rarr; probability 1/4; 1 &rarr; 5/6; 2 &rarr; 23/24; 3 &rarr; 5/8.
 
 **Algorithm 2.** This algorithm takes an oracle and produces non-negative random variates that average to the mean of _f_(_X_), where _X_ is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, _f_) to a potentially irrational number.
+
+**Algorithm 3.** For this algorithm, see the appendix.
+
+**Algorithm 4.** Say there is an oracle that produces independent uniform integers in the half-open interval [0, _n_), where _n_&ge;2 is unknown.  In this case, it's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.
+
+Using the oracle, there is an algorithm, given below, to generate a binomial(_n_, 1/_n_) random variate (Duvignau 2015, Algorithm 20)<sup>[**(46)**](#Note46)</sup>:
+
+1. Take items from the oracle until the same item is taken twice.  Let _m_ be the number of items taken this way, other than the last.
+2. Create an _m_-item list consisting of the numbers 0, 1, ..., (_m_&minus;1), in that order.  Then shuffle the list.
+3. In the shuffled list, count the number of items that didn't change position after being shuffled, then return that number.
+
+Duvignau 2015 also includes an improved algorithm as well as an algorithm to generate a binomial(_n_, _k_/_n_) variate given the oracle, but they're not as trivial.
 
 <a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
 ### Pushdown Automata for Square-Root-Like Functions
@@ -650,8 +662,8 @@ The algorithm follows.
     - If _x_ is a rational number and a power of 2, this step can be implemented by generating blocks of _b_ unbiased random bits until a **non-zero** block of bits is generated this way, then setting _k_ to the number of **all-zero** blocks of bits generated this way.
     - If _x_ is a uniform PSRN, this step is implemented as follows: Run the first subalgorithm (later in this section) repeatedly until a run returns 0.  Set _k_ to the number of runs that returned 1 this way.
 2. (The rest of the algorithm samples the fractional part.) Create _f_, a uniform PSRN with a positive sign, an empty fractional part, and an integer part of 0.
-3. Create a _&mu;_ input coin that does the following: "**Sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(2)** (described in "Bernoulli Factory Algorithms").  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)   Then:
-    - If _x_ is a rational number, but not a power of 2, also create a _&nu;_ input coin that does the following: "**Sample from the number _f_**, then run the **algorithm for ln(1 + _y_/_z_)** (described in "Bernoulli Factory Algorithms") with _y_/_z_ = (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>.  If both calls return 1, return 1.  Otherwise, return 0."
+3. Create a _&mu;_ input coin that does the following: "**Sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)   Then:
+    - If _x_ is a rational number, but not a power of 2, also create a _&nu;_ input coin that does the following: "**Sample from the number _f_**, then run the **algorithm for ln(1 + _y_/_z_)** with _y_/_z_ = (_x_&minus;2<sup>_b_</sup>)/2<sup>_b_</sup>.  If both calls return 1, return 1.  Otherwise, return 0."
     - If _x_ is a uniform PSRN, also create a _&rho;_ input coin that does the following: "Return the result of the second subalgorithm (later in this section), given _x_ and _b_", and a _&nu;_ input coin that does the following: "**Sample from the number _f_**, then run the **algorithm for ln(1 + _&lambda;_)**, using the _&rho;_ input coin.  If both calls return 1, return 1.  Otherwise, return 0."
 4. Run the **algorithm for exp(&minus;_&lambda;_)** (described in "Bernoulli Factory Algorithms") _b_ times, using the _&mu;_ input coin.  If a _&nu;_ input coin was created in step 3, run the same algorithm once, using the _&nu;_ input coin.  If all these calls return 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
@@ -662,7 +674,7 @@ The following generator for the **rate ln(2)** is a special case of the previous
 
 1. (Samples the integer part of the random variate.  This will be geometrically distributed with parameter 1/2.) Generate unbiased random bits until a zero is generated this way.  Set _k_ to the number of ones generated this way.
 2. (The rest of the algorithm samples the fractional part.) Generate a uniform (0, 1) random variate, call it _f_.
-3. Create an input coin that does the following: "**Sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(2)** (described in "Bernoulli Factory Algorithms").  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)
+3. Create an input coin that does the following: "**Sample from the number _f_** (e.g., call **SampleGeometricBag** on _f_ if _f_ is implemented as a uniform PSRN), then run the **algorithm for ln(1+_y_/_z_)** (given in "Bernoulli Factory Algorithms") with _y_/_z_ = 1/1.  If both calls return 1, return 1.  Otherwise, return 0." (This simulates the probability _&lambda;_ = _f_\*ln(2).)
 4. Run the **algorithm for exp(&minus;_&lambda;_)** (described in "Bernoulli Factory Algorithms"), using the input coin from the previous step.  If the call returns 1, accept _f_.  If _f_ is accepted this way, set _f_'s integer part to _k_, then optionally fill _f_ with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**), then return _f_.
 5. If _f_ was not accepted by the previous step, go to step 2.
 
@@ -762,6 +774,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note43>(43)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
 - <small><sup id=Note44>(44)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note45>(45)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
+- <small><sup id=Note46>(46)</sup> Duvignau, R., 2015. Maintenance et simulation de graphes aléatoires dynamiques (Doctoral dissertation, Université de Bordeaux).</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1263,9 +1276,9 @@ To prove part 2 of the proposition, translate an arbitrary finite-state generato
 
 1. Of the probability distributions that a finite-state generator can generate:
      - What is the exact class of _discrete distributions_ (those that cover a finite or countably infinite set of values)?
-     - What is the exact class of _singular distributions_ (those that cover an uncountable but zero-volume set of values)?
-     - What is the exact class of _absolutely continuous distributions_ (uncountable set, but not singular)?
-     - What is the exact class of absolutely continuous distributions with everywhere continuous probability density functions?
+     - What is the exact class of _absolutely continuous distributions_ (those with a probability density function)?
+     - What is the exact class of _singular distributions_ (covering an uncountable but zero-volume set)?
+     - What is the exact class of absolutely continuous distributions with _continuous_ density functions?
 2. Same question as 1, but for pushdown generators.
 
 <a id=License></a>
