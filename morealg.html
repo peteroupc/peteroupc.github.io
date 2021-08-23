@@ -411,7 +411,7 @@
 
 <p>The Bernoulli factory approach can be extended in a number of ways to produce random variates beyond the interval [0, 1].  The algorithms in this section use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
 
-<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates that average to <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
+<p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
 <ul>
 <li><em>f</em> is continuous on [<em>a</em>, <em>b</em>], and</li>
@@ -439,23 +439,25 @@
 </ol>
 </blockquote>
 
-<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
+<p><strong>Algorithm 2.</strong> This algorithm takes an oracle and produces non-negative random variates whose expected (&quot;average&quot;) value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  The algorithm appears in the appendix, however, because it requires applying an arbitrary function (here, <em>f</em>) to a potentially irrational number.</p>
 
 <p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
 
-<p><strong>Algorithm 4.</strong> Say there is an oracle that produces independent uniform integers in the half-open interval [0, <em>n</em>), where <em>n</em>&ge;2 is unknown.  The question arises: Which probability distributions can be sampled with this oracle?  The following describes three of them.</p>
+<p><strong>Algorithm 4.</strong> Say there is an oracle that produces independent uniform integers in the half-open interval [0, <em>n</em>), where <em>n</em>&ge;2 is unknown.  The question arises: Which probability distributions can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, and the following are four of these distributions.</p>
 
-<p><strong>Bernoulli 1/<em>n</em></strong>. It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.</p>
+<p><strong><em>Bernoulli 1/n.</em></strong>. It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)</p>
 
-<p><strong>Binomial with parameters <em>n</em> and 1/<em>n</em>.</strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup><a href="#Note8"><strong>(8)</strong></a></sup>:</p>
+<p><strong><em>Random variate with mean n</em></strong>. Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a &quot;geometric&quot; random variate, and has a mean of <em>n</em>.)</p>
+
+<p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup><a href="#Note8"><strong>(8)</strong></a></sup>:</p>
 
 <ol>
 <li>Take items from the oracle until the same item is taken twice.</li>
-<li>Create a list consisting of the items taken in step 1, except for the last one, then shuffle that list.</li>
+<li>Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.</li>
 <li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
 </ol>
 
-<p><strong>Binomial with parameters <em>n</em> and <em>k</em>/<em>n</em>.</strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate with parameters <em>n</em>, <em>k</em>/<em>n</em> using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
+<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate with parameters <em>n</em>, <em>k</em>/<em>n</em> using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
 
 <ol>
 <li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
@@ -471,7 +473,8 @@
 
 <ol>
 <li>Let <em>P</em> be the item at position <em>i</em> in <em>U</em>.</li>
-<li>Take an item from the oracle.  If the item is in <em>U</em> at position <strong><em>i</em> or less</strong> (positions start at 0), repeat this substep.  Otherwise, if the last item taken this way is in <em>U</em> at a position <strong>greater than <em>i</em></strong>, add <em>P</em> to <em>L</em> (if not already present).</li>
+<li>Take an item from the oracle.  If the item is in <em>U</em> at position <strong><em>i</em> or less</strong> (positions start at 0), repeat this substep.</li>
+<li>If the last item taken in the previous substep is in <em>U</em> at a position <strong>greater than <em>i</em></strong>, add <em>P</em> to <em>L</em> (if not already present).</li>
 </ol></li>
 <li>Return the number of items in <em>L</em>.</li>
 </ol>
@@ -1378,7 +1381,7 @@ calc_linear_func(count=8)
 
 <h3>More Algorithms for Non-Negative Factories</h3>
 
-<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers that average to a known or unknown mean. The goal is now to produce non-negative random variates that average to the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>:</p>
+<p><strong>Algorithm 2.</strong> Say we have an <em>oracle</em> that produces independent random real numbers whose expected (&quot;average&quot;) value is a known or unknown mean. The goal is now to produce non-negative random variates whose expected value is the mean of <em>f</em>(<em>X</em>), where <em>X</em> is a number produced by the oracle.  This is possible whenever <em>f</em> has a finite minimum and maximum and the mean of <em>f</em>(<em>X</em>) is not less than <em>&delta;</em>, where <em>&delta;</em> is a known rational number greater than 0. The algorithm to do so follows (see Lee et al. 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>:</p>
 
 <ol>
 <li>Let <em>m</em> be a rational number equal to or greater than the maximum value of abs(<em>f</em>(<em>&mu;</em>)) anywhere.  Create a <em>&nu;</em> input coin that does the following: &quot;Take a number from the oracle, call it <em>x</em>.  With probability abs(<em>f</em>(<em>x</em>))/<em>m</em>, return a number that is 1 if <em>f</em>(<em>x</em>) &lt; 0 and 0 otherwise.  Otherwise, repeat this process.&quot;</li>
@@ -1386,7 +1389,7 @@ calc_linear_func(count=8)
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates that average to that mean.</p>
+<p><strong>Example:</strong> An example from Lee et al. (2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  Say the oracle produces uniform random variates in [0, 3*<em>&pi;</em>], and let <em>f</em>(<em>&nu;</em>) = sin(<em>&nu;</em>).  Then the mean of <em>f</em>(<em>X</em>) is 2/(3*<em>&pi;</em>), which is greater than 0 and found in SymPy by <code>sympy.stats.E(sin(sympy.stats.Uniform(&#39;U&#39;,0,3*pi)))</code>, so the algorithm can produce non-negative random variates whose expected (&quot;average&quot;) value is that mean.</p>
 
 <p><strong>Notes:</strong></p>
 
