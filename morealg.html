@@ -38,7 +38,7 @@
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
-<li><a href="#Non_Negative_Factories"><strong>Non-Negative Factories</strong></a></li>
+<li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
 <li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
@@ -405,11 +405,11 @@
 </tr>
 </tbody></table>
 
-<p><a id=Non_Negative_Factories></a></p>
+<p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
 
-<h3>Non-Negative Factories</h3>
+<h3>Sampling Distributions Using Incomplete Information</h3>
 
-<p>The Bernoulli factory approach can be extended in a number of ways to produce random variates beyond the interval [0, 1].  The algorithms in this section use a different <em>oracle</em> (black box) than coins that output heads or tails.</p>
+<p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that outputs heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
 
 <p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
@@ -443,11 +443,11 @@
 
 <p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
 
-<p><strong>Algorithm 4.</strong> Say there is an oracle that produces independent uniform integers in the half-open interval [0, <em>n</em>), where <em>n</em>&ge;2 is unknown.  The question arises: Which probability distributions can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, and the following are four of these distributions.</p>
+<p><strong>Algorithm 4.</strong> Say there is an oracle that produces independent uniform integers in the half-open interval [0, <em>n</em>), where <em>n</em>&ge;2 is unknown.  The question arises: Which probability distributions based on <em>n</em> can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup><a href="#Note8"><strong>(8)</strong></a></sup>, and the following are four of these distributions.</p>
 
-<p><strong><em>Bernoulli 1/n.</em></strong>. It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.)</p>
+<p><strong><em>Bernoulli 1/n.</em></strong> It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.</p>
 
-<p><strong><em>Random variate with mean n</em></strong>. Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a &quot;geometric&quot; random variate, and has a mean of <em>n</em>.)</p>
+<p><strong><em>Random variate with mean n.</em></strong> Likewise, it&#39;s trivial to generate variates with a mean of <em>n</em>: Do &quot;Bernoulli 1/n&quot; trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a &quot;geometric&quot; random variate, and has a mean of <em>n</em>.)</p>
 
 <p><strong><em>Binomial with parameters n and 1/n.</em></strong> Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup><a href="#Note8"><strong>(8)</strong></a></sup>:</p>
 
@@ -478,6 +478,14 @@
 </ol></li>
 <li>Return the number of items in <em>L</em>.</li>
 </ol>
+
+<p>Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown <em>n</em> can be sampled with the oracle?<sup><a href="#Note47"><strong>(47)</strong></a></sup> The result applies to a family of distributions with the same (unknown) parameter <em>n</em>, starting with <em>a</em>&ge;1.  Let Supp(<em>n</em>) be the set of values taken on by the distribution with parameter <em>n</em>.  Then that family can be sampled using the oracle if and only if:</p>
+
+<ul>
+<li>There is a computable function <em>f</em>(<em>k</em>) that outputs a positive number.</li>
+<li>For each <em>n</em>, Supp(<em>n</em>) is included in Supp(<em>n</em>+1).</li>
+<li>For every <em>k</em> and for every <em>n</em> starting with the greater of 2 or the first <em>n</em> for which <em>k</em> is in Supp(<em>n</em>), the probability of seeing <em>k</em> given parameter <em>n</em> is at least (1/<em>n</em>)<sup><em>f</em>(<em>k</em>)</sup> (roughly speaking, the probability doesn&#39;t decay at a faster than polynomial rate as <em>n</em> increases).</li>
+</ul>
 
 <p><a id=Pushdown_Automata_for_Square_Root_Like_Functions></a></p>
 
@@ -1094,6 +1102,7 @@
 <li><small><sup id=Note44>(44)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small></li>
 <li><small><sup id=Note45>(45)</sup> Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</small></li>
 <li><small><sup id=Note46>(46)</sup> Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</small></li>
+<li><small><sup id=Note47>(47)</sup> There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won&#39;t use the unknown <em>n</em> in general.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

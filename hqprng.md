@@ -46,7 +46,7 @@ The following lists high-quality PRNGs that support streams and their PractRand 
 <a id=Counter_Based_PRNGs></a>
 ### Counter-Based PRNGs
 
-Constructions for counter-based PRNGs (using the definition from (Salmon et al. 2011)<sup>[**(7)**](#Note7)</sup>, section 2) include:
+Constructions for counter-based PRNGs (using the definition from (Salmon et al. 2011, section 2)<sup>[**(14)**](#Note14)</sup> include:
 
 1. A PRNG that outputs hash codes of a counter and the seed.
 2. A PRNG that uses a block cipher with the seed as a key to output encrypted counters.
@@ -98,7 +98,7 @@ Although the following are technically high-quality PRNGs, they are not preferre
 
 | PRNG | Notes |
  ----------| --- |
-| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | Usually takes about 192 8-bit bytes of memory. Admits up to 2^577 - 2 seeds; seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(8)**](#Note8)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  |
+| C++'s [**`std::ranlux48` engine**](http://www.cplusplus.com/reference/random/ranlux48/) | Usually takes about 192 8-bit bytes of memory. Admits up to 2^577 - 2 seeds; seed's bits cannot be all zeros or all ones (L&uuml;scher 1994)<sup>[**(7)**](#Note7)</sup>.  The maximum cycle length for `ranlux48`'s underlying generator is very close to 2^576.  |
 | A high-quality PRNG that is an LCG with non-prime modulus (or a PRNG based on one, such as PCG) | If the modulus is a power of 2, this PRNG can produce highly correlated "random" number sequences from seeds that differ only in their high bits (see S. Vigna, "[**The wrap-up on PCG generators**](http://pcg.di.unimi.it/pcg.php)") and lowest bits have short cycles. What PCG calls "streams" does not produce independent sequences. |
 
 <a id=Not_High_Quality_PRNGs></a>
@@ -110,16 +110,16 @@ The following are not considered high-quality PRNGs:
   ---------- |  ---- |
 | Sequential counter | Doesn't behave like independent random sequence |
 | A linear congruential generator with modulus less than 2<sup>63</sup> (such as `java.util.Random` and C++'s `std::minstd_rand` and `std::minstd_rand0` engines) | Admits fewer than 2<sup>63</sup> seeds |
-| Mersenne Twister (MT19937) | Shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(9)**](#Note9)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory. |
-| Marsaglia's `xorshift` family ("Xorshift RNGs", 2003) | Shows systematic failures in SmallCrush's MatrixRank test (Vigna 2016)<sup>[**(10)**](#Note10)</sup>|
+| Mersenne Twister (MT19937) | Shows a [**systematic failure**](http://xoroshiro.di.unimi.it/#quality) in BigCrush's LinearComp test (part of L'Ecuyer and Simard's "TestU01"). (See also (Vigna 2019)<sup>[**(8)**](#Note8)</sup>.) Moreover, it usually takes about 2500 8-bit bytes of memory. |
+| Marsaglia's `xorshift` family ("Xorshift RNGs", 2003) | Shows systematic failures in SmallCrush's MatrixRank test (Vigna 2016)<sup>[**(9)**](#Note9)</sup>|
 | `System.Random`, as implemented in the .NET Framework 4.7 | Admits fewer than 2<sup>63</sup> seeds |
 | Ran2 (_Numerical Recipes_) | Minimum cycle length less than 2<sup>63</sup> |
-| `msws` (Widynski 2017)<sup>[**(11)**](#Note11)</sup> | Admits fewer than 2<sup>63</sup> seeds (about 2<sup>54.1</sup> valid seeds) |
+| `msws` (Widynski 2017)<sup>[**(10)**](#Note10)</sup> | Admits fewer than 2<sup>63</sup> seeds (about 2<sup>54.1</sup> valid seeds) |
 | JSF32 (B. Jenkins's "A small noncryptographic PRNG") | Admits fewer than 2<sup>63</sup> seeds; proven minimum cycle length is only 2<sup>20</sup> or more |
 | JSF64 (B. Jenkins's "A small noncryptographic PRNG") | No proven minimum cycle of at least 2<sup>63</sup> values |
 | Middle square | No proven minimum cycle of at least 2<sup>63</sup> values |
-| Many cellular-automaton PRNGs (especially if they are neither reversible nor maximal-length<sup>[**(12)**](#Note12)</sup>) | No proven minimum cycle of at least 2<sup>63</sup> values |
-| Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(13)**](#Note13)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
+| Many cellular-automaton PRNGs (especially if they are neither reversible nor maximal-length<sup>[**(11)**](#Note11)</sup>) | No proven minimum cycle of at least 2<sup>63</sup> values |
+| Tyche/Tyche-i (Neves and Araujo 2011)<sup>[**(12)**](#Note12)</sup> | No proven minimum cycle of at least 2<sup>63</sup> values |
 | ISAAC ("ISAAC and RC4" by B. Jenkins) | Proven minimum cycle length is only 2<sup>40</sup> or more |
 
 <a id=Notes></a>
@@ -131,14 +131,14 @@ The following are not considered high-quality PRNGs:
 - <small><sup id=Note4>(4)</sup> Jones, D., "Good Practice in (Pseudo) Random Number Generation for Bioinformatics Applications", 2007/2010.</small>
 - <small><sup id=Note5>(5)</sup> P. L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", _Mathematics of Computation_ 68(225), January 1999, with [**errata**](http://www.iro.umontreal.ca/~lecuyer/myftp/papers/latrules99Errata.pdf).</small>
 - <small><sup id=Note6>(6)</sup> This XorShift\* generator is not to be confused with S. Vigna's \*-scrambled PRNGs, which multiply the PRNG state differently than this one does.</small>
-- <small><sup id=Note7>(7)</sup> Salmon, J.K.; Moraes, M.A.; et al., "Parallel Random Numbers: As Easy as 1, 2, 3", 2011.</small>
-- <small><sup id=Note8>(8)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
-- <small><sup id=Note9>(9)</sup> S. Vigna, "[**It Is High Time We Let Go of the Mersenne Twister**](https://arxiv.org/abs/1910.06437)", arXiv:1910.06437 [cs.DS], 2019.</small>
-- <small><sup id=Note10>(10)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
-- <small><sup id=Note11>(11)</sup> Widynski, B., "[**Middle Square Weyl Sequence RNG**](https://arxiv.org/abs/1704.00358)", arXiv:1704.00358 [cs.CR], 2017.</small>
-- <small><sup id=Note12>(12)</sup> Bhattacharjee, K., "[**Cellular Automata: Reversibility, Semi-reversibility and Randomness**](https://arxiv.org/abs/1911.03609)", arXiv:1911.03609 [cs.FL], 2019.</small>
-- <small><sup id=Note13>(13)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
-- <small><sup id=Note14>(14)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
+- <small><sup id=Note7>(7)</sup> L&uuml;scher, M., "A Portable High-Quality Random Number Generator for Lattice Field Theory Simulations", arXiv:hep-lat/9309020 (1994).  See also Conrads, C., "[**Faster RANLUX Pseudo-Random Number Generators**](https://christoph-conrads.name/faster-ranlux-pseudo-random-number-generators/)".</small>
+- <small><sup id=Note8>(8)</sup> S. Vigna, "[**It Is High Time We Let Go of the Mersenne Twister**](https://arxiv.org/abs/1910.06437)", arXiv:1910.06437 [cs.DS], 2019.</small>
+- <small><sup id=Note9>(9)</sup> S. Vigna, "[**An experimental exploration of Marsaglia's `xorshift` generators, scrambled**](http://vigna.di.unimi.it/ftp/papers/xorshift.pdf)", 2016.</small>
+- <small><sup id=Note10>(10)</sup> Widynski, B., "[**Middle Square Weyl Sequence RNG**](https://arxiv.org/abs/1704.00358)", arXiv:1704.00358 [cs.CR], 2017.</small>
+- <small><sup id=Note11>(11)</sup> Bhattacharjee, K., "[**Cellular Automata: Reversibility, Semi-reversibility and Randomness**](https://arxiv.org/abs/1911.03609)", arXiv:1911.03609 [cs.FL], 2019.</small>
+- <small><sup id=Note12>(12)</sup> Neves, S., and Araujo, F., "Fast and Small Nonlinear Pseudorandom Number Generators for Computer Simulation", 2011.</small>
+- <small><sup id=Note13>(13)</sup> Claessen, K, Pa&#x142;ka, M., "Splittable Pseudorandom Number Generators using Cryptographic Hashing", _ACM SIGPLAN Notices_ 48(12), December 2013.</small>
+- <small><sup id=Note14>(14)</sup> Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3." In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -155,7 +155,7 @@ Here are implementation notes on splittable PRNGs.  The [**pseudocode convention
 
 The splittable PRNG designs described here use _keyed hash functions_, which hash a message with a given key and output a hash code.  An unkeyed hash function can become a keyed hash function by hashing the following data: `key || TOBYTES(0x5F, 1) || message`.
 
-The Claessen&ndash;Pa&#x142;ka splittable PRNG (Claessen and Pa&#x142;ka 2013)<sup>[**(14)**](#Note14)</sup> can be described as follows:
+The Claessen&ndash;Pa&#x142;ka splittable PRNG (Claessen and Pa&#x142;ka 2013)<sup>[**(13)**](#Note13)</sup> can be described as follows:
 
 - A PRNG state has two components: a seed and a path (a vector of bits).  A new state's seed is `TOBLOCK(seed)` and its path is an empty bit vector.
 - `split` creates two new states from the old one; the first (or second) is a copy of the old state, except a 0 (or 1, respectively) is appended to the path.  If a new state's path reaches `BLOCKLEN` bits this way, the state's seed is set to the result of hashing `BitsToBytes(path)` with the seed as the key, and the state's path is set to an empty bit vector.

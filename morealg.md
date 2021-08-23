@@ -28,7 +28,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
-    - [**Non-Negative Factories**](#Non_Negative_Factories)
+    - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
@@ -273,10 +273,10 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 | 1 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
 | _&mu;_ at 0; 1/2 at 1/2; and 1 at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
 
-<a id=Non_Negative_Factories></a>
-### Non-Negative Factories
+<a id=Sampling_Distributions_Using_Incomplete_Information></a>
+### Sampling Distributions Using Incomplete Information
 
-The Bernoulli factory approach can be extended in a number of ways to produce random variates beyond the interval [0, 1].  The algorithms in this section use a different _oracle_ (black box) than coins that output heads or tails.
+The Bernoulli factory is a special case of the problem of **sampling a probability distribution with unknown parameters**.  This problem can be described as sampling from a new distribution using an _oracle_ (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a _coin that outputs heads or tails where the probability of heads is unknown_.  The rest of this section deals with oracles that go beyond coins.
 
 **Algorithm 1.** Say we have an oracle that produces independent random variates in the interval \[_a_, _b_\], and these numbers have an unknown mean of _&mu;_. The goal is now to produce non-negative random variates whose expected ("average") value is _f_(_&mu;_).  Unless _f_ is constant, this is possible if and only if&mdash;
 
@@ -302,11 +302,11 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 
 **Algorithm 3.** For this algorithm, see the appendix.
 
-**Algorithm 4.** Say there is an oracle that produces independent uniform integers in the half-open interval \[0, _n_), where _n_&ge;2 is unknown.  The question arises: Which probability distributions can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup>[**(8)**](#Note8)</sup>, and the following are four of these distributions.
+**Algorithm 4.** Say there is an oracle that produces independent uniform integers in the half-open interval \[0, _n_), where _n_&ge;2 is unknown.  The question arises: Which probability distributions based on _n_ can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup>[**(8)**](#Note8)</sup>, and the following are four of these distributions.
 
-**_Bernoulli 1/n._**. It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup>[**(8)**](#Note8)</sup>.)
+**_Bernoulli 1/n._** It's trivial to generate a Bernoulli variate that is 1 with probability 1/_n_ and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup>[**(8)**](#Note8)</sup>.
 
-**_Random variate with mean n_**. Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a "geometric" random variate, and has a mean of _n_.)
+**_Random variate with mean n._** Likewise, it's trivial to generate variates with a mean of _n_: Do "Bernoulli 1/n" trials as described above until a trial returns 0, then return the number of trials done this way.  (This is often called 1 plus a "geometric" random variate, and has a mean of _n_.)
 
 **_Binomial with parameters n and 1/n._** Using the oracle, the following algorithm generates a binomial variate of this kind (Duvignau 2015, Algorithm 20)<sup>[**(8)**](#Note8)</sup>:
 
@@ -327,6 +327,12 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
     2. Take an item from the oracle.  If the item is in _U_ at position **_i_ or less** (positions start at 0), repeat this substep.
     3. If the last item taken in the previous substep is in _U_ at a position **greater than _i_**, add _P_ to _L_ (if not already present).
 5. Return the number of items in _L_.
+
+Duvignau proved a result (Theorem 5.2) that answers the question: Which probability distributions based on the unknown _n_ can be sampled with the oracle?<sup>[**(47)**](#Note47)</sup> The result applies to a family of distributions with the same (unknown) parameter _n_, starting with _a_&ge;1.  Let Supp(_n_) be the set of values taken on by the distribution with parameter _n_.  Then that family can be sampled using the oracle if and only if:
+
+- There is a computable function _f_(_k_) that outputs a positive number.
+- For each _n_, Supp(_n_) is included in Supp(_n_+1).
+- For every _k_ and for every _n_ starting with the greater of 2 or the first _n_ for which _k_ is in Supp(_n_), the probability of seeing _k_ given parameter _n_ is at least (1/_n_)<sup>_f_(_k_)</sup> (roughly speaking, the probability doesn't decay at a faster than polynomial rate as _n_ increases).
 
 <a id=Pushdown_Automata_for_Square_Root_Like_Functions></a>
 ### Pushdown Automata for Square-Root-Like Functions
@@ -791,6 +797,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note44>(44)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
 - <small><sup id=Note45>(45)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note46>(46)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
+- <small><sup id=Note47>(47)</sup> There are many distributions that can be sampled using the oracle, by first generating unbiased random bits via randomness extraction methods, but then these distributions won't use the unknown _n_ in general.</small>
 
 <a id=Appendix></a>
 ## Appendix

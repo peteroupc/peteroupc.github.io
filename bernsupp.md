@@ -749,7 +749,7 @@ Now, let _g_\[_j_\] and _&omega;_\[_j_\] be the _j_<sup>th</sup> coefficient of 
 3. If 1 is in the domain of _f_ and if _j_ is _n_, return _g_(1) = _&omega;_(1) = 0.
 4. Generate a uniform(0, 1) random variate, then return 1 if that variate is less than _&omega;_\[_j_\], or return 0 if that variate is greater than _g_\[_j_\].  This step is carried out via the von Neumann method, as in Proposition 1.
 
-If the algorithm didn't return a value, then by now we know that the input coin's probability of heads is neither 0 or 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn't return all zeros or all ones.
+If the algorithm didn't return a value, then by now we know that the input coin's probability of heads is neither 0 nor 1, since step 2 returned a value (either 0 or 1), which can only happen if the input coin didn't return all zeros or all ones.
 
 Now let _r_(_&lambda;_) = (_f_(_&lambda;_) &minus; _&omega;_(_&lambda;_)) / (_g_(_&lambda;_) &minus; _&omega;_(_&lambda;_)).  By the conditions in the lemma, _h_ will be positive everywhere in the interval (0, 1), wherever _f_ is defined.
 
@@ -865,8 +865,6 @@ so that the algorithm would simulate _f_(_&lambda;_) = _P1_ / _P01_.  Observe th
 While this algorithm is coin-flip-efficient, it is not believed to be an optimal factory, at least not without more work.  In particular, a bigger savings of input coin flips could occur if _f_(_&lambda;_) maps the interval _J_ to a small range of values, so that the algorithm could, for example, generate a uniform random variate in [0, 1] using unbiased random bits and see whether it lies outside that range of values &mdash; and thus produce a sample from _f_(_&lambda;_) without flipping the input coin again.
 
 <small><sup>&dagger;</sup> For example, by translating the number to input bits via Pae's entropy-preserving binarization (Pae 2018)<sup>[**(19)**](#Note19)</sup>.  But correctness might depend on how this is done; after all, the number of coin flips per sample must equal or exceed the entropy bound for every _&lambda;_.</small>
-
-<small><sup>&dagger;&dagger;</sup> Peres described this algorithm only incompletely.  By simulation I found that the algorithm has to use two extractors (extractor 1 and extractor 2) as well as the method for generating unbiased bits given in this section; and for the three cases given here, the bits (0), (1, 0), and (1, 1), respectively, are passed as input bits to extractor 2.  These measures are needed for correctness.</small>
 
 <a id=Proofs_for_Function_Approximation_Schemes></a>
 ### Proofs for Function Approximation Schemes
