@@ -435,7 +435,7 @@
 
 <h3>Sampling Distributions Using Incomplete Information</h3>
 
-<p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that outputs heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
+<p>The Bernoulli factory is a special case of the problem of <strong>sampling a probability distribution with unknown parameters</strong>.  This problem can be described as sampling from a new distribution using an <em>oracle</em> (black box) that produces numbers of an incompletely known distribution. In the Bernoulli factory problem, this oracle is a <em>coin that shows heads or tails where the probability of heads is unknown</em>.  The rest of this section deals with oracles that go beyond coins.</p>
 
 <p><strong>Algorithm 1.</strong> Say we have an oracle that produces independent random variates in the interval [<em>a</em>, <em>b</em>], and these numbers have an unknown mean of <em>&mu;</em>. The goal is now to produce non-negative random variates whose expected (&quot;average&quot;) value is <em>f</em>(<em>&mu;</em>).  Unless <em>f</em> is constant, this is possible if and only if&mdash;</p>
 
@@ -469,7 +469,7 @@
 
 <p><strong>Algorithm 3.</strong> For this algorithm, see the appendix.</p>
 
-<p><strong>Algorithm 4.</strong> Say there is an oracle in the form of an <em>n</em>-sided fair die (<em>n</em>&ge;2) with an unknown number of faces, where each face shows a different integer in the interval[0, <em>n</em>).  The question arises: Which probability distributions based on <em>n</em> can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, and the following are four of these distributions.</p>
+<p><strong>Algorithm 4.</strong> Say there is an oracle in the form of an <em>n</em>-sided fair die (<em>n</em>&ge;2) with an unknown number of faces, where each face shows a different integer in the interval [0, <em>n</em>).  The question arises: Which probability distributions based on <em>n</em> can be sampled with this oracle?  This question was studied in the French-language dissertation of R. Duvignau (2015, section 5.2)<sup><a href="#Note9"><strong>(9)</strong></a></sup>, and the following are four of these distributions.</p>
 
 <p><strong><em>Bernoulli 1/n.</em></strong> It&#39;s trivial to generate a Bernoulli variate that is 1 with probability 1/<em>n</em> and 0 otherwise: just take a number from the oracle and return either 1 if that number is 0, or 0 otherwise.  Alternatively, take two numbers from the oracle and return either 1 if both are the same, or 0 otherwise (Duvignau 2015, p. 153)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</p>
 
