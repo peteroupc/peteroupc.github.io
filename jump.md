@@ -33,7 +33,7 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
 <a id=Counter_Based_PRNGs></a>
 ### Counter-Based PRNGs
 
-Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011)<sup>[**(6)**](#Note6)</sup>.
+Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011)<sup>[**(4)**](#Note4)</sup>.
 
 <a id=Multiple_Recursive_Generators></a>
 ### Multiple Recursive Generators
@@ -53,7 +53,7 @@ To calculate the parameter needed to jump the MRG ahead N steps, calculate `M`<s
 
 Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` is the jump matrix and `S` is the state in the form of a column vector; the result is a new state for the MRG.
 
-This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002)<sup>[**(4)**](#Note4)</sup>.
+This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002)<sup>[**(5)**](#Note5)</sup>.
 
 <a id=Example></a>
 #### Example
@@ -82,7 +82,7 @@ Transforming the MRG's state with J (and reducing mod 1449) will transform the s
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
 
-An efficient way to jump an LCG ahead is described in (Brown 1994)<sup>[**(5)**](#Note5)</sup>. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
+An efficient way to jump an LCG ahead is described in (Brown 1994)<sup>[**(6)**](#Note6)</sup>. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
 
 An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).  For `c` other than 0, the following matrix describes the state transition `[x(k-1), 1]` to `[x(k), 1]` (mod `modulus`):
 
@@ -132,6 +132,6 @@ Sebastiano Vigna reviewed this page and gave comments.
 - <small><sup id=Note1>(1)</sup> Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.</small>
 - <small><sup id=Note2>(2)</sup> Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).</small>
 - <small><sup id=Note3>(3)</sup> Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.</small>
-- <small><sup id=Note4>(4)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
-- <small><sup id=Note5>(5)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
-- <small><sup id=Note6>(6)</sup> Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3." In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.</small>
+- <small><sup id=Note4>(4)</sup> Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3." In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.</small>
+- <small><sup id=Note5>(5)</sup> L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.</small>
+- <small><sup id=Note6>(6)</sup> Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.</small>
