@@ -28,6 +28,8 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
+    - [**_&pi;_/4**](#pi___4)
+    - [**_&pi;_/4 &minus; 1/2**](#pi___4_minus_1_2)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -230,6 +232,34 @@ As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional par
 
 1. Generate a PSRN for the reciprocal of a uniform random variate, as described in [**another page of mine**](https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number).
 2. Set the PSRN's integer part to 0, then run **SampleGeometricBag** on that PSRN.  Return 0 if the run returns 1, or 1 otherwise.
+
+<a id=pi___4></a>
+### _&pi;_/4
+
+The following algorithm to sample the probability _&pi;_/4 is based on the section "Uniform Distribution Inside N-Dimensional Shapes", especially its Note 5.
+
+1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
+2. Do the following process repeatedly, until the algorithm returns a value:
+    1. Set _c1_ to 2\*_c1_ plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
+    3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
+    4. Multiply _S_ by 2.
+
+<a id=pi___4_minus_1_2></a>
+### _&pi;_/4 &minus; 1/2
+
+Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an area equal to 1/2 removed.
+
+1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
+2. Do the following process repeatedly, until the algorithm returns a value:
+    1. Set _c1_ to 2\*_c1_ plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    2. Set _diamond_ to _MAYBE_ and _disk_ to _MAYBE_.
+    3. If ((_c1_+1) + (_c2_+1)) < _S_, set _diamond_ to _YES_.
+    4. If ((_c1_) + (_c2_)) > _S_, set _diamond_ to _NO_.
+    5. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, set _disk_ to _YES_.
+    6. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, set _disk_ to _NO_.
+    7. If _disk_ is _YES_ and _diamond_ is _NO_, return 1.  Otherwise, if _diamond_ is _YES_ or _disk_ is _NO_, return 0.
+    8. Multiply _S_ by 2.
 
 <a id=4_3___pi></a>
 ### 4/(3\*_&pi;_)
@@ -445,13 +475,22 @@ The sampler's description has the following skeleton.
 > 2. Rejection sampling on a shape is subject to the "curse of dimensionality", since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.
 > 3. Devroye (1986, chapter 8, section 3)<sup>[**(15)**](#Note15)</sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/_base_<sup>_k_</sup> in all dimensions; the result of **InShape** is calculated for each such box and that box labeled with the result; all boxes labeled _NO_ are discarded; and the algorithm is modified by adding the following after step 2: "2a. Choose a precalculated box uniformly at random, then set _c1_, ..., _cN_ to that box's coordinates, then set _d_ to _k_ and set _S_ to _base_<sup>_k_</sup>. If a box labeled _YES_ was chosen, follow the substeps in step 5. If a box labeled _MAYBE_ was chosen, multiply _S_ by _base_ and add 1 to _d_." (For example, if _base_ is 10, _k_ is 1, _N_ is 2, and _d1_ = _d2_ = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, **InShape** is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on \[the boxes' coordinates are stored as just given, but **InShape** instead uses those coordinates divided by _base_<sup>_k_</sup>, or 10<sup>1</sup> in this case\], each such box is labeled with the result, and boxes labeled _NO_ are discarded.  Finally the algorithm above is modified as just given.)
 > 4. Besides a grid, another useful data structure is a _mapped regular paving_ (Harlow et al. 2012)<sup>[**(16)**](#Note16)</sup>, which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate **InShape** for the box.  If it returns _YES_ or _NO_ then mark the box with _YES_ or _NO_, respectively; otherwise it returns _MAYBE_, so divide the box along its first widest coordinate into two sub-boxes, set the parent box's children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with _MAYBE_).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked _YES_, return a uniform random point between the given coordinates using the **RandUniformInRange** algorithm; or (2) if the box is marked _NO_, start over from the root; or (3) if the box is marked _MAYBE_, get the two child boxes bisected from the box, choose one of them with equal probability (e.g., choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of **InShape** for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.
-> 5. The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape's volume divided by the hyperrectangle's volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: "5. If the result of **InShape** is YES, return 1.; 6. If the result of **InShape** is NO, return 0." (I thank BruceET of the Cross Validated community for leading me to this insight.)
+> 5. The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape's volume divided by the hyperrectangle's volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: "5. If the result of **InShape** is _YES_, return 1.; 6. If the result of **InShape** is _NO_, return 0." (I thank BruceET of the Cross Validated community for leading me to this insight.)
 >
 > **Examples:**
 >
 > - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_\*_k_; _NO_ if (_c1_ + ... + _cN_) > _S_\*_k_; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the _N_ dimensions.
 > - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < (_S_\*_k_)<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > (_S_\*_k_)<sup>2</sup>; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is _&pi;_/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the _N_ dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(15)**](#Note15)</sup>).
 > - The following example generates a point inside a quarter _astroid_ (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_sk_&minus;_c1_&minus;1)<sup>2</sup> + ... + (_sk_&minus;_cN_&minus;1)<sup>2</sup>) > _sk_<sup>2</sup>; _NO_ if ((_sk_&minus;_c1_)<sup>2</sup> + ... + (_sk_&minus;_cN_)<sup>2</sup>) < _sk_<sup>2</sup>; and _MAYBE_ otherwise, where _sk_ = _S_\*_k_.  For _N_=2, the acceptance rate (see note 5) is 1 &minus; _&pi;_/4. For a full astroid, step 5.3 in the algorithm is done for each of the _N_ dimensions.
+
+4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.  See the [**appendix**](#Implementation_Notes_for_Box_Shape_Intersection) for further implementation notes.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).
+5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
+    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 7342, set _p1_'s fractional part to \[3, 4, 2\] and _p1_'s integer part to 7.)
+    2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
+    3. For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
+    4. Return the PSRNs _p1_, ..., _pN_, in that order.
+6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
+7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
 ### Building an Arbitrary-Precision Sampler

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/25"><meta name="citation_online_date" content="2021/08/25"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/26"><meta name="citation_online_date" content="2021/08/26"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -38,6 +38,8 @@
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
+<li><a href="#pi___4"><strong><em>&pi;</em>/4</strong></a></li>
+<li><a href="#pi___4_minus_1_2"><strong><em>&pi;</em>/4 &minus; 1/2</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
@@ -331,6 +333,46 @@
 <ol>
 <li>Generate a PSRN for the reciprocal of a uniform random variate, as described in <a href="https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number"><strong>another page of mine</strong></a>.</li>
 <li>Set the PSRN&#39;s integer part to 0, then run <strong>SampleGeometricBag</strong> on that PSRN.  Return 0 if the run returns 1, or 1 otherwise.</li>
+</ol>
+
+<p><a id=pi___4></a></p>
+
+<h3><em>&pi;</em>/4</h3>
+
+<p>The following algorithm to sample the probability <em>&pi;</em>/4 is based on the section &quot;Uniform Distribution Inside N-Dimensional Shapes&quot;, especially its Note 5.</p>
+
+<ol>
+<li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
+<li>Do the following process repeatedly, until the algorithm returns a value:
+
+<ol>
+<li>Set <em>c1</em> to 2*<em>c1</em> plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set <em>c2</em> to 2*<em>c2</em> plus an unbiased random bit.</li>
+<li>If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is <em>&pi;</em>/4.)</li>
+<li>If ((<em>c1</em>)<sup>2</sup> + (<em>c2</em>)<sup>2</sup>) &gt; <em>S</em><sup>2</sup>, return 0.  (Point is outside the quarter disk.)</li>
+<li>Multiply <em>S</em> by 2.</li>
+</ol></li>
+</ol>
+
+<p><a id=pi___4_minus_1_2></a></p>
+
+<h3><em>&pi;</em>/4 &minus; 1/2</h3>
+
+<p>Follows the <em>&pi;</em>/4 algorithm, except it samples from a quarter disk with an area equal to 1/2 removed.</p>
+
+<ol>
+<li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
+<li>Do the following process repeatedly, until the algorithm returns a value:
+
+<ol>
+<li>Set <em>c1</em> to 2*<em>c1</em> plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set <em>c2</em> to 2*<em>c2</em> plus an unbiased random bit.</li>
+<li>Set <em>diamond</em> to <em>MAYBE</em> and <em>disk</em> to <em>MAYBE</em>.</li>
+<li>If ((<em>c1</em>+1) + (<em>c2</em>+1)) &lt; <em>S</em>, set <em>diamond</em> to <em>YES</em>.</li>
+<li>If ((<em>c1</em>) + (<em>c2</em>)) &gt; <em>S</em>, set <em>diamond</em> to <em>NO</em>.</li>
+<li>If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>, set <em>disk</em> to <em>YES</em>.</li>
+<li>If ((<em>c1</em>)<sup>2</sup> + (<em>c2</em>)<sup>2</sup>) &gt; <em>S</em><sup>2</sup>, set <em>disk</em> to <em>NO</em>.</li>
+<li>If <em>disk</em> is <em>YES</em> and <em>diamond</em> is <em>NO</em>, return 1.  Otherwise, if <em>diamond</em> is <em>YES</em> or <em>disk</em> is <em>NO</em>, return 0.</li>
+<li>Multiply <em>S</em> by 2.</li>
+</ol></li>
 </ol>
 
 <p><a id=4_3___pi></a></p>
@@ -641,7 +683,7 @@
 <li>Rejection sampling on a shape is subject to the &quot;curse of dimensionality&quot;, since typical shapes of high dimension will tend to cover much less volume than their bounding boxes, so that it would take a lot of time on average to accept a high-dimensional box.  Moreover, the more area the shape takes up in the bounding box, the higher the acceptance rate.</li>
 <li>Devroye (1986, chapter 8, section 3)<sup><a href="#Note15"><strong>(15)</strong></a></sup> describes grid-based methods to optimize random point generation.  In this case, the space is divided into a grid of boxes each with size 1/<em>base</em><sup><em>k</em></sup> in all dimensions; the result of <strong>InShape</strong> is calculated for each such box and that box labeled with the result; all boxes labeled <em>NO</em> are discarded; and the algorithm is modified by adding the following after step 2: &quot;2a. Choose a precalculated box uniformly at random, then set <em>c1</em>, ..., <em>cN</em> to that box&#39;s coordinates, then set <em>d</em> to <em>k</em> and set <em>S</em> to <em>base</em><sup><em>k</em></sup>. If a box labeled <em>YES</em> was chosen, follow the substeps in step 5. If a box labeled <em>MAYBE</em> was chosen, multiply <em>S</em> by <em>base</em> and add 1 to <em>d</em>.&quot; (For example, if <em>base</em> is 10, <em>k</em> is 1, <em>N</em> is 2, and <em>d1</em> = <em>d2</em> = 1, the space could be divided into a 10&times;10 grid, made up of 100 boxes each of size (1/10)&times;(1/10).  Then, <strong>InShape</strong> is precalculated for the box with coordinates ((0, 0), (1, 1)), the box ((0, 1), (1, 2)), and so on [the boxes&#39; coordinates are stored as just given, but <strong>InShape</strong> instead uses those coordinates divided by <em>base</em><sup><em>k</em></sup>, or 10<sup>1</sup> in this case], each such box is labeled with the result, and boxes labeled <em>NO</em> are discarded.  Finally the algorithm above is modified as just given.)</li>
 <li>Besides a grid, another useful data structure is a <em>mapped regular paving</em> (Harlow et al. 2012)<sup><a href="#Note16"><strong>(16)</strong></a></sup>, which can be described as a binary tree with nodes each consisting of zero or two child nodes and a marking value.  Start with a box that entirely covers the desired shape.  Calculate <strong>InShape</strong> for the box.  If it returns <em>YES</em> or <em>NO</em> then mark the box with <em>YES</em> or <em>NO</em>, respectively; otherwise it returns <em>MAYBE</em>, so divide the box along its first widest coordinate into two sub-boxes, set the parent box&#39;s children to those sub-boxes, then repeat this process for each sub-box (or if the nesting level is too deep, instead mark each sub-box with <em>MAYBE</em>).  Then, to generate a random point (with a base-2 fractional part), start from the root, then: (1) If the box is marked <em>YES</em>, return a uniform random point between the given coordinates using the <strong>RandUniformInRange</strong> algorithm; or (2) if the box is marked <em>NO</em>, start over from the root; or (3) if the box is marked <em>MAYBE</em>, get the two child boxes bisected from the box, choose one of them with equal probability (e.g., choose the left child if an unbiased random bit is 0, or the right child otherwise), mark the chosen child with the result of <strong>InShape</strong> for that child, and repeat this process with that child; or (4) the box has two child boxes, so choose one of them with equal probability and repeat this process with that child.</li>
-<li>The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape&#39;s volume divided by the hyperrectangle&#39;s volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: &quot;5. If the result of <strong>InShape</strong> is YES, return 1.; 6. If the result of <strong>InShape</strong> is NO, return 0.&quot; (I thank BruceET of the Cross Validated community for leading me to this insight.)</li>
+<li>The algorithm can be adapted to return 1 with probability equal to its acceptance rate (which equals the shape&#39;s volume divided by the hyperrectangle&#39;s volume), and return 0 with the opposite probability.  In this case, replace steps 5 and 6 with the following: &quot;5. If the result of <strong>InShape</strong> is <em>YES</em>, return 1.; 6. If the result of <strong>InShape</strong> is <em>NO</em>, return 0.&quot; (I thank BruceET of the Cross Validated community for leading me to this insight.)</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -652,6 +694,20 @@
 <li>The following example generates a point inside a quarter <em>astroid</em> (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>sk</em>&minus;<em>c1</em>&minus;1)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>&minus;1)<sup>2</sup>) &gt; <em>sk</em><sup>2</sup>; <em>NO</em> if ((<em>sk</em>&minus;<em>c1</em>)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>)<sup>2</sup>) &lt; <em>sk</em><sup>2</sup>; and <em>MAYBE</em> otherwise, where <em>sk</em> = <em>S</em>*<em>k</em>.  For <em>N</em>=2, the acceptance rate (see note 5) is 1 &minus; <em>&pi;</em>/4. For a full astroid, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
 </ul>
 </blockquote>
+
+<ol>
+<li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  <strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.  See the <a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>appendix</strong></a> for further implementation notes.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).</li>
+<li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
+
+<ol>
+<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <em>p1</em>&#39;s fractional part to [3, 4, 2] and <em>p1</em>&#39;s integer part to 7.)</li>
+<li>For each PSRN (<em>p1</em>, ..., <em>pN</em>), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
+<li>For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
+<li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
+</ol></li>
+<li>If the result of <strong>InShape</strong> is <em>NO</em>, then the current box lies outside the shape and is rejected.  In this case, go to step 2.</li>
+<li>If the result of <strong>InShape</strong> is <em>MAYBE</em>, it is not known whether the current box lies fully inside the shape, so multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
+</ol>
 
 <p><a id=Building_an_Arbitrary_Precision_Sampler></a></p>
 
