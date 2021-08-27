@@ -26,6 +26,9 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
     - [**exp(_&lambda;_/4)/2**](#exp___lambda___4_2)
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
+    - [**1/(exp(1) &minus; 1)**](#1_exp_1_minus_1)
+    - [**exp(1) &minus; 2**](#exp_1_minus_2)
+    - [**3 &minus; exp(1)**](#3_minus_exp_1)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
     - [**_&pi;_/4**](#pi___4)
@@ -189,6 +192,26 @@ This algorithm involves an application of the general martingale algorithm to th
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     5. Add 1 to _n_.
 
+<a id=1_exp_1_minus_1></a>
+### 1/(exp(1) &minus; 1)
+
+Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+
+- Do the following process repeatedly until this run of the algorithm returns a value:
+    1. If _pos_ is divisible by 3 (that is, if rem(_pos_, 3) equals 0): Let _k_ be (_pos_/3)\*2.  With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
+    2. If _pos_ is not divisible by 3: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
+    3. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
+
+<a id=exp_1_minus_2></a>
+### exp(1) &minus; 2
+
+Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm is the same as in the previous section, except it begins with _pos_ equal to 2 rather than 1 (because the continued fractions are almost the same).
+
+<a id=3_minus_exp_1></a>
+### 3 &minus; exp(1)
+
+Run the **algorithm for exp(1) &minus; 2**, then return 1 minus the result.
+
 <a id=tanh___lambda></a>
 ### tanh(_&lambda;_)
 
@@ -240,7 +263,7 @@ The following algorithm to sample the probability _&pi;_/4 is based on the secti
 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:
-    1. Set _c1_ to 2\*_c1_ plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
     2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
     4. Multiply _S_ by 2.
@@ -252,7 +275,7 @@ Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an ar
 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:
-    1. Set _c1_ to 2\*_c1_ plus a unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
     2. Set _diamond_ to _MAYBE_ and _disk_ to _MAYBE_.
     3. If ((_c1_+1) + (_c2_+1)) < _S_, set _diamond_ to _YES_.
     4. If ((_c1_) + (_c2_)) > _S_, set _diamond_ to _NO_.

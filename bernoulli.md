@@ -193,9 +193,8 @@ In the following algorithms:
 -  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  Note that for every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
-    - by creating a [**uniform partially-sampled random variate (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate),
-    - by generating a uniform random variate in the half-open interval [**0, 1) (e.g., `RNDRANGEMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate), or
-    - by generating a uniform random integer in the interval [0, 1000) and dividing it by 1000 (e.g., `RNDINTEXC(1000) / 1000` in "Randomization and Sampling Methods") (less accurate).
+    - by creating a [**uniform partially-sampled random variate (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
+    - by generating a uniform random variate in the half-open interval [**0, 1) (e.g., `RNDRANGEMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
 - The instruction to "generate an exponential random variate" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
     - by getting the result of the **ExpRand** or **ExpRand2** algorithm (described in my article on PSRNs) with a rate of 1, or
@@ -677,25 +676,34 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 <a id=Integrals></a>
 #### Integrals
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the following probability:
+Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the area under that function's graph when the function is restricted to that interval.
 
-- (1/_&lambda;_) &int;<sub>\[0, _&lambda;_\]</sub> _f_(_u_) _du_, or equivalently,
-- &int;<sub>\[0, 1\]</sub> _f_(_u_ * _&lambda;_) _du_ (an integral).
+**Algorithm 1.** (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup> showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the following probability:
 
-This can be done by modifying the algorithm as follows:
+- (1/_&lambda;_) \* &int;<sub>\[0, _&lambda;_\]</sub> _f_(_u_) _du_, or equivalently,
+- &int;<sub>\[0, 1\]</sub> _f_(_u_ * _&lambda;_) _du_ (an integral),
 
-- Generate a uniform(0, 1) random variate _u_ at the start of the algorithm.
-- Instead of flipping the input coin, flip a coin that does the following: "Flip the input coin, then [**sample from the number _u_**](#Algorithms).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+using the following algorithm:
 
-I have found that it's possible to simulate the following integral, namely&mdash;
+1. Generate a uniform(0, 1) random variate _u_.
+2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
+
+**Algorithm 2.** A special case of Algorithm 1 is the integral &int;<sub>\[0, 1\]</sub> _f_(_u_) _du_, when the original input coin always returns 1:
+
+1. Generate a uniform(0, 1) random variate _u_.
+2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
+
+**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
 
 - &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
 
-where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using different changes to the algorithm, namely:
+where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using the following algorithm:
 
-- Add the following step at the start of the algorithm: "Generate a uniform(0, 1) random variate _u_ at the start of the algorithm.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)"
-- Instead of flipping the input coin, flip a coin that does the following: "[**Sample from the number _u_**](#Algorithms) and return the result."
-- If the algorithm would return 1, it instead returns a number that is 1 with probability _b_ &minus; _a_ and 0 otherwise.
+1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
+2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, return a number that is 1 with probability _b_ &minus; _a_ and 0 otherwise.
 
 > **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
@@ -1096,14 +1104,14 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate a uniform(0, 1) random variate _u_.
-2. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
-3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
+2. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.
+3. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
-3. [**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.
+3. [**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.
 
 <a id=arctan___lambda></a>
 #### arctan(_&lambda;_)
@@ -1182,15 +1190,15 @@ The algorithm to simulate sin(_&lambda;_) follows.
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
-3. [**Sample from the number _u_**](#Algorithms). If the result is 0, flip the input coin and return the result.
+3. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, flip the input coin and return the result.
 4. Flip the input coin.  If it returns 0, return 0.
-5. [**Sample from the number _u_**](#Algorithms). If the result is 0, return 0.  Otherwise, go to step 2.
+5. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
 2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
-3. [**Sample from the number _u_**](#Algorithms), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.
+3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.
 
 <a id=1_minus_ln_1___lambda></a>
 #### 1 &minus; ln(1+_&lambda;_)
@@ -1203,10 +1211,10 @@ Return 1 minus the result of the algorithm for ln(1+_&lambda;_).<sup>[**(44)**](
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.
 
 1. Generate a uniform(0, 1) random variate _u_.
-2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Algorithms) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
+2. Create a secondary coin _&mu;_ that does the following: "[**Sample from the number _u_**](#Implementation_Notes) twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, return 1."
 3. Call the **algorithm for _&mu;_<sup>1/2</sup>** using the secondary coin _&mu;_.  If it returns 0, return 0.
 4. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-5. [**Sample from the number _u_**](#Algorithms) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
+5. [**Sample from the number _u_**](#Implementation_Notes) once, and flip the input coin once.  If both the call and flip return 1, return 0.  Otherwise, go to step 4.
 
 <a id=arcsin___lambda___2></a>
 #### arcsin(_&lambda;_) / 2
@@ -1276,15 +1284,15 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
-3. [**Sample from the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 1.
+3. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 1.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
-5. [**Sample from the number _u_**](#Algorithms) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
+5. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
-3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Algorithms) twice.  If both of these calls return 1, return 0.
+3. With probability _x_ * _x_/(_y_ * _y_), [**sample from the number _u_**](#Implementation_Notes) twice.  If both of these calls return 1, return 0.
 4. Go to step 1.
 
 <a id=pi___12></a>
@@ -1406,13 +1414,13 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 
 1. Generate three uniform(0, 1) random variates.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-3. [**Sample from each of the three numbers**](#Algorithms) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random variates.)
+3. [**Sample from each of the three numbers**](#Implementation_Notes) generated in step 1.  If all three calls return 1, return 0.  Otherwise, go to step 2. (This implements a triple integral involving the uniform random variates.)
 
 This can be extended to cover any constant of the form _&zeta;_(_k_) * (1 &minus; 2<sup>&minus;(_k_ &minus; 1)</sup>) where _k_ &ge; 2 is an integer, as suggested slightly by the Flajolet paper when it mentions _&zeta;_(5) * 31 / 32 (which should probably read _&zeta;_(5) * 15 / 16 instead), using the following algorithm.
 
 1. Generate _k_ uniform(0, 1) random variates.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-3. [**Sample from each of the _k_ numbers**](#Algorithms) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
+3. [**Sample from each of the _k_ numbers**](#Implementation_Notes) generated in step 1.  If all _k_ calls return 1, return 0.  Otherwise, go to step 2.
 
 <a id=erf__x__erf_1></a>
 #### erf(_x_)/erf(1)
@@ -1508,7 +1516,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 1. If _y_/_z_ is 0, return 0.
 2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
 3. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
-4. [**Sample from the number _u_**](#Algorithms), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.
+4. [**Sample from the number _u_**](#Implementation_Notes), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
