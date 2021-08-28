@@ -1230,7 +1230,7 @@ The Flajolet paper doesn't explain in detail how arcsin(_&lambda;_)/2 arises out
 
 The following algorithm simulates the expression Li<sub>_r_</sub>(_&lambda;_) * (1 / _&lambda;_ &minus; 1), where _r_ is an integer 1 or greater.    However, even with a relatively small _r_ such as 6, the expression quickly approaches a straight line.
 
-If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  See also "[**Convex Combinations**](#Convex_Combinations)" (the case of 1/2 works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = _i_<sup>_r_</sup>, where _i_ &ge; 1).
+If _&lambda;_ is 1/2, this expression simplifies to Li<sub>_r_</sub>(1/2). See also (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>.  See also "[**Convex Combinations**](#Convex_Combinations)" (the case of 1/2 works by decomposing the series forming the polylogarithmic constant into _g_(_i_) = (1/2)<sup>_i_</sup>, which sums to 1, and _h_<sub>_i_</sub>() = 1/_i_<sup>_r_</sup>, where _i_ &ge; 1).
 
 1. Flip the input coin until it returns 0, and let _t_ be 1 plus the number of times the coin returned 1 this way.
 2. Return a number that is 1 with probability 1/_t_<sup>_r_</sup> and 0 otherwise.
@@ -1527,19 +1527,26 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
-2. To apply some of the general algorithms for Bernoulli factories, I request expressions of mathematical functions that can be expressed in any of the following ways:
-    - Series expansions for continuous functions that equal 0 or 1 at the points 0 and 1.
-    - A series expansion with non-negative terms that can be "tucked" under a discrete probability mass function.
-    - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.
-    - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
-    - Upper and lower bound approximations that converge to a given constant.  These upper and lower bounds must be nonincreasing or nondecreasing, respectively.
-    - Sequences of approximating functions (such as rational functions) that converge from above and below to a given function.  These sequences must be nonincreasing or nondecreasing, respectively (but the approximating functions themselves need not be).
-    - Simple [**continued fractions**](#Continued_Fractions) that express useful constants.
-    - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on Mathematics Stack Exchange**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).
+2. What simulations exist that are "relatively simple" and succeed with an irrational probability in [0, 1)? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
+    - Should use only uniform random integers (or bits) and integer arithmetic.
+    - Does not make direct use of square root or transcendental functions.
+    - Does not calculate base-_n_ expansions directly.
+    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
 
-        The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials that converge to that function in a manner needed for the Bernoulli factory problem, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?
+    See also Flajolet et al. (2010)<sup>[**(59)**](#Note59)</sup>.  There are many ways to describe the irrational probability or factory function. I request references to papers or books that describe irrational constants or factory functions in any of the following ways:
 
-    All these expressions should not rely on floating-point arithmetic or the direct use of irrational constants (such as _&pi;_ or sqrt(2)), but may rely on rational arithmetic.  For example, a series expansion that _directly_ contains the constant _&pi;_ is not desired; however, a series expansion that converges to a fraction of _&pi;_ is.
+    - For irrational constants:
+        - Simple [**continued fraction**](#Continued_Fractions) expansions.
+        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
+        - Given that a random (_x_, _y_) point lies inside a closed shape, return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Functions that map [0, 1] to [0, 1] whose integral (area under curve) equals an irrational probability.
+        - A "relatively simple" simulation that succeeds with probability _&pi;_ &minus; 3.
+    - For Bernoulli factory functions:
+        - Series expansions for functions that equal 0 or 1 at the points 0 and 1.
+        - A series expansion with non-negative terms that can be "tucked" under a discrete probability mass function.
+        - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.
+        - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
+        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on Mathematics Stack Exchange**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials that converge to that function in a manner needed for the Bernoulli factory problem, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
 4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011)<sup>[**(23)**](#Note23)</sup> (see "[**General Factory Functions**](#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
     1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
@@ -1547,7 +1554,6 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 
     These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions whose coefficients are integers? Rational functions whose coefficients are rational numbers? Arbitrary approximating functions?
 5. A _pushdown automaton_ is a state machine that holds a stack of symbols.  Mossel and Peres (2005)<sup>[**(3)**](#Note3)</sup> investigated which functions (_f_(_&lambda;_)) can be simulated by these machines when they're given an infinite "tape" of flips of a coin that shows heads with probability _&lambda;_.  They showed that pushdown automata can simulate only _algebraic functions_, but perhaps not all of them. (See "[**Certain Algebraic Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Algebraic_Functions)".)  The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  I have written an [**article appendix**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions) showing my progress, but are there other results on this question?
-6. Are there relatively simple Monte Carlo simulations whose expected value ("average" value) is an irrational number in [0, 1]?  For an example, see the 1/_&pi;_ algorithm on this page.
 
 <a id=Correctness_and_Performance_Charts></a>
 ## Correctness and Performance Charts
@@ -1621,6 +1627,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note57>(57)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note59>(59)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1684,11 +1691,11 @@ Since both conditions of Huber's theorem are satisfied, this completes the proof
 <a id=Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3></a>
 ### Correctness Proof for Continued Fraction Simulation Algorithm 3
 
-**Theorem.** _Suppose a generalized continued fraction's partial numerators are b[i] and all greater than 0, and its partial denominators are a[i] and all greater than 0, and suppose further that each b[i]/a[i] is 1 or less. Then the algorithm given as Algorithm 3 in "Continued Fractions" returns 1 with probability exactly equal to the number represented by that continued fraction, and 0 otherwise, assuming the algorithm terminates with probability 1._
+**Theorem.** _Suppose a generalized continued fraction's partial numerators are b[i] and all greater than 0, and its partial denominators are a[i] and all 1 or greater, and suppose further that each b[i]/a[i] is 1 or less. Then the algorithm given as Algorithm 3 in "Continued Fractions" returns 1 with probability exactly equal to the number represented by that continued fraction, and 0 otherwise._
 
 _Proof._ We use Huber's "fundamental theorem of perfect simulation" again in the proof of correctness.
 
-- The algorithm finishes with probability 1 by assumption.
+- The algorithm finishes with probability 1 because with each recursion, the method is never more likely to do a recursive run than not to do so; observe that _a_\[_i_\] can never be more than 1, so that _a_\[_i_\]/(1+_a_\[_i_\]), that is, the probability of finishing the run in each iteration, is always 1/2 or greater.
 - If the recursive call in the loop is replaced with a "black box" that simulates the correct "sub-fraction", the algorithm is locally correct.  If step 1 reaches the last element of the continued fraction, the algorithm obviously passes with the correct probability. Otherwise, we will be simulating the probability _b_\[_i_\] / (_a_\[_i_\] + _x_), where _x_ is the "continued sub-fraction" and will be at most 1 by assumption.  Step 2 defines a loop that divides the probability space into three pieces: the first piece takes up a part equal to _h_ = _a_\[_i_\]/(_a_\[_i_\] + 1), the second piece (in the second substep) takes up a portion of the remainder (which here is equal to _x_ * (1 &minus; _h_)), and the last piece is the "rejection piece".  The algorithm will pass at the first substep with probability _p_ = (_b_\[_i_\] / _a_\[_pos_\]) * _h_ and fail either at the first substep of the loop with probability _f1_ = (1 &minus; _b_\[_i_\] / _a_\[_pos_\]) * _h_, or at the second substep with probability _f2_ = _x_ * (1 &minus; _h_) (all these probabilities are relative to the whole iteration).  Finally, dividing the passes by the sum of passes and fails leads to _b_\[_i_\] / (_a_\[_i_\] + _x_), which is the probability we wanted, so that both of Huber's conditions are satisfied and we are done.  &#x25a1;
 
 <a id=The_von_Neumann_Schema></a>

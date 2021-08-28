@@ -32,7 +32,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
     - [**_&pi;_/4**](#pi___4)
-    - [**_&pi;_/4 &minus; 1/2**](#pi___4_minus_1_2)
+    - [**_&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4**](#pi___4_minus_1_2_or___pi___minus_2_4)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -242,11 +242,12 @@ The algorithm is then as follows:
 1. Flip the input coin.  If it returns 0, return 0.
 2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 3. Generate a uniform(0, 1) random variate _ret_.
-4. (The remaining steps are done repeatedly, until the algorithm returns a value.) If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
-5. (Calculate the next term of the alternating series for tanh.) Let _m_ be 2\*(_n_+1).  **Get the _m_<sup>th</sup> Bernoulli number**, call it _b_. Let _t_ be abs(_b_)\*2<sup>_m_</sup>\*(2<sup>_m_</sup>&minus;1)/(_m_!).
-6. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _t_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _t_.
-7. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-8. Add 1 to _n_ and go to step 4.
+4. Do the following process repeatedly, until the algorithm returns a value:
+    1. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this substep again.
+    2. (Calculate the next term of the alternating series for tanh.) Let _m_ be 2\*(_n_+1).  **Get the _m_<sup>th</sup> Bernoulli number**, call it _b_. Let _t_ be abs(_b_)\*2<sup>_m_</sup>\*(2<sup>_m_</sup>&minus;1)/(_m_!).
+    3. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _t_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _t_.
+    4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+    5. Add 1 to _n_.
 
 <a id=Euler_ndash_Mascheroni_Constant___gamma></a>
 ### Euler&ndash;Mascheroni Constant _&gamma;_
@@ -259,7 +260,7 @@ As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional par
 <a id=pi___4></a>
 ### _&pi;_/4
 
-The following algorithm to sample the probability _&pi;_/4 is based on the section "Uniform Distribution Inside N-Dimensional Shapes", especially its Note 5.
+The following algorithm to sample the probability _&pi;_/4 is based on the section "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", especially its Note 5.
 
 1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
 2. Do the following process repeatedly, until the algorithm returns a value:
@@ -268,8 +269,8 @@ The following algorithm to sample the probability _&pi;_/4 is based on the secti
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
     4. Multiply _S_ by 2.
 
-<a id=pi___4_minus_1_2></a>
-### _&pi;_/4 &minus; 1/2
+<a id=pi___4_minus_1_2_or___pi___minus_2_4></a>
+### _&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4
 
 Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an area equal to 1/2 removed.
 
@@ -289,7 +290,7 @@ Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an ar
 
 Given that the point (_x_, _y_) has positive coordinates and lies inside a disk of radius 1 centered at (0, 0), the mean value of _x_ is 4/(3\*_&pi;_). This leads to the following algorithm to sample that probability:
 
-1. Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see "Uniform Distribution Inside N-Dimensional Shapes" below, as well as the examples).
+1. Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)" below, as well as the examples).
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
@@ -779,7 +780,7 @@ The second subalgorithm samples the probability (_x_&minus;2<sup>_b_</sup>)/2<su
 Samples from the symmetric geometric distribution from (Ghosh et al. 2012)<sup>[**(19)**](#Note19)</sup>, with parameter _&lambda;_, in the form of an input coin with unknown probability of heads of _&lambda;_.
 
 1. Flip the input coin until it returns 0.  Set _n_ to the number of times the coin returned 1 this way.
-2. Run a **Bernoulli factory algorithm for 1/(2&minus;&lambda;)**, using the input coin.  If the run returns 1, return _n_.  Otherwise, return &minus;1 &minus; _n_.
+2. Run a **Bernoulli factory algorithm for 1/(2&minus;_&lambda;_)**, using the input coin.  If the run returns 1, return _n_.  Otherwise, return &minus;1 &minus; _n_.
 
 This is similar to an algorithm mentioned in an appendix in Li (2021)<sup>[**(20)**](#Note20)</sup>, in which the input coin&mdash;
 
@@ -931,7 +932,7 @@ The "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distributio
     - _NO_ if the signed distance (or a lower bound of such distance) at each of the box's corners is greater than _&sigma;_; and
     - _MAYBE_ in any other case, or if the function is unsure.
 6. **InShape** implementations can also involve a shape's _implicit curve_ or _algebraic curve_ equation (for closed curves), its _implicit surface_ equation (for closed surfaces), or its _signed distance field_ (a quantized version of a signed distance function).
-7. An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
+7. An **InShape** function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own **InShape** function.  The final result depends on the set operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
     - For unions, the final result is _YES_ if any component returns _YES_; _NO_ if all components return _NO_; and _MAYBE_ otherwise.
     - For intersections, the final result is _YES_ if all components return _YES_; _NO_ if any component returns _NO_; and _MAYBE_ otherwise.
     - For differences between two shapes, the final result is _YES_ if the first shape returns _YES_ and the second returns _NO_; _NO_ if the first shape returns _NO_ or if both shapes return _YES_; and _MAYBE_ otherwise.

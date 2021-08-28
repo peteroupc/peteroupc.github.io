@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/27"><meta name="citation_online_date" content="2021/08/27"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/08/28"><meta name="citation_online_date" content="2021/08/28"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -42,7 +42,7 @@
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
 <li><a href="#pi___4"><strong><em>&pi;</em>/4</strong></a></li>
-<li><a href="#pi___4_minus_1_2"><strong><em>&pi;</em>/4 &minus; 1/2</strong></a></li>
+<li><a href="#pi___4_minus_1_2_or___pi___minus_2_4"><strong><em>&pi;</em>/4 &minus; 1/2 or (<em>&pi;</em> &minus; 2)/4</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
@@ -348,11 +348,15 @@
 <li>Flip the input coin.  If it returns 0, return 0.</li>
 <li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
+<li>Do the following process repeatedly, until the algorithm returns a value:
+
+<ol>
+<li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this substep again.</li>
 <li>(Calculate the next term of the alternating series for tanh.) Let <em>m</em> be 2*(<em>n</em>+1).  <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>. Let <em>t</em> be abs(<em>b</em>)*2<sup><em>m</em></sup>*(2<sup><em>m</em></sup>&minus;1)/(<em>m</em>!).</li>
 <li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>t</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>t</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em> and go to step 4.</li>
+<li>Add 1 to <em>n</em>.</li>
+</ol></li>
 </ol>
 
 <p><a id=Euler_ndash_Mascheroni_Constant___gamma></a></p>
@@ -370,7 +374,7 @@
 
 <h3><em>&pi;</em>/4</h3>
 
-<p>The following algorithm to sample the probability <em>&pi;</em>/4 is based on the section &quot;Uniform Distribution Inside N-Dimensional Shapes&quot;, especially its Note 5.</p>
+<p>The following algorithm to sample the probability <em>&pi;</em>/4 is based on the section &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot;, especially its Note 5.</p>
 
 <ol>
 <li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
@@ -384,9 +388,9 @@
 </ol></li>
 </ol>
 
-<p><a id=pi___4_minus_1_2></a></p>
+<p><a id=pi___4_minus_1_2_or___pi___minus_2_4></a></p>
 
-<h3><em>&pi;</em>/4 &minus; 1/2</h3>
+<h3><em>&pi;</em>/4 &minus; 1/2 or (<em>&pi;</em> &minus; 2)/4</h3>
 
 <p>Follows the <em>&pi;</em>/4 algorithm, except it samples from a quarter disk with an area equal to 1/2 removed.</p>
 
@@ -413,7 +417,7 @@
 <p>Given that the point (<em>x</em>, <em>y</em>) has positive coordinates and lies inside a disk of radius 1 centered at (0, 0), the mean value of <em>x</em> is 4/(3*<em>&pi;</em>). This leads to the following algorithm to sample that probability:</p>
 
 <ol>
-<li>Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see &quot;Uniform Distribution Inside N-Dimensional Shapes&quot; below, as well as the examples).</li>
+<li>Generate two PSRNs in the form of a uniformly chosen point inside a 2-dimensional quarter hypersphere (see &quot;<a href="#Uniform_Distribution_Inside_N_Dimensional_Shapes"><strong>Uniform Distribution Inside N-Dimensional Shapes</strong></a>&quot; below, as well as the examples).</li>
 <li>Let <em>x</em> be one of those PSRNs.  Run <strong>SampleGeometricBag</strong> on that PSRN and return the result (which will be either 0 or 1).</li>
 </ol>
 
@@ -1093,7 +1097,7 @@
 
 <ol>
 <li>Flip the input coin until it returns 0.  Set <em>n</em> to the number of times the coin returned 1 this way.</li>
-<li>Run a <strong>Bernoulli factory algorithm for 1/(2&minus;&lambda;)</strong>, using the input coin.  If the run returns 1, return <em>n</em>.  Otherwise, return &minus;1 &minus; <em>n</em>.</li>
+<li>Run a <strong>Bernoulli factory algorithm for 1/(2&minus;<em>&lambda;</em>)</strong>, using the input coin.  If the run returns 1, return <em>n</em>.  Otherwise, return &minus;1 &minus; <em>n</em>.</li>
 </ol>
 
 <p>This is similar to an algorithm mentioned in an appendix in Li (2021)<sup><a href="#Note20"><strong>(20)</strong></a></sup>, in which the input coin&mdash;</p>
@@ -1292,7 +1296,7 @@
 <li><em>MAYBE</em> in any other case, or if the function is unsure.</li>
 </ul></li>
 <li><strong>InShape</strong> implementations can also involve a shape&#39;s <em>implicit curve</em> or <em>algebraic curve</em> equation (for closed curves), its <em>implicit surface</em> equation (for closed surfaces), or its <em>signed distance field</em> (a quantized version of a signed distance function).</li>
-<li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the shape operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
+<li>An <strong>InShape</strong> function can implement a set operation (such as a union, intersection, or difference) of several simpler shapes, each with its own <strong>InShape</strong> function.  The final result depends on the set operation (such as union or intersection) as well as the result returned by each component for a given box.  The following are examples of set operations:
 
 <ul>
 <li>For unions, the final result is <em>YES</em> if any component returns <em>YES</em>; <em>NO</em> if all components return <em>NO</em>; and <em>MAYBE</em> otherwise.</li>
