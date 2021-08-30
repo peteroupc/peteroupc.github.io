@@ -578,7 +578,7 @@ See the appendix for a correctness proof of Algorithm 3.
 <a id=Continued_Logarithms></a>
 #### Continued Logarithms
 
-The _continued logarithm_ (Gosper 1978)<sup>[**(28)**](#Note28)</sup>, (Borwein et al., 2016)<sup>[**(29)**](#Note29)</sup> of a number in (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
+The _continued logarithm_ (Gosper 1978)<sup>[**(28)**](#Note28)</sup>, (Borwein et al., 2016)<sup>[**(29)**](#Note29)</sup> of a number in the open interval (0, 1) has the following continued fraction form: 0 + (1 / 2<sup>_c_\[1\]</sup>) / (1 + (1 / 2<sup>_c_\[2\]</sup>) / (1 + ...)), where _c_\[_i_\] are the coefficients of the continued logarithm and all 0 or greater.  I have come up with the following algorithm that simulates a probability expressed as a continued logarithm expansion.
 
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
@@ -592,7 +592,7 @@ For a correctness proof, see the appendix.
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-A general-purpose algorithm was given by Mendo (2020)<sup>[**(30)**](#Note30)</sup> that can simulate any probability in (0, 1), as long as it can be rewritten as a converging series&mdash;
+A general-purpose algorithm was given by Mendo (2020)<sup>[**(30)**](#Note30)</sup> that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a converging series&mdash;
 
 - that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0, and
 - for which a sequence _err_\[0\], _err_\[1\], ..., is available that is nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
@@ -609,7 +609,7 @@ The algorithm follows.
 8. Let _bound_ be _lam_+1/(2<sup>_k_</sup>).  If _lamunq_+_&#x03F5;_ &le; _bound_, set _s_ to 0.  Otherwise, if _lamunq_ > _bound_, set _s_ to 2.  Otherwise, set _s_ to 1.
 9. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 2.  Otherwise, return a number that is 0 if _s_ is 0, 1 if _s_ is 2, or an unbiased random bit (either 0 or 1 with equal probability) otherwise.
 
-If _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+If _a_, given above, is instead a sequence that converges to the _base-2 logarithm_ of a probability in the open interval (0, 1), the following algorithm I developed simulates that probability.  For simplicity's sake, even though logarithms for such probabilities are negative, all the _a_\[_i_\] must be 0 or greater (and thus are the negated values of the already negative logarithm approximations) and must form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Set _intinf_ to floor(max(0, abs(_a_\[0\]))).  (This is the absolute integer part of the first term in the series, or 0, whichever is greater.)
 2. If _intinf_ is greater than 0, generate unbiased random bits until a zero bit or _intinf_ bits were generated this way.  If a zero was generated this way, return 0.
@@ -740,7 +740,7 @@ This section describes algorithms for specific functions, especially when they h
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), .... This algorithm converges quickly everywhere in (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for every choice of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(27)**](#Note27)</sup>.<sup>[**(38)**](#Note38)</sup>)
+This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), .... This algorithm converges quickly everywhere in the open interval (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for every choice of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717)<sup>[**(27)**](#Note27)</sup>.<sup>[**(38)**](#Note38)</sup>)
 
 1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ **to 1**.
 2. Generate a uniform(0, 1) random variate _ret_.
@@ -989,7 +989,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>
 
-In the algorithm below, the case where _x_/_y_ is in (0, 1) is due to Mendo (2019)<sup>[**(22)**](#Note22)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
+In the algorithm below, the case where _x_/_y_ is in the open interval (0, 1) is due to Mendo (2019)<sup>[**(22)**](#Note22)</sup>.  The algorithm works only when _x_/_y_ is 0 or greater.
 
 1. If _x_/_y_ is 0, return 1.
 2. If _x_/_y_ is equal to 1, flip the input coin and return the result.
@@ -1028,7 +1028,7 @@ Use the algorithm for _&lambda;_<sup>1/2</sup>.
 <a id=lambda____x___y__linear_Bernoulli_factories></a>
 #### _&lambda;_ * _x_/_y_ (linear Bernoulli factories)
 
-In general, this function will touch 0 or 1 somewhere in (0, 1), when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
+In general, this function will touch 0 or 1 somewhere in the open interval (0, 1), when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
 
 Huber has suggested several algorithms for this function over the years.
 
@@ -1328,7 +1328,7 @@ For a sketch of how this algorithm is derived, see the appendix.
 <a id=a___b___x___y></a>
 #### (_a_/_b_)<sup>_x_/_y_</sup>
 
-In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where _x_/_y_ is in (0, 1) is due to recent work by Mendo (2019)<sup>[**(22)**](#Note22)</sup>.  This algorithm works only if&mdash;
+In the algorithm below, _a_, _b_, _x_, and _y_ are integers, and the case where _x_/_y_ is in the open interval (0, 1) is due to recent work by Mendo (2019)<sup>[**(22)**](#Note22)</sup>.  This algorithm works only if&mdash;
 
 -  _x_/_y_ is 0 or greater and _a_/_b_ is in the interval [0, 1], or
 -  _x_/_y_ is less than 0 and _a_/_b_ is 1 or greater.
@@ -1521,32 +1521,33 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
-1. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
+1. Besides the algorithms on this page, what simulations exist that are "relatively simple" and succeed with an irrational probability between 0 and 1? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
+    - Should use only uniform random integers (or bits) and integer arithmetic.
+    - Does not use floating-point arithmetic or make direct use of square root or transcendental functions.
+    - Does not calculate base-_n_ expansions directly.
+    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
+
+    See also Flajolet et al. (2010)<sup>[**(1)**](#Note1)</sup>.  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
+
+    - For irrational constants:
+        - Simple [**continued fraction**](#Continued_Fractions) expansions.
+        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
+        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
+        - A "relatively simple" simulation that succeeds with probability _&pi;_ &minus; 3.
+    - For Bernoulli factory functions:
+        - Functions with any of the following series expansions, using rational arithmetic only:
+            - Power series where _f_(0) is 0 and _f_(1) is rational or vice versa (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
+            - Series with non-negative terms that can be "tucked" under a discrete probability mass function (see "[**Convex Combinations**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations)").
+            - Alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
+            - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
+        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on Mathematics Stack Exchange**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials that converge to that function in a manner needed for the Bernoulli factory problem, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?
+2. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
     1. What is the probability that _n_ is returned?
     2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
     3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
-2. What simulations exist that are "relatively simple" and succeed with an irrational probability in [0, 1)? What about "relatively simple" Bernoulli factory algorithms for factory functions?  Here, "relatively simple" means that the algorithm:
-    - Should use only uniform random integers (or bits) and integer arithmetic.
-    - Does not make direct use of square root or transcendental functions.
-    - Does not calculate base-_n_ expansions directly.
-    - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
-
-    See also Flajolet et al. (2010)<sup>[**(59)**](#Note59)</sup>.  There are many ways to describe the irrational probability or factory function. I request references to papers or books that describe irrational constants or factory functions in any of the following ways:
-
-    - For irrational constants:
-        - Simple [**continued fraction**](#Continued_Fractions) expansions.
-        - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
-        - Given that a random (_x_, _y_) point lies inside a closed shape, return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
-        - Functions that map [0, 1] to [0, 1] whose integral (area under curve) equals an irrational probability.
-        - A "relatively simple" simulation that succeeds with probability _&pi;_ &minus; 3.
-    - For Bernoulli factory functions:
-        - Series expansions for functions that equal 0 or 1 at the points 0 and 1.
-        - A series expansion with non-negative terms that can be "tucked" under a discrete probability mass function.
-        - Series expansions for alternating power series whose coefficients are all in the interval [0, 1] and form a nonincreasing sequence.
-        - Series expansions with non-negative coefficients and for which bounds on the truncation error are available.
-        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on Mathematics Stack Exchange**](https://math.stackexchange.com/questions/3904732/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials that converge to that function in a manner needed for the Bernoulli factory problem, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
 4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011)<sup>[**(23)**](#Note23)</sup> (see "[**General Factory Functions**](#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
     1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
@@ -1627,7 +1628,6 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note57>(57)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
-- <small><sup id=Note59>(59)</sup> Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.</small>
 
 <a id=Appendix></a>
 ## Appendix

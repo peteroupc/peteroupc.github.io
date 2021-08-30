@@ -1334,11 +1334,10 @@ The "output" of the machine is now a real number _X_ in the interval [0, 1], in 
 
 A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(41)**](#Note41)</sup> is the special case where the probability of heads is 1/2, each digit is either 0 or 1, rules can't push stack symbols, and only one stack symbol is used.  Then if `PDF(z)` is "smooth" (has infinitely many "slope" functions) on the open interval (0, 1), it must be a polynomial with rational coefficients and not equal 0 at any irrational point on (0, 1) (Vatan 2001)<sup>[**(42)**](#Note42)</sup>, (Kindler and Romik 2004)<sup>[**(43)**](#Note43)</sup>, and it can be shown that the mean of _X_ must be a rational number.  <sup>[**(44)**](#Note44)</sup>
 
-**Proposition 8.** _Suppose a finite-state generator meeting can generate a probability distribution that takes on finitely many values.  Then:_
+**Proposition 8.** _Suppose a finite-state generator can generate a probability distribution that takes on finitely many values.  Then:_
 
 1. _Each value occurs with a rational probability._
 2. _Each value is either rational or transcendental._
-3. _The probabilities are arbitrary, but they must be positive and sum to 1._
 
 A real number is _transcendental_ if it can't be a root of a polynomial with integer coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
 
