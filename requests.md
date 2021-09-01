@@ -65,7 +65,6 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
         - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
         - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
         - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
-        - A "relatively simple" simulation that succeeds with probability _&pi;_ &minus; 3.
     - For Bernoulli factory functions:
         - Functions with any of the following series expansions, using rational arithmetic only:
             - Power series where _f_(0) is 0 and _f_(1) is rational or vice versa (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").

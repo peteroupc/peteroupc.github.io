@@ -34,6 +34,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**_&pi;_/4**](#pi___4)
     - [**_&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4**](#pi___4_minus_1_2_or___pi___minus_2_4)
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
+    - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -296,6 +297,23 @@ Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with enoug
 3. (Removed boxes.) If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < 1024, return 0.
 4. Multiply _S_ by 2.
 5. (Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
+    1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
+    3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
+    4. Multiply _S_ by 2.
+
+<a id=pi___minus_3></a>
+### _&pi;_ &minus; 3
+
+Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area covering 1/4 of the unit square, then inside that area, it determines whether that point is inside another area covering (_&pi;_ &minus; 3)/4 of the unit square.  Thus, the algorithm acts as though it samples ((_&pi;_ &minus; 3)/4) / (1/4) = _&pi;_ &minus; 3.
+
+1. Set _S_ to 2.  Then set _c1_ and _c2_ to 0.
+2. Do the following process repeatedly, until the algorithm aborts it or returns a value:
+    1. Set _S_ to 32.  Then set _c1_ to a uniform random integer in the half-open interval [0, _S_) and _c2_ to another uniform random integer in [0, _S_).
+    2. (Return 1 if in retained boxes.) If _c1_ is 0 and _c2_ is 0, or if _c1_ is 0 and _c2_ is 1, return 1.
+    3. (Check if outside removed boxes.) If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) >= 1024, abort this process and go to step 3. (Otherwise, _c1_ and _c2_ are rejected and this process continues.)
+3. Multiply _S_ by 2.
+4. (Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
     1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
     2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)

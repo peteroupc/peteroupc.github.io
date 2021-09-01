@@ -44,6 +44,7 @@
 <li><a href="#pi___4"><strong><em>&pi;</em>/4</strong></a></li>
 <li><a href="#pi___4_minus_1_2_or___pi___minus_2_4"><strong><em>&pi;</em>/4 &minus; 1/2 or (<em>&pi;</em> &minus; 2)/4</strong></a></li>
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
+<li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
@@ -421,6 +422,32 @@
 <li>Set <em>S</em> to 32.  Then set <em>c1</em> to a uniform random integer in the half-open interval [0, <em>S</em>) and <em>c2</em> to another uniform random integer in [0, <em>S</em>).</li>
 <li>(Retained boxes.) If <em>c1</em> is 0 and <em>c2</em> is 0, or if <em>c1</em> is 0 and <em>c2</em> is 1, return 1.</li>
 <li>(Removed boxes.) If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &lt; 1024, return 0.</li>
+<li>Multiply <em>S</em> by 2.</li>
+<li>(Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
+
+<ol>
+<li>Set <em>c1</em> to 2*<em>c1</em> plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set <em>c2</em> to 2*<em>c2</em> plus an unbiased random bit.</li>
+<li>If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &lt; <em>S</em><sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is <em>&pi;</em>/4.)</li>
+<li>If ((<em>c1</em>)<sup>2</sup> + (<em>c2</em>)<sup>2</sup>) &gt; <em>S</em><sup>2</sup>, return 0.  (Point is outside the quarter disk.)</li>
+<li>Multiply <em>S</em> by 2.</li>
+</ol></li>
+</ol>
+
+<p><a id=pi___minus_3></a></p>
+
+<h3><em>&pi;</em> &minus; 3</h3>
+
+<p>Similar to the <em>&pi;</em>/4 algorithm.  First it samples a point inside an area covering 1/4 of the unit square, then inside that area, it determines whether that point is inside another area covering (<em>&pi;</em> &minus; 3)/4 of the unit square.  Thus, the algorithm acts as though it samples ((<em>&pi;</em> &minus; 3)/4) / (1/4) = <em>&pi;</em> &minus; 3.</p>
+
+<ol>
+<li>Set <em>S</em> to 2.  Then set <em>c1</em> and <em>c2</em> to 0.</li>
+<li>Do the following process repeatedly, until the algorithm aborts it or returns a value:
+
+<ol>
+<li>Set <em>S</em> to 32.  Then set <em>c1</em> to a uniform random integer in the half-open interval [0, <em>S</em>) and <em>c2</em> to another uniform random integer in [0, <em>S</em>).</li>
+<li>(Return 1 if in retained boxes.) If <em>c1</em> is 0 and <em>c2</em> is 0, or if <em>c1</em> is 0 and <em>c2</em> is 1, return 1.</li>
+<li>(Check if outside removed boxes.) If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &gt;= 1024, abort this process and go to step 3. (Otherwise, <em>c1</em> and <em>c2</em> are rejected and this process continues.)</li>
+</ol></li>
 <li>Multiply <em>S</em> by 2.</li>
 <li>(Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
 
