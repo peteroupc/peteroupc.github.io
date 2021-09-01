@@ -28,7 +28,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
     - [**1/(exp(1) &minus; 1)**](#1_exp_1_minus_1)
     - [**exp(1) &minus; 2**](#exp_1_minus_2)
-    - [**3 &minus; exp(1)**](#3_minus_exp_1)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
     - [**_&pi;_/4**](#pi___4)
@@ -36,6 +35,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
+    - [**Other Constants**](#Other_Constants)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
@@ -209,11 +209,6 @@ Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for 
 
 Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm is the same as in the previous section, except it begins with _pos_ equal to 2 rather than 1 (because the continued fractions are almost the same).
 
-<a id=3_minus_exp_1></a>
-### 3 &minus; exp(1)
-
-Run the **algorithm for exp(1) &minus; 2**, then return 1 minus the result.
-
 <a id=tanh___lambda></a>
 ### tanh(_&lambda;_)
 
@@ -312,12 +307,14 @@ Similar to the _&pi;_/4 algorithm.  First it samples a point inside an area cove
     1. Set _S_ to 32.  Then set _c1_ to a uniform random integer in the half-open interval [0, _S_) and _c2_ to another uniform random integer in [0, _S_).
     2. (Return 1 if in retained boxes.) If _c1_ is 0 and _c2_ is 0, or if _c1_ is 0 and _c2_ is 1, return 1.
     3. (Check if outside removed boxes.) If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) >= 1024, abort this process and go to step 3. (Otherwise, _c1_ and _c2_ are rejected and this process continues.)
-3. Multiply _S_ by 2.
+3. Set _S_ to 64.
 4. (Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
     1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
     2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
     3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
     4. Multiply _S_ by 2.
+
+> **Note:** Only a limited set of (_c1_, _c2_) pairs, including (0, 0) and (0, 1), will pass step 2 of this algorithm.  Thus it may be more efficient to choose one of them uniformly at random, rather than do step 2 as shown.  If (0, 0) or (0, 1) is chosen this way, the algorithm returns 1.
 
 <a id=4_3___pi></a>
 ### 4/(3\*_&pi;_)
@@ -328,6 +325,17 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
+
+<a id=Other_Constants></a>
+### Other Constants
+
+Algorithms in bold are given either in this page or in the "Bernoulli Factory Algorithms" page.
+
+|  To simulate:  |  Follow this algorithm: |
+   --- |  ---- |
+|  1/sqrt(_&pi;_)  |  Create _&lambda;_ coin for **1/_&pi;_**.<br>Run algorithm for **sqrt(_&lambda;_)**.  |
+|  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
+|  exp(1)/_&pi;_  |  Create _&mu;_ coin for **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions

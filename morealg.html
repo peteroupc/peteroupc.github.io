@@ -38,7 +38,6 @@
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
 <li><a href="#1_exp_1_minus_1"><strong>1/(exp(1) &minus; 1)</strong></a></li>
 <li><a href="#exp_1_minus_2"><strong>exp(1) &minus; 2</strong></a></li>
-<li><a href="#3_minus_exp_1"><strong>3 &minus; exp(1)</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
 <li><a href="#pi___4"><strong><em>&pi;</em>/4</strong></a></li>
@@ -46,6 +45,7 @@
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
 <li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
+<li><a href="#Other_Constants"><strong>Other Constants</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
@@ -296,12 +296,6 @@
 
 <p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm is the same as in the previous section, except it begins with <em>pos</em> equal to 2 rather than 1 (because the continued fractions are almost the same).</p>
 
-<p><a id=3_minus_exp_1></a></p>
-
-<h3>3 &minus; exp(1)</h3>
-
-<p>Run the <strong>algorithm for exp(1) &minus; 2</strong>, then return 1 minus the result.</p>
-
 <p><a id=tanh___lambda></a></p>
 
 <h3>tanh(<em>&lambda;</em>)</h3>
@@ -448,7 +442,7 @@
 <li>(Return 1 if in retained boxes.) If <em>c1</em> is 0 and <em>c2</em> is 0, or if <em>c1</em> is 0 and <em>c2</em> is 1, return 1.</li>
 <li>(Check if outside removed boxes.) If ((<em>c1</em>+1)<sup>2</sup> + (<em>c2</em>+1)<sup>2</sup>) &gt;= 1024, abort this process and go to step 3. (Otherwise, <em>c1</em> and <em>c2</em> are rejected and this process continues.)</li>
 </ol></li>
-<li>Multiply <em>S</em> by 2.</li>
+<li>Set <em>S</em> to 64.</li>
 <li>(Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
 
 <ol>
@@ -458,6 +452,10 @@
 <li>Multiply <em>S</em> by 2.</li>
 </ol></li>
 </ol>
+
+<blockquote>
+<p><strong>Note:</strong> Only a limited set of (<em>c1</em>, <em>c2</em>) pairs, including (0, 0) and (0, 1), will pass step 2 of this algorithm.  Thus it may be more efficient to choose one of them uniformly at random, rather than do step 2 as shown.  If (0, 0) or (0, 1) is chosen this way, the algorithm returns 1.</p>
+</blockquote>
 
 <p><a id=4_3___pi></a></p>
 
@@ -473,6 +471,32 @@
 <blockquote>
 <p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
+
+<p><a id=Other_Constants></a></p>
+
+<h3>Other Constants</h3>
+
+<p>Algorithms in bold are given either in this page or in the &quot;Bernoulli Factory Algorithms&quot; page.</p>
+
+<table><thead>
+<tr>
+<th>To simulate:</th>
+<th>Follow this algorithm:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>1/sqrt(<em>&pi;</em>)</td>
+<td>Create <em>&lambda;</em> coin for <strong>1/<em>&pi;</em></strong>.<br>Run algorithm for <strong>sqrt(<em>&lambda;</em>)</strong>.</td>
+</tr>
+<tr>
+<td>3 &minus; exp(1)</td>
+<td>Run the algorithm for <strong>exp(1) &minus; 2</strong>, then return 1 minus the result.</td>
+</tr>
+<tr>
+<td>exp(1)/<em>&pi;</em></td>
+<td>Create <em>&mu;</em> coin for <strong>exp(1) &minus; 2</strong>.<br>Create <em>&lambda;</em> coin for <strong><em>&pi;</em> &minus; 3</strong>.<br>Run algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em>=2 and <em>c</em>=3.</td>
+</tr>
+</tbody></table>
 
 <p><a id=Certain_Piecewise_Linear_Functions></a></p>
 
