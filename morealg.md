@@ -33,6 +33,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
     - [**_&pi;_/4**](#pi___4)
     - [**_&pi;_/4 &minus; 1/2 or (_&pi;_ &minus; 2)/4**](#pi___4_minus_1_2_or___pi___minus_2_4)
+    - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -285,6 +286,21 @@ Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with an ar
     7. If _disk_ is _YES_ and _diamond_ is _NO_, return 1.  Otherwise, if _diamond_ is _YES_ or _disk_ is _NO_, return 0.
     8. Multiply _S_ by 2.
 
+<a id=pi___minus_3_4></a>
+### (_&pi;_ &minus; 3)/4
+
+Follows the _&pi;_/4 algorithm, except it samples from a quarter disk with enough boxes removed from it to total an area equal to 3/4.
+
+1. Set _S_ to 32.  Then set _c1_ to a uniform random integer in the half-open interval [0, _S_) and _c2_ to another uniform random integer in [0, _S_).
+2. (Retained boxes.) If _c1_ is 0 and _c2_ is 0, or if _c1_ is 0 and _c2_ is 1, return 1.
+3. (Removed boxes.) If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < 1024, return 0.
+4. Multiply _S_ by 2.
+5. (Sample the modified quarter disk.) Do the following process repeatedly, until the algorithm returns a value:
+    1. Set _c1_ to 2\*_c1_ plus an unbiased random bit (either 0 or 1 with equal probability).  Then, set _c2_ to 2\*_c2_ plus an unbiased random bit.
+    2. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, return 1.  (Point is inside the quarter disk, whose area is _&pi;_/4.)
+    3. If ((_c1_)<sup>2</sup> + (_c2_)<sup>2</sup>) > _S_<sup>2</sup>, return 0.  (Point is outside the quarter disk.)
+    4. Multiply _S_ by 2.
+
 <a id=4_3___pi></a>
 ### 4/(3\*_&pi;_)
 
@@ -491,7 +507,7 @@ The sampler's description has the following skeleton.
     3. For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
     4. Return the PSRNs _p1_, ..., _pN_, in that order.
 6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
-7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
+7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside or fully outside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 > **Notes:**
 >
@@ -1339,7 +1355,7 @@ A _finite-state generator_ (Knuth and Yao 1976)<sup>[**(41)**](#Note41)</sup> is
 1. _Each value occurs with a rational probability._
 2. _Each value is either rational or transcendental._
 
-A real number is _transcendental_ if it can't be a root of a polynomial with integer coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
+A real number is _transcendental_ if it can't be a root of a nonzero polynomial with integer coefficients.  Thus, part 2 means, for example, that irrational, non-transcendental numbers such as 1/sqrt(2) and the golden ratio minus 1 can't be generated exactly.
 
 Proving this proposition involves the following lemma, which shows that a finite-state generator is related to a machine with a one-way read-only input and a one-way write-only output:
 
