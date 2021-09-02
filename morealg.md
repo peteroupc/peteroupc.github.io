@@ -35,7 +35,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
-    - [**Other Constants**](#Other_Constants)
+    - [**Other Constants and Factory Functions**](#Other_Constants_and_Factory_Functions)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
@@ -326,16 +326,17 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
 
-<a id=Other_Constants></a>
-### Other Constants
+<a id=Other_Constants_and_Factory_Functions></a>
+### Other Constants and Factory Functions
 
 Algorithms in bold are given either in this page or in the "Bernoulli Factory Algorithms" page.
 
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
-|  1/sqrt(_&pi;_)  |  Create _&lambda;_ coin for **1/_&pi;_**.<br>Run algorithm for **sqrt(_&lambda;_)**.  |
+|  1/sqrt(_&pi;_)  |  Create _&lambda;_ coin for algorithm **1/_&pi;_**.<br>Run algorithm for **sqrt(_&lambda;_)**.  |
+|  1/sqrt(_h_+_&lambda;_)  |  (_&lambda;_ is unknown heads probability of a coin; _h_&ge;1 is a rational number.)<br>Create _&mu;_ coin for algorithm **_d_/(_c_+_&lambda;_)** with _c_=_h_ and _d_=1.<br>Run algorithm for **sqrt(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin.  |
 |  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
-|  exp(1)/_&pi;_  |  Create _&mu;_ coin for **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
+|  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
