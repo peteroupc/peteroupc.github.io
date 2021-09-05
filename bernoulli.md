@@ -124,7 +124,7 @@ Supplemental notes are found in: [**Supplemental Notes for Bernoulli Factory Alg
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Randomized vs. Non-Randomized Algorithms**](#Randomized_vs_Non_Randomized_Algorithms)
-    - [**Simulating Probabilities vs. Estimating Probabilities**](#Simulating_Probabilities_vs_Estimating_Probabilities)
+    - [**Bernoulli Factories and Unbiased Estimation**](#Bernoulli_Factories_and_Unbiased_Estimation)
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
@@ -143,7 +143,7 @@ A _factory function_ is a known function that relates the old probability to the
 
 Many Bernoulli factories also have access to outside randomness (such as a source of unbiased random bits).  A factory function is _strongly simulable_ if it admits a Bernoulli factory that uses only the input coin and no outside randomness.
 
-Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup> showed that _f_ admits a Bernoulli factory if and only if&mdash;
+Keane and O'Brien (1994)<sup>[**(2)**](#Note2)</sup> showed that a function _f_ that maps [0, 1] to [0, 1] admits a Bernoulli factory if and only if&mdash;
 
 - _f_ is constant on its domain, or
 - _f_ is continuous and polynomially bounded on its domain (polynomially bounded means that both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_).
@@ -1624,11 +1624,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note51>(51)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note52>(52)</sup> Pae, S., "Random number generation using a biased source", dissertation, University of Illinois at Urbana-Champaign, 2005.</small>
 - <small><sup id=Note53>(53)</sup> Peres, Y., "Iterating von Neumann's procedure for extracting random bits", Annals of Statistics 1992,20,1, p. 590-597.</small>
-- <small><sup id=Note54>(54)</sup> Estimating _&lambda;_ as _&lambda;&prime;_, then finding _f_(_&lambda;&prime;_), is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.</small>
-- <small><sup id=Note55>(55)</sup> Glynn, P.W., "Exact simulation vs exact estimation", _Proceedings of the 2016 Winter Simulation Conference_, 2016.</small>
-- <small><sup id=Note56>(56)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
-- <small><sup id=Note57>(57)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
-- <small><sup id=Note58>(58)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
+- <small><sup id=Note55>(55)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
+- <small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1640,40 +1638,34 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 A _non-randomized algorithm_ is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to _randomized algorithms_, which do use other sources of randomness) (Mendo 2019)<sup>[**(22)**](#Note22)</sup>.  Instead of generating outside randomness, a randomized algorithm can implement a [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a _non-randomized algorithm_.  For example, if an algorithm implements the **two-coin special case** by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>.
 
-In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads of (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(52)**](#Note52)</sup>, (Peres 1992)<sup>[**(53)**](#Note53)</sup>) and is calculated as&mdash;
+In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads (_&lambda;_) into a coin with another (_&tau;_ = _f_(_&lambda;_)).  It's called the _entropy bound_ (see, e.g., (Pae 2005)<sup>[**(52)**](#Note52)</sup>, (Peres 1992)<sup>[**(53)**](#Note53)</sup>) and is calculated as&mdash;
 
 - ((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) / ((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
-For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin strongly leans towards heads or tails (the probability of heads is _&lambda;_).  Note that this formula only works if nothing but coin flips is allowed as randomness.
+For example, if _f_(_&lambda;_) is a constant, non-randomized algorithms will generally require a growing number of coin flips to simulate that constant if the input coin strongly leans towards heads or tails.  But this formula only works if nothing but coin flips is allowed as randomness.
 
 For certain values of _&lambda;_, Kozen (2014)<sup>[**(32)**](#Note32)</sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
-A function _f_(_&lambda;_) is _strongly simulable_ (Keane and O'Brien 1994)<sup>[**(22)**](#Note22)</sup> if it admits a non-randomized Bernoulli factory algorithm.  One notable case of being strongly simulable is if the input coin's probability of heads (_&lambda;_) can be neither 0 nor 1.
+A function _f_(_&lambda;_) is _strongly simulable_ (Keane and O'Brien 1994)<sup>[**(22)**](#Note22)</sup> if it admits a non-randomized Bernoulli factory algorithm.  A factory function is strongly simulable, for example, if the input coin's probability of heads (_&lambda;_) can be neither 0 nor 1.
 
-<a id=Simulating_Probabilities_vs_Estimating_Probabilities></a>
-### Simulating Probabilities vs. Estimating Probabilities
+<a id=Bernoulli_Factories_and_Unbiased_Estimation></a>
+### Bernoulli Factories and Unbiased Estimation
 
 If an algorithm&mdash;
 
 - takes flips of a coin with an unknown probability of heads (_&lambda;_), and
 - produces heads with a probability that depends on _&lambda;_ (_f_(_&lambda;_)),
 
-the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(23)**](#Note23)</sup>.  As a result, the probability _f_(_&lambda;_) can be simulated in theory by&mdash;
+the algorithm acts as an _unbiased estimator_ of _f_(_&lambda;_) that produces estimates in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(23)**](#Note23)</sup>. (And this is possible only if _f_ is a factory function; see Łatuszyński.) Because the algorithm is _unbiased_, its expected value (or mean) is _f_(_&lambda;_).  Here's one result of unbiasedness: Take a sample of _n_ independent outputs of the algorithm, sum them, then divide by _n_.  Then with probability 1, this _average_ approaches _f_(_&lambda;_) as _n_ gets _large_.  This is the _law of large numbers_ in action.
 
-1. finding in some way an unbiased estimate of _f_(_&lambda;_);<sup>[**(54)**](#Note54)</sup>
-2. generating a uniform random variate in [0,1], call it _u_; and
-3. returning 1 if _u_ is less than _v_, or 0 otherwise.
+On the other hand&mdash;
 
-In practice, however, this method is prone to numerous errors, and they include errors due to the use of fixed precision in steps 1 and 2, such as rounding and cancellations.  For this reason and also because "exact sampling" is the focus of this page, this page does not cover algorithms that directly estimate _&lambda;_ or _f_(_&lambda;_). See also (Mossel and Peres 2005, section 4)<sup>[**(14)**](#Note14)</sup>.
+- estimating _&lambda;_ as _&lambda;&prime;_ (e.g., by averaging multiple flips of a _&lambda;_-coin), then
+- calculating _f_(_&lambda;&prime;_),
 
-Only _factory functions_ (as defined in "[**About Bernoulli Factories**](#About_Bernoulli_Factories)") can have unbiased estimation algorithms whose estimates lie in \[0, 1\] with probability 1 (Łatuszyński et al. 2009/2011)<sup>[**(23)**](#Note23)</sup>.
+is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&prime;_ is an unbiased estimator.
 
-Glynn (2016)<sup>[**(55)**](#Note55)</sup> distinguishes between&mdash;
-
-- _exact simulation_, or methods that simulate the same _distribution_ as that of _g_(_X_) (same "shape", location, and scale of probabilities) and finish with probability 1, and
-- _exact estimation_, or methods that simulate the same _expected value_ as that of _g_(_X_) (_unbiased_ estimator, not merely a _consistent_ or _asymptotically unbiased_ estimator) and finish with probability 1,
-
-where _g_(_X_) is a random value that follows the desired distribution, based on random variates _X_.  Again, the focus of this page is "exact sampling" (_exact simulation_), not "exact estimation", but the input coin with probability of heads of _&lambda;_ can be any "exact estimator" of _&lambda;_ (as defined above) that outputs either 0 or 1.
+This page focuses on _unbiased_ estimators because "exact sampling" depends on it. See also (Mossel and Peres 2005, section 4)<sup>[**(14)**](#Note14)</sup>
 
 > **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&minus;_f_(_&lambda;_)) and can go as high as 1/4.  There are ways to reduce this variance, which are outside the scope of this document.  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
 
@@ -1721,7 +1713,7 @@ Examples of permutation classes include&mdash;
 - alternating permutations of even size (EGF(_&lambda;_) = 1/cos(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000364**](https://oeis.org/A000364) in the _On-Line Encyclopedia of Integer Sequences_), and
 - alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)),
 
-using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(56)**](#Note56)</sup>.
+using the notation in "Analytic Combinatorics" (Flajolet and Sedgewick 2009)<sup>[**(54)**](#Note54)</sup>.
 
 The following algorithm generates a random variate that follows the von Neumann schema.
 
@@ -1800,7 +1792,7 @@ Then the algorithm's behavior is given in the tables below.
 | Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is less than _x_ given that _n_ is ... |
  --- | --- | --- | --- |
 | Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(27)**](#Note27)</sup>; see also Forsythe 1972<sup>[**(48)**](#Note48)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
-| Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(57)**](#Note57)</sup>).  DPDF and ECDF are as above. |
+| Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(55)**](#Note55)</sup>).  DPDF and ECDF are as above. |
 | Numbers sorted in descending order | Both uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(51)**](#Note51)</sup>. |
 | Numbers sorted in descending order | _D_ is uniform(0,1); _E_ is max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
@@ -1910,7 +1902,7 @@ If the polynomial is written in so-called "power form" as _c\[0\]_ + _c\[1\]_\*_
 - their coefficients are all 0 or greater, and
 - the sum of _j_<sup>th</sup> coefficients is greater than 0, for each _j_ starting at 0 and ending at _n_, except that the list of sums may begin and/or end with zeros.
 
-If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(16)**](#Note16)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(58)**](#Note58)</sup>).  It is implemented as follows:
+If those conditions are not met, then each polynomial can be _augmented_ as often as necessary to meet the conditions (Morina et al., 2019)<sup>[**(16)**](#Note16)</sup>.  For polynomials of the kind relevant here, augmenting a polynomial amounts to degree elevation similar to that of polynomials in Bernstein form (see also Tsai and Farouki 2001<sup>[**(56)**](#Note56)</sup>).  It is implemented as follows:
 
 - Let _n_ be the polynomial's old degree.  For each _k_ in [0, _n_+1], the new polynomial's coefficient at _k_ is found as follows:
     - Let _c_\[_j_\] be the old polynomial's _j_<sup>th</sup> coefficient (starting at 0).  Calculate _c_\[_j_\] \* choose(1, _k_&minus;_j_) for each _j_ in the interval \[max(0, _k_&minus;1), min(_n_, _k_)\], then add them together.  The sum is the new coefficient.

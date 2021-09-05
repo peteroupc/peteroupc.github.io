@@ -1477,7 +1477,7 @@ The points of a low-discrepancy sequence can be "scrambled" with the help of a p
 <a id=Transformations_Additional_Examples></a>
 #### Transformations: Additional Examples
 
-1. **Bates distribution**: Find the mean of _n_ uniform random variates in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean; see the [**appendix**](#Mean_and_Variance_Calculation)).
+1. **Bates distribution**: Find the mean of _n_ uniform random variates in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean).
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000)<sup>[**(72)**](#Note72)</sup>, sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent numbers chosen at random in the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
 3. It is reasonable to talk about sampling the sum or mean of N random variates, where N has a fractional part.  In this case, `ceil(N)` random variates are generated and the last variate is multiplied by that fractional part.  For example, to sample the sum of 2.5 random variates, generate three random variates, multiply the last by 0.5 (the fractional part of 2.5), then add together all three variates.
 4. A **hypoexponential distribution** models the sum of _n_ random variates that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").

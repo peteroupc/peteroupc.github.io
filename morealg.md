@@ -35,7 +35,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
-    - [**Other Constants and Factory Functions**](#Other_Constants_and_Factory_Functions)
+    - [**Other Probabilities and Factory Functions**](#Other_Probabilities_and_Factory_Functions)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
@@ -326,10 +326,10 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
 
-<a id=Other_Constants_and_Factory_Functions></a>
-### Other Constants and Factory Functions
+<a id=Other_Probabilities_and_Factory_Functions></a>
+### Other Probabilities and Factory Functions
 
-Algorithms in bold are given either in this page or in the "Bernoulli Factory Algorithms" page.
+Algorithms in bold are given either in this page or in the "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)" page.
 
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
@@ -429,7 +429,7 @@ In the algorithm below, let _&kappa;_ be a rational number greater than the maxi
 2. Create a list consisting of the items taken in step 1, except for the last item taken, then shuffle that list.
 3. In the shuffled list, count the number of items that didn't change position after being shuffled, then return that number.
 
-**_Binomial with parameters n and k/n._** Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate with parameters _n_, _k_/_n_ using the oracle (where _k_ is a known integer such that 0 < _k_ and _k_ &le; _n_):
+**_Binomial with parameters n and k/n._** Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate of this kind using the oracle (where _k_ is a known integer such that 0 < _k_ and _k_ &le; _n_):
 
 1. Take items from the oracle until _k_ different items were taken this way.  Let _U_ be a list of these _k_ items, in the order in which they were first taken.
 2. Create an empty list _L_.
@@ -549,15 +549,6 @@ The sampler's description has the following skeleton.
 > - The following example generates a point inside a quarter diamond (centered at (0, ..., 0), "radius" _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1) + ... + (_cN_+1)) < _S_\*_k_; _NO_ if (_c1_ + ... + _cN_) > _S_\*_k_; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is 1/2.  For a full diamond, step 5.3 in the algorithm is done for each of the _N_ dimensions.
 > - The following example generates a point inside a quarter hypersphere (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_c1_+1)<sup>2</sup> + ... + (_cN_+1)<sup>2</sup>) < (_S_\*_k_)<sup>2</sup>; _NO_ if (_c1_<sup>2</sup> + ... + _cN_<sup>2</sup>) > (_S_\*_k_)<sup>2</sup>; and _MAYBE_ otherwise.  For _N_=2, the acceptance rate (see note 5) is _&pi;_/4. For a full hypersphere with radius 1, step 5.3 in the algorithm is done for each of the _N_ dimensions.  In the case of a 2-dimensional disk, this algorithm thus adapts the well-known rejection technique of generating X and Y coordinates until X<sup>2</sup>+Y<sup>2</sup> < 1 (e.g., (Devroye 1986, p. 230 et seq.)<sup>[**(15)**](#Note15)</sup>).
 > - The following example generates a point inside a quarter _astroid_ (centered at (0, ..., 0), radius _k_ where _k_ is an integer greater than 0): Let _d1_, ..., _dN_ be _k_. Let **InShape** return _YES_ if ((_sk_&minus;_c1_&minus;1)<sup>2</sup> + ... + (_sk_&minus;_cN_&minus;1)<sup>2</sup>) > _sk_<sup>2</sup>; _NO_ if ((_sk_&minus;_c1_)<sup>2</sup> + ... + (_sk_&minus;_cN_)<sup>2</sup>) < _sk_<sup>2</sup>; and _MAYBE_ otherwise, where _sk_ = _S_\*_k_.  For _N_=2, the acceptance rate (see note 5) is 1 &minus; _&pi;_/4. For a full astroid, step 5.3 in the algorithm is done for each of the _N_ dimensions.
-
-4. This step uses a function known as **InShape**, which takes the coordinates of a box and returns one of three values: _YES_ if the box is entirely inside the shape; _NO_ if the box is entirely outside the shape; and _MAYBE_ if the box is partly inside and partly outside the shape, or if the function is unsure.  **InShape**, as well as the divisions of the coordinates by _S_, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass _S_ as a separate parameter to **InShape**.  See the [**appendix**](#Implementation_Notes_for_Box_Shape_Intersection) for further implementation notes.  In this step, run **InShape** using the current box, whose coordinates in this case are ((_c1_/_S_, _c2_/_S_, ..., _cN_/_S_), ((_c1_+1)/_S_, (_c2_+1)/_S_, ..., (_cN_+1)/_S_)).
-5. If the result of **InShape** is _YES_, then the current box was accepted.  If the box is accepted this way, then at this point, _c1_, _c2_, etc., will each store the _d_ digits of a coordinate in the shape, expressed as a number in the interval \[0, 1\], or more precisely, a range of numbers.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, then the first coordinate is 0.342, or more precisely, a number in the interval \[0.342, 0.343\].)  In this case, do the following:
-    1. For each coordinate (_c1_, ..., _cN_), transfer that coordinate's least significant digits to the corresponding PSRN's fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. Then, for each coordinate (_c1_, ..., _cN_), set the corresponding PSRN's integer part to floor(_cX_/_base_<sup>_d_</sup>), where _cX_ is that coordinate.  (For example, if _base_ is 10, _d_ is 3, and _c1_ is 7342, set _p1_'s fractional part to \[3, 4, 2\] and _p1_'s integer part to 7.)
-    2. For each PSRN (_p1_, ..., _pN_), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to **FillGeometricBag**).
-    3. For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN's sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)
-    4. Return the PSRNs _p1_, ..., _pN_, in that order.
-6. If the result of **InShape** is _NO_, then the current box lies outside the shape and is rejected.  In this case, go to step 2.
-7. If the result of **InShape** is _MAYBE_, it is not known whether the current box lies fully inside the shape, so multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
 <a id=Building_an_Arbitrary_Precision_Sampler></a>
 ### Building an Arbitrary-Precision Sampler
@@ -719,7 +710,7 @@ Here we reimplement an example from Devroye's book _Non-Uniform Random Variate G
 5. If _m_ is odd, optionally fill _ret_ with uniform random digits as necessary to give its fractional part the desired number of digits  (similarly to **FillGeometricBag**), and return _ret_.
 6. If _m_ is even, go to step 1.
 
-And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from _randomgen.py_ and _bernoulli.py_.
+And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and it relies on methods from _randomgen.py_ and _bernoulli.py_.
 
 ```
 def example_4_2_1(rg, bern, precision=53):

@@ -875,13 +875,13 @@ In the following results:
 
 - A _strictly bounded factory function_ means a continuous function on the closed interval [0, 1], with a minimum of greater than 0 and a maximum of less than 1.
 - A function _f_(_&lambda;_) is _polynomially bounded_ if both _f_(_&lambda;_) and 1&minus;_f_(_&lambda;_) are bounded from below by min(_&lambda;_<sup>_n_</sup>, (1&minus;_&lambda;_)<sup>_n_</sup>) for some integer _n_ (Keane and O'Brien 1994)<sup>[**(14)**](#Note14)</sup>.
-- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, the modulus of continuity _&omega;_(_&delta;_) gives _f_'s maximum range in a window of size _&delta;_.
+- A _modulus of continuity_ of a function _f_ means a non-negative and nondecreasing function _&omega;_ on the interval [0, 1], for which _&omega;_(0) = 0, and for which abs(f(_x_) &minus; f(_y_)) &le; _&omega;_(abs(_x_&minus;_y_)) for every _x_ in [0, 1] and every _y_ in [0, 1].  Loosely speaking, a modulus of continuity _&omega;_(_&delta;_) is bounded below by _f_'s maximum range in a window of size _&delta;_.
 
-**Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then **E**[f(X<sub>k</sub>/n)] is nondecreasing as k increases._
+**Lemma 1.** _Let f(&lambda;) be a continuous and nondecreasing function, and let X<sub>k</sub> be a hypergeometric(2\*n, k, n) random variable, where n&ge;1 is a constant integer and k is an integer in [0, 2\*n] .  Then the expected value of f(X<sub>k</sub>/n) is nondecreasing as k increases._
 
-_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ &succeq; _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> &succeq; _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(20)**](#Note20)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(21)**](#Note21)</sup>. &#x25a1;
+_Proof._ This is equivalent to verifying whether _X_<sub>_m_+1</sub>/_n_ "dominates" _X_<sub>_m_</sub>/_n_ (and, obviously by extension, _X_<sub>_m_+1</sub> "dominates" _X_<sub>_m_</sub>) in terms of first-degree stochastic dominance (Levy 1998)<sup>[**(20)**](#Note20)</sup>.   This means that the probability that (_X_<sub>_m_+1</sub> &le; _j_) is less than or equal to that for _X_<sub>_m_</sub> for each _j_ in the interval [0, _n_].  A proof of this was given by the user "Henry" of the _Mathematics Stack Exchange_ community<sup>[**(21)**](#Note21)</sup>. &#x25a1;
 
-Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions with no slope "steeper" than any "nth" root.
+Lemma 6(i) of Nacu and Peres (2005)<sup>[**(1)**](#Note1)</sup> can be applied to continuous functions beyond just Lipschitz continuous functions.  This includes _Hölder continuous_ functions, namely continuous functions with no slope that's "steeper" than every "nth" root.
 
 **Lemma 2.** _Let f(&lambda;) be a continuous function that maps [0, 1] to [0, 1], and let X be a hypergeometric(2\*n, k, n) random variable._
 
@@ -1023,7 +1023,7 @@ Let _f_(_&lambda;_) = 0 if _&lambda;_ is 0, and (ln(_&lambda;_/exp(3)))<sup>&min
 - **fbelow**(n, k) = f(_k_/_n_).
 - **fabove**(n, k) = max(**fabove**(4,0), **fabove**(4,1), ..., **fabove**(4,4)) if n < 4; otherwise, f(_k_/_n_) +  _&eta;_(_n_).
 
-Where &Phi; is a function called the _Lerch transcendent_, and **fabove** is subject to Theorem 1's bounding note.
+Where &Phi;(.) is a function called the _Lerch transcendent_, and **fabove** is subject to Theorem 1's bounding note.
 
 Notice that the function _f_ is not Hölder continuous; its slope is exponentially steep at the point 0.
 
@@ -1037,7 +1037,7 @@ Now, by applying Theorem 1, we compute _&eta;_(_k_) by substituting _n_ with 2<s
 
 - _&eta;_(_k_) = &Phi;(1, 2, (ln(_k_)+ln(7)+6)/ln(2))\*4/ln(2)<sup>2</sup>,
 
-where &Phi; is the Lerch transcendent.  This _&eta;_ matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
+where &Phi;(.) is the Lerch transcendent.  This _&eta;_ matches the _&eta;_ given in the scheme above.  That scheme then follows from Theorems 1 and 2, as well as from part 1 of Proposition 1 because _f_ is concave.
 
 The following SymPy code is an example of finding the parameters for this approximation scheme.
 

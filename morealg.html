@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/02"><meta name="citation_online_date" content="2021/09/02"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/04"><meta name="citation_online_date" content="2021/09/04"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -45,7 +45,7 @@
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
 <li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
 <li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
-<li><a href="#Other_Constants_and_Factory_Functions"><strong>Other Constants and Factory Functions</strong></a></li>
+<li><a href="#Other_Probabilities_and_Factory_Functions"><strong>Other Probabilities and Factory Functions</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
@@ -472,11 +472,11 @@
 <p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
 
-<p><a id=Other_Constants_and_Factory_Functions></a></p>
+<p><a id=Other_Probabilities_and_Factory_Functions></a></p>
 
-<h3>Other Constants and Factory Functions</h3>
+<h3>Other Probabilities and Factory Functions</h3>
 
-<p>Algorithms in bold are given either in this page or in the &quot;Bernoulli Factory Algorithms&quot; page.</p>
+<p>Algorithms in bold are given either in this page or in the &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot; page.</p>
 
 <table><thead>
 <tr>
@@ -637,7 +637,7 @@
 <li>In the shuffled list, count the number of items that didn&#39;t change position after being shuffled, then return that number.</li>
 </ol>
 
-<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate with parameters <em>n</em>, <em>k</em>/<em>n</em> using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
+<p><strong><em>Binomial with parameters n and k/n.</em></strong> Duvignau 2015 also includes an algorithm (Algorithm 25) to generate a binomial variate of this kind using the oracle (where <em>k</em> is a known integer such that 0 &lt; <em>k</em> and <em>k</em> &le; <em>n</em>):</p>
 
 <ol>
 <li>Take items from the oracle until <em>k</em> different items were taken this way.  Let <em>U</em> be a list of these <em>k</em> items, in the order in which they were first taken.</li>
@@ -806,20 +806,6 @@
 <li>The following example generates a point inside a quarter <em>astroid</em> (centered at (0, ..., 0), radius <em>k</em> where <em>k</em> is an integer greater than 0): Let <em>d1</em>, ..., <em>dN</em> be <em>k</em>. Let <strong>InShape</strong> return <em>YES</em> if ((<em>sk</em>&minus;<em>c1</em>&minus;1)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>&minus;1)<sup>2</sup>) &gt; <em>sk</em><sup>2</sup>; <em>NO</em> if ((<em>sk</em>&minus;<em>c1</em>)<sup>2</sup> + ... + (<em>sk</em>&minus;<em>cN</em>)<sup>2</sup>) &lt; <em>sk</em><sup>2</sup>; and <em>MAYBE</em> otherwise, where <em>sk</em> = <em>S</em>*<em>k</em>.  For <em>N</em>=2, the acceptance rate (see note 5) is 1 &minus; <em>&pi;</em>/4. For a full astroid, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</li>
 </ul>
 </blockquote>
-
-<ol>
-<li>This step uses a function known as <strong>InShape</strong>, which takes the coordinates of a box and returns one of three values: <em>YES</em> if the box is entirely inside the shape; <em>NO</em> if the box is entirely outside the shape; and <em>MAYBE</em> if the box is partly inside and partly outside the shape, or if the function is unsure.  <strong>InShape</strong>, as well as the divisions of the coordinates by <em>S</em>, should be implemented using rational arithmetic.  Instead of dividing those coordinates this way, an implementation can pass <em>S</em> as a separate parameter to <strong>InShape</strong>.  See the <a href="#Implementation_Notes_for_Box_Shape_Intersection"><strong>appendix</strong></a> for further implementation notes.  In this step, run <strong>InShape</strong> using the current box, whose coordinates in this case are ((<em>c1</em>/<em>S</em>, <em>c2</em>/<em>S</em>, ..., <em>cN</em>/<em>S</em>), ((<em>c1</em>+1)/<em>S</em>, (<em>c2</em>+1)/<em>S</em>, ..., (<em>cN</em>+1)/<em>S</em>)).</li>
-<li>If the result of <strong>InShape</strong> is <em>YES</em>, then the current box was accepted.  If the box is accepted this way, then at this point, <em>c1</em>, <em>c2</em>, etc., will each store the <em>d</em> digits of a coordinate in the shape, expressed as a number in the interval [0, 1], or more precisely, a range of numbers.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 342, then the first coordinate is 0.342, or more precisely, a number in the interval [0.342, 0.343].)  In this case, do the following:
-
-<ol>
-<li>For each coordinate (<em>c1</em>, ..., <em>cN</em>), transfer that coordinate&#39;s least significant digits to the corresponding PSRN&#39;s fractional part.  The variable <em>d</em> tells how many digits to transfer to each PSRN this way. Then, for each coordinate (<em>c1</em>, ..., <em>cN</em>), set the corresponding PSRN&#39;s integer part to floor(<em>cX</em>/<em>base</em><sup><em>d</em></sup>), where <em>cX</em> is that coordinate.  (For example, if <em>base</em> is 10, <em>d</em> is 3, and <em>c1</em> is 7342, set <em>p1</em>&#39;s fractional part to [3, 4, 2] and <em>p1</em>&#39;s integer part to 7.)</li>
-<li>For each PSRN (<em>p1</em>, ..., <em>pN</em>), optionally fill that PSRN with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>).</li>
-<li>For each PSRN, optionally do the following: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), set that PSRN&#39;s sign to negative. (This will result in a symmetric shape in the corresponding dimension.  This step can be done for some PSRNs and not others.)</li>
-<li>Return the PSRNs <em>p1</em>, ..., <em>pN</em>, in that order.</li>
-</ol></li>
-<li>If the result of <strong>InShape</strong> is <em>NO</em>, then the current box lies outside the shape and is rejected.  In this case, go to step 2.</li>
-<li>If the result of <strong>InShape</strong> is <em>MAYBE</em>, it is not known whether the current box lies fully inside the shape, so multiply <em>S</em> by <em>base</em>, then add 1 to <em>d</em>, then go to step 3.</li>
-</ol>
 
 <p><a id=Building_an_Arbitrary_Precision_Sampler></a></p>
 
@@ -1038,7 +1024,7 @@
 <li>If <em>m</em> is even, go to step 1.</li>
 </ol>
 
-<p>And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and that it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
+<p>And here is Python code that implements this algorithm.  The code uses floating-point arithmetic only at the end, to convert the result to a convenient form, and it relies on methods from <em>randomgen.py</em> and <em>bernoulli.py</em>.</p>
 
 <pre>def example_4_2_1(rg, bern, precision=53):
     while True:
