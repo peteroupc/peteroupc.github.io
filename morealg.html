@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/04"><meta name="citation_online_date" content="2021/09/04"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/06"><meta name="citation_online_date" content="2021/09/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -1204,6 +1204,20 @@
 </ul></li>
 <li>The appendix contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</li>
 <li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>*(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the appendix, enough times (at least <em>r</em> times), then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A <a href="https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1"><strong>MathOverflow answer</strong></a> showed that <em>r</em> is at least <em>m</em> = (<em>n</em>/<em>f</em>(1/2)<sup>2</sup>)/(1&minus;<em>f</em>(1/2)<sup>2</sup>), but is it true that floor(<em>m</em>)+1 elevations are enough?</li>
+<li><p>A <a href="https://peteroupc.github.io/morealg.html#Finite_State_and_Pushdown_Generators"><strong><em>finite-state generator</em></strong></a> is a finite-state machine that outputs a real number&#39;s base-2 expansion such as 0.110101100..., driven by flips of a coin.  A <em>pushdown generator</em> is a finite-state generator with a stack of memory.  Both generators produce real numbers with a given probability distribution.  For example, a generator with a loop that outputs 0 or 1 at an equal chance produces a <em>uniform distribution</em>.  The following questions ask what kinds of distributions are possible with these generators.</p>
+
+<ol>
+<li>Of the probability distributions that a finite-state generator can generate, what is the exact class of:
+
+<ul>
+<li><em>Discrete distributions</em> (those that cover a finite or countably infinite set of values)?</li>
+<li><em>Absolutely continuous distributions</em> (those with a probability density function such as the uniform or triangular distribution)?</li>
+<li><em>Singular distributions</em> (covering an uncountable but zero-volume set)?</li>
+<li>Absolutely continuous distributions with <em>continuous</em> density functions?</li>
+</ul></li>
+<li>Same question as 1, but for pushdown generators.</li>
+<li>Of the probability distributions that a pushdown generator can generate, what is the exact class of distributions with piecewise smooth density functions?  (The answer is known for finite-state generators.)</li>
+</ol></li>
 </ol>
 
 <p><a id=Notes></a></p>
@@ -1833,7 +1847,7 @@ calc_linear_func(count=8)
 
 <h4>Finite-State and Pushdown Generators</h4>
 
-<p>Another interesting class of machines (called <em>pushdown generators</em> here) are similar to pushdown automata, with the following exceptions:</p>
+<p>Another interesting class of machines (called <em>pushdown generators</em> here) are similar to pushdown automata (see above), with the following exceptions:</p>
 
 <ol>
 <li>Each transition rule can also, optionally, output a base-<em>N</em> digit in its right-hand side.  An example is: (<em>state</em>, <em>flip</em>, <em>sy</em>) &rarr; (<em>digit</em>, <em>state2</em>, {<em>sy2</em>}).</li>
@@ -1878,19 +1892,7 @@ calc_linear_func(count=8)
 
 <p>To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup><a href="#Note45"><strong>(45)</strong></a></sup>, the generator can generate a real number&#39;s binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup><a href="#Note46"><strong>(46)</strong></a></sup>; Adamczewski and Bugeaud (2007)<sup><a href="#Note47"><strong>(47)</strong></a></sup>).</s>  &#x25a1;</p>
 
-<p><strong>Questions:</strong></p>
-
-<ol>
-<li>Of the probability distributions that a finite-state generator can generate:
-
-<ul>
-<li>What is the exact class of <em>discrete distributions</em> (those that cover a finite or countably infinite set of values)?</li>
-<li>What is the exact class of <em>absolutely continuous distributions</em> (those with a probability density function)?</li>
-<li>What is the exact class of <em>singular distributions</em> (covering an uncountable but zero-volume set)?</li>
-<li>What is the exact class of absolutely continuous distributions with <em>continuous</em> density functions?</li>
-</ul></li>
-<li>Same question as 1, but for pushdown generators.</li>
-</ol>
+<p>For open questions, see &quot;Requests and Open Questions&quot;.</p>
 
 <p><a id=License></a></p>
 

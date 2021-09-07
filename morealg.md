@@ -845,6 +845,15 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
     - Descriptions of new arbitrary-precision algorithms that use the skeleton given in the section "Building an Arbitrary-Precision Sampler".
 2. The appendix contains implementation notes for **InShape**, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of **InShape** will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?
 3. Take a polynomial _f_(_&lambda;_) of even degree _n_ of the form choose(_n_,_n_/2)\*_&lambda;_<sup>_n_/2</sup>\*(1&minus;_&lambda;_)<sup>_n_/2</sup>\*_k_, where _k_ is greater than 1 (thus all _f_'s Bernstein coefficients are 0 except for the middle one, which equals _k_).  Suppose _f_(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the appendix, enough times (at least _r_ times), then _f_'s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A [**MathOverflow answer**](https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1) showed that _r_ is at least _m_ = (_n_/_f_(1/2)<sup>2</sup>)/(1&minus;_f_(1/2)<sup>2</sup>), but is it true that floor(_m_)+1 elevations are enough?
+4. A [**_finite-state generator_**](https://peteroupc.github.io/morealg.html#Finite_State_and_Pushdown_Generators) is a finite-state machine that outputs a real number's base-2 expansion such as 0.110101100..., driven by flips of a coin.  A _pushdown generator_ is a finite-state generator with a stack of memory.  Both generators produce real numbers with a given probability distribution.  For example, a generator with a loop that outputs 0 or 1 at an equal chance produces a _uniform distribution_.  The following questions ask what kinds of distributions are possible with these generators.
+
+    1. Of the probability distributions that a finite-state generator can generate, what is the exact class of:
+        - _Discrete distributions_ (those that cover a finite or countably infinite set of values)?
+        - _Absolutely continuous distributions_ (those with a probability density function such as the uniform or triangular distribution)?
+        - _Singular distributions_ (covering an uncountable but zero-volume set)?
+        - Absolutely continuous distributions with _continuous_ density functions?
+    2. Same question as 1, but for pushdown generators.
+    3. Of the probability distributions that a pushdown generator can generate, what is the exact class of distributions with piecewise smooth density functions?  (The answer is known for finite-state generators.)
 
 <a id=Notes></a>
 ## Notes
@@ -1355,7 +1364,7 @@ Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>
 <a id=Finite_State_and_Pushdown_Generators></a>
 #### Finite-State and Pushdown Generators
 
-Another interesting class of machines (called _pushdown generators_ here) are similar to pushdown automata, with the following exceptions:
+Another interesting class of machines (called _pushdown generators_ here) are similar to pushdown automata (see above), with the following exceptions:
 
 1. Each transition rule can also, optionally, output a base-_N_ digit in its right-hand side.  An example is: (_state_, _flip_, _sy_) &rarr; (_digit_, _state2_, {_sy2_}).
 2. The machine must output infinitely many digits if allowed to run forever.
@@ -1392,14 +1401,7 @@ _Proof of Proposition 8:_ Let _n_ be an integer greater than 0. Take a finite-st
 
 To prove part 2 of the proposition, translate an arbitrary finite-state generator to a machine described in Lemma 2.  Once that is done, all that must be shown is that there are two different non-empty sequences of coin flips that end up at the same configuration. This is easy using the pigeonhole principle, since the finite-state generator has a finite number of configurations. Thus, by propositions 5.11, 4.6, and AB of Adamczewski et al. (2020)<sup>[**(45)**](#Note45)</sup>, the generator can generate a real number's binary expansion only if that number is rational or transcendental (see also Cobham (1968)<sup>[**(46)**](#Note46)</sup>; Adamczewski and Bugeaud (2007)<sup>[**(47)**](#Note47)</sup>).</s>  &#x25a1;
 
-**Questions:**
-
-1. Of the probability distributions that a finite-state generator can generate:
-     - What is the exact class of _discrete distributions_ (those that cover a finite or countably infinite set of values)?
-     - What is the exact class of _absolutely continuous distributions_ (those with a probability density function)?
-     - What is the exact class of _singular distributions_ (covering an uncountable but zero-volume set)?
-     - What is the exact class of absolutely continuous distributions with _continuous_ density functions?
-2. Same question as 1, but for pushdown generators.
+For open questions, see "Requests and Open Questions".
 
 <a id=License></a>
 ## License

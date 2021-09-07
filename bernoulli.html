@@ -84,7 +84,6 @@
 <li><a href="#1_2_k____lambda___or_exp_minus__k____lambda___ln_2"><strong>1/(2<sup><em>k</em> + <em>&lambda;</em></sup>) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2))</strong></a></li>
 <li><a href="#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m"><strong>1/(2<sup><em>m</em>*(<em>k</em> + <em>&lambda;</em>)</sup>) or 1/((2<sup><em>m</em></sup>)*(<em>k</em> + <em>&lambda;</em>)) or exp(&minus;(<em>k</em> + <em>&lambda;</em>)*ln(2<sup><em>m</em></sup>))</strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
-<li><a href="#lambda___1___lambda"><strong><em>&lambda;</em>/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_2_minus___lambda"><strong>1/(2 &minus; <em>&lambda;</em>)</strong></a></li>
 <li><a href="#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d"><strong><em>c</em> * <em>&lambda;</em> * <em>&beta;</em> / (<em>&beta;</em> * (<em>c</em> * <em>&lambda;</em> + <em>d</em> * <em>&mu;</em>) &minus; (<em>&beta;</em> &minus; 1) * (<em>c</em> + <em>d</em>))</strong></a></li>
 <li><a href="#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda"><strong><em>c</em> * <em>&lambda;</em> / (<em>c</em> * <em>&lambda;</em> + <em>d</em>) or (<em>c</em>/<em>d</em>) * <em>&lambda;</em> / (1 + (<em>c</em>/<em>d</em>) * <em>&lambda;</em>))</strong></a></li>
@@ -1186,12 +1185,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.</li>
 </ol>
 
-<p><a id=lambda___1___lambda></a></p>
-
-<h4><em>&lambda;</em>/(1+<em>&lambda;</em>)</h4>
-
-<p>Return 1 minus the result of the <strong>algorithm for 1/(1+<em>&lambda;</em>)</strong>.</p>
-
 <p><a id=1_2_minus___lambda></a></p>
 
 <h4>1/(2 &minus; <em>&lambda;</em>)</h4>
@@ -1733,7 +1726,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </tr>
 <tr>
 <td>1 &minus; ln(1+<em>&lambda;</em>)</td>
-<td>Run algorithm for ln(1+<em>&lambda;</em>), then return 1 minus the result.<sup><a href="#Note45"><strong>(45)</strong></a></sup></td>
+<td>Run algorithm for <strong>ln(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.<sup><a href="#Note45"><strong>(45)</strong></a></sup></td>
+</tr>
+<tr>
+<td><em>&lambda;</em>/(1+<em>&lambda;</em>)</td>
+<td>Run algorithm for <strong>1/(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.</td>
 </tr>
 </tbody></table>
 

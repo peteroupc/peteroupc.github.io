@@ -61,7 +61,6 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))**](#1_2_k____lambda___or_exp_minus__k____lambda___ln_2)
         - [**1/(2<sup>_m_\*(_k_ + _&lambda;_)</sup>) or 1/((2<sup>_m_</sup>)\*(_k_ + _&lambda;_)) or exp(&minus;(_k_ + _&lambda;_)\*ln(2<sup>_m_</sup>))**](#1_2_m___k____lambda___or_1_2_m___k____lambda___or_exp_minus__k____lambda___ln_2_m)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
-        - [**_&lambda;_/(1+_&lambda;_)**](#lambda___1___lambda)
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
         - [**_c_ * _&lambda;_ * _&beta;_ / (_&beta;_ * (_c_ * _&lambda;_ + _d_ * _&mu;_) &minus; (_&beta;_ &minus; 1) * (_c_ + _d_))**](#c____lambda_____beta_____beta____c____lambda____d____mu___minus___beta___minus_1__c___d)
         - [**_c_ * _&lambda;_ / (_c_ * _&lambda;_ + _d_) or (_c_/_d_) * _&lambda;_ / (1 + (_c_/_d_) * _&lambda;_))**](#c____lambda____c____lambda____d__or__c___d____lambda___1__c___d____lambda)
@@ -849,11 +848,6 @@ This algorithm is a special case of the two-coin Bernoulli factory of (Gonçalve
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
 
-<a id=lambda___1___lambda></a>
-#### _&lambda;_/(1+_&lambda;_)
-
-Return 1 minus the result of the **algorithm for 1/(1+_&lambda;_)**.
-
 <a id=1_2_minus___lambda></a>
 #### 1/(2 &minus; _&lambda;_)
 
@@ -1239,7 +1233,8 @@ Algorithms in bold are given in this page.
    --- |  ---- |
 |  1 / (_c_ + _&lambda;_)  |  (_c_&ge;1 is a rational number.)<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_ = 1. |
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2017)<sup>[**(34)**](#Note34)</sup>; applies an exponential weight&mdash;here, _c_&mdash; to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate a Poisson(_c_) random integer, call it _N_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
-| 1 &minus; ln(1+_&lambda;_) | Run algorithm for ln(1+_&lambda;_), then return 1 minus the result.<sup>[**(45)**](#Note45)</sup> |
+| 1 &minus; ln(1+_&lambda;_) | Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.<sup>[**(45)**](#Note45)</sup> |
+| _&lambda;_/(1+_&lambda;_) | Run algorithm for **1/(1+_&lambda;_)**, then return 1 minus the result. |
 
 <a id=Algorithms_for_Specific_Constants></a>
 ### Algorithms for Specific Constants
