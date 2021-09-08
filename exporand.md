@@ -1644,7 +1644,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note9>(9)</sup> von Neumann, J., "Various techniques used in connection with random digits", 1951.</small>
 - <small><sup id=Note10>(10)</sup> As noted by von Neumann (1951), a uniform random variate bounded by 0 and 1 can be produced by "juxtapos[ing] enough random binary digits".  In this sense, the variate is _X1_/`B`<sup>1</sup> + _X2_/`B`<sup>2</sup> + ..., (where `B` is the digit base 2, and _X1_, _X2_, etc. are independent uniform random integers in the interval \[0, `B`\)), perhaps "forc[ing] the last [random bit] to be 1" "[t]o avoid any bias".  It is not hard to see that this approach can be applied to generate any digit expansion of any base, not just 2.</small>
 - <small><sup id=Note11>(11)</sup> Yusong Du, Baoying Fan, and Baodian Wei, "[**An Improved Exact Sampling Algorithm for the Standard Normal Distribution**](https://arxiv.org/abs/2008.03855)", arXiv:2008.03855 [cs.DS], 2020.</small>
-- <small><sup id=Note12>(12)</sup> This means that every zero-volume (measure-zero) subset of the distribution's domain (such as a set of points) has zero probability.  This section speaks of distributions and probability density functions with respect to _Lebesgue measure_, which, roughly speaking, measures sets of real numbers according to their "length".</small>
+- <small><sup id=Note12>(12)</sup> This means that every zero-volume (Lebesgue measure zero) subset of the distribution's domain (such as a set of points) has zero probability.  Equivalently, it means the distribution has a probability density function.</small>
 - <small><sup id=Note13>(13)</sup> Oberhoff, Sebastian, "[**Exact Sampling and Prefix Distributions**](https://dc.uwm.edu/etd/1888)", _Theses and Dissertations_, University of Wisconsin Milwaukee, 2018.</small>
 - <small><sup id=Note14>(14)</sup> Hill, T.P. and Schürger, K., 2005. Regularity of digits and significant digits of random variables. _Stochastic processes and their applications_, 115(10), pp.1723-1743.</small>
 - <small><sup id=Note15>(15)</sup> J.F. Williamson, "Random selection of points distributed on curved surfaces", _Physics in Medicine & Biology_ 32(10), 1987.</small>
@@ -1722,7 +1722,8 @@ As Marsaglia also showed, similar results apply when the base of the random digi
 
 Case 2 has several special cases, including:
 
-- The uniform distribution (_w_ = 0), the fractional part of an exponential random variate with rate 1 (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>).
+- The uniform distribution (_w_ = 0).
+- The fractional part of an exponential random variate with rate 1 (_w_ = &minus;1; (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>).
 - More general, the fractional part of an exponential variate with rate _&lambda;_ (_w_ = &minus;_&lambda;_).
 - 1 minus the fractional part of an exponential variate with rate _w_ when _w_ > 0.
 - _a_<sub>_j_</sub> = _y_<sup>_v_/2<sup>_j_</sup></sup>/(1 + _y_<sup>_v_/2<sup>_j_</sup></sup>), with _w_ = ln(_y_)\*_v_ where _y_ > 0 and _v_ are constants.

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/06"><meta name="citation_online_date" content="2021/09/06"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/07"><meta name="citation_online_date" content="2021/09/07"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -484,14 +484,6 @@
 <th>Follow this algorithm:</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>1/sqrt(<em>&pi;</em>)</td>
-<td>Create <em>&lambda;</em> coin for algorithm <strong>1/<em>&pi;</em></strong>.<br>Run algorithm for <strong>sqrt(<em>&lambda;</em>)</strong>.</td>
-</tr>
-<tr>
-<td>1/sqrt(<em>h</em>+<em>&lambda;</em>)</td>
-<td>(<em>&lambda;</em> is unknown heads probability of a coin; <em>h</em>&ge;1 is a rational number.)<br>Create <em>&mu;</em> coin for algorithm <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>c</em>=<em>h</em> and <em>d</em>=1.<br>Run algorithm for <strong>sqrt(<em>&lambda;</em>)</strong> with <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
-</tr>
 <tr>
 <td>3 &minus; exp(1)</td>
 <td>Run the algorithm for <strong>exp(1) &minus; 2</strong>, then return 1 minus the result.</td>
@@ -1204,7 +1196,7 @@
 </ul></li>
 <li>The appendix contains implementation notes for <strong>InShape</strong>, which determines whether a box is outside or partially or fully inside a shape.  However, practical implementations of <strong>InShape</strong> will generally only be able to evaluate a shape pointwise.  What are necessary and/or sufficient conditions that allow an implementation to correctly classify a box just by evaluating the shape pointwise?</li>
 <li>Take a polynomial <em>f</em>(<em>&lambda;</em>) of even degree <em>n</em> of the form choose(<em>n</em>,<em>n</em>/2)*<em>&lambda;</em><sup><em>n</em>/2</sup>*(1&minus;<em>&lambda;</em>)<sup><em>n</em>/2</sup>*<em>k</em>, where <em>k</em> is greater than 1 (thus all <em>f</em>&#39;s Bernstein coefficients are 0 except for the middle one, which equals <em>k</em>).  Suppose <em>f</em>(1/2) lies in the interval (0, 1).  If we do the degree elevation, described in the appendix, enough times (at least <em>r</em> times), then <em>f</em>&#39;s Bernstein coefficients will all lie in [0, 1].  The question is: how many degree elevations are enough?  A <a href="https://mathoverflow.net/questions/381419/on-the-degree-elevation-needed-to-bring-bernstein-coefficients-to-0-1"><strong>MathOverflow answer</strong></a> showed that <em>r</em> is at least <em>m</em> = (<em>n</em>/<em>f</em>(1/2)<sup>2</sup>)/(1&minus;<em>f</em>(1/2)<sup>2</sup>), but is it true that floor(<em>m</em>)+1 elevations are enough?</li>
-<li><p>A <a href="https://peteroupc.github.io/morealg.html#Finite_State_and_Pushdown_Generators"><strong><em>finite-state generator</em></strong></a> is a finite-state machine that outputs a real number&#39;s base-2 expansion such as 0.110101100..., driven by flips of a coin.  A <em>pushdown generator</em> is a finite-state generator with a stack of memory.  Both generators produce real numbers with a given probability distribution.  For example, a generator with a loop that outputs 0 or 1 at an equal chance produces a <em>uniform distribution</em>.  The following questions ask what kinds of distributions are possible with these generators.</p>
+<li><p>A <a href="https://peteroupc.github.io/morealg.html#Finite_State_and_Pushdown_Generators"><strong><em>finite-state generator</em></strong></a> is a finite-state machine that generates a real number&#39;s base-2 expansion such as 0.110101100..., driven by flips of a coin.  A <em>pushdown generator</em> is a finite-state generator with a stack of memory.  Both generators produce real numbers with a given probability distribution.  For example, a generator with a loop that outputs 0 or 1 at an equal chance produces a <em>uniform distribution</em>.  The following questions ask what kinds of distributions are possible with these generators.</p>
 
 <ol>
 <li>Of the probability distributions that a finite-state generator can generate, what is the exact class of:
@@ -1618,6 +1610,7 @@ calc_linear_func(count=8)
 <ul>
 <li>sqrt(<em>&lambda;</em>) can be simulated.</li>
 <li>Every rational function with rational coefficients that maps the open interval (0, 1) to (0, 1) can be simulated.</li>
+<li>If <em>f</em>(<em>&lambda;</em>) can be simulated, so can any Bernstein-form polynomial in the variable <em>f</em>(<em>&lambda;</em>) with coefficients that can be simulated.</li>
 <li>If <em>f</em>(<em>&lambda;</em>) and <em>g</em>(<em>&lambda;</em>) can be simulated, so can <em>f</em>(<em>&lambda;</em>)*<em>g</em>(<em>&lambda;</em>), <em>f</em>(<em>g</em>(<em>&lambda;</em>)), and <em>g</em>(<em>f</em>(<em>&lambda;</em>)).</li>
 <li>If a full-domain pushdown automaton (defined later) can generate words of a given length with a given probability (a <em>probability distribution</em> of word lengths), then the probability generating function for that distribution can be simulated, as well as for that distribution conditioned on a finite set or periodic infinite set of word lengths (e.g., all odd word lengths only).</li>
 <li>If a stochastic context-free grammar (defined later) can generate a probability distribution of word lengths, and terminates with probability 1, then the probability generating function for that distribution can be simulated.</li>
@@ -1648,6 +1641,7 @@ calc_linear_func(count=8)
 <li><p>A <em>full-domain pushdown automaton</em> means a pushdown automaton that terminates with probability 1 given a coin with probability of heads <em>&lambda;</em>, for every <em>&lambda;</em> in the open interval (0, 1).</p></li>
 <li><strong>PDA</strong> is the class of functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.</li>
 <li><strong>ALGRAT</strong> is the class of functions that map the open interval (0, 1) to (0, 1), are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers).</li>
+<li>A <em>probability generating function</em> has the form <em>p</em><sub>0</sub>*<em>&lambda;</em><sup>0</sup> + <em>p</em><sub>1</sub>*<em>&lambda;</em><sup>1</sup> + ..., where <em>p</em><sub><em>i</em></sub> (a <em>coefficient</em>) is the probability of getting <em>i</em>.</li>
 </ol>
 
 <blockquote>
@@ -1663,30 +1657,44 @@ calc_linear_func(count=8)
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
-<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
+<p><strong>Lemma 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda))*h(&amp;lambda).</em></p>
 
 <p><em>Proof:</em> Let <em>F</em> be a full-domain pushdown automaton for <em>f</em>, and let <em>G</em> be that for <em>g</em>.</p>
 
-<p>Assume that machines <em>F</em> and <em>G</em> stop when they pop EMPTY from the stack.  If this is not the case, transform both machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, <em>flip</em>, EMPTY) &rarr; (<em>start</em>, {EMPTY&prime;&prime;}) and rule (<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state</em>, {}) for all states other than X0, where <em>start</em> is the starting state of <em>F</em> or <em>G</em>, as the case may be.</p>
+<p>Assume that machines <em>F</em>, <em>G</em>, and <em>H</em> stop when they pop EMPTY from the stack.  If this is not the case, transform all three machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, <em>flip</em>, EMPTY) &rarr; (<em>start</em>, {EMPTY&prime;&prime;}) and rule (<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state</em>, {}) for all states other than X0, where <em>start</em> is the starting state of <em>F</em>, <em>G</em>, and <em>H</em>, as the case may be.</p>
 
-<p>Now, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
+<p>Now, rename each state of <em>G</em> and <em>H</em> as necessary so that the sets of states of <em>F</em>, of <em>G</em>, and of <em>H</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
 
 <p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state2</em>, {}),</p>
 
-<p>where <em>state2</em> is a final state of <em>F</em> associated with output 1, replace that rule with&mdash;</p>
+<p>where <em>state2</em> is a final state of <em>F</em>, replace that rule with&mdash;</p>
 
-<p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}),</p>
+<ul>
+<li>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}), for final states associated with output 1, and</li>
+<li>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>hstart</em>, {EMPTY}), for final states associated with output 0.</li>
+</ul>
 
-<p>where <em>gstart</em> is the starting state for <em>G</em>.  Then take the final states of the combined machine as the union of the final states of <em>F</em> and <em>G</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>where <em>gstart</em> is the starting state for <em>G</em> and <em>hstart</em> is the starting state for <em>H</em>.  Then take the final states of the combined machine as the union of the final states of <em>G</em> and <em>H</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.
+&#x25a1;</p>
 
-<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
+<p><strong>Lemma 1B:</strong>  <em>There are pushdown automata that simulate the probabilities 0 and 1.</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>, and let <em>G</em> be that for <em>g</em>. As in Proposition 1, assume that machines <em>F</em> and <em>G</em> stop when they pop EMPTY from the stack. First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for each pair of rules in <em>F</em> of the form&mdash;</p>
+<p><em>Proof:</em> The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. <em>&mdash;</em></p>
+
+<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&amp;lambda)*g(&amp;lambda).</em></p>
+
+<p><em>Proof:</em> Use Lemma 1A with <em>F</em> and <em>G</em> being the automata for <em>f</em> and <em>g</em>, and with <em>H</em> being the probability 0 automaton in Lemma 1B. &#x25a1;</p>
+
+<p><strong>Lemma 2A:</strong> <em>Let g(&lambda;) be a function in the class <strong>PDA</strong>, and suppose a pushdown automaton F has two rules of the form (<code>state</code>, HEADS, <code>stacksymbol</code>) &rarr; RHS1 and (<code>state</code>, TAILS, <code>stacksymbol</code>) &rarr; RHS2, where <code>state</code> and <code>stacksymbol</code> are a specific state/symbol pair among the left-hand sides of F&#39;s rules.  Then there is a pushdown automaton that transitions to RHS1 with probability g(&lambda;) and to RHS2 with probability 1&minus;g(&lambda;) instead.</em></p>
+
+<p><em>Proof:</em> If RHS1 and RHS2 are the same, then the conclusion holds and nothing has to be done.  Thus assume RHS1 and RHS2 are different.</p>
+
+<p>Let <em>G</em> be the full-domain pushdown automaton for <em>g</em>. As in Proposition 1, assume that machines <em>F</em> and <em>G</em> stop when they pop EMPTY from the stack. First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for the following two pairs of rules in <em>F</em>, namely&mdash;</p>
 
 <p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>), and<br>
 (<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>),</p>
 
-<p>where <em>state</em> is an arbitrary state and the transitions of the two rules differ, add two new states <em>state</em><sub>0</sub> and <em>state</em><sub>1</sub> that correspond to <em>state</em> and have names different from all other states, and replace that rule with the following rules:</p>
+<p>add two new states <em>state</em><sub>0</sub> and <em>state</em><sub>1</sub> that correspond to <em>state</em> and have names different from all other states, and replace that rule with the following rules:</p>
 
 <p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>gstart</em>, {<em>stacksymbol</em>, EMPTY&prime;}),<br>
 (<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>gstart</em>, {<em>stacksymbol</em>, EMPTY&prime;}),<br>
@@ -1704,7 +1712,31 @@ calc_linear_func(count=8)
 <li>Replace each rule in <em>G</em> of the form (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; (<em>state2</em>, {}), where <em>state2</em> is a final state of <em>G</em> associated with output 0, with the rule (<em>state</em>, <em>flip</em>, EMPTY&prime;) &rarr; ( <em>state</em><sub>0</sub>, {}).</li>
 </ul>
 
-<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton. &#x25a1;</p>
+<p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. &#x25a1;</p>
+
+<p>Because of Lemma 2A, it&#39;s possible to label each left-hand side of a pushdown automaton&#39;s rules with not just HEADS or TAILS, but also a rational number or another function in <strong>PDA</strong>, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:</p>
+
+<p>(START, 1/2, EMPTY) &rarr; ..., (START, sqrt(<em>&lambda;</em>)/2, EMPTY) &rarr; ..., (START, (1 &minus; sqrt(<em>&lambda;</em>))/2, EMPTY) &rarr; ....</p>
+
+<p><strong>Proposition 2A:</strong> <em>If f(&lambda;) is in the class <strong>PDA</strong>, then so is every polynomial written as&mdash;</em></p>
+
+<p>&sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * <em>f</em>(<em>&lambda;</em>)<sup><em>i</em></sup> * (1 &minus; <em>f</em>(<em>&lambda;</em>))<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>],</p>
+
+<p><em>where n is the polynomial&#39;s degree and a[i] is a function in the class <strong>PDA</strong>.</em></p>
+
+<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 2A.  &#x25a1;</p>
+
+<p>This leads to an alternative proof of Proposition 1:</p>
+
+<p><em>Proof:</em> Special case of Proposition 2A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=0 (using Lemma 1B), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
+
+<p><strong>Corollary 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda)*h(&amp;lambda)).</em></p>
+
+<p><em>Proof:</em> Special case of Proposition 2A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=<em>h</em>(<em>&lambda;</em>), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
+
+<p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
+
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 2A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class <strong>PDA</strong>.</em></p>
 
@@ -1715,8 +1747,6 @@ calc_linear_func(count=8)
 </blockquote>
 
 <p><strong>Proposition 4:</strong> <em>If a full-domain pushdown automaton can generate words with the same letter such that the length of each word follows a probability distribution, then that distribution&#39;s probability generating function is in class <strong>PDA</strong>.</em></p>
-
-<p>A <em>probability generating function</em> has the form <em>p</em><sub>0</sub>*<em>&lambda;</em><sup>0</sup> + <em>p</em><sub>1</sub>*<em>&lambda;</em><sup>1</sup> + ..., where <em>p</em><sub><em>i</em></sub> (a <em>coefficient</em>) is the probability of getting <em>i</em>.</p>
 
 <p><em>Proof:</em> Let <em>F</em> be a full-domain pushdown automaton.  Add one state FAILURE, then augment <em>F</em> with a special &quot;letter-generating&quot; operation as follows.  Add the following rule that pops all symbols from the stack:</p>
 
@@ -1738,7 +1768,7 @@ calc_linear_func(count=8)
 
 <ul>
 <li><em>X</em> &rarr; <em>a</em> (rewrite <em>X</em> to the letter <em>a</em>).</li>
-<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).  For the same nonterminal, all the <em>p</em> must sum to 1.</li>
+<li><em>X</em> &rarr;<sub><em>p</em></sub> (<em>a</em>, <em>Y</em>) (with rational probability <em>p</em>, rewrite <em>X</em> to the letter <em>a</em> followed by the nonterminal <em>Y</em>).  For the same left-hand side, all the <em>p</em> must sum to 1.</li>
 <li><em>X</em> &rarr; (<em>Y</em>, <em>Z</em>) (rewrite <em>X</em> to the nonterminals <em>Y</em> and <em>Z</em> in that order).</li>
 </ul>
 
