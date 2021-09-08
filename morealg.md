@@ -1205,37 +1205,13 @@ The following definitions are used in this section:
 
 It is not known whether **ALGRAT** and **PDA** are equal, but the following can be established about **PDA**:
 
-**Lemma 1A:** _If f(&lambda;), g(&lambda;), and h(&lambda) are functions in the class **PDA**, then so is f(&lambda)\*g(&lambda) + (1&minus;f(&lambda))\*h(&lambda)._
-
-_Proof:_ Let _F_ be a full-domain pushdown automaton for _f_, and let _G_ be that for _g_.
-
-Assume that machines _F_, _G_, and _H_ stop when they pop EMPTY from the stack.  If this is not the case, transform all three machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, _flip_, EMPTY) &rarr; (_start_, {EMPTY&prime;&prime;}) and rule (_state_, _flip_, EMPTY) &rarr; (_state_, {}) for all states other than X0, where _start_ is the starting state of _F_, _G_, and _H_, as the case may be.
-
-Now, rename each state of _G_ and _H_ as necessary so that the sets of states of _F_, of _G_, and of _H_ are disjoint.  Then, for each rule in _F_ of the form&mdash;
-
-(_state_, _flip_, EMPTY) &rarr; (_state2_, {}),
-
-where _state2_ is a final state of _F_, replace that rule with&mdash;
-
-- (_state_, _flip_, EMPTY) &rarr; (_gstart_, {EMPTY}), for final states associated with output 1, and
-- (_state_, _flip_, EMPTY) &rarr; (_hstart_, {EMPTY}), for final states associated with output 0.
-
-where _gstart_ is the starting state for _G_ and _hstart_ is the starting state for _H_.  Then take the final states of the combined machine as the union of the final states of _G_ and _H_. The new machine terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(11)**](#Note11)</sup> because the machine is a full-domain pushdown automaton.
-&#x25a1;
-
-**Lemma 1B:**  _There are pushdown automata that simulate the probabilities 0 and 1._
-
-_Proof:_ The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. _&mdash;_
-
-**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda)\*g(&lambda)._
-
-_Proof:_ Use Lemma 1A with _F_ and _G_ being the automata for _f_ and _g_, and with _H_ being the probability 0 automaton in Lemma 1B. &#x25a1;
-
-**Lemma 2A:** _Let g(&lambda;) be a function in the class **PDA**, and suppose a pushdown automaton F has two rules of the form (`state`, HEADS, `stacksymbol`) &rarr; RHS1 and (`state`, TAILS, `stacksymbol`) &rarr; RHS2, where `state` and `stacksymbol` are a specific state/symbol pair among the left-hand sides of F's rules.  Then there is a pushdown automaton that transitions to RHS1 with probability g(&lambda;) and to RHS2 with probability 1&minus;g(&lambda;) instead._
+**Lemma 1A:** _Let g(&lambda;) be a function in the class **PDA**, and suppose a pushdown automaton F has two rules of the form (`state`, HEADS, `stacksymbol`) &rarr; RHS1 and (`state`, TAILS, `stacksymbol`) &rarr; RHS2, where `state` and `stacksymbol` are a specific state/symbol pair among the left-hand sides of F's rules.  Then there is a pushdown automaton that transitions to RHS1 with probability g(&lambda;) and to RHS2 with probability 1&minus;g(&lambda;) instead._
 
 _Proof:_ If RHS1 and RHS2 are the same, then the conclusion holds and nothing has to be done.  Thus assume RHS1 and RHS2 are different.
 
-Let _G_ be the full-domain pushdown automaton for _g_. As in Proposition 1, assume that machines _F_ and _G_ stop when they pop EMPTY from the stack. First, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for the following two pairs of rules in _F_, namely&mdash;
+Let _G_ be the full-domain pushdown automaton for _g_. Assume that machines _F_ and _G_ stop when they pop EMPTY from the stack. If this is not the case, transform both machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, _flip_, EMPTY) &rarr; (_start_, {EMPTY&prime;&prime;}) and rule (_state_, _flip_, EMPTY) &rarr; (_state_, {}) for all states other than X0, where _start_ is the starting state of _F_ or _G_, as the case may be.
+
+Now, rename each state of _G_ as necessary so that the sets of states of _F_ and of _G_ are disjoint.  Then, add to _F_ a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for the following two pairs of rules in _F_, namely&mdash;
 
 (_state_, HEADS, _stacksymbol_) &rarr; (_state2heads_, _stackheads_), and<br>
 (_state_, TAILS, _stacksymbol_) &rarr; (_state2tails_, _stacktails_),
@@ -1258,29 +1234,33 @@ where _gstart_ is the starting state for _G_, and copy the rules of the automato
 
 Then, the final states of the new machine are the same as those for the original machine _F_. &#x25a1;
 
-Because of Lemma 2A, it's possible to label each left-hand side of a pushdown automaton's rules with not just HEADS or TAILS, but also a rational number or another function in **PDA**, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:
+**Lemma 1B:**  _There are pushdown automata that simulate the probabilities 0 and 1._
+
+_Proof:_ The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. _&mdash;_
+
+Because of Lemma 1A, it's possible to label each left-hand side of a pushdown automaton's rules with not just HEADS or TAILS, but also a rational number or another function in **PDA**, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:
 
 (START, 1/2, EMPTY) &rarr; ..., (START, sqrt(_&lambda;_)/2, EMPTY) &rarr; ..., (START, (1 &minus; sqrt(_&lambda;_))/2, EMPTY) &rarr; ....
 
-**Proposition 2A:** _If f(&lambda;) is in the class **PDA**, then so is every polynomial written as&mdash;_
+**Proposition 1A:** _If f(&lambda;) is in the class **PDA**, then so is every polynomial written as&mdash;_
 
 &sum;<sub>_i_ = 0, ..., _n_</sub> choose(_n_, _i_) * _f_(_&lambda;_)<sup>_i_</sup> * (1 &minus; _f_(_&lambda;_))<sup>_n_ &minus; _i_</sup> * _a_\[_i_\],
 
 _where n is the polynomial's degree and a\[i\] is a function in the class **PDA**._
 
-_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup>[**(7)**](#Note7)</sup>: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 2A.  &#x25a1;
+_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup>[**(7)**](#Note7)</sup>: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
 
-This leads to an alternative proof of Proposition 1:
+**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda)\*g(&lambda)._
 
-_Proof:_ Special case of Proposition 2A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=0 (using Lemma 1B), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
+_Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=0 (using Lemma 1B), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
 
-**Corollary 1A:** _If f(&lambda;), g(&lambda;), and h(&lambda) are functions in the class **PDA**, then so is f(&lambda)\*g(&lambda) + (1&minus;f(&lambda)\*h(&lambda))._
+**Corollary 1A:** _If f(&lambda;), g(&lambda;), and h(&lambda) are functions in the class **PDA**, then so is f(&lambda)\*g(&lambda) + (1&minus;f(&lambda))\*h(&lambda)._
 
-_Proof:_ Special case of Proposition 2A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=_h_(_&lambda;_), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
+_Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=_h_(_&lambda;_), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
 
 **Proposition 2:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;)._
 
-_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 2A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(11)**](#Note11)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
+_Proof:_ Let _F_ be the full-domain pushdown automaton for _f_. For each state/symbol pair among the left-hand sides of _F_'s rules, apply Lemma 1A to the automaton _F_, using the function _g_.  Then the new machine _F_ terminates with probability 1 because the original _F_ and _G_ do for every _&lambda;_ in (0, 1), and because _G_ maps to (0, 1) where _F_ terminates with probability 1.  Moreover, _f_ is in class **PDA** by Theorem 1.2 of (Mossel and Peres 2005)<sup>[**(11)**](#Note11)</sup> because the machine is a full-domain pushdown automaton.  &#x25a1;
 
 **Proposition 3:** _Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class **PDA**._
 
@@ -1360,7 +1340,7 @@ One example of a finite set of word lengths is {1, 3, 5, 6}, where only words of
 
 _Proof Sketch:_
 
-1. As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6}), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its start state be the start state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its start state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.
+1. As in Lemma 1A, assume that the automaton stops when it pops EMPTY from the stack.  Let _S_ be the finite set (e.g., {1, 3, 5, 6}), and let _M_ be the maximum value in the finite set.  For each integer _i_ in \[0, _M_\], make a copy of the automaton and append the integer _i_ to the name of each of its states.  Combine the copies into a new automaton _F_, and let its start state be the start state for copy 0.  Now, whenever _F_ generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2's version of "XYZ", namely "2\_XYZ", transition to "3\_XYZ" instead), or if the last copy is reached, transition to the last copy's FAILURE state.  If _F_ would transition to a failure state corresponding to a copy not in _S_ (e.g., "0\_FAILURE", "2\_FAILURE", "3\_FAILURE" in this example), first all symbols other than EMPTY are popped from the stack and then _F_ transitions to its start state (this is a so-called "rejection" operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in _S_ (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.
 
 2. Follow (1), except as follows: (A) _M_ is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;
 

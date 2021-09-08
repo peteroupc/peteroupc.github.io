@@ -1657,39 +1657,13 @@ calc_linear_func(count=8)
 
 <p>It is not known whether <strong>ALGRAT</strong> and <strong>PDA</strong> are equal, but the following can be established about <strong>PDA</strong>:</p>
 
-<p><strong>Lemma 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda))*h(&amp;lambda).</em></p>
-
-<p><em>Proof:</em> Let <em>F</em> be a full-domain pushdown automaton for <em>f</em>, and let <em>G</em> be that for <em>g</em>.</p>
-
-<p>Assume that machines <em>F</em>, <em>G</em>, and <em>H</em> stop when they pop EMPTY from the stack.  If this is not the case, transform all three machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, <em>flip</em>, EMPTY) &rarr; (<em>start</em>, {EMPTY&prime;&prime;}) and rule (<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state</em>, {}) for all states other than X0, where <em>start</em> is the starting state of <em>F</em>, <em>G</em>, and <em>H</em>, as the case may be.</p>
-
-<p>Now, rename each state of <em>G</em> and <em>H</em> as necessary so that the sets of states of <em>F</em>, of <em>G</em>, and of <em>H</em> are disjoint.  Then, for each rule in <em>F</em> of the form&mdash;</p>
-
-<p>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state2</em>, {}),</p>
-
-<p>where <em>state2</em> is a final state of <em>F</em>, replace that rule with&mdash;</p>
-
-<ul>
-<li>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>gstart</em>, {EMPTY}), for final states associated with output 1, and</li>
-<li>(<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>hstart</em>, {EMPTY}), for final states associated with output 0.</li>
-</ul>
-
-<p>where <em>gstart</em> is the starting state for <em>G</em> and <em>hstart</em> is the starting state for <em>H</em>.  Then take the final states of the combined machine as the union of the final states of <em>G</em> and <em>H</em>. The new machine terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.
-&#x25a1;</p>
-
-<p><strong>Lemma 1B:</strong>  <em>There are pushdown automata that simulate the probabilities 0 and 1.</em></p>
-
-<p><em>Proof:</em> The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. <em>&mdash;</em></p>
-
-<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&amp;lambda)*g(&amp;lambda).</em></p>
-
-<p><em>Proof:</em> Use Lemma 1A with <em>F</em> and <em>G</em> being the automata for <em>f</em> and <em>g</em>, and with <em>H</em> being the probability 0 automaton in Lemma 1B. &#x25a1;</p>
-
-<p><strong>Lemma 2A:</strong> <em>Let g(&lambda;) be a function in the class <strong>PDA</strong>, and suppose a pushdown automaton F has two rules of the form (<code>state</code>, HEADS, <code>stacksymbol</code>) &rarr; RHS1 and (<code>state</code>, TAILS, <code>stacksymbol</code>) &rarr; RHS2, where <code>state</code> and <code>stacksymbol</code> are a specific state/symbol pair among the left-hand sides of F&#39;s rules.  Then there is a pushdown automaton that transitions to RHS1 with probability g(&lambda;) and to RHS2 with probability 1&minus;g(&lambda;) instead.</em></p>
+<p><strong>Lemma 1A:</strong> <em>Let g(&lambda;) be a function in the class <strong>PDA</strong>, and suppose a pushdown automaton F has two rules of the form (<code>state</code>, HEADS, <code>stacksymbol</code>) &rarr; RHS1 and (<code>state</code>, TAILS, <code>stacksymbol</code>) &rarr; RHS2, where <code>state</code> and <code>stacksymbol</code> are a specific state/symbol pair among the left-hand sides of F&#39;s rules.  Then there is a pushdown automaton that transitions to RHS1 with probability g(&lambda;) and to RHS2 with probability 1&minus;g(&lambda;) instead.</em></p>
 
 <p><em>Proof:</em> If RHS1 and RHS2 are the same, then the conclusion holds and nothing has to be done.  Thus assume RHS1 and RHS2 are different.</p>
 
-<p>Let <em>G</em> be the full-domain pushdown automaton for <em>g</em>. As in Proposition 1, assume that machines <em>F</em> and <em>G</em> stop when they pop EMPTY from the stack. First, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for the following two pairs of rules in <em>F</em>, namely&mdash;</p>
+<p>Let <em>G</em> be the full-domain pushdown automaton for <em>g</em>. Assume that machines <em>F</em> and <em>G</em> stop when they pop EMPTY from the stack. If this is not the case, transform both machines by renaming the symbol EMPTY to EMPTY&prime;&prime;, adding a new symbol EMPTY&prime;&prime; and new starting state X0, and adding rules (X0, <em>flip</em>, EMPTY) &rarr; (<em>start</em>, {EMPTY&prime;&prime;}) and rule (<em>state</em>, <em>flip</em>, EMPTY) &rarr; (<em>state</em>, {}) for all states other than X0, where <em>start</em> is the starting state of <em>F</em> or <em>G</em>, as the case may be.</p>
+
+<p>Now, rename each state of <em>G</em> as necessary so that the sets of states of <em>F</em> and of <em>G</em> are disjoint.  Then, add to <em>F</em> a new stack symbol EMPTY&prime; (or a name not found in the stack symbols of G, as the case may be).  Then, for the following two pairs of rules in <em>F</em>, namely&mdash;</p>
 
 <p>(<em>state</em>, HEADS, <em>stacksymbol</em>) &rarr; (<em>state2heads</em>, <em>stackheads</em>), and<br>
 (<em>state</em>, TAILS, <em>stacksymbol</em>) &rarr; (<em>state2tails</em>, <em>stacktails</em>),</p>
@@ -1714,29 +1688,33 @@ calc_linear_func(count=8)
 
 <p>Then, the final states of the new machine are the same as those for the original machine <em>F</em>. &#x25a1;</p>
 
-<p>Because of Lemma 2A, it&#39;s possible to label each left-hand side of a pushdown automaton&#39;s rules with not just HEADS or TAILS, but also a rational number or another function in <strong>PDA</strong>, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:</p>
+<p><strong>Lemma 1B:</strong>  <em>There are pushdown automata that simulate the probabilities 0 and 1.</em></p>
+
+<p><em>Proof:</em> The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. <em>&mdash;</em></p>
+
+<p>Because of Lemma 1A, it&#39;s possible to label each left-hand side of a pushdown automaton&#39;s rules with not just HEADS or TAILS, but also a rational number or another function in <strong>PDA</strong>, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:</p>
 
 <p>(START, 1/2, EMPTY) &rarr; ..., (START, sqrt(<em>&lambda;</em>)/2, EMPTY) &rarr; ..., (START, (1 &minus; sqrt(<em>&lambda;</em>))/2, EMPTY) &rarr; ....</p>
 
-<p><strong>Proposition 2A:</strong> <em>If f(&lambda;) is in the class <strong>PDA</strong>, then so is every polynomial written as&mdash;</em></p>
+<p><strong>Proposition 1A:</strong> <em>If f(&lambda;) is in the class <strong>PDA</strong>, then so is every polynomial written as&mdash;</em></p>
 
 <p>&sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> choose(<em>n</em>, <em>i</em>) * <em>f</em>(<em>&lambda;</em>)<sup><em>i</em></sup> * (1 &minus; <em>f</em>(<em>&lambda;</em>))<sup><em>n</em> &minus; <em>i</em></sup> * <em>a</em>[<em>i</em>],</p>
 
 <p><em>where n is the polynomial&#39;s degree and a[i] is a function in the class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 2A.  &#x25a1;</p>
+<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
 
-<p>This leads to an alternative proof of Proposition 1:</p>
+<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&amp;lambda)*g(&amp;lambda).</em></p>
 
-<p><em>Proof:</em> Special case of Proposition 2A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=0 (using Lemma 1B), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
+<p><em>Proof:</em> Special case of Proposition 1A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=0 (using Lemma 1B), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
 
-<p><strong>Corollary 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda)*h(&amp;lambda)).</em></p>
+<p><strong>Corollary 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda))*h(&amp;lambda).</em></p>
 
-<p><em>Proof:</em> Special case of Proposition 2A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=<em>h</em>(<em>&lambda;</em>), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
+<p><em>Proof:</em> Special case of Proposition 1A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=<em>h</em>(<em>&lambda;</em>), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 2A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class <strong>PDA</strong>.</em></p>
 
@@ -1834,7 +1812,7 @@ calc_linear_func(count=8)
 <p><em>Proof Sketch:</em></p>
 
 <ol>
-<li><p>As in Proposition 1, assume that the automaton stops when it pops EMPTY from the stack.  Let <em>S</em> be the finite set (e.g., {1, 3, 5, 6}), and let <em>M</em> be the maximum value in the finite set.  For each integer <em>i</em> in [0, <em>M</em>], make a copy of the automaton and append the integer <em>i</em> to the name of each of its states.  Combine the copies into a new automaton <em>F</em>, and let its start state be the start state for copy 0.  Now, whenever <em>F</em> generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2&#39;s version of &quot;XYZ&quot;, namely &quot;2_XYZ&quot;, transition to &quot;3_XYZ&quot; instead), or if the last copy is reached, transition to the last copy&#39;s FAILURE state.  If <em>F</em> would transition to a failure state corresponding to a copy not in <em>S</em> (e.g., &quot;0_FAILURE&quot;, &quot;2_FAILURE&quot;, &quot;3_FAILURE&quot; in this example), first all symbols other than EMPTY are popped from the stack and then <em>F</em> transitions to its start state (this is a so-called &quot;rejection&quot; operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in <em>S</em> (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.</p></li>
+<li><p>As in Lemma 1A, assume that the automaton stops when it pops EMPTY from the stack.  Let <em>S</em> be the finite set (e.g., {1, 3, 5, 6}), and let <em>M</em> be the maximum value in the finite set.  For each integer <em>i</em> in [0, <em>M</em>], make a copy of the automaton and append the integer <em>i</em> to the name of each of its states.  Combine the copies into a new automaton <em>F</em>, and let its start state be the start state for copy 0.  Now, whenever <em>F</em> generates a letter, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for the next copy (e.g., if the operation would transition to copy 2&#39;s version of &quot;XYZ&quot;, namely &quot;2_XYZ&quot;, transition to &quot;3_XYZ&quot; instead), or if the last copy is reached, transition to the last copy&#39;s FAILURE state.  If <em>F</em> would transition to a failure state corresponding to a copy not in <em>S</em> (e.g., &quot;0_FAILURE&quot;, &quot;2_FAILURE&quot;, &quot;3_FAILURE&quot; in this example), first all symbols other than EMPTY are popped from the stack and then <em>F</em> transitions to its start state (this is a so-called &quot;rejection&quot; operation).  Now, all the final states (except FAILURE states) for the copies corresponding to the values in <em>S</em> (e.g., copies 1, 3, 5, 6 in the example) are treated as returning 1, and all other states are treated as returning 0.</p></li>
 <li><p>Follow (1), except as follows: (A) <em>M</em> is equal to the integer modulus minus 1.  (B) For the last copy of the automaton, instead of transitioning to the next state after the letter-generating operation (see Proposition 4), transition to the corresponding state for copy 0 of the automaton.  &#x25a1;</p></li>
 </ol>
 
