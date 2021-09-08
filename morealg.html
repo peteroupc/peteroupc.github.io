@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/07"><meta name="citation_online_date" content="2021/09/07"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/08"><meta name="citation_online_date" content="2021/09/08"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -73,6 +73,7 @@
 <li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
 <li><a href="#Symmetric_Geometric_Distribution"><strong>Symmetric Geometric Distribution</strong></a></li>
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
+<li><a href="#One_Dimensional_Epanechnikov_Kernel"><strong>One-Dimensional Epanechnikov Kernel</strong></a></li>
 </ul></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -1183,6 +1184,19 @@
 <p><strong>Note:</strong> If <em>&theta;</em> is a uniform PSRN, then the check &quot;With probability  <em>w</em> = <em>&theta;</em>/(1+<em>&theta;</em>)&quot; can be implemented by running the Bernoulli factory algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / ((<em>d</em> + <em>&mu;</em>) + (<em>c</em> + <em>&lambda;</em>))</strong>, where <em>c</em> is 1; <em>&lambda;</em> represents an input coin that always returns 0; <em>d</em> is <em>&theta;</em>&#39;s integer part, and <em>&mu;</em> is an input coin that runs <strong>SampleGeometricBag</strong> on <em>&theta;</em>&#39;s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.</p>
 </blockquote>
 
+<p><a id=One_Dimensional_Epanechnikov_Kernel></a></p>
+
+<h3>One-Dimensional Epanechnikov Kernel</h3>
+
+<p>Adapted from Devroye and Györfi (1985, p. 236)<sup><a href="#Note48"><strong>(48)</strong></a></sup>.</p>
+
+<ol>
+<li>Generate three empty PSRNs <em>a</em>, <em>b</em>, and <em>c</em>, with a positive sign, an integer part of 0, and an empty fractional part.</li>
+<li>Run <strong>URandLess</strong> on <em>a</em> and <em>c</em> in that order, then run <strong>URandLess</strong> on <em>b</em> and <em>c</em> in that order.  If both runs return 1, set <em>c</em> to point to <em>b</em>.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which will happen with probability 1/2), set <em>c</em>&#39;s sign to negative.</li>
+<li>Return <em>c</em>.</li>
+</ol>
+
 <p><a id=Requests_and_Open_Questions></a></p>
 
 <h2>Requests and Open Questions</h2>
@@ -1264,6 +1278,7 @@
 <li><small><sup id=Note45>(45)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small></li>
 <li><small><sup id=Note46>(46)</sup> Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</small></li>
 <li><small><sup id=Note47>(47)</sup> Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</small></li>
+<li><small><sup id=Note48>(48)</sup> Devroye, L., Györfi, L., <em>Nonparametric Density Estimation: The L1 View</em>, 1985.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -1690,7 +1705,7 @@ calc_linear_func(count=8)
 
 <p><strong>Lemma 1B:</strong>  <em>There are pushdown automata that simulate the probabilities 0 and 1.</em></p>
 
-<p><em>Proof:</em> The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. <em>&mdash;</em></p>
+<p><em>Proof:</em> The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. &#x25a1;</p>
 
 <p>Because of Lemma 1A, it&#39;s possible to label each left-hand side of a pushdown automaton&#39;s rules with not just HEADS or TAILS, but also a rational number or another function in <strong>PDA</strong>, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:</p>
 
@@ -1702,13 +1717,13 @@ calc_linear_func(count=8)
 
 <p><em>where n is the polynomial&#39;s degree and a[i] is a function in the class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
+<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup><a href="#Note7"><strong>(7)</strong></a></sup>: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
 
-<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&amp;lambda)*g(&amp;lambda).</em></p>
+<p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
 
 <p><em>Proof:</em> Special case of Proposition 1A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=0 (using Lemma 1B), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
 
-<p><strong>Corollary 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&amp;lambda) are functions in the class <strong>PDA</strong>, then so is f(&amp;lambda)*g(&amp;lambda) + (1&minus;f(&amp;lambda))*h(&amp;lambda).</em></p>
+<p><strong>Corollary 1A:</strong> <em>If f(&lambda;), g(&lambda;), and h(&lambda;) are functions in the class <strong>PDA</strong>, then so is f(&lambda;)*g(&lambda;) + (1&minus;f(&lambda;))*h(&lambda;).</em></p>
 
 <p><em>Proof:</em> Special case of Proposition 1A with <em>n</em>=1, <em>f</em>(<em>&lambda;</em>)=<em>f</em>(<em>&lambda;</em>), <em>a</em>[0]=<em>h</em>(<em>&lambda;</em>), and <em>a</em>[1]=<em>g</em>(<em>&lambda;</em>).  &#x25a1;</p>
 

@@ -114,7 +114,7 @@ This page has more algorithms for sampling using partially-sampled random number
         - _Discrete distributions_ (those that cover a finite or countably infinite set of values)?
         - _Absolutely continuous distributions_ (those with a probability density function such as the uniform or triangular distribution)?
         - _Singular distributions_ (covering an uncountable but zero-volume set)?
-        - Absolutely continuous distributions with _continuous_ density functions?
+        - Distributions with _continuous_ density functions?
     2. Same question as 1, but for pushdown generators.
     3. Of the probability distributions that a pushdown generator can generate, what is the exact class of distributions with piecewise smooth density functions?  (The answer is known for finite-state generators.)
 

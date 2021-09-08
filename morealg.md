@@ -57,6 +57,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Symmetric Geometric Distribution**](#Symmetric_Geometric_Distribution)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
+    - [**One-Dimensional Epanechnikov Kernel**](#One_Dimensional_Epanechnikov_Kernel)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
@@ -835,6 +836,16 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
+<a id=One_Dimensional_Epanechnikov_Kernel></a>
+### One-Dimensional Epanechnikov Kernel
+
+Adapted from Devroye and Györfi (1985, p. 236)<sup>[**(48)**](#Note48)</sup>.
+
+1. Generate three empty PSRNs _a_, _b_, and _c_, with a positive sign, an integer part of 0, and an empty fractional part.
+2. Run **URandLess** on _a_ and _c_ in that order, then run **URandLess** on _b_ and _c_ in that order.  If both runs return 1, set _c_ to point to _b_.
+3. Generate an unbiased random bit.  If that bit is 1 (which will happen with probability 1/2), set _c_'s sign to negative.
+4. Return _c_.
+
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
 
@@ -903,6 +914,7 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 - <small><sup id=Note45>(45)</sup> Adamczewski, B., Cassaigne, J. and Le Gonidec, M., 2020. On the computational complexity of algebraic numbers: the Hartmanis–Stearns problem revisited. Transactions of the American Mathematical Society, 373(5), pp.3085-3115.</small>
 - <small><sup id=Note46>(46)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note47>(47)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
+- <small><sup id=Note48>(48)</sup> Devroye, L., Györfi, L., _Nonparametric Density Estimation: The L1 View_, 1985.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1236,7 +1248,7 @@ Then, the final states of the new machine are the same as those for the original
 
 **Lemma 1B:**  _There are pushdown automata that simulate the probabilities 0 and 1._
 
-_Proof:_ The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. _&mdash;_
+_Proof:_ The probability 0 automaton has the rules (START, HEADS, EMPTY) &rarr; (START, {}) and (START, TAILS, EMPTY) &rarr; (START, {}), and its only state START is associated with output 0. The probability 1 automaton is the same, except START is associated with output 1.  Both automata obviously terminate with probability 1. &#x25a1;
 
 Because of Lemma 1A, it's possible to label each left-hand side of a pushdown automaton's rules with not just HEADS or TAILS, but also a rational number or another function in **PDA**, as long as for each state/symbol pair, the probabilities for that pair sum to 1.  For example, rules like the following are now allowed:
 
@@ -1248,13 +1260,13 @@ Because of Lemma 1A, it's possible to label each left-hand side of a pushdown au
 
 _where n is the polynomial's degree and a\[i\] is a function in the class **PDA**._
 
-_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup>[**(7)**](#Note7)</sup>: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin with success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
+_Proof Sketch_: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)<sup>[**(7)**](#Note7)</sup>: The first stage counts the number of "heads" shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability _a_\[_i_\], where _i_ is the number of "heads". The automaton's transitions take advantage of Lemma 1A.  &#x25a1;
 
-**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda)\*g(&lambda)._
+**Proposition 1:** _If f(&lambda;) and g(&lambda;) are functions in the class **PDA**, then so is their product, namely f(&lambda;)\*g(&lambda;)._
 
 _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=0 (using Lemma 1B), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
 
-**Corollary 1A:** _If f(&lambda;), g(&lambda;), and h(&lambda) are functions in the class **PDA**, then so is f(&lambda)\*g(&lambda) + (1&minus;f(&lambda))\*h(&lambda)._
+**Corollary 1A:** _If f(&lambda;), g(&lambda;), and h(&lambda;) are functions in the class **PDA**, then so is f(&lambda;)\*g(&lambda;) + (1&minus;f(&lambda;))\*h(&lambda;)._
 
 _Proof:_ Special case of Proposition 1A with _n_=1, _f_(_&lambda;_)=_f_(_&lambda;_), _a_\[0]=_h_(_&lambda;_), and _a_\[1]=_g_(_&lambda;_).  &#x25a1;
 
