@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/08/25"><meta name="citation_online_date" content="2021/08/25"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/09/09"><meta name="citation_online_date" content="2021/09/09"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -19,13 +19,13 @@
 
 <p>The following concepts are used in this document.</p>
 
-<p>Each algorithm takes a stream of random variates (numbers).  These numbers follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.</p>
+<p>Each algorithm takes a stream of independent random variates (numbers).  These numbers follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.</p>
 
 <ul>
-<li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the average value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as <em>n</em> gets large.</li>
+<li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the average value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as <em>n</em> gets large (the <em>law of large numbers</em>).</li>
 <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.  In other words, take random samples, raise them to the power <em>n</em>, then take their average.  The average will approach the <em>n</em><sup>th</sup> moment as <em>n</em> gets large.</li>
-<li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em><sup><em>n</em></sup> &minus; <em>&mu;</em>), where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>.</li>
-<li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em><sup><em>n</em></sup> &minus; <em>&mu;</em>), where <em>&mu;</em> is the distribution&#39;s mean.  This is the same as the central moment when <em>n</em> is even.</li>
+<li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>.</li>
+<li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  This is the same as the central moment when <em>n</em> is even.</li>
 </ul>
 
 <p>Some distributions don&#39;t have an <em>n</em><sup>th</sup> moment for a particular <em>n</em>.  This usually means the <em>n</em><sup>th</sup> power of the stream&#39;s numbers varies so wildly that it can&#39;t be estimated accurately.  If a distribution has an <em>n</em><sup>th</sup> moment, it also has a <em>k</em><sup>th</sup> moment for any <em>k</em> in the interval [1, <em>n</em>).</p>
@@ -97,6 +97,8 @@
 
 <p>With this algorithm, the relative error will be no greater than <em>&epsilon;</em> with probability 1 &minus; <em>&delta;</em> or greater.  However, the estimate has a nonzero probability of being higher than 1.</p>
 
+<p>This algorithm is not guaranteed to produce unbiased estimates.</p>
+
 <p>The algorithm, called <strong>Algorithm B</strong> in this document, follows.</p>
 
 <ol>
@@ -159,6 +161,8 @@
 </ul>
 
 <p>The algorithm works by first estimating the <em>p</em><sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream&#39;s mean.</p>
+
+<p>This algorithm is not guaranteed to produce unbiased estimates.</p>
 
 <p>The algorithm has the following parameters:</p>
 
@@ -302,6 +306,7 @@
 <li>Instead of <em>&epsilon;</em>, take <em>&epsilon;</em>/(<em>b</em> &minus; <em>a</em>).</li>
 <li>If the algorithm would return <em>f</em>(<em>&mu;</em>), instead return <em>g</em>(<em>&mu;</em>) where <em>g</em>(<em>&mu;</em>) = <em>f</em>(<em>a</em> + (<em>&mu;</em>*(<em>b</em> &minus; <em>a</em>))).</li>
 </ul></li>
+<li><p>The sample mean, which is used by <em>Algorithm E</em> and <em>Algorithm F</em>, is an unbiased estimator of the mean as long as the sample size <em>n</em> is unchanged.</p></li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -317,7 +322,7 @@
 
 <h2>Randomized Integration</h2>
 
-<p>Monte Carlo integration is a randomized way to estimate the integral of a function.  <em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), with the following properties:</p>
+<p>Monte Carlo integration is a randomized way to estimate the integral (&quot;area under the graph&quot;) of a function.  <em>Algorithm C</em> can be used to estimate an integral of a function <em>h</em>(<strong>z</strong>), with the following properties:</p>
 
 <ul>
 <li><em>h</em>(<strong>z</strong>) is a multidimensional function that takes an <em>n</em>-dimensional vector and returns a real number.  <em>h</em>(<strong>z</strong>) is usually a function that&#39;s easy to evaluate but whose integral is hard to calculate.</li>

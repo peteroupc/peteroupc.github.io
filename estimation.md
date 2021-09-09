@@ -14,12 +14,12 @@ The algorithms are described to make them easy to implement by programmers.
 
 The following concepts are used in this document.
 
-Each algorithm takes a stream of random variates (numbers).  These numbers follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
+Each algorithm takes a stream of independent random variates (numbers).  These numbers follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
 
-- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as _n_ gets large.
+- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  In other words, take random samples and then take their average.  The average will approach the expected value as _n_ gets large (the _law of large numbers_).
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.  In other words, take random samples, raise them to the power _n_, then take their average.  The average will approach the _n_<sup>th</sup> moment as _n_ gets large.
-- An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
-- An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_<sup>_n_</sup> &minus; _&mu;_), where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
+- An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
+- An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
 
 Some distributions don't have an _n_<sup>th</sup> moment for a particular _n_.  This usually means the _n_<sup>th</sup> power of the stream's numbers varies so wildly that it can't be estimated accurately.  If a distribution has an _n_<sup>th</sup> moment, it also has a _k_<sup>th</sup> moment for any _k_ in the interval [1, _n_).
 
@@ -72,6 +72,8 @@ The algorithm has the following parameters:
 
 With this algorithm, the relative error will be no greater than _&epsilon;_ with probability 1 &minus; _&delta;_ or greater.  However, the estimate has a nonzero probability of being higher than 1.
 
+This algorithm is not guaranteed to produce unbiased estimates.
+
 The algorithm, called **Algorithm B** in this document, follows.
 
 1. Set _k_ to ceil(2\*ln(6/_&delta;_)/_&epsilon;_<sup>2/3</sup>).
@@ -117,6 +119,8 @@ The following algorithm comes from Kunsch et al. (2019)<sup>[**(5)**](#Note5)</s
 - The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (Note that the _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
 The algorithm works by first estimating the _p_<sup>th</sup> c.a.m. of the stream, then using the estimate to determine a sample size for the next step, which actually estimates the stream's mean.
+
+This algorithm is not guaranteed to produce unbiased estimates.
 
 The algorithm has the following parameters:
 
@@ -213,6 +217,8 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
 >     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
+> 4. The sample mean, which is used by _Algorithm E_ and _Algorithm F_, is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
+>
 > **Examples:**
 >
 > 1. Take _f_(_x_) = sin(_&pi;_\*_x_\*4)/2 + 1/2.  This is a Lipschitz continuous function with Lipschitz constant 2\*_&pi;_, so for this _f_, _&psi;_(_&epsilon;_) = _&epsilon;_/(2\*_&pi;_).  Now, if we have a coin that produces heads with an unknown probability in the interval \[_&mu;_, 1&minus;_&mu;_\], or 0 otherwise, we can run _Algorithm D_ or _Algorithm E_ with _q_ = 4, _p_ = 2, and _&kappa;_ &ge; (1/min(_&mu;_, 1&minus;_&mu;_))<sup>1/4</sup> (see the section on _Algorithm C_).
@@ -222,7 +228,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 <a id=Randomized_Integration></a>
 ## Randomized Integration
 
-Monte Carlo integration is a randomized way to estimate the integral of a function.  _Algorithm C_ can be used to estimate an integral of a function _h_(**z**), with the following properties:
+Monte Carlo integration is a randomized way to estimate the integral ("area under the graph") of a function.  _Algorithm C_ can be used to estimate an integral of a function _h_(**z**), with the following properties:
 
 - _h_(**z**) is a multidimensional function that takes an _n_-dimensional vector and returns a real number.  _h_(**z**) is usually a function that's easy to evaluate but whose integral is hard to calculate.
 - **z** is an _n_-dimensional vector chosen at random in the sampling domain.

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/08/27"><meta name="citation_online_date" content="2021/08/27"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Miscellaneous Observations on Randomization</title><meta name="citation_title" content="Miscellaneous Observations on Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randmisc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randmisc.html"><meta name="citation_date" content="2021/09/08"><meta name="citation_online_date" content="2021/09/08"><meta name="og:title" content="Miscellaneous Observations on Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randmisc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Miscellaneous Observations on Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Miscellaneous Observations on Randomization</h1>
@@ -323,11 +323,11 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <ul>
 <li>Let <em>f</em>(.) be a function applied to <em>a</em> or <em>b</em> before calculating the quantile.</li>
 <li>Let <em>Q</em>(<em>z</em>) be the quantile function for the desired distribution.</li>
-<li>Let <em>x</em> be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval [<em>a</em>, <em>b</em>].  If <em>f</em>(<em>t</em>) = <em>t</em>, the PSRN <em>x</em> must have a positive sign and an integer part of 0, so that the interval [<em>a</em>, <em>b</em>] is either the interval [0, 1] or a closed interval in [0, 1], depending on the PSRN&#39;s fractional part.</li>
+<li>Let <em>x</em> be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval [<em>a</em>, <em>b</em>].  If <em>f</em>(<em>t</em>) = <em>t</em> (the identity function), the PSRN <em>x</em> must have a positive sign and an integer part of 0, so that the interval [<em>a</em>, <em>b</em>] is either the interval [0, 1] or a closed interval in [0, 1], depending on the PSRN&#39;s fractional part.  For example, if the PSRN&#39;s fractional part is 0.147..., then the interval is [0.147, 0.148].</li>
 <li>Let <em>&beta;</em> be the digit base of digits in <em>x</em>&#39;s fractional part (such as 2 for binary).</li>
 </ul>
 
-<p>Then the following algorithm transforms that number to a random variate for the distribution associated with <em>Q</em>, with a desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>):</p>
+<p>Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of <em>&epsilon;</em> with probability 1 (see (Devroye and Gravel 2020)<sup><a href="#Note29"><strong>(29)</strong></a></sup>):</p>
 
 <ol>
 <li>Generate additional digits of <em>x</em> uniformly at random&mdash;thus shortening the interval [<em>a</em>, <em>b</em>]&mdash;until a lower bound of <em>Q</em>(<em>f</em>(<em>a</em>)) and an upper bound of <em>Q</em>(<em>f</em>(<em>b</em>)) differ by no more than 2*<em>&epsilon;</em>.  Call the two bounds <em>low</em> and <em>high</em>, respectively.</li>
@@ -336,7 +336,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 
 <p>In some cases, it may be possible to calculate the needed digit size in advance.</p>
 
-<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>], which roughly means that it&#39;s a continuous function with no vertical slope on that interval, then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
+<p>As one example, if <em>f</em>(<em>t</em>) = <em>t</em> (the identity function) and the quantile function is <em>Lipschitz continuous</em> on the interval [<em>a</em>, <em>b</em>], which roughly means that it&#39;s a continuous function with no vertical slope on that interval, then the following algorithm generates a quantile with error tolerance <em>&epsilon;</em>:</p>
 
 <ol>
 <li>Let <em>d</em> be ceil((ln(max(1,<em>L</em>)) &minus; ln(<em>&epsilon;</em>)) / ln(<em>&beta;</em>)), where <em>L</em> is an upper bound of the quantile function&#39;s maximum slope (also known as the <em>Lipschitz constant</em>). For each digit among the first <em>d</em> digits in <em>x</em>&#39;s fractional part, if that digit is unsampled, set it to a digit chosen uniformly at random.</li>
@@ -351,7 +351,7 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <p>Specifically, if&mdash;</p>
 
 <ul>
-<li><em>f</em>(<em>t</em>) = <em>t</em>,</li>
+<li><em>f</em>(<em>t</em>) = <em>t</em> (the identity function),</li>
 <li><em>Q</em> on the interval [<em>a</em>, <em>b</em>] is continuous and has a minimum and maximum, and</li>
 <li><em>Q</em> on [<em>a</em>, <em>b</em>] admits a continuous and monotone increasing function <em>&omega;</em>(<em>&delta;</em>) as a <em>modulus of continuity</em>,</li>
 </ul>
@@ -361,8 +361,8 @@ emphasis on sampling random variates from them.  Some of these families are desc
 <p>For example&mdash;</p>
 
 <ul>
-<li>if <em>Q_is Lipschitz continuous with Lipschitz constant _L</em> on [<em>a</em>, <em>b</em>], then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>L</em>*<em>&delta;</em>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em>, and</li>
-<li>if <em>Q_is _&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
+<li>if <em>Q</em> is Lipschitz continuous with Lipschitz constant <em>L</em> on [<em>a</em>, <em>b</em>], then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>L</em>*<em>&delta;</em>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = <em>&epsilon;</em>/<em>L</em>, and</li>
+<li>if <em>Q</em> is <em>&alpha;</em>-Hölder continuous with Hölder constant <em>M</em> on that interval, then the function is no &quot;steeper&quot; than <em>&omega;</em>(<em>&delta;</em>) = <em>M</em>*<em>&delta;</em><sup><em>&alpha;</em></sup>, so <em>&omega;</em><sup>&minus;1</sup>(<em>&epsilon;</em>) = (<em>&epsilon;</em>/<em>M</em>)<sup>1/<em>&alpha;</em></sup>.</li>
 </ul>
 
 <p>The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:</p>
