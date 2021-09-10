@@ -73,10 +73,7 @@
 <li><a href="#Exponential_Distribution_with_Rate_ln__x"><strong>Exponential Distribution with Rate ln(<em>x</em>)</strong></a></li>
 <li><a href="#Symmetric_Geometric_Distribution"><strong>Symmetric Geometric Distribution</strong></a></li>
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
-</ul></li>
-<li><a href="#Gamma_Distribution_with_Parameter_1_or_Less"><strong>Gamma Distribution with Parameter 1 or Less</strong></a>
-
-<ul>
+<li><a href="#Gamma_Distribution_with_Parameter_1_or_Less"><strong>Gamma Distribution with Parameter 1 or Less</strong></a></li>
 <li><a href="#One_Dimensional_Epanechnikov_Kernel"><strong>One-Dimensional Epanechnikov Kernel</strong></a></li>
 </ul></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
@@ -1190,7 +1187,7 @@
 
 <p><a id=Gamma_Distribution_with_Parameter_1_or_Less></a></p>
 
-<h2>Gamma Distribution with Parameter 1 or Less</h2>
+<h3>Gamma Distribution with Parameter 1 or Less</h3>
 
 <p>Takes a parameter <em>a</em>, which must be a rational number in the interval (0, 1].  Adapted from Berman&#39;s gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN&#39;s fractional digits are binary (zeros or ones).</p>
 
@@ -1198,7 +1195,7 @@
 <li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.  If <em>a</em> is 1, instead generate an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or
 <strong>ExpRand2</strong> algorithm and return that variate.</li>
 <li>Generate a PSRN <em>ret</em> using the <strong>power-of-uniform sub-algorithm</strong> (in the page on PSRNs) with <em>px</em>/<em>py</em> = 1/<em>a</em>.</li>
-<li>(The following two steps succeed with probability (1&minus;<em>ret</em>)<sup>(1&minus;<em>a</em>).)  Create an input coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;</li>
+<li>(The following two steps succeed with probability (1&minus;<em>ret</em>)<sup>(1&minus;<em>a</em>)</sup>.)  Create an input coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;</li>
 <li>Run the <strong>algorithm for <em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong> with <em>x</em>/<em>y</em> = 1&minus;<em>a</em>, using the input coin from step 3.  If the run returns 0, go to step 1.</li>
 <li>(At this point, <em>ret</em> is distributed as beta(<em>a</em>, 2 &minus; <em>a</em>).)  Generate two exponential random variates with a rate of 1 via <strong>ExpRand</strong> or <strong>ExpRand2</strong>, then generate their sum by applying the <strong>UniformAdd</strong> algorithm.  Call the sum <em>z</em>.</li>
 <li>Run the <strong>UniformMultiply</strong> algorithm on <em>ret</em> and <em>z</em>, and return the result of that algorithm.</li>

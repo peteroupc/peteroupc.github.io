@@ -57,7 +57,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Symmetric Geometric Distribution**](#Symmetric_Geometric_Distribution)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
-- [**Gamma Distribution with Parameter 1 or Less**](#Gamma_Distribution_with_Parameter_1_or_Less)
+    - [**Gamma Distribution with Parameter 1 or Less**](#Gamma_Distribution_with_Parameter_1_or_Less)
     - [**One-Dimensional Epanechnikov Kernel**](#One_Dimensional_Epanechnikov_Kernel)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
@@ -838,14 +838,14 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
 <a id=Gamma_Distribution_with_Parameter_1_or_Less></a>
-## Gamma Distribution with Parameter 1 or Less
+### Gamma Distribution with Parameter 1 or Less
 
 Takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).
 
 1. Create a positive-sign zero-integer-part uniform PSRN, _ret_.  If _a_ is 1, instead generate an exponential random variate with a rate of 1 via the **ExpRand** or
 **ExpRand2** algorithm and return that variate.
 2. Generate a PSRN _ret_ using the **power-of-uniform sub-algorithm** (in the page on PSRNs) with _px_/_py_ = 1/_a_.
-3. (The following two steps succeed with probability (1&minus;_ret_)<sup>(1&minus;_a_).)  Create an input coin that does the following: "Flip the input coin and return 1 minus the result."
+3. (The following two steps succeed with probability (1&minus;_ret_)<sup>(1&minus;_a_)</sup>.)  Create an input coin that does the following: "Flip the input coin and return 1 minus the result."
 4. Run the **algorithm for _&lambda;_<sup>_x_/_y_</sup>** with _x_/_y_ = 1&minus;_a_, using the input coin from step 3.  If the run returns 0, go to step 1.
 5. (At this point, _ret_ is distributed as beta(_a_, 2 &minus; _a_).)  Generate two exponential random variates with a rate of 1 via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm.  Call the sum _z_.
 6. Run the **UniformMultiply** algorithm on _ret_ and _z_, and return the result of that algorithm.
