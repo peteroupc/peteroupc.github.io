@@ -217,7 +217,7 @@ If the stream is **unbounded** (can take on any real number) and its distributio
 >     - Instead of _&epsilon;_, take _&epsilon;_/(_b_ &minus; _a_).
 >     - If the algorithm would return _f_(_&mu;_), instead return _g_(_&mu;_) where _g_(_&mu;_) = _f_(_a_ + (_&mu;_\*(_b_ &minus; _a_))).
 >
-> 4. The sample mean, which is used by _Algorithm E_ and _Algorithm F_, is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
+> 4. _Algorithm E_ and _Algorithm F_ are not unbiased estimators in general.  However, when _f_(_x_) = _x_, the sample mean used by both algorithms is an unbiased estimator of the mean as long as the sample size _n_ is unchanged.
 >
 > **Examples:**
 >

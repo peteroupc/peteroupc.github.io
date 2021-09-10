@@ -629,7 +629,7 @@ Once a PSRN is accepted by the steps above, optionally fill the unsampled digits
 > **Notes:**
 >
 > - A beta random variate with parameters 1/_x_ and 1 is the same as a uniform random variate in [0, 1] raised to the power of _x_.
-> - For the beta distribution bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random variates get rejected by steps 5 and 6, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the PDF, approaches 0 as the parameters get bigger.  To deal with this, step 2 was included, which under certain circumstances breaks the PDF into two parts that are relatively trivial to sample (in terms of bit complexity).
+> - For the beta distribution, the bigger `alpha` or `beta` is, the smaller the area of acceptance becomes (and the more likely random variates get rejected by steps 5 and 6, raising its run-time).  This is because `max(u^(alpha-1)*(1-u)^(beta-1))`, the peak of the PDF, approaches 0 as the parameters get bigger.  To deal with this, step 2 was included, which under certain circumstances breaks the PDF into two parts that are relatively trivial to sample (in terms of bit complexity).
 
 <a id=Exponential_Distribution></a>
 ### Exponential Distribution

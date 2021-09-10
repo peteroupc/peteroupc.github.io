@@ -166,11 +166,6 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 
 **Specific functions.** My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py) includes SymPy code for a method, `approxscheme2`, to build a polynomial approximation scheme for certain factory functions.
 
-**Open questions.**
-
-- Are there factory functions used in practice that are not covered by the approximation schemes in this section?
-- Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions (besides those I list in this section or the main [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html) article)?
-
 <a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
 
@@ -303,7 +298,7 @@ The following table summarizes the rate of simulation (in terms of the number of
 > **Notes:**
 >
 > 1. By the results of Holtz et al., it is suspected that the target function _f_ can't be simulated using a finite number of flips on average unless _f_ is _C_<sup>2</sup> continuous.
-> 2. If a function is constant on some open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
+> 2. If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can't be real analytic.
 
 <a id=Complexity></a>
 ## Complexity
@@ -658,9 +653,9 @@ The following are approximation schemes and hints to simulate a coin of probabil
 <a id=Which_functions_admit_a_Bernoulli_factory></a>
 ### Which functions admit a Bernoulli factory?
 
-Let _f_(_&lambda;_) be a function whose domain is the _closed_ interval [0, 1] or a subset of it, and maps its domain to [0, 1].  The domain of _f_ gives the allowable values of _&lambda;_, which is the input coin's probability of heads.
+Let _f_(_&lambda;_) be a function whose domain is the _closed_ interval [0, 1] or a subset of it, and that maps its domain to [0, 1].  The domain of _f_ gives the allowable values of _&lambda;_, which is the input coin's probability of heads.
 
-In general, _f_ admits a Bernoulli factory if and only if _f_ is constant on its domain, or is continuous and _polynomially bounded_ on its domain, as defined in the section "Proofs for Function Approximation Schemes" (Keane and O'Brien 1994)<sup>[**(14)**](#Note14)</sup>.
+_f_ admits a Bernoulli factory if and only if _f_ is constant on its domain, or is continuous and _polynomially bounded_ on its domain, as defined in the section "Proofs for Function Approximation Schemes" (Keane and O'Brien 1994)<sup>[**(14)**](#Note14)</sup>.
 
 If _f_(_&lambda;_) meets these sufficient conditions, it admits a Bernoulli factory:
 

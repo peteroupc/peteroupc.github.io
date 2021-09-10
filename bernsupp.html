@@ -251,13 +251,6 @@
 
 <p><strong>Specific functions.</strong> My <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/approxscheme.py"><strong>GitHub repository</strong></a> includes SymPy code for a method, <code>approxscheme2</code>, to build a polynomial approximation scheme for certain factory functions.</p>
 
-<p><strong>Open questions.</strong></p>
-
-<ul>
-<li>Are there factory functions used in practice that are not covered by the approximation schemes in this section?</li>
-<li>Are there specific functions (especially those in practical use) for which there are practical and faster formulas for building polynomials that converge to those functions (besides those I list in this section or the main <a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a> article)?</li>
-</ul>
-
 <p><a id=Schemes_That_Don_t_Work></a></p>
 
 <h3>Schemes That Don&#39;t Work</h3>
@@ -446,7 +439,7 @@
 
 <ol>
 <li>By the results of Holtz et al., it is suspected that the target function <em>f</em> can&#39;t be simulated using a finite number of flips on average unless <em>f</em> is <em>C</em><sup>2</sup> continuous.</li>
-<li>If a function is constant on some open interval in its domain, but is not constant on the whole domain, then it can&#39;t be real analytic.</li>
+<li>If a function is constant on some non-empty open interval in its domain, but is not constant on the whole domain, then it can&#39;t be real analytic.</li>
 </ol>
 </blockquote>
 
@@ -1120,9 +1113,9 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 
 <h3>Which functions admit a Bernoulli factory?</h3>
 
-<p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the <em>closed</em> interval [0, 1] or a subset of it, and maps its domain to [0, 1].  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
+<p>Let <em>f</em>(<em>&lambda;</em>) be a function whose domain is the <em>closed</em> interval [0, 1] or a subset of it, and that maps its domain to [0, 1].  The domain of <em>f</em> gives the allowable values of <em>&lambda;</em>, which is the input coin&#39;s probability of heads.</p>
 
-<p>In general, <em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined in the section &quot;Proofs for Function Approximation Schemes&quot; (Keane and O&#39;Brien 1994)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
+<p><em>f</em> admits a Bernoulli factory if and only if <em>f</em> is constant on its domain, or is continuous and <em>polynomially bounded</em> on its domain, as defined in the section &quot;Proofs for Function Approximation Schemes&quot; (Keane and O&#39;Brien 1994)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</p>
 
 <p>If <em>f</em>(<em>&lambda;</em>) meets these sufficient conditions, it admits a Bernoulli factory:</p>
 
