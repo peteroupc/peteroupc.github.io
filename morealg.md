@@ -46,7 +46,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Weighted Choice Involving PSRNs**](#Weighted_Choice_Involving_PSRNs)
 - [**Specific Arbitrary-Precision Samplers**](#Specific_Arbitrary_Precision_Samplers)
     - [**Rayleigh Distribution**](#Rayleigh_Distribution)
-    - [**Sum of Exponential Random Variates**](#Sum_of_Exponential_Random_Variates)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
     - [**Reciprocal of Power of Uniform**](#Reciprocal_of_Power_of_Uniform)
     - [**Distribution of _U_/(1&minus;_U_)**](#Distribution_of__U__1_minus__U)
@@ -57,7 +56,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Exponential Distribution with Rate ln(_x_)**](#Exponential_Distribution_with_Rate_ln__x)
     - [**Symmetric Geometric Distribution**](#Symmetric_Geometric_Distribution)
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
-    - [**Gamma Distribution with Parameter 1 or Less**](#Gamma_Distribution_with_Parameter_1_or_Less)
+    - [**Gamma Distribution**](#Gamma_Distribution)
     - [**One-Dimensional Epanechnikov Kernel**](#One_Dimensional_Epanechnikov_Kernel)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
@@ -638,18 +637,10 @@ For bases other than 2, such as 10 for decimal, this can be implemented as follo
     1. Set _da_ to rem(_k_ / 2<sup>_z_ &minus; 1 &minus; _i_</sup>, _base_), and set _db_ to a digit chosen uniformly at random (that is, an integer in the interval [0, _base_)).
     2. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 3. If _i_ is _z_ or greater:
-    1. If the digit at position (_i_ &minus; _z_) in the uniform PSRN's fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.).
+    1. If the digit at position (_i_ &minus; _z_) in the uniform PSRN's fractional part is not set, set the item at that position to a digit chosen uniformly at random (positions start at 0 where 0 is the most significant digit after the point, 1 is the second most significant, etc.).
     2. Set _da_ to the item at that position, and set _db_ to a digit chosen uniformly at random (that is, an integer in the interval [0, _base_)).
     3. Return 1 if _da_ is less than _db_, or 0 if _da_ is greater than _db_.
 4. Add 1 to _i_ and go to step 3.
-
-<a id=Sum_of_Exponential_Random_Variates></a>
-### Sum of Exponential Random Variates
-
-An arbitrary-precision sampler for the sum of _n_ exponential random variates (also known as the Erlang(_n_) or gamma(_n_) distribution) is doable via partially-sampled uniform random variates, though it is obviously inefficient for large values of _n_.
-
-1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
-2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](https://peteroupc.github.io/exporand.html#Addition_and_Subtraction) algorithm given in another document.
 
 <a id=Hyperbolic_Secant_Distribution></a>
 ### Hyperbolic Secant Distribution
@@ -837,18 +828,31 @@ For the mixture-of-weighted-exponential-and-weighted-gamma distribution in (Iqba
 
 > **Note:** If _&theta;_ is a uniform PSRN, then the check "With probability  _w_ = _&theta;_/(1+_&theta;_)" can be implemented by running the Bernoulli factory algorithm for **(_d_ + _&mu;_) / ((_d_ + _&mu;_) + (_c_ + _&lambda;_))**, where _c_ is 1; _&lambda;_ represents an input coin that always returns 0; _d_ is _&theta;_'s integer part, and _&mu;_ is an input coin that runs **SampleGeometricBag** on _&theta;_'s fractional part.  The check succeeds if the Bernoulli factory algorithm returns 1.
 
-<a id=Gamma_Distribution_with_Parameter_1_or_Less></a>
-### Gamma Distribution with Parameter 1 or Less
+<a id=Gamma_Distribution></a>
+### Gamma Distribution
 
-Takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).
+The path to building an arbitrary-precision gamma sampler makes use of two algorithms: one for integer parameters of _a_, and another for rational parameters of _a_ in [0, 1).  Both algorithms can be combined into an arbitrary-precision gamma generator for rational parameters _a_>0.
+
+First is an arbitrary-precision sampler for the sum of _n_ independent exponential random variates (also known as the Erlang(_n_) or gamma(_n_) distribution), implemented via partially-sampled uniform random variates.  Obviously, this algorithm is inefficient for large values of _n_.
+
+1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
+2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](https://peteroupc.github.io/exporand.html#Addition_and_Subtraction) algorithm given in another document.
+
+The second algorithm takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).
 
 1. Create a positive-sign zero-integer-part uniform PSRN, _ret_.  If _a_ is 1, instead generate an exponential random variate with a rate of 1 via the **ExpRand** or
 **ExpRand2** algorithm and return that variate.
 2. Generate a PSRN _ret_ using the **power-of-uniform sub-algorithm** (in the page on PSRNs) with _px_/_py_ = 1/_a_.
-3. (The following two steps succeed with probability (1&minus;_ret_)<sup>(1&minus;_a_)</sup>.)  Create an input coin that does the following: "Flip the input coin and return 1 minus the result."
+3. (The following two steps succeed with probability (1&minus;_ret_)<sup>1&minus;_a_</sup>.)  Create an input coin that does the following: "Flip the input coin and return 1 minus the result."
 4. Run the **algorithm for _&lambda;_<sup>_x_/_y_</sup>** with _x_/_y_ = 1&minus;_a_, using the input coin from step 3.  If the run returns 0, go to step 1.
 5. (At this point, _ret_ is distributed as beta(_a_, 2 &minus; _a_).)  Generate two exponential random variates with a rate of 1 via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm.  Call the sum _z_.
 6. Run the **UniformMultiply** algorithm on _ret_ and _z_, and return the result of that algorithm.
+
+The third algorithm combines both algorithms and works for any rational parameter _a_>0.
+
+1. Let _n_ = floor(_a_).  Generate _ret_, a sum of _n_ exponential variates generated via the first algorithm in this section.  If _n_ = _a_, return _ret_.
+2. Let _frac_ be _a_ &minus; floor(_a_).  Generate _ret2_, a gamma variate generated via the second algorithm in this section, with _a_ = _frac_.
+3. Run the **UniformAdd** algorithm on _ret_ and _ret2_ and return the result of that algorithm.
 
 <a id=One_Dimensional_Epanechnikov_Kernel></a>
 ### One-Dimensional Epanechnikov Kernel
