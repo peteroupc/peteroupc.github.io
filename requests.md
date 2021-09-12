@@ -35,10 +35,6 @@ Here are my goals for both articles:
 - To put emphasis on algorithms that sample a distribution _exactly_, or at least with a controlled upper bound on the error.  For discussion, see  "[**Exact, Error-Bounded, and Approximate Algorithms**](https://peteroupc.github.io/randomnotes.html#Exact_Error_Bounded_and_Approximate_Algorithms)".
 - To ensure the documents are easy for programmers to understand and implement.
 
-**Other questions:**
-
-- Is there any non-trivial use of random fixed-point numbers in any applications, other than uniformly distributed numbers?
-
 <a id=Bernoulli_Factory_Algorithms></a>
 ## Bernoulli Factory Algorithms
 
