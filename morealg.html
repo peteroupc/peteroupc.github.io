@@ -561,6 +561,10 @@
 <td>Flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
 </tr>
 <tr>
+<td>(1&minus;<em>&mu;</em>)/2 at 0; 1/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
+<td>Generate an unbiased random bit.  If that bit is 1, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.  Otherwise, flip the <em>&mu;</em> input coin.  If it returns 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&lambda;</em> input coin and return 1 minus the result.</td>
+</tr>
+<tr>
 <td>0 at 0; <em>&mu;</em>/2 at 1/2; and <em>&mu;</em>/2 at 1.</td>
 <td>Flip the <em>&mu;</em> input coin.  If it returns 0, return 0.  Otherwise, generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
 </tr>
@@ -575,6 +579,10 @@
 <tr>
 <td><em>&mu;</em> at 0; 1/2 at 1/2; and 1 at 1.</td>
 <td>Flip the <em>&mu;</em> input coin.  If it returns 0, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return 1 minus the result of that run.</td>
+</tr>
+<tr>
+<td><em>B</em> at 0; <em>B</em>+(<em>A</em>/2) at 1/2; and <em>B</em>+(<em>A</em>/2) at 1.</td>
+<td>(<em>A</em>&le;1 and <em>B</em>&le;1&minus;<em>A</em> are rational numbers.) With probability 1&minus;<em>A</em>, return a number that is 1 with probability <em>B</em>/(1&minus;<em>A</em>) and 0 otherwise.  Otherwise, generate an unbiased random bit.  If that bit is 1, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, run the algorithm for min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) using the <em>&lambda;</em> input coin, and return the result of that run.</td>
 </tr>
 </tbody></table>
 
@@ -1752,7 +1760,7 @@ calc_linear_func(count=8)
 
 <p><strong>Proposition 2:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their composition, namely f(g(&lambda;)) or f&#x2218;g(&lambda;).</em></p>
 
-<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and <em>G</em> do for every <em>&lambda;</em> in (0, 1), and because <em>G</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
+<p><em>Proof:</em> Let <em>F</em> be the full-domain pushdown automaton for <em>f</em>. For each state/symbol pair among the left-hand sides of <em>F</em>&#39;s rules, apply Lemma 1A to the automaton <em>F</em>, using the function <em>g</em>.  Then the new machine <em>F</em> terminates with probability 1 because the original <em>F</em> and the original automaton for <em>g</em> do for every <em>&lambda;</em> in (0, 1), and because the automaton for <em>g</em> maps to (0, 1) where <em>F</em> terminates with probability 1.  Moreover, <em>f</em> is in class <strong>PDA</strong> by Theorem 1.2 of (Mossel and Peres 2005)<sup><a href="#Note11"><strong>(11)</strong></a></sup> because the machine is a full-domain pushdown automaton.  &#x25a1;</p>
 
 <p><strong>Proposition 3:</strong> <em>Every rational function with rational coefficients that maps (0, 1) to (0, 1) is in class <strong>PDA</strong>.</em></p>
 

@@ -227,7 +227,7 @@ Take the following situation:
 
 - Let _f_(.) be a function applied to _a_ or _b_ before calculating the quantile.
 - Let _Q_(_z_) be the quantile function for the desired distribution.
-- Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_ (the identity function), the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.  For example, if the PSRN's fractional part is 0.147..., then the interval is \[0.147, 0.148\].
+- Let _x_ be a random variate in the form of a uniform PSRN, so that this PSRN will lie in the interval \[_a_, _b_\].  If _f_(_t_) = _t_ (the identity function), the PSRN _x_ must have a positive sign and an integer part of 0, so that the interval \[_a_, _b_\] is either the interval \[0, 1\] or a closed interval in \[0, 1\], depending on the PSRN's fractional part.  For example, if the PSRN is 2.147..., then the interval is \[2.147, 2.148\].
 - Let _&beta;_ be the digit base of digits in _x_'s fractional part (such as 2 for binary).
 
 Then the following algorithm transforms that number to a random variate for the desired distribution, which comes within the desired error tolerance of _&epsilon;_ with probability 1 (see (Devroye and Gravel 2020)<sup>[**(29)**](#Note29)</sup>):
