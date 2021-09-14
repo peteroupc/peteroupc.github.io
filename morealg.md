@@ -339,6 +339,9 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
 |  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
+| expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
+| expit(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin; _m_&ge;0 is an integer.)<br>Create _&mu;_ coin for algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
+|  expit(_&lambda;_)\*2&minus;1 | (Equals tanh(_&lambda;_/2). _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that does the following: "Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result."<br>Run algorithm for **tanh(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin. |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
