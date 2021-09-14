@@ -885,7 +885,7 @@ This algorithm currently works only if _d_ and _c_ are integers and 0 &le; _d_ <
 <a id=d___c____lambda></a>
 #### _d_ / (_c_ + _&lambda;_)
 
-In this algorithm, _c_ and _d_ must be rational numbers, _c_ &ge; 1, and 0 &le; _d_ &le; _c_.  See also the algorithms for continued fractions.  (For example, when _d_ = 1, this algorithm can simulate a probability of the form 1 / _z_, where _z_ is greater than 0 and made up of an integer part (_c_) and a fractional part (_&lambda;_) that can be simulated by a Bernoulli factory.)
+In this algorithm, _c_ and _d_ must be rational numbers, _c_ &ge; 1, and 0 &le; _d_ &le; _c_.  See also the algorithms for continued fractions.  (For example, when _d_ = 1, this algorithm can simulate a probability of the form 1 / _z_, where _z_ is 1 or greater and made up of an integer part (_c_) and a fractional part (_&lambda;_) that can be simulated by a Bernoulli factory.)
 
 1. With probability _c_ / (1 + _c_), return a number that is 1 with probability _d_/_c_ and 0 otherwise.
 2. Flip the input coin.  If the flip returns 1, return 0.  Otherwise, go to step 1.
@@ -915,7 +915,7 @@ In this algorithm, _c_ and _d_ are integers 0 or greater, and _&lambda;_ and _&m
 <a id=d__k___c____lambda____k__or__d___c____lambda____k></a>
 #### _d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>
 
-In this algorithm, _c_ must be 1 or greater, _d_ must be in the interval \[0, _c_\], and _k_ must be an integer 0 or greater.
+In this algorithm, _c_ and _d_ must be rational numbers, _c_ &ge; 1, and 0 &le; _d_ &le; _c_, and _k_ must be an integer 0 or greater.
 
 1. Set _i_ to 0.
 2. If _k_ is 0, return 1.

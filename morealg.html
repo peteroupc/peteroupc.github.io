@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/12"><meta name="citation_online_date" content="2021/09/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/09/13"><meta name="citation_online_date" content="2021/09/13"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -36,7 +36,7 @@
 <li><a href="#cosh___lambda___minus_1"><strong>cosh(<em>&lambda;</em>) &minus; 1</strong></a></li>
 <li><a href="#exp___lambda___4_2"><strong>exp(<em>&lambda;</em>/4)/2</strong></a></li>
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
-<li><a href="#1_exp_1_minus_1"><strong>1/(exp(1) &minus; 1)</strong></a></li>
+<li><a href="#1_exp_1__c__minus_2"><strong>1/(exp(1) + <em>c</em> &minus; 2)</strong></a></li>
 <li><a href="#exp_1_minus_2"><strong>exp(1) &minus; 2</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#Euler_ndash_Mascheroni_Constant___gamma"><strong>Euler&ndash;Mascheroni Constant <em>&gamma;</em></strong></a></li>
@@ -275,18 +275,20 @@
 </ol></li>
 </ol>
 
-<p><a id=1_exp_1_minus_1></a></p>
+<p><a id=1_exp_1__c__minus_2></a></p>
 
-<h3>1/(exp(1) &minus; 1)</h3>
+<h3>1/(exp(1) + <em>c</em> &minus; 2)</h3>
 
-<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  In this algorithm, <em>c</em>&ge;1 is a rational number.
+The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ul>
 <li>Do the following process repeatedly until this run of the algorithm returns a value:
 
 <ol>
 <li>If <em>pos</em> is divisible by 3 (that is, if rem(<em>pos</em>, 3) equals 0): Let <em>k</em> be (<em>pos</em>/3)*2.  With probability <em>k</em>/(1+<em>k</em>), return a number that is 1 with probability 1/<em>k</em> and 0 otherwise.</li>
-<li>If <em>pos</em> is not divisible by 3: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
+<li>If <em>pos</em> is 1: With probability <em>c</em>/(1+<em>c</em>), return a number that is 1 with probability 1/<em>c</em> and 0 otherwise.</li>
+<li>If <em>pos</em> is greater than 1 and not divisible by 3: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Do a separate run of the currently running algorithm, but with <em>pos</em> = <em>pos</em> + 1.  If the separate run returns 1, return 0.</li>
 </ol></li>
 </ul>
@@ -295,7 +297,7 @@
 
 <h3>exp(1) &minus; 2</h3>
 
-<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm is the same as in the previous section, except it begins with <em>pos</em> equal to 2 rather than 1 (because the continued fractions are almost the same).</p>
+<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  Run the algorithm for <strong>1/(exp(1)+<em>c</em>&minus;2)</strong> above with <em>c</em> = 1, except the algorithm begins with <em>pos</em> equal to 2 rather than 1 (because the continued fractions are almost the same).</p>
 
 <p><a id=tanh___lambda></a></p>
 
@@ -488,6 +490,14 @@
 <tr>
 <td>3 &minus; exp(1)</td>
 <td>Run the algorithm for <strong>exp(1) &minus; 2</strong>, then return 1 minus the result.</td>
+</tr>
+<tr>
+<td>1/(exp(1)&minus;1)</td>
+<td>Run the algorithm for <strong>1/(exp(1)+<em>c</em>&minus;2)</strong> with <em>c</em> = 1.</td>
+</tr>
+<tr>
+<td>1/(1+exp(1))</td>
+<td>Run the algorithm for <strong>1/(exp(1)+<em>c</em>&minus;2)</strong> with <em>c</em> = 3.</td>
 </tr>
 <tr>
 <td>exp(1)/<em>&pi;</em></td>

@@ -26,7 +26,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
     - [**exp(_&lambda;_/4)/2**](#exp___lambda___4_2)
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
-    - [**1/(exp(1) &minus; 1)**](#1_exp_1_minus_1)
+    - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
     - [**exp(1) &minus; 2**](#exp_1_minus_2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
     - [**Euler&ndash;Mascheroni Constant _&gamma;_**](#Euler_ndash_Mascheroni_Constant___gamma)
@@ -195,20 +195,22 @@ This algorithm involves an application of the general martingale algorithm to th
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     5. Add 1 to _n_.
 
-<a id=1_exp_1_minus_1></a>
-### 1/(exp(1) &minus; 1)
+<a id=1_exp_1__c__minus_2></a>
+### 1/(exp(1) + _c_ &minus; 2)
 
-Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  In this algorithm, _c_&ge;1 is a rational number.
+The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 - Do the following process repeatedly until this run of the algorithm returns a value:
     1. If _pos_ is divisible by 3 (that is, if rem(_pos_, 3) equals 0): Let _k_ be (_pos_/3)\*2.  With probability _k_/(1+_k_), return a number that is 1 with probability 1/_k_ and 0 otherwise.
-    2. If _pos_ is not divisible by 3: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
-    3. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
+    2. If _pos_ is 1: With probability _c_/(1+_c_), return a number that is 1 with probability 1/_c_ and 0 otherwise.
+    3. If _pos_ is greater than 1 and not divisible by 3: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
+    4. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns 1, return 0.
 
 <a id=exp_1_minus_2></a>
 ### exp(1) &minus; 2
 
-Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  The algorithm is the same as in the previous section, except it begins with _pos_ equal to 2 rather than 1 (because the continued fractions are almost the same).
+Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  Run the algorithm for **1/(exp(1)+_c_&minus;2)** above with _c_ = 1, except the algorithm begins with _pos_ equal to 2 rather than 1 (because the continued fractions are almost the same).
 
 <a id=tanh___lambda></a>
 ### tanh(_&lambda;_)
@@ -335,6 +337,8 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  To simulate:  |  Follow this algorithm: |
    --- |  ---- |
 |  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
+|  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
+|  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
