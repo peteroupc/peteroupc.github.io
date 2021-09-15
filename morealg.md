@@ -44,6 +44,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Building an Arbitrary-Precision Sampler**](#Building_an_Arbitrary_Precision_Sampler)
     - [**Mixtures**](#Mixtures)
     - [**Weighted Choice Involving PSRNs**](#Weighted_Choice_Involving_PSRNs)
+    - [**Cumulative Distribution Functions**](#Cumulative_Distribution_Functions)
 - [**Specific Arbitrary-Precision Samplers**](#Specific_Arbitrary_Precision_Samplers)
     - [**Rayleigh Distribution**](#Rayleigh_Distribution)
     - [**Hyperbolic Secant Distribution**](#Hyperbolic_Secant_Distribution)
@@ -342,6 +343,7 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 | expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 | expit(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin; _m_&ge;0 is an integer.)<br>Create _&mu;_ coin for algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  expit(_&lambda;_)\*2&minus;1 | (Equals tanh(_&lambda;_/2). _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that does the following: "Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result."<br>Run algorithm for **tanh(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin. |
+|  2/_&pi;_  |  Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
@@ -611,6 +613,26 @@ Given _n_ uniform PSRNs, called _weights_, with labels starting from 0 and endin
 1. Create an empty list, then for each weight starting with weight 0, add the weight's integer part plus 1 to that list.  For example, if the weights are [2.22...,0.001...,1.3...], in that order, the list will be [3, 1, 2], corresponding to integers 0, 1, and 2, in that order.  Call the list just created the _rounded weights list_.
 2. Choose an integer _i_ with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of **WeightedChoice**(_list_), where _list_ is the rounded weights list and **WeightedChoice** is given in "[**Randomization and Samping Methods**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)".
 3. Run **URandLessThanReal**(_w_, _rw_), where _w_ is the original weight for integer _i_, and _rw_ is the rounded weight for integer _i_ in the rounded weights list.  That algorithm returns 1 if _w_ turns out to be less than _rw_.  If the result is 1, return _i_.  Otherwise, go to step 2.
+
+<a id=Cumulative_Distribution_Functions></a>
+### Cumulative Distribution Functions
+
+Suppose we have a real number _z_ (which might be a uniform PSRN or a rational number).  If a continuous distribution&mdash;
+
+- has a probability density function (PDF) (as with the normal or exponential distribution), and
+- has an arbitrary-precision sampler that returns a uniform PSRN _X_,
+
+then it's possible to generate 1 with the same probability as the sampler returns an _X_ that is less than or equal to _z_, as follows:
+
+1. Run the arbitrary-precision sampler to generate _X_, a uniform PSRN.
+2. Run **URandLess** (if _z_ is a uniform PSRN) or **URandLessThanReal** (if _z_ is a real number) with parameters _X_ and _z_, in that order, and return the result.
+
+Specifically, the probability of returning 1 is the _cumulative distribution function_ (CDF) for the distribution of _X_.
+
+> **Notes:**
+>
+> 1. Although step 2 of the algorithm checks whether _X_ is merely less than _z_, this is still correct; because the distribution of _X_ has a PDF, _X_ is less than _z_ with the same probability as _X_ is less than or equal to _z_.
+> 2. All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.
 
 <a id=Specific_Arbitrary_Precision_Samplers></a>
 ## Specific Arbitrary-Precision Samplers

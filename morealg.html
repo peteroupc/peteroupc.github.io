@@ -57,6 +57,7 @@
 <li><a href="#Building_an_Arbitrary_Precision_Sampler"><strong>Building an Arbitrary-Precision Sampler</strong></a></li>
 <li><a href="#Mixtures"><strong>Mixtures</strong></a></li>
 <li><a href="#Weighted_Choice_Involving_PSRNs"><strong>Weighted Choice Involving PSRNs</strong></a></li>
+<li><a href="#Cumulative_Distribution_Functions"><strong>Cumulative Distribution Functions</strong></a></li>
 </ul></li>
 <li><a href="#Specific_Arbitrary_Precision_Samplers"><strong>Specific Arbitrary-Precision Samplers</strong></a>
 
@@ -512,6 +513,10 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <td>(Equals tanh(<em>&lambda;</em>/2). <em>&lambda;</em> is unknown heads probability of a coin.)<br>Create <em>&mu;</em> coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result.&quot;<br>Run algorithm for <strong>tanh(<em>&lambda;</em>)</strong> with <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
 </tr>
 <tr>
+<td>2/<em>&pi;</em></td>
+<td>Create <em>&lambda;</em> coin for algorithm <strong><em>&pi;</em> &minus; 3</strong>.<br>Run algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em>=2 and <em>c</em>=3.</td>
+</tr>
+<tr>
 <td>exp(1)/<em>&pi;</em></td>
 <td>Create <em>&mu;</em> coin for algorithm <strong>exp(1) &minus; 2</strong>.<br>Create <em>&lambda;</em> coin for algorithm <strong><em>&pi;</em> &minus; 3</strong>.<br>Run algorithm for <strong>(<em>d</em> + <em>&mu;</em>) / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em>=2 and <em>c</em>=3.</td>
 </tr>
@@ -907,6 +912,35 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <li>Choose an integer <em>i</em> with probability proportional to the weights in the rounded weights list.  This can be done, for example, by taking the result of <strong>WeightedChoice</strong>(<em>list</em>), where <em>list</em> is the rounded weights list and <strong>WeightedChoice</strong> is given in &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Randomization and Samping Methods</strong></a>&quot;.</li>
 <li>Run <strong>URandLessThanReal</strong>(<em>w</em>, <em>rw</em>), where <em>w</em> is the original weight for integer <em>i</em>, and <em>rw</em> is the rounded weight for integer <em>i</em> in the rounded weights list.  That algorithm returns 1 if <em>w</em> turns out to be less than <em>rw</em>.  If the result is 1, return <em>i</em>.  Otherwise, go to step 2.</li>
 </ol>
+
+<p><a id=Cumulative_Distribution_Functions></a></p>
+
+<h3>Cumulative Distribution Functions</h3>
+
+<p>Suppose we have a real number <em>z</em> (which might be a uniform PSRN or a rational number).  If a continuous distribution&mdash;</p>
+
+<ul>
+<li>has a probability density function (PDF) (as with the normal or exponential distribution), and</li>
+<li>has an arbitrary-precision sampler that returns a uniform PSRN <em>X</em>,</li>
+</ul>
+
+<p>then it&#39;s possible to generate 1 with the same probability as the sampler returns an <em>X</em> that is less than or equal to <em>z</em>, as follows:</p>
+
+<ol>
+<li>Run the arbitrary-precision sampler to generate <em>X</em>, a uniform PSRN.</li>
+<li>Run <strong>URandLess</strong> (if <em>z</em> is a uniform PSRN) or <strong>URandLessThanReal</strong> (if <em>z</em> is a real number) with parameters <em>X</em> and <em>z</em>, in that order, and return the result.</li>
+</ol>
+
+<p>Specifically, the probability of returning 1 is the <em>cumulative distribution function</em> (CDF) for the distribution of <em>X</em>.</p>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>Although step 2 of the algorithm checks whether <em>X</em> is merely less than <em>z</em>, this is still correct; because the distribution of <em>X</em> has a PDF, <em>X</em> is less than <em>z</em> with the same probability as <em>X</em> is less than or equal to <em>z</em>.</li>
+<li>All probability distributions have a CDF, not just those with a PDF, but also discrete ones such as Poisson or binomial.</li>
+</ol>
+</blockquote>
 
 <p><a id=Specific_Arbitrary_Precision_Samplers></a></p>
 
