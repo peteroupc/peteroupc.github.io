@@ -308,7 +308,6 @@ def psrn_reciprocal(rg, psrn1, digits=2):
     for i in range(len(psrn1[2])):
         psrn1[2][i] = rg.rndint(digits - 1) if psrn1[2][i] == None else psrn1[2][i]
     digitcount = len(psrn1[2])
-    # Perform multiplication
     frac1 = psrn1[1]
     for i in range(digitcount):
         frac1 = frac1 * digits + psrn1[2][i]
@@ -366,6 +365,8 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             ddc *= digits
             dc *= digits
 
+# TODO: This is approximate only; figure out how
+# to implement exact version
 def psrn_multiply(rg, psrn1, psrn2, digits=2):
     """Multiplies two uniform partially-sampled random numbers.
     psrn1: List containing the sign, integer part, and fractional part
@@ -1898,6 +1899,11 @@ if __name__ == "__main__":
             ps, pi, pf = random_psrn(rg, digits=digits)
             qs, qi, qf = random_psrn(rg, digits=digits)
             psrn_multiply_test(rg, ps, pi, pf, qs, qi, qf, i, digits=digits)
+
+        for i in range(200):
+            ps, pi, pf = random_psrn(rg, digits=digits)
+            pi = 0
+            psrn_reciprocal_test(rg, ps, pi, pf, i, digits=digits)
 
         for i in range(1000):
             ps, pi, pf = random_psrn(rg, digits=digits)
