@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/09"><meta name="citation_online_date" content="2021/09/09"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/15"><meta name="citation_online_date" content="2021/09/15"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -482,33 +482,35 @@
 <li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).
 
 <ul>
-<li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</small></li>
+<li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</small></li>
 </ul></li>
 <li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong>&#39;s sign is negative and <strong>b</strong>&#39;s sign is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to positive.</li>
 <li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>minv</em>).</li>
-<li>If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the trapezoid.  In this case, do the following:
+<li>If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the &quot;trapezoid&quot;.&dagger; <s>In this case, do the following:</s>
 
 <ol>
-<li>Set <em>x</em> to <em>z</em>, then set <em>newdigits</em> to 0, then set <em>b</em> to <em>midmin</em>&minus;<em>minv</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</li>
-<li>If <em>y</em> is less than <em>x</em>, the algorithm succeeds, so do the following:
+<li><s>Set <em>x</em> to <em>z</em>, then set <em>newdigits</em> to 0, then set <em>b</em> to <em>midmin</em>&minus;<em>minv</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</s></li>
+<li><s>If <em>y</em> is less than <em>x</em>, the algorithm succeeds, so do the following:</s>
 
 <ol>
-<li>Set <em>s</em> to <em>minv</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em> (where <em>base</em> is the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal).</li>
-<li>Transfer the (<em>n</em>*2 + <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, where <em>n</em> is the number of digits in <strong>a</strong>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)  Then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>).  (For example, if <em>base</em> is 10, (<em>n</em>*2 + <em>newdigits</em>) is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</li>
+<li><s>Set <em>s</em> to <em>minv</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em> (where <em>base</em> is the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal).</s></li>
+<li><s>Transfer the (<em>n</em>*2 + <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, where <em>n</em> is the number of digits in <strong>a</strong>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)  Then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>).  (For example, if <em>base</em> is 10, (<em>n</em>*2 + <em>newdigits</em>) is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</s></li>
 </ol></li>
-<li>If <em>y</em> is greater than <em>x</em> + 1, abort these substeps and go to step 8. (This is a rejection event.)</li>
-<li>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</li>
+<li><s>If <em>y</em> is greater than <em>x</em> + 1, abort these substeps and go to step 8. (This is a rejection event.)</s></li>
+<li><s>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</s></li>
 </ol></li>
-<li>If <em>z</em> is greater than or equal to <em>midmax</em>&minus;<em>minv</em>, we will sample from the right side of the trapezoid.  In this case, do the following:
+<li>If <em>z</em> is greater than or equal to <em>midmax</em>&minus;<em>minv</em>, we will sample from the right side of the &quot;trapezoid&quot;.&dagger;  <s>In this case, do the following:</s>
 
 <ol>
-<li>Set <em>x</em> to <em>z</em>&minus;(<em>midmax</em>&minus;<em>minv</em>), then set <em>newdigits</em> to 0, then set <em>b</em> to <em>maxv</em>&minus;<em>midmax</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</li>
-<li>If <em>y</em> is less than <em>b</em>&minus;1&minus;<em>x</em>, the algorithm succeeds, so do the following: Set <em>s</em> to <em>midmax</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em>, then transfer the (<em>n</em>*2+ <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>), then return <em>ret</em>.</li>
-<li>If <em>y</em> is greater than (<em>b</em>&minus;1&minus;<em>x</em>) + 1, abort these substeps and go to step 8. (This is a rejection event.)</li>
-<li>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</li>
+<li><s>Set <em>x</em> to <em>z</em>&minus;(<em>midmax</em>&minus;<em>minv</em>), then set <em>newdigits</em> to 0, then set <em>b</em> to <em>maxv</em>&minus;<em>midmax</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</s></li>
+<li><s>If <em>y</em> is less than <em>b</em>&minus;1&minus;<em>x</em>, the algorithm succeeds, so do the following: Set <em>s</em> to <em>midmax</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em>, then transfer the (<em>n</em>*2+ <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>), then return <em>ret</em>.</s></li>
+<li><s>If <em>y</em> is greater than (<em>b</em>&minus;1&minus;<em>x</em>) + 1, abort these substeps and go to step 8. (This is a rejection event.)</s></li>
+<li><s>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</s></li>
 </ol></li>
 <li>If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
 </ol>
+
+<p>&dagger; <em>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution.</em></p>
 
 <p>The following algorithm (<strong>UniformMultiplyRational</strong>) shows how to multiply a uniform PSRN (<strong>a</strong>) by a nonzero rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 
@@ -1158,7 +1160,7 @@ def exprand(lam):
 
 </pre>
 
-<p>In the following Python code, <code>multiply_psrns</code> and <code>add_psrns</code> are methods to generate the result of multiplying or adding two uniform PSRNs, respectively.</p>
+<p>In the following Python code, <code>add_psrns</code> is a method to generate the result of multiplying or adding two uniform PSRNs, respectively.</p>
 
 <pre>def psrn_reciprocal(psrn1, digits=2):
     &quot;&quot;&quot; Generates the reciprocal of a partially-sampled random number.
@@ -1229,117 +1231,6 @@ def exprand(lam):
             dcount += 1
             ddc *= digits
             dc *= digits
-
-def multiply_psrns(psrn1, psrn2, digits=2):
-    &quot;&quot;&quot; Multiplies two uniform partially-sampled random numbers.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        psrn2: List containing the sign, integer part, and fractional part
-            of the second PSRN.
-        digits: Digit base of PSRNs&#39; digits.  Default is 2, or binary. &quot;&quot;&quot;
-    if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
-        raise ValueError
-    for i in range(len(psrn1[2])):
-        psrn1[2][i] = (
-            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
-        )
-    for i in range(len(psrn2[2])):
-        psrn2[2][i] = (
-            random.randint(0, digits - 1) if psrn2[2][i] == None else psrn2[2][i]
-        )
-    while len(psrn1[2]) &lt; len(psrn2[2]):
-        psrn1[2].append(random.randint(0, digits - 1))
-    while len(psrn1[2]) &gt; len(psrn2[2]):
-        psrn2[2].append(random.randint(0, digits - 1))
-    digitcount = len(psrn1[2])
-    if len(psrn2[2]) != digitcount:
-        raise ValueError
-    # Perform multiplication
-    frac1 = psrn1[1]
-    frac2 = psrn2[1]
-    for i in range(digitcount):
-        frac1 = frac1 * digits + psrn1[2][i]
-    for i in range(digitcount):
-        frac2 = frac2 * digits + psrn2[2][i]
-    while frac1 == 0 and frac2 == 0:
-        # Avoid degenerate cases
-        d1 = random.randint(0, digits - 1)
-        psrn1[2].append(d1)
-        d2 = random.randint(0, digits - 1)
-        psrn2[2].append(d2)
-        frac1 = frac1 * digits + d1
-        frac2 = frac2 * digits + d2
-        digitcount += 1
-    small = frac1 * frac2
-    mid1 = frac1 * (frac2 + 1)
-    mid2 = (frac1 + 1) * frac2
-    large = (frac1 + 1) * (frac2 + 1)
-    midmin = min(mid1, mid2)
-    midmax = max(mid1, mid2)
-    cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
-    cpsrn[0] = psrn1[0] * psrn2[0]
-    while True:
-        rv = random.randint(0, large - small - 1)
-        if rv &lt; midmin - small:
-            # Left side of product density; rising triangular
-            pw = rv
-            newdigits = 0
-            b = midmin - small
-            y = random.randint(0, b - 1)
-            while True:
-                if y &lt; pw:
-                    # Success
-                    sret = small * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
-                        while idx &gt;= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif y &gt; pw + 1:  # Greater than upper bound
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
-        elif rv &gt;= midmax - small:
-            # Right side of product density; falling triangular
-            pw = rv - (midmax - small)
-            newdigits = 0
-            b = large - midmax
-            y = random.randint(0, b - 1)
-            while True:
-                lowerbound = b - 1 - pw
-                if y &lt; lowerbound:
-                    # Success
-                    sret = midmax * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
-                        while idx &gt;= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif y &gt; lowerbound + 1:  # Greater than upper bound
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
-        else:
-            # Middle, or uniform, part of product density
-            sret = small + rv
-            for i in range(digitcount * 2):
-                cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
-                sret //= digits
-            cpsrn[1] = sret
-            return cpsrn
 
 def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     &quot;&quot;&quot; Multiplies a partially-sampled random number by a fraction.
@@ -2063,7 +1954,7 @@ def contbernoullidist(b, lamda, precision=53):
 <p>There are some open questions on PSRNs:</p>
 
 <ol>
-<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
+<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
 <li>Is the conjecture in the section &quot;<a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a>&quot; true?</li>
 </ol>
 

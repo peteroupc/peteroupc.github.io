@@ -775,7 +775,7 @@ Uses the skeleton for the uniform distribution inside N-dimensional shapes.
 3. Multiply _c1_ and _c2_ each by _base_ and add a digit chosen uniformly at random to that coordinate.
 4. If ((_c1_+1)<sup>2</sup> + (_c2_+1)<sup>2</sup>) < _S_<sup>2</sup>, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way. (For example, if _base_ is 10, _d_ is 3, and _c1_ is 342, set _p1_'s fractional part to \[3, 4, 2\].)
-    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
+    2. Run the **UniformDivide** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order, then set the resulting PSRN's sign to positive or negative with equal probability, then return that PSRN.
 5. If (_c1_<sup>2</sup> + _c2_<sup>2</sup>) > _S_<sup>2</sup>, then go to step 2.
 6. Multiply _S_ by _base_, then add 1 to _d_, then go to step 3.
 
@@ -869,8 +869,9 @@ First is an arbitrary-precision sampler for the sum of _n_ independent exponenti
 1. Generate _n_ exponential random variates with a rate of 1 via the **ExpRand** or **ExpRand2** algorithm described in my article on [**partially-sampled random numbers (PSRNs)**](https://peteroupc.github.io/exporand.html).  These numbers will be uniform PSRNs; this algorithm won't work for exponential PSRNs (e-rands), described in the same article, because the sum of two e-rands may follow a subtly wrong distribution.  By contrast, generating exponential random variates via rejection from the uniform distribution will allow unsampled digits to be sampled uniformly at random without deviating from the exponential distribution.
 2. Generate the sum of the random variates generated in step 1 by applying the [**UniformAdd**](https://peteroupc.github.io/exporand.html#Addition_and_Subtraction) algorithm given in another document.
 
-The second algorithm takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).
+<s>The second algorithm takes a parameter _a_, which must be a rational number in the interval (0, 1].  Adapted from Berman's gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN's fractional digits are binary (zeros or ones).</s>
 
+<s>
 1. Create a positive-sign zero-integer-part uniform PSRN, _ret_.  If _a_ is 1, instead generate an exponential random variate with a rate of 1 via the **ExpRand** or
 **ExpRand2** algorithm and return that variate.
 2. Generate a PSRN _ret_ using the **power-of-uniform sub-algorithm** (in the page on PSRNs) with _px_/_py_ = 1/_a_.
@@ -878,6 +879,7 @@ The second algorithm takes a parameter _a_, which must be a rational number in t
 4. Run the **algorithm for _&lambda;_<sup>_x_/_y_</sup>** with _x_/_y_ = 1&minus;_a_, using the input coin from step 3.  If the run returns 0, go to step 1.
 5. (At this point, _ret_ is distributed as beta(_a_, 2 &minus; _a_).)  Generate two exponential random variates with a rate of 1 via **ExpRand** or **ExpRand2**, then generate their sum by applying the **UniformAdd** algorithm.  Call the sum _z_.
 6. Run the **UniformMultiply** algorithm on _ret_ and _z_, and return the result of that algorithm.
+</s>
 
 The third algorithm combines both algorithms and works for any rational parameter _a_>0.
 
@@ -992,7 +994,7 @@ The algorithm follows.
 4. Run an **InShape** function that determines whether the transformed PDF is covered by the current box. In principle, this is the case when _z_ &le; 0 everywhere in the box, where _u_ lies in \[_c1_/_S_, (_c1_+1)/_S_\], _v_ lies in \[_c2_/_S_, (_c2_+1)/_S_\], and _z_ is _v_<sup>2</sup>&minus;_PDF_(_u_/_v_).  **InShape** returns _YES_ if the box is fully inside the transformed PDF, _NO_ if the box is fully outside it, and _MAYBE_ in any other case, or if evaluating _z_ fails for a given box (e.g., because ln(0) would be calculated or _v_ is 0).  See the next section for implementation notes.
 5. If **InShape** as described in step 4 returns _YES_, then do the following:
     1. Transfer _c1_'s least significant digits to _p1_'s fractional part, and transfer _c2_'s least significant digits to _p2_'s fractional part.  The variable _d_ tells how many digits to transfer to each PSRN this way.  Then set _p1_'s integer part to floor(_c1_/_base_<sup>_d_</sup>) and _p2_'s integer part to floor(_c2_/_base_<sup>_d_</sup>). (For example, if _base_ is 10, _d_ is 3, and _c1_ is 7342, set _p1_'s fractional part to \[3, 4, 2\] and _p1_'s integer part to 7.)
-    2. Run the **UniformDivision** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
+    2. Run the **UniformDivide** algorithm (described in the article on PSRNs) on _p1_ and _p2_, in that order.
     3. If the transformed PDF is symmetric about the _v_-axis, set the resulting PSRN's sign to positive or negative with equal probability.  Otherwise, set the PSRN's sign to positive.
     4. Return the PSRN.
 6. If **InShape** as described in step 4 returns _NO_, then go to step 2.

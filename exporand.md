@@ -345,22 +345,24 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example, and let _bfp_ be **b**'s integer and fractional parts packed the same way.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
 6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
-    - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval; in the case of multiplication the distribution resembles a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
+    - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
 7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
-9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the trapezoid.  In this case, do the following:
-    1. Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).
-    2. If _y_ is less than _x_, the algorithm succeeds, so do the following:
-        1. Set _s_ to _minv_\*_base_<sup>_newdigits_</sup> + _x_ (where _base_ is the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal).
-        2. Transfer the (_n_\*2 + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_\*2 + _newdigits_) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.
-    3. If _y_ is greater than _x_ + 1, abort these substeps and go to step 8. (This is a rejection event.)
-    4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
-10. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the trapezoid.  In this case, do the following:
-    1. Set _x_ to _z_&minus;(_midmax_&minus;_minv_), then set _newdigits_ to 0, then set _b_ to _maxv_&minus;_midmax_, then set _y_ to a uniform random integer in the interval [0, _b_).
-    2. If _y_ is less than _b_&minus;1&minus;_x_, the algorithm succeeds, so do the following: Set _s_ to _midmax_\*_base_<sup>_newdigits_</sup> + _x_, then transfer the (_n_\*2+ _newdigits_) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>), then return _ret_.
-    3. If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 8. (This is a rejection event.)
-    4. Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.
+9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the "trapezoid".&dagger; <s>In this case, do the following:</s>
+    1. <s>Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).</s>
+    2. <s>If _y_ is less than _x_, the algorithm succeeds, so do the following:</s>
+        1. <s>Set _s_ to _minv_\*_base_<sup>_newdigits_</sup> + _x_ (where _base_ is the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal).</s>
+        2. <s>Transfer the (_n_\*2 + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_\*2 + _newdigits_) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.</s>
+    3. <s>If _y_ is greater than _x_ + 1, abort these substeps and go to step 8. (This is a rejection event.)</s>
+    4. <s>Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.</s>
+10. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the "trapezoid".&dagger;  <s>In this case, do the following:</s>
+    1. <s>Set _x_ to _z_&minus;(_midmax_&minus;_minv_), then set _newdigits_ to 0, then set _b_ to _maxv_&minus;_midmax_, then set _y_ to a uniform random integer in the interval [0, _b_).</s>
+    2. <s>If _y_ is less than _b_&minus;1&minus;_x_, the algorithm succeeds, so do the following: Set _s_ to _midmax_\*_base_<sup>_newdigits_</sup> + _x_, then transfer the (_n_\*2+ _newdigits_) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>), then return _ret_.</s>
+    3. <s>If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 8. (This is a rejection event.)</s>
+    4. <s>Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.</s>
 11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
+
+&dagger; _The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution._
 
 The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a nonzero rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
@@ -919,7 +921,7 @@ def exprand(lam):
 
 ```
 
-In the following Python code, `multiply_psrns` and `add_psrns` are methods to generate the result of multiplying or adding two uniform PSRNs, respectively.
+In the following Python code, `add_psrns` is a method to generate the result of multiplying or adding two uniform PSRNs, respectively.
 
 ```
 def psrn_reciprocal(psrn1, digits=2):
@@ -991,117 +993,6 @@ def psrn_reciprocal(psrn1, digits=2):
             dcount += 1
             ddc *= digits
             dc *= digits
-
-def multiply_psrns(psrn1, psrn2, digits=2):
-    """ Multiplies two uniform partially-sampled random numbers.
-        psrn1: List containing the sign, integer part, and fractional part
-            of the first PSRN.  Fractional part is a list of digits
-            after the point, starting with the first.
-        psrn2: List containing the sign, integer part, and fractional part
-            of the second PSRN.
-        digits: Digit base of PSRNs' digits.  Default is 2, or binary. """
-    if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
-        raise ValueError
-    for i in range(len(psrn1[2])):
-        psrn1[2][i] = (
-            random.randint(0, digits - 1) if psrn1[2][i] == None else psrn1[2][i]
-        )
-    for i in range(len(psrn2[2])):
-        psrn2[2][i] = (
-            random.randint(0, digits - 1) if psrn2[2][i] == None else psrn2[2][i]
-        )
-    while len(psrn1[2]) < len(psrn2[2]):
-        psrn1[2].append(random.randint(0, digits - 1))
-    while len(psrn1[2]) > len(psrn2[2]):
-        psrn2[2].append(random.randint(0, digits - 1))
-    digitcount = len(psrn1[2])
-    if len(psrn2[2]) != digitcount:
-        raise ValueError
-    # Perform multiplication
-    frac1 = psrn1[1]
-    frac2 = psrn2[1]
-    for i in range(digitcount):
-        frac1 = frac1 * digits + psrn1[2][i]
-    for i in range(digitcount):
-        frac2 = frac2 * digits + psrn2[2][i]
-    while frac1 == 0 and frac2 == 0:
-        # Avoid degenerate cases
-        d1 = random.randint(0, digits - 1)
-        psrn1[2].append(d1)
-        d2 = random.randint(0, digits - 1)
-        psrn2[2].append(d2)
-        frac1 = frac1 * digits + d1
-        frac2 = frac2 * digits + d2
-        digitcount += 1
-    small = frac1 * frac2
-    mid1 = frac1 * (frac2 + 1)
-    mid2 = (frac1 + 1) * frac2
-    large = (frac1 + 1) * (frac2 + 1)
-    midmin = min(mid1, mid2)
-    midmax = max(mid1, mid2)
-    cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
-    cpsrn[0] = psrn1[0] * psrn2[0]
-    while True:
-        rv = random.randint(0, large - small - 1)
-        if rv < midmin - small:
-            # Left side of product density; rising triangular
-            pw = rv
-            newdigits = 0
-            b = midmin - small
-            y = random.randint(0, b - 1)
-            while True:
-                if y < pw:
-                    # Success
-                    sret = small * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif y > pw + 1:  # Greater than upper bound
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
-        elif rv >= midmax - small:
-            # Right side of product density; falling triangular
-            pw = rv - (midmax - small)
-            newdigits = 0
-            b = large - midmax
-            y = random.randint(0, b - 1)
-            while True:
-                lowerbound = b - 1 - pw
-                if y < lowerbound:
-                    # Success
-                    sret = midmax * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif y > lowerbound + 1:  # Greater than upper bound
-                    # Rejected
-                    break
-                pw = pw * digits + random.randint(0, digits - 1)
-                y = y * digits + random.randint(0, digits - 1)
-                b *= digits
-                newdigits += 1
-        else:
-            # Middle, or uniform, part of product density
-            sret = small + rv
-            for i in range(digitcount * 2):
-                cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
-                sret //= digits
-            cpsrn[1] = sret
-            return cpsrn
 
 def multiply_psrn_by_fraction(psrn1, fraction, digits=2):
     """ Multiplies a partially-sampled random number by a fraction.
@@ -1607,7 +1498,7 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 
 There are some open questions on PSRNs:
 
-1. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle, and in the case of multiplication this distribution resembles a trapezoid.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
+1. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
 2. Is the conjecture in the section "[**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)" true?
 
 <a id=Acknowledgments></a>
