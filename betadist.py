@@ -365,9 +365,47 @@ def psrn_reciprocal(rg, psrn1, digits=2):
             ddc *= digits
             dc *= digits
 
+def psrn_multiply(rg, psrn1, psrn2, digits=2):
+    iters = 0
+    while True:
+        # if iters>10 and iters%10==0: print(iters)
+        if iters > 50:
+            # print([psrn_fill(rg,psrn1),psrn_fill(rg,psrn2)])
+            return psrn_multiply_a(rg, psrn1, psrn2, digits, cc=True)
+        pa = psrn_multiply_a(rg, psrn1, psrn2, digits)
+        if pa == None:
+            psrn1[2].append(rg.rndint(digits - 1))
+            psrn2[2].append(rg.rndint(digits - 1))
+            iters += 1
+        else:
+            # print(["finish "+str(iters)])
+            return pa
+
+def proddist(x, a, b, c, d):
+    if a * d < b * c:
+        aa = a
+        bb = b
+        cc = c
+        dd = d
+        a = cc
+        b = dd
+        c = aa
+        d = bb
+    if a * c > x:
+        x = a * c
+    if b * d < x:
+        x = b * d
+    if a * c <= x and x <= b * c:
+        r = max(0, min(1, math.log(x / (a * c)))) / math.log(b / a)
+    elif b * c <= x and x <= a * d:
+        r = 1
+    else:
+        r = max(0, min(1, math.log(b * d / x))) / math.log(b / a)
+    return max(0, min(1, r))
+
 # TODO: This is approximate only; figure out how
 # to implement exact version
-def psrn_multiply(rg, psrn1, psrn2, digits=2):
+def psrn_multiply_a(rg, psrn1, psrn2, digits=2, cc=False, testing=False):
     """Multiplies two uniform partially-sampled random numbers.
     psrn1: List containing the sign, integer part, and fractional part
         of the first PSRN.  Fractional part is a list of digits
@@ -395,7 +433,7 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
         frac1 = frac1 * digits + psrn1[2][i]
     for i in range(digitcount):
         frac2 = frac2 * digits + psrn2[2][i]
-    while frac1 == 0 and frac2 == 0:
+    while frac1 == 0 or frac2 == 0:
         # Avoid degenerate cases
         d1 = rg.rndint(digits - 1)
         psrn1[2].append(d1)
@@ -410,36 +448,120 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
     large = (frac1 + 1) * (frac2 + 1)
     midmin = min(mid1, mid2)
     midmax = max(mid1, mid2)
-    cpsrn = [1, 0, [0 for i in range(digitcount * 2)]]
+    dc2 = digitcount * 2
+
+    fa = Fraction(frac1, digits ** digitcount)
+    fb = Fraction(frac1 + 1, digits ** digitcount)
+    fc = Fraction(frac2, digits ** digitcount)
+    fd = Fraction(frac2 + 1, digits ** digitcount)
+
+    fsmall = Fraction(small, digits ** dc2)
+    flarge = Fraction(large, digits ** dc2)
+    fmidmin = Fraction(midmin, digits ** dc2)
+    fmidmax = Fraction(midmax, digits ** dc2)
+    cpsrn = [1, 0, [0 for i in range(dc2)]]
     cpsrn[0] = psrn1[0] * psrn2[0]
+    iters = 0
     while True:
+        # if iters>10 and iters%10==0: print(["iters",iters])
         rv = rg.rndint(large - small - 1)
+        if testing:
+            ru = fsmall + rv * (flarge - fsmall) / (large - small)
+            ru2 = fsmall + (rv + 1) * (flarge - fsmall) / (large - small)
+            if ru > flarge or ru < fsmall:
+                raise ValueError
+            # pd=proddist(float(fmidmin),fa,fb,fc,fd)
+            # if pd!=1:print(["mmn",float(fmidmin),pd])
+            # pd=proddist(float(fmidmax),fa,fb,fc,fd)
+            # if pd!=1:print(["mmx",float(fmidmax),pd])
         if rv < midmin - small:
             # Left side of product density; rising triangular
+            if False and not cc:
+                print(
+                    [
+                        "left",
+                        rv,
+                        "smlg",
+                        float(fsmall),
+                        float(flarge),
+                        "midminmax",
+                        float(fmidmin),
+                        float(fmidmax),
+                        "midsize",
+                        float((fmidmax - fmidmin) / (flarge - fsmall)),
+                    ]
+                )
+                return None
+            if fsmall == 0:
+                raise ValueError
+            rux = None
+            if testing:
+                ry = random.random()
+                rpw = proddist(float(ru), fa, fb, fc, fd)
+                rpw2 = proddist(float(ru2), fa, fb, fc, fd)
             pw = rv
             newdigits = 0
             b = midmin - small
             y = rg.rndint(b - 1)
             while True:
-                if y < pw:
+                if (testing and ry < rpw) or (not testing and y < pw):
                     # Success
                     sret = small * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
+                    for i in range(dc2 + newdigits):
+                        idx = (dc2 + newdigits) - 1 - i
                         while idx >= len(cpsrn[2]):
                             cpsrn[2].append(None)
                         cpsrn[2][idx] = sret % digits
                         sret //= digits
                     cpsrn[1] = sret
                     return cpsrn
-                elif y > pw + 1:  # Greater than upper bound
+                elif (testing and ry > rpw2) or (
+                    not testing and y > pw + 1
+                ):  # Greater than upper bound
                     # Rejected
                     break
                 pw = pw * digits + rg.rndint(digits - 1)
                 y = y * digits + rg.rndint(digits - 1)
                 b *= digits
                 newdigits += 1
+                if testing:
+                    # print(["old ru",float(ru),float(ru2)])
+                    nru = fsmall + ((pw) / digits ** newdigits) * (flarge - fsmall) / (
+                        large - small
+                    )
+                    nru2 = fsmall + ((pw + 1) / digits ** newdigits) * (
+                        flarge - fsmall
+                    ) / (large - small)
+                    if nru < ru or nru2 > ru2:
+                        print([float(ru), nru, float(ru2), nru2])
+                        raise ValueError
+                    ru = nru
+                    ru2 = nru2
+                    rpw = proddist(float(ru), fa, fb, fc, fd)
+                    rpw2 = proddist(float(ru2), fa, fb, fc, fd)
         elif rv >= midmax - small:
+            if False and not cc:
+                print(
+                    [
+                        "right",
+                        rv,
+                        "smlg",
+                        float(fsmall),
+                        float(flarge),
+                        "midminmax",
+                        float(fmidmin),
+                        float(fmidmax),
+                        "midsize",
+                        float((fmidmax - fmidmin) / (flarge - fsmall)),
+                    ]
+                )
+                return None
+            rux = None
+            if testing:
+                ry = random.random()
+                rpw = proddist(float(ru), fa, fb, fc, fd)
+                rpw2 = proddist(float(ru2), fa, fb, fc, fd)
+                # print(["ru",rpw,rpw2])
             # Right side of product density; falling triangular
             pw = rv - (midmax - small)
             newdigits = 0
@@ -447,29 +569,47 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
             y = rg.rndint(b - 1)
             while True:
                 lowerbound = b - 1 - pw
-                if y < lowerbound:
+                if (testing and ry < rpw2) or (not testing and y < lowerbound):
                     # Success
                     sret = midmax * (digits ** newdigits) + pw
-                    for i in range(digitcount * 2 + newdigits):
-                        idx = (digitcount * 2 + newdigits) - 1 - i
+                    for i in range(dc2 + newdigits):
+                        idx = (dc2 + newdigits) - 1 - i
                         while idx >= len(cpsrn[2]):
                             cpsrn[2].append(None)
                         cpsrn[2][idx] = sret % digits
                         sret //= digits
                     cpsrn[1] = sret
                     return cpsrn
-                elif y > lowerbound + 1:  # Greater than upper bound
+                elif (testing and ry > rpw) or (
+                    not testing and y > lowerbound + 1
+                ):  # Greater than upper bound
                     # Rejected
                     break
                 pw = pw * digits + rg.rndint(digits - 1)
                 y = y * digits + rg.rndint(digits - 1)
                 b *= digits
                 newdigits += 1
+                if testing:
+                    # print(["old ru",float(ru),float(ru2)])
+                    nru = fmidmax + ((pw) / digits ** newdigits) * (flarge - fsmall) / (
+                        large - small
+                    )
+                    nru2 = fmidmax + ((pw + 1) / digits ** newdigits) * (
+                        flarge - fsmall
+                    ) / (large - small)
+                    if nru < ru or nru2 > ru2:
+                        print([float(ru), nru, float(ru2), nru2])
+                        raise ValueError
+                    ru = nru
+                    ru2 = nru2
+                    # print(["new ru",ru,ru2])
+                    rpw = proddist(float(ru), fa, fb, fc, fd)
+                    rpw2 = proddist(float(ru2), fa, fb, fc, fd)
         else:
             # Middle, or uniform, part of product density
             sret = small + rv
-            for i in range(digitcount * 2):
-                cpsrn[2][digitcount * 2 - 1 - i] = sret % digits
+            for i in range(dc2):
+                cpsrn[2][dc2 - 1 - i] = sret % digits
                 sret //= digits
             cpsrn[1] = sret
             return cpsrn
@@ -1295,7 +1435,10 @@ class _BitFetchingRandomGen:
             x >>= 1
         self.fetchedbits = 0
 
-def _test_rand_extraction(func, digits=2, nofill=False):
+def _test_rand_extraction(rg, func, digits=2, nofill=False):
+
+    func(rg)
+    return
 
     import scipy.stats as st
 
@@ -1507,6 +1650,7 @@ if __name__ == "__main__":
             return
         if i < 10:
             _test_rand_extraction(
+                rg,
                 lambda rg: psrn_add_fraction(
                     rg, [ps, pi, [x for x in pfc]], frac, digits=digits
                 ),
@@ -1553,7 +1697,7 @@ if __name__ == "__main__":
             raise ValueError
         if i < 100:
             _test_rand_extraction(
-                lambda rg: psrn_in_range(rg, f1, f2, digits=digits), digits=digits
+                rg, lambda rg: psrn_in_range(rg, f1, f2, digits=digits), digits=digits
             )
             sample1 = [random.uniform(float(f1), float(f2)) for _ in range(2000)]
             sample2 = [
@@ -1602,6 +1746,7 @@ if __name__ == "__main__":
             raise ValueError
         if i < 10:
             _test_rand_extraction(
+                rg,
                 lambda rg: psrn_multiply_by_fraction(
                     rg, [ps, pi, [x for x in pfc]], frac, digits=digits
                 ),
@@ -1653,6 +1798,7 @@ if __name__ == "__main__":
             raise ValueError
         if i < 20:
             _test_rand_extraction(
+                rg,
                 lambda rg: psrn_reciprocal(
                     rg, [ps, pi, [x for x in pfc]], digits=digits
                 ),
@@ -1708,6 +1854,7 @@ if __name__ == "__main__":
             return
         if i < 50:
             _test_rand_extraction(
+                rg,
                 lambda rg: psrn_add(
                     rg,
                     [ps, pi, [x for x in pfc]],
@@ -1774,6 +1921,7 @@ if __name__ == "__main__":
             raise ValueError
         if i < 100:
             _test_rand_extraction(
+                rg,
                 lambda rg: psrn_multiply(
                     rg,
                     [ps, pi, [x for x in pfc]],
@@ -1783,7 +1931,7 @@ if __name__ == "__main__":
                 digits=digits,
             )
             sample1 = [
-                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(2000)
+                random.uniform(p, p2) * random.uniform(q, q2) for _ in range(3000)
             ]
             sample2 = [
                 _rp(
@@ -1796,7 +1944,7 @@ if __name__ == "__main__":
                     ),
                     digits=digits,
                 )
-                for _ in range(2000)
+                for _ in range(3000)
             ]
             ks = st.ks_2samp(sample1, sample2)
             if ks.pvalue < 1e-6:
@@ -1814,8 +1962,6 @@ if __name__ == "__main__":
         sample1 = [random.expovariate(1) for i in range(10000)]
         sample2 = [psrn_fill(rg, psrnexpo(rg)) for i in range(10000)]
         ks = st.ks_2samp(sample1, sample2)
-        # dobucket(sample1)
-        # dobucket(sample2)
         if ks.pvalue < 1e-6:
             print("    psrn_expo_test()")
             print("    # exp. range about %s - %s" % (min(sample1), max(sample1)))
@@ -1825,7 +1971,7 @@ if __name__ == "__main__":
 
     bern = bernoulli.Bernoulli()
     rg = randomgen.RandomGen()
-    _test_rand_extraction(lambda rg: psrnexpo(rg))
+    # _test_rand_extraction(lambda rg: psrnexpo(rg))
     psrn_expo_test(rg)
 
     sample1 = []
@@ -1853,6 +1999,23 @@ if __name__ == "__main__":
     psrn_add_fraction_test(rg, 1, 0, [], Fraction(-1, 1), digits=10)
     psrn_add_fraction_test(rg, 1, 0, [], Fraction(-2, 1), digits=2)
     psrn_add_fraction_test(rg, 1, 0, [], Fraction(-2, 1), digits=10)
+
+    psrn_multiply_test(rg, -1, 3, [], -1, 4, [], digits=2)
+    psrn_multiply_test(rg, -1, 0, [], -1, 0, [], digits=2)
+    psrn_multiply_test(rg, -1, 0, [], -1, 0, [0], digits=2)
+    psrn_multiply_test(rg, -1, 0, [0], -1, 0, [0], digits=2)
+    psrn_multiply_test(rg, -1, 0, [0], -1, 0, [0, 0], digits=2)
+    psrn_multiply_test(rg, -1, 0, [0, 0], -1, 0, [0, 0], digits=2)
+    psrn_multiply_test(rg, -1, 5, [], 1, 2, [], digits=3)
+    psrn_multiply_test(rg, -1, 2, [], 1, 2, [], digits=10)
+    psrn_multiply_test(rg, 1, 5, [], 1, 6, [], digits=10)
+    # Additional tests
+    psrn_multiply_test(rg, -1, 5, [], 1, 2, [], digits=2)
+    psrn_multiply_test(rg, -1, 2, [], 1, 2, [], digits=2)
+    psrn_multiply_test(rg, 1, 5, [], 1, 6, [], digits=2)
+    psrn_multiply_test(rg, -1, 5, [], 1, 2, [], digits=10)
+    psrn_multiply_test(rg, -1, 2, [], 1, 2, [], digits=10)
+    psrn_multiply_test(rg, 1, 5, [], 1, 6, [], digits=3)
 
     for digits in [2, 3, 10, 5, 16]:
         psrn_in_range_test(rg, Fraction(-9, 11), Fraction(1, 23), digits=2)

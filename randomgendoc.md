@@ -2540,6 +2540,8 @@ FUNCTIONS
           random number.
         - precision: Number of bits after the point that the result will contain.
 
+    proddist(x, a, b, c, d)
+
     psrn_add(rg, psrn1, psrn2, digits=2)
         Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -2564,6 +2566,8 @@ FUNCTIONS
     psrn_less_than_fraction(rg, psrn, rat, digits=2)
 
     psrn_multiply(rg, psrn1, psrn2, digits=2)
+
+    psrn_multiply_a(rg, psrn1, psrn2, digits=2, cc=False, testing=False)
         Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits

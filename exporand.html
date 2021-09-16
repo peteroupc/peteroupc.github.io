@@ -471,11 +471,11 @@
 <ol>
 <li>If <strong>a</strong> has unsampled digits before the last sampled digit in its fractional part, set each of those unsampled digits to a digit chosen uniformly at random.  Do the same for <strong>b</strong>.</li>
 <li>If <strong>a</strong> has fewer digits in its fractional part than <strong>b</strong> (or vice versa), sample enough digits (by setting them to uniform random digits, such as unbiased random bits if <strong>a</strong> and <strong>b</strong> store binary, or base-2, digits) so that both PSRNs&#39; fractional parts have the same number of digits.</li>
-<li>If both <strong>a</strong> and <strong>b</strong> have no non-zero digits in their fractional parts, and if their integer parts are both 0, then do the following. (This step is crucial for correctness when both PSRNs&#39; intervals cover the number 0, since the distribution of their product is different from the usual case.)
+<li>If either <strong>a</strong> or <strong>b</strong> has an integer part of 0 and a fractional part with no non-zero digits, then do the following. (This step is crucial for correctness when both PSRNs&#39; intervals cover the number 0, since the distribution of their product is different from the usual case.)
 
 <ol>
 <li>Append a digit chosen uniformly at random to <strong>a</strong>&#39;s fractional part.  Do the same for <strong>b</strong>.</li>
-<li>If both digits chosen in the previous substep were zeros, go to the previous substep.</li>
+<li>If either <strong>a</strong> or <strong>b</strong> has an integer part of 0 and a fractional part with no non-zero digits, go to the previous substep.</li>
 </ol></li>
 <li>Let <em>afp</em> be <strong>a</strong>&#39;s integer and fractional parts packed into an integer, as explained in the example, and let <em>bfp</em> be <strong>b</strong>&#39;s integer and fractional parts packed the same way.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 8312344.)  Let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>Calculate <em>n1</em> = <em>afp</em>*<em>bfp</em>, <em>n2</em> = <em>afp</em>*(<em>bfp</em>+1), <em>n3</em> = (<em>afp</em>+1)*<em>bfp</em>, and <em>n4</em> = (<em>afp</em>+1)*(<em>bfp</em>+1).</li>
