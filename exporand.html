@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/15"><meta name="citation_online_date" content="2021/09/15"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/18"><meta name="citation_online_date" content="2021/09/18"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -286,7 +286,7 @@
 </ol>
 </blockquote>
 
-<p>The <strong>RandUniformInRangePositive</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one non-negative real number <strong>bmin</strong> and less than another positive real number <strong>bmax</strong> with probability 1.  This algorithm works whether <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number or not (for example, either number can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number.</p>
+<p>The <strong>RandUniformInRangePositive</strong> algorithm generates a uniformly distributed PSRN (<strong>a</strong>) that is greater than one non-negative real number <strong>bmin</strong> and less than another positive real number <strong>bmax</strong> with probability 1.  This algorithm works whether <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number or not (for example, either number can be the result of an expression such as <code>exp(-2)</code> or <code>ln(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>bmin</strong> or <strong>bmax</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>bmin</strong> is greater than or equal to <strong>bmax</strong>, if <strong>bmin</strong> is less than 0, or if <strong>bmax</strong> is 0 or less, return an error.</li>
@@ -479,7 +479,7 @@
 </ol></li>
 <li>Let <em>afp</em> be <strong>a</strong>&#39;s integer and fractional parts packed into an integer, as explained in the example, and let <em>bfp</em> be <strong>b</strong>&#39;s integer and fractional parts packed the same way.  (For example, if <strong>a</strong> represents the number 83.12344..., <em>afp</em> is 8312344.)  Let <em>digitcount</em> be the number of digits in <strong>a</strong>&#39;s fractional part.</li>
 <li>Calculate <em>n1</em> = <em>afp</em>*<em>bfp</em>, <em>n2</em> = <em>afp</em>*(<em>bfp</em>+1), <em>n3</em> = (<em>afp</em>+1)*<em>bfp</em>, and <em>n4</em> = (<em>afp</em>+1)*(<em>bfp</em>+1).</li>
-<li>Set <em>minv</em> to the minimum and <em>maxv</em> to the maximum of the four numbers just calculated.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).
+<li>Set <em>minv</em> to <em>n1</em> and <em>maxv</em> to <em>n2</em>.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).
 
 <ul>
 <li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</small></li>
@@ -511,6 +511,31 @@
 </ol>
 
 <p>&dagger; <em>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution.</em></p>
+
+<blockquote>
+<p><strong>Note:</strong> A sketch of the correct procedure for steps 9 and 10:</p>
+
+<ul>
+<li>(9.) If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the &quot;trapezoid&quot;:
+
+<ol>
+<li>Generate a uniform PSRN <em>u</em> with empty fractional part, zero integer part, and positive sign.</li>
+<li>Set <em>z</em> to a uniform random integer in the interval [0, <em>midmin</em>).  Set <em>lower</em> to <em>minv</em>+<em>z</em> and <em>upper</em> to <em>minv</em>+<em>z</em>+1.</li>
+<li>Calculate the density lower bound as ln(<em>lower</em>/<em>minv</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
+<li>Calculate the density upper bound as ln(<em>upper</em>/<em>minv</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
+<li>If <em>u</em> is less than the density lower bound, the algorithm succeeds.  If <em>u</em> is greater than the density upper bound, go to the first substep.  Otherwise, improve <em>lower</em> and <em>upper</em> and go to the second substep.</li>
+</ol></li>
+<li>(10.) If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the right side of the &quot;trapezoid&quot;:
+
+<ol>
+<li>Generate a uniform PSRN <em>u</em> with empty fractional part, zero integer part, and positive sign.</li>
+<li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>midmax</em>).  Set <em>lower</em> to <em>midmax</em>+<em>z</em> and <em>upper</em> to <em>midmax</em>+<em>z</em>+1.</li>
+<li>Calculate the density lower bound as ln(<em>maxv</em>/<em>upper</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
+<li>Calculate the density upper bound as ln(<em>maxv</em>/<em>lower</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
+<li>If <em>u</em> is less than the density lower bound, the algorithm succeeds.  If <em>u</em> is greater than the density upper bound, go to the first substep.  Otherwise, improve <em>lower</em> and <em>upper</em> and go to the second substep.</li>
+</ol></li>
+</ul>
+</blockquote>
 
 <p>The following algorithm (<strong>UniformMultiplyRational</strong>) shows how to multiply a uniform PSRN (<strong>a</strong>) by a nonzero rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 
@@ -605,7 +630,7 @@
 <p><strong>Note</strong>: To sample the <strong>maximum</strong> of two uniform random variate in the interval [0, 1]s, or the <strong>square root</strong> of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs <strong>a</strong> and <strong>b</strong> each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run <strong>RandLess</strong> on <strong>a</strong> and <strong>b</strong> in that order.  If the call returns 0, return <strong>a</strong>; otherwise, return <strong>b</strong>.</p>
 </blockquote>
 
-<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>log(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
+<p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>ln(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part or sign is unsampled, return an error.</li>

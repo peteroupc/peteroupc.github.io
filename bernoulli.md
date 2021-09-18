@@ -1073,12 +1073,12 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 
 1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
 2. Special case: If _x_ is less than _y_ and _i_ = 1, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
-3. Special case: If _x_ is less than _y_, then create a secondary coin _&mu;_ that does the following: "(a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0", then run the **algorithm for (_&mu;_<sup>_i_/1</sup>)** (described earlier) using this secondary coin.
+3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "(a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
 4. Set _t_ to 355/100 and _c_ to _x_/_y_.
 5. If _i_ is 0, return 1.
 6. While _i_ = _t_ / _&#x03F5;_:
     1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
-    2. Run the **algorithm for (1/_&beta;_)<sup>_i_</sup>** (the algorithm labeled **_x_<sup>_y_</sup>** and given in the irrational constants section).  If it returns 0, return 0.
+    2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
     3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
 7. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2, then go to step 5.
 

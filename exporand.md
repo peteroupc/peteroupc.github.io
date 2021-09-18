@@ -206,7 +206,7 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 > 2. The **RandUniform** algorithm is equivalent to generating the product of a random variate (**b**) and a uniform random variate in the interval [0, 1].
 > 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1]s.
 
-The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
+The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
 
 1. If **bmin** is greater than or equal to **bmax**, if **bmin** is less than 0, or if **bmax** is 0 or less, return an error.
 2. Create an empty uniform PSRN **a**.
@@ -344,7 +344,7 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
      2. If either **a** or **b** has an integer part of 0 and a fractional part with no non-zero digits, go to the previous substep.
 4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example, and let _bfp_ be **b**'s integer and fractional parts packed the same way.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
-6. Set _minv_ to the minimum and _maxv_ to the maximum of the four numbers just calculated.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
+6. Set _minv_ to _n1_ and _maxv_ to _n2_.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
     - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
 7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
@@ -363,6 +363,21 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
 &dagger; _The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution._
+
+> **Note:** A sketch of the correct procedure for steps 9 and 10:
+>
+> - (9.) If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the "trapezoid":
+>     1. Generate a uniform PSRN _u_ with empty fractional part, zero integer part, and positive sign.
+>     2. Set _z_ to a uniform random integer in the interval [0, _midmin_).  Set _lower_ to _minv_+_z_ and _upper_ to _minv_+_z_+1.
+>     3. Calculate the density lower bound as ln(_lower_/_minv_) / ln(_midmin_/_minv_).
+>     4. Calculate the density upper bound as ln(_upper_/_minv_) / ln(_midmin_/_minv_).
+>     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to the first substep.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
+> - (10.) If _z_ is less than _midmin_&minus;_minv_, we will sample from the right side of the "trapezoid":
+>     1. Generate a uniform PSRN _u_ with empty fractional part, zero integer part, and positive sign.
+>     2. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_midmax_).  Set _lower_ to _midmax_+_z_ and _upper_ to _midmax_+_z_+1.
+>     3. Calculate the density lower bound as ln(_maxv_/_upper_) / ln(_midmin_/_minv_).
+>     4. Calculate the density upper bound as ln(_maxv_/_lower_) / ln(_midmin_/_minv_).
+>     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to the first substep.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
 
 The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a nonzero rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
@@ -437,7 +452,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 
 > **Note**: To sample the **maximum** of two uniform random variate in the interval [0, 1]s, or the **square root** of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
 
-The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** with probability 1, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `log(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
+The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** with probability 1, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
 1. If **a**'s integer part or sign is unsampled, return an error.
 2. Set _bs_ to &minus;1 if **b** is less than 0, or 1 otherwise. Calculate floor(abs(**b**)), and set _bi_ to the result. (_If **b** is known rational:_ Then set _bf_ to abs(**b**) minus _bi_.)

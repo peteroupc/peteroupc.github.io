@@ -2542,6 +2542,8 @@ FUNCTIONS
 
     proddist(x, a, b, c, d)
 
+    proddist2(x, a, b, c, d)
+
     psrn_add(rg, psrn1, psrn2, digits=2)
         Adds two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
@@ -2566,8 +2568,6 @@ FUNCTIONS
     psrn_less_than_fraction(rg, psrn, rat, digits=2)
 
     psrn_multiply(rg, psrn1, psrn2, digits=2)
-
-    psrn_multiply_a(rg, psrn1, psrn2, digits=2, cc=False, testing=False)
         Multiplies two uniform partially-sampled random numbers.
         psrn1: List containing the sign, integer part, and fractional part
             of the first PSRN.  Fractional part is a list of digits
@@ -2575,6 +2575,10 @@ FUNCTIONS
         psrn2: List containing the sign, integer part, and fractional part
             of the second PSRN.
         digits: Digit base of PSRNs' digits.  Default is 2, or binary.
+
+    psrn_multiply_a(rg, psrn1, psrn2, digits=2, testing=False)
+
+    psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False)
 
     psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2)
         Multiplies a partially-sampled random number by a fraction.
