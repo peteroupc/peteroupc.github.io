@@ -2597,6 +2597,8 @@ FUNCTIONS
             after the point, starting with the first.
         digits: Digit base of PSRNs' digits.  Default is 2, or binary.
 
+    psrn_sample(rg, psrn, digits=2)
+
     psrnexpo(rg)
 
 FILE

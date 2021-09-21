@@ -195,6 +195,9 @@ def psrn_in_range_positive(rg, bmin, bmax, digits=2):
                 continue
         return a
 
+def psrn_sample(rg, psrn, digits=2):
+    return psrn_less(rg, psrn_new_01(), [1, 0, psrn[2]], digits)
+
 def psrn_less(rg, psrn1, psrn2, digits=2):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
@@ -419,6 +422,55 @@ def psrn_multiply(rg, psrn1, psrn2, digits=2):
     digits: Digit base of PSRNs' digits.  Default is 2, or binary."""
     return psrn_multiply_a(rg, psrn1, psrn2, digits=digits)
 
+def _dlc(rg, psrn, c, digits=2):
+    i = rg.rndint(c - 1)
+    if i < psrn[1]:
+        return 1
+    if i == psrn[1]:
+        return psrn_sample(rg, psrn, digits=digits)
+    return 0
+
+def _log_yxyz(rg, psrn, st, digits=2):
+    # log((st+psrn)/st)
+    if psrn[0] < 0 or psrn[1] > st:
+        raise ValueError([psrn[1], "st", st])
+    u = None
+    while True:
+        if rg.rndint(1) == 0:
+            return _dlc(rg, psrn, st, digits=digits)
+        if u == None:
+            u = psrn_new_01()
+        if psrn_sample(rg, psrn, digits=digits):
+            if _dlc(rg, psrn, st, digits=digits) == 1:
+                return 0
+
+def _dlc2(rg, psrn, n, d, digits=2):
+    while True:
+        if rg.rndint(d) != d:
+            i = rg.rndint(d - 1)
+            if i < n:
+                return 1
+            if i == n:
+                return 1 - psrn_sample(rg, psrn, digits=digits)
+            return 0
+        if psrn_sample(rg, psrn, digits=digits) == 1:
+            return 1
+
+def _log_xyzy(rg, psrn, large, midmax, digits=2):
+    if psrn[0] < 0:
+        raise ValueError
+    u = None
+    n = large - psrn[1] - midmax - 1
+    d = psrn[1] + midmax
+    while True:
+        if rg.rndint(1) == 0:
+            return _dlc2(rg, psrn, n, d, digits=digits)
+        if u == None:
+            u = psrn_new_01()
+        if psrn_sample(rg, psrn, digits=digits):
+            if _dlc2(rg, psrn, n, d, digits=digits) == 1:
+                return 0
+
 def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
     if psrn1[0] == None or psrn1[1] == None or psrn2[0] == None or psrn2[1] == None:
         raise ValueError
@@ -466,81 +518,121 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
     fc = Fraction(frac2, digits ** digitcount)
     fd = Fraction(frac2 + 1, digits ** digitcount)
 
-    floor_log_2 = lambda x: int(x).bit_length() - 1
-    ceil_log_2 = (
-        lambda x: (int(x) - 1).bit_length() if int(x) == x else (int(x)).bit_length()
-    )
-
     cpsrn = [1, 0, [0 for i in range(dc2)]]
     cpsrn[0] = psrn1[0] * psrn2[0]
     iters = 0
     rv = rg.rndint(large - small - 1)
     if rv < midmin - small:
+        testing = True
+        while True:
+            ru = small + rg.rndint(midmin - small - 1)
+            rv = ru - small
+            if testing:
+                ru = fsmall + rv * (flarge - fsmall) / (large - small)
+                ru2 = fsmall + (rv + 1) * (flarge - fsmall) / (large - small)
+                if ru > flarge or ru < fsmall:
+                    raise ValueError
+            if fsmall == 0:
+                raise ValueError
+
+            if testing:
+                ry = random.random()
+                rpw = proddist(float(ru), fa, fb, fc, fd)
+                rpw2 = proddist(float(ru2), fa, fb, fc, fd)
+            pw = rv
+            newdigits = 0
+            b = midmin - small
+            y = rg.rndint(b - 1)
+            while True:
+                if (testing and ry < rpw) or (not testing and y < pw):
+                    # Success
+                    sret = small * (digits ** newdigits) + pw
+                    for i in range(dc2 + newdigits):
+                        idx = (dc2 + newdigits) - 1 - i
+                        while idx >= len(cpsrn[2]):
+                            cpsrn[2].append(None)
+                        cpsrn[2][idx] = sret % digits
+                        sret //= digits
+                    cpsrn[1] = sret
+                    return cpsrn
+                elif (testing and ry > rpw2) or (
+                    not testing and y > pw + 1
+                ):  # Greater than upper bound
+                    # Rejected
+                    break
+                pw = pw * digits + rg.rndint(digits - 1)
+                y = y * digits + rg.rndint(digits - 1)
+                b *= digits
+                newdigits += 1
+                if testing:
+                    # print(["old ru",float(ru),float(ru2)])
+                    nru = fsmall + ((pw) / digits ** newdigits) * (flarge - fsmall) / (
+                        large - small
+                    )
+                    nru2 = fsmall + ((pw + 1) / digits ** newdigits) * (
+                        flarge - fsmall
+                    ) / (large - small)
+                    if nru < ru or nru2 > ru2:
+                        print([float(ru), nru, float(ru2), nru2])
+                        raise ValueError
+                    ru = nru
+                    ru2 = nru2
+                    rpw = proddist(float(ru), fa, fb, fc, fd)
+                    rpw2 = proddist(float(ru2), fa, fb, fc, fd)
+        """
         cc = 0
         while True:
             cc += 1
+            #if cc % 10 == 0:
+            #    print(cc)
             if cc > 100:
                 raise ValueError
             ru = small + rg.rndint(midmin - small - 1)
-            fx = Fraction(ru, digits ** digitcount)
-            fx2 = Fraction(ru + 1, digits ** digitcount)
-            if fx < fsmall or fx > flarge or fx2 < fsmall or fx2 > flarge:
-                print(
-                    [
-                        "left",
-                        float(fx),
-                        float(fx2),
-                        "smlg",
-                        float(fsmall),
-                        float(flarge),
-                    ]
-                )
-                raise ValueError
-            pd1 = proddist2(fx, fa, fb, fc, fd)
-            pd2 = proddist2(fx2, fa, fb, fc, fd)
-            newdigits = 0
-            ps = psrn_new_01()
-            while True:
-                if newdigits > 50:
+            psrn = [1, ru - small, []]  # PSRN
+            if _log_yxyz(rg, psrn, small, digits=digits) == 1:
+                # Success
+                sret = ru
+                for i in range(dc2):
+                    idx = (dc2) - 1 - i
+                    while idx >= len(cpsrn[2]):
+                        cpsrn[2].append(None)
+                    cpsrn[2][idx] = sret % digits
+                    sret //= digits
+                for i in range(len(ps[2])):
+                    idx = dc2 + i
+                    if idx >= len(cpsrn[2]):
+                        cpsrn[2].append(ps[2][i])
+                    else:
+                        cpsrn[2][idx] = ps[2][i]
+                cpsrn[1] = sret
+                return cpsrn
+        """
+    elif rv >= midmax - small:
+        testing = True
+        while True:
+            ru = midmax + rg.rndint(large - midmax - 1)
+            rv = (ru - midmax) + (midmax - small)
+            if testing:
+                ru = fsmall + rv * (flarge - fsmall) / (large - small)
+                ru2 = fsmall + (rv + 1) * (flarge - fsmall) / (large - small)
+                if ru > flarge or ru < fsmall:
                     raise ValueError
-                pdlower = floor_log_2(pd1[0] * digits ** newdigits)
-                pdupper = ceil_log_2(pd2[0] * digits ** newdigits)
-                print(
-                    ["fx", float(fx), float(fx2), float(midmin / digits ** digitcount)]
-                )
-                print(
-                    [
-                        "pd1",
-                        float(pd1[0]),
-                        float(pd2[0]),
-                        "pdlu",
-                        float(pdlower),
-                        float(pdupper),
-                        "pdlu2",
-                        ceil_log_2(pd1[1] * digits ** newdigits),
-                        ceil_log_2(pd2[1] * digits ** newdigits),
-                        "log",
-                        float(math.log(pd1[0])),
-                        float(math.log(pd2[0])),
-                    ]
-                )
-                pdlower /= ceil_log_2(pd1[1] * digits ** newdigits)
-                pdupper /= max(1, ceil_log_2(pd2[1] * digits ** newdigits))
-                print(
-                    [
-                        "---",
-                        "pdlu",
-                        float(pdlower),
-                        float(pdupper),
-                        "log",
-                        float(math.log(pd1[0]) / math.log(pd1[1])),
-                    ]
-                )
-                print([pdlower, pdupper])
-                if psrn_less_than_fraction(rg, ps, pdlower) == 1:
+
+            if testing:
+                ry = random.random()
+                rpw = proddist(float(ru), fa, fb, fc, fd)
+                rpw2 = proddist(float(ru2), fa, fb, fc, fd)
+                # print(["ru",rpw,rpw2])
+            # Right side of product density; falling triangular
+            pw = rv - (midmax - small)
+            newdigits = 0
+            b = large - midmax
+            y = rg.rndint(b - 1)
+            while True:
+                lowerbound = b - 1 - pw
+                if (testing and ry < rpw2) or (not testing and y < lowerbound):
                     # Success
-                    sret = ru
-                    print(ru)
+                    sret = midmax * (digits ** newdigits) + pw
                     for i in range(dc2 + newdigits):
                         idx = (dc2 + newdigits) - 1 - i
                         while idx >= len(cpsrn[2]):
@@ -549,67 +641,59 @@ def psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False):
                         sret //= digits
                     cpsrn[1] = sret
                     return cpsrn
-                elif psrn_less_than_fraction(rg, ps, pdupper) == 0:
+                elif (testing and ry > rpw) or (
+                    not testing and y > lowerbound + 1
+                ):  # Greater than upper bound
                     # Rejected
                     break
-                else:
-                    newdigits += 1
-                    ru = ru * digits + rg.rndint(digits - 1)
-                    fx = Fraction(ru, digits ** (digitcount + newdigits))
-                    fx2 = Fraction(ru + 1, digits ** (digitcount + newdigits))
-                    pd1 = proddist2(fx, fa, fb, fc, fd)
-                    pd2 = proddist2(fx2, fa, fb, fc, fd)
-    elif rv >= midmax - small:
+                pw = pw * digits + rg.rndint(digits - 1)
+                y = y * digits + rg.rndint(digits - 1)
+                b *= digits
+                newdigits += 1
+                if testing:
+                    # print(["old ru",float(ru),float(ru2)])
+                    nru = fmidmax + ((pw) / digits ** newdigits) * (flarge - fsmall) / (
+                        large - small
+                    )
+                    nru2 = fmidmax + ((pw + 1) / digits ** newdigits) * (
+                        flarge - fsmall
+                    ) / (large - small)
+                    if nru < ru or nru2 > ru2:
+                        print([float(ru), nru, float(ru2), nru2])
+                        raise ValueError
+                    ru = nru
+                    ru2 = nru2
+                    # print(["new ru",ru,ru2])
+                    rpw = proddist(float(ru), fa, fb, fc, fd)
+                    rpw2 = proddist(float(ru2), fa, fb, fc, fd)
+        """
         cc = 0
         while True:
             cc += 1
+            if cc % 10 == 0:
+                print(cc)
             if cc > 100:
                 raise ValueError
             ru = midmax + rg.rndint(large - midmax - 1)
-            fx = Fraction(ru, digits ** digitcount)
-            fx2 = Fraction(ru + 1, digits ** digitcount)
-            if fx < fsmall or fx > flarge or fx2 < fsmall or fx2 > flarge:
-                print(
-                    [
-                        "right",
-                        float(fx),
-                        float(fx2),
-                        "smlg",
-                        float(fsmall),
-                        float(flarge),
-                    ]
-                )
-                raise ValueError
-            pd1 = proddist2(fx, fa, fb, fc, fd)
-            pd2 = proddist2(fx2, fa, fb, fc, fd)
-            newdigits = 0
-            ps = psrn_new_01()
-            while True:
-                pdlower = ceil_log_2(pd1[1] * digits ** newdigits)
-                pdupper = floor_log_2(pd2[1] * digits ** newdigits)
-                pdlower /= max(1, floor_log_2(pd1[1] * digits ** newdigits))
-                pdupper /= ceil_log_2(pd2[1] * digits ** newdigits)
-                if psrn_less_than_fraction(rg, ps, pdupper) == 1:
-                    # Success
-                    sret = ru
-                    for i in range(dc2 + newdigits):
-                        idx = (dc2 + newdigits) - 1 - i
-                        while idx >= len(cpsrn[2]):
-                            cpsrn[2].append(None)
-                        cpsrn[2][idx] = sret % digits
-                        sret //= digits
-                    cpsrn[1] = sret
-                    return cpsrn
-                elif psrn_less_than_fraction(rg, ps, pdlower) == 0:
-                    # Rejected
-                    break
-                else:
-                    newdigits += 1
-                    ru = ru * digits + rg.rndint(digits - 1)
-                    fx = Fraction(ru, digits ** (digitcount + newdigits))
-                    fx2 = Fraction(ru + 1, digits ** (digitcount + newdigits))
-                    pd1 = proddist2(fx, fa, fb, fc, fd)
-                    pd2 = proddist2(fx2, fa, fb, fc, fd)
+            psrn = [1, ru - midmax, []]  # PSRN
+            if _log_xyzy(rg, psrn, large, midmax, digits=digits) == 1:
+                # Success
+                sret = ru
+                for i in range(dc2):
+                    idx = (dc2) - 1 - i
+                    while idx >= len(cpsrn[2]):
+                        cpsrn[2].append(None)
+                    cpsrn[2][idx] = sret % digits
+                    sret //= digits
+                for i in range(len(ps[2])):
+                    idx = dc2 + i
+                    if idx >= len(cpsrn[2]):
+                        cpsrn[2].append(ps[2][i])
+                    else:
+                        cpsrn[2][idx] = ps[2][i]
+                cpsrn[1] = sret
+                return cpsrn
+        """
     else:
         # Middle, or uniform, part of product density
         sret = small + rv
@@ -685,7 +769,7 @@ def psrn_multiply_a(rg, psrn1, psrn2, digits=2, testing=False):
             # Left side of product density; rising triangular
             if fsmall == 0:
                 raise ValueError
-            rux = None
+
             if testing:
                 ry = random.random()
                 rpw = proddist(float(ru), fa, fb, fc, fd)
@@ -731,7 +815,7 @@ def psrn_multiply_a(rg, psrn1, psrn2, digits=2, testing=False):
                     rpw = proddist(float(ru), fa, fb, fc, fd)
                     rpw2 = proddist(float(ru2), fa, fb, fc, fd)
         elif rv >= midmax - small:
-            rux = None
+
             if testing:
                 ry = random.random()
                 rpw = proddist(float(ru), fa, fb, fc, fd)

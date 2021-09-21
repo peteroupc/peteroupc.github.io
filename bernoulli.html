@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/09/18"><meta name="citation_online_date" content="2021/09/18"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/09/21"><meta name="citation_online_date" content="2021/09/21"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -113,6 +113,7 @@
 <li><a href="#1_minus___lambda___cos___lambda"><strong>(1&minus;<em>&lambda;</em>)/cos(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus___lambda___tan___lambda"><strong>(1&minus;<em>&lambda;</em>) * tan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#ln_1___lambda"><strong>ln(1+<em>&lambda;</em>)</strong></a></li>
+<li><a href="#ln__c___d____lambda____c"><strong>ln((<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em>)</strong></a></li>
 <li><a href="#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1"><strong>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</strong></a></li>
 <li><a href="#arcsin___lambda___2"><strong>arcsin(<em>&lambda;</em>) / 2</strong></a></li>
 <li><a href="#Expressions_Involving_Polylogarithms"><strong>Expressions Involving Polylogarithms</strong></a></li>
@@ -331,7 +332,7 @@ functions, or functions in general.</p>
 <p>But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval [0, 1] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012<sup><a href="#Note6"><strong>(6)</strong></a></sup>; Qian et al. 2011)<sup><a href="#Note7"><strong>(7)</strong></a></sup>; see also Wästlund 1999, section 4<sup><a href="#Note8"><strong>(8)</strong></a></sup>).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.</p>
 
 <ol>
-<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.</li>
+<li>Flip the input coin <em>n</em> times, and let <em>j</em> be the number of times the coin returned 1 this way.<sup><a href="#Note57"><strong>(57)</strong></a></sup></li>
 <li>With probability <em>a</em>[<em>j</em>], return 1.  Otherwise, return 0.</li>
 </ol>
 
@@ -1651,19 +1652,43 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
 <li>Flip the input coin.  If it returns 0, flip the coin again and return the result.</li>
 <li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, flip the input coin and return the result.</li>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, return 0.</li>
+</ol></li>
 </ol>
 
 <p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
 
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.</li>
 <li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.</li>
-</ol>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then flip the input coin.  If the call and the flip both return 1, return 0.</li>
+</ol></li>
+</ul>
+
+<p><a id=ln__c___d____lambda____c></a></p>
+
+<h4>ln((<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em>)</h4>
+
+<p>In this algorithm, <em>d</em> and <em>c</em> are integers, 0 &lt; <em>c</em> &lt; <em>d</em>, and <em>d</em> &ge; 0.</p>
+
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>, and return the result.</li>
+<li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then run the <strong>algorithm for (<em>d</em> + <em>&lambda;</em>) / <em>c</em></strong> with <em>d</em> = <em>d</em> and <em>c</em> = <em>c</em>.  If both calls return 1, return 0.</li>
+</ol></li>
+</ul>
 
 <p><a id=arcsin___lambda___sqrt_1_minus___lambda__2_minus_1></a></p>
 
@@ -2103,9 +2128,13 @@ kind of irrational number.</p>
 
 <ol>
 <li>If <em>y</em>/<em>z</em> is 0, return 0.</li>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.</li>
 <li>Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.</li>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>, then generate a number that is 1 with probability <em>y</em>/<em>z</em> and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.</li>
+</ol></li>
 </ol>
 
 <p><a id=Requests_and_Open_Questions></a></p>
@@ -2242,6 +2271,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note55>(55)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note57>(57)</sup> Then <em>j</em> is a <em>binomial</em> random variate expressing the number of successes in <em>n</em> trials that each succeed with probability <em>&lambda;</em>.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

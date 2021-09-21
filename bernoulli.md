@@ -90,6 +90,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**(1&minus;_&lambda;_)/cos(_&lambda;_)**](#1_minus___lambda___cos___lambda)
         - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
         - [**ln(1+_&lambda;_)**](#ln_1___lambda)
+        - [**ln((_c_ + _d_ + _&lambda;_)/_c_)**](#ln__c___d____lambda____c)
         - [**arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1**](#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1)
         - [**arcsin(_&lambda;_) / 2**](#arcsin___lambda___2)
         - [**Expressions Involving Polylogarithms**](#Expressions_Involving_Polylogarithms)
@@ -226,7 +227,7 @@ Any polynomial can be written in _Bernstein form_ as &sum;<sub>_i_ = 0, ..., _n_
 
 But the only polynomials that admit a Bernoulli factory are those whose coefficients are all in the interval \[0, 1\] (once the polynomials are written in Bernstein form), and these polynomials are the only functions that can be simulated with a fixed number of coin flips (Goyal and Sigman 2012<sup>[**(6)**](#Note6)</sup>; Qian et al. 2011)<sup>[**(7)**](#Note7)</sup>; see also Wästlund 1999, section 4<sup>[**(8)**](#Note8)</sup>).  Goyal and Sigman give an algorithm for simulating these polynomials, which is given below.
 
-1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.<sup>[**(57)**](#Note57)</sup>
 2. With probability _a_\[_j_\], return 1.  Otherwise, return 0.
 
 For certain polynomials with duplicate coefficients, the following is an optimized version of this algorithm, not given by Goyal and Sigman:
@@ -1183,16 +1184,28 @@ The algorithm to simulate sin(_&lambda;_) follows.
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
 
 1. Generate a uniform(0, 1) random variate _u_.
-2. Flip the input coin.  If it returns 0, flip the coin again and return the result.
-3. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, flip the input coin and return the result.
-4. Flip the input coin.  If it returns 0, return 0.
-5. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, return 0.  Otherwise, go to step 2.
+2. Do the following process repeatedly, until this algorithm returns a value:
+    1. Flip the input coin.  If it returns 0, flip the coin again and return the result.
+    2. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, flip the input coin and return the result.
+    3. Flip the input coin.  If it returns 0, return 0.
+    4. [**Sample from the number _u_**](#Implementation_Notes). If the result is 0, return 0.
 
 Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every _&lambda;_ parameters, the algorithm above can be made uniformly fast as follows:
 
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
-2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
-3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.  Otherwise, go to step 1.
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
+    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    3. [**Sample from the number _u_**](#Implementation_Notes), then flip the input coin.  If the call and the flip both return 1, return 0.
+
+<a id=ln__c___d____lambda____c></a>
+#### ln((_c_ + _d_ + _&lambda;_)/_c_)
+
+In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_ &lt; _d_, and _d_ &ge; 0.
+
+- Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_, and return the result.
+    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    3. [**Sample from the number _u_**](#Implementation_Notes), then run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_.  If both calls return 1, return 0.
 
 <a id=arcsin___lambda___sqrt_1_minus___lambda__2_minus_1></a>
 #### arcsin(_&lambda;_) + sqrt(1 &minus; _&lambda;_<sup>2</sup>) &minus; 1
@@ -1517,9 +1530,10 @@ This algorithm is again based on an algorithm due to Mendo (2020)<sup>[**(30)**]
 See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _y_/_z_ is a rational number in the interval [0, 1].  (Thus, the special case ln(2) results when _y_/_z_ = 1/1.)
 
 1. If _y_/_z_ is 0, return 0.
-2. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
-3. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
-4. [**Sample from the number _u_**](#Implementation_Notes), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.  Otherwise, go to step 2.
+2. Do the following process repeatedly, until this algorithm returns a value:
+    1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return a number that is 1 with probability _y_/_z_ and 0 otherwise.
+    2. Generate a uniform(0, 1) random variate _u_, if _u_ wasn't generated yet.
+    3. [**Sample from the number _u_**](#Implementation_Notes), then generate a number that is 1 with probability _y_/_z_ and 0 otherwise.  If the call returns 1 and the number generated is 1, return 0.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions
@@ -1628,6 +1642,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note54>(54)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note55>(55)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note56>(56)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note57>(57)</sup> Then _j_ is a _binomial_ random variate expressing the number of successes in _n_ trials that each succeed with probability _&lambda;_.</small>
 
 <a id=Appendix></a>
 ## Appendix
