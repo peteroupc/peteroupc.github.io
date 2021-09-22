@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/21"><meta name="citation_online_date" content="2021/09/21"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/22"><meta name="citation_online_date" content="2021/09/22"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -486,56 +486,61 @@
 </ul></li>
 <li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong>&#39;s sign is negative and <strong>b</strong>&#39;s sign is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to positive.</li>
 <li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>minv</em>).</li>
-<li>If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the &quot;trapezoid&quot;.&dagger; <s>In this case, do the following:</s>
+<li>If <em>z</em> &lt; <em>midmin</em>&minus;<em>minv</em> or if <em>z</em> &ge; <em>midmax</em> &minus; <em>minv</em>, we will sample from the left side or right side of the &quot;trapezoid&quot;, respectively.  In this case, do the following:
 
 <ol>
-<li><s>Set <em>x</em> to <em>z</em>, then set <em>newdigits</em> to 0, then set <em>b</em> to <em>midmin</em>&minus;<em>minv</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</s></li>
-<li><s>If <em>y</em> is less than <em>x</em>, the algorithm succeeds, so do the following:</s>
+<li>Set <em>x</em> to <em>minv</em> + <em>z</em>.  Create <em>psrn</em>, a PSRN with positive sign and empty fractional part.</li>
+<li>If <em>z</em> &lt; <em>midmin</em> &minus; <em>minv</em> (left side), set <em>psrn</em>&#39;s integer part to <em>x</em> &minus; <em>minv</em>, then run <strong>sub-algorithm 1</strong> given later, with the parameters <em>minv</em> and <em>psrn</em>. (The sub-algorithm returns 1 with probability ln((<em>minv</em>+<em>psrn</em>)/<em>minv</em>).)</li>
+<li>If <em>z</em> &ge; <em>midmin</em> &minus; <em>minv</em> (left side), set <em>psrn</em>&#39;s integer part to <em>x</em> &minus; <em>midmax</em>, then run <strong>sub-algorithm 2</strong> given later, with the parameters <em>maxv</em>, <em>midmax</em> and <em>psrn</em>. (The sub-algorithm returns 1 with probability ln(<em>maxv</em>/(<em>midmax</em>+<em>psrn</em>)).)</li>
+<li>If sub-algorithm 1 or 2 returns 1, the algorithm succeeds, so do the following:
 
 <ol>
-<li><s>Set <em>s</em> to <em>minv</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em> (where <em>base</em> is the base of digits stored by <strong>a</strong> and <strong>b</strong>, such as 2 for binary or 10 for decimal).</s></li>
-<li><s>Transfer the (<em>n</em>*2 + <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, where <em>n</em> is the number of digits in <strong>a</strong>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)  Then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>).  (For example, if <em>base</em> is 10, (<em>n</em>*2 + <em>newdigits</em>) is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</s></li>
+<li>Set <em>s</em> to <em>ru</em>.</li>
+<li>Transfer the <em>n</em>*2 least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, where <em>n</em> is the number of digits in <strong>a</strong>&#39;s fractional part.  (Note that <em>ret</em>&#39;s fractional part stores digits from most to least significant.)</li>
+<li>Append the digits in <em>psrn</em>&#39;s fractional part to the end of <em>ret</em>&#39;s fractional part.</li>
+<li>Set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>).  (For example, if <em>base</em> is 10, <em>n</em>*2 is 4, and <em>s</em> is 342978, then <em>ret</em>&#39;s fractional part is set to [2, 9, 7, 8], and <em>ret</em>&#39;s integer part is set to 34.)  Finally, return <em>ret</em>.</li>
 </ol></li>
-<li><s>If <em>y</em> is greater than <em>x</em> + 1, abort these substeps and go to step 8. (This is a rejection event.)</s></li>
-<li><s>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</s></li>
+<li>If sub-algorithm 1 or 2 returns 0, abort these substeps and go to step 8.</li>
 </ol></li>
-<li>If <em>z</em> is greater than or equal to <em>midmax</em>&minus;<em>minv</em>, we will sample from the right side of the &quot;trapezoid&quot;.&dagger;  <s>In this case, do the following:</s>
-
-<ol>
-<li><s>Set <em>x</em> to <em>z</em>&minus;(<em>midmax</em>&minus;<em>minv</em>), then set <em>newdigits</em> to 0, then set <em>b</em> to <em>maxv</em>&minus;<em>midmax</em>, then set <em>y</em> to a uniform random integer in the interval [0, <em>b</em>).</s></li>
-<li><s>If <em>y</em> is less than <em>b</em>&minus;1&minus;<em>x</em>, the algorithm succeeds, so do the following: Set <em>s</em> to <em>midmax</em>*<em>base</em><sup><em>newdigits</em></sup> + <em>x</em>, then transfer the (<em>n</em>*2+ <em>newdigits</em>) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2 + <em>newdigits</em></sup>), then return <em>ret</em>.</s></li>
-<li><s>If <em>y</em> is greater than (<em>b</em>&minus;1&minus;<em>x</em>) + 1, abort these substeps and go to step 8. (This is a rejection event.)</s></li>
-<li><s>Multiply <em>x</em>, <em>y</em>, and <em>b</em> each by <em>base</em>, then add a digit chosen uniformly at random to <em>x</em>, then add a digit chosen uniformly at random to <em>y</em>, then add 1 to <em>newdigits</em>, then go to the second substep.</s></li>
-</ol></li>
-<li>If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
+<li>(If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform.) If <em>n2</em> &gt; <em>n3</em>, run <strong>sub-algorithm 3</strong> given later, with the parameter <em>afp</em> (returns 1 with probability ln(1+1/<em>afp</em>)).  Otherwise, run <strong>sub-algorithm 3</strong> with the parameter <em>bfp</em> (returns 1 with probability ln(1+1/<em>bfp</em>)).  In either case, if the sub-algorithm returns 0, go to step 8.</li>
+<li>(The algorithm succeeds.) Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
 </ol>
 
-<p>&dagger; <em>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution.</em></p>
+<p>&dagger; <em>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.</em></p>
 
-<blockquote>
-<p><strong>Note:</strong> A sketch of the correct procedure for steps 9 and 10:</p>
+<p>The following sub-algorithms are used by <strong>UniformMultiply</strong>.  They all involve the same underlying function, ln(1+<em>x</em>), with an <a href="https://peteroupc.github.io/bernoulli.html#ln_1___lambda"><strong>algorithm</strong></a> mentioned in the page &quot;Bernoulli Factory Algorithms&quot;.</p>
 
 <ul>
-<li>(9.) If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the left side of the &quot;trapezoid&quot;:
+<li>The sub-algorithm <strong>ln(1+<em>x</em>)</strong> takes an <strong>input algorithm</strong> and returns 1 with probability ln(1+<em>x</em>), where <em>x</em> is the probability that the input algorithm returns 1.
+
+<ul>
+<li>Do the following process repeatedly, until this sub-algorithm returns a value:
 
 <ol>
-<li>Generate a uniform PSRN <em>u</em> with empty fractional part, zero integer part, and positive sign.</li>
-<li>Set <em>z</em> to a uniform random integer in the interval [0, <em>midmin</em>).  Set <em>lower</em> to <em>minv</em>+<em>z</em> and <em>upper</em> to <em>minv</em>+<em>z</em>+1.</li>
-<li>Calculate the density lower bound as ln(<em>lower</em>/<em>minv</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
-<li>Calculate the density upper bound as ln(<em>upper</em>/<em>minv</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
-<li>If <em>u</em> is less than the density lower bound, the algorithm succeeds.  If <em>u</em> is greater than the density upper bound, go to step 8.  Otherwise, improve <em>lower</em> and <em>upper</em> and go to the second substep.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the <strong>input algorithm</strong> and return the result.</li>
+<li>If <em>u</em> wasn&#39;t created yet, create <em>u</em>, a uniform PSRN with positive sign, an integer part of 0, and an empty fractional part.</li>
+<li>Run the <strong>SampleGeometricBag</strong> algorithm on <em>u</em>&#39;s fractional part, then run the <strong>input algorithm</strong>.  If the call and the run both return 1, return 0.</li>
 </ol></li>
-<li>(10.) If <em>z</em> is less than <em>midmin</em>&minus;<em>minv</em>, we will sample from the right side of the &quot;trapezoid&quot;:
+</ul></li>
+<li><strong>Sub-algorithm 1</strong> takes two parameters (<em>minv</em> and <em>psrn</em>) and returns 1 with probability ln((<em>minv</em>+<em>psrn</em>)/<em>minv</em>).  Run the <strong>ln(1+<em>x</em>)</strong> sub-algorithm with an <strong>input algorithm</strong> as follows:
 
 <ol>
-<li>Generate a uniform PSRN <em>u</em> with empty fractional part, zero integer part, and positive sign.</li>
-<li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>midmax</em>).  Set <em>lower</em> to <em>midmax</em>+<em>z</em> and <em>upper</em> to <em>midmax</em>+<em>z</em>+1.</li>
-<li>Calculate the density lower bound as ln(<em>maxv</em>/<em>upper</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
-<li>Calculate the density upper bound as ln(<em>maxv</em>/<em>lower</em>) / ln(<em>midmin</em>/<em>minv</em>).</li>
-<li>If <em>u</em> is less than the density lower bound, the algorithm succeeds.  If <em>u</em> is greater than the density upper bound, go to step 8.  Otherwise, improve <em>lower</em> and <em>upper</em> and go to the second substep.</li>
+<li>Let <em>p</em> be <em>psrn</em>&#39;s integer part.  Generate an integer in [0, <em>minv</em>) uniformly at random, call it <em>i</em>.</li>
+<li>If <em>i</em> &lt; <em>p</em>, return 1.  If <em>i</em> = <em>p</em>, flip the input coin and return the result.  If neither is the case, return 0.</li>
 </ol></li>
+<li><strong>Sub-algorithm 2</strong> takes three parameters (<em>maxv</em>, <em>midmax</em> and <em>psrn</em>) and returns 1 with probability ln(<em>maxv</em>/(<em>midmax</em>+<em>psrn</em>)).  Run the <strong>ln(1+<em>x</em>)</strong> sub-algorithm with an <strong>input algorithm</strong> as follows:
+
+<ol>
+<li>Let <em>p</em> be <em>psrn</em>&#39;s integer part.  Set <em>d</em> to <em>maxv</em> &minus; <em>p</em> &minus; <em>midmax</em> &minus; 1, and set <em>c</em> to <em>p</em> + <em>midmax</em>.</li>
+<li>With probability <em>c</em> / (1 + <em>c</em>), do the following:
+
+<ul>
+<li>Generate an integer in [0, <em>c</em>) uniformly at random, call it <em>i</em>.   If <em>i</em> &lt; <em>d</em>, return 1.  If <em>i</em> = <em>d</em>, run <strong>SampleGeometricBag</strong> on <em>psrn</em>&#39;s fractional part and return 1 minus the result.  If <em>i</em> &gt; <em>d</em>, return 0.</li>
+</ul></li>
+<li>Run <strong>SampleGeometricBag</strong> on <em>psrn</em>&#39;s fractional part.  If the result is 1, return 0.  Otherwise, go to step 2.</li>
+</ol></li>
+<li><strong>Sub-algorithm 3</strong> takes one parameter (called <em>n</em> here) and returns 1 with probability ln(1+1/<em>n</em>).  Run the <strong>ln(1+<em>x</em>)</strong> sub-algorithm with an <strong>input algorithm</strong> as follows: &quot;Return a number that is 1 with probability 1/<em>n</em> and 0 otherwise.&quot;</li>
 </ul>
-</blockquote>
 
 <p>The following algorithm (<strong>UniformMultiplyRational</strong>) shows how to multiply a uniform PSRN (<strong>a</strong>) by a nonzero rational number <strong>b</strong>.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. <em>Python code implementing this algorithm is given later in this document.</em></p>
 

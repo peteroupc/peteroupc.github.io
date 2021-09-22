@@ -2576,8 +2576,6 @@ FUNCTIONS
             of the second PSRN.
         digits: Digit base of PSRNs' digits.  Default is 2, or binary.
 
-    psrn_multiply_a(rg, psrn1, psrn2, digits=2, testing=False)
-
     psrn_multiply_b(rg, psrn1, psrn2, digits=2, testing=False)
 
     psrn_multiply_by_fraction(rg, psrn1, fraction, digits=2)

@@ -348,36 +348,37 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
     - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
 7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
-9. If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the "trapezoid".&dagger; <s>In this case, do the following:</s>
-    1. <s>Set _x_ to _z_, then set _newdigits_ to 0, then set _b_ to _midmin_&minus;_minv_, then set _y_ to a uniform random integer in the interval [0, _b_).</s>
-    2. <s>If _y_ is less than _x_, the algorithm succeeds, so do the following:</s>
-        1. <s>Set _s_ to _minv_\*_base_<sup>_newdigits_</sup> + _x_ (where _base_ is the base of digits stored by **a** and **b**, such as 2 for binary or 10 for decimal).</s>
-        2. <s>Transfer the (_n_\*2 + _newdigits_) least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)  Then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>).  (For example, if _base_ is 10, (_n_\*2 + _newdigits_) is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.</s>
-    3. <s>If _y_ is greater than _x_ + 1, abort these substeps and go to step 8. (This is a rejection event.)</s>
-    4. <s>Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.</s>
-10. If _z_ is greater than or equal to _midmax_&minus;_minv_, we will sample from the right side of the "trapezoid".&dagger;  <s>In this case, do the following:</s>
-    1. <s>Set _x_ to _z_&minus;(_midmax_&minus;_minv_), then set _newdigits_ to 0, then set _b_ to _maxv_&minus;_midmax_, then set _y_ to a uniform random integer in the interval [0, _b_).</s>
-    2. <s>If _y_ is less than _b_&minus;1&minus;_x_, the algorithm succeeds, so do the following: Set _s_ to _midmax_\*_base_<sup>_newdigits_</sup> + _x_, then transfer the (_n_\*2+ _newdigits_) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2 + _newdigits_</sup>), then return _ret_.</s>
-    3. <s>If _y_ is greater than (_b_&minus;1&minus;_x_) + 1, abort these substeps and go to step 8. (This is a rejection event.)</s>
-    4. <s>Multiply _x_, _y_, and _b_ each by _base_, then add a digit chosen uniformly at random to _x_, then add a digit chosen uniformly at random to _y_, then add 1 to _newdigits_, then go to the second substep.</s>
-11. If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform, so no rejection is necessary. Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
+9. If _z_ &lt; _midmin_&minus;_minv_ or if _z_ &ge; _midmax_ &minus; _minv_, we will sample from the left side or right side of the "trapezoid", respectively.  In this case, do the following:
+     1. Set _x_ to _minv_ + _z_.  Create _psrn_, a PSRN with positive sign and empty fractional part.
+     2. If _z_ &lt; _midmin_ &minus; _minv_ (left side), set _psrn_'s integer part to _x_ &minus; _minv_, then run **sub-algorithm 1** given later, with the parameters _minv_ and _psrn_. (The sub-algorithm returns 1 with probability ln((_minv_+_psrn_)/_minv_).)
+     3. If _z_ &ge; _midmin_ &minus; _minv_ (left side), set _psrn_'s integer part to _x_ &minus; _midmax_, then run **sub-algorithm 2** given later, with the parameters _maxv_, _midmax_ and _psrn_. (The sub-algorithm returns 1 with probability ln(_maxv_/(_midmax_+_psrn_)).)
+     4. If sub-algorithm 1 or 2 returns 1, the algorithm succeeds, so do the following:
+         1. Set _s_ to _ru_.
+         2. Transfer the _n_\*2 least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)
+         3. Append the digits in _psrn_'s fractional part to the end of _ret_'s fractional part.
+         4. Set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>).  (For example, if _base_ is 10, _n_\*2 is 4, and _s_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)  Finally, return _ret_.
+     5. If sub-algorithm 1 or 2 returns 0, abort these substeps and go to step 8.
+10. (If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform.) If _n2_ > _n3_, run **sub-algorithm 3** given later, with the parameter _afp_ (returns 1 with probability ln(1+1/_afp_)).  Otherwise, run **sub-algorithm 3** with the parameter _bfp_ (returns 1 with probability ln(1+1/_bfp_)).  In either case, if the sub-algorithm returns 0, go to step 8.
+11. (The algorithm succeeds.) Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
 
-&dagger; _The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.  An exact method to sample this distribution may appear in the future, but in the meantime, the stricken-out text will sample a very good approximation to this distribution._
+&dagger; _The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller._
 
-> **Note:** A sketch of the correct procedure for steps 9 and 10:
->
-> - (9.) If _z_ is less than _midmin_&minus;_minv_, we will sample from the left side of the "trapezoid":
->     1. Generate a uniform PSRN _u_ with empty fractional part, zero integer part, and positive sign.
->     2. Set _z_ to a uniform random integer in the interval [0, _midmin_).  Set _lower_ to _minv_+_z_ and _upper_ to _minv_+_z_+1.
->     3. Calculate the density lower bound as ln(_lower_/_minv_) / ln(_midmin_/_minv_).
->     4. Calculate the density upper bound as ln(_upper_/_minv_) / ln(_midmin_/_minv_).
->     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to step 8.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
-> - (10.) If _z_ is less than _midmin_&minus;_minv_, we will sample from the right side of the "trapezoid":
->     1. Generate a uniform PSRN _u_ with empty fractional part, zero integer part, and positive sign.
->     2. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_midmax_).  Set _lower_ to _midmax_+_z_ and _upper_ to _midmax_+_z_+1.
->     3. Calculate the density lower bound as ln(_maxv_/_upper_) / ln(_midmin_/_minv_).
->     4. Calculate the density upper bound as ln(_maxv_/_lower_) / ln(_midmin_/_minv_).
->     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to step 8.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
+The following sub-algorithms are used by **UniformMultiply**.  They all involve the same underlying function, ln(1+_x_), with an [**algorithm**](https://peteroupc.github.io/bernoulli.html#ln_1___lambda) mentioned in the page "Bernoulli Factory Algorithms".
+
+- The sub-algorithm **ln(1+_x_)** takes an **input algorithm** and returns 1 with probability ln(1+_x_), where _x_ is the probability that the input algorithm returns 1.
+    - Do the following process repeatedly, until this sub-algorithm returns a value:
+        1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **input algorithm** and return the result.
+        2. If _u_ wasn't created yet, create _u_, a uniform PSRN with positive sign, an integer part of 0, and an empty fractional part.
+        3. Run the **SampleGeometricBag** algorithm on _u_'s fractional part, then run the **input algorithm**.  If the call and the run both return 1, return 0.
+- **Sub-algorithm 1** takes two parameters (_minv_ and _psrn_) and returns 1 with probability ln((_minv_+_psrn_)/_minv_).  Run the **ln(1+_x_)** sub-algorithm with an **input algorithm** as follows:
+    1. Let _p_ be _psrn_'s integer part.  Generate an integer in [0, _minv_) uniformly at random, call it _i_.
+    2. If _i_ < _p_, return 1.  If _i_ = _p_, flip the input coin and return the result.  If neither is the case, return 0.
+- **Sub-algorithm 2** takes three parameters (_maxv_, _midmax_ and _psrn_) and returns 1 with probability ln(_maxv_/(_midmax_+_psrn_)).  Run the **ln(1+_x_)** sub-algorithm with an **input algorithm** as follows:
+    1. Let _p_ be _psrn_'s integer part.  Set _d_ to _maxv_ &minus; _p_ &minus; _midmax_ &minus; 1, and set _c_ to _p_ + _midmax_.
+    2. With probability _c_ / (1 + _c_), do the following:
+        - Generate an integer in [0, _c_) uniformly at random, call it _i_.   If _i_ < _d_, return 1.  If _i_ = _d_, run **SampleGeometricBag** on _psrn_'s fractional part and return 1 minus the result.  If _i_ > _d_, return 0.
+    3. Run **SampleGeometricBag** on _psrn_'s fractional part.  If the result is 1, return 0.  Otherwise, go to step 2.
+- **Sub-algorithm 3** takes one parameter (called _n_ here) and returns 1 with probability ln(1+1/_n_).  Run the **ln(1+_x_)** sub-algorithm with an **input algorithm** as follows: "Return a number that is 1 with probability 1/_n_ and 0 otherwise."
 
 The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a nonzero rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
