@@ -371,13 +371,13 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 >     2. Set _z_ to a uniform random integer in the interval [0, _midmin_).  Set _lower_ to _minv_+_z_ and _upper_ to _minv_+_z_+1.
 >     3. Calculate the density lower bound as ln(_lower_/_minv_) / ln(_midmin_/_minv_).
 >     4. Calculate the density upper bound as ln(_upper_/_minv_) / ln(_midmin_/_minv_).
->     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to the first substep.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
+>     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to step 8.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
 > - (10.) If _z_ is less than _midmin_&minus;_minv_, we will sample from the right side of the "trapezoid":
 >     1. Generate a uniform PSRN _u_ with empty fractional part, zero integer part, and positive sign.
 >     2. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_midmax_).  Set _lower_ to _midmax_+_z_ and _upper_ to _midmax_+_z_+1.
 >     3. Calculate the density lower bound as ln(_maxv_/_upper_) / ln(_midmin_/_minv_).
 >     4. Calculate the density upper bound as ln(_maxv_/_lower_) / ln(_midmin_/_minv_).
->     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to the first substep.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
+>     5. If _u_ is less than the density lower bound, the algorithm succeeds.  If _u_ is greater than the density upper bound, go to step 8.  Otherwise, improve _lower_ and _upper_ and go to the second substep.
 
 The following algorithm (**UniformMultiplyRational**) shows how to multiply a uniform PSRN (**a**) by a nonzero rational number **b**.  The input PSRN may have a positive or negative sign, and it is assumed that its integer part and sign were sampled. _Python code implementing this algorithm is given later in this document._
 
