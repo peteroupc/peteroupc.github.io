@@ -88,9 +88,15 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
 [**https://peteroupc.github.io/exporand.html**](https://peteroupc.github.io/exporand.html)
 
-A _partially-sampled random number_ (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.  The following is an open question on PSRNs.
+A _partially-sampled random number_ (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.
 
-Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
+1. The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random number that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
+2. The following two algorithms appear to produce variates with the same distribution, where _b_, _c_, and _d_ are real numbers, _b_ > 0, and _d_ > _c_ &ge; 0.  Is this true?
+
+    - Generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate.
+    - Generate a uniform(0, _b_) random variate _X_, then return _X_ times a uniform(_c_, _d_) random variate.
+
+    (As a special case let _&alpha;_>0 be a real number [the "curved part"], define _b_ as before [the "flat part"], and let _c_ = 1 and _d_ = (_&alpha;_+_b_)/_b_.)
 
 <a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a>
 ## More Algorithms for Arbitrary-Precision Sampling

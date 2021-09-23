@@ -282,7 +282,7 @@
 <ol>
 <li>Karney (2014, end of sec. 4)<sup><a href="#Note1"><strong>(1)</strong></a></sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.</li>
 <li>The <strong>RandUniform</strong> algorithm is equivalent to generating the product of a random variate (<strong>b</strong>) and a uniform random variate in the interval [0, 1].</li>
-<li>If <strong>b</strong> is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the <strong>RandUniform</strong> algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1]s.</li>
+<li>If <strong>b</strong> is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the <strong>RandUniform</strong> algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1].</li>
 </ol>
 </blockquote>
 
@@ -491,7 +491,7 @@
 <ol>
 <li>Set <em>x</em> to <em>minv</em> + <em>z</em>.  Create <em>psrn</em>, a PSRN with positive sign and empty fractional part.</li>
 <li>If <em>z</em> &lt; <em>midmin</em> &minus; <em>minv</em> (left side), set <em>psrn</em>&#39;s integer part to <em>x</em> &minus; <em>minv</em>, then run <strong>sub-algorithm 1</strong> given later, with the parameters <em>minv</em> and <em>psrn</em>. (The sub-algorithm returns 1 with probability ln((<em>minv</em>+<em>psrn</em>)/<em>minv</em>).)</li>
-<li>If <em>z</em> &ge; <em>midmin</em> &minus; <em>minv</em> (left side), set <em>psrn</em>&#39;s integer part to <em>x</em> &minus; <em>midmax</em>, then run <strong>sub-algorithm 2</strong> given later, with the parameters <em>maxv</em>, <em>midmax</em> and <em>psrn</em>. (The sub-algorithm returns 1 with probability ln(<em>maxv</em>/(<em>midmax</em>+<em>psrn</em>)).)</li>
+<li>If <em>z</em> &ge; <em>midmin</em> &minus; <em>minv</em> (right side), set <em>psrn</em>&#39;s integer part to <em>x</em> &minus; <em>midmax</em>, then run <strong>sub-algorithm 2</strong> given later, with the parameters <em>maxv</em>, <em>midmax</em> and <em>psrn</em>. (The sub-algorithm returns 1 with probability ln(<em>maxv</em>/(<em>midmax</em>+<em>psrn</em>)).)</li>
 <li>If sub-algorithm 1 or 2 returns 1, the algorithm succeeds, so do the following:
 
 <ol>
@@ -632,7 +632,7 @@
 <p><strong>URandLess</strong> is a version of <strong>RandLess</strong> that involves two uniform PSRNs.  The algorithm for <strong>URandLess</strong> samples digit <em>i</em> in step 4 by setting the digit at position <em>i</em> to a digit chosen uniformly at random. (For example, if <strong>a</strong> is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to an unbiased random bit.)</p>
 
 <blockquote>
-<p><strong>Note</strong>: To sample the <strong>maximum</strong> of two uniform random variate in the interval [0, 1]s, or the <strong>square root</strong> of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs <strong>a</strong> and <strong>b</strong> each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run <strong>RandLess</strong> on <strong>a</strong> and <strong>b</strong> in that order.  If the call returns 0, return <strong>a</strong>; otherwise, return <strong>b</strong>.</p>
+<p><strong>Note</strong>: To sample the <strong>maximum</strong> of two uniform random variate in the interval [0, 1], or the <strong>square root</strong> of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs <strong>a</strong> and <strong>b</strong> each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run <strong>RandLess</strong> on <strong>a</strong> and <strong>b</strong> in that order.  If the call returns 0, return <strong>a</strong>; otherwise, return <strong>b</strong>.</p>
 </blockquote>
 
 <p>The <strong>RandLessThanReal</strong> algorithm compares a PSRN <strong>a</strong> with a real number <strong>b</strong> and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise.  This algorithm samples digits of <strong>a</strong>&#39;s fractional part as necessary.  This algorithm works whether <strong>b</strong> is known to be a rational number or not (for example, <strong>b</strong> can be the result of an expression such as <code>exp(-2)</code> or <code>ln(20)</code>), but the algorithm notes how it can be more efficiently implemented if <strong>b</strong> is known to be a rational number.</p>
@@ -1985,7 +1985,14 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ol>
 <li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
-<li>Is the conjecture in the section &quot;<a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a>&quot; true?</li>
+<li><p>The following two algorithms appear to produce variates with the same distribution, where <em>b</em>, <em>c</em>, and <em>d</em> are real numbers, <em>b</em> &gt; 0, and <em>d</em> &gt; <em>c</em> &ge; 0.  Is this true?</p>
+
+<ul>
+<li>Generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate.</li>
+<li>Generate a uniform(0, <em>b</em>) random variate <em>X</em>, then return <em>X</em> times a uniform(<em>c</em>, <em>d</em>) random variate.</li>
+</ul>
+
+<p>(As a special case let <em>&alpha;</em>&gt;0 be a real number, define <em>b</em> as before, and let <em>c</em> = 1 and <em>d</em> = (<em>&alpha;</em>+<em>b</em>)/<em>b</em>.)</p></li>
 </ol>
 
 <p><a id=Acknowledgments></a></p>

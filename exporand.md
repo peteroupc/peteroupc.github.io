@@ -204,7 +204,7 @@ The **RandUniform** algorithm generates a uniformly distributed PSRN (**a**) tha
 >
 > 1. Karney (2014, end of sec. 4)<sup>[**(1)**](#Note1)</sup> discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.
 > 2. The **RandUniform** algorithm is equivalent to generating the product of a random variate (**b**) and a uniform random variate in the interval [0, 1].
-> 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1]s.
+> 3. If **b** is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the **RandUniform** algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1].
 
 The **RandUniformInRangePositive** algorithm generates a uniformly distributed PSRN (**a**) that is greater than one non-negative real number **bmin** and less than another positive real number **bmax** with probability 1.  This algorithm works whether **bmin** or **bmax** is known to be a rational number or not (for example, either number can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **bmin** or **bmax** is known to be a rational number.
 
@@ -351,7 +351,7 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 9. If _z_ &lt; _midmin_&minus;_minv_ or if _z_ &ge; _midmax_ &minus; _minv_, we will sample from the left side or right side of the "trapezoid", respectively.  In this case, do the following:
      1. Set _x_ to _minv_ + _z_.  Create _psrn_, a PSRN with positive sign and empty fractional part.
      2. If _z_ &lt; _midmin_ &minus; _minv_ (left side), set _psrn_'s integer part to _x_ &minus; _minv_, then run **sub-algorithm 1** given later, with the parameters _minv_ and _psrn_. (The sub-algorithm returns 1 with probability ln((_minv_+_psrn_)/_minv_).)
-     3. If _z_ &ge; _midmin_ &minus; _minv_ (left side), set _psrn_'s integer part to _x_ &minus; _midmax_, then run **sub-algorithm 2** given later, with the parameters _maxv_, _midmax_ and _psrn_. (The sub-algorithm returns 1 with probability ln(_maxv_/(_midmax_+_psrn_)).)
+     3. If _z_ &ge; _midmin_ &minus; _minv_ (right side), set _psrn_'s integer part to _x_ &minus; _midmax_, then run **sub-algorithm 2** given later, with the parameters _maxv_, _midmax_ and _psrn_. (The sub-algorithm returns 1 with probability ln(_maxv_/(_midmax_+_psrn_)).)
      4. If sub-algorithm 1 or 2 returns 1, the algorithm succeeds, so do the following:
          1. Set _s_ to _ru_.
          2. Transfer the _n_\*2 least significant digits of _s_ to _ret_'s fractional part, where _n_ is the number of digits in **a**'s fractional part.  (Note that _ret_'s fractional part stores digits from most to least significant.)
@@ -451,7 +451,7 @@ The **RandLess** algorithm compares two PSRNs, **a** and **b** (and samples addi
 
 **URandLess** is a version of **RandLess** that involves two uniform PSRNs.  The algorithm for **URandLess** samples digit _i_ in step 4 by setting the digit at position _i_ to a digit chosen uniformly at random. (For example, if **a** is a uniform PSRN that stores base-2 or binary digits, this can be done by setting the digit at that position to an unbiased random bit.)
 
-> **Note**: To sample the **maximum** of two uniform random variate in the interval [0, 1]s, or the **square root** of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
+> **Note**: To sample the **maximum** of two uniform random variate in the interval [0, 1], or the **square root** of a uniform random variate in the interval [0, 1]: (1) Generate two uniform PSRNs **a** and **b** each with a positive sign, an integer part of 0, and an empty fractional part. (2) Run **RandLess** on **a** and **b** in that order.  If the call returns 0, return **a**; otherwise, return **b**.
 
 The **RandLessThanReal** algorithm compares a PSRN **a** with a real number **b** and returns 1 if **a** turns out to be less than **b** with probability 1, or 0 otherwise.  This algorithm samples digits of **a**'s fractional part as necessary.  This algorithm works whether **b** is known to be a rational number or not (for example, **b** can be the result of an expression such as `exp(-2)` or `ln(20)`), but the algorithm notes how it can be more efficiently implemented if **b** is known to be a rational number.
 
@@ -1515,7 +1515,12 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 There are some open questions on PSRNs:
 
 1. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
-2. Is the conjecture in the section "[**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)" true?
+2. The following two algorithms appear to produce variates with the same distribution, where _b_, _c_, and _d_ are real numbers, _b_ > 0, and _d_ > _c_ &ge; 0.  Is this true?
+
+    - Generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate.
+    - Generate a uniform(0, _b_) random variate _X_, then return _X_ times a uniform(_c_, _d_) random variate.
+
+    (As a special case let _&alpha;_>0 be a real number, define _b_ as before, and let _c_ = 1 and _d_ = (_&alpha;_+_b_)/_b_.)
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
