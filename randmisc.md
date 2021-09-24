@@ -263,7 +263,7 @@ For example&mdash;
 The algorithms given earlier in this section have a disadvantage: the desired error tolerance has to be made known to the algorithm in advance.  To generate a quantile to any error tolerance (even if the tolerance is not known in advance), a rejection sampling approach is needed.  For this to work:
 
 - The target distribution's probability density function, or a function proportional to it, must be known.  This is called the density function in the rest of this section.
-- The density function must be continuous almost everywhere and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(29)**](#Note29)</sup>).
+- The density function must be continuous "almost everywhere" and bounded from above (see also (Devroye and Gravel 2020)<sup>[**(29)**](#Note29)</sup>).
 
 Here is a sketch of how this rejection sampler might work:
 

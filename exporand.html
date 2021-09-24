@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/22"><meta name="citation_online_date" content="2021/09/22"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/23"><meta name="citation_online_date" content="2021/09/23"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -114,6 +114,7 @@
 
 <ul>
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
+<li><a href="#Equivalence_of_Product_Algorithms"><strong>Equivalence of Product Algorithms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
 <li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
 </ul></li>
@@ -482,7 +483,7 @@
 <li>Set <em>minv</em> to <em>n1</em> and <em>maxv</em> to <em>n2</em>.  Set <em>midmin</em> to min(<em>n2</em>, <em>n3</em>) and <em>midmax</em> to max(<em>n2</em>, <em>n3</em>).
 
 <ul>
-<li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>.</small></li>
+<li><small>The numbers <em>minv</em> and <em>maxv</em> are lower and upper bounds to the result of applying interval multiplication to the PSRNs <strong>a</strong> and <strong>b</strong>. For example, if <strong>a</strong> is 0.12344... and <strong>b</strong> is 0.38925..., their fractional parts are added to form <strong>c</strong> = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval [<em>minv</em>, <em>maxv</em>] and whose top is delimited by <em>midmin</em> and <em>midmax</em>. (See note 1 at the end of this section.)</small></li>
 </ul></li>
 <li>Create a new uniform PSRN, <em>ret</em>.  If <strong>a</strong>&#39;s sign is negative and <strong>b</strong>&#39;s sign is negative, or vice versa, set <em>ret</em>&#39;s sign to negative.  Otherwise, set <em>ret</em>&#39;s sign to positive.</li>
 <li>Set <em>z</em> to a uniform random integer in the interval [0, <em>maxv</em>&minus;<em>minv</em>).</li>
@@ -505,8 +506,6 @@
 <li>(If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform.) If <em>n2</em> &gt; <em>n3</em>, run <strong>sub-algorithm 3</strong> given later, with the parameter <em>afp</em> (returns 1 with probability ln(1+1/<em>afp</em>)).  Otherwise, run <strong>sub-algorithm 3</strong> with the parameter <em>bfp</em> (returns 1 with probability ln(1+1/<em>bfp</em>)).  In either case, if the sub-algorithm returns 0, go to step 8.</li>
 <li>(The algorithm succeeds.) Set <em>s</em> to <em>minv</em> + <em>z</em>, then transfer the (<em>n</em>*2) least significant digits of <em>s</em> to <em>ret</em>&#39;s fractional part, then set <em>ret</em>&#39;s integer part to floor(<em>s</em>/<em>base</em><sup><em>n</em>*2</sup>), then return <em>ret</em>.</li>
 </ol>
-
-<p>&dagger; <em>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.</em></p>
 
 <p>The following sub-algorithms are used by <strong>UniformMultiply</strong>.  They all involve the same underlying function, ln(1+<em>x</em>), with an <a href="https://peteroupc.github.io/bernoulli.html#ln_1___lambda"><strong>algorithm</strong></a> mentioned in the page &quot;Bernoulli Factory Algorithms&quot;.</p>
 
@@ -555,6 +554,15 @@
 <li>If <em>rvlower</em> is greater than <em>upper</em> or if <em>rvupper</em> is less than <em>lower</em>, go to step 4.</li>
 <li>Multiply <em>rv</em> and <em>ddc</em> each by <em>base</em>, then add 1 to <em>dcount</em>, then add a digit chosen uniformly at random to <em>rv</em>, then go to step 6.</li>
 </ol>
+
+<blockquote>
+<p><strong>Notes:</strong></p>
+
+<ol>
+<li>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.</li>
+<li>Let <em>b</em>&gt;0, <em>c</em>&ge;0, and <em>d</em>&gt;0 be rational numbers where <em>d</em>&gt;<em>c</em>. To generate the product of two uniform variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>], the following algorithm can be used.<br>(1) Generate a uniform PSRN using <strong>RandUniformFromReal</strong> with parameter <em>b</em>*(<em>d</em>&minus;<em>c</em>), call it <strong>K</strong>;<br>(2) Get the result of <strong>UniformAddRational</strong> with parameters <strong>K</strong> and <em>b</em>*<em>c</em><br>, call it <strong>M</strong>;<br>(3) Generate a uniform PSRN using <strong>RandUniform</strong> with parameter <strong>M</strong>; return the PSRN.<br>Broadly speaking: &quot;generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate&quot;.  See the appendix for a proof that this algorithm works, at least when <em>c</em> = 0.</li>
+</ol>
+</blockquote>
 
 <p><a id=Reciprocal_and_Division></a></p>
 
@@ -1981,19 +1989,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h2>Open Questions</h2>
 
-<p>There are some open questions on PSRNs:</p>
-
-<ol>
-<li>Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
-<li><p>The following two algorithms appear to produce variates with the same distribution, where <em>b</em>, <em>c</em>, and <em>d</em> are real numbers, <em>b</em> &gt; 0, and <em>d</em> &gt; <em>c</em> &ge; 0.  Is this true?</p>
-
 <ul>
-<li>Generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate.</li>
-<li>Generate a uniform(0, <em>b</em>) random variate <em>X</em>, then return <em>X</em> times a uniform(<em>c</em>, <em>d</em>) random variate.</li>
+<li>The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in &quot;<a href="#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random variate that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
 </ul>
-
-<p>(As a special case let <em>&alpha;</em>&gt;0 be a real number, define <em>b</em> as before, and let <em>c</em> = 1 and <em>d</em> = (<em>&alpha;</em>+<em>b</em>)/<em>b</em>.)</p></li>
-</ol>
 
 <p><a id=Acknowledgments></a></p>
 
@@ -2056,6 +2054,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li><small><sup id=Note28>(28)</sup> S. Kakutani, &quot;On equivalence of infinite product measures&quot;, <em>Annals of Mathematics</em> 1948.</small></li>
 <li><small><sup id=Note29>(29)</sup> George Marsaglia. &quot;Random Variables with Independent Binary Digits.&quot; Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. <a href="https://doi.org/10.1214/aoms/1177693058"><strong>https://doi.org/10.1214/aoms/1177693058</strong></a> .</small></li>
 <li><small><sup id=Note30>(30)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small></li>
+<li><small><sup id=Note31>(31)</sup> Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics &amp; data analysis, 44(3), pp.451-464.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2074,11 +2073,32 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position <em>N</em>, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s, which will occur with the same probability.</li>
 </ul>
 
+<p><a id=Equivalence_of_Product_Algorithms></a></p>
+
+<h3>Equivalence of Product Algorithms</h3>
+
+<p>This section shows that the algorithm given in note 2 of the section &quot;Multiplication&quot; correctly produces the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>], at least when <em>c</em> = 0.</p>
+
+<p>The probability density function (PDF) for a uniform(<em>&alpha;</em>, <em>&beta;</em>) random variate is 1/(<em>&beta;</em>&minus;<em>&alpha;</em>) if <em>x</em> is in [<em>&alpha;</em>, <em>&beta;</em>], and 0 elsewhere.  It will be called UPDF(<em>x</em>, <em>&alpha;</em>, <em>&beta;</em>) here.</p>
+
+<p>Let <em>K</em> = <em>b</em>*(<em>d</em>&minus;<em>c</em>).  To show the result, we find the PDFs of their return values.</p>
+
+<p>To find the PDF for the first algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</p>
+
+<p>The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi&#39;s formula (see also (Glen et al. 2004)<sup><a href="#Note31"><strong>(31)</strong></a></sup>), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>,</p>
+
+<p>Now it must be shown that both PDFs (which are one-variable functions of <em>x</em>) are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
+
+<ul>
+<li>Both PDFs are equal at least when <em>c</em> = 0 (and when <em>b</em>, <em>d</em>, and <em>x</em> are all greater than 0).</li>
+<li>The simplified difference between the PDFs has an integral equal to 0, which strongly suggests the PDFs are equal (this is not conclusive because the simplified difference can be negative).</li>
+</ul>
+
 <p><a id=Oberhoff_s_Exact_Rejection_Sampling_Method></a></p>
 
 <h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, see also (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous &quot;almost everywhere&quot; and bounded from above (Oberhoff 2018, section 3)<sup><a href="#Note13"><strong>(13)</strong></a></sup>, see also (Devroye and Gravel 2020)<sup><a href="#Note3"><strong>(3)</strong></a></sup>. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
 <li>Set <em>pdfmax</em> to an upper bound of the PDF (or the PDF times a possibly unknown constant factor) on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>

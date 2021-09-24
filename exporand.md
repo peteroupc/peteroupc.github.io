@@ -73,6 +73,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
+    - [**Equivalence of Product Algorithms**](#Equivalence_of_Product_Algorithms)
     - [**Oberhoff's "Exact Rejection Sampling" Method**](#Oberhoff_s_Exact_Rejection_Sampling_Method)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
 - [**License**](#License)
@@ -345,7 +346,7 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
 4. Let _afp_ be **a**'s integer and fractional parts packed into an integer, as explained in the example, and let _bfp_ be **b**'s integer and fractional parts packed the same way.  (For example, if **a** represents the number 83.12344..., _afp_ is 8312344.)  Let _digitcount_ be the number of digits in **a**'s fractional part.
 5. Calculate _n1_ = _afp_\*_bfp_, _n2_ = _afp_\*(_bfp_+1), _n3_ = (_afp_+1)\*_bfp_, and _n4_ = (_afp_+1)\*(_bfp_+1).
 6. Set _minv_ to _n1_ and _maxv_ to _n2_.  Set _midmin_ to min(_n2_, _n3_) and _midmax_ to max(_n2_, _n3_).
-    - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_.</small>
+    - <small>The numbers _minv_ and _maxv_ are lower and upper bounds to the result of applying interval multiplication to the PSRNs **a** and **b**. For example, if **a** is 0.12344... and **b** is 0.38925..., their fractional parts are added to form **c** = 0.51269...., or the interval [0.51269, 0.51271].  However, the resulting PSRN is not uniformly distributed in its interval.  In the case of multiplication the distribution is almost a trapezoid whose domain is the interval \[_minv_, _maxv_\] and whose top is delimited by _midmin_ and _midmax_. (See note 1 at the end of this section.)</small>
 7. Create a new uniform PSRN, _ret_.  If **a**'s sign is negative and **b**'s sign is negative, or vice versa, set _ret_'s sign to negative.  Otherwise, set _ret_'s sign to positive.
 8. Set _z_ to a uniform random integer in the interval [0, _maxv_&minus;_minv_).
 9. If _z_ &lt; _midmin_&minus;_minv_ or if _z_ &ge; _midmax_ &minus; _minv_, we will sample from the left side or right side of the "trapezoid", respectively.  In this case, do the following:
@@ -360,8 +361,6 @@ The following algorithm (**UniformMultiply**) shows how to multiply two uniform 
      5. If sub-algorithm 1 or 2 returns 0, abort these substeps and go to step 8.
 10. (If we reach here, we have reached the middle part of the trapezoid, which is flat and uniform.) If _n2_ > _n3_, run **sub-algorithm 3** given later, with the parameter _afp_ (returns 1 with probability ln(1+1/_afp_)).  Otherwise, run **sub-algorithm 3** with the parameter _bfp_ (returns 1 with probability ln(1+1/_bfp_)).  In either case, if the sub-algorithm returns 0, go to step 8.
 11. (The algorithm succeeds.) Set _s_ to _minv_ + _z_, then transfer the (_n_\*2) least significant digits of _s_ to _ret_'s fractional part, then set _ret_'s integer part to floor(_s_/_base_<sup>_n_\*2</sup>), then return _ret_.
-
-&dagger; _The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller._
 
 The following sub-algorithms are used by **UniformMultiply**.  They all involve the same underlying function, ln(1+_x_), with an [**algorithm**](https://peteroupc.github.io/bernoulli.html#ln_1___lambda) mentioned in the page "Bernoulli Factory Algorithms".
 
@@ -391,6 +390,11 @@ The following algorithm (**UniformMultiplyRational**) shows how to multiply a un
 7. If _rvlower_ is greater than or equal to _lower_ and _rvupper_ is less than _upper_, then the algorithm is almost done, so do the following: Transfer the _dcount_ least significant digits of _rv_ to _ret_'s fractional part (note that _ret_'s fractional part stores digits from most to least significant),  then set _ret_'s integer part to floor(_rv_/_base_<sup>_dcount_</sup>), then return _ret_. (For example, if _base_ is 10, _dcount_ is 4, and _rv_ is 342978, then _ret_'s fractional part is set to \[2, 9, 7, 8\], and _ret_'s integer part is set to 34.)
 8. If _rvlower_ is greater than _upper_ or if _rvupper_ is less than _lower_, go to step 4.
 9. Multiply _rv_ and _ddc_ each by _base_, then add 1 to _dcount_, then add a digit chosen uniformly at random to _rv_, then go to step 6.
+
+> **Notes:**
+>
+> 1. The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.
+> 2. Let _b_>0, _c_&ge;0, and _d_>0 be rational numbers where _d_>_c_. To generate the product of two uniform variates, one in [0, _b_] and the other in [_c_, _d_], the following algorithm can be used.<br>(1) Generate a uniform PSRN using **RandUniformFromReal** with parameter _b_\*(_d_&minus;_c_), call it **K**;<br>(2) Get the result of **UniformAddRational** with parameters **K** and _b_\*_c_<br>, call it **M**;<br>(3) Generate a uniform PSRN using **RandUniform** with parameter **M**; return the PSRN.<br>Broadly speaking: "generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate".  See the appendix for a proof that this algorithm works, at least when _c_ = 0.
 
 <a id=Reciprocal_and_Division></a>
 ### Reciprocal and Division
@@ -1512,15 +1516,7 @@ For **SampleGeometricBag** with base 2, the bit complexity has two components.
 <a id=Open_Questions></a>
 ## Open Questions
 
-There are some open questions on PSRNs:
-
-1. Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
-2. The following two algorithms appear to produce variates with the same distribution, where _b_, _c_, and _d_ are real numbers, _b_ > 0, and _d_ > _c_ &ge; 0.  Is this true?
-
-    - Generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate.
-    - Generate a uniform(0, _b_) random variate _X_, then return _X_ times a uniform(_c_, _d_) random variate.
-
-    (As a special case let _&alpha;_>0 be a real number, define _b_ as before, and let _c_ = 1 and _d_ = (_&alpha;_+_b_)/_b_.)
+- The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random variate that lies in an interval.  However, as explained in "[**Arithmetic and Comparisons with PSRNs**](#Arithmetic_and_Comparisons_with_PSRNs)", the result of the operation is an interval that bounds a random variate that is _not_ always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
@@ -1577,6 +1573,7 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note28>(28)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>
 - <small><sup id=Note29>(29)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .</small>
 - <small><sup id=Note30>(30)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small>
+- <small><sup id=Note31>(31)</sup> Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics & data analysis, 44(3), pp.451-464.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1590,10 +1587,28 @@ For the **SampleGeometricBag**, there are two versions: one for binary (base 2) 
 - The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**'s fractional part is less than **b**'s, which will occur with the same probability.
 - The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**'s fractional part is greater than **b**'s, which will occur with the same probability.
 
+<a id=Equivalence_of_Product_Algorithms></a>
+### Equivalence of Product Algorithms
+
+This section shows that the algorithm given in note 2 of the section "Multiplication" correctly produces the product of two uniform random variates, one in [0, _b_] and the other in [_c_, _d_], at least when _c_ = 0.
+
+The probability density function (PDF) for a uniform(_&alpha;_, _&beta;_) random variate is 1/(_&beta;_&minus;_&alpha;_) if _x_ is in [_&alpha;_, _&beta;_], and 0 elsewhere.  It will be called UPDF(_x_, _&alpha;_, _&beta;_) here.
+
+Let _K_ = _b_\*(_d_&minus;_c_).  To show the result, we find the PDFs of their return values.
+
+To find the PDF for the first algorithm, find the expected value of UPDF(_x_, 0, _Z_+_b_\*_c_), where _Z_ is distributed as uniform(0, _K_).  This is done by finding the integral (area under the graph) with respect to _z_ of UPDF(_x_, 0, _z_+_b_\*_c_)\*UPDF(_z_, 0, _K_) in the interval [0, _K_\] (the set of values _Z_ can take on).  The result is `ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)`.
+
+The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi's formula (see also (Glen et al. 2004)<sup>[**(31)**](#Note31)</sup>), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`,
+
+Now it must be shown that both PDFs (which are one-variable functions of _x_) are equal whenever _x_ is in the interval (0, _b_\*_d_).  Subtracting one PDF from the other and simplifying, it is seen that:
+
+- Both PDFs are equal at least when _c_ = 0 (and when _b_, _d_, and _x_ are all greater than 0).
+- The simplified difference between the PDFs has an integral equal to 0, which strongly suggests the PDFs are equal (this is not conclusive because the simplified difference can be negative).
+
 <a id=Oberhoff_s_Exact_Rejection_Sampling_Method></a>
 ### Oberhoff's "Exact Rejection Sampling" Method
 
-The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous almost everywhere and bounded from above (Oberhoff 2018, section 3)<sup>[**(13)**](#Note13)</sup>, see also (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>. (Note that if the PDF's domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)
+The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous "almost everywhere" and bounded from above (Oberhoff 2018, section 3)<sup>[**(13)**](#Note13)</sup>, see also (Devroye and Gravel 2020)<sup>[**(3)**](#Note3)</sup>. (Note that if the PDF's domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)
 
 1. Set _pdfmax_ to an upper bound of the PDF (or the PDF times a possibly unknown constant factor) on the domain at \[0, 1\].  Let _base_ be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).
 2. Set _prefix_ to 0 and _prefixLength_ to 0.

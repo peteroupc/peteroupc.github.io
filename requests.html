@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/09/22"><meta name="citation_online_date" content="2021/09/22"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Requests and Open Questions</title><meta name="citation_title" content="Requests and Open Questions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/requests.pdf"><meta name="citation_url" content="https://peteroupc.github.io/requests.html"><meta name="citation_date" content="2021/09/23"><meta name="citation_online_date" content="2021/09/23"><meta name="og:title" content="Requests and Open Questions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/requests.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Requests and Open Questions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Requests and Open Questions</h1>
@@ -125,17 +125,9 @@
 
 <p>A <em>partially-sampled random number</em> (PSRN) is a data structure holding the initial digits of a random number that is built up digit by digit.</p>
 
-<ol>
-<li>The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
-<li><p>The following two algorithms appear to produce variates with the same distribution, where <em>b</em>, <em>c</em>, and <em>d</em> are real numbers, <em>b</em> &gt; 0, and <em>d</em> &gt; <em>c</em> &ge; 0.  Is this true?</p>
-
 <ul>
-<li>Generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate.</li>
-<li>Generate a uniform(0, <em>b</em>) random variate <em>X</em>, then return <em>X</em> times a uniform(<em>c</em>, <em>d</em>) random variate.</li>
+<li>The following is an open question on PSRNs.  Doing an arithmetic operation between two PSRNs is akin to doing an interval operation between those PSRNs, since a PSRN is ultimately a random number that lies in an interval.  However, as explained in &quot;<a href="https://peteroupc.github.io/exporand.html#Arithmetic_and_Comparisons_with_PSRNs"><strong>Arithmetic and Comparisons with PSRNs</strong></a>&quot;, the result of the operation is an interval that bounds a random number that is <em>not</em> always uniformly distributed in that interval.  For example, in the case of addition this distribution is triangular with a peak in the middle.  What are the exact distributions of this kind for other interval arithmetic operations, such as division, ln, exp, sin, or other mathematical functions?</li>
 </ul>
-
-<p>(As a special case let <em>&alpha;</em>&gt;0 be a real number [the &quot;curved part&quot;], define <em>b</em> as before [the &quot;flat part&quot;], and let <em>c</em> = 1 and <em>d</em> = (<em>&alpha;</em>+<em>b</em>)/<em>b</em>.)</p></li>
-</ol>
 
 <p><a id=More_Algorithms_for_Arbitrary_Precision_Sampling></a></p>
 
