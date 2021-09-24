@@ -1570,10 +1570,10 @@ The following are some additional articles I have written on the topic of random
 - <small><sup id=Note25>(25)</sup> Knuth, Donald E. and Andrew Chi-Chih Yao. "The complexity of nonuniform random number generation", in _Algorithms and Complexity: New Directions and Recent Results_, 1976.</small>
 - <small><sup id=Note26>(26)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
 - <small><sup id=Note27>(27)</sup> Efraimidis, P. "[**Weighted Random Sampling over Data Streams**](https://arxiv.org/abs/1012.0256v2)", arXiv:1012.0256v2 [cs.DS], 2015.</small>
-- <small><sup id=Note28>(28)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>
-- <small><sup id=Note29>(29)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .</small>
-- <small><sup id=Note30>(30)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small>
-- <small><sup id=Note31>(31)</sup> Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics & data analysis, 44(3), pp.451-464.</small>
+- <small><sup id=Note28>(28)</sup> Glen, A.G., Leemis, L.M. and Drew, J.H., 2004. Computing the distribution of the product of two continuous random variables. Computational statistics & data analysis, 44(3), pp.451-464.</small>
+- <small><sup id=Note29>(29)</sup> S. Kakutani, "On equivalence of infinite product measures", _Annals of Mathematics_ 1948.</small>
+- <small><sup id=Note30>(30)</sup> George Marsaglia. "Random Variables with Independent Binary Digits." Ann. Math. Statist. 42 (6) 1922 - 1929, December, 1971. [**https://doi.org/10.1214/aoms/1177693058**](https://doi.org/10.1214/aoms/1177693058) .</small>
+- <small><sup id=Note31>(31)</sup> Chatterji, S. D.. “Certain induced measures and the fractional dimensions of their “supports”.” Zeitschrift für Wahrscheinlichkeitstheorie und Verwandte Gebiete 3 (1964): 184-192.</small>
 
 <a id=Appendix></a>
 ## Appendix
@@ -1598,11 +1598,11 @@ Let _K_ = _b_\*(_d_&minus;_c_).  To show the result, we find the PDFs of their r
 
 To find the PDF for the first algorithm, find the expected value of UPDF(_x_, 0, _Z_+_b_\*_c_), where _Z_ is distributed as uniform(0, _K_).  This is done by finding the integral (area under the graph) with respect to _z_ of UPDF(_x_, 0, _z_+_b_\*_c_)\*UPDF(_z_, 0, _K_) in the interval [0, _K_\] (the set of values _Z_ can take on).  The result is `ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)`.
 
-The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi's formula (see also (Glen et al. 2004)<sup>[**(31)**](#Note31)</sup>), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`,
+The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi's formula (see also (Glen et al. 2004)<sup>[**(28)**](#Note28)</sup>), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`,
 
 Now it must be shown that both PDFs (which are one-variable functions of _x_) are equal whenever _x_ is in the interval (0, _b_\*_d_).  Subtracting one PDF from the other and simplifying, it is seen that:
 
-- Both PDFs are equal at least when _c_ = 0 (and when _b_, _d_, and _x_ are all greater than 0).
+- Both PDFs are equal at least when _c_ = 0 (and when _b_, _d_, and _x_ are all greater than 0), and they are equal in all calculations so far when _b_, _c_, and _d_ are replaced with specific values.
 - The simplified difference between the PDFs has an integral equal to 0, which strongly suggests the PDFs are equal (this is not conclusive because the simplified difference can be negative).
 
 <a id=Oberhoff_s_Exact_Rejection_Sampling_Method></a>
@@ -1633,9 +1633,9 @@ Let _X_ be a random variate of the form `0.bbbbbbb...`, where each `b` is an ind
 
 Let _a_<sub>_j_</sub> be the probability that the digit at position _j_ equals 1 (starting with _j_ = 1 for the first digit after the point).
 
-Then Kakutani's theorem (Kakutani 1948)<sup>[**(28)**](#Note28)</sup> says that _X_ has an _absolutely continuous_<sup>[**(12)**](#Note12)</sup> distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)<sup>[**(29)**](#Note29)</sup>, (Chatterji 1964)<sup>[**(30)**](#Note30)</sup>.
+Then Kakutani's theorem (Kakutani 1948)<sup>[**(29)**](#Note29)</sup> says that _X_ has an _absolutely continuous_<sup>[**(12)**](#Note12)</sup> distribution if and only if the sum of squares of (_a_<sub>_j_</sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)<sup>[**(30)**](#Note30)</sup>, (Chatterji 1964)<sup>[**(31)**](#Note31)</sup>.
 
-This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971)<sup>[**(29)**](#Note29)</sup> showed, the absolutely continuous distribution can only be one of the following:
+This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence _a_<sub>_j_</sub> that converges to 1/2, and set _X_'s binary digits using those probabilities.  However, as Marsaglia (1971)<sup>[**(30)**](#Note30)</sup> showed, the absolutely continuous distribution can only be one of the following:
 
 1. The distribution's probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.
 2. The PDF is positive at 1/2, 1/4, 1/8, and so on, so the PDF is continuous and positive on all of (0, 1), and the sequence has the form&mdash;
