@@ -73,7 +73,7 @@ This page shows [**Python code**](#Sampler_Code) for these samplers.
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
     - [**Equivalence of SampleGeometricBag Algorithms**](#Equivalence_of_SampleGeometricBag_Algorithms)
-    - [**Equivalence of Product Algorithms**](#Equivalence_of_Product_Algorithms)
+    - [**Uniform of Uniforms Produces a Product of Uniforms**](#Uniform_of_Uniforms_Produces_a_Product_of_Uniforms)
     - [**Oberhoff's "Exact Rejection Sampling" Method**](#Oberhoff_s_Exact_Rejection_Sampling_Method)
     - [**Setting Digits by Digit Probabilities**](#Setting_Digits_by_Digit_Probabilities)
 - [**License**](#License)
@@ -394,7 +394,7 @@ The following algorithm (**UniformMultiplyRational**) shows how to multiply a un
 > **Notes:**
 >
 > 1. The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a [**not-so-trivial distribution**](https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables); the left and right sides are not exactly "triangular", but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution's "width" gets smaller.
-> 2. Let _b_>0, _c_&ge;0, and _d_>0 be rational numbers where _d_>_c_. To generate the product of two uniform variates, one in [0, _b_] and the other in [_c_, _d_], the following algorithm can be used.<br>(1) Generate a uniform PSRN using **RandUniformFromReal** with parameter _b_\*(_d_&minus;_c_), call it **K**;<br>(2) Get the result of **UniformAddRational** with parameters **K** and _b_\*_c_<br>, call it **M**;<br>(3) Generate a uniform PSRN using **RandUniform** with parameter **M**; return the PSRN.<br>Broadly speaking: "generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate".  See the appendix for a proof that this algorithm works, at least when _c_ = 0.
+> 2. Let _b_>0, _c_&ge;0, and _d_>0 be rational numbers where _d_>_c_. To generate the product of two uniform variates, one in [0, _b_] and the other in [_c_, _d_], the following algorithm can be used.<br>(1) Generate a uniform PSRN using **RandUniformFromReal** with parameter _b_\*(_d_&minus;_c_), call it **K**;<br>(2) Get the result of **UniformAddRational** with parameters **K** and _b_\*_c_<br>, call it **M**;<br>(3) Generate a uniform PSRN using **RandUniform** with parameter **M**; return the PSRN.<br>Broadly speaking: "generate a uniform(0, _b_\*(_d_&minus;_c_)) random variate _X_, then return a uniform(0, _X_+_b_\*_c_) random variate".  See the [**appendix**](#Uniform_of_Uniforms_Produces_a_Product_of_Uniforms) for a proof that this algorithm works, at least when _c_ = 0.
 
 <a id=Reciprocal_and_Division></a>
 ### Reciprocal and Division
@@ -1587,20 +1587,19 @@ For the **SampleGeometricBag**, there are two versions: one for binary (base 2) 
 - The generated bit is zero, and the algorithm samples (or retrieves) a zero bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 0 because **a**'s fractional part is less than **b**'s, which will occur with the same probability.
 - The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position _N_, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because **a**'s fractional part is greater than **b**'s, which will occur with the same probability.
 
-<a id=Equivalence_of_Product_Algorithms></a>
-### Equivalence of Product Algorithms
+<a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a>
+### Uniform of Uniforms Produces a Product of Uniforms
 
 This section shows that the algorithm given in note 2 of the section "Multiplication" correctly produces the product of two uniform random variates, one in [0, _b_] and the other in [_c_, _d_], at least when _c_ = 0.
 
 The probability density function (PDF) for a uniform(_&alpha;_, _&beta;_) random variate is 1/(_&beta;_&minus;_&alpha;_) if _x_ is in [_&alpha;_, _&beta;_], and 0 elsewhere.  It will be called UPDF(_x_, _&alpha;_, _&beta;_) here.
 
-Let _K_ = _b_\*(_d_&minus;_c_).  To show the result, we find the PDFs of their return values.
+Let _K_ = _b_\*(_d_&minus;_c_).  To show the result, we find two PDFs as described below.
 
-To find the PDF for the first algorithm, find the expected value of UPDF(_x_, 0, _Z_+_b_\*_c_), where _Z_ is distributed as uniform(0, _K_).  This is done by finding the integral (area under the graph) with respect to _z_ of UPDF(_x_, 0, _z_+_b_\*_c_)\*UPDF(_z_, 0, _K_) in the interval [0, _K_\] (the set of values _Z_ can take on).  The result is `ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)`.
+- To find the PDF for the algorithm, find the expected value of UPDF(_x_, 0, _Z_+_b_\*_c_), where _Z_ is distributed as uniform(0, _K_).  This is done by finding the integral (area under the graph) with respect to _z_ of UPDF(_x_, 0, _z_+_b_\*_c_)\*UPDF(_z_, 0, _K_) in the interval [0, _K_\] (the set of values _Z_ can take on).  The result is `PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)`.
+- The second PDF is the PDF for the product of two uniform random variates, one in [0, _b_] and the other in [_c_, _d_].  By Rohatgi's formula (see also (Glen et al. 2004)<sup>[**(28)**](#Note28)</sup>), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`.
 
-The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi's formula (see also (Glen et al. 2004)<sup>[**(28)**](#Note28)</sup>), it can be found by finding the integral with respect to _z_ of UPDF(_z_, 0, _b_)\*UPDF(_x_/_z_, _c_, _d_)/_z_, in the interval [0, &infin;) (noting that _z_ is never negative here).  The result is `(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)`,
-
-Now it must be shown that both PDFs (which are one-variable functions of _x_) are equal whenever _x_ is in the interval (0, _b_\*_d_).  Subtracting one PDF from the other and simplifying, it is seen that:
+Now it must be shown that `PDF1` and `PDF2` are equal whenever _x_ is in the interval (0, _b_\*_d_).  Subtracting one PDF from the other and simplifying, it is seen that:
 
 - Both PDFs are equal at least when _c_ = 0 (and when _b_, _d_, and _x_ are all greater than 0), and they are equal in all calculations so far when _b_, _c_, and _d_ are replaced with specific values.
 - The simplified difference between the PDFs has an integral equal to 0, which strongly suggests the PDFs are equal (this is not conclusive because the simplified difference can be negative).

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/24"><meta name="citation_online_date" content="2021/09/24"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/09/25"><meta name="citation_online_date" content="2021/09/25"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</h1>
@@ -114,7 +114,7 @@
 
 <ul>
 <li><a href="#Equivalence_of_SampleGeometricBag_Algorithms"><strong>Equivalence of SampleGeometricBag Algorithms</strong></a></li>
-<li><a href="#Equivalence_of_Product_Algorithms"><strong>Equivalence of Product Algorithms</strong></a></li>
+<li><a href="#Uniform_of_Uniforms_Produces_a_Product_of_Uniforms"><strong>Uniform of Uniforms Produces a Product of Uniforms</strong></a></li>
 <li><a href="#Oberhoff_s_Exact_Rejection_Sampling_Method"><strong>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</strong></a></li>
 <li><a href="#Setting_Digits_by_Digit_Probabilities"><strong>Setting Digits by Digit Probabilities</strong></a></li>
 </ul></li>
@@ -560,7 +560,7 @@
 
 <ol>
 <li>The product distribution of two uniform PSRNs is not exactly a trapezoid, but follows a <a href="https://math.stackexchange.com/questions/375967/probability-density-function-of-a-product-of-uniform-random-variables"><strong>not-so-trivial distribution</strong></a>; the left and right sides are not exactly &quot;triangular&quot;, but are based on logarithmic functions.  However, these logarithmic functions approach a triangular shape as the distribution&#39;s &quot;width&quot; gets smaller.</li>
-<li>Let <em>b</em>&gt;0, <em>c</em>&ge;0, and <em>d</em>&gt;0 be rational numbers where <em>d</em>&gt;<em>c</em>. To generate the product of two uniform variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>], the following algorithm can be used.<br>(1) Generate a uniform PSRN using <strong>RandUniformFromReal</strong> with parameter <em>b</em>*(<em>d</em>&minus;<em>c</em>), call it <strong>K</strong>;<br>(2) Get the result of <strong>UniformAddRational</strong> with parameters <strong>K</strong> and <em>b</em>*<em>c</em><br>, call it <strong>M</strong>;<br>(3) Generate a uniform PSRN using <strong>RandUniform</strong> with parameter <strong>M</strong>; return the PSRN.<br>Broadly speaking: &quot;generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate&quot;.  See the appendix for a proof that this algorithm works, at least when <em>c</em> = 0.</li>
+<li>Let <em>b</em>&gt;0, <em>c</em>&ge;0, and <em>d</em>&gt;0 be rational numbers where <em>d</em>&gt;<em>c</em>. To generate the product of two uniform variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>], the following algorithm can be used.<br>(1) Generate a uniform PSRN using <strong>RandUniformFromReal</strong> with parameter <em>b</em>*(<em>d</em>&minus;<em>c</em>), call it <strong>K</strong>;<br>(2) Get the result of <strong>UniformAddRational</strong> with parameters <strong>K</strong> and <em>b</em>*<em>c</em><br>, call it <strong>M</strong>;<br>(3) Generate a uniform PSRN using <strong>RandUniform</strong> with parameter <strong>M</strong>; return the PSRN.<br>Broadly speaking: &quot;generate a uniform(0, <em>b</em>*(<em>d</em>&minus;<em>c</em>)) random variate <em>X</em>, then return a uniform(0, <em>X</em>+<em>b</em>*<em>c</em>) random variate&quot;.  See the <a href="#Uniform_of_Uniforms_Produces_a_Product_of_Uniforms"><strong>appendix</strong></a> for a proof that this algorithm works, at least when <em>c</em> = 0.</li>
 </ol>
 </blockquote>
 
@@ -2073,21 +2073,22 @@ def contbernoullidist(b, lamda, precision=53):
 <li>The generated bit is zero, and the algorithm samples (or retrieves) a one bit at position <em>N</em>, which will occur at a 25% chance. In algorithm 3, this corresponds to returning 1 because <strong>a</strong>&#39;s fractional part is greater than <strong>b</strong>&#39;s, which will occur with the same probability.</li>
 </ul>
 
-<p><a id=Equivalence_of_Product_Algorithms></a></p>
+<p><a id=Uniform_of_Uniforms_Produces_a_Product_of_Uniforms></a></p>
 
-<h3>Equivalence of Product Algorithms</h3>
+<h3>Uniform of Uniforms Produces a Product of Uniforms</h3>
 
 <p>This section shows that the algorithm given in note 2 of the section &quot;Multiplication&quot; correctly produces the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>], at least when <em>c</em> = 0.</p>
 
 <p>The probability density function (PDF) for a uniform(<em>&alpha;</em>, <em>&beta;</em>) random variate is 1/(<em>&beta;</em>&minus;<em>&alpha;</em>) if <em>x</em> is in [<em>&alpha;</em>, <em>&beta;</em>], and 0 elsewhere.  It will be called UPDF(<em>x</em>, <em>&alpha;</em>, <em>&beta;</em>) here.</p>
 
-<p>Let <em>K</em> = <em>b</em>*(<em>d</em>&minus;<em>c</em>).  To show the result, we find the PDFs of their return values.</p>
+<p>Let <em>K</em> = <em>b</em>*(<em>d</em>&minus;<em>c</em>).  To show the result, we find two PDFs as described below.</p>
 
-<p>To find the PDF for the first algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</p>
+<ul>
+<li>To find the PDF for the algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</li>
+<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)<sup><a href="#Note28"><strong>(28)</strong></a></sup>), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
+</ul>
 
-<p>The PDF for the second algorithm is the PDF for the product of two variates X and Y.  By Rohatgi&#39;s formula (see also (Glen et al. 2004)<sup><a href="#Note28"><strong>(28)</strong></a></sup>), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>(ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>,</p>
-
-<p>Now it must be shown that both PDFs (which are one-variable functions of <em>x</em>) are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
+<p>Now it must be shown that <code>PDF1</code> and <code>PDF2</code> are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
 
 <ul>
 <li>Both PDFs are equal at least when <em>c</em> = 0 (and when <em>b</em>, <em>d</em>, and <em>x</em> are all greater than 0), and they are equal in all calculations so far when <em>b</em>, <em>c</em>, and <em>d</em> are replaced with specific values.</li>
