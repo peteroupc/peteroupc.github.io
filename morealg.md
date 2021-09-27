@@ -1254,8 +1254,8 @@ The following definitions are used in this section:
     When the stack is empty, the machine stops, and returns either 0 or 1 depending on the state it ends up at.  (Because each left-hand side has no more than one possible transition, the automaton is _deterministic_.)
 
 2. A _full-domain pushdown automaton_ means a pushdown automaton that terminates with probability 1 given a coin with probability of heads _&lambda;_, for every _&lambda;_ in the open interval (0, 1).
-3. **PDA** is the class of functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.
-4. **ALGRAT** is the class of functions that map the open interval (0, 1) to (0, 1), are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers).
+3. **PDA** is the class of functions that map the open interval (0, 1) to (0, 1) and can be simulated by a full-domain pushdown automaton.  **PDA** also includes the constant functions 0 and 1.
+4. **ALGRAT** is the class of functions that map the open interval (0, 1) to (0, 1), are continuous, and are algebraic over the rational numbers (they satisfy a nonzero polynomial system whose coefficients are rational numbers). **ALGRAT** also includes the constant functions 0 and 1.
 5. A _probability generating function_ has the form _p_<sub>0</sub>\*_&lambda;_<sup>0</sup> + _p_<sub>1</sub>\*_&lambda;_<sup>1</sup> + ..., where _p_<sub>_i_</sub> (a _coefficient_) is the probability of getting _i_.
 
 > **Notes:**

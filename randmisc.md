@@ -153,7 +153,7 @@ In fact, the "X-G" families are a special case of the so-called "transformed&nda
 
 The following are special cases of the "transformed&ndash;transformer" family:
 
-- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(15)**](#Note15)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must be included in the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the CDF for _Y_).
+- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(15)**](#Note15)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must contain the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the CDF for _Y_).
 - Several versions of _W_ have been proposed for the case when distribution X's support is \[0, &infin;\), such as the Rayleigh and gamma distributions.  They include:
     - _W_(_x_) = &minus;ln(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = 1&minus;exp(&minus;_x_)).  Suggested in the original paper by Alzaatreh et al.
     - _W_(_x_) = _x_/(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = _x_/(1+_x_)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called "odd X G" family, and one example is the "odd log-logistic G" family (Gleaton and Lynch 2006)<sup>[**(16)**](#Note16)</sup>.
@@ -166,7 +166,7 @@ A _compound distribution_ is simply the minimum of _N_ random variates distribut
 
 A _complementary compound distribution_ is the maximum of _N_ random variates distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(21)**](#Note21)</sup>.
 
-An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of the reciprocal of a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(22)**](#Note22)</sup> is the reciprocal of an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
+An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(22)**](#Note22)</sup> is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
 
 A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
