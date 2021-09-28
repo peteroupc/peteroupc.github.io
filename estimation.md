@@ -280,14 +280,14 @@ Given _m_ coins with unknown probability of heads, the following algorithm finds
 
 - _k_ is the number of coins to return.
 - _&delta;_ is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; _&delta;_.
-- _D_ is a _gap parameter_ or a lesser number, but must be 0 or greater.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most biased coin and the (_k_+1)<sup>th</sup> most biased coin.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
+- _D_ is a _gap parameter_ or a lesser number, but must be greater than 0.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most biased coin and the (_k_+1)<sup>th</sup> most biased coin.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
 - _r_ is the number of rounds to run the algorithm and must be an integer 1 or greater.
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.
 
 Agarwal et al. (2017)<sup>[**(10)**](#Note10)</sup> called this algorithm "aggressive elimination", and it can be described as follows.
 
-1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8*_k_/_&delta;_))\*2/(_D_\*_D_)).
+1. Let _t_ be ceil((ilog(_m_, _r_) + ln(8\*_k_/_&delta;_)) \* 2/(_D_\*_D_)).
 2. For each integer _i_ in \[1, _m_\], flip the coin labeled _i_, _t_ many times, then set _P_\[_i_\] to a list of two items: first is the number of times coin _i_ showed heads, and second is the label _i_.
 3. Sort the _P_\[_i_\] in decreasing order by their values.
 4. If _r_ is 1, return the labels to the first _k_ items in the list _P_, and the algorithm is done.

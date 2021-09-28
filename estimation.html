@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/09/26"><meta name="citation_online_date" content="2021/09/26"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/09/27"><meta name="citation_online_date" content="2021/09/27"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -388,7 +388,7 @@ pprint(Max(1,kappa))
 <ul>
 <li><em>k</em> is the number of coins to return.</li>
 <li><em>&delta;</em> is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; <em>&delta;</em>.</li>
-<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be 0 or greater.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most biased coin and the (<em>k</em>+1)<sup>th</sup> most biased coin.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
+<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be greater than 0.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most biased coin and the (<em>k</em>+1)<sup>th</sup> most biased coin.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
 <li><em>r</em> is the number of rounds to run the algorithm and must be an integer 1 or greater.</li>
 </ul>
 
@@ -397,7 +397,7 @@ pprint(Max(1,kappa))
 <p>Agarwal et al. (2017)<sup><a href="#Note10"><strong>(10)</strong></a></sup> called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
 
 <ol>
-<li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8<em><em>k</em>/<em>&delta;</em>))\</em>2/(<em>D</em>*<em>D</em>)).</li>
+<li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8*<em>k</em>/<em>&delta;</em>)) * 2/(<em>D</em>*<em>D</em>)).</li>
 <li>For each integer <em>i</em> in [1, <em>m</em>], flip the coin labeled <em>i</em>, <em>t</em> many times, then set <em>P</em>[<em>i</em>] to a list of two items: first is the number of times coin <em>i</em> showed heads, and second is the label <em>i</em>.</li>
 <li>Sort the <em>P</em>[<em>i</em>] in decreasing order by their values.</li>
 <li>If <em>r</em> is 1, return the labels to the first <em>k</em> items in the list <em>P</em>, and the algorithm is done.</li>

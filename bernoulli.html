@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/09/27"><meta name="citation_online_date" content="2021/09/27"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/09/28"><meta name="citation_online_date" content="2021/09/28"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -95,6 +95,8 @@
 <li><a href="#1_1__c___d____lambda"><strong>1 / (1 + (<em>c</em>/<em>d</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
+<li><a href="#x03F5_____lambda"><strong><em>&#x03F5;</em> / <em>&lambda;</em></strong></a></li>
+<li><a href="#mu_____lambda"><strong><em>&mu;</em> / <em>&lambda;</em></strong></a></li>
 <li><a href="#1_minus___lambda"><strong>1 &minus; <em>&lambda;</em></strong></a></li>
 <li><a href="#nu_____lambda___1_minus___nu_____mu"><strong><em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em></strong></a></li>
 <li><a href="#lambda_____mu___minus___lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em> &minus; (<em>&lambda;</em> * <em>&mu;</em>)</strong></a></li>
@@ -105,7 +107,6 @@
 <li><a href="#lambda_____mu_2"><strong><em>&lambda;</em> * <em>&mu;</em></strong></a></li>
 <li><a href="#lambda____x___y__linear_Bernoulli_factories"><strong><em>&lambda;</em> * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
 <li><a href="#lambda____x___y___i"><strong>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
-<li><a href="#x03F5_____lambda"><strong><em>&#x03F5;</em> / <em>&lambda;</em></strong></a></li>
 <li><a href="#arctan___lambda_____lambda"><strong>arctan(<em>&lambda;</em>) /<em>&lambda;</em></strong></a></li>
 <li><a href="#arctan___lambda"><strong>arctan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#cos___lambda"><strong>cos(<em>&lambda;</em>)</strong></a></li>
@@ -1317,7 +1318,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&lambda;</em> + <em>&mu;</em></h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em>, which must be greater than 0 and chosen such that <em>&lambda;</em> + <em>&mu;</em> &lt; 1 &minus; <em>&#x03F5;</em>.</p>
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the open interval (0, 1 &minus; <em>&lambda;</em> &minus; <em>&mu;</em>).</p>
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
@@ -1328,12 +1329,41 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&lambda;</em> &minus; <em>&mu;</em></h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em>, which must be greater than 0 and chosen such that <em>&lambda;</em> &minus; <em>&mu;</em> &gt; <em>&#x03F5;</em> (and should be chosen such that <em>&#x03F5;</em> is slightly less than <em>&lambda;</em> &minus; <em>&mu;</em>).</p>
+<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>] (the greater <em>&#x03F5;</em> is, the more efficient).</p>
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
 <li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return 1 minus the result.</li>
 </ol>
+
+<p><a id=x03F5_____lambda></a></p>
+
+<h4><em>&#x03F5;</em> / <em>&lambda;</em></h4>
+
+<p>(Lee et al. 2014)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em>, which must be greater than 0 and be chosen such that <em>&#x03F5;</em> is less than <em>&lambda;</em>.</p>
+
+<ol>
+<li>Set <em>&beta;</em> to max(<em>&#x03F5;</em>, 1/2) and set <em>&gamma;</em> to 1 &minus; (1 &minus; <em>&beta;</em>) / (1 &minus; (<em>&beta;</em> / 2)).</li>
+<li>Create a <em>&mu;</em> input coin that flips the input coin and returns 1 minus the result.</li>
+<li>With probability <em>&#x03F5;</em>, return 1.</li>
+<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; <em>&#x03F5;</em>),  <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&gamma;</em>. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (<em>&lambda;</em> &minus; <em>&#x03F5;</em>)/(1 &minus; <em>&#x03F5;</em>) or 1 &minus; (1 &minus; <em>&lambda;</em>)/(1 &minus; <em>&#x03F5;</em>)).</li>
+</ol>
+
+<p><a id=mu_____lambda></a></p>
+
+<h4><em>&mu;</em> / <em>&lambda;</em></h4>
+
+<p>(Morina 2021)<sup><a href="#Note58"><strong>(58)</strong></a></sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend <em>&mu;</em> and a coin simulating the divisor <em>&lambda;</em>, and a parameter <em>&epsilon;</em> in the half-open interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>).  In this algorithm, <em>&mu;</em> must be less than <em>&lambda;</em>.</p>
+
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Generate an unbiased random bit (either 0 or 1 with equal probability).</li>
+<li>If the bit generated in step 1 is 1, flip the <em>&mu;</em> input coin.  If it returns 1, return 1.</li>
+<li>If the bit generated in step 1 is 0, run the <strong>algorithm for <em>&lambda;</em> &minus; <em>&mu;</em></strong> . If it returns 1, return 0.</li>
+</ol></li>
+</ul>
 
 <p><a id=1_minus___lambda></a></p>
 
@@ -1502,7 +1532,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></h4>
 
-<p>(Huber 2019)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and <em>&#x03F5;</em>, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &ge; 0 is an integer, and <em>&#x03F5;</em> is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the <em>&#x03F5;</em> parameter has to be chosen such that <em>&lambda;</em> * <em>x</em>/<em>y</em> &lt; 1 &minus; <em>&#x03F5;</em>.  It also has special cases not mentioned in Huber 2019.</p>
+<p>(Huber 2019)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters: <em>x</em>, <em>y</em>, <em>i</em>, and <em>&#x03F5;</em>, such that <em>x</em>/<em>y</em> &gt; 0, <em>i</em> &ge; 0 is an integer, and <em>&#x03F5;</em> is greater than 0.  When <em>x</em>/<em>y</em> is greater than 1, the <em>&#x03F5;</em> parameter has to be chosen such that <em>&lambda;</em> * <em>x</em>/<em>y</em> &lt; 1 &minus; <em>&#x03F5;</em>.  It also has special cases not mentioned in Huber 2019.</p>
 
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
@@ -1520,38 +1550,21 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
 </ol>
 
-<p><a id=x03F5_____lambda></a></p>
-
-<h4><em>&#x03F5;</em> / <em>&lambda;</em></h4>
-
-<p>(Lee et al. 2014)<sup><a href="#Note44"><strong>(44)</strong></a></sup>  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em>, which must be greater than 0 and be chosen such that <em>&#x03F5;</em> is less than <em>&lambda;</em>.</p>
-
-<ol>
-<li>Set <em>&beta;</em> to max(<em>&#x03F5;</em>, 1/2) and set <em>&gamma;</em> to 1 &minus; (1 &minus; <em>&beta;</em>) / (1 &minus; (<em>&beta;</em> / 2)).</li>
-<li>Create a <em>&mu;</em> input coin that flips the input coin and returns 1 minus the result.</li>
-<li>With probability <em>&#x03F5;</em>, return 1.</li>
-<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; <em>&#x03F5;</em>),  <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&gamma;</em>. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (<em>&lambda;</em> &minus; <em>&#x03F5;</em>)/(1 &minus; <em>&#x03F5;</em>) or 1 &minus; (1 &minus; <em>&lambda;</em>)/(1 &minus; <em>&#x03F5;</em>)).</li>
-</ol>
-
 <p><a id=arctan___lambda_____lambda></a></p>
 
 <h4>arctan(<em>&lambda;</em>) /<em>&lambda;</em></h4>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
+<p>Based on the algorithm from Flajolet et al. (2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, but uses the two-coin special case (which is uniformly fast for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).<sup><a href="#Note59"><strong>(59)</strong></a></sup></p>
 
-<ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0.  Otherwise, go to step 2.</li>
-</ol>
-
-<p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
 <li>Generate a uniform(0, 1) random variate <em>u</em>, if it wasn&#39;t generated yet.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.  Otherwise, go to step 1.</li>
-</ol>
+<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If all of these calls and flips return 1, return 0.</li>
+</ol></li>
+</ul>
 
 <p><a id=arctan___lambda></a></p>
 
@@ -1648,21 +1661,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>ln(1+<em>&lambda;</em>)</h4>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>:</p>
-
-<ol>
-<li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
-<li>Do the following process repeatedly, until this algorithm returns a value:
-
-<ol>
-<li>Flip the input coin.  If it returns 0, flip the coin again and return the result.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, flip the input coin and return the result.</li>
-<li>Flip the input coin.  If it returns 0, return 0.</li>
-<li><a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, return 0.</li>
-</ol></li>
-</ol>
-
-<p>Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin special case, which is uniformly fast for every <em>&lambda;</em> parameters, the algorithm above can be made uniformly fast as follows:</p>
+<p>Based on the algorithm from Flajolet et al. (2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, but uses the two-coin special case (which is uniformly fast for every <em>&lambda;</em> parameter) rather than the even-parity construction (which is not).<sup><a href="#Note60"><strong>(60)</strong></a></sup></p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1694,7 +1693,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</h4>
 
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the special two-coin case rather than the even-parity construction.</p>
+<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  The algorithm given here uses the two-coin special case rather than the even-parity construction.</p>
 
 <ol>
 <li>Generate a uniform(0, 1) random variate <em>u</em>.</li>
@@ -2258,8 +2257,8 @@ kind of irrational number.</p>
 <li><small><sup id=Note40>(40)</sup> Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O. (2017).  Exact Monte Carlo likelihood-based inference for jump-diffusion processes.</small></li>
 <li><small><sup id=Note41>(41)</sup> There are two other algorithms for this function, but they both converge very slowly when <em>&lambda;</em> is very close to 1.  One is the general martingale algorithm, since when <em>&lambda;</em> is in [0, 1], this function is an alternating series of the form <code>1 - x + x^2 - x^3 + ...</code>, whose coefficients are 1, 1, 1, 1, ....  The other is the so-called &quot;even-parity&quot; construction from Flajolet et al. 2010: &quot;(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.&quot;</small></li>
 <li><small><sup id=Note42>(42)</sup> Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., &quot;Efficient Bernoulli factory MCMC for intractable posteriors&quot;, <em>Biometrika</em>, 2021 (also in arXiv:2004.07471 [stat.CO]).</small></li>
-<li><small><sup id=Note43>(43)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1907.06748v1"><strong>Designing perfect simulation algorithms using local correctness</strong></a>&quot;, arXiv:1907.06748v1 [cs.DS], 2019.</small></li>
-<li><small><sup id=Note44>(44)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
+<li><small><sup id=Note43>(43)</sup> Lee, A., Doucet, A. and Łatuszyński, K., 2014. &quot;<a href="https://arxiv.org/abs/1407.5770v1"><strong>Perfect simulation using atomic regeneration with application to Sequential Monte Carlo</strong></a>&quot;, arXiv:1407.5770v1  [stat.CO].</small></li>
+<li><small><sup id=Note44>(44)</sup> Huber, M., &quot;<a href="https://arxiv.org/abs/1907.06748v1"><strong>Designing perfect simulation algorithms using local correctness</strong></a>&quot;, arXiv:1907.06748v1 [cs.DS], 2019.</small></li>
 <li><small><sup id=Note45>(45)</sup> One of the only implementations I could find of this, if not the only, was a <a href="https://github.com/derekelkins/buffon/blob/master/Data/Distribution/Buffon.hs"><strong>Haskell implementation</strong></a>.</small></li>
 <li><small><sup id=Note46>(46)</sup> Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as <em>&lambda;</em> approaches 1.  Here, the alternating series is <code>1 - x + x^2/2 - x^3/3 + ...</code>, whose coefficients are 1, 1, 1/2, 1/3, ...</small></li>
 <li><small><sup id=Note47>(47)</sup> Penaud, J.G., Roques, O., &quot;Tirage à pile ou face de mots de Fibonacci&quot;, <em>Discrete Mathematics</em> 256, 2002.</small></li>
@@ -2273,6 +2272,9 @@ kind of irrational number.</p>
 <li><small><sup id=Note55>(55)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note56>(56)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note57>(57)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note58>(58)</sup> Morina, Giulio (2021) Extending the Bernoulli Factory to a dice enterprise. PhD thesis, University of Warwick. </small></li>
+<li><small><sup id=Note59>(59)</sup> The even-parity version from Flajolet et al. (2010) could be written as follows.  Do the following process repeatedly, until this algorithm returns a value: (1) Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet; (2) <a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 1; (3) (5) Sample from the number <em>u</em> twice, and flip the input coin twice.  If any of these calls or flips returns 0, return 0. </small></li>
+<li><small><sup id=Note60>(60)</sup> The even-parity version from Flajolet et al. (2010) could be written as follows.  Do the following process repeatedly, until this algorithm returns a value: (1) Flip the input coin.  If it returns 0, flip the coin again and return the result; (2) Generate a uniform(0, 1) random variate <em>u</em>, if <em>u</em> wasn&#39;t generated yet; (3) <a href="#Implementation_Notes"><strong>Sample from the number <em>u</em></strong></a>. If the result is 0, flip the input coin and return the result; (4)  Flip the input coin.  If it returns 0, return 0; (5) Sample from the number <em>u</em>.  If the result is 0, return 0.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
@@ -2333,7 +2335,7 @@ kind of irrational number.</p>
 
 <p><strong>Theorem.</strong> <em>If the algorithm given in &quot;Continued Logarithms&quot; terminates with probability 1, it returns 1 with probability exactly equal to the number represented by the continued logarithm c, and 0 otherwise.</em></p>
 
-<p><em>Proof.</em> This proof of correctness takes advantage of Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; (Huber 2019)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  Using Huber&#39;s theorem requires proving two things:</p>
+<p><em>Proof.</em> This proof of correctness takes advantage of Huber&#39;s &quot;fundamental theorem of perfect simulation&quot; (Huber 2019)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  Using Huber&#39;s theorem requires proving two things:</p>
 
 <ul>
 <li>The algorithm finishes with probability 1 by assumption.</li>
