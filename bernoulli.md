@@ -389,26 +389,25 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-Mendo (2019)<sup>[**(23)**](#Note23)</sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a power series.  The algorithm follows, where step 1 varies depending on the power series.  A table of supported power series will follow the algorithm.
+Mendo (2019)<sup>[**(23)**](#Note23)</sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a power series.  The algorithm uses parameter _v_ and is given below.  A table of supported power series will follow the algorithm.
 
-1. [Step 1 depends on the power series.]
-2. Set _dsum_ to 0 and _i_ to 0.
-3. Do the following process repeatedly, until this algorithm returns a value:
-    1. Flip the input coin.  If it returns _v_, return _result_.
-    2. If this is an infinite series or _i_ is less than the number of coefficients:
-        - With probability _c_\[_i_\]/(1 &minus; _dsum_), return 1 minus _result_.  Otherwise, add _c_\[_i_\] to _dsum_.
+1. Set _dsum_ to 0 and _i_ to 0.
+2. Do the following process repeatedly, until this algorithm returns a value:
+    1. Flip the input coin.  If it returns _v_, return 1.
+    2. If this is an infinite series or if _i_ is less than the number of coefficients:
+        - With probability _c_\[_i_\]/(1 &minus; _dsum_), return 0.  Otherwise, add _c_\[_i_\] to _dsum_.
     3. Add 1 to _i_.
 
 A table of supported power series follows:
 
-|   Power Series:  |   Step 1 reads: |
+|   Power Series  |   Algorithm  |
   --- | --- |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 1. |
-| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 0. |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 1. |
-| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 0. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=1 and return the result.  Otherwise, return 0. |
+| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return 1 minus the result.  Otherwise, return 1. |
+| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return the result.  Otherwise, return 1. |
 
-In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners".) Also, as pointed out by Mendo, the _c_\[_i_\] can also sum to less than 1; for the first and fourth cases given above, if the algorithm would return 1, instead it returns a number that is 1 with probability equal to the sum of all _c_\[_i_\], and 0 otherwise.
+In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ is the sum of all the coefficients and must be 1 or less.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners".)
 
 (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.
 
@@ -435,9 +434,14 @@ which, again, is an alternating series where _d_\[_i_\] are all in the interval 
 
 (Nacu and Peres 2005, proposition 16)<sup>[**(16)**](#Note16)</sup>.  The algorithm below simulates a function of the form&mdash;
 
-&nbsp;&nbsp;&nbsp;&nbsp;_d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
+_f_(_&lambda;_) = _d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
 
-where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&#x03F5;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&#x03F5;_.
+where each _d_\[_i_\] is 0 or greater, and takes the following parameter:
+
+- _t_ is a rational number in the interval (_B;_, 1] such that _f_(_t_) < 1.
+- _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2).
+
+_B_ is not a parameter, but is the maximum allowed value for _&lambda;_ (probability of heads) and in the interval (0, 1).
 
 1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If any of these runs returns 0, return 0.  Otherwise, return 1."
 2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
@@ -712,7 +716,7 @@ where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using the following
 <a id=Generalized_Bernoulli_Race></a>
 #### Generalized Bernoulli Race
 
-The following algorithm (Schmon et al. 2019)<sup>[**(37)**](#Note37)</sup> generalizes the Bernoulli Race from the "Convex Combinations" section.  It returns _i_ with probability&mdash;
+The Bernoulli factory approach, which simulates a coin with unknown heads probability, leads to an algorithm to roll an _n_-face die where the chance of each face is unknown.  Here is one such die-rolling algorithm (Schmon et al. 2019)<sup>[**(37)**](#Note37)</sup>.  It generalizes the Bernoulli Race from the "Convex Combinations" section, and returns _i_ with probability&mdash;
 
 - _&phi;_<sub>_i_</sub> = _g_(_i_)\*_h_<sub>_i_</sub>(**_&lambda;_**) / &sum;<sub>_k_=0,...,_r_</sub> _g_(_k_)\*_h_<sub>_k_</sub>(**_&lambda;_**),
 
@@ -1068,24 +1072,9 @@ As a result, some knowledge of _&lambda;_ has to be available to the algorithm. 
         2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
 9. (_i_ is 0.) Return 1.
 
-The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(36)**](#Note36)</sup> and uses the same parameters _x_, _y_, and _&#x03F5;_, and its description uses the same special cases.  The difference here is that it involves a so-called "logistic Bernoulli factory", which is replaced in this document with a different one that simulates the same function.
+Huber (2016)<sup>[**(36)**](#Note36)</sup> presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the 2014 algorithm above and the 2019 algorithm below (see also Morina 2021)<sup>[**(44)**](#Note44)</sup>.
 
-1. The same special cases as for the 2014 algorithm apply.
-2. Set _m_ to ceil(1 + 9 / (2 * _&#x03F5;_)).
-3. Set _&beta;_ to 1 + 1 / (_m_ &minus; 1).
-4. **Algorithm A** is what Huber calls this step.  Set _s_ to 1, then while _s_ is greater than 0 and less than _m_:
-    1. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = _&beta;_ * _x_/_y_.
-    2. Set _s_ to _s_ &minus; _z_ * 2 + 1, where _z_ is the result of the logistic Bernoulli factory.
-5. If _s_ is other than 0, return 0.
-6. With probability 1/_&beta;_, return 1.
-7. Do a separate run of the currently running algorithm, with _x_/_y_ = _&beta;_ * _x_/_y_ and _&#x03F5;_ = 1 &minus; _&beta;_ * (1 &minus; _&#x03F5;_).  If the separate run returns 0, return 0.
-8. The **high-power logistic Bernoulli factory** is what Huber calls this step.  Set _s_ to 1, then while _s_ is greater than 0 and less than or equal to _m_ minus 2:
-    1. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = _&beta;_ * _x_/_y_.
-    2. Set _s_ to _s_ + _z_ * 2 &minus; 1, where _z_ is the result of the logistic Bernoulli factory.
-9. If _s_ is equal to _m_ minus 1, return 1.
-10. Subtract 1 from _m_ and go to step 7.
-
-The paper that presented the 2016 algorithm also included a third algorithm, described below, that works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters: _x_, _y_, and _m_, and _m_ has to be chosen such that _&lambda;_ * _x_ / _y_ &le; _m_ < 1/2.
+Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters: _x_, _y_, and _m_, and _m_ has to be chosen such that _&lambda;_ * _x_ / _y_ &le; _m_ < 1/2.
 
 1. The same special cases as for the 2014 algorithm apply.
 2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
@@ -1123,7 +1112,6 @@ The algorithm also has special cases not mentioned in Huber 2019.
 In this document, a **linear Bernoulli factory** refers to one of the following:
 
 - The **2014 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_.
-- The **2016 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_.
 - The **2019 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_, and with _i_ = 1.
 
 <a id=arctan___lambda_____lambda></a>

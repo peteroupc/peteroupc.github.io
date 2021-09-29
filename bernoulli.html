@@ -555,19 +555,18 @@ functions, or functions in general.</p>
 
 <h4>Certain Power Series</h4>
 
-<p>Mendo (2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a power series.  The algorithm follows, where step 1 varies depending on the power series.  A table of supported power series will follow the algorithm.</p>
+<p>Mendo (2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup> gave a Bernoulli factory algorithm for certain functions that can be rewritten as a power series.  The algorithm uses parameter <em>v</em> and is given below.  A table of supported power series will follow the algorithm.</p>
 
 <ol>
-<li>[Step 1 depends on the power series.]</li>
 <li>Set <em>dsum</em> to 0 and <em>i</em> to 0.</li>
 <li>Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
-<li>Flip the input coin.  If it returns <em>v</em>, return <em>result</em>.</li>
-<li>If this is an infinite series or <em>i</em> is less than the number of coefficients:
+<li>Flip the input coin.  If it returns <em>v</em>, return 1.</li>
+<li>If this is an infinite series or if <em>i</em> is less than the number of coefficients:
 
 <ul>
-<li>With probability <em>c</em>[<em>i</em>]/(1 &minus; <em>dsum</em>), return 1 minus <em>result</em>.  Otherwise, add <em>c</em>[<em>i</em>] to <em>dsum</em>.</li>
+<li>With probability <em>c</em>[<em>i</em>]/(1 &minus; <em>dsum</em>), return 0.  Otherwise, add <em>c</em>[<em>i</em>] to <em>dsum</em>.</li>
 </ul></li>
 <li>Add 1 to <em>i</em>.</li>
 </ol></li>
@@ -577,29 +576,29 @@ functions, or functions in general.</p>
 
 <table><thead>
 <tr>
-<th>Power Series:</th>
-<th>Step 1 reads:</th>
+<th>Power Series</th>
+<th>Algorithm</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
-<td>Let <em>v</em> be 1 and let <em>result</em> be 1.</td>
+<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=1 and return the result.  Otherwise, return 0.</td>
 </tr>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
-<td>Let <em>v</em> be 1 and let <em>result</em> be 0.</td>
-</tr>
-<tr>
-<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
-<td>Let <em>v</em> be 0 and let <em>result</em> be 1.</td>
+<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 1.</td>
 </tr>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
-<td>Let <em>v</em> be 0 and let <em>result</em> be 0.</td>
+<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 0.</td>
+</tr>
+<tr>
+<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
+<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return the result.  Otherwise, return 1.</td>
 </tr>
 </tbody></table>
 
-<p>In the table above, <em>c</em>[<em>i</em>] &ge; 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no &quot;sharp corners&quot;.) Also, as pointed out by Mendo, the <em>c</em>[<em>i</em>] can also sum to less than 1; for the first and fourth cases given above, if the algorithm would return 1, instead it returns a number that is 1 with probability equal to the sum of all <em>c</em>[<em>i</em>], and 0 otherwise.</p>
+<p>In the table above, <em>c</em>[<em>i</em>] &ge; 0 are the coefficients of the series.  <em>CS</em> is the sum of all the coefficients and must be 1 or less.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no &quot;sharp corners&quot;.)</p>
 
 <p>(Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.</p>
 
@@ -628,9 +627,16 @@ functions, or functions in general.</p>
 
 <p>(Nacu and Peres 2005, proposition 16)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  The algorithm below simulates a function of the form&mdash;</p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp;<em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
+<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
 
-<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes two parameters <em>t</em> and <em>&#x03F5;</em>, where <em>t</em> must be chosen such that <em>t</em> is in (0, 1], <em>f</em>(<em>t</em>) &lt; 1, and <em>&lambda;</em> &lt; <em>t</em> &minus; 2*<em>&#x03F5;</em>.</p>
+<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameter:</p>
+
+<ul>
+<li><em>t</em> is a rational number in the interval (<em>B;</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
+<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2).</li>
+</ul>
+
+<p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads) and in the interval (0, 1).</p>
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these runs returns 0, return 0.  Otherwise, return 1.&quot;</li>
@@ -1016,7 +1022,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>Generalized Bernoulli Race</h4>
 
-<p>The following algorithm (Schmon et al. 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup> generalizes the Bernoulli Race from the &quot;Convex Combinations&quot; section.  It returns <em>i</em> with probability&mdash;</p>
+<p>The Bernoulli factory approach, which simulates a coin with unknown heads probability, leads to an algorithm to roll an <em>n</em>-face die where the chance of each face is unknown.  Here is one such die-rolling algorithm (Schmon et al. 2019)<sup><a href="#Note37"><strong>(37)</strong></a></sup>.  It generalizes the Bernoulli Race from the &quot;Convex Combinations&quot; section, and returns <em>i</em> with probability&mdash;</p>
 
 <ul>
 <li><em>&phi;</em><sub><em>i</em></sub> = <em>g</em>(<em>i</em>)*<em>h</em><sub><em>i</em></sub>(<strong><em>&lambda;</em></strong>) / &sum;<sub><em>k</em>=0,...,<em>r</em></sub> <em>g</em>(<em>k</em>)*<em>h</em><sub><em>k</em></sub>(<strong><em>&lambda;</em></strong>),</li>
@@ -1522,32 +1528,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>(<em>i</em> is 0.) Return 1.</li>
 </ol>
 
-<p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note36"><strong>(36)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and <em>&#x03F5;</em>, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.</p>
+<p>Huber (2016)<sup><a href="#Note36"><strong>(36)</strong></a></sup> presented a second algorithm using the same three parameters, but it&#39;s omitted here because it appears to perform worse than the 2014 algorithm above and the 2019 algorithm below (see also Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.</p>
 
-<ol>
-<li>The same special cases as for the 2014 algorithm apply.</li>
-<li>Set <em>m</em> to ceil(1 + 9 / (2 * <em>&#x03F5;</em>)).</li>
-<li>Set <em>&beta;</em> to 1 + 1 / (<em>m</em> &minus; 1).</li>
-<li><strong>Algorithm A</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than <em>m</em>:
-
-<ol>
-<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = <em>&beta;</em> * <em>x</em>/<em>y</em>.</li>
-<li>Set <em>s</em> to <em>s</em> &minus; <em>z</em> * 2 + 1, where <em>z</em> is the result of the logistic Bernoulli factory.</li>
-</ol></li>
-<li>If <em>s</em> is other than 0, return 0.</li>
-<li>With probability 1/<em>&beta;</em>, return 1.</li>
-<li>Do a separate run of the currently running algorithm, with <em>x</em>/<em>y</em> = <em>&beta;</em> * <em>x</em>/<em>y</em> and <em>&#x03F5;</em> = 1 &minus; <em>&beta;</em> * (1 &minus; <em>&#x03F5;</em>).  If the separate run returns 0, return 0.</li>
-<li>The <strong>high-power logistic Bernoulli factory</strong> is what Huber calls this step.  Set <em>s</em> to 1, then while <em>s</em> is greater than 0 and less than or equal to <em>m</em> minus 2:
-
-<ol>
-<li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = <em>&beta;</em> * <em>x</em>/<em>y</em>.</li>
-<li>Set <em>s</em> to <em>s</em> + <em>z</em> * 2 &minus; 1, where <em>z</em> is the result of the logistic Bernoulli factory.</li>
-</ol></li>
-<li>If <em>s</em> is equal to <em>m</em> minus 1, return 1.</li>
-<li>Subtract 1 from <em>m</em> and go to step 7.</li>
-</ol>
-
-<p>The paper that presented the 2016 algorithm also included a third algorithm, described below, that works only if <em>&lambda;</em> * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters: <em>x</em>, <em>y</em>, and <em>m</em>, and <em>m</em> has to be chosen such that <em>&lambda;</em> * <em>x</em> / <em>y</em> &le; <em>m</em> &lt; 1/2.</p>
+<p>Huber (2016) also included a third algorithm that simulates <em>&lambda;</em> * <em>x</em> / <em>y</em>.  The algorithm works only if <em>&lambda;</em> * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters: <em>x</em>, <em>y</em>, and <em>m</em>, and <em>m</em> has to be chosen such that <em>&lambda;</em> * <em>x</em> / <em>y</em> &le; <em>m</em> &lt; 1/2.</p>
 
 <ol>
 <li>The same special cases as for the 2014 algorithm apply.</li>
@@ -1602,7 +1585,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ul>
 <li>The <strong>2014 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>.</li>
-<li>The <strong>2016 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>.</li>
 <li>The <strong>2019 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>, and with <em>i</em> = 1.</li>
 </ul>
 
