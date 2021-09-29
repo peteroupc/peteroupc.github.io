@@ -82,8 +82,9 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**_&lambda;_<sup>_&mu;_</sup>**](#lambda____mu)
         - [**sqrt(_&lambda;_)**](#sqrt___lambda)
         - [**_&lambda;_ * _&mu;_**](#lambda_____mu_2)
-        - [**_&lambda;_ * _x_/_y_ (linear Bernoulli factories)**](#lambda____x___y__linear_Bernoulli_factories)
+        - [**_&lambda;_ * _x_/_y_**](#lambda____x___y)
         - [**(_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i)
+        - [**Linear Bernoulli Factories**](#Linear_Bernoulli_Factories)
         - [**arctan(_&lambda;_) /_&lambda;_**](#arctan___lambda_____lambda)
         - [**arctan(_&lambda;_)**](#arctan___lambda)
         - [**cos(_&lambda;_)**](#cos___lambda)
@@ -402,10 +403,10 @@ A table of supported power series follows:
 
 |   Power Series:  |   Step 1 reads: |
   --- | --- |
-| 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 1. |
-| (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 0. |
-| 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 1. |
-| (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 0. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 1. |
+| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | Let _v_ be 1 and let _result_ be 0. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 1. |
+| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | Let _v_ be 0 and let _result_ be 0. |
 
 In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series and sum to 1.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners".) Also, as pointed out by Mendo, the _c_\[_i_\] can also sum to less than 1; for the first and fourth cases given above, if the algorithm would return 1, instead it returns a number that is 1 with probability equal to the sum of all _c_\[_i_\], and 0 otherwise.
 
@@ -415,7 +416,7 @@ One of these cases is when _f_(_&lambda;_) can be written as&mdash;
 
 _f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
 
-which is an alternating series where _d_\[_i_\] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
+which is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
 
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
 
@@ -438,8 +439,8 @@ which, again, is an alternating series where _d_\[_i_\] are all in the interval 
 
 where each _d_\[_i_\] is 0 or greater, and takes two parameters _t_ and _&#x03F5;_, where _t_ must be chosen such that _t_ is in (0, 1], _f_(_t_) < 1, and _&lambda;_ < _t_ &minus; 2\*_&#x03F5;_.
 
-1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_.  If any of these calls returns 0, return 0.  Otherwise, return 1."
-2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm** once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return the result.
+1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If any of these runs returns 0, return 0.  Otherwise, return 1."
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
@@ -943,7 +944,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 (Nacu and Peres 2005, proposition 14(iii))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the open interval (0, 1 &minus; _&lambda;_ &minus; _&mu;_).
 
 1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
-2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the _&nu;_ input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return the result.
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 <a id=lambda___minus___mu></a>
 #### _&lambda;_ &minus; _&mu;_
@@ -951,7 +952,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 (Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the interval (0, _&lambda;_ &minus; _&mu;_] \(the greater _&#x03F5;_ is, the more efficient\).
 
 1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
-2. Call the **2014 algorithm**, the **2016 algorithm**, or the **2019 algorithm**, described later, using the _&nu;_ input coin, _x_/_y_ = 2/1, _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
 
 <a id=x03F5_____lambda></a>
 #### _&#x03F5;_ / _&lambda;_
@@ -961,7 +962,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
 3. With probability _&#x03F5;_, return 1.
-4. Run the **2014 algorithm**, **2016 algorithm**, or **2019 algorithm**, with the _&mu;_ input coin, _x_/_y_ = 1 / (1 &minus; _&#x03F5;_),  _i_ = 1 (for the 2019 algorithm), and _&#x03F5;_ = _&gamma;_. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (_&lambda;_ &minus; _&#x03F5;_)/(1 &minus; _&#x03F5;_) or 1 &minus; (1 &minus; _&lambda;_)/(1 &minus; _&#x03F5;_)).
+4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with the _&mu;_ input coin, _x_/_y_ = 1 / (1 &minus; _&#x03F5;_), and _&#x03F5;_ = _&gamma;_. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (_&lambda;_ &minus; _&#x03F5;_)/(1 &minus; _&#x03F5;_) or 1 &minus; (1 &minus; _&lambda;_)/(1 &minus; _&#x03F5;_)).
 
 <a id=mu_____lambda></a>
 #### _&mu;_ / _&lambda;_
@@ -1041,8 +1042,8 @@ Special case of the previous algorithm with _&mu;_ = 1/2.
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the _&lambda;_ input coin and the _&mu;_ input coin.  Return 1 if both flips return 1, and 0 otherwise.
 
-<a id=lambda____x___y__linear_Bernoulli_factories></a>
-#### _&lambda;_ * _x_/_y_ (linear Bernoulli factories)
+<a id=lambda____x___y></a>
+#### _&lambda;_ * _x_/_y_
 
 In general, this function will touch 0 or 1 somewhere in the open interval (0, 1), when _x_/_y_ > 1.  This makes the function relatively non-trivial to simulate in this case.
 
@@ -1055,17 +1056,17 @@ The first algorithm is called the **2014 algorithm** in this document (Huber 201
 
 As a result, some knowledge of _&lambda;_ has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
 
-1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
+1. Special cases: If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_, flip the input coin and return the result.  Otherwise, if _x_ is less than _y_, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
 2. Set _c_ to _x_/_y_, and set _k_ to 23 / (5 * _&#x03F5;_).
 3. If _&#x03F5;_ is greater than 644/1000, set _&#x03F5;_ to 644/1000.
 4. Set _i_ to 1.
-5. Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (_c_ &minus; 1) / _c_ and 0 otherwise, until 0 is generated this way, then add 1 to _i_ for each number generated this way (including the last).
-6. Subtract 1 from _i_, then if _i_ is 0, return 1.
-7. If _i_ is less than _k_, go to step 5.
-8. If _i_ is _k_ or greater:
-    1. Generate _i_ numbers that are each 1 with probability 2 / (_&#x03F5;_ + 2) or 0 otherwise.  If any of those numbers is 0, return 0.
-    2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), divide _&#x03F5;_ by 2, and multiply _k_ by 2.
-9. If _i_ is 0, return 1.  Otherwise, go to step 5.
+5. While _i_ is not 0:
+    1. Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (_c_ &minus; 1) / _c_ and 0 otherwise, until 1 is generated this way, then add 1 to _i_ for each number generated this way (including the last).
+    2. Subtract 1 from _i_.
+    3. If _i_ is _k_ or greater:
+        1. Generate _i_ numbers that are each 1 with probability 2 / (_&#x03F5;_ + 2) or 0 otherwise.  If any of those numbers is 0, return 0.
+        2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
+9. (_i_ is 0.) Return 1.
 
 The second algorithm is called the **2016 algorithm** (Huber 2016)<sup>[**(36)**](#Note36)</sup> and uses the same parameters _x_, _y_, and _&#x03F5;_, and its description uses the same special cases.  The difference here is that it involves a so-called "logistic Bernoulli factory", which is replaced in this document with a different one that simulates the same function.
 
@@ -1089,7 +1090,7 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 1. The same special cases as for the 2014 algorithm apply.
 2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
 3. With probability 1 &minus; 2 * _m_, return 1.
-4. Run the 2014 algorithm or 2016 algorithm with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
+4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
 
 > **Note:** For approximate methods to simulate _&lambda;_\*(_x_/_y_), see the page "[**Supplemental Notes for Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernsupp.html)".
 
@@ -1099,21 +1100,31 @@ The paper that presented the 2016 algorithm also included a third algorithm, des
 (Huber 2019)<sup>[**(45)**](#Note45)</sup>.  This algorithm, called the **2019 algorithm** in this document, uses four parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _i_ &ge; 0 is an integer.
+- _i_ is an integer 0 or greater.
 - _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the open interval (0, 1 &minus; _&lambda;_ * _x_/_y_).
 
 The algorithm also has special cases not mentioned in Huber 2019.
 
 1.  Special cases: If _i_ is 0, return 1.  If _x_ is 0, return 0.  Otherwise, if _x_ equals _y_ and _i_ equals 1, flip the input coin and return the result.
-2. Special case: If _x_ is less than _y_ and _i_ = 1, then: (a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0.
-3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "(a) With probability _x_/_y_, flip the input coin and return the result; otherwise (b) return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
+2. Special case: If _x_ is less than _y_ and _i_ = 1, then do the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0."
+3. Special case: If _x_ is less than _y_, then create a secondary coin that does the following: "With probability _x_/_y_, flip the input coin and return the result; otherwise return 0", then run the **algorithm for** [**_&lambda;_<sup>_x_/_y_</sup>**](lambda___x___y) with _x_=_i_, _y_=1, and _&lambda;_ being the secondary coin, then return the result of that run.
 4. Set _t_ to 355/100 and _c_ to _x_/_y_.
-5. If _i_ is 0, return 1.
-6. While _i_ = _t_ / _&#x03F5;_:
-    1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
-    2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
-    3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
-7. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2, then go to step 5.
+5. While _i_ is not 0:
+    1. While _i_ > _t_ / _&#x03F5;_:
+        1. Set _&beta;_ to (1 &minus; _&#x03F5;_ / 2) / (1 &minus; _&#x03F5;_).
+        2. Run the **algorithm for (_a_/_b_)<sup>_x_/_y_</sup>** (given in the irrational constants section) with _a_=1, _b_=_&beta;_, _x_=_i_, and _y_=1.  If the run returns 0, return 0.
+        3. Multiply _c_ by _&beta;_, then divide _&#x03F5;_ by 2.
+    2. Run the **logistic Bernoulli factory** with _c_/_d_ = _c_, then set _z_ to the result.  Set _i_ to _i_ + 1 &minus; _z_ * 2.
+6. (_i_ is 0.) Return 1.
+
+<a id=Linear_Bernoulli_Factories></a>
+#### Linear Bernoulli Factories
+
+In this document, a **linear Bernoulli factory** refers to one of the following:
+
+- The **2014 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_.
+- The **2016 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_.
+- The **2019 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_, and with _i_ = 1.
 
 <a id=arctan___lambda_____lambda></a>
 #### arctan(_&lambda;_) /_&lambda;_

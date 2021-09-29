@@ -105,8 +105,9 @@
 <li><a href="#lambda____mu"><strong><em>&lambda;</em><sup><em>&mu;</em></sup></strong></a></li>
 <li><a href="#sqrt___lambda"><strong>sqrt(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu_2"><strong><em>&lambda;</em> * <em>&mu;</em></strong></a></li>
-<li><a href="#lambda____x___y__linear_Bernoulli_factories"><strong><em>&lambda;</em> * <em>x</em>/<em>y</em> (linear Bernoulli factories)</strong></a></li>
+<li><a href="#lambda____x___y"><strong><em>&lambda;</em> * <em>x</em>/<em>y</em></strong></a></li>
 <li><a href="#lambda____x___y___i"><strong>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
+<li><a href="#Linear_Bernoulli_Factories"><strong>Linear Bernoulli Factories</strong></a></li>
 <li><a href="#arctan___lambda_____lambda"><strong>arctan(<em>&lambda;</em>) /<em>&lambda;</em></strong></a></li>
 <li><a href="#arctan___lambda"><strong>arctan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#cos___lambda"><strong>cos(<em>&lambda;</em>)</strong></a></li>
@@ -581,19 +582,19 @@ functions, or functions in general.</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>1 &minus; (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
+<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
 <td>Let <em>v</em> be 1 and let <em>result</em> be 1.</td>
 </tr>
 <tr>
-<td>(<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
+<td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
 <td>Let <em>v</em> be 1 and let <em>result</em> be 0.</td>
 </tr>
 <tr>
-<td>1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
+<td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
 <td>Let <em>v</em> be 0 and let <em>result</em> be 1.</td>
 </tr>
 <tr>
-<td>(<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
+<td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
 <td>Let <em>v</em> be 0 and let <em>result</em> be 0.</td>
 </tr>
 </tbody></table>
@@ -606,7 +607,7 @@ functions, or functions in general.</p>
 
 <p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> &minus; <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> &minus; ...,</p>
 
-<p>which is an alternating series where <em>d</em>[<em>i</em>] are all in the interval [0, 1], form a nonincreasing sequence of coefficients, and <em>f</em>(1) must converge to a number in the half-open interval [0, 1).</p>
+<p>which is an alternating series where <em>d</em>[<em>i</em>] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and <em>f</em>(1) must converge to a number in the half-open interval [0, 1).</p>
 
 <p>The following is the general algorithm for this kind of series, called the <strong>general martingale algorithm</strong>.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.</p>
 
@@ -632,8 +633,8 @@ functions, or functions in general.</p>
 <p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes two parameters <em>t</em> and <em>&#x03F5;</em>, where <em>t</em> must be chosen such that <em>t</em> is in (0, 1], <em>f</em>(<em>t</em>) &lt; 1, and <em>&lambda;</em> &lt; <em>t</em> &minus; 2*<em>&#x03F5;</em>.</p>
 
 <ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these calls returns 0, return 0.  Otherwise, return 1.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these runs returns 0, return 0.  Otherwise, return 1.&quot;</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
 </ol>
 
 <p><a id=General_Factory_Functions></a></p>
@@ -1343,7 +1344,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
 </ol>
 
 <p><a id=lambda___minus___mu></a></p>
@@ -1354,7 +1355,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
-<li>Call the <strong>2014 algorithm</strong>, the <strong>2016 algorithm</strong>, or the <strong>2019 algorithm</strong>, described later, using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return 1 minus the result.</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> using the <em>&nu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return 1 minus the result.</li>
 </ol>
 
 <p><a id=x03F5_____lambda></a></p>
@@ -1367,7 +1368,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Set <em>&beta;</em> to max(<em>&#x03F5;</em>, 1/2) and set <em>&gamma;</em> to 1 &minus; (1 &minus; <em>&beta;</em>) / (1 &minus; (<em>&beta;</em> / 2)).</li>
 <li>Create a <em>&mu;</em> input coin that flips the input coin and returns 1 minus the result.</li>
 <li>With probability <em>&#x03F5;</em>, return 1.</li>
-<li>Run the <strong>2014 algorithm</strong>, <strong>2016 algorithm</strong>, or <strong>2019 algorithm</strong>, with the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; <em>&#x03F5;</em>),  <em>i</em> = 1 (for the 2019 algorithm), and <em>&#x03F5;</em> = <em>&gamma;</em>. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (<em>&lambda;</em> &minus; <em>&#x03F5;</em>)/(1 &minus; <em>&#x03F5;</em>) or 1 &minus; (1 &minus; <em>&lambda;</em>)/(1 &minus; <em>&#x03F5;</em>)).</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> with the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 1 / (1 &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&gamma;</em>. If the result is 0, return 0.  Otherwise, go to step 3.  (Note that running the algorithm this way simulates the probability (<em>&lambda;</em> &minus; <em>&#x03F5;</em>)/(1 &minus; <em>&#x03F5;</em>) or 1 &minus; (1 &minus; <em>&lambda;</em>)/(1 &minus; <em>&#x03F5;</em>)).</li>
 </ol>
 
 <p><a id=mu_____lambda></a></p>
@@ -1484,9 +1485,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the <em>&lambda;</em> input coin and the <em>&mu;</em> input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
 
-<p><a id=lambda____x___y__linear_Bernoulli_factories></a></p>
+<p><a id=lambda____x___y></a></p>
 
-<h4><em>&lambda;</em> * <em>x</em>/<em>y</em> (linear Bernoulli factories)</h4>
+<h4><em>&lambda;</em> * <em>x</em>/<em>y</em></h4>
 
 <p>In general, this function will touch 0 or 1 somewhere in the open interval (0, 1), when <em>x</em>/<em>y</em> &gt; 1.  This makes the function relatively non-trivial to simulate in this case.</p>
 
@@ -1502,20 +1503,23 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>As a result, some knowledge of <em>&lambda;</em> has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
 
 <ol>
-<li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
+<li>Special cases: If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em>, flip the input coin and return the result.  Otherwise, if <em>x</em> is less than <em>y</em>, then do the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0.&quot;</li>
 <li>Set <em>c</em> to <em>x</em>/<em>y</em>, and set <em>k</em> to 23 / (5 * <em>&#x03F5;</em>).</li>
 <li>If <em>&#x03F5;</em> is greater than 644/1000, set <em>&#x03F5;</em> to 644/1000.</li>
 <li>Set <em>i</em> to 1.</li>
-<li>Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (<em>c</em> &minus; 1) / <em>c</em> and 0 otherwise, until 0 is generated this way, then add 1 to <em>i</em> for each number generated this way (including the last).</li>
-<li>Subtract 1 from <em>i</em>, then if <em>i</em> is 0, return 1.</li>
-<li>If <em>i</em> is less than <em>k</em>, go to step 5.</li>
+<li>While <em>i</em> is not 0:
+
+<ol>
+<li>Flip the input coin.  If it returns 0, then generate numbers that are each 1 with probability (<em>c</em> &minus; 1) / <em>c</em> and 0 otherwise, until 1 is generated this way, then add 1 to <em>i</em> for each number generated this way (including the last).</li>
+<li>Subtract 1 from <em>i</em>.</li>
 <li>If <em>i</em> is <em>k</em> or greater:
 
 <ol>
 <li>Generate <em>i</em> numbers that are each 1 with probability 2 / (<em>&#x03F5;</em> + 2) or 0 otherwise.  If any of those numbers is 0, return 0.</li>
-<li>Multiply <em>c</em> by 2 / (<em>&#x03F5;</em> + 2), divide <em>&#x03F5;</em> by 2, and multiply <em>k</em> by 2.</li>
+<li>Multiply <em>c</em> by 2 / (<em>&#x03F5;</em> + 2), then divide <em>&#x03F5;</em> by 2, then multiply <em>k</em> by 2.</li>
 </ol></li>
-<li>If <em>i</em> is 0, return 1.  Otherwise, go to step 5.</li>
+</ol></li>
+<li>(<em>i</em> is 0.) Return 1.</li>
 </ol>
 
 <p>The second algorithm is called the <strong>2016 algorithm</strong> (Huber 2016)<sup><a href="#Note36"><strong>(36)</strong></a></sup> and uses the same parameters <em>x</em>, <em>y</em>, and <em>&#x03F5;</em>, and its description uses the same special cases.  The difference here is that it involves a so-called &quot;logistic Bernoulli factory&quot;, which is replaced in this document with a different one that simulates the same function.</p>
@@ -1549,7 +1553,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>The same special cases as for the 2014 algorithm apply.</li>
 <li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
 <li>With probability 1 &minus; 2 * <em>m</em>, return 1.</li>
-<li>Run the 2014 algorithm or 2016 algorithm with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and <em>&#x03F5;</em> = 1 &minus; <em>m</em>.</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and <em>&#x03F5;</em> = 1 &minus; <em>m</em>.</li>
 </ol>
 
 <blockquote>
@@ -1564,7 +1568,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ul>
 <li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
-<li><em>i</em> &ge; 0 is an integer.</li>
+<li><em>i</em> is an integer 0 or greater.</li>
 <li><em>&#x03F5;</em> is a rational number in the open interval (0, 1).  If <em>x</em>/<em>y</em> is greater than 1, <em>&#x03F5;</em> must be in the open interval (0, 1 &minus; <em>&lambda;</em> * <em>x</em>/<em>y</em>).</li>
 </ul>
 
@@ -1572,19 +1576,35 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li> Special cases: If <em>i</em> is 0, return 1.  If <em>x</em> is 0, return 0.  Otherwise, if <em>x</em> equals <em>y</em> and <em>i</em> equals 1, flip the input coin and return the result.</li>
-<li>Special case: If <em>x</em> is less than <em>y</em> and <em>i</em> = 1, then: (a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0.</li>
-<li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin that does the following: &quot;(a) With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise (b) return 0&quot;, then run the <strong>algorithm for</strong> <a href="lambda___x___y"><strong><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong></a> with <em>x</em>=<em>i</em>, <em>y</em>=1, and <em>&lambda;</em> being the secondary coin, then return the result of that run.</li>
+<li>Special case: If <em>x</em> is less than <em>y</em> and <em>i</em> = 1, then do the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0.&quot;</li>
+<li>Special case: If <em>x</em> is less than <em>y</em>, then create a secondary coin that does the following: &quot;With probability <em>x</em>/<em>y</em>, flip the input coin and return the result; otherwise return 0&quot;, then run the <strong>algorithm for</strong> <a href="lambda___x___y"><strong><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong></a> with <em>x</em>=<em>i</em>, <em>y</em>=1, and <em>&lambda;</em> being the secondary coin, then return the result of that run.</li>
 <li>Set <em>t</em> to 355/100 and <em>c</em> to <em>x</em>/<em>y</em>.</li>
-<li>If <em>i</em> is 0, return 1.</li>
-<li>While <em>i</em> = <em>t</em> / <em>&#x03F5;</em>:
+<li>While <em>i</em> is not 0:
+
+<ol>
+<li>While <em>i</em> &gt; <em>t</em> / <em>&#x03F5;</em>:
 
 <ol>
 <li>Set <em>&beta;</em> to (1 &minus; <em>&#x03F5;</em> / 2) / (1 &minus; <em>&#x03F5;</em>).</li>
 <li>Run the <strong>algorithm for (<em>a</em>/<em>b</em>)<sup><em>x</em>/<em>y</em></sup></strong> (given in the irrational constants section) with <em>a</em>=1, <em>b</em>=<em>&beta;</em>, <em>x</em>=<em>i</em>, and <em>y</em>=1.  If the run returns 0, return 0.</li>
 <li>Multiply <em>c</em> by <em>&beta;</em>, then divide <em>&#x03F5;</em> by 2.</li>
 </ol></li>
-<li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2, then go to step 5.</li>
+<li>Run the <strong>logistic Bernoulli factory</strong> with <em>c</em>/<em>d</em> = <em>c</em>, then set <em>z</em> to the result.  Set <em>i</em> to <em>i</em> + 1 &minus; <em>z</em> * 2.</li>
+</ol></li>
+<li>(<em>i</em> is 0.) Return 1.</li>
 </ol>
+
+<p><a id=Linear_Bernoulli_Factories></a></p>
+
+<h4>Linear Bernoulli Factories</h4>
+
+<p>In this document, a <strong>linear Bernoulli factory</strong> refers to one of the following:</p>
+
+<ul>
+<li>The <strong>2014 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>.</li>
+<li>The <strong>2016 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>.</li>
+<li>The <strong>2019 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>, and with <em>i</em> = 1.</li>
+</ul>
 
 <p><a id=arctan___lambda_____lambda></a></p>
 
