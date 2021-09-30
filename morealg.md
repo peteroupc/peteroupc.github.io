@@ -341,9 +341,11 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
 |  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
 | expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
+| exp(_&lambda;_)/(1+exp(_&lambda;_))<sup>2</sup> | (Equals expit(_&lambda;_)\*(1&minus;expit(_&lambda;_)). _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_&lambda;_)** twice. If the runs both return 0 or both 1, return 0.  Otherwise, return 1. |
 | expit(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin; _m_&ge;0 is an integer.)<br>Create _&mu;_ coin for algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  expit(_&lambda;_)\*2&minus;1 | (Equals tanh(_&lambda;_/2). _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that does the following: "Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result."<br>Run algorithm for **tanh(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin. |
-|  2/_&pi;_  |  Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
+|  _n_/_&pi;_  |  (_n_ is 1, 2, or 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=3.  |
+|  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _mu_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
