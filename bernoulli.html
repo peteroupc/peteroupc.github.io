@@ -97,14 +97,10 @@
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
 <li><a href="#x03F5_____lambda"><strong><em>&#x03F5;</em> / <em>&lambda;</em></strong></a></li>
 <li><a href="#mu_____lambda"><strong><em>&mu;</em> / <em>&lambda;</em></strong></a></li>
-<li><a href="#1_minus___lambda"><strong>1 &minus; <em>&lambda;</em></strong></a></li>
 <li><a href="#nu_____lambda___1_minus___nu_____mu"><strong><em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em></strong></a></li>
-<li><a href="#lambda_____mu___minus___lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em> &minus; (<em>&lambda;</em> * <em>&mu;</em>)</strong></a></li>
-<li><a href="#lambda_____mu___2"><strong>(<em>&lambda;</em> + <em>&mu;</em>) / 2</strong></a></li>
 <li><a href="#lambda___x___y"><strong><em>&lambda;</em><sup><em>x</em>/<em>y</em></sup></strong></a></li>
 <li><a href="#lambda____mu"><strong><em>&lambda;</em><sup><em>&mu;</em></sup></strong></a></li>
 <li><a href="#sqrt___lambda"><strong>sqrt(<em>&lambda;</em>)</strong></a></li>
-<li><a href="#lambda_____mu_2"><strong><em>&lambda;</em> * <em>&mu;</em></strong></a></li>
 <li><a href="#lambda____x___y"><strong><em>&lambda;</em> * <em>x</em>/<em>y</em></strong></a></li>
 <li><a href="#lambda____x___y___i"><strong>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a></li>
 <li><a href="#Linear_Bernoulli_Factories"><strong>Linear Bernoulli Factories</strong></a></li>
@@ -582,23 +578,25 @@ functions, or functions in general.</p>
 </thead><tbody>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=1 and return the result.  Otherwise, return 0.</td>
+<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=1 and return the result.  Otherwise, return 0.</td>
 </tr>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * (1 &minus; <em>&lambda;</em>) + ... + <em>c</em>[<em>i</em>] * (1 &minus; <em>&lambda;</em>)<sup><em>i</em> + 1</sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 1.</td>
+<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=1 and return 1 minus the result.  Otherwise, return 1.</td>
 </tr>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 0.</td>
+<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=0 and return 1 minus the result.  Otherwise, return 0.</td>
 </tr>
 <tr>
 <td><em>f</em>(<em>&lambda;</em>) = 1 &minus; (<em>c</em>[0] * <em>&lambda;</em> + ... + <em>c</em>[<em>i</em>] * <em>&lambda;</em><sup><em>i</em> + 1</sup> + ...)</td>
-<td>With probability <em>CS</em>, run the algorithm with <em>v</em>=0 and return the result.  Otherwise, return 1.</td>
+<td>With probability <em>CS</em>, run the algorithm above with <em>v</em>=0 and return the result.  Otherwise, return 1.</td>
 </tr>
 </tbody></table>
 
 <p>In the table above, <em>c</em>[<em>i</em>] &ge; 0 are the coefficients of the series.  <em>CS</em> is the sum of all the coefficients and must be 1 or less.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no &quot;sharp corners&quot;.)</p>
+
+<hr>
 
 <p>(Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.</p>
 
@@ -625,14 +623,16 @@ functions, or functions in general.</p>
 
 <p>which, again, is an alternating series where <em>d</em>[<em>i</em>] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and <em>f</em>(1) must converge to a number in the half-open interval [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: &quot;3a. Repeat step 3 once.&quot;  (Examples of this kind of series are found in sin(<em>&lambda;</em>) and cos(<em>&lambda;</em>).)</p>
 
+<hr>
+
 <p>(Nacu and Peres 2005, proposition 16)<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  The algorithm below simulates a function of the form&mdash;</p>
 
 <p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
 
-<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameter:</p>
+<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameters:</p>
 
 <ul>
-<li><em>t</em> is a rational number in the interval (<em>B;</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
+<li><em>t</em> is a rational number in the interval (<em>B</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
 <li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2).</li>
 </ul>
 
@@ -760,7 +760,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (<em>a</em>[1] + 1 / (<em>a</em>[2] + 1 / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the <em>partial denominators</em>, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, &quot;Finite graphs (Markov chains) and rational functions&quot;)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, I developed the following algorithm.</p>
 
-<p>Algorithm 1. This algorithm works only if each <em>a</em>[<em>i</em>]&#39;s absolute value is 1 or greater and <em>a</em>[1] is greater than 0, but otherwise, each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p><strong>Algorithm 1.</strong> This algorithm works only if each <em>a</em>[<em>i</em>]&#39;s absolute value is 1 or greater and <em>a</em>[1] is greater than 0, but otherwise, each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>Set <em>k</em> to <em>a</em>[<em>pos</em>].</li>
@@ -774,9 +774,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 </ol>
 
+<p><strong>Algorithm 2.</strong></p>
+
 <p>A <em>generalized continued fraction</em> has the form 0 + <em>b</em>[1] / (<em>a</em>[1] + <em>b</em>[2] / (<em>a</em>[2] + <em>b</em>[3] / (<em>a</em>[3] + ... ))).  The <em>a</em>[<em>i</em>] are the same as before, but the <em>b</em>[<em>i</em>] are the <em>partial numerators</em>. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.</p>
 
-<p>Algorithm 2. This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] has an absolute value of 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
+<p>The following algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] has an absolute value of 1 or less, but otherwise, each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with <em>pos</em> and <em>r</em> both equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>Set <em>r</em> to 1 / (<em>r</em> * <em>b</em>[<em>pos</em>]), then set <em>k</em> to <em>a</em>[<em>pos</em>] * <em>r</em>. (<em>k</em> is the partial denominator for the equivalent simple continued fraction.)</li>
@@ -791,7 +793,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 </ol>
 
-<p>Algorithm 3. This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p><strong>Algorithm 3.</strong> This algorithm works only if each ratio <em>b</em>[<em>i</em>]/<em>a</em>[<em>i</em>] is 1 or less and if each <em>b</em>[<em>i</em>] and each  <em>a</em>[<em>i</em>] is greater than 0, but otherwise, each <em>b</em>[<em>i</em>] and each <em>a</em>[<em>i</em>] may be a non-integer.  The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ol>
 <li>If the partial numerator/denominator pair at <em>pos</em> is the last, return a number that is 1 with probability <em>b</em>[<em>pos</em>]/<em>a</em>[<em>pos</em>] and 0 otherwise.</li>
@@ -1368,7 +1370,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&#x03F5;</em> / <em>&lambda;</em></h4>
 
-<p>(Lee et al. 2014)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em>, which must be greater than 0 and be chosen such that <em>&#x03F5;</em> is less than <em>&lambda;</em>.</p>
+<p>(Lee et al. 2014)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em>).</p>
 
 <ol>
 <li>Set <em>&beta;</em> to max(<em>&#x03F5;</em>, 1/2) and set <em>&gamma;</em> to 1 &minus; (1 &minus; <em>&beta;</em>) / (1 &minus; (<em>&beta;</em> / 2)).</li>
@@ -1381,7 +1383,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&mu;</em> / <em>&lambda;</em></h4>
 
-<p>(Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend <em>&mu;</em> and a coin simulating the divisor <em>&lambda;</em>, and a parameter <em>&epsilon;</em> in the open interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>).  In this algorithm, <em>&mu;</em> must be less than <em>&lambda;</em>.</p>
+<p>(Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend <em>&mu;</em> and a coin simulating the divisor <em>&lambda;</em>, and a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>].  In this algorithm, <em>&mu;</em> must be less than <em>&lambda;</em>.</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1389,15 +1391,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ol>
 <li>Generate an unbiased random bit (either 0 or 1 with equal probability).</li>
 <li>If the bit generated in step 1 is 1, flip the <em>&mu;</em> input coin.  If it returns 1, return 1.</li>
-<li>If the bit generated in step 1 is 0, run the <strong>algorithm for <em>&lambda;</em> &minus; <em>&mu;</em></strong> . If it returns 1, return 0.</li>
+<li>If the bit generated in step 1 is 0, run the <strong>algorithm for <em>&lambda;</em> &minus; <em>&mu;</em></strong> with <em>&#x03F5;</em> = <em>&#x03F5;</em>. If it returns 1, return 0.</li>
 </ol></li>
 </ul>
-
-<p><a id=1_minus___lambda></a></p>
-
-<h4>1 &minus; <em>&lambda;</em></h4>
-
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the <em>&lambda;</em> input coin and return 0 if the result is 1, or 1 otherwise.</p>
 
 <p><a id=nu_____lambda___1_minus___nu_____mu></a></p>
 
@@ -1405,17 +1401,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the <em>&nu;</em> input coin.  If the result is 0, flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</p>
 
-<p><a id=lambda_____mu___minus___lambda_____mu></a></p>
-
-<h4><em>&lambda;</em> + <em>&mu;</em> &minus; (<em>&lambda;</em> * <em>&mu;</em>)</h4>
-
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the <em>&lambda;</em> input coin and the <em>&mu;</em> input coin.  Return 1 if either flip returns 1, and 0 otherwise.</p>
-
-<p><a id=lambda_____mu___2></a></p>
-
-<h4>(<em>&lambda;</em> + <em>&mu;</em>) / 2</h4>
-
-<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note16"><strong>(16)</strong></a></sup>; (Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</p>
+<p>Special cases include complement, mean, product, and logical OR; see &quot;Other Factory Functions&quot;.</p>
 
 <p><a id=lambda___x___y></a></p>
 
@@ -1429,7 +1415,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>If <em>x</em>/<em>y</em> is greater than 1:
 
 <ol>
-<li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to <code>rem(x, y)</code>.</li>
+<li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to rem(<em>x</em>, <em>y</em>) (equivalent to <em>x</em> - <em>y</em>*floor(<em>x</em>/<em>y</em>)).</li>
 <li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
 <li>If <em>ipart</em> is 1 or greater, flip the input coin <em>ipart</em> many times.  Return 0 if any of these flips returns 1.</li>
 <li>Return 1.</li>
@@ -1485,12 +1471,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 </ul>
 
-<p><a id=lambda_____mu_2></a></p>
-
-<h4><em>&lambda;</em> * <em>&mu;</em></h4>
-
-<p>(Flajolet et al., 2010)<sup><a href="#Note1"><strong>(1)</strong></a></sup>: Flip the <em>&lambda;</em> input coin and the <em>&mu;</em> input coin.  Return 1 if both flips return 1, and 0 otherwise.</p>
-
 <p><a id=lambda____x___y></a></p>
 
 <h4><em>&lambda;</em> * <em>x</em>/<em>y</em></h4>
@@ -1499,7 +1479,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p>Huber has suggested several algorithms for this function over the years.</p>
 
-<p>The first algorithm is called the <strong>2014 algorithm</strong> in this document (Huber 2014)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  It uses three parameters:</p>
+<p>The first algorithm in this document comes from Huber (2014)<sup><a href="#Note4"><strong>(4)</strong></a></sup>.  It uses three parameters:</p>
 
 <ul>
 <li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
@@ -1528,12 +1508,19 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>(<em>i</em> is 0.) Return 1.</li>
 </ol>
 
-<p>Huber (2016)<sup><a href="#Note36"><strong>(36)</strong></a></sup> presented a second algorithm using the same three parameters, but it&#39;s omitted here because it appears to perform worse than the 2014 algorithm above and the 2019 algorithm below (see also Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.</p>
+<p>Huber (2016)<sup><a href="#Note36"><strong>(36)</strong></a></sup> presented a second algorithm using the same three parameters, but it&#39;s omitted here because it appears to perform worse than the algorithm given above and the <strong>algorithm for (<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong> below (see also Morina 2021<sup><a href="#Note44"><strong>(44)</strong></a></sup>).</p>
 
-<p>Huber (2016) also included a third algorithm that simulates <em>&lambda;</em> * <em>x</em> / <em>y</em>.  The algorithm works only if <em>&lambda;</em> * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters: <em>x</em>, <em>y</em>, and <em>m</em>, and <em>m</em> has to be chosen such that <em>&lambda;</em> * <em>x</em> / <em>y</em> &le; <em>m</em> &lt; 1/2.</p>
+<p>Huber (2016) also included a third algorithm that simulates <em>&lambda;</em> * <em>x</em> / <em>y</em>.  The algorithm works only if <em>&lambda;</em> * <em>x</em> / <em>y</em> is known to be less than 1/2.  This third algorithm takes three parameters:</p>
+
+<ul>
+<li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
+<li><em>m</em> is a rational number such that <em>&lambda;</em> * <em>x</em> / <em>y</em> &le; <em>m</em> &lt; 1/2.</li>
+</ul>
+
+<p>The algorithm follows.</p>
 
 <ol>
-<li>The same special cases as for the 2014 algorithm apply.</li>
+<li>The same special cases as for the first algorithm in this section apply.</li>
 <li>Run the <strong>logistic Bernoulli factory</strong> algorithm with <em>c</em>/<em>d</em> = (<em>x</em>/<em>y</em>) / (1 &minus; 2 * <em>m</em>).  If it returns 0, return 0.</li>
 <li>With probability 1 &minus; 2 * <em>m</em>, return 1.</li>
 <li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> with <em>x</em>/<em>y</em> = (<em>x</em>/<em>y</em>) / (2 * <em>m</em>) and <em>&#x03F5;</em> = 1 &minus; <em>m</em>.</li>
@@ -1547,7 +1534,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>(<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></h4>
 
-<p>(Huber 2019)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  This algorithm, called the <strong>2019 algorithm</strong> in this document, uses four parameters:</p>
+<p>(Huber 2019)<sup><a href="#Note45"><strong>(45)</strong></a></sup>.  This algorithm uses four parameters:</p>
 
 <ul>
 <li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
@@ -1584,8 +1571,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>In this document, a <strong>linear Bernoulli factory</strong> refers to one of the following:</p>
 
 <ul>
-<li>The <strong>2014 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>.</li>
-<li>The <strong>2019 algorithm</strong> with the stated parameters <em>x</em>, <em>y</em>, and <em>&epsilon;</em>, and with <em>i</em> = 1.</li>
+<li>The first algorithm for <a href="#lambda____x___y"><strong><em>&lambda;</em> * <em>x</em>/<em>y</em></strong></a> with the stated parameters <em>x</em>, <em>y</em>, and <em>&#x03F5;</em>.</li>
+<li>The <a href="#lambda____x___y___i"><strong>algorithm for (<em>&lambda;</em> * <em>x</em>/<em>y</em>)<sup><em>i</em></sup></strong></a> with the stated parameters <em>x</em>, <em>y</em>, and <em>&#x03F5;</em>, and with <em>i</em> = 1 (see previous section).</li>
 </ul>
 
 <p><a id=arctan___lambda_____lambda></a></p>
@@ -1802,6 +1789,22 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <td><em>&lambda;</em>/(1+<em>&lambda;</em>)</td>
 <td>Run algorithm for <strong>1/(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.</td>
 </tr>
+<tr>
+<td><em>&nu;</em> * 1 + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> = <em>&nu;</em> + <em>&mu;</em> &minus; (<em>&nu;</em>*<em>&mu;</em>)</td>
+<td>(<strong>Logical OR</strong>. Flajolet et al., 2010<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Special case of <em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> with <em>&lambda;</em> = 1. <em>&nu;</em> and <em>&mu;</em> are unknown heads probabilities of two coins.)<br>Flip the <em>&nu;</em> input coin and the <em>&mu;</em> input coin.  Return 1 if either flip returns 1, and 0 otherwise.</td>
+</tr>
+<tr>
+<td>1 &minus; <em>&mu;</em></td>
+<td>(<strong>Complement</strong>. Flajolet et al., 2010<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Special case of <em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> with <em>&lambda;</em> = 0 and <em>&mu;</em> = 1. <em>&nu;</em> is unknown heads probability of a coin.)<br>Flip the <em>&nu;</em> input coin and return 1 minus the result.</td>
+</tr>
+<tr>
+<td><em>&nu;</em> * <em>&lambda;</em></td>
+<td>(<strong>Logical AND</strong> or <strong>Product</strong>. Flajolet et al., 2010<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Special case of <em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> with <em>&mu;</em> = 0. <em>&nu;</em> and <em>&lambda;</em> are unknown heads probabilities of two coins.)<br>Flip the <em>&nu;</em> input coin and the <em>&lambda;</em> input coin.  Return 1 if both flips return 1, and 0 otherwise.</td>
+</tr>
+<tr>
+<td>(<em>&lambda;</em> + <em>&mu;</em>)/2 = (1/2)*<em>&lambda;</em> + (1/2)*<em>&mu;</em></td>
+<td>(<strong>Mean</strong>. Nacu and Peres 2005, proposition 14(iii)<sup><a href="#Note16"><strong>(16)</strong></a></sup>; Flajolet et al., 2010<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Special case of <em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> with <em>&nu;</em> = 1/2. <em>&lambda;</em> and <em>&mu;</em> are unknown heads probabilities of two coins.)<br> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</td>
+</tr>
 </tbody></table>
 
 <p><a id=Algorithms_for_Specific_Constants></a></p>
@@ -1941,7 +1944,7 @@ kind of irrational number.</p>
 <li>If <em>x</em>/<em>y</em> is greater than 1:
 
 <ol>
-<li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to <code>rem(x, y)</code>.</li>
+<li>Set <em>ipart</em> to floor(<em>x</em>/<em>y</em>) and <em>fpart</em> to rem(<em>x</em>, <em>y</em>) (equivalent to <em>x</em> - <em>y</em>*floor(<em>x</em>/<em>y</em>)).</li>
 <li>If <em>fpart</em> is greater than 0, subtract 1 from <em>ipart</em>, then call this algorithm recursively with <em>x</em> = floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>, then call this algorithm, again recursively, with <em>x</em> = <em>fpart</em> &minus; floor(<em>fpart</em>/2) and <em>y</em> = <em>y</em>. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)</li>
 <li>If <em>ipart</em> is 1 or greater, generate at random a number that is 1 with probability <em>a</em><sup><em>ipart</em></sup>/<em>b</em><sup><em>ipart</em></sup> or 0 otherwise. (Or generate, at random, <em>ipart</em> many numbers that are each 1 with probability <em>a</em>/<em>b</em> or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.</li>
 <li>Return 1.</li>
@@ -1976,7 +1979,7 @@ kind of irrational number.</p>
 
 <ol>
 <li>Decompose <em>z</em> into <em>n</em> &gt; 0 components that sum to <em>z</em>, all of which are greater than 0.  For example, if <em>z</em> = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if <em>z</em> = <em>&pi;</em>, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.</li>
-<li>For each component <em>LC</em>[<em>i</em>] found this way, let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
+<li>For each component <em>LC</em>[<em>i</em>] found this way (where <em>i</em> is in [1, <em>n</em>]), let <em>LI</em>[<em>i</em>] be floor(<em>LC</em>[<em>i</em>]) and let <em>LF</em>[<em>i</em>] be <em>LC</em>[<em>i</em>] &minus; floor(<em>LC</em>[<em>i</em>]) (<em>LC</em>[<em>i</em>]&#39;s fractional part).</li>
 </ol>
 
 <p>The algorithm is then as follows:</p>
@@ -2027,7 +2030,7 @@ kind of irrational number.</p>
 <ol>
 <li>For each component <em>LC</em>[<em>i</em>], create an input coin that does the following: &quot;(a) With probability 1/(2<sup><em>prec</em></sup>), return 1 if the input coin that simulates <em>LF</em>[<em>i</em>] returns 1; (b) Return 0&quot;.</li>
 <li>Return 0 with probability 1/2.</li>
-<li>Call the <strong>algorithm for exp(&minus; <em>x</em>/<em>y</em>)</strong> with <em>x</em> = &sum;<sub><em>i</em></sub> <em>LI</em>[<em>i</em>] and <em>y</em> = 2<sup><em>prec</em></sup>.  If this call returns 0, go to step 2.</li>
+<li>Call the <strong>algorithm for exp(&minus; <em>x</em>/<em>y</em>)</strong> with <em>x</em> = <em>LI</em>[1] + <em>LI</em>[2] + ... + <em>LI</em>[<em>n</em>] and <em>y</em> = 2<sup><em>prec</em></sup>.  If this call returns 0, go to step 2.</li>
 <li>For each component <em>LC</em>[<em>i</em>], call the <strong>algorithm for exp(&minus;<em>&lambda;</em>)</strong>, using the corresponding input coin for  <em>LC</em>[<em>i</em>] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.</li>
 </ol>
 

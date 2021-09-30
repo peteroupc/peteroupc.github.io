@@ -74,14 +74,10 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
         - [**_&#x03F5;_ / _&lambda;_**](#x03F5_____lambda)
         - [**_&mu;_ / _&lambda;_**](#mu_____lambda)
-        - [**1 &minus; _&lambda;_**](#1_minus___lambda)
         - [**_&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_**](#nu_____lambda___1_minus___nu_____mu)
-        - [**_&lambda;_ + _&mu;_ &minus; (_&lambda;_ * _&mu;_)**](#lambda_____mu___minus___lambda_____mu)
-        - [**(_&lambda;_ + _&mu;_) / 2**](#lambda_____mu___2)
         - [**_&lambda;_<sup>_x_/_y_</sup>**](#lambda___x___y)
         - [**_&lambda;_<sup>_&mu;_</sup>**](#lambda____mu)
         - [**sqrt(_&lambda;_)**](#sqrt___lambda)
-        - [**_&lambda;_ * _&mu;_**](#lambda_____mu_2)
         - [**_&lambda;_ * _x_/_y_**](#lambda____x___y)
         - [**(_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i)
         - [**Linear Bernoulli Factories**](#Linear_Bernoulli_Factories)
@@ -402,12 +398,14 @@ A table of supported power series follows:
 
 |   Power Series  |   Algorithm  |
   --- | --- |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=1 and return the result.  Otherwise, return 0. |
-| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return 1 minus the result.  Otherwise, return 1. |
-| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm with _v_=0 and return the result.  Otherwise, return 1. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return the result.  Otherwise, return 0. |
+| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return 1 minus the result.  Otherwise, return 1. |
+| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
+| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return the result.  Otherwise, return 1. |
 
 In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ is the sum of all the coefficients and must be 1 or less.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners".)
+
+----
 
 (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup> gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.
 
@@ -432,13 +430,15 @@ _f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&la
 
 which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
 
+----
+
 (Nacu and Peres 2005, proposition 16)<sup>[**(16)**](#Note16)</sup>.  The algorithm below simulates a function of the form&mdash;
 
 _f_(_&lambda;_) = _d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
 
-where each _d_\[_i_\] is 0 or greater, and takes the following parameter:
+where each _d_\[_i_\] is 0 or greater, and takes the following parameters:
 
-- _t_ is a rational number in the interval (_B;_, 1] such that _f_(_t_) < 1.
+- _t_ is a rational number in the interval (_B_, 1] such that _f_(_t_) < 1.
 - _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2).
 
 _B_ is not a parameter, but is the maximum allowed value for _&lambda;_ (probability of heads) and in the interval (0, 1).
@@ -533,7 +533,7 @@ In the algorithm (see also (Brassard et al., 2019)<sup>[**(27)**](#Note27)</sup>
 
 The following algorithm simulates a probability expressed as a simple continued fraction of the following form: 0 + 1 / (_a_\[1\] + 1 / (_a_\[2\] + 1 / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the _partial denominators_, none of which may have an absolute value less than 1.  Inspired by (Flajolet et al., 2010, "Finite graphs (Markov chains) and rational functions")<sup>[**(1)**](#Note1)</sup>, I developed the following algorithm.
 
-Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 1.** This algorithm works only if each _a_\[_i_\]'s absolute value is 1 or greater and _a_\[1\] is greater than 0, but otherwise, each  _a_\[_i_\] may be negative and/or a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. Set _k_ to _a_\[_pos_\].
 2. If the partial denominator at _pos_ is the last, return a number that is 1 with probability 1/_k_ and 0 otherwise.
@@ -542,9 +542,11 @@ Algorithm 1. This algorithm works only if each _a_\[_i_\]'s absolute value is 1 
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1.  If the separate run returns _s_, return 0.
 
+**Algorithm 2.**
+
 A _generalized continued fraction_ has the form 0 + _b_\[1\] / (_a_\[1\] + _b_\[2\] / (_a_\[2\] + _b_\[3\] / (_a_\[3\] + ... ))).  The _a_\[_i_\] are the same as before, but the _b_\[_i_\] are the _partial numerators_. The following are two algorithms to simulate a probability in the form of a generalized continued fraction.
 
-Algorithm 2. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
+The following algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has an absolute value of 1 or less, but otherwise, each _b_\[_i_\] and each  _a_\[_i_\] may be negative and/or a non-integer.  This algorithm employs an equivalence transform from generalized to simple continued fractions.  The algorithm begins with _pos_ and _r_ both equal to 1.  Then the following steps are taken.
 
 1. Set _r_ to 1 / (_r_ * _b_\[_pos_\]), then set _k_ to _a_\[_pos_\] * _r_. (_k_ is the partial denominator for the equivalent simple continued fraction.)
 2. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability 1/abs(_k_) and 0 otherwise.
@@ -554,7 +556,7 @@ Algorithm 2. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] has a
     1. With probability _kp_/(1+_kp_), return a number that is 1 with probability 1/_kp_ and 0 otherwise.
     2. Do a separate run of the currently running algorithm, but with _pos_ = _pos_ + 1 and _r_ = _r_.  If the separate run returns _s_, return 0.
 
-Algorithm 3. This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
+**Algorithm 3.** This algorithm works only if each ratio _b_\[_i_\]/_a_\[_i_\] is 1 or less and if each _b_\[_i_\] and each  _a_\[_i_\] is greater than 0, but otherwise, each _b_\[_i_\] and each _a_\[_i_\] may be a non-integer.  The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 1. If the partial numerator/denominator pair at _pos_ is the last, return a number that is 1 with probability _b_\[_pos_\]/_a_\[_pos_\] and 0 otherwise.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -961,7 +963,7 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 <a id=x03F5_____lambda></a>
 #### _&#x03F5;_ / _&lambda;_
 
-(Lee et al. 2014)<sup>[**(43)**](#Note43)</sup>.  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_, which must be greater than 0 and be chosen such that _&#x03F5;_ is less than _&lambda;_.
+(Lee et al. 2014)<sup>[**(43)**](#Note43)</sup>.  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ in the interval (0, _&lambda;_).
 
 1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
@@ -971,32 +973,19 @@ This algorithm is a special case of the two-coin algorithm.  In this algorithm, 
 <a id=mu_____lambda></a>
 #### _&mu;_ / _&lambda;_
 
-(Morina 2021)<sup>[**(44)**](#Note44)</sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&epsilon;_ in the open interval (0, _&lambda;_ &minus; _&mu;_).  In this algorithm, _&mu;_ must be less than _&lambda;_.
+(Morina 2021)<sup>[**(44)**](#Note44)</sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ in the interval (0, _&lambda;_ &minus; _&mu;_].  In this algorithm, _&mu;_ must be less than _&lambda;_.
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit (either 0 or 1 with equal probability).
     2. If the bit generated in step 1 is 1, flip the _&mu;_ input coin.  If it returns 1, return 1.
-    3. If the bit generated in step 1 is 0, run the **algorithm for _&lambda;_ &minus; _&mu;_** . If it returns 1, return 0.
-
-<a id=1_minus___lambda></a>
-#### 1 &minus; _&lambda;_
-
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the _&lambda;_ input coin and return 0 if the result is 1, or 1 otherwise.
+    3. If the bit generated in step 1 is 0, run the **algorithm for _&lambda;_ &minus; _&mu;_** with _&#x03F5;_ = _&#x03F5;_. If it returns 1, return 0.
 
 <a id=nu_____lambda___1_minus___nu_____mu></a>
 #### _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_
 
 (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the _&nu;_ input coin.  If the result is 0, flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result.
 
-<a id=lambda_____mu___minus___lambda_____mu></a>
-#### _&lambda;_ + _&mu;_ &minus; (_&lambda;_ * _&mu;_)
-
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the _&lambda;_ input coin and the _&mu;_ input coin.  Return 1 if either flip returns 1, and 0 otherwise.
-
-<a id=lambda_____mu___2></a>
-#### (_&lambda;_ + _&mu;_) / 2
-
-(Nacu and Peres 2005, proposition 14(iii))<sup>[**(16)**](#Note16)</sup>; (Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result.
+Special cases include complement, mean, product, and logical OR; see "Other Factory Functions".
 
 <a id=lambda___x___y></a>
 #### _&lambda;_<sup>_x_/_y_</sup>
@@ -1006,7 +995,7 @@ In the algorithm below, the case where _x_/_y_ is in the open interval (0, 1) is
 1. If _x_/_y_ is 0, return 1.
 2. If _x_/_y_ is equal to 1, flip the input coin and return the result.
 3. If _x_/_y_ is greater than 1:
-    1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to `rem(x, y)`.
+    1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to rem(_x_, _y_) (equivalent to _x_ - _y_\*floor(_x_/_y_)).
     2. If _fpart_ is greater than 0, subtract 1 from _ipart_, then call this algorithm recursively with _x_ = floor(_fpart_/2) and _y_ = _y_, then call this algorithm, again recursively, with _x_ = _fpart_ &minus; floor(_fpart_/2) and _y_ = _y_. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)
     3. If _ipart_ is 1 or greater, flip the input coin _ipart_ many times.  Return 0 if any of these flips returns 1.
     4. Return 1.
@@ -1041,11 +1030,6 @@ Special case of the previous algorithm with _&mu;_ = 1/2.
     2. With probability 1/(_i_\*2), return 0.
     3. Add 1 to _i_ and go to step 1.
 
-<a id=lambda_____mu_2></a>
-#### _&lambda;_ * _&mu;_
-
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Flip the _&lambda;_ input coin and the _&mu;_ input coin.  Return 1 if both flips return 1, and 0 otherwise.
-
 <a id=lambda____x___y></a>
 #### _&lambda;_ * _x_/_y_
 
@@ -1053,7 +1037,7 @@ In general, this function will touch 0 or 1 somewhere in the open interval (0, 1
 
 Huber has suggested several algorithms for this function over the years.
 
-The first algorithm is called the **2014 algorithm** in this document (Huber 2014)<sup>[**(4)**](#Note4)</sup>.  It uses three parameters:
+The first algorithm in this document comes from Huber (2014)<sup>[**(4)**](#Note4)</sup>.  It uses three parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
 - _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the open interval (0, 1 &minus; _&lambda;_ * _x_/_y_), in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
@@ -1072,11 +1056,16 @@ As a result, some knowledge of _&lambda;_ has to be available to the algorithm. 
         2. Multiply _c_ by 2 / (_&#x03F5;_ + 2), then divide _&#x03F5;_ by 2, then multiply _k_ by 2.
 9. (_i_ is 0.) Return 1.
 
-Huber (2016)<sup>[**(36)**](#Note36)</sup> presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the 2014 algorithm above and the 2019 algorithm below (see also Morina 2021)<sup>[**(44)**](#Note44)</sup>.
+Huber (2016)<sup>[**(36)**](#Note36)</sup> presented a second algorithm using the same three parameters, but it's omitted here because it appears to perform worse than the algorithm given above and the **algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>** below (see also Morina 2021<sup>[**(44)**](#Note44)</sup>).
 
-Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters: _x_, _y_, and _m_, and _m_ has to be chosen such that _&lambda;_ * _x_ / _y_ &le; _m_ < 1/2.
+Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _y_.  The algorithm works only if _&lambda;_ * _x_ / _y_ is known to be less than 1/2.  This third algorithm takes three parameters:
 
-1. The same special cases as for the 2014 algorithm apply.
+- _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
+- _m_ is a rational number such that _&lambda;_ * _x_ / _y_ &le; _m_ < 1/2.
+
+The algorithm follows.
+
+1. The same special cases as for the first algorithm in this section apply.
 2. Run the **logistic Bernoulli factory** algorithm with _c_/_d_ = (_x_/_y_) / (1 &minus; 2 * _m_).  If it returns 0, return 0.
 3. With probability 1 &minus; 2 * _m_, return 1.
 4. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) with _x_/_y_ = (_x_/_y_) / (2 * _m_) and _&#x03F5;_ = 1 &minus; _m_.
@@ -1086,7 +1075,7 @@ Huber (2016) also included a third algorithm that simulates _&lambda;_ * _x_ / _
 <a id=lambda____x___y___i></a>
 #### (_&lambda;_ * _x_/_y_)<sup>_i_</sup>
 
-(Huber 2019)<sup>[**(45)**](#Note45)</sup>.  This algorithm, called the **2019 algorithm** in this document, uses four parameters:
+(Huber 2019)<sup>[**(45)**](#Note45)</sup>.  This algorithm uses four parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
 - _i_ is an integer 0 or greater.
@@ -1111,8 +1100,8 @@ The algorithm also has special cases not mentioned in Huber 2019.
 
 In this document, a **linear Bernoulli factory** refers to one of the following:
 
-- The **2014 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_.
-- The **2019 algorithm** with the stated parameters _x_, _y_, and _&epsilon;_, and with _i_ = 1.
+- The first algorithm for [**_&lambda;_ * _x_/_y_**](#lambda____x___y) with the stated parameters _x_, _y_, and _&#x03F5;_.
+- The [**algorithm for (_&lambda;_ * _x_/_y_)<sup>_i_</sup>**](#lambda____x___y___i) with the stated parameters _x_, _y_, and _&#x03F5;_, and with _i_ = 1 (see previous section).
 
 <a id=arctan___lambda_____lambda></a>
 #### arctan(_&lambda;_) /_&lambda;_
@@ -1257,6 +1246,10 @@ Algorithms in bold are given in this page.
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2017)<sup>[**(35)**](#Note35)</sup>; applies an exponential weight&mdash;here, _c_&mdash; to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate a Poisson(_c_) random integer, call it _N_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
 | 1 &minus; ln(1+_&lambda;_) | Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.<sup>[**(49)**](#Note49)</sup> |
 | _&lambda;_/(1+_&lambda;_) | Run algorithm for **1/(1+_&lambda;_)**, then return 1 minus the result. |
+| _&nu;_ * 1 + (1 &minus; _&nu;_) * _&mu;_ = _&nu;_ + _&mu;_ &minus; (_&nu;_\*_&mu;_) | (**Logical OR**. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 1. _&nu;_ and _&mu;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&mu;_ input coin.  Return 1 if either flip returns 1, and 0 otherwise. |
+| 1 &minus; _&mu;_ | (**Complement**. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 0 and _&mu;_ = 1. _&nu;_ is unknown heads probability of a coin.)<br>Flip the _&nu;_ input coin and return 1 minus the result. |
+| _&nu;_ * _&lambda;_ | (**Logical AND** or **Product**. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&mu;_ = 0. _&nu;_ and _&lambda;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&lambda;_ input coin.  Return 1 if both flips return 1, and 0 otherwise. |
+| (_&lambda;_ + _&mu;_)/2 = (1/2)\*_&lambda;_ + (1/2)\*_&mu;_ | (**Mean**. Nacu and Peres 2005, proposition 14(iii)<sup>[**(16)**](#Note16)</sup>; Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&nu;_ = 1/2. _&lambda;_ and _&mu;_ are unknown heads probabilities of two coins.)<br> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result. |
 
 <a id=Algorithms_for_Specific_Constants></a>
 ### Algorithms for Specific Constants
@@ -1362,7 +1355,7 @@ The algorithm follows.
 2. If _x_/_y_ is equal to 1, return 1 with probability _a_/_b_ and 0 otherwise.
 3. If _x_ is 0, return 1.  Otherwise, if _a_ is 0, return 0.  Otherwise, if _a_ equals _b_, return 1.
 4. If _x_/_y_ is greater than 1:
-    1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to `rem(x, y)`.
+    1. Set _ipart_ to floor(_x_/_y_) and _fpart_ to rem(_x_, _y_) (equivalent to _x_ - _y_\*floor(_x_/_y_)).
     2. If _fpart_ is greater than 0, subtract 1 from _ipart_, then call this algorithm recursively with _x_ = floor(_fpart_/2) and _y_ = _y_, then call this algorithm, again recursively, with _x_ = _fpart_ &minus; floor(_fpart_/2) and _y_ = _y_. Return 0 if either call returns 0.  (This is done rather than the more obvious approach in order to avoid calling this algorithm with fractional parts very close to 0, because the algorithm runs much more slowly than for fractional parts closer to 1.)
     3. If _ipart_ is 1 or greater, generate at random a number that is 1 with probability _a_<sup>_ipart_</sup>/_b_<sup>_ipart_</sup> or 0 otherwise. (Or generate, at random, _ipart_ many numbers that are each 1 with probability _a_/_b_ or 0 otherwise, then multiply them all into one number.)  If that number is 0, return 0.
     4. Return 1.
@@ -1390,7 +1383,7 @@ This algorithm is similar to the previous algorithm, except that the exponent, _
 More specifically:
 
 1. Decompose _z_ into _n_ > 0 components that sum to _z_, all of which are greater than 0.  For example, if _z_ = 3.5, it can be decomposed into only one component, 3.5 (whose fractional part is trivial to simulate), and if _z_ = _&pi;_, it can be decomposed into four components that are all (&pi; / 4), which has a not-so-trivial simulation described earlier on this page.
-2. For each component _LC_\[_i_\] found this way, let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
+2. For each component _LC_\[_i_\] found this way (where _i_ is in \[1, _n_\]), let _LI_\[_i_\] be floor(_LC_\[_i_\]) and let _LF_\[_i_\] be _LC_\[_i_\] &minus; floor(_LC_\[_i_\]) (_LC_\[_i_\]'s fractional part).
 
 The algorithm is then as follows:
 
@@ -1427,7 +1420,7 @@ Decompose _z_ into _LC_\[_i_\], _LI_\[_i_\], and _LF_\[_i_\] just as for the **e
 
 1. For each component _LC_\[_i_\], create an input coin that does the following: "(a) With probability 1/(2<sup>_prec_</sup>), return 1 if the input coin that simulates _LF_\[_i_\] returns 1; (b) Return 0".
 2. Return 0 with probability 1/2.
-3. Call the **algorithm for exp(&minus; _x_/_y_)** with _x_ = &sum;<sub>_i_</sub> _LI_\[_i_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
+3. Call the **algorithm for exp(&minus; _x_/_y_)** with _x_ = _LI_\[1\] + _LI_\[2\] + ... + _LI_\[_n_\] and _y_ = 2<sup>_prec_</sup>.  If this call returns 0, go to step 2.
 4. For each component _LC_\[_i_\], call the **algorithm for exp(&minus;_&lambda;_)**, using the corresponding input coin for  _LC_\[_i_\] created in step 1. If any of these calls returns 0, go to step 2.  Otherwise, return 1.
 
 <a id=zeta___3_3_4_and_Other_Zeta_Related_Constants></a>
