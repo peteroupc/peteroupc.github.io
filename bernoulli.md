@@ -9,7 +9,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-Given a coin with unknown probability of heads of _&lambda;_, sample the probability _f_(_&lambda;_).  In other words, turn a coin biased one way (_&lambda;_) into a coin biased another way (_f_(_&lambda;_)).  This is the _Bernoulli factory problem_.
+We're given a coin that shows heads with an unknown probability, _\lambda_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _\lambda_, call it _f_(_&lambda;_). This is the _Bernoulli factory problem_.
 
 And this page catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.
 
@@ -244,7 +244,7 @@ And here is another optimized algorithm:
 
 Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all of them can themselves be coins with unknown probability of heads.  In that case, the first algorithm can read as follows:
 
-1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.<sup>[**(9)**](#Note9)</sup>
+1. Flip the input coin _n_ times, and let _j_ be the number of times the coin returned 1 this way.
 2. If _a_\[_j_\] is a coin, flip it and return the result.  Otherwise, return a number that is 1 with probability _a_\[_j_\], or 0 otherwise.
 
 > **Notes**:
@@ -256,7 +256,7 @@ Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all 
 > **Examples:**
 >
 > 1. Take the following parabolic function discussed in Thomas and Blanchet (2012)<sup>[**(11)**](#Note11)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(12)**](#Note12)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(13)**](#Note13)</sup>
-> 2. The _conditional_ construction, mentioned in Flajolet et al. (2010)<sup>[**(1)**](#Note1)</sup>, has the form&mdash;<br>(_&lambda;_) \* _a_\[0] + (1 &mdash; _&lambda;_) \* _a_\[1].<br>This is a degree-1 polynomial in Bernstein form with variable _&lambda;_ and coefficients _a_\[0] and _a_\[1]. The following algorithm simulates this polynomial: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
+> 2. The _conditional_ construction, mentioned in Flajolet et al. (2010)<sup>[**(1)**](#Note1)</sup>, has the form&mdash;<br>(_&lambda;_) \* _a_\[0] + (1 &minus; _&lambda;_) \* _a_\[1].<br>This is a degree-1 polynomial in Bernstein form with variable _&lambda;_ and coefficients _a_\[0] and _a_\[1]. The following algorithm simulates this polynomial: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
 
 &nbsp;
 
