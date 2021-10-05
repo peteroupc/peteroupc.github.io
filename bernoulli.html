@@ -926,7 +926,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Examples</strong>:</p>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  The first algorithm in this section can simulate this constant if step 6 is modified to read: &quot;Let <em>m</em> be ((<em>n</em>+1)*2), and let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series).  Add <em>&alpha;</em> to <em>lamunq</em> and set <em>&#x03F5;</em> to 2/((<em>m</em>+1)!) (the error term).&quot;.<sup><a href="#Note32"><strong>(32)</strong></a></sup></li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  This function can be rewritten as a converging series required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  That algorithm can simulate this constant if step 6 is modified to read: &quot;Let <em>m</em> be ((<em>n</em>+1)*2), and let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the series).  Add <em>&alpha;</em> to <em>lamunq</em> and set <em>&#x03F5;</em> to 2/((<em>m</em>+1)!) (the error term).&quot;.<sup><a href="#Note32"><strong>(32)</strong></a></sup></li>
 <li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note33"><strong>(33)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.</li>
 </ul>
 </blockquote>
@@ -1806,11 +1806,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </tr>
 <tr>
 <td>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</td>
-<td>((Dughmi et al. 2017)<sup><a href="#Note35"><strong>(35)</strong></a></sup>; applies an exponential weight&mdash;here, <em>c</em>&mdash; to an input coin)<br>(1) If <em>c</em> is 0, return 1.<br>(2) Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first, then return a number that is 1 if <em>N</em> is 0 or all of the coin flips (including the last) return 1, or 0 otherwise.</td>
+<td>((Dughmi et al. 2017)<sup><a href="#Note35"><strong>(35)</strong></a></sup>; applies an exponential weight&mdash;here, <em>c</em>&mdash;to an input coin)<br>(1) If <em>c</em> is 0, return 1.<br>(2) Generate a Poisson(<em>c</em>) random integer, call it <em>N</em>.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first, then return a number that is 1 if <em>N</em> is 0 or all of the coin flips (including the last) return 1, or 0 otherwise.</td>
 </tr>
 <tr>
-<td>1 &minus; ln(1+<em>&lambda;</em>)</td>
-<td>Run algorithm for <strong>ln(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.<sup><a href="#Note49"><strong>(49)</strong></a></sup></td>
+<td>1 &minus; 1 / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>)) =<br>(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>) / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>))</td>
+<td>(Special case of <strong>logistic Bernoulli factory</strong>; <em>&lambda;</em> is in [0, 1], <em>&mu;</em> is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the <em>&mu;</em> coin.  If it returns 0, return 0. (With probability <em>&mu;</em>/(<em>&mu;</em> + (1 &minus; <em>&mu;</em>)) = <em>&mu;</em>.) <br>(2) Flip the <em>&lambda;</em> coin.  If the flip returns 1, return 1.  Otherwise, go to step 1.</td>
 </tr>
 <tr>
 <td><em>&lambda;</em>/(1+<em>&lambda;</em>)</td>
@@ -1831,6 +1831,10 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <tr>
 <td>(<em>&lambda;</em> + <em>&mu;</em>)/2 = (1/2)*<em>&lambda;</em> + (1/2)*<em>&mu;</em></td>
 <td>(<em>Mean</em>. Nacu and Peres 2005, proposition 14(iii)<sup><a href="#Note16"><strong>(16)</strong></a></sup>; Flajolet et al., 2010<sup><a href="#Note1"><strong>(1)</strong></a></sup>.  Special case of <em>&nu;</em> * <em>&lambda;</em> + (1 &minus; <em>&nu;</em>) * <em>&mu;</em> with <em>&nu;</em> = 1/2. <em>&lambda;</em> and <em>&mu;</em> are unknown heads probabilities of two coins.)<br> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.</td>
+</tr>
+<tr>
+<td>1 &minus; ln(1+<em>&lambda;</em>)</td>
+<td>Run algorithm for <strong>ln(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.<sup><a href="#Note49"><strong>(49)</strong></a></sup></td>
 </tr>
 </tbody></table>
 
@@ -2314,7 +2318,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note29>(29)</sup> Bill Gosper, &quot;Continued Fraction Arithmetic&quot;, 1978.</small></li>
 <li><small><sup id=Note30>(30)</sup> Borwein, J. et al. “Continued Logarithms and Associated Continued Fractions.” <em>Experimental Mathematics</em> 26 (2017): 412 - 429.</small></li>
 <li><small><sup id=Note31>(31)</sup> Mendo, L., &quot;<a href="https://arxiv.org/abs/2010.14901"><strong>Simulating a coin with irrational bias using rational arithmetic</strong></a>&quot;, arXiv:2010.14901 [math.PR], 2020.</small></li>
-<li><small><sup id=Note32>(32)</sup> The error term, which follows from <em>Taylor&#39;s theorem</em>, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that <em>f</em>&#39;s slope, slope-of-slope, etc. functions can achieve.</small></li>
+<li><small><sup id=Note32>(32)</sup> The error term, which follows from the so-called Lagrange remainder for Taylor series, has a numerator of 2 because 2 is higher than the maximum value at the point 1 (in cosh(1)) that <em>f</em>&#39;s slope, slope-of-slope, etc. functions can achieve.</small></li>
 <li><small><sup id=Note33>(33)</sup> Kozen, D., <a href="http://www.cs.cornell.edu/%7Ekozen/Papers/Coinflip.pdf"><strong>&quot;Optimal Coin Flipping&quot;</strong></a>, 2014.</small></li>
 <li><small><sup id=Note34>(34)</sup> K. Bringmann, F. Kuhn, et al., “Internal DLA: Efficient Simulation of a Physical Growth Model.” In: <em>Proc. 41st International Colloquium on Automata, Languages, and Programming (ICALP&#39;14)</em>, 2014.</small></li>
 <li><small><sup id=Note35>(35)</sup> Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</small></li>

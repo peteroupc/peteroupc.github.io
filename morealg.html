@@ -157,7 +157,7 @@
 <h3>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>x</em>)/&gamma;(<em>m</em>, 1)).</h3>
 
 <ol>
-<li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.  (Thus, <em>ret</em> is distributed as <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform(0, 1) random variate; although <strong>kthsmallest</strong> accepts only integers, this formula works for any <em>m</em> greater than 0.)</li>
+<li>Set <em>ret</em> to the result of <strong>kthsmallest</strong> with the two parameters <em>m</em> and <em>m</em>.  (Thus, <em>ret</em> is distributed as <em>u</em><sup>1/<em>m</em></sup> where <em>u</em> is a uniform random variate in [0, 1]; although <strong>kthsmallest</strong> accepts only integers, this formula works for any <em>m</em> greater than 0.)</li>
 <li>Set <em>k</em> to 1, then set <em>u</em> to point to the same value as <em>ret</em>.</li>
 <li>Generate a uniform(0, 1) random variate <em>v</em>.</li>
 <li>If <em>v</em> is less than <em>u</em>: Set <em>u</em> to <em>v</em>, then add 1 to <em>k</em>, then go to step 3.</li>
@@ -167,7 +167,7 @@
 <p>Derivation:  See Formula 1 in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot;, where:</p>
 
 <ul>
-<li><code>ECDF(x)</code>  is the uniform(0,1) distribution&#39;s cumulative distribution function, namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
+<li><code>ECDF(x)</code>  is the cumulative distribution function for the uniform distribution on the interval [0, 1], namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
 <li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random variates, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
 </ul>
 
@@ -192,14 +192,14 @@
 
 <p>There are two algorithms.</p>
 
-<p>The first algorithm involves an application of the general martingale algorithm to the Taylor series for cosh(<em>&lambda;</em>)&minus;1, which is <em>&lambda;</em><sup>2</sup>/(2!) + <em>&lambda;</em><sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup><a href="#Note2"><strong>(2)</strong></a></sup>. (In this document, <em>n</em>! = 1*2*3*...*<em>n</em> is known as <em>n</em> factorial.)</p>
+<p>The first algorithm involves an application of the general martingale algorithm to a power series that equals cosh(<em>&lambda;</em>)&minus;1.  Specifically, the power series is the function&#39;s <em>Taylor series</em> at 0, which is <em>&lambda;</em><sup>2</sup>/(2!) + <em>&lambda;</em><sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup><a href="#Note2"><strong>(2)</strong></a></sup>. (In this document, <em>n</em>! = 1*2*3*...*<em>n</em> is known as <em>n</em> factorial.)</p>
 
 <ol>
 <li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
 <li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to step 6.  (The estimate <em>&lambda;</em><sup><em>n</em>*2</sup> is 0, so no more terms are added and we use <em>&#x2113;</em> as the final estimate for cosh(<em>&lambda;</em>)&minus;1.)</li>
-<li>Let <em>m</em> be (<em>n</em>*2), let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series), and let <em>err</em> be 2/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
+<li>Let <em>m</em> be (<em>n</em>*2), let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series at 0), and let <em>err</em> be 2/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
@@ -235,27 +235,49 @@
 
 <ul>
 <li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>&minus;<em>c</em></sup> if <em>n</em>&ge;<em>c</em>, or 0 otherwise (the &quot;geometric&quot; probabilities&quot;), and</li>
-<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is the appropriate term for <em>n</em> in the target function&#39;s Taylor series expansion, starting with <em>n</em> = <em>c</em>.</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is the appropriate term for <em>n</em> in the target function&#39;s Taylor series expansion at 0, starting with <em>n</em> = <em>c</em>.</li>
 </ul>
 
 <p>Additional functions:</p>
 
-<p>| To simulate: | Follow this algorithm, except the probability in step 2 is: | And <em>c</em> is: |
-  ------- | -------- |
-| exp(<em>&lambda;</em>)/4. |  2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!). | 0. |
-| exp(<em>&lambda;</em>)/6. |  2<sup><em>n</em></sup>/(3*(<em>n</em>!)). | 0. |
-| exp(<em>&lambda;</em>/2)/2. | 1/(<em>n</em>!). | 0. |
-| (exp(<em>&lambda;</em>)&minus;1)/2. | 2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!). | 1. |</p>
+<table><thead>
+<tr>
+<th>To simulate:</th>
+<th>Follow this algorithm, except the probability in step 2 is:</th>
+<th>And <em>c</em> is:</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>exp(<em>&lambda;</em>)/4.</td>
+<td>2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!).</td>
+<td>0.</td>
+</tr>
+<tr>
+<td>exp(<em>&lambda;</em>)/6.</td>
+<td>2<sup><em>n</em></sup>/(3*(<em>n</em>!)).</td>
+<td>0.</td>
+</tr>
+<tr>
+<td>exp(<em>&lambda;</em>/2)/2.</td>
+<td>1/(<em>n</em>!).</td>
+<td>0.</td>
+</tr>
+<tr>
+<td>(exp(<em>&lambda;</em>)&minus;1)/2.</td>
+<td>2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!).</td>
+<td>1.</td>
+</tr>
+</tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as <em>f</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + ... + <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> + ..., where the <em>coefficients</em> <em>a</em>[<em>i</em>] are 0 or greater.<br>This kind of function has three properties: (1) it&#39;s non-negative for every <em>x</em>; (2) it&#39;s either constant or monotone increasing; (3) it&#39;s <em>convex</em> (its &quot;slope&quot; doesn&#39;t decrease as <em>x</em> increases).<br>To show the function is convex, find the &quot;slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>x</em> in the domain.  To do so, omit the first term and for each remaining term, replace <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> with <em>a</em>[<em>i</em>&minus;1]*<em>i</em>*<em>x</em><sup><em>i</em></sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.</p>
+<p><strong>Note:</strong> All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as <em>f</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + ... + <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> + ..., where the <em>coefficients</em> <em>a</em>[<em>i</em>] are 0 or greater.<br>This kind of function has three properties: (1) it&#39;s non-negative for every <em>x</em>; (2) it&#39;s either constant or monotone increasing; (3) it&#39;s <em>convex</em> (its &quot;slope&quot; doesn&#39;t decrease as <em>x</em> increases).<br>To show the function is convex, find the &quot;slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>x</em> in the domain.  To do so, omit the first term and for each remaining term, replace <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> with <em>a</em>[<em>i</em>]*<em>i</em>*<em>x</em><sup><em>i</em>&minus;1</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.</p>
 </blockquote>
 
 <p><a id=sinh___lambda___2></a></p>
 
 <h3>sinh(<em>&lambda;</em>)/2</h3>
 
-<p>This algorithm involves an application of the general martingale algorithm to the Taylor series for sinh(<em>&lambda;</em>)/2, which is <em>&lambda;</em><sup>1</sup>/(1!*2) + <em>&lambda;</em><sup>3</sup>/(3!*2) + ..., or as used here, <em>&lambda;</em>*(1/2 + <em>&lambda;</em><sup>2</sup>/(3!*2) + <em>&lambda;</em><sup>4</sup>/(5!*2) + ...).</p>
+<p>This algorithm involves an application of the general martingale algorithm to the Taylor series at 0 for sinh(<em>&lambda;</em>)/2, which is <em>&lambda;</em><sup>1</sup>/(1!*2) + <em>&lambda;</em><sup>3</sup>/(3!*2) + ..., or as used here, <em>&lambda;</em>*(1/2 + <em>&lambda;</em><sup>2</sup>/(3!*2) + <em>&lambda;</em><sup>4</sup>/(5!*2) + ...).</p>
 
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
@@ -266,7 +288,7 @@
 <ol>
 <li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this substep again.</li>
 <li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to the fourth substep. (No more terms are added here.)</li>
-<li>Let <em>m</em> be (<em>n</em>*2+1), let <em>&alpha;</em> be 1/(<em>m</em>!*2) (a term of the Taylor series), and let <em>err</em> be 1/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
+<li>Let <em>m</em> be (<em>n</em>*2+1), let <em>&alpha;</em> be 1/(<em>m</em>!*2) (a term of the Taylor series at 0), and let <em>err</em> be 1/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next substep.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em>.</li>
 </ol></li>
@@ -498,7 +520,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 </tr>
 <tr>
 <td>expit(<em>&lambda;</em>)</td>
-<td>(expit(<em>x</em>) = 1&minus;1/(1+exp(<em>x</em>)).  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Create <em>&mu;</em> coin for algorithm <strong>exp(&minus;<em>&lambda;</em>)</strong>.<br>Run algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
+<td>(expit(<em>x</em>) = 1&minus;1/(1+exp(<em>x</em>)) = exp(<em>x</em>)/(1+exp(<em>x</em>)).  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Create <em>&mu;</em> coin for algorithm <strong>exp(&minus;<em>&lambda;</em>)</strong>.<br>Run algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
 </tr>
 <tr>
 <td>exp(<em>&lambda;</em>)/(1+exp(<em>&lambda;</em>))<sup>2</sup></td>
@@ -1503,7 +1525,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <ol>
 <li>Set <em>v</em> to 0 and <em>k</em> to 1.</li>
-<li>(<em>v</em> acts as a uniform(0, 1) random variate to compare with <em>f</em>(<em>U</em>).) Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
+<li>(<em>v</em> acts as a uniform random variate in [0, 1] to compare with <em>f</em>(<em>U</em>).) Set <em>v</em> to <em>b</em> * <em>v</em> + <em>d</em>, where <em>b</em> is the base (or radix) of the uniform PSRN&#39;s digits, and <em>d</em> is a digit chosen uniformly at random.</li>
 <li>Calculate an approximation of <em>f</em>(<em>U</em>) as follows:
 
 <ol>

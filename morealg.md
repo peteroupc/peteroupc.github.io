@@ -113,7 +113,7 @@ An application of the continued fraction algorithm is the following algorithm th
 <a id=Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1></a>
 ### Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).
 
-1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.  (Thus, _ret_ is distributed as _u_<sup>1/_m_</sup> where _u_ is a uniform(0, 1) random variate; although **kthsmallest** accepts only integers, this formula works for any _m_ greater than 0.)
+1. Set _ret_ to the result of **kthsmallest** with the two parameters _m_ and _m_.  (Thus, _ret_ is distributed as _u_<sup>1/_m_</sup> where _u_ is a uniform random variate in [0, 1]; although **kthsmallest** accepts only integers, this formula works for any _m_ greater than 0.)
 2. Set _k_ to 1, then set _u_ to point to the same value as _ret_.
 3. Generate a uniform(0, 1) random variate _v_.
 4. If _v_ is less than _u_: Set _u_ to _v_, then add 1 to _k_, then go to step 3.
@@ -121,7 +121,7 @@ An application of the continued fraction algorithm is the following algorithm th
 
 Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
 
-- `ECDF(x)`  is the uniform(0,1) distribution's cumulative distribution function, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
+- `ECDF(x)`  is the cumulative distribution function for the uniform distribution on the interval \[0, 1\], namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
 - `DPDF(x)` is the probability density function for the maximum of _m_ uniform(0,1) random variates, namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
 
 <a id=Derivative_slope_of_arctan___lambda></a>
@@ -141,13 +141,13 @@ This algorithm involves the series expansion of this function (1 &minus; _&lambd
 
 There are two algorithms.
 
-The first algorithm involves an application of the general martingale algorithm to the Taylor series for cosh(_&lambda;_)&minus;1, which is _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup>[**(2)**](#Note2)</sup>. (In this document, _n_! = 1\*2\*3\*...\*_n_ is known as _n_ factorial.)
+The first algorithm involves an application of the general martingale algorithm to a power series that equals cosh(_&lambda;_)&minus;1.  Specifically, the power series is the function's _Taylor series_ at 0, which is _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)<sup>[**(2)**](#Note2)</sup>. (In this document, _n_! = 1\*2\*3\*...\*_n_ is known as _n_ factorial.)
 
 1. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
 4. If _w_ is 0, set _u_ to _&#x2113;_ and go to step 6.  (The estimate _&lambda;_<sup>_n_\*2</sup> is 0, so no more terms are added and we use _&#x2113;_ as the final estimate for cosh(_&lambda;_)&minus;1.)
-5. Let _m_ be (_n_\*2), let _&alpha;_ be 1/(_m_!) (a term of the Taylor series), and let _err_ be 2/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
+5. Let _m_ be (_n_\*2), let _&alpha;_ be 1/(_m_!) (a term of the Taylor series at 0), and let _err_ be 2/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
 6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 3.
 
@@ -174,23 +174,23 @@ Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following ser
 Derivation: Follows from rewriting exp(_&lambda;_/4)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time&mdash;
 
 - _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;_c_</sup> if _n_&ge;_c_, or 0 otherwise (the "geometric" probabilities"), and
-- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion, starting with _n_ = _c_.
+- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion at 0, starting with _n_ = _c_.
 
 Additional functions:
 
 | To simulate: | Follow this algorithm, except the probability in step 2 is: | And _c_ is: |
-  ------- | -------- |
+  ------- | -------- | --- |
 | exp(_&lambda;_)/4. |  2<sup>_n_&minus;1</sup>/(_n_!). | 0. |
 | exp(_&lambda;_)/6. |  2<sup>_n_</sup>/(3\*(_n_!)). | 0. |
 | exp(_&lambda;_/2)/2. | 1/(_n_!). | 0. |
 | (exp(_&lambda;_)&minus;1)/2. | 2<sup>_n_&minus;1</sup>/(_n_!). | 1. |
 
-> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_&minus;1]\*_i_\*_x_<sup>_i_</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.
+> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_]\*_i_\*_x_<sup>_i_&minus;1</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2
 
-This algorithm involves an application of the general martingale algorithm to the Taylor series for sinh(_&lambda;_)/2, which is _&lambda;_<sup>1</sup>/(1!\*2) + _&lambda;_<sup>3</sup>/(3!\*2) + ..., or as used here, _&lambda;_\*(1/2 + _&lambda;_<sup>2</sup>/(3!\*2) + _&lambda;_<sup>4</sup>/(5!\*2) + ...).
+This algorithm involves an application of the general martingale algorithm to the Taylor series at 0 for sinh(_&lambda;_)/2, which is _&lambda;_<sup>1</sup>/(1!\*2) + _&lambda;_<sup>3</sup>/(3!\*2) + ..., or as used here, _&lambda;_\*(1/2 + _&lambda;_<sup>2</sup>/(3!\*2) + _&lambda;_<sup>4</sup>/(5!\*2) + ...).
 
 1. Flip the input coin.  If it returns 0, return 0.
 2. Set _u_ to 0, set _w_ to 1, set _&#x2113;_ to 1/2 (the first term is added already), and set _n_ to 1.
@@ -198,7 +198,7 @@ This algorithm involves an application of the general martingale algorithm to th
 4. Do the following process repeatedly, until this algorithm returns a value:
     1. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this substep again.
     2. If _w_ is 0, set _u_ to _&#x2113;_ and go to the fourth substep. (No more terms are added here.)
-    3. Let _m_ be (_n_\*2+1), let _&alpha;_ be 1/(_m_!\*2) (a term of the Taylor series), and let _err_ be 1/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
+    3. Let _m_ be (_n_\*2+1), let _&alpha;_ be 1/(_m_!\*2) (a term of the Taylor series at 0), and let _err_ be 1/((_m_+1)!) (the error term).  Add _&alpha;_ to _&#x2113;_, then set _u_ to _&#x2113;_ + _err_.
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     5. Add 1 to _n_.
 
@@ -346,7 +346,7 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  3 &minus; exp(1) | Run the algorithm for **exp(1) &minus; 2**, then return 1 minus the result. |
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
 |  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
-| expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
+| expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)) = exp(_x_)/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 | exp(_&lambda;_)/(1+exp(_&lambda;_))<sup>2</sup> | (Equals expit(_&lambda;_)\*(1&minus;expit(_&lambda;_)). _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_&lambda;_)** twice. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0. |
 | expit(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin; _m_&ge;0 is an integer.)<br>Create _&mu;_ coin for algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  expit(_&lambda;_)\*2&minus;1 | (Equals tanh(_&lambda;_/2). _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that does the following: "Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result."<br>Run algorithm for **tanh(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin. |
@@ -1064,7 +1064,7 @@ The following algorithm takes a uniform partially-sampled random number (PSRN) a
 The algorithm follows.
 
 1. Set _v_ to 0 and _k_ to 1.
-2. (_v_ acts as a uniform(0, 1) random variate to compare with _f_(_U_).) Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
+2. (_v_ acts as a uniform random variate in [0, 1] to compare with _f_(_U_).) Set _v_ to _b_ * _v_ + _d_, where _b_ is the base (or radix) of the uniform PSRN's digits, and _d_ is a digit chosen uniformly at random.
 3. Calculate an approximation of _f_(_U_) as follows:
     1. Set _n_ to the number of items (sampled and unsampled digits) in the uniform PSRN's fractional part.
     2. Of the first _n_ digits (sampled and unsampled) in the PSRN's fractional part, sample each of the unsampled digits uniformly at random.  Then let _uk_ be the PSRN's digit expansion up to the first _n_ digits after the point.
