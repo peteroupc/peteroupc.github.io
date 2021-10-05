@@ -276,7 +276,7 @@ pprint(Max(1,kappa))
 <a id=Finding_Biased_Coins></a>
 ## Finding Biased Coins
 
-Given _m_ coins with unknown probability of heads, the following algorithm finds the _k_ coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
+Given _m_ coins each with unknown probability of heads, the following algorithm finds the _k_ coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
 
 - _k_ is the number of coins to return.
 - _&delta;_ is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; _&delta;_.

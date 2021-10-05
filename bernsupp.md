@@ -25,7 +25,7 @@
 <a id=General_Factory_Functions></a>
 ## General Factory Functions
 
-As a reminder, the _Bernoulli factory problem_ is: We're given a coin that shows heads with an unknown probability, _\lambda_, and the goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _\lambda_, call it _f_(_&lambda;_).
+As a reminder, the _Bernoulli factory problem_ is: We're given a coin that shows heads with an unknown probability, _&lambda;_, and the goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_).
 
 The algorithms for [**general factory functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions), described in my main article on Bernoulli factory algorithms, work by building randomized upper and lower bounds for a function _f_(_&lambda;_), based on flips of the input coin.  Roughly speaking, the algorithms work as follows:
 

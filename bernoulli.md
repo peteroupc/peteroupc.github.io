@@ -9,7 +9,7 @@
 <a id=Introduction></a>
 ## Introduction
 
-We're given a coin that shows heads with an unknown probability, _\lambda_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _\lambda_, call it _f_(_&lambda;_). This is the _Bernoulli factory problem_.
+We're given a coin that shows heads with an unknown probability, _&lambda;_. The goal is to use that coin (and possibly also a fair coin) to build a "new" coin that shows heads with a probability that depends on _&lambda;_, call it _f_(_&lambda;_). This is the _Bernoulli factory problem_.
 
 And this page catalogs algorithms to solve this problem for a wide variety of functions, algorithms known as _Bernoulli factories_.
 
@@ -772,6 +772,8 @@ This algorithm is adapted from the general martingale algorithm (in "Certain Pow
     2. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
     3. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
     4. Add 1 to _n_.
+
+> **Note:** exp(&minus;_&lambda;_) = exp(1&minus;_&lambda;)/exp(1).
 
 <a id=exp___lambda___minus_1_exp_minus___lambda></a>
 #### (exp(_&lambda;_)&minus;1)/exp(&minus;_&lambda;_)

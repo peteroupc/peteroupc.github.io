@@ -151,7 +151,7 @@ The first algorithm involves an application of the general martingale algorithm 
 6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 7. Add 1 to _n_ and go to step 3.
 
-In this algorithm, the error term, which follows from _Taylor's theorem_, has a numerator of 2 because 2 is higher than the maximum value that the function's slope, slope-of-slope, etc. functions can achieve anywhere in the interval [0, 1].
+In this algorithm, the error term, which follows from the _Lagrange remainder_ for Taylor series, has a numerator of 2 because 2 is higher than the maximum value that the function's slope, slope-of-slope, etc. functions can achieve anywhere in the interval [0, 1].
 
 The second algorithm is one I found that takes advantage of the convex combination method.
 
@@ -167,19 +167,25 @@ Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following ser
 <a id=exp___lambda___4_2></a>
 ### exp(_&lambda;_/4)/2
 
-1. ("Geometric" random variate _n_.)  Generate unbiased random bits until a zero is generated this way.  Set _n_ to the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
+1. ("Geometric" random variate _n_.)  Let _c_ be 0.  Generate unbiased random bits until a zero is generated this way.  Set _n_ to _c_ plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
 2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  With probability 1/(2<sup>_n_</sup>\*(_n_!)), go to the next step.  Otherwise, return 0.
 3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
 
-Derivation: Follows from rewriting exp(_&lambda;_/4)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time, _g_(_n_) is (1/2)\*(1/2)<sup>_n_</sup> (the "geometric" probabilities"), and _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series.
+Derivation: Follows from rewriting exp(_&lambda;_/4)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time&mdash;
+
+- _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;_c_</sup> if _n_&ge;_c_, or 0 otherwise (the "geometric" probabilities"), and
+- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion, starting with _n_ = _c_.
 
 Additional functions:
 
-| To simulate: | Follow this algorithm, except the probability in step 2 is: |
+| To simulate: | Follow this algorithm, except the probability in step 2 is: | And _c_ is: |
   ------- | -------- |
-| exp(_&lambda;_)/4. |  2<sup>_n_&minus;1</sup>/(_n_!). |
-| exp(_&lambda;_)/6. |  2<sup>_n_</sup>/(3\*(_n_!)). |
-| exp(_&lambda;_/2)/2. | 1/(_n_!). |
+| exp(_&lambda;_)/4. |  2<sup>_n_&minus;1</sup>/(_n_!). | 0. |
+| exp(_&lambda;_)/6. |  2<sup>_n_</sup>/(3\*(_n_!)). | 0. |
+| exp(_&lambda;_/2)/2. | 1/(_n_!). | 0. |
+| (exp(_&lambda;_)&minus;1)/2. | 2<sup>_n_&minus;1</sup>/(_n_!). | 1. |
+
+> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_&minus;1]\*_i_\*_x_<sup>_i_</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2
@@ -341,11 +347,11 @@ Algorithms in bold are given either in this page or in the "[**Bernoulli Factory
 |  1/(exp(1)&minus;1) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 1. |
 |  1/(1+exp(1)) | Run the algorithm for **1/(exp(1)+_c_&minus;2)** with _c_ = 3. |
 | expit(_&lambda;_) | (expit(_x_) = 1&minus;1/(1+exp(_x_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin for algorithm **exp(&minus;_&lambda;_)**.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
-| exp(_&lambda;_)/(1+exp(_&lambda;_))<sup>2</sup> | (Equals expit(_&lambda;_)\*(1&minus;expit(_&lambda;_)). _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_&lambda;_)** twice. If the runs both return 0 or both 1, return 0.  Otherwise, return 1. |
+| exp(_&lambda;_)/(1+exp(_&lambda;_))<sup>2</sup> | (Equals expit(_&lambda;_)\*(1&minus;expit(_&lambda;_)). _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_&lambda;_)** twice. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0. |
 | expit(_m_+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin; _m_&ge;0 is an integer.)<br>Create _&mu;_ coin for algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.<br>Run algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin. |
 |  expit(_&lambda;_)\*2&minus;1 | (Equals tanh(_&lambda;_/2). _&lambda;_ is unknown heads probability of a coin.)<br>Create _&mu;_ coin that does the following: "Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result."<br>Run algorithm for **tanh(_&lambda;_)** with _&lambda;_ being the _&mu;_ coin. |
 |  _n_/_&pi;_  |  (_n_ is 1, 2, or 3.)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **_d_ / (_c_ + _&lambda;_)** with _d_=_n_ and _c_=3.  |
-|  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _mu_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
+|  _r_/_&pi;_  |  (_r_ is a rational number in open interval (0, 3).)<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Create _&mu;_ coin that does: "With probability _r_ &minus; floor(_r_), return 1; otherwise return 0."<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=floor(_r_) and _c_=3.  |
 |  exp(1)/_&pi;_  |  Create _&mu;_ coin for algorithm **exp(1) &minus; 2**.<br>Create _&lambda;_ coin for algorithm **_&pi;_ &minus; 3**.<br>Run algorithm for **(_d_ + _&mu;_) / (_c_ + _&lambda;_)** with _d_=2 and _c_=3.  |
 
 <a id=Certain_Piecewise_Linear_Functions></a>
