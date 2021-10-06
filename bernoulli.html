@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/05"><meta name="citation_online_date" content="2021/10/05"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/06"><meta name="citation_online_date" content="2021/10/06"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -150,7 +150,7 @@
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
-<li><a href="#Randomized_vs_Non_Randomized_Algorithms"><strong>Randomized vs. Non-Randomized Algorithms</strong></a></li>
+<li><a href="#Using_the_Biased_Coin_Alone_for_Randomness"><strong>Using the Biased Coin Alone for Randomness</strong></a></li>
 <li><a href="#Bernoulli_Factories_and_Unbiased_Estimation"><strong>Bernoulli Factories and Unbiased Estimation</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
@@ -167,11 +167,17 @@
 
 <h2>About Bernoulli Factories</h2>
 
-<p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.  The unknown probability of heads is called <em>&lambda;</em> in this document.  For example, a Bernoulli factory algorithm can take a coin that returns heads with probability <em>&lambda;</em> and produce a coin that returns heads with probability exp(&minus;<em>&lambda;</em>).</p>
+<p>A <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin&#39;s probability of heads.</p>
 
-<p>A <em>factory function</em> is a known function that relates the old probability to the new one.  Its domain is the <em>closed</em> interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].</p>
+<ul>
+<li>The Greek letter lambda (<em>&lambda;</em>) represents the unknown probability of heads.</li>
+<li>Many Bernoulli factories also use a <em>fair coin</em> in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the biased coin.</li>
+<li>A <em>factory function</em> is a known function that relates the old probability to the new one.  Its domain is the <em>closed</em> interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].</li>
+</ul>
 
-<p>Many Bernoulli factories also have access to outside randomness (such as a source of unbiased random bits).  A factory function is <em>strongly simulable</em> if it admits a Bernoulli factory whose only source of randomness is the input coin.</p>
+<blockquote>
+<p><strong>Example:</strong> A Bernoulli factory algorithm can take a coin that returns heads with probability <em>&lambda;</em> and produce a coin that returns heads with probability exp(&minus;<em>&lambda;</em>).  In this example, exp(&minus;<em>&lambda;</em>) is the factory function.</p>
+</blockquote>
 
 <p>Keane and O&#39;Brien (1994)<sup><a href="#Note2"><strong>(2)</strong></a></sup> showed that a function <em>f</em> that maps <a href="or%20a%20subset%20of%20it">0, 1</a> to [0, 1] admits a Bernoulli factory if and only if&mdash;</p>
 
@@ -259,7 +265,7 @@
 
 <p>The algorithms as described here do not always lead to the best performance.  An implementation may change these algorithms as long as they produce the same results as the algorithms as described here.</p>
 
-<p>Most of the algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the <a href="#Randomized_vs_Non_Randomized_Algorithms"><strong>appendix</strong></a> for details.</p>
+<p>Most of the algorithms assume that a source of independent and unbiased random bits is available, in addition to the input coins.  But in many cases, they can be implemented using nothing but those coins as a source of randomness.  See the <a href="#Appendix"><strong>appendix</strong></a> for details.</p>
 
 <p>Bernoulli factory algorithms that sample the probability <em>f</em>(<em>&lambda;</em>) act as unbiased estimators of <em>f</em>(<em>&lambda;</em>). See the <a href="#Bernoulli_Factories_and_Unbiased_Estimation"><strong>appendix</strong></a> for details.</p>
 
@@ -1802,7 +1808,11 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </tr>
 <tr>
 <td>1 / (<em>c</em> + <em>&lambda;</em>)</td>
-<td>(<em>c</em>&ge;1 is a rational number.)<br>Run algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em> = 1.</td>
+<td>(<em>&lambda;</em> is unknown heads probability of a coin; <em>c</em>&ge;1 is a rational number.)<br>Run algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em> = 1.</td>
+</tr>
+<tr>
+<td>1 / (<em>c</em> + exp(&minus; <em>&lambda;</em>))</td>
+<td>(<em>&lambda;</em> is unknown heads probability of a coin; <em>c</em>&ge;1 is a rational number.)<br>Create <em>&mu;</em> coin for algorithm <strong>exp(&minus; <em>&lambda;</em>)</strong>.<br>Run algorithm for <strong><em>d</em> / (<em>c</em> + <em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=<em>c</em>, and <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
 </tr>
 <tr>
 <td>exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>))</td>
@@ -1810,7 +1820,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </tr>
 <tr>
 <td>1 &minus; 1 / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>)) =<br>(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>) / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>))</td>
-<td>(Special case of <strong>logistic Bernoulli factory</strong>; <em>&lambda;</em> is in [0, 1], <em>&mu;</em> is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the <em>&mu;</em> coin.  If it returns 0, return 0. (With probability <em>&mu;</em>/(<em>&mu;</em> + (1 &minus; <em>&mu;</em>)) = <em>&mu;</em>.) <br>(2) Flip the <em>&lambda;</em> coin.  If the flip returns 1, return 1.  Otherwise, go to step 1.</td>
+<td>(Special case of <strong>logistic Bernoulli factory</strong>; <em>&lambda;</em> is in [0, 1], <em>&mu;</em> is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the <em>&mu;</em> coin.  If it returns 0, return 0. (With probability <em>&mu;</em>/(<em>&mu;</em> + (1 &minus; <em>&mu;</em>)) = <em>&mu;</em>.) <br>(2) Flip the <em>&lambda;</em> coin.  If it returns 1, return 1.  Otherwise, go to step 1.</td>
 </tr>
 <tr>
 <td><em>&lambda;</em>/(1+<em>&lambda;</em>)</td>
@@ -2355,11 +2365,17 @@ kind of irrational number.</p>
 
 <p>&nbsp;</p>
 
-<p><a id=Randomized_vs_Non_Randomized_Algorithms></a></p>
+<p><a id=Using_the_Biased_Coin_Alone_for_Randomness></a></p>
 
-<h3>Randomized vs. Non-Randomized Algorithms</h3>
+<h3>Using the Biased Coin Alone for Randomness</h3>
 
-<p>A <em>non-randomized algorithm</em> is a simulation algorithm that uses nothing but the input coin as a source of randomness (in contrast to <em>randomized algorithms</em>, which do use other sources of randomness) (Mendo 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.  Instead of generating outside randomness, a randomized algorithm can implement a <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> procedure to generate that randomness using the input coins themselves.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.  For example, if an algorithm implements the <strong>two-coin algorithm</strong> by generating a random bit in step 1, it could replace generating that bit with flipping the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then taking the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.</p>
+<p>A function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note23"><strong>(23)</strong></a></sup> if there is a Bernoulli factory algorithm for that function that uses <em>only</em> the input coin (&quot;biased coin&quot;) as its source of randomness.  If so, the algorithm is called a <em>non-randomized algorithm</em> (Mendo 2019)<sup><a href="#Note23"><strong>(23)</strong></a></sup>.</p>
+
+<p>If a Bernoulli factory algorithm uses a fair coin, it can generate flips of the fair coin using the input coin instead, with the help of <a href="https://peteroupc.github.io/randextract.html"><strong><em>randomness extraction</em></strong></a> techniques.  In this way, the algorithm becomes a <em>non-randomized algorithm</em>.</p>
+
+<blockquote>
+<p><strong>Example:</strong> If a Bernoulli factory algorithm would generate an unbiased random bit, instead it could flip the input coin twice until the flip returns 0 then 1 or 1 then 0 this way, then take the result as 0 or 1, respectively (von Neumann 1951)<sup><a href="#Note55"><strong>(55)</strong></a></sup>.  But this trick works only the input coin&#39;s probability of heads is neither 0 nor 1.</p>
+</blockquote>
 
 <p>In fact, there is a lower bound on the average number of coin flips needed to turn a coin with one probability of heads (<em>&lambda;</em>) into a coin with another (<em>&tau;</em> = <em>f</em>(<em>&lambda;</em>)).  It&#39;s called the <em>entropy bound</em> (see, e.g., (Pae 2005)<sup><a href="#Note56"><strong>(56)</strong></a></sup>, (Peres 1992)<sup><a href="#Note57"><strong>(57)</strong></a></sup>) and is calculated as&mdash;</p>
 
@@ -2371,7 +2387,7 @@ kind of irrational number.</p>
 
 <p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note33"><strong>(33)</strong></a></sup> showed a tighter lower bound of this kind, but this bound is generally non-trivial and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for any integer <em>n</em>.</p>
 
-<p>A function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> (Keane and O&#39;Brien 1994)<sup><a href="#Note23"><strong>(23)</strong></a></sup> if it admits a non-randomized Bernoulli factory algorithm.  A factory function is strongly simulable, for example, if the input coin&#39;s probability of heads (<em>&lambda;</em>) can be neither 0 nor 1.</p>
+<p>See the <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>supplemental notes</strong></a> for the question on which functions are strongly simulable.</p>
 
 <p><a id=Bernoulli_Factories_and_Unbiased_Estimation></a></p>
 
