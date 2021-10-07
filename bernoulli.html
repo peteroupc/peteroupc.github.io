@@ -656,7 +656,7 @@ functions, or functions in general.</p>
 
 <ul>
 <li><em>t</em> is a rational number in the interval (<em>B</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
-<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2).</li>
+<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2].</li>
 </ul>
 
 <p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads) and in the interval (0, 1).</p>
@@ -1397,7 +1397,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&lambda;</em> + <em>&mu;</em></h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the open interval (0, 1 &minus; <em>&lambda;</em> &minus; <em>&mu;</em>).</p>
+<p>(Nacu and Peres 2005, proposition 14(iii))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the half-open interval (0, 1 &minus; <em>&lambda;</em> &minus; <em>&mu;</em>].</p>
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return the result.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
@@ -1408,7 +1408,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&lambda;</em> &minus; <em>&mu;</em></h4>
 
-<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>] (the greater <em>&#x03F5;</em> is, the more efficient).</p>
+<p>(Nacu and Peres 2005, proposition 14(iii-iv))<sup><a href="#Note16"><strong>(16)</strong></a></sup>.  This algorithm takes two input coins that simulate <em>&lambda;</em> or <em>&mu;</em>, respectively, and a parameter <em>&#x03F5;</em> in the half-open interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>] (the greater <em>&#x03F5;</em> is, the more efficient).</p>
 
 <ol>
 <li>Create a <em>&nu;</em> input coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the <em>&lambda;</em> input coin and return <strong>1 minus the result</strong>.  Otherwise, flip the <em>&mu;</em> input coin and return the result.&quot;</li>
@@ -1419,7 +1419,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&#x03F5;</em> / <em>&lambda;</em></h4>
 
-<p>(Lee et al. 2014)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em>).</p>
+<p>(Lee et al. 2014)<sup><a href="#Note43"><strong>(43)</strong></a></sup>.  This algorithm, in addition to the input coin, takes a parameter <em>&#x03F5;</em> in the half-open interval (0, <em>&lambda;</em>].</p>
 
 <ol>
 <li>Set <em>&beta;</em> to max(<em>&#x03F5;</em>, 1/2) and set <em>&gamma;</em> to 1 &minus; (1 &minus; <em>&beta;</em>) / (1 &minus; (<em>&beta;</em> / 2)).</li>
@@ -1432,7 +1432,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4><em>&mu;</em> / <em>&lambda;</em></h4>
 
-<p>(Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend <em>&mu;</em> and a coin simulating the divisor <em>&lambda;</em>, and a parameter <em>&#x03F5;</em> in the interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>].  In this algorithm, <em>&mu;</em> must be less than <em>&lambda;</em>.</p>
+<p>(Morina 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend <em>&mu;</em> and a coin simulating the divisor <em>&lambda;</em>, and a parameter <em>&#x03F5;</em> in the half-open interval (0, <em>&lambda;</em> &minus; <em>&mu;</em>].  In this algorithm, <em>&mu;</em> must be less than <em>&lambda;</em>.</p>
 
 <ul>
 <li>Do the following process repeatedly, until this algorithm returns a value:
@@ -1524,7 +1524,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ul>
 <li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
-<li><em>&#x03F5;</em> is a rational number in the open interval (0, 1).  If <em>x</em>/<em>y</em> is greater than 1, <em>&#x03F5;</em> must be in the open interval (0, 1 &minus; <em>&lambda;</em> * <em>x</em>/<em>y</em>), in order to bound the function away from 0 and 1.  The greater <em>&#x03F5;</em> is, the more efficient.</li>
+<li><em>&#x03F5;</em> is a rational number in the open interval (0, 1).  If <em>x</em>/<em>y</em> is greater than 1, <em>&#x03F5;</em> must be in the half-open interval (0, 1 &minus; <em>&lambda;</em> * <em>x</em>/<em>y</em>], in order to bound the function away from 0 and 1.  The greater <em>&#x03F5;</em> is, the more efficient.</li>
 </ul>
 
 <p>As a result, some knowledge of <em>&lambda;</em> has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.</p>
@@ -1580,7 +1580,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ul>
 <li><em>x</em> and <em>y</em> are integers such that <em>x</em>/<em>y</em> &gt; 0 and <em>y</em>!=0.</li>
 <li><em>i</em> is an integer 0 or greater.</li>
-<li><em>&#x03F5;</em> is a rational number in the open interval (0, 1).  If <em>x</em>/<em>y</em> is greater than 1, <em>&#x03F5;</em> must be in the open interval (0, 1 &minus; <em>&lambda;</em> * <em>x</em>/<em>y</em>).</li>
+<li><em>&#x03F5;</em> is a rational number in the open interval (0, 1).  If <em>x</em>/<em>y</em> is greater than 1, <em>&#x03F5;</em> must be in the half-open interval (0, 1 &minus; <em>&lambda;</em> * <em>x</em>/<em>y</em>].</li>
 </ul>
 
 <p>The algorithm also has special cases not mentioned in Huber 2019.</p>
@@ -2401,7 +2401,7 @@ kind of irrational number.</p>
 <li>((<em>&tau;</em> &minus; 1) * ln(1 &minus; <em>&tau;</em>) &minus; <em>&tau;</em> * ln(<em>&tau;</em>)) / ((<em>&lambda;</em> &minus; 1) * ln(1 &minus; <em>&lambda;</em>) &minus; <em>&lambda;</em> * ln(<em>&lambda;</em>)).</li>
 </ul>
 
-<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, algorithms whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if <em>f</em> isn&#39;t a constant.</p>
+<p>For example, if <em>f</em>(<em>&lambda;</em>) is a constant, an algorithm whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if <em>f</em> isn&#39;t a constant.</p>
 
 <p>For certain values of <em>&lambda;</em>, Kozen (2014)<sup><a href="#Note33"><strong>(33)</strong></a></sup> showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes <em>&lambda;</em> is known.  However, if <em>&lambda;</em> is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant <em>&tau;</em>, except when <em>&tau;</em> is a multiple of 1/(2<sup><em>n</em></sup>) for any integer <em>n</em>.</p>
 

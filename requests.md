@@ -113,7 +113,7 @@ This page has more algorithms for sampling using partially-sampled random number
         - _Singular distributions_ (covering an uncountable but zero-volume set)?
         - Distributions with _continuous_ density functions?
     2. Same question as 1, but for pushdown generators.
-    3. Of the probability distributions that a pushdown generator can generate, what is the exact class of distributions with piecewise smooth density functions?  (The answer is known for finite-state generators.)
+    3. Of the probability distributions that a pushdown generator can generate, what is the exact class of distributions with piecewise density functions whose pieces have infinitely many "slope" functions?  (The answer is known for finite-state generators.)
 
 <a id=Randomized_Estimation_Algorithms></a>
 ## Randomized Estimation Algorithms

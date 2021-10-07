@@ -450,7 +450,7 @@ _f_(_&lambda;_) = _d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup>
 where each _d_\[_i_\] is 0 or greater, and takes the following parameters:
 
 - _t_ is a rational number in the interval (_B_, 1] such that _f_(_t_) < 1.
-- _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2).
+- _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2].
 
 _B_ is not a parameter, but is the maximum allowed value for _&lambda;_ (probability of heads) and in the interval (0, 1).
 
@@ -974,7 +974,7 @@ Another special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must
 <a id=lambda_____mu></a>
 #### _&lambda;_ + _&mu;_
 
-(Nacu and Peres 2005, proposition 14(iii))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the open interval (0, 1 &minus; _&lambda;_ &minus; _&mu;_).
+(Nacu and Peres 2005, proposition 14(iii))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the half-open interval (0, 1 &minus; _&lambda;_ &minus; _&mu;_].
 
 1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result."
 2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return the result.
@@ -982,7 +982,7 @@ Another special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must
 <a id=lambda___minus___mu></a>
 #### _&lambda;_ &minus; _&mu;_
 
-(Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the interval (0, _&lambda;_ &minus; _&mu;_] \(the greater _&#x03F5;_ is, the more efficient\).
+(Nacu and Peres 2005, proposition 14(iii-iv))<sup>[**(16)**](#Note16)</sup>.  This algorithm takes two input coins that simulate _&lambda;_ or _&mu;_, respectively, and a parameter _&#x03F5;_ in the half-open interval (0, _&lambda;_ &minus; _&mu;_] \(the greater _&#x03F5;_ is, the more efficient\).
 
 1. Create a _&nu;_ input coin that does the following: "Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return **1 minus the result**.  Otherwise, flip the _&mu;_ input coin and return the result."
 2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&nu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = _&#x03F5;_, and return 1 minus the result.
@@ -990,7 +990,7 @@ Another special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must
 <a id=x03F5_____lambda></a>
 #### _&#x03F5;_ / _&lambda;_
 
-(Lee et al. 2014)<sup>[**(43)**](#Note43)</sup>.  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ in the interval (0, _&lambda;_).
+(Lee et al. 2014)<sup>[**(43)**](#Note43)</sup>.  This algorithm, in addition to the input coin, takes a parameter _&#x03F5;_ in the half-open interval (0, _&lambda;_].
 
 1. Set _&beta;_ to max(_&#x03F5;_, 1/2) and set _&gamma;_ to 1 &minus; (1 &minus; _&beta;_) / (1 &minus; (_&beta;_ / 2)).
 2. Create a _&mu;_ input coin that flips the input coin and returns 1 minus the result.
@@ -1000,7 +1000,7 @@ Another special case of the two-coin algorithm.  In this algorithm, _c_/_d_ must
 <a id=mu_____lambda></a>
 #### _&mu;_ / _&lambda;_
 
-(Morina 2021)<sup>[**(44)**](#Note44)</sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ in the interval (0, _&lambda;_ &minus; _&mu;_].  In this algorithm, _&mu;_ must be less than _&lambda;_.
+(Morina 2021)<sup>[**(44)**](#Note44)</sup>.  This division algorithm takes two input coins, namely a coin simulating the dividend _&mu;_ and a coin simulating the divisor _&lambda;_, and a parameter _&#x03F5;_ in the half-open interval (0, _&lambda;_ &minus; _&mu;_].  In this algorithm, _&mu;_ must be less than _&lambda;_.
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit (either 0 or 1 with equal probability).
@@ -1060,7 +1060,7 @@ Huber has suggested several algorithms for this function over the years.
 The first algorithm in this document comes from Huber (2014)<sup>[**(4)**](#Note4)</sup>.  It uses three parameters:
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
-- _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the open interval (0, 1 &minus; _&lambda;_ * _x_/_y_), in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
+- _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the half-open interval (0, 1 &minus; _&lambda;_ * _x_/_y_], in order to bound the function away from 0 and 1.  The greater _&#x03F5;_ is, the more efficient.
 
 As a result, some knowledge of _&lambda;_ has to be available to the algorithm. The algorithm as described below also includes certain special cases, not mentioned in Huber, to make it more general.
 
@@ -1099,7 +1099,7 @@ The algorithm follows.
 
 - _x_ and _y_ are integers such that _x_/_y_ > 0 and _y_!=0.
 - _i_ is an integer 0 or greater.
-- _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the open interval (0, 1 &minus; _&lambda;_ * _x_/_y_).
+- _&#x03F5;_ is a rational number in the open interval (0, 1).  If _x_/_y_ is greater than 1, _&#x03F5;_ must be in the half-open interval (0, 1 &minus; _&lambda;_ * _x_/_y_].
 
 The algorithm also has special cases not mentioned in Huber 2019.
 
@@ -1695,7 +1695,7 @@ There is a lower bound on the average number of coin flips needed to turn a coin
 
 - ((_&tau;_ &minus; 1) * ln(1 &minus; _&tau;_) &minus; _&tau;_ * ln(_&tau;_)) / ((_&lambda;_ &minus; 1) * ln(1 &minus; _&lambda;_) &minus; _&lambda;_ * ln(_&lambda;_)).
 
-For example, if _f_(_&lambda;_) is a constant, algorithms whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if _f_ isn't a constant.
+For example, if _f_(_&lambda;_) is a constant, an algorithm whose only randomness comes from the input coin will require more coin flips to simulate that constant, the more strongly that coin leans towards heads or tails.  But this formula works only for such algorithms, even if _f_ isn't a constant.
 
 For certain values of _&lambda;_, Kozen (2014)<sup>[**(33)**](#Note33)</sup> showed a tighter lower bound of this kind, but in general, this bound is not so easy to describe and assumes _&lambda;_ is known.  However, if _&lambda;_ is 1/2 (the input coin is unbiased), this bound is simple: at least 2 flips of the input coin are needed on average to simulate a known constant _&tau;_, except when _&tau;_ is a multiple of 1/(2<sup>_n_</sup>) for any integer _n_.
 
