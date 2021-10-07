@@ -453,7 +453,7 @@ The [**Fisher&ndash;Yates shuffle method**](https://en.wikipedia.org/wiki/Fisher
           i = size(list) - 1
           while i > 0
              // Choose an item ranging from the first item
-             // up to the item given in `i`. Note that the item
+             // up to the item given in `i`. Observe that the item
              // at i+1 is excluded.
              j = RNDINTEXC(i + 1)
              // Swap item at index i with item at index j;
@@ -612,7 +612,7 @@ Example criteria include checking&mdash;
 > **Notes:**
 >
 > 1. The running time for rejection sampling depends on the acceptance rate, that is, how often the sampler accepts a sampled outcome rather than rejecting it.  In general, this rate is the number of acceptable outcomes divided by the total number of outcomes.
-> 2. All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  Note that graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all implement a rejection sampling technique because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own "source of random numbers" (such as numbers generated from its own PRNG), then to take the first sampled number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(22)**](#Note22)</sup>
+> 2. All rejection sampling strategies have a chance to reject data, so they all have a _variable running time_ (in fact, they could run indefinitely).  But graphics processing units (GPUs) and other devices that run multiple tasks at once work better if all the tasks finish their work at the same time.  This is not possible if they all implement a rejection sampling technique because of its variable running time.  If each iteration of the rejection sampler has a low rejection rate, one solution is to have each task run one iteration of the sampler, with its own "source of random numbers" (such as numbers generated from its own PRNG), then to take the first sampled number that hasn't been rejected this way by a task (which can fail at a very low rate).<sup>[**(22)**](#Note22)</sup>
 
 <a id=Random_Walks></a>
 ### Random Walks
@@ -1223,7 +1223,7 @@ The following pseudocode shows how to generate `n` random integers with a given 
 
 - the method `PositiveIntegersWithSum` returns `n` integers greater than 0 that sum to `total`, in random order,
 - the method `IntegersWithSum` returns `n` integers 0 or greater that sum to `total`, in random order, and
-- `Sort(list)` sorts the items in `list` in ascending order (note that sort algorithms are outside the scope of this document).
+- `Sort(list)` sorts the items in `list` in ascending order (however, sort algorithms are outside the scope of this document).
 
 &nbsp;
 
@@ -1638,7 +1638,7 @@ Some applications need to convert a pregenerated number in \[0, 1\] (usually a n
 
 In addition, the following methods approximate the quantile if the application can trade accuracy for speed:
 
-- Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  Note that finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(78)**](#Note78)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
+- Distribution is **discrete, with known PDF-like function** (and the distribution takes on integers): If the interval \[a, b\] covers all or almost all the distribution, then the application can store the PDF-like function's values in that interval in a list and call `WChoose`: `for i in a..b: AddItem(weights, PDF(i)); return a + WChoose(weights, u01 * Sum(weights))`.  However, finding the quantile based on the **CDF** instead of a PDF-like function can introduce more error (Walter 2019)<sup>[**(78)**](#Note78)</sup>.  See also `integers_from_u01` in the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - Distribution is **continuous, with known PDF-like function**: `ICDFFromContPDF(u01, mini, maxi, step)`, below, finds an approximate quantile based on a piecewise linear approximation of the PDF-like function in [`mini`, `maxi`], with pieces up to `step` wide. (Devroye and Gravel 2020)<sup>[**(12)**](#Note12)</sup>. See also `DensityInversionSampler`, `numbers_from_u01`, and `numbers_from_dist_inversion` (Derflinger et al. 2010)<sup>[**(79)**](#Note79)</sup>, (Devroye and Gravel 2020)<sup>[**(12)**](#Note12)</sup> in the Python sample code <sup>[**(80)**](#Note80)</sup>.
 - Distribution is **continuous, with known CDF**: See `numbers_from_u01` in the Python sample code.
 
@@ -1893,7 +1893,7 @@ Miscellaneous:
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
 - **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
 - **Yule&ndash;Simon distribution**: See beta negative binomial distribution.
-- **Zeta distribution**: Generate `n = floor(pow(RNDRANGEMinMaxExc(0, 1), -1.0 / r))`, and if `d / pow(2, r) < RNDRANGEMaxExc((d - 1) * n / (pow(2, r) - 1.0))`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in (Devroye 1986)<sup>[**(20)**](#Note20)</sup>. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some integer greater than 0 is called a _Zipf distribution_ or _Estoup distribution_. (Note that Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
+- **Zeta distribution**: Generate `n = floor(pow(RNDRANGEMinMaxExc(0, 1), -1.0 / r))`, and if `d / pow(2, r) < RNDRANGEMaxExc((d - 1) * n / (pow(2, r) - 1.0))`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in (Devroye 1986)<sup>[**(20)**](#Note20)</sup>. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some integer greater than 0 is called a _Zipf distribution_ or _Estoup distribution_. (Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
 
 </small>
@@ -2151,7 +2151,7 @@ However, this is an ideal assumption which is hard if not impossible to achieve 
 
 Indeed, most applications make use of _pseudorandom number generators_ (PRNGs), which are algorithms that produce _random-behaving_ numbers, that is, numbers that simulate the ideal "source of random numbers" mentioned above. As a result, the performance and quality of the methods on this page will depend in practice on the quality of the PRNG (or other generator of random-behaving numbers) even if they don't in theory.
 
-Note that the "source of random numbers" can be simulated by a wide range of devices and programs, including PRNGs, so-called &quot;true random number generators&quot;, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  An application ought to choose devices or programs that simulate the "source of random numbers" well enough for its purposes, including in terms of their statistical quality,  "unguessability", or both. However, it is outside this document's scope to give further advice on this choice.
+The "source of random numbers" can be simulated by a wide range of devices and programs, including PRNGs, so-called &quot;true random number generators&quot;, and application programming interfaces (APIs) that provide uniform random-behaving numbers to applications.  An application ought to choose devices or programs that simulate the "source of random numbers" well enough for its purposes, including in terms of their statistical quality,  "unguessability", or both. However, it is outside this document's scope to give further advice on this choice.
 
 The randomization methods in this document are deterministic (that is, they produce the same values given the same state and input), regardless of what simulates the "source of random numbers" (such as a PRNG or a "true random number generator").  The exceptions are as follows:
 
