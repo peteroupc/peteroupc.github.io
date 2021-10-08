@@ -154,7 +154,7 @@ The following shows some functions that are factory functions and some that are 
 | 0 | [0, 1] | Yes; constant. |
 | 1 | [0, 1] | Yes; constant. |
 | 1/2 | (0, 1) | Yes; constant. |
-| floor(_&lambda;_/2)*3+1/4 | (0, 1) | No; discontinuous. |
+| 1/4 if _&lambda;_<1/2, and 3/4 elsewhere | (0, 1) | No; discontinuous. |
 | 2*_&lambda;_ | \[0,&nbsp;1\] or \[0,&nbsp;1/2\) | No; not polynomially bounded since its graph touches 1 somewhere in the interval (0,&nbsp;1) on its domain.<sup>[**(3)**](#Note3)</sup>. |
 | 1&minus;2*_&lambda;_ | [0,&nbsp;1] or [0,&nbsp;1/2) | No; not polynomially bounded since its graph touches 0 somewhere in the interval (0, 1) on its domain. |
 | 2*_&lambda;_ | [0,&nbsp;1/2&minus;&#x03F5;\] | Yes; continuous and polynomially bounded on domain (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup>. |
@@ -1509,14 +1509,14 @@ In this algorithm, _k_ must be an integer 0 or greater.
 
 1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
 2. Create a _&mu;_ input coin that runs the sub-algorithm given below.
-3. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&mu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = 6/10 (6/10 because it's greater than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.
+3. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&mu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = 6/10 (6/10 because it's less than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.
 
 The sub-algorithm referred to is the following (which simulates the probability (1/(1+exp(_k_+1)) + exp(_k_)/(1+exp(_k_+1)))/2):
 
-1. Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(_k_+1)) as follows.  Do the following process repeatedly, until this algorithm returns a value:
+1. Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1, return 0.
     2. Run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = (_k_+1)/1.  If it returns 1, return 1.
-2. The bit is 0, so simulate the probability exp(_k_)/(1+exp(_k_+1)) as follows.  Do the following process repeatedly, until this algorithm returns a value:
+2. The bit is 0, so simulate the probability exp(_k_)/(1+exp(_k_+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1, run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = 1/1 and return the result.
     2. Run the algorithm for **exp(&minus;_x_/_y_)** with _x_/_y_ = (_k_+1)/1.  If it returns 1, return 0.
 

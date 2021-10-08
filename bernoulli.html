@@ -211,7 +211,7 @@
 <td>Yes; constant.</td>
 </tr>
 <tr>
-<td>floor(<em>&lambda;</em>/2)*3+1/4</td>
+<td>1/4 if <em>&lambda;</em>&lt;1/2, and 3/4 elsewhere</td>
 <td>(0, 1)</td>
 <td>No; discontinuous.</td>
 </tr>
@@ -2167,19 +2167,19 @@ kind of irrational number.</p>
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
 <li>Create a <em>&mu;</em> input coin that runs the sub-algorithm given below.</li>
-<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> using the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, and <em>&#x03F5;</em> = 6/10 (6/10 because it&#39;s greater than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> using the <em>&mu;</em> input coin, <em>x</em>/<em>y</em> = 2/1, and <em>&#x03F5;</em> = 6/10 (6/10 because it&#39;s less than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.</li>
 </ol>
 
 <p>The sub-algorithm referred to is the following (which simulates the probability (1/(1+exp(<em>k</em>+1)) + exp(<em>k</em>)/(1+exp(<em>k</em>+1)))/2):</p>
 
 <ol>
-<li>Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(<em>k</em>+1)) as follows.  Do the following process repeatedly, until this algorithm returns a value:
+<li>Generate an unbiased random bit.  If that bit is 1, simulate the probability 1/(1+exp(<em>k</em>+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1, return 0.</li>
 <li>Run the algorithm for <strong>exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em>/<em>y</em> = (<em>k</em>+1)/1.  If it returns 1, return 1.</li>
 </ol></li>
-<li>The bit is 0, so simulate the probability exp(<em>k</em>)/(1+exp(<em>k</em>+1)) as follows.  Do the following process repeatedly, until this algorithm returns a value:
+<li>The bit is 0, so simulate the probability exp(<em>k</em>)/(1+exp(<em>k</em>+1)) as follows:  Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1, run the algorithm for <strong>exp(&minus;<em>x</em>/<em>y</em>)</strong> with <em>x</em>/<em>y</em> = 1/1 and return the result.</li>
