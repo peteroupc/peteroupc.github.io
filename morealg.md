@@ -35,6 +35,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**(_&pi;_ &minus; 3)/4**](#pi___minus_3_4)
     - [**_&pi;_ &minus; 3**](#pi___minus_3)
     - [**4/(3\*_&pi;_)**](#4_3___pi)
+        - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
     - [**Other Probabilities and Factory Functions**](#Other_Probabilities_and_Factory_Functions)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
@@ -185,7 +186,7 @@ Additional functions:
 | exp(_&lambda;_/2)/2. | 1/(_n_!). | 0. |
 | (exp(_&lambda;_)&minus;1)/2. | 2<sup>_n_&minus;1</sup>/(_n_!). | 1. |
 
-> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_]\*_i_\*_x_<sup>_i_&minus;1</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.
+> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_]\*_i_\*_x_<sup>_i_&minus;1</sup>.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2
@@ -335,6 +336,42 @@ Given that the point (_x_, _y_) has positive coordinates and lies inside a disk 
 2. Let _x_ be one of those PSRNs.  Run **SampleGeometricBag** on that PSRN and return the result (which will be either 0 or 1).
 
 > **Note:** The mean value 4/(3\*_&pi;_) can be derived as follows.  The relative probability that _x_ is "close" to _z_ is _p_(_z_) = sqrt(1 &minus; _z_\*_z_), where _z_ is in the interval [0, 1].  Now find the area under the graph of _z_\*_p_(_z_)/_c_ (where _c_=_&pi;_/4 is the area under the graph of _p_(_z_)).  The result is the mean value 4/(3\*_&pi;_).  The following Python code prints this mean value using the SymPy computer algebra library: `p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));`.
+
+<a id=1_exp__k__1_exp__k__1></a>
+#### (1 + exp(_k_)) / (1 + exp(_k_ + 1))
+
+This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup>[**(50)**](#Note50)</sup>.  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)<sup>[**(51)**](#Note51)</sup> in this algorithm.  In this algorithm, _k_ must be an integer 0 or greater.
+
+1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
+2. Generate a uniform(0, 1) random variate, call it _ret_.
+3. If _k_ is 3 or greater, return 0 if _ret_ is greater than 38/100, or 1 if _ret_ is less than 36/100.  (This is an early return step.  If _ret_ is implemented as a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+4. Set _d_ to 2.
+5. Calculate a lower and upper bound of exp(1) (_LB_ and _UB_, respectively) in the form of rational numbers whose numerator has at most _d_ digits, using the Citterio and Pavani algorithm.  For details, see the appendix.
+6. Set _rl_ to (1+_LB_<sup>_k_</sup>) / (1+_UB_<sup>_k_ + 1</sup>), and set _ru_ to (1+_UB_<sup>_k_</sup>) / (1+_LB_<sup>_k_ + 1</sup>); both these numbers should be calculated using rational arithmetic.
+7. If _ret_ is greater than _ru_, return 0.  If _ret_ is less than _rl_, return 1.  (If _ret_ is implemented as a uniform PSRN, these comparisons should be done via **URandLessThanReal**.)
+8. Add 1 to _d_ and go to step 5.
+
+The following implements the parts of Citterio and Pavani's algorithm needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.
+
+Define the following operations:
+
+- **Setup:** Set _p_ to the list `[0, 1]`, set _q_ to the list `[1, 0]`, set _a_ to the list `[0, 0, 2]` (two zeros, followed by the integer part for exp(1)), set _v_ to 0, and set _av_ to 0.
+- **Ensure _n_:** While _v_ is less than or equal to _n_:
+    1. (Ensure partial denominator _v_, starting from 0, is available.) If _v_ + 2 is greater than or equal to the size of _a_, append 1, _av_, and 1, in that order, to the list _a_, then add 2 to _av_.
+    2. (Calculate convergent _v_, starting from 0.) Append _a_\[_n_+2\] \* _p_\[_n_+1\]+_p_\[_n_\] to the list _p_, and append _a_\[_n_+2\] \* _q_\[_n_+1\]+_q_\[_n_\] to the list _q_. (Positions in lists start at 0.  For example, _p_\[0\] means the first item in _p_; _p_\[1\] means the second; and so on.)
+    3. Add 1 to _v_.
+- **Get the numerator for convergent _n_:** Ensure _n_, then return _p_\[_n_+2\].
+- **Get convergent _n_:** Ensure _n_, then return _p_\[_n_+2\]/_q_\[_n_+2\].
+- **Get semiconvergent _n_ given _d_:**
+    1. Ensure _n_, then set _m_ to floor(((10<sup>_d_</sup>)&minus;1&minus;_p_\[_n_+1\])/_p_[_n_+2]).
+    2. Return (_p_\[_n_+2\] \* _m_ +_p_[_n_+1]) / (_q_\[_n_+2\] \* _m_ +_q_[_n_+1]).
+
+Then the algorithm to calculate lower and upper bounds for exp(1), given _d_, is as follows:
+
+1. Set _i_ to 0, then run the **setup**.
+2. **Get the numerator for convergent _i_**, call it _c_. If _c_ is less than 10<sup>_d_</sup>, add 1 to _i_ and repeat this step.  Otherwise, go to the next step.
+3. **Get convergent _i_ &minus; 1** and **get semiconvergent _i_ &minus; 1 given _d_**, call them _conv_ and _semi_, respectively.
+4. If (_i_ &minus; 1) is odd, return _semi_ as the lower bound and _conv_ as the upper bound.  Otherwise, return _conv_ as the lower bound and _semi_ as the upper bound.
 
 <a id=Other_Probabilities_and_Factory_Functions></a>
 ### Other Probabilities and Factory Functions
@@ -973,6 +1010,8 @@ Adapted from Devroye and Györfi (1985, p. 236)<sup>[**(25)**](#Note25)</sup>.
 - <small><sup id=Note47>(47)</sup> Cobham, A., "On the Hartmanis-Stearns problem for a class of tag machines", in _IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory_ 1968.</small>
 - <small><sup id=Note48>(48)</sup> Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).</small>
 - <small><sup id=Note49>(49)</sup> Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</small>
+- <small><sup id=Note50>(50)</sup> Citterio, M., Pavani, R., "A Fast Computation of the Best k-Digit Rational Approximation to a Real Number", Mediterranean Journal of Mathematics 13 (2016).</small>
+- <small><sup id=Note51>(51)</sup> Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., "[Simulating events of unknown probabilities via reverse time martingales](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.</small>
 
 <a id=Appendix></a>
 ## Appendix

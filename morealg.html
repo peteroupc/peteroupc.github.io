@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/10/07"><meta name="citation_online_date" content="2021/10/07"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/10/08"><meta name="citation_online_date" content="2021/10/08"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
@@ -44,7 +44,11 @@
 <li><a href="#pi___4_minus_1_2_or___pi___minus_2_4"><strong><em>&pi;</em>/4 &minus; 1/2 or (<em>&pi;</em> &minus; 2)/4</strong></a></li>
 <li><a href="#pi___minus_3_4"><strong>(<em>&pi;</em> &minus; 3)/4</strong></a></li>
 <li><a href="#pi___minus_3"><strong><em>&pi;</em> &minus; 3</strong></a></li>
-<li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a></li>
+<li><a href="#4_3___pi"><strong>4/(3*<em>&pi;</em>)</strong></a>
+
+<ul>
+<li><a href="#1_exp__k__1_exp__k__1"><strong>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</strong></a></li>
+</ul></li>
 <li><a href="#Other_Probabilities_and_Factory_Functions"><strong>Other Probabilities and Factory Functions</strong></a></li>
 <li><a href="#Certain_Piecewise_Linear_Functions"><strong>Certain Piecewise Linear Functions</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
@@ -270,7 +274,7 @@
 </tbody></table>
 
 <blockquote>
-<p><strong>Note:</strong> All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as <em>f</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + ... + <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> + ..., where the <em>coefficients</em> <em>a</em>[<em>i</em>] are 0 or greater.<br>This kind of function has three properties: (1) it&#39;s non-negative for every <em>x</em>; (2) it&#39;s either constant or monotone increasing; (3) it&#39;s <em>convex</em> (its &quot;slope&quot; doesn&#39;t decrease as <em>x</em> increases).<br>To show the function is convex, find the &quot;slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>x</em> in the domain.  To do so, omit the first term and for each remaining term, replace <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> with <em>a</em>[<em>i</em>]*<em>i</em>*<em>x</em><sup><em>i</em>&minus;1</sup>.  The resulting series is still an infinite series with coefficients 0 or greater, so the proof follows by induction.</p>
+<p><strong>Note:</strong> All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as <em>f</em>(<em>x</em>) = <em>a</em>[0]*<em>x</em><sup>0</sup> + ... + <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> + ..., where the <em>coefficients</em> <em>a</em>[<em>i</em>] are 0 or greater.<br>This kind of function has three properties: (1) it&#39;s non-negative for every <em>x</em>; (2) it&#39;s either constant or monotone increasing; (3) it&#39;s <em>convex</em> (its &quot;slope&quot; doesn&#39;t decrease as <em>x</em> increases).<br>To show the function is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>x</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term, replace <em>a</em>[<em>i</em>]*<em>x</em><sup><em>i</em></sup> with <em>a</em>[<em>i</em>]*<em>i</em>*<em>x</em><sup><em>i</em>&minus;1</sup>.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
 </blockquote>
 
 <p><a id=sinh___lambda___2></a></p>
@@ -493,6 +497,55 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <blockquote>
 <p><strong>Note:</strong> The mean value 4/(3*<em>&pi;</em>) can be derived as follows.  The relative probability that <em>x</em> is &quot;close&quot; to <em>z</em> is <em>p</em>(<em>z</em>) = sqrt(1 &minus; <em>z</em>*<em>z</em>), where <em>z</em> is in the interval [0, 1].  Now find the area under the graph of <em>z</em>*<em>p</em>(<em>z</em>)/<em>c</em> (where <em>c</em>=<em>&pi;</em>/4 is the area under the graph of <em>p</em>(<em>z</em>)).  The result is the mean value 4/(3*<em>&pi;</em>).  The following Python code prints this mean value using the SymPy computer algebra library: <code>p=sqrt(1-z*z); c=integrate(p,(z,0,1)); print(integrate(z*p/c,(z,0,1)));</code>.</p>
 </blockquote>
+
+<p><a id=1_exp__k__1_exp__k__1></a></p>
+
+<h4>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</h4>
+
+<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated by an algorithm by Citterio and Pavani (2016)<sup><a href="#Note50"><strong>(50)</strong></a></sup>.  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)<sup><a href="#Note51"><strong>(51)</strong></a></sup> in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
+
+<ol>
+<li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
+<li>Generate a uniform(0, 1) random variate, call it <em>ret</em>.</li>
+<li>If <em>k</em> is 3 or greater, return 0 if <em>ret</em> is greater than 38/100, or 1 if <em>ret</em> is less than 36/100.  (This is an early return step.  If <em>ret</em> is implemented as a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
+<li>Set <em>d</em> to 2.</li>
+<li>Calculate a lower and upper bound of exp(1) (<em>LB</em> and <em>UB</em>, respectively) in the form of rational numbers whose numerator has at most <em>d</em> digits, using the Citterio and Pavani algorithm.  For details, see the appendix.</li>
+<li>Set <em>rl</em> to (1+<em>LB</em><sup><em>k</em></sup>) / (1+<em>UB</em><sup><em>k</em> + 1</sup>), and set <em>ru</em> to (1+<em>UB</em><sup><em>k</em></sup>) / (1+<em>LB</em><sup><em>k</em> + 1</sup>); both these numbers should be calculated using rational arithmetic.</li>
+<li>If <em>ret</em> is greater than <em>ru</em>, return 0.  If <em>ret</em> is less than <em>rl</em>, return 1.  (If <em>ret</em> is implemented as a uniform PSRN, these comparisons should be done via <strong>URandLessThanReal</strong>.)</li>
+<li>Add 1 to <em>d</em> and go to step 5.</li>
+</ol>
+
+<p>The following implements the parts of Citterio and Pavani&#39;s algorithm needed to calculate lower and upper bounds for exp(1) in the form of rational numbers.</p>
+
+<p>Define the following operations:</p>
+
+<ul>
+<li><strong>Setup:</strong> Set <em>p</em> to the list <code>[0, 1]</code>, set <em>q</em> to the list <code>[1, 0]</code>, set <em>a</em> to the list <code>[0, 0, 2]</code> (two zeros, followed by the integer part for exp(1)), set <em>v</em> to 0, and set <em>av</em> to 0.</li>
+<li><strong>Ensure <em>n</em>:</strong> While <em>v</em> is less than or equal to <em>n</em>:
+
+<ol>
+<li>(Ensure partial denominator <em>v</em>, starting from 0, is available.) If <em>v</em> + 2 is greater than or equal to the size of <em>a</em>, append 1, <em>av</em>, and 1, in that order, to the list <em>a</em>, then add 2 to <em>av</em>.</li>
+<li>(Calculate convergent <em>v</em>, starting from 0.) Append <em>a</em>[<em>n</em>+2] * <em>p</em>[<em>n</em>+1]+<em>p</em>[<em>n</em>] to the list <em>p</em>, and append <em>a</em>[<em>n</em>+2] * <em>q</em>[<em>n</em>+1]+<em>q</em>[<em>n</em>] to the list <em>q</em>. (Positions in lists start at 0.  For example, <em>p</em>[0] means the first item in <em>p</em>; <em>p</em>[1] means the second; and so on.)</li>
+<li>Add 1 to <em>v</em>.</li>
+</ol></li>
+<li><strong>Get the numerator for convergent <em>n</em>:</strong> Ensure <em>n</em>, then return <em>p</em>[<em>n</em>+2].</li>
+<li><strong>Get convergent <em>n</em>:</strong> Ensure <em>n</em>, then return <em>p</em>[<em>n</em>+2]/<em>q</em>[<em>n</em>+2].</li>
+<li><strong>Get semiconvergent <em>n</em> given <em>d</em>:</strong>
+
+<ol>
+<li>Ensure <em>n</em>, then set <em>m</em> to floor(((10<sup><em>d</em></sup>)&minus;1&minus;<em>p</em>[<em>n</em>+1])/<em>p</em>[<em>n</em>+2]).</li>
+<li>Return (<em>p</em>[<em>n</em>+2] * <em>m</em> +<em>p</em>[<em>n</em>+1]) / (<em>q</em>[<em>n</em>+2] * <em>m</em> +<em>q</em>[<em>n</em>+1]).</li>
+</ol></li>
+</ul>
+
+<p>Then the algorithm to calculate lower and upper bounds for exp(1), given <em>d</em>, is as follows:</p>
+
+<ol>
+<li>Set <em>i</em> to 0, then run the <strong>setup</strong>.</li>
+<li><strong>Get the numerator for convergent <em>i</em></strong>, call it <em>c</em>. If <em>c</em> is less than 10<sup><em>d</em></sup>, add 1 to <em>i</em> and repeat this step.  Otherwise, go to the next step.</li>
+<li><strong>Get convergent <em>i</em> &minus; 1</strong> and <strong>get semiconvergent <em>i</em> &minus; 1 given <em>d</em></strong>, call them <em>conv</em> and <em>semi</em>, respectively.</li>
+<li>If (<em>i</em> &minus; 1) is odd, return <em>semi</em> as the lower bound and <em>conv</em> as the upper bound.  Otherwise, return <em>conv</em> as the lower bound and <em>semi</em> as the upper bound.</li>
+</ol>
 
 <p><a id=Other_Probabilities_and_Factory_Functions></a></p>
 
@@ -1394,6 +1447,8 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <li><small><sup id=Note47>(47)</sup> Cobham, A., &quot;On the Hartmanis-Stearns problem for a class of tag machines&quot;, in <em>IEEE Conference Record of 1968 Ninth Annual Symposium on Switching and Automata Theory</em> 1968.</small></li>
 <li><small><sup id=Note48>(48)</sup> Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</small></li>
 <li><small><sup id=Note49>(49)</sup> Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</small></li>
+<li><small><sup id=Note50>(50)</sup> Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, Mediterranean Journal of Mathematics 13 (2016).</small></li>
+<li><small><sup id=Note51>(51)</sup> Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2">Simulating events of unknown probabilities via reverse time martingales</a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>
