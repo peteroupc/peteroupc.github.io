@@ -944,20 +944,20 @@ Adapted from Devroye and Györfi (1985, p. 236)<sup>[**(27)**](#Note27)</sup>.
 
 The following example generates a point inside a quarter [**_rectellipse_**](https://mathworld.wolfram.com/Rectellipse.html) centered at (0, 0) with&mdash;
 
-- radius _k_, which is an integer greater than 0, and
+- horizontal "radius" _d1_, which is an integer greater than 0,
+- vertical "radius" _d2_, which is an integer greater than 0, and
 - squareness parameter _&sigma;_, which is a rational number in [0, 1].
 
-Use the algorithm in "Uniform Distribution Inside N-Dimensional Shapes", except:
+Use the algorithm in "[**Uniform Distribution Inside N-Dimensional Shapes**](#Uniform_Distribution_Inside_N_Dimensional_Shapes)", except:
 
-- Let _d1_ and _d2_ be _k_, and let _N_ be 2.
 - Let **InShape** return&mdash;
-    - _YES_ if (_&sigma;_\*_x1_\*_y1_/_k_<sup>2\*_N_</sup>) &minus; (_x2_+_y2_)/_k_<sup>2</sup> + 1 > 0,
-    - _NO_ if (_&sigma;_\*_x2_\*_y2_/_k_<sup>2\*_N_</sup>) &minus; (_x1_+_y1_)/_k_<sup>2</sup> + 1 < 0, and
+    - _YES_ if (_&sigma;_\*_x1_\*_y1_)<sup>2</sup>/(_d1_\*_d2_)<sup>2</sup> &minus; (_x2_/_d1_)<sup>2</sup> &minus; (_y2_/_d2_)<sup>2</sup> + 1 > 0,
+    - _NO_ if (_&sigma;_\*_x2_\*_y2_)<sup>2</sup>/(_d1_\*_d2_)<sup>2</sup> &minus; (_x1_/_d1_)<sup>2</sup> &minus; (_y1_/_d2_)<sup>2</sup> + 1 < 0, and
     - _MAYBE_ otherwise,
 
-    where _x1_ = _C1_/_S_, _x2_ = (_C1_+1)/_S_, _y1_ = _C2_/_S_, and _y2_ = (_C2_+1)/_S_ (these four values define the edges, along the X and Y dimensions, of the box passed to **InShape**).
+    where _x1_ = _C1_/_S_, _x2_ = (_C1_+1)/_S_, _y1_ = _C2_/_S_, and _y2_ = (_C2_+1)/_S_ (these four values define the bounds, along the X and Y dimensions, of the box passed to **InShape**).
 
-For a full rectellipse, step 5.3 in the algorithm is done for each of the _N_ dimensions.
+For a full rectellipse, step 5.3 in the algorithm is done for each of the two dimensions.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

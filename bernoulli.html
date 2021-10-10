@@ -1428,13 +1428,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Create a <em>&mu;</em> coin that runs the algorithm for <strong>exp(&minus;<em>&lambda;</em>)</strong>.</li>
-<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&mu;</em> coin, and return the result of that run.</li>
+<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with <em>&lambda;</em> being the <em>&mu;</em> coin, and return the result of that run.</li>
 </ol></li>
 <li>If <em>m</em> &gt; 0:
 
 <ol>
 <li>Create a <em>&mu;</em> coin that runs the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong> with <em>k</em>=1 and <em>m</em>=<em>m</em>.</li>
-<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&mu;</em> coin, and return the result of that run.</li>
+<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with  <em>&lambda;</em> being the <em>&mu;</em> coin, and return the result of that run.</li>
 </ol></li>
 <li>If <em>m</em> &lt; 0:
 
@@ -1452,7 +1452,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>In this algorithm:</p>
 
 <ul>
-<li><em>m</em> + <em>&nu;</em> is an &quot;exponential shift&quot; (Peres et al. 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>), where <em>m</em> is an integer and <em>&nu;</em> is a coin that shows heads with probability equal to the shift minus <em>m</em>.</li>
+<li><em>m</em> + <em>&nu;</em> is an &quot;exponential shift&quot; (Peres et al. 2021)<sup><a href="#Note44"><strong>(44)</strong></a></sup>, where <em>m</em> is an integer and <em>&nu;</em> is a coin that shows heads with probability equal to the shift minus <em>m</em>.</li>
 <li><em>&lambda;</em> is a coin that shows heads with probability equal to the probability to be shifted.</li>
 </ul>
 
@@ -1463,7 +1463,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Flip the <em>&lambda;</em> input coin.  Let <em>flip</em> be the result of that flip.</li>
-<li>Run the algorithm for <strong>expit(<em>m</em> + <em>&lambda;</em>)</strong> with <em>m</em>=<em>m</em>, and <em>&lambda;</em> being the <em>&nu;</em> input coin. If the run returns 1 and if <em>flip</em> is 1, return 1.  If the run returns 0 and if <em>flip</em> is 0, return 0.</li>
+<li>Run the algorithm for <strong>expit(<em>m</em> + <em>&lambda;</em>)</strong> with <em>m</em>=<em>m</em>, and with  <em>&lambda;</em> being the <em>&nu;</em> input coin. If the run returns 1 and if <em>flip</em> is 1, return 1.  If the run returns 0 and if <em>flip</em> is 0, return 0.</li>
 </ol></li>
 </ul>
 

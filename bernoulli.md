@@ -991,10 +991,10 @@ In this algorithm, _m_ is an integer and can be positive or not.
 
 - If _m_ = 0:
     1. Create a _&mu;_ coin that runs the algorithm for **exp(&minus;_&lambda;_)**.
-    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin, and return the result of that run.
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with _&lambda;_ being the _&mu;_ coin, and return the result of that run.
 - If _m_ > 0:
     1. Create a _&mu;_ coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1 and _m_=_m_.
-    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin, and return the result of that run.
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _&mu;_ coin, and return the result of that run.
 - If _m_ < 0:
     1. Create a _&nu;_ input coin that flips the (_&lambda;_) input coin and returns 1 minus the result.
     2. Create a _&mu;_ input coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1, _m_=abs(_m_)&minus;1, and _&lambda;_ being the _&nu;_ input coin.
@@ -1005,14 +1005,14 @@ In this algorithm, _m_ is an integer and can be positive or not.
 
 In this algorithm:
 
-- _m_ + _&nu;_ is an "exponential shift" (Peres et al. 2021)<sup>[**(44)**](#Note44)</sup>), where _m_ is an integer and _&nu;_ is a coin that shows heads with probability equal to the shift minus _m_.
+- _m_ + _&nu;_ is an "exponential shift" (Peres et al. 2021)<sup>[**(44)**](#Note44)</sup>, where _m_ is an integer and _&nu;_ is a coin that shows heads with probability equal to the shift minus _m_.
 - _&lambda;_ is a coin that shows heads with probability equal to the probability to be shifted.
 
 The algorithm follows:
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Flip the _&lambda;_ input coin.  Let _flip_ be the result of that flip.
-    2. Run the algorithm for **expit(_m_ + _&lambda;_)** with _m_=_m_, and _&lambda;_ being the _&nu;_ input coin. If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
+    2. Run the algorithm for **expit(_m_ + _&lambda;_)** with _m_=_m_, and with  _&lambda;_ being the _&nu;_ input coin. If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
 
 > **Note:** This is also a special case of the two-coin algorithm, where _&beta;_=1, _c_=exp(_m_ + _&nu;_), _d_=1, _&lambda;_ = _&lambda;_, and _&mu;_ = 1 &minus; _&lambda;_.
 
