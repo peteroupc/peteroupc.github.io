@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/09"><meta name="citation_online_date" content="2021/10/09"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/10"><meta name="citation_online_date" content="2021/10/10"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -93,6 +93,7 @@
 <li><a href="#d__k___c____lambda____k__or__d___c____lambda____k"><strong><em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup>, or (<em>d</em> / (<em>c</em> + <em>&lambda;</em>))<sup><em>k</em></sup></strong></a></li>
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_2_minus___lambda"><strong>1/(2 &minus; <em>&lambda;</em>)</strong></a></li>
+<li><a href="#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda"><strong><em>&lambda;</em>*exp(<em>m</em>+<em>&nu;</em>) / (<em>&lambda;</em>*exp(<em>m</em>+<em>&nu;</em>) + (1 &minus; <em>&lambda;</em>))</strong></a></li>
 <li><a href="#1_1__x___y____lambda"><strong>1 / (1 + (<em>x</em>/<em>y</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
 <li><a href="#lambda___minus___mu"><strong><em>&lambda;</em> &minus; <em>&mu;</em></strong></a></li>
@@ -883,8 +884,6 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>Certain Algebraic Numbers</h4>
 
-<p>An <em>algebraic number</em> is a real number that can be a solution of a polynomial with rational coefficients.  In that case, the number is a <em>root</em> of that polynomial.</p>
-
 <p>A method to sample a probability equal to a polynomial&#39;s root appears in a French-language article by Penaud and Roques (2002)<sup><a href="#Note31"><strong>(31)</strong></a></sup>.  The following is an implementation of that method, using the discussion in the paper&#39;s section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:</p>
 
 <ul>
@@ -892,7 +891,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>It equals 0 (has a <em>root</em>) at exactly one point on [0, 1].</li>
 </ul>
 
-<p>And the algorithm returns 1 with probability equal to the root, and 0 otherwise.</p>
+<p>And the algorithm returns 1 with probability equal to the root, and 0 otherwise.  The root <em>R</em> is known as an <em>algebraic number</em> because it satisfies the polynomial equation <em>P</em>(<em>R</em>) = 0.  The algorithm follows.</p>
 
 <ol>
 <li>Set <em>r</em> to 0 and <em>d</em> to 2.</li>
@@ -918,18 +917,18 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol>
 
 <blockquote>
-<p><strong>Example</strong> (Penaud and Roques 2002)<sup><a href="#Note31"><strong>(31)</strong></a></sup>:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a decreasing polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em>.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
+<p><strong>Example</strong> (Penaud and Roques 2002)<sup><a href="#Note31"><strong>(31)</strong></a></sup>:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em>, and <em>P</em>(0) &gt; 0.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
 </blockquote>
 
 <p><a id=Certain_Converging_Series></a></p>
 
 <h4>Certain Converging Series</h4>
 
-<p>A general-purpose algorithm was given by Mendo (2020)<sup><a href="#Note32"><strong>(32)</strong></a></sup> that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a converging series&mdash;</p>
+<p>A general-purpose algorithm was given by Mendo (2020)<sup><a href="#Note32"><strong>(32)</strong></a></sup> that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;</p>
 
 <ul>
-<li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all rational numbers greater than 0, and</li>
-<li>for which a sequence <em>err</em>[0], <em>err</em>[1], ..., is available that is nonincreasing and converges to 0, where <em>err</em>[<em>n</em>] is an upper bound on the error from truncating the series <em>a</em> after summing the first <em>n</em>+1 terms.</li>
+<li>that has the form <em>a</em>[0] + <em>a</em>[1] + ..., where <em>a</em>[<em>n</em>] are all rational numbers greater than 0 and sum to <em>p</em> (in other words, the series <em>converges</em> to <em>p</em>)</li>
+<li>for which a sequence <em>err</em>[0], <em>err</em>[1], ... is available that is nonincreasing and has a limit of 0 (<em>converges</em> to 0), where <em>err</em>[<em>n</em>] is an upper bound on the error from truncating the series <em>a</em> after summing the first <em>n</em>+1 terms.</li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -962,7 +961,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 </ol>
 
-<p>The case when <em>a</em> converges to a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
+<p>The case when the sequence <em>a</em> converges to a <em>natural logarithm</em> rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the <em>a</em>[<em>i</em>] must be 0 or greater and form a nondecreasing sequence, and all the <em>err</em>[<em>i</em>] must be 0 or greater.</p>
 
 <ol>
 <li>Generate an exponential random variate <em>E</em> (with rate 1).</li>
@@ -980,8 +979,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Examples</strong>:</p>
 
 <ul>
-<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  This function can be rewritten as a converging series required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  That algorithm can simulate this constant if step 6 is modified to read: &quot;Let <em>m</em> be ((<em>n</em>+1)*2), and let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the series).  Add <em>&alpha;</em> to <em>lamunq</em> and set <em>&#x03F5;</em> to 2/((<em>m</em>+1)!) (the error term).&quot;.<sup><a href="#Note33"><strong>(33)</strong></a></sup></li>
-<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
+<li>Let <em>f</em>(<em>&lambda;</em>) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely <em>f</em>&#39;s <em>Taylor series</em> at 0.  That algorithm can simulate this constant if step 6 is modified to read: &quot;Let <em>m</em> be ((<em>n</em>+1)*2), and let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the series).  Add <em>&alpha;</em> to <em>lamunq</em> and set <em>&#x03F5;</em> to 2/((<em>m</em>+1)!) (the error term).&quot;.<sup><a href="#Note33"><strong>(33)</strong></a></sup></li>
+<li>Logarithms can form the basis of efficient algorithms to simulate the probability <em>z</em> = choose(<em>n</em>, <em>k</em>)/2<sup><em>n</em></sup> when <em>n</em> can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(<em>n</em>, <em>k</em>), the binomial coefficient, will generally require a growing amount of storage that depends on <em>n</em> and <em>k</em>. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup><a href="#Note34"><strong>(34)</strong></a></sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that sums to that coefficient&#39;s logarithm, such as ln(choose(<em>n</em>, <em>k</em>)), which is economical in space even for large <em>n</em> and <em>k</em>.  Then the algorithm above can be used with that series to simulate the probability <em>z</em>.  A similar approach has been implemented (see <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694"><strong>interval.py</strong></a> and <a href="https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700"><strong>betadist.py</strong></a>).  See also an appendix in (Bringmann et al. 2014)<sup><a href="#Note35"><strong>(35)</strong></a></sup>.</li>
 </ul>
 </blockquote>
 
@@ -1415,6 +1414,26 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <blockquote>
 <p><strong>Note:</strong> Can be derived from the previous algorithm by observing that 1/(2 &minus; <em>&lambda;</em>) = 1/(1 + (1 &minus; <em>&lambda;</em>)).</p>
+</blockquote>
+
+<p><a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda></a></p>
+
+<h4><em>&lambda;</em>*exp(<em>m</em>+<em>&nu;</em>) / (<em>&lambda;</em>*exp(<em>m</em>+<em>&nu;</em>) + (1 &minus; <em>&lambda;</em>))</h4>
+
+<p>Uses two input coins, namely <em>&lambda;</em> (the original coin) and <em>&nu;</em> (which shows heads with probability equal to the fractional part of the &quot;exponential shift&quot; parameter <em>m</em>+<em>&nu;</em> (Peres et al. 2021)<sup><a href="#Note60"><strong>(60)</strong></a></sup>).</p>
+
+<ol>
+<li>Create a <em>&rho;</em> input coin that runs the algorithm <strong>exp(&minus;(<em>&lambda;</em> + <em>m</em>)<sup><em>k</em></sup>)</strong> with <em>k</em>=1, <em>m</em>=<em>m</em>, and <em>&lambda;</em> being the <em>&nu;</em> input coin.</li>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Flip the input coin.  Let <em>flip</em> be the result of that flip.</li>
+<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&rho;</em> input coin. (This simulates exp(<em>m</em>+<em>&nu;</em>)/(exp(<em>m</em>+<em>&nu;</em>)+1).) If the run returns 1 and if <em>flip</em> is 1, return 1.  If the run returns 0 and if <em>flip</em> is 0, return 0.</li>
+</ol></li>
+</ol>
+
+<blockquote>
+<p><strong>Note:</strong> In this special case of the two-coin algorithm, <em>&beta;</em>=1, <em>c</em>=exp(<em>m</em> + <em>&nu;</em>), <em>d</em>=1, <em>&lambda;</em> = <em>&lambda;</em>, and <em>&mu;</em> = 1 &minus; <em>&lambda;</em>.</p>
 </blockquote>
 
 <p><a id=1_1__x___y____lambda></a></p>
@@ -2422,6 +2441,7 @@ kind of irrational number.</p>
 <li><small><sup id=Note57>(57)</sup> Flajolet, P., Sedgewick, R., <em>Analytic Combinatorics</em>, Cambridge University Press, 2009.</small></li>
 <li><small><sup id=Note58>(58)</sup> Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</small></li>
 <li><small><sup id=Note59>(59)</sup> Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</small></li>
+<li><small><sup id=Note60>(60)</sup> Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.</small></li>
 </ul>
 
 <p><a id=Appendix></a></p>

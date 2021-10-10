@@ -70,6 +70,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
+        - [**_&lambda;_\*exp(_m_+_&nu;_) / (_&lambda;_\*exp(_m_+_&nu;_) + (1 &minus; _&lambda;_))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
         - [**_&lambda;_ &minus; _&mu;_**](#lambda___minus___mu)
@@ -611,14 +612,12 @@ For a correctness proof, see the appendix.
 <a id=Certain_Algebraic_Numbers></a>
 #### Certain Algebraic Numbers
 
-An _algebraic number_ is a real number that can be a solution of a polynomial with rational coefficients.  In that case, the number is a _root_ of that polynomial.
-
 A method to sample a probability equal to a polynomial's root appears in a French-language article by Penaud and Roques (2002)<sup>[**(31)**](#Note31)</sup>.  The following is an implementation of that method, using the discussion in the paper's section 1 and Algorithm 2, and incorporates a correction to Algorithm 2.  The algorithm takes a polynomial as follows:
 
 - It has the form _P_(_x_) = _a_\[0\]\*_x_<sup>0</sup> + _a_\[1\]\*_x_<sup>1</sup> + ... + _a_\[_n_\]\*_x_<sup>_n_</sup>, where _a_\[_i_\], the _coefficients_, are all rational numbers.
 - It equals 0 (has a _root_) at exactly one point on [0, 1].
 
-And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
+And the algorithm returns 1 with probability equal to the root, and 0 otherwise.  The root _R_ is known as an _algebraic number_ because it satisfies the polynomial equation _P_(_R_) = 0.  The algorithm follows.
 
 1. Set _r_ to 0 and _d_ to 2.
 2. Do the following process repeatedly, until this algorithm returns a value:
@@ -632,15 +631,15 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
         2. If _z_ is 0 and _P_(_t_) is less than 0, return 1.
     5. Set _r_ to _r_\*2+_z_, then multiply _d_ by 2.
 
-> **Example** (Penaud and Roques 2002)<sup>[**(31)**](#Note31)</sup>:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a decreasing polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
+> **Example** (Penaud and Roques 2002)<sup>[**(31)**](#Note31)</sup>:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
 
-A general-purpose algorithm was given by Mendo (2020)<sup>[**(32)**](#Note32)</sup> that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a converging series&mdash;
+A general-purpose algorithm was given by Mendo (2020)<sup>[**(32)**](#Note32)</sup> that can simulate any probability in the open interval (0, 1), as long as it can be rewritten as a series&mdash;
 
-- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0, and
-- for which a sequence _err_\[0\], _err_\[1\], ..., is available that is nonincreasing and converges to 0, where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
+- that has the form _a_\[0\] + _a_\[1\] + ..., where _a_\[_n_\] are all rational numbers greater than 0 and sum to _p_ (in other words, the series _converges_ to _p_)
+- for which a sequence _err_\[0\], _err_\[1\], ... is available that is nonincreasing and has a limit of 0 (_converges_ to 0), where _err_\[_n_\] is an upper bound on the error from truncating the series _a_ after summing the first _n_+1 terms.
 
 The algorithm follows.
 
@@ -665,7 +664,7 @@ If _a_, given above, is instead a sequence that converges to the _base-2 logarit
     2. If _E_ is less than _inf_+_intinf_, return 0.  If _E_ is less than _sup_+_intinf_, go to the next step.  If neither is the case, return 1.
     3. Set _n_ to 1.
 
-The case when _a_ converges to a _natural logarithm_ rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the _a_\[_i_\] must be 0 or greater and form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
+The case when the sequence _a_ converges to a _natural logarithm_ rather than a base-2 logarithm is trivial by comparison.  Again for this algorithm, all the _a_\[_i_\] must be 0 or greater and form a nondecreasing sequence, and all the _err_\[_i_\] must be 0 or greater.
 
 1. Generate an exponential random variate _E_ (with rate 1).
 2. Set _n_ to 0.
@@ -676,8 +675,8 @@ The case when _a_ converges to a _natural logarithm_ rather than a base-2 logari
 
 > **Examples**:
 >
-> - Let _f_(_&lambda;_) = cosh(1)&minus;1.  This function can be rewritten as a converging series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  That algorithm can simulate this constant if step 6 is modified to read: "Let _m_ be ((_n_+1)\*2), and let _&alpha;_ be 1/(_m_!) (a term of the series).  Add _&alpha;_ to _lamunq_ and set _&#x03F5;_ to 2/((_m_+1)!) (the error term).".<sup>[**(33)**](#Note33)</sup>
-> - Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(34)**](#Note34)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that converges to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(35)**](#Note35)</sup>.
+> - Let _f_(_&lambda;_) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  That algorithm can simulate this constant if step 6 is modified to read: "Let _m_ be ((_n_+1)\*2), and let _&alpha;_ be 1/(_m_!) (a term of the series).  Add _&alpha;_ to _lamunq_ and set _&#x03F5;_ to 2/((_m_+1)!) (the error term).".<sup>[**(33)**](#Note33)</sup>
+> - Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014)<sup>[**(34)**](#Note34)</sup>.  Instead of calculating the binomial coefficient directly, a series can be calculated that sums to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014)<sup>[**(35)**](#Note35)</sup>.
 
 <a id=Other_General_Algorithms></a>
 ### Other General Algorithms
@@ -983,6 +982,18 @@ This algorithm is a special case of the two-coin algorithm of (Gonçalves et al.
 2. Flip the input coin.  **If it returns 0**, return 0.  Otherwise, go to step 1.
 
 > **Note:** Can be derived from the previous algorithm by observing that 1/(2 &minus; _&lambda;_) = 1/(1 + (1 &minus; _&lambda;_)).
+
+<a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda></a>
+#### _&lambda;_\*exp(_m_+_&nu;_) / (_&lambda;_\*exp(_m_+_&nu;_) + (1 &minus; _&lambda;_))
+
+Uses two input coins, namely _&lambda;_ (the original coin) and _&nu;_ (which shows heads with probability equal to the fractional part of the "exponential shift" parameter _m_+_&nu;_ (Peres et al. 2021)<sup>[**(60)**](#Note60)</sup>).
+
+1. Create a _&rho;_ input coin that runs the algorithm **exp(&minus;(_&lambda;_ + _m_)<sup>_k_</sup>)** with _k_=1, _m_=_m_, and _&lambda;_ being the _&nu;_ input coin.
+2. Do the following process repeatedly, until this algorithm returns a value:
+    1. Flip the input coin.  Let _flip_ be the result of that flip.
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&rho;_ input coin. (This simulates exp(_m_+_&nu;_)/(exp(_m_+_&nu;_)+1).) If the run returns 1 and if _flip_ is 1, return 1.  If the run returns 0 and if _flip_ is 0, return 0.
+
+> **Note:** In this special case of the two-coin algorithm, _&beta;_=1, _c_=exp(_m_ + _&nu;_), _d_=1, _&lambda;_ = _&lambda;_, and _&mu;_ = 1 &minus; _&lambda;_.
 
 <a id=1_1__x___y____lambda></a>
 #### 1 / (1 + (_x_/_y_)\*_&lambda;_)
@@ -1700,6 +1711,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 - <small><sup id=Note57>(57)</sup> Flajolet, P., Sedgewick, R., _Analytic Combinatorics_, Cambridge University Press, 2009.</small>
 - <small><sup id=Note58>(58)</sup> Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.</small>
 - <small><sup id=Note59>(59)</sup> Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.</small>
+- <small><sup id=Note60>(60)</sup> Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.</small>
 
 <a id=Appendix></a>
 ## Appendix

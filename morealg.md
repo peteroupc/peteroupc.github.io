@@ -2,14 +2,14 @@
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
-**Abstract:** This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.
+**Abstract:** This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.
 
 **2020 Mathematics Subject Classification:** 68W20, 60-08, 60-04.
 
 <a id=Introduction></a>
 ## Introduction
 
-This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:
+This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:
 
 * [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](https://peteroupc.github.io/exporand.html)
 * [**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)
@@ -60,6 +60,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Lindley Distribution and Lindley-Like Mixtures**](#Lindley_Distribution_and_Lindley_Like_Mixtures)
     - [**Gamma Distribution**](#Gamma_Distribution)
     - [**One-Dimensional Epanechnikov Kernel**](#One_Dimensional_Epanechnikov_Kernel)
+    - [**Uniform Distribution Inside Rectellipse**](#Uniform_Distribution_Inside_Rectellipse)
 - [**Requests and Open Questions**](#Requests_and_Open_Questions)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
@@ -575,7 +576,7 @@ where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals
 <a id=Uniform_Distribution_Inside_N_Dimensional_Shapes></a>
 ### Uniform Distribution Inside N-Dimensional Shapes
 
-The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_] in _N_-dimensional space, where _d1_, ..., _dN_ are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).
+The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, _d1_]&times;[0, _d2_]&times;...&times;[0,_dN_] in _N_-dimensional space, where _d1_, ..., _dN_ are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume (Lebesgue measure zero) boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).
 
 The sampler's description has the following skeleton.
 
@@ -939,6 +940,26 @@ Adapted from Devroye and Györfi (1985, p. 236)<sup>[**(27)**](#Note27)</sup>.
 2. Run **URandLess** on _a_ and _c_ in that order, then run **URandLess** on _b_ and _c_ in that order.  If both runs return 1, set _c_ to point to _b_.
 3. Generate an unbiased random bit.  If that bit is 1 (which will happen with probability 1/2), set _c_'s sign to negative.
 4. Return _c_.
+
+<a id=Uniform_Distribution_Inside_Rectellipse></a>
+### Uniform Distribution Inside Rectellipse
+
+The following example generates a point inside a quarter [**_rectellipse_**](https://mathworld.wolfram.com/Rectellipse.html) centered at (0, 0) with&mdash;
+
+- radius _k_, which is an integer greater than 0, and
+- squareness parameter _&sigma;_, which is a rational number in [0, 1].
+
+Use the algorithm in "Uniform Distribution Inside N-Dimensional Shapes", except:
+
+- Let _d1_ and _d2_ be _k_, and let _N_ be 2.
+- Let **InShape** return&mdash;
+    - _YES_ if (_&sigma;_\*_x1_\*_y1_/_k_<sup>2\*_N_</sup>) &minus; (_x2_+_y2_)/_k_<sup>2</sup> + 1 > 0,
+    - _NO_ if (_&sigma;_\*_x2_\*_y2_/_k_<sup>2\*_N_</sup>) &minus; (_x1_+_y1_)/_k_<sup>2</sup> + 1 < 0, and
+    - _MAYBE_ otherwise,
+
+    where _x1_ = _C1_/_S_, _x2_ = (_C1_+1)/_S_, _y1_ = _C2_/_S_, and _y2_ = (_C2_+1)/_S_ (these four values define the edges, along the X and Y dimensions, of the box passed to **InShape**).
+
+For a full rectellipse, step 5.3 in the algorithm is done for each of the _N_ dimensions.
 
 <a id=Requests_and_Open_Questions></a>
 ## Requests and Open Questions

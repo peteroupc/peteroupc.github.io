@@ -1,11 +1,11 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/10/08"><meta name="citation_online_date" content="2021/10/08"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algo..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/10/10"><meta name="citation_online_date" content="2021/10/10"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>More Algorithms for Arbitrary-Precision Sampling</h1>
 
 <p><a href="mailto:poccil14@gmail.com"><strong>Peter Occil</strong></a></p>
 
-<p><strong>Abstract:</strong> This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.</p>
+<p><strong>Abstract:</strong> This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers.</p>
 
 <p><strong>2020 Mathematics Subject Classification:</strong> 68W20, 60-08, 60-04.</p>
 
@@ -13,7 +13,7 @@
 
 <h2>Introduction</h2>
 
-<p>This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to simulate irrational probabilities.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:</p>
+<p>This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  These samplers are designed to not rely on floating-point arithmetic.  They may depend on algorithms given in the following pages:</p>
 
 <ul>
 <li><a href="https://peteroupc.github.io/exporand.html"><strong>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</strong></a></li>
@@ -76,6 +76,7 @@
 <li><a href="#Lindley_Distribution_and_Lindley_Like_Mixtures"><strong>Lindley Distribution and Lindley-Like Mixtures</strong></a></li>
 <li><a href="#Gamma_Distribution"><strong>Gamma Distribution</strong></a></li>
 <li><a href="#One_Dimensional_Epanechnikov_Kernel"><strong>One-Dimensional Epanechnikov Kernel</strong></a></li>
+<li><a href="#Uniform_Distribution_Inside_Rectellipse"><strong>Uniform Distribution Inside Rectellipse</strong></a></li>
 </ul></li>
 <li><a href="#Requests_and_Open_Questions"><strong>Requests and Open Questions</strong></a></li>
 <li><a href="#Notes"><strong>Notes</strong></a></li>
@@ -872,7 +873,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <h3>Uniform Distribution Inside N-Dimensional Shapes</h3>
 
-<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, <em>d1</em>]&times;[0, <em>d2</em>]&times;...&times;[0,<em>dN</em>] in <em>N</em>-dimensional space, where <em>d1</em>, ..., <em>dN</em> are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).</p>
+<p>The following is a general way to describe an arbitrary-precision sampler for generating a point uniformly at random inside a geometric shape located entirely in the hypercube [0, <em>d1</em>]&times;[0, <em>d2</em>]&times;...&times;[0,<em>dN</em>] in <em>N</em>-dimensional space, where <em>d1</em>, ..., <em>dN</em> are integers greater than 0. The algorithm will generally work if the shape is reasonably defined; the technical requirements are that the shape must have a zero-volume (Lebesgue measure zero) boundary and a nonzero finite volume, and must assign zero probability to any zero-volume subset of it (such as a set of individual points).</p>
 
 <p>The sampler&#39;s description has the following skeleton.</p>
 
@@ -1360,6 +1361,34 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <li>Generate an unbiased random bit.  If that bit is 1 (which will happen with probability 1/2), set <em>c</em>&#39;s sign to negative.</li>
 <li>Return <em>c</em>.</li>
 </ol>
+
+<p><a id=Uniform_Distribution_Inside_Rectellipse></a></p>
+
+<h3>Uniform Distribution Inside Rectellipse</h3>
+
+<p>The following example generates a point inside a quarter <a href="https://mathworld.wolfram.com/Rectellipse.html"><strong><em>rectellipse</em></strong></a> centered at (0, 0) with&mdash;</p>
+
+<ul>
+<li>radius <em>k</em>, which is an integer greater than 0, and</li>
+<li>squareness parameter <em>&sigma;</em>, which is a rational number in [0, 1].</li>
+</ul>
+
+<p>Use the algorithm in &quot;Uniform Distribution Inside N-Dimensional Shapes&quot;, except:</p>
+
+<ul>
+<li>Let <em>d1</em> and <em>d2</em> be <em>k</em>, and let <em>N</em> be 2.</li>
+<li><p>Let <strong>InShape</strong> return&mdash;</p>
+
+<ul>
+<li><em>YES</em> if (<em>&sigma;</em>*<em>x1</em>*<em>y1</em>/<em>k</em><sup>2*<em>N</em></sup>) &minus; (<em>x2</em>+<em>y2</em>)/<em>k</em><sup>2</sup> + 1 &gt; 0,</li>
+<li><em>NO</em> if (<em>&sigma;</em>*<em>x2</em>*<em>y2</em>/<em>k</em><sup>2*<em>N</em></sup>) &minus; (<em>x1</em>+<em>y1</em>)/<em>k</em><sup>2</sup> + 1 &lt; 0, and</li>
+<li><em>MAYBE</em> otherwise,</li>
+</ul>
+
+<p>where <em>x1</em> = <em>C1</em>/<em>S</em>, <em>x2</em> = (<em>C1</em>+1)/<em>S</em>, <em>y1</em> = <em>C2</em>/<em>S</em>, and <em>y2</em> = (<em>C2</em>+1)/<em>S</em> (these four values define the edges, along the X and Y dimensions, of the box passed to <strong>InShape</strong>).</p></li>
+</ul>
+
+<p>For a full rectellipse, step 5.3 in the algorithm is done for each of the <em>N</em> dimensions.</p>
 
 <p><a id=Requests_and_Open_Questions></a></p>
 
