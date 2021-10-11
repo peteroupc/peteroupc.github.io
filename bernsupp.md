@@ -1037,7 +1037,7 @@ where &Phi;(.) is the Lerch transcendent.  This _&eta;_ matches the _&eta;_ give
 The following SymPy code is an example of finding the parameters for this approximation scheme.
 
 ```
-px=Piecewise((0,Eq(x,0)),((log(x/exp(3))**-2),True))
+px=Piecewise((0,Eq(x,0)),((ln(x/exp(3))**-2),True))
 # omega is modulus of continuity.  Since
 # px is monotone increasing, concave, and px(0)=0,
 # we can take omega as px

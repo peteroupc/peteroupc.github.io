@@ -70,7 +70,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**_d_<sup>_k_</sup> / (_c_ + _&lambda;_)<sup>_k_</sup>, or (_d_ / (_c_ + _&lambda;_))<sup>_k_</sup>**](#d__k___c____lambda____k__or__d___c____lambda____k)
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
-        - [**expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_))**](#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda)
+        - [**expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))**](#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda)
         - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
@@ -984,8 +984,10 @@ This algorithm is a special case of the two-coin algorithm of (Gonçalves et al.
 
 > **Note:** Can be derived from the previous algorithm by observing that 1/(2 &minus; _&lambda;_) = 1/(1 + (1 &minus; _&lambda;_)).
 
-<a id=expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda></a>
-#### expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_))
+<a id=expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda></a>
+#### expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))
+
+expit(_x_), also known as the _logistic function_, is the probability that a random variate from the logistic distribution is _x_ or less.
 
 In this algorithm, _m_ is an integer and can be positive or not.
 
@@ -1325,6 +1327,7 @@ Algorithms in bold are given in this page.
 | exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) | ((Dughmi et al. 2017)<sup>[**(36)**](#Note36)</sup>; applies an exponential weight&mdash;here, _c_&mdash;to an input coin)<br>(1) If _c_ is 0, return 1.<br>(2) Generate a Poisson(_c_) random integer, call it _N_.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped _N_ times, whichever comes first, then return a number that is 1 if _N_ is 0 or all of the coin flips (including the last) return 1, or 0 otherwise. |
 | 1 &minus; 1 / (1+(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_)) =<br>(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_) / (1+(_&mu;_\*_&lambda;_/(1 &minus; _&mu;_)) | (Special case of **logistic Bernoulli factory**; _&lambda;_ is in [0, 1], _&mu;_ is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the _&mu;_ coin.  If it returns 0, return 0. (Happens with probability _&mu;_/(_&mu;_ + (1 &minus; _&mu;_)) = _&mu;_.) <br>(2) Flip the _&lambda;_ coin.  If it returns 1, return 1.  Otherwise, go to step 1. |
 | _&lambda;_/(1+_&lambda;_) | Run algorithm for **1/(1+_&lambda;_)**, then return 1 minus the result. |
+| exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_))<sup>2</sup> | (Equals expit(_m_ + _&lambda;_)\*(1&minus;expit(_m_ + _&lambda;_)).  _&lambda;_ is unknown heads probability of a coin.)<br>Run the algorithm for **expit(_m_ + _&lambda;_)** twice, with _m_=0. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0. |
 | _&nu;_ * 1 + (1 &minus; _&nu;_) * _&mu;_ = _&nu;_ + _&mu;_ &minus; (_&nu;_\*_&mu;_) | (_Logical OR_. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 1. _&nu;_ and _&mu;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&mu;_ input coin.  Return 1 if either flip returns 1, and 0 otherwise. |
 | 1 &minus; _&nu;_ | (_Complement_. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&lambda;_ = 0 and _&mu;_ = 1. _&nu;_ is unknown heads probability of a coin.)<br>Flip the _&nu;_ input coin and return 1 minus the result. |
 | _&nu;_ * _&lambda;_ | (_Logical AND_ or _Product_. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&mu;_ = 0. _&nu;_ and _&lambda;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&lambda;_ input coin.  Return 1 if both flips return 1, and 0 otherwise. |
@@ -1647,7 +1650,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
 2. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way, minus 1.  In this case:
     1. What is the probability that _n_ is returned?
     2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
-    3. What is the distribution function (CDF) of the first generated number given that _n_ is odd, or that _n_ is even?
+    3. For each _x_, what is the probability that the first generated number is _x_ or less given that _n_ is odd? ...given that _n_ is even?
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
@@ -1902,16 +1905,16 @@ Then the algorithm's behavior is given in the tables below.
 | Alternating numbers | Both uniform(0,1) | (_a_<sub>_n_</sub> * (_n_ + 1) &minus; _a_<sub>_n_ + 1</sub>) / (_n_ + 1)!, where _a_<sub>_i_</sub> is the integer at position _i_ (starting at 0) of the sequence [**A000111**](https://oeis.org/A000111) in the _On-Line Encyclopedia of Integer Sequences_. | Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1). |
 | Any | Both uniform(0,1) | (&int;<sub>\[0, 1\]</sub> 1 \* (_z_<sup>_n_&minus;1</sup>\*V(_n_)/((_n_&minus;1)!) &minus; _z_<sup>_n_</sup>\*V(_n_+1)/(_n_!)) _dz_), for every _n_ > 0.  _V_(_n_) is the number of permutations of size _n_ that meet the permutation class's requirements. For this algorithm, _V_(_n_) must be in the interval \(0, _n_!\]; this algorithm won't work, for example, if there are 0 permutations of odd size.  | Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than _k_ is (_V_(0) &minus; _V_(_k_)/(_k_!)) / _V_(0). |
 
-| Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is less than _x_ given that _n_ is ... |
+| Permutation Class | Distributions _D_ and _E_ | The probability that the first number in the sequence is _x_ or less given that _n_ is ... |
  --- | --- | --- | --- |
-| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(28)**](#Note28)</sup>; see also Forsythe 1972<sup>[**(53)**](#Note53)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function (CDF) of _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
+| Numbers sorted in descending order | Each arbitrary | Odd is _&psi;_(_x_) = (&int;<sub>(&minus;&infin;, _x_)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> exp(&minus;ECDF(_z_)) * DPDF(_z_) _dz_) (Formula 1; see Theorem 2.1(iii) of (Devroye 1986, Chapter IV)<sup>[**(28)**](#Note28)</sup>; see also Forsythe 1972<sup>[**(53)**](#Note53)</sup>).  Here, DPDF is the probability density function (PDF) of _D_, and ECDF is the cumulative distribution function for _E_.<br>If _x_ is uniform(0, 1), this probability becomes &int;<sub>[0, 1]</sub> _&psi;_(_z_) _dz_. |
 | Numbers sorted in descending order | Each arbitrary | Even is (&int;<sub>(&minus;&infin;, _x_)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) / (&int;<sub>(&minus;&infin;, &infin;)</sub> (1 &minus; exp(&minus;ECDF(_z_))) * DPDF(_z_) _dz_) (Formula 2; see also Monahan 1979<sup>[**(59)**](#Note59)</sup>).  DPDF and ECDF are as above. |
 | Numbers sorted in descending order | Both uniform(0,1) | Odd is ((1&minus;exp(&minus;_x_))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and "truncated" to the interval \[0, 1\] (von Neumann 1951)<sup>[**(55)**](#Note55)</sup>. |
 | Numbers sorted in descending order | _D_ is uniform(0,1); _E_ is max. of two uniform(0,1) | Odd is erf(_x_)/erf(1) (uses Formula 1, where DPDF(_z_) = 1 and ECDF(_z_) = _z_<sup>2</sup> for _z_ in \[0, 1\]; see also [**erf(_x_)/erf(1)**](#erf__x__erf_1)). |
 
 > **Notes:**
 >
-> 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express the cumulative distribution function _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
+> 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 
 **Open Question:**  How can the tables above be filled for other permutation classes and different combinations of distributions _D_ and _E_?

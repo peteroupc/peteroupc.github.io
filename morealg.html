@@ -570,12 +570,8 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <td>Run the algorithm for <strong>1/(exp(1)+<em>c</em>&minus;2)</strong> with <em>c</em> = 3.</td>
 </tr>
 <tr>
-<td>exp(<em>&lambda;</em>)/(1+exp(<em>&lambda;</em>))<sup>2</sup></td>
-<td>(Equals expit(<em>&lambda;</em>)*(1&minus;expit(<em>&lambda;</em>)). expit(<em>x</em>) = 1&minus;1/(1+exp(<em>x</em>)) = exp(<em>x</em>)/(1+exp(<em>x</em>)).  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Run the algorithm for <strong>expit(<em>m</em> + <em>&lambda;</em>)</strong> twice, with <em>m</em>=0. If the first run returns 1 and the second returns 0, return 1.  Otherwise, return 0.</td>
-</tr>
-<tr>
 <td>expit(<em>&lambda;</em>)*2&minus;1</td>
-<td>(Equals tanh(<em>&lambda;</em>/2). <em>&lambda;</em> is unknown heads probability of a coin.)<br>Create <em>&mu;</em> coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result.&quot;<br>Run algorithm for <strong>tanh(<em>&lambda;</em>)</strong> with <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
+<td>(Equals tanh(<em>&lambda;</em>/2). expit(<em>x</em>) = 1&minus;1/(1+exp(<em>x</em>)) = exp(<em>x</em>)/(1+exp(<em>x</em>)).  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Create <em>&mu;</em> coin that does the following: &quot;Generate an unbiased random bit.  If that bit is 0, return 0.  Otherwise, flip the input coin and return the result.&quot;<br>Run algorithm for <strong>tanh(<em>&lambda;</em>)</strong> with <em>&lambda;</em> being the <em>&mu;</em> coin.</td>
 </tr>
 <tr>
 <td><em>n</em>/<em>&pi;</em></td>
