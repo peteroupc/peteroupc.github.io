@@ -43,7 +43,7 @@ More specifically, step 7 can be changed as follows:
 
 My implementation of loggamma and the natural logarithm ([**interval.py**](https://peteroupc.github.io/interval.py)) relies on rational interval arithmetic (Daumas et al. 2007)<sup>[**(4)**](#Note4)</sup> and a fast converging version of Stirling's formula for the factorial's natural logarithm (Schumacher 2016)<sup>[**(5)**](#Note5)</sup>.
 
-Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the interval \[sqrt(_n_), sqrt(_n_)+3\], so I implement step 1 by starting with _u_ = 2<sup>floor((1+_&beta;_(_n_))/2)</sup>, then calculating _v_ = floor((_u_+floor(_n_/_u_))/2), _w_ = _u_, _u_ = _v_  until _v_ >= _w_, then setting _m_ to _w_ + 1.  Here, _&beta;_(_n_) = ceil(ln(_n_+1)/ln(2)), or alternatively the minimum number of bits needed to store _n_ (with _&beta;_(0) = 0).
+Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the interval \[sqrt(_n_), sqrt(_n_)+3\], so I implement step 1 by starting with _u_ = 2<sup>floor((1+_&beta;_(_n_))/2)</sup>, then calculating _v_ = floor((_u_+floor(_n_/_u_))/2), _w_ = _u_, _u_ = _v_  until _v_ &ge; _w_, then setting _m_ to _w_ + 1.  Here, _&beta;_(_n_) = ceil(ln(_n_+1)/ln(2)), or alternatively the minimum number of bits needed to store _n_ (with _&beta;_(0) = 0).
 
 > **Notes:**
 >
@@ -59,11 +59,11 @@ Also, according to the Bringmann paper, _m_ can be set such that _m_ is in the i
 The following algorithm is equivalent to the geometric(_px_/_py_) sampler that appeared in (Bringmann and Friedrich 2013)<sup>[**(7)**](#Note7)</sup>, but adapted to be more programmer-friendly.  As used in that paper, a geometric(_p_) random variate expresses the number of failing trials before the first success, where each trial is independent and has success probability _p_. (Note that the terminology "geometric random variate" has conflicting meanings in academic works.  Note also that the algorithm uses the rational number _px_/_py_, not an arbitrary real number _p_; some of the notes in this section indicate how to adapt the algorithm to an arbitrary _p_.)
 
 1. Set _pn_ to _px_, _k_ to 0, and _d_ to 0.
-2. While _pn_\*2 <= _py_, add 1 to _k_ and multiply _pn_ by 2.  (Equivalent to finding the largest _k_ >= 0 such that _p_\*2<sup>_k_</sup> <= 1.  For the case when _p_ need not be rational, enough of its binary expansion can be calculated to carry out this step accurately, but in this case any _k_ such that _p_ is greater than 1/(2<sup>_k_+2</sup>) and less than or equal to 1/(2<sup>_k_</sup>) will suffice, as the Bringmann paper points out.)
+2. While _pn_\*2 &le; _py_, add 1 to _k_ and multiply _pn_ by 2.  (Equivalent to finding the largest _k_ &ge; 0 such that _p_\*2<sup>_k_</sup> &le; 1.  For the case when _p_ need not be rational, enough of its binary expansion can be calculated to carry out this step accurately, but in this case any _k_ such that _p_ is greater than 1/(2<sup>_k_+2</sup>) and less than or equal to 1/(2<sup>_k_</sup>) will suffice, as the Bringmann paper points out.)
 3. With probability (1&minus;_px_/_py_)<sup>2<sup>_k_</sup></sup>, add 1 to _d_ and repeat this step. (To simulate this probability, the first sub-algorithm below can be used.)
 4. Generate a uniform random integer in [0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return _d_\*2<sup>_k_</sup>+_m_. Otherwise, repeat this step. (The Bringmann paper, though, suggests to simulate this probability by sampling only as many bits of _m_ as needed to do so, rather than just generating _m_ in one go, then using the first sub-algorithm on _m_.  However, the implementation, given as the second sub-algorithm below, is much more complicated and is not crucial for correctness.)
 
-The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</sup>, assuming that _n_\*_px_/_py_ <= 1.  It implements the approach from the Bringmann paper by rewriting the probability using the binomial theorem. (For the case when _p_ need not be rational, the probability (1&minus;_p_)<sup>_n_</sup> can be simulated using _Bernoulli factory_ algorithms, or by calculating its digit expansion or series expansion and using the appropriate algorithm for [**simulating irrational constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants). Run that algorithm _n_ times or until it outputs 1, whichever comes first.  This sub-algorithm returns 1 if all the runs return 0, or 1 otherwise.)
+The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</sup>, assuming that _n_\*_px_/_py_ &le; 1.  It implements the approach from the Bringmann paper by rewriting the probability using the binomial theorem. (For the case when _p_ need not be rational, the probability (1&minus;_p_)<sup>_n_</sup> can be simulated using _Bernoulli factory_ algorithms, or by calculating its digit expansion or series expansion and using the appropriate algorithm for [**simulating irrational constants**](https://peteroupc.github.io/bernoulli.html#Algorithms_for_Irrational_Constants). Run that algorithm _n_ times or until it outputs 1, whichever comes first.  This sub-algorithm returns 1 if all the runs return 0, or 1 otherwise.)
 
 1. Set _pnum_, _pden_, and _j_  to 1, then set _r_ to 0, then set _qnum_ to _px_, and _qden_ to _py_, then set _i_ to 2.
 2. If _j_ is greater than _n_, go to step 5.
@@ -71,9 +71,9 @@ The first sub-algorithm returns 1 with probability (1&minus;_px_/_py_)<sup>_n_</
 4. Multiply _pden_ by _qden_, then multiply _qnum_ by _px_, then multiply _qden_ by _py_, then add 1 to _j_.
 5. If _j_ is less than or equal to 2 and less than or equal to _n_, go to step 2.
 6. Multiply _r_ by 2, then add an unbiased random bit's value (either 0 or 1 with equal probability) to _r_.
-7. If _r_ <= floor((_pnum_\*_i_)/_pden_) &minus; 2, return 1. If _r_ >= floor((_pnum_\*_i_)/_pden_) + 1, return 0.  If neither is the case, multiply _i_ by 2 and go to step 2.
+7. If _r_ &le; floor((_pnum_\*_i_)/_pden_) &minus; 2, return 1. If _r_ &ge; floor((_pnum_\*_i_)/_pden_) + 1, return 0.  If neither is the case, multiply _i_ by 2 and go to step 2.
 
-The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that 2<sup>_k_</sup>\*_px_/_py_ <= 1.
+The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with probability (1&minus;_px_/_py_)<sup>_m_</sup>, or &minus;1 with the opposite probability.  It assumes that 2<sup>_k_</sup>\*_px_/_py_ &le; 1.
 
 1. Set _r_ and _m_ to 0.
 2. Set _b_ to 0, then while _b_ is less than _k_:
@@ -83,19 +83,19 @@ The second sub-algorithm returns an integer _m_ in [0, 2<sup>_k_</sup>) with pro
     4. If _j_ is even, set _pnum_ to _pnum_\*_qden_ + _pden_\*_qnum_\*choose(_m_,_j_). Otherwise, set _pnum_ to _pnum_\*_qden_ &minus; _pden_\*_qnum_\*choose(_m_,_j_).
     5. Multiply _pden_ by _qden_, then multiply _qnum_ by _px_, then multiply _qden_ by _py_, then add 1 to _j_, then go to the third substep.
     6. (Now check the probability.) Multiply _r_ by 2, then add an unbiased random bit's value (either 0 or 1 with equal probability) to _r_.
-    7. If _r_ <= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in [0, 2<sup>_k_\*_b_</sup>) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ >= floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to _b_.
+    7. If _r_ &le; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) &minus; 2, add a uniform random integer in [0, 2<sup>_k_\*_b_</sup>) to _m_ and return _m_ (and, if requested, the number _k_&minus;_b_&minus;1). If _r_ &ge; floor((_pnum_\*2<sup>_b_</sup>)/_pden_) + 1, return &minus;1 (and, if requested, an arbitrary value).  If neither is the case, add 1 to _b_.
 8. Add an unbiased random bit to _m_. (At this point, _m_ is fully sampled.)
 9. Run the first sub-algorithm with _n_ = _m_, except in step 1 of that sub-algorithm, set _r_ to the value of _r_ built up by this algorithm, rather than 0, and set _i_ to 2<sup>_k_</sup>, rather than 2.  If that sub-algorithm returns 1, return _m_ (and, if requested, the number &minus;1).  Otherwise, return &minus;1 (and, if requested, an arbitrary value).
 
 As used in the Bringmann paper, a bounded geometric(_p_, _n_) random variate is a geometric(_p_) random variate or _n_ (an integer greater than 0), whichever is less.  The following algorithm is equivalent to the algorithm given in that paper, but adapted to be more programmer-friendly.
 
 1. Set _pn_ to _px_, _k_ to 0, _d_ to 0, and _m2_ to the smallest power of 2 that is greater than _n_ (or equivalently, 2<sup>_bits_</sup> where _bits_ is the minimum number of bits needed to store _n_).
-2. While _pn_\*2 <= _py_, add 1 to _k_ and multiply _pn_ by 2.
+2. While _pn_\*2 &le; _py_, add 1 to _k_ and multiply _pn_ by 2.
 3. With probability (1&minus;_px_/_py_)<sup>2<sup>_k_</sup></sup>, add 1 to _d_ and then either return _n_ if _d_\*2<sup>_k_</sup> is greater than or equal to _m2_, or repeat this step if less. (To simulate this probability, the first sub-algorithm above can be used.)
 4. Generate a uniform random integer in [0, 2<sup>_k_</sup>), call it _m_, then with probability (1&minus;_px_/_py_)<sup>_m_</sup>, return min(_n_, _d_\*2<sup>_k_</sup>+_m_). In the Bringmann paper, this step is implemented in a manner equivalent to the following (this alternative implementation, though, is not crucial for correctness):
     1. Run the second sub-algorithm above, except return two values, rather than one, in the situations given in the sub-algorithm.  Call these two values _m_ and _mbit_.
     2. If _m_ < 0, go to the first substep.
-    3. If _mbit_ >= 0, add 2<sup>_mbit_</sup> times an unbiased random bit to _m_ and subtract 1 from _mbit_.  If that bit is 1 or _mbit_ < 0, go to the next substep; otherwise, repeat this substep.
+    3. If _mbit_ &ge; 0, add 2<sup>_mbit_</sup> times an unbiased random bit to _m_ and subtract 1 from _mbit_.  If that bit is 1 or _mbit_ < 0, go to the next substep; otherwise, repeat this substep.
     4. Return _n_ if _d_\*2<sup>_k_</sup> is greater than or equal to _m2_.
     5. Add a uniform random integer in [0, 2<sup>_mbit_+1</sup>) to _m_, then return min(_n_, _d_\*2<sup>_k_</sup>+_m_).
 
@@ -133,8 +133,9 @@ The following definitions are used:
 
 - A distribution's _quantile function_ (also known as _inverse cumulative distribution function_ or _inverse CDF_) is a nondecreasing function that maps uniform random variates in the closed interval [0, 1] to numbers that follow the distribution.
 - A distribution's _support_ is the set of values the distribution can take on.  For example, the beta distribution's support is the interval [0, 1], and the normal distribution's support is the entire real line.
+- A distribution's _probability generating function_ is a function written as _a_\[0]\*_x_<sup>0</sup> + _a_\[1]\*_x_<sup>1</sup> + ..., where 0 &lt; _x_ &lt; 1 and _a_\[_i_] is the probability of getting _i_.
 
-In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002)<sup>[**(9)**](#Note9)</sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval \[0, 1\] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:
+**G families.** In general, families of the form "X-G" (such as "beta-G" (Eugene et al., 2002)<sup>[**(9)**](#Note9)</sup>) use two distributions, X and G, where X is a continuous distribution whose support is the interval \[0, 1\] and G is a distribution with an easy-to-compute quantile function.  The following algorithm samples a random variate following a distribution from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform [**partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) that follows the distribution X.)  Call the number _x_.
 2. Calculate the quantile for G of _x_, and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
@@ -146,14 +147,14 @@ Certain special cases of the "X-G" families, such as the following, use a specia
 - The _transmuted-G_ family (Shaw and Buckley 2007)<sup>[**(12)**](#Note12)</sup>. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup>[**(3)**](#Note3)</sup>: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform(0, 1) random variate. Otherwise, generate two uniform(0, 1) random variates, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> mentions the same distribution, but with parameter _&lambda;_ = _&eta;_ + 1, in the interval [0, 2].)
 - A _cubic rank transmuted_ distribution (Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform(0, 1) random variates, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 
-In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013)<sup>[**(14)**](#Note14)</sup> that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
+**Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013)<sup>[**(14)**](#Note14)</sup> that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. Calculate the quantile for G of _W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _W_), and return that quantile. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 
 The following are special cases of the "transformed&ndash;transformer" family:
 
-- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(15)**](#Note15)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must contain the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the CDF for _Y_).
+- The "T-R{_Y_}" family (Aljarrah et al., 2014)<sup>[**(15)**](#Note15)</sup>, in which _T_ is an arbitrary continuous distribution (X in the algorithm above), _R_ is a distribution with an easy-to-compute quantile function (G in the algorithm above), and _W_ is the quantile function for the distribution _Y_, whose support must contain the support of _T_ (so that _W_<sup>&minus;1</sup>(_x_) is the cumulative distribution function for _Y_, or the probability that a _Y_-distributed number is _x_ or less).
 - Several versions of _W_ have been proposed for the case when distribution X's support is \[0, &infin;\), such as the Rayleigh and gamma distributions.  They include:
     - _W_(_x_) = &minus;ln(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = 1&minus;exp(&minus;_x_)).  Suggested in the original paper by Alzaatreh et al.
     - _W_(_x_) = _x_/(1&minus;_x_) (_W_<sup>&minus;1</sup>(_x_) = _x_/(1+_x_)).  Suggested in the original paper by Alzaatreh et al.  This choice forms the so-called "odd X G" family, and one example is the "odd log-logistic G" family (Gleaton and Lynch 2006)<sup>[**(16)**](#Note16)</sup>.
@@ -162,20 +163,30 @@ Many special cases of the "transformed&ndash;transformer" family have been propo
 
 A family very similar to the "transformed&ndash;transformer" family uses a _decreasing_ _W_.  When distribution X's support is \[0, &infin;), one such _W_ that has been proposed is _W_(_x_) = &minus;ln(_x_) (_W_<sup>&minus;1</sup>(_x_) = exp(&minus;_x_); examples include the "Rayleigh-G" family or "Rayleigh&ndash;Rayleigh" distribution (Al Noor and Assi 2020)<sup>[**(18)**](#Note18)</sup>, as well as the "generalized gamma-G" family, where "generalized gamma" refers to the Stacy distribution (Boshi et al. 2020)<sup>[**(19)**](#Note19)</sup>).
 
-A _compound distribution_ is simply the minimum of _N_ random variates distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_ (Tahir and Cordeiro 2016)<sup>[**(20)**](#Note20)</sup>.  For example, the "beta-G-geometric" family represents the minimum of _N_ beta-G random variates, where _N_ is a random variate expressing 1 plus the number of failures before the first success, with each success having the same probability.
+**Minimums, maximums, and sums.** Some distributions are described as a minimum, maximum, or sum of _N_ random variates distributed as _X_, where _N_ &ge; 1 is an integer distributed as the discrete distribution _Y_.
 
-A _complementary compound distribution_ is the maximum of _N_ random variates distributed as _X_, where _N_ >= 1 is an integer distributed as the discrete distribution _Y_.  An example is the "geometric zero-truncated Poisson distribution", where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(21)**](#Note21)</sup>.
+- Tahir and Cordeiro (2016)<sup>[**(20)**](#Note20)</sup> calls a distribution of minimums a _compound distribution_, and a distribution of maximums a _complementary compound distribution_.
+- Pérez-Casany et al. (2016)<sup>[**(37)**](#Note37)</sup> calls a distribution of minimums or of maximums a _random-stopped extreme distribution_.
+- A distribution of sums can be called a _stopped-sum distribution_ (Johnson et al. 2005)<sup>[**(38)**](#Note38)</sup>. (In this case, _N_ can be 0 so that _N_ &ge; 0 is an integer distributed as _Y_.)
 
-An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(22)**](#Note22)</sup> is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
+> **Example:** The "geometric zero-truncated Poisson distribution" is a distribution of maximums where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(21)**](#Note21)</sup>.
 
-A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
+A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021|Duarte-López, A., Pérez-Casany, M. and Valero, J., 2021. Randomly stopped extreme Zipf extensions. Extremes, pp.1-34.>>:
+
+1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)
+2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(1&minus;_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile<sup>[**(39)**](#Note39)</sup>. (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
+3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
+
+**Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(22)**](#Note22)</sup> is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
+
+**Weighted distributions.** A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
 1. Generate a random variate that follows the distribution X. (Or generate a uniform PSRN that follows X.) Call the number _x_.
 2. With probability _w_(_x_), return _x_.  Otherwise, go to step 1.
 
 Some weighted distributions allow any weight function _w_(_x_) whose values are non-negative everywhere in X's support (Rao 1985)<sup>[**(23)**](#Note23)</sup>.  (If _w_(_x_) = _x_, the distribution is often called a _length-biased_ or _size-biased distribution_; if _w_(_x_) = _x_<sup>2</sup>, _area-biased_.)  Their probability density functions are proportional to the original density functions multiplied by _w_(_x_).
 
-To generate an _inflated X_ (also called _c-inflated X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
+**Inflated distributions.** To generate an _inflated X_ (also called _c-inflated X_) random variate with parameters _c_ and _&alpha;_, generate&mdash;
 
 - _c_ with probability _&alpha;_, and
 - a random variate distributed as X otherwise.
@@ -195,7 +206,7 @@ In the table below, _U_ is a uniform(0, 1) random variate.
 | Power function(_a_, _c_). | _c_\*_U_<sup>1/_a_</sup>. | _a_ > 0, _c_ > 0. |
 | Right-truncated Weibull(_a_, _b_, _c_) (Jodrá 2020)<sup>[**(26)**](#Note26)</sup>. | Minimum of _N_ power function(_b_, _c_) random variates, where _N_ is zero-truncated Poisson(_a_\*_c_<sup>_b_</sup>). | _a_, _b_, _c_ > 0. |
 | Lehmann Weibull(_a1_, _a2_, _&beta;_) (Elgohari and Yousof 2020)<sup>[**(27)**](#Note27)</sup>. | (ln(1/_U_)/_&beta;_)<sup>1/_a1_</sup>/_a2_ or _E_<sup>1/_a1_</sup>/_a2_ | _a1_, _a2_, _&beta;_ > 0. _E_ is exponential with rate _&beta;_. |
-| Marshall&ndash;Olkin(_&alpha;_). | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
+| Marshall&ndash;Olkin(_&alpha;_) (Marshall and Olkin 1997)<sup>[**(40)**](#Note40)</sup> | (1&minus;_U_)/(_U_\*(_&alpha;_&minus;1) + 1). | _&alpha;_ in [0, 1]. |
 | Lomax(_&alpha;_). | (&minus;1/(_U_&minus;1))<sup>1/_&alpha;_</sup>&minus;1. | _&alpha;_ > 0. |
 | Power Lomax(_&alpha;_, _&beta;_) (Rady et al. 2016)<sup>[**(28)**](#Note28)</sup>. | _L_<sup>1/_&beta;_</sup> | _&beta;_ > 0; _L_ is Lomax(_&alpha;_). |
 
@@ -278,7 +289,7 @@ Here is a sketch of how this rejection sampler might work:
 This algorithm `ExpoExact`, samples an exponential random variate given the rate `rx`/`ry` with an error tolerance of 2<sup>`-precision`</sup>; for more information, see "[**Partially-Sampled Random Numbers**](https://peteroupc.github.io/exporand.html)"; see also Morina et al. (2019)<sup>[**(33)**](#Note33)</sup>; Canonne et al. (2020)<sup>[**(34)**](#Note34)</sup>.  In this section, `RNDINT(1)` generates an independent unbiased random bit.
 
     METHOD ZeroOrOneExpMinus(x, y)
-      if y <= 0 or x<0: return error
+      if y==0 or y<0 or x<0: return error
       if x==0: return 1 // exp(0) = 1
       if x > y
         x = rem(x, y)
@@ -396,6 +407,10 @@ Samples from the so-called "log uniform distribution" as used by the Abseil prog
 - <small><sup id=Note34>(34)</sup> Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.</small>
 - <small><sup id=Note35>(35)</sup> Karney, C.F.F., "[**Sampling exactly from the normal distribution**](https://arxiv.org/abs/1303.6257v2)", arXiv:1303.6257v2  [physics.comp-ph], 2014.</small>
 - <small><sup id=Note36>(36)</sup> Chewi, S., Gerber, P., et al., "[**Rejection sampling from shape-constrained distributions in sublinear time**](https://arxiv.org/abs/2105.14166)", arXiv:2105.14166, 2021</small>
+- <small><sup id=Note37>(37)</sup> Pérez-Casany, M., Valero, J., and Ginebra, J. (2016). Random-Stopped Extreme distributions. International Conference on Statistical Distributions and Applications. </small>
+- <small><sup id=Note38>(38)</sup> Johnson, N. L., Kemp, A. W., and Kotz, S. (2005). Univariate discrete distributions.</small>
+- <small><sup id=Note39>(39)</sup> This is simplified from the paper because _Y_ can take on only values greater than 0 so that the probability of getting 0 is 0.</small>
+- <small><sup id=Note40>(40)</sup> Marshall, A.W. and Olkin, I., 1997. A new method for adding a parameter to a family of distributions with application to the exponential and Weibull families. Biometrika, 84(3), pp.641-652.</small>
 
 <a id=License></a>
 ## License
