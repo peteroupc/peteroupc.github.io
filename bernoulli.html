@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/12"><meta name="citation_online_date" content="2021/10/12"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/17"><meta name="citation_online_date" content="2021/10/17"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -109,6 +109,7 @@
 <li><a href="#arctan___lambda_____lambda"><strong>arctan(<em>&lambda;</em>) /<em>&lambda;</em></strong></a></li>
 <li><a href="#arctan___lambda"><strong>arctan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#cos___lambda"><strong>cos(<em>&lambda;</em>)</strong></a></li>
+<li><a href="#sin___lambda___sqrt__c____lambda___sqrt__c"><strong>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</strong></a></li>
 <li><a href="#sin___lambda"><strong>sin(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus___lambda___cos___lambda"><strong>(1&minus;<em>&lambda;</em>)/cos(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_minus___lambda___tan___lambda"><strong>(1&minus;<em>&lambda;</em>) * tan(<em>&lambda;</em>)</strong></a></li>
@@ -379,7 +380,7 @@ functions, or functions in general.</p>
 <ol>
 <li>Each <em>a</em>[<em>i</em>] acts as a control point for a 1-dimensional <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve"><strong>Bézier curve</strong></a>, where <em>&lambda;</em> is the relative position on that curve, the curve begins at  <em>a</em>[0], and the curve ends at <em>a</em>[<em>n</em>].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when <em>&lambda;</em> = 0, and 0.6 when <em>&lambda;</em> = 1.  (The curve, however, is not at 0.3 when <em>&lambda;</em> = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)</li>
 <li>The problem of simulating polynomials in Bernstein form is related to <em>stochastic logic</em>, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and XOR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, Qian and Riedel 2008<sup><a href="#Note10"><strong>(10)</strong></a></sup>).</li>
-<li>These algorithms can serve as an approximate way to simulate any continuous function <em>f</em> (or even any function that maps the interval [0, 1] to [0, 1], even if it&#39;s not continuous).  In this case, <em>a</em>[<em>j</em>] is calculated as <em>f</em>(<em>j</em>/<em>n</em>), so that the resulting polynomial closely approximates the function.  In fact, if <em>f</em> is continuous, it&#39;s possible to choose <em>n</em> high enough to achieve a given maximum error (this is a result of the so-called &quot;Weierstrass approximation theorem&quot;), but this is not the case in general if <em>f</em> is not continuous.  For more information, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
+<li>These algorithms can serve as an approximate way to simulate any function <em>f</em> that maps the interval [0, 1] to [0, 1], whether continuous or not.  In this case, <em>a</em>[<em>j</em>] is calculated as <em>f</em>(<em>j</em>/<em>n</em>), so that the resulting polynomial closely approximates the function.  In fact, if <em>f</em> is continuous, it&#39;s possible to choose <em>n</em> high enough to achieve a given maximum error (this is a result of the so-called &quot;Weierstrass approximation theorem&quot;).  For more information, see my <a href="https://peteroupc.github.io/bernsupp.html"><strong>Supplemental Notes on Bernoulli Factories</strong></a>.</li>
 </ol>
 
 <p><strong>Examples:</strong></p>
@@ -422,7 +423,7 @@ functions, or functions in general.</p>
 
 <p>According to Mossel and Peres (2005)<sup><a href="#Note15"><strong>(15)</strong></a></sup>, a function that maps the open interval (0, 1) to (0, 1) can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.</p>
 
-<p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  It assumes the rational function is of the form <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
+<p>The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  It assumes the rational function is written as <em>D</em>(<em>&lambda;</em>)/<em>E</em>(<em>&lambda;</em>), where&mdash;</p>
 
 <ul>
 <li><em>D</em>(<em>&lambda;</em>) = &sum;<sub><em>i</em> = 0, ..., <em>n</em></sub> <em>&lambda;</em><sup><em>i</em></sup> * (1 &minus; <em>&lambda;</em>)<sup><em>n</em> &minus; <em>i</em></sup> * <em>d</em>[<em>i</em>],</li>
@@ -1761,23 +1762,34 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2 &minus; 1) * (<em>n</em> * 2), then go to step 3.</li>
 </ol>
 
-<p><a id=sin___lambda></a></p>
+<p><a id=sin___lambda___sqrt__c____lambda___sqrt__c></a></p>
 
-<h4>sin(<em>&lambda;</em>)</h4>
+<h4>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</h4>
 
-<p>This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup><a href="#Note24"><strong>(24)</strong></a></sup>.  sin(<em>&lambda;</em>) can be rewritten as <em>&lambda;</em> * (1 &minus; <em>&lambda;</em><sup>2</sup>/(3!) + <em>&lambda;</em><sup>4</sup>/(5!) &minus; ...), which includes an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(<em>&lambda;</em>) series does.</p>
+<p>This function can be rewritten as 1 &minus; <em>&lambda;</em><sup>2</sup>/(3!) + <em>&lambda;</em><sup>4</sup>/(5!) &minus; ..., which is an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, <em>c</em><sup>1</sup>/(3!), <em>c</em><sup>2</sup>/(5!), ....  Thus, there is an algorithm to simulate this alternating series (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;).</p>
+
+<p>In this algorithm, <em>c</em> is a rational number that must be in the interval (0, 6], since the algorithm requires a decreasing sequence of coefficients.</p>
 
 <p>The algorithm to simulate sin(<em>&lambda;</em>) follows.</p>
 
 <ol>
-<li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, set <em>n</em> to 1, and set <em>fac</em> to 6.</li>
+<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, set <em>n</em> to 1, set <em>cprod</em> to <em>c</em>, and set <em>fac</em> to 6.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, flip the input coin. If the flip returns 0, set <em>w</em> to 0. Do this step again.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> / <em>fac</em>.</li>
+<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * <em>cprod</em> / <em>fac</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * <em>cprod</em> / <em>fac</em>.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2) * (<em>n</em> * 2 + 1), then go to step 4.</li>
+<li>Add 1 to <em>n</em>, then multiply <em>fac</em> by (<em>n</em> * 2) * (<em>n</em> * 2 + 1), then multiply <em>cprod</em> by <em>c</em>, then go to step 4.</li>
 </ol>
+
+<p><a id=sin___lambda></a></p>
+
+<h4>sin(<em>&lambda;</em>)</h4>
+
+<p>Equals the previous function times <em>&lambda;</em>, with <em>c</em> = 1.</p>
+
+<ul>
+<li>Flip the input coin.  If it returns 0, return 0.  Otherwise, run the algorithm for <strong>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</strong> with <em>c</em> = 1, then return the result.</li>
+</ul>
 
 <p><a id=1_minus___lambda___cos___lambda></a></p>
 
@@ -2656,7 +2668,7 @@ def valid_perm(f, x, n):
 <blockquote>
 <p><strong>Note:</strong> The von Neumann schema can simulate any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, because of step 2, the number of input coin flips required by the schema grows without bound as <em>&lambda;</em> approaches 1.</p>
 
-<p><strong>Example:</strong> Using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random variate via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &mdash; return 1 if a Poisson(<em>&lambda;</em>) random variate is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as <em>&lambda;</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson(floor(<em>c</em>)) random variate to a Poisson(<em>c</em>&minus;floor(<em>c</em>)) variate generates a Poisson(<em>c</em>) random variate.</p>
+<p><strong>Example:</strong> Using the class of <em>sorted permutations</em>, we can generate a Poisson(<em>&lambda;</em>) random variate via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &minus; 1 if a Poisson(<em>&lambda;</em>) random variate is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as <em>&lambda;</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson(floor(<em>c</em>)) random variate to a Poisson(<em>c</em>&minus;floor(<em>c</em>)) variate generates a Poisson(<em>c</em>) random variate.</p>
 </blockquote>
 
 <p>A variation on the von Neumann schema occurs if <em>G</em> is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return <em>n</em> with probability&mdash;</p>

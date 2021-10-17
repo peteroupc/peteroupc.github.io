@@ -86,6 +86,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**arctan(_&lambda;_) /_&lambda;_**](#arctan___lambda_____lambda)
         - [**arctan(_&lambda;_)**](#arctan___lambda)
         - [**cos(_&lambda;_)**](#cos___lambda)
+        - [**sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**](#sin___lambda___sqrt__c____lambda___sqrt__c)
         - [**sin(_&lambda;_)**](#sin___lambda)
         - [**(1&minus;_&lambda;_)/cos(_&lambda;_)**](#1_minus___lambda___cos___lambda)
         - [**(1&minus;_&lambda;_) * tan(_&lambda;_)**](#1_minus___lambda___tan___lambda)
@@ -257,7 +258,7 @@ Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all 
 >
 > 1. Each _a_\[_i_\] acts as a control point for a 1-dimensional [**Bézier curve**](https://en.wikipedia.org/wiki/Bézier_curve), where _&lambda;_ is the relative position on that curve, the curve begins at  _a_\[0\], and the curve ends at _a_\[_n_\].  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _&lambda;_ = 0, and 0.6 when _&lambda;_ = 1.  (The curve, however, is not at 0.3 when _&lambda;_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 > 2. The problem of simulating polynomials in Bernstein form is related to _stochastic logic_, which involves simulating probabilities that arise out of Boolean functions (functions that use only AND, OR, NOT, and XOR operations) that take a fixed number of bits as input, where each bit has a separate probability of being 1 rather than 0, and output a single bit (for further discussion see (Qian et al. 2011)<sup>[**(7)**](#Note7)</sup>, Qian and Riedel 2008<sup>[**(10)**](#Note10)</sup>).
-> 3. These algorithms can serve as an approximate way to simulate any continuous function _f_ (or even any function that maps the interval \[0, 1] to \[0, 1], even if it's not continuous).  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if _f_ is continuous, it's possible to choose _n_ high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem"), but this is not the case in general if _f_ is not continuous.  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
+> 3. These algorithms can serve as an approximate way to simulate any function _f_ that maps the interval \[0, 1] to \[0, 1], whether continuous or not.  In this case, _a_\[_j_\] is calculated as _f_(_j_/_n_), so that the resulting polynomial closely approximates the function.  In fact, if _f_ is continuous, it's possible to choose _n_ high enough to achieve a given maximum error (this is a result of the so-called "Weierstrass approximation theorem").  For more information, see my [**Supplemental Notes on Bernoulli Factories**](https://peteroupc.github.io/bernsupp.html).
 >
 > **Examples:**
 >
@@ -288,7 +289,7 @@ A _rational function_ is a ratio of polynomials.
 
 According to Mossel and Peres (2005)<sup>[**(15)**](#Note15)</sup>, a function that maps the open interval (0, 1) to (0, 1) can be simulated by a finite-state machine if and only if the function can be written as a rational function whose coefficients are rational numbers.
 
-The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup>[**(11)**](#Note11)</sup>.  It assumes the rational function is of the form _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
+The following algorithm is suggested from the Mossel and Peres paper and from (Thomas and Blanchet 2012)<sup>[**(11)**](#Note11)</sup>.  It assumes the rational function is written as _D_(_&lambda;_)/_E_(_&lambda;_), where&mdash;
 
 - _D_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _d_\[_i_\],
 - _E_(_&lambda;_) = &sum;<sub>_i_ = 0, ..., _n_</sub> _&lambda;_<sup>_i_</sup> * (1 &minus; _&lambda;_)<sup>_n_ &minus; _i_</sup> * _e_\[_i_\],
@@ -1218,20 +1219,28 @@ The algorithm to simulate cos(_&lambda;_) follows.
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
 
-<a id=sin___lambda></a>
-#### sin(_&lambda;_)
+<a id=sin___lambda___sqrt__c____lambda___sqrt__c></a>
+#### sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))
 
-This algorithm is likewise a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011)<sup>[**(24)**](#Note24)</sup>.  sin(_&lambda;_) can be rewritten as _&lambda;_ * (1 &minus; _&lambda;_<sup>2</sup>/(3!) + _&lambda;_<sup>4</sup>/(5!) &minus; ...), which includes an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(3!), 1/(5!), .... This series expansion meets the requirements of Algorithm 3 for the same reasons as the cos(_&lambda;_) series does.
+This function can be rewritten as 1 &minus; _&lambda;_<sup>2</sup>/(3!) + _&lambda;_<sup>4</sup>/(5!) &minus; ..., which is an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, _c_<sup>1</sup>/(3!), _c_<sup>2</sup>/(5!), ....  Thus, there is an algorithm to simulate this alternating series (see "[**Certain Power Series**](#Certain_Power_Series)").
+
+In this algorithm, _c_ is a rational number that must be in the interval (0, 6], since the algorithm requires a decreasing sequence of coefficients.
 
 The algorithm to simulate sin(_&lambda;_) follows.
 
-1. Flip the input coin.  If it returns 0, return 0.
-2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, and set _fac_ to 6.
-3. Generate a uniform(0, 1) random variate _ret_.
-4. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
-5. If _n_ is even, set _u_ to _&#x2113;_ + _w_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ / _fac_.
-6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-7. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then go to step 4.
+1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, set _cprod_ to _c_, and set _fac_ to 6.
+2. Generate a uniform(0, 1) random variate _ret_.
+3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
+4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _cprod_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _cprod_ / _fac_.
+5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then multiply _cprod_ by _c_, then go to step 4.
+
+<a id=sin___lambda></a>
+#### sin(_&lambda;_)
+
+Equals the previous function times _&lambda;_, with _c_ = 1.
+
+- Flip the input coin.  If it returns 0, return 0.  Otherwise, run the algorithm for **sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))** with _c_ = 1, then return the result.
 
 <a id=1_minus___lambda___cos___lambda></a>
 #### (1&minus;_&lambda;_)/cos(_&lambda;_)
@@ -1879,7 +1888,7 @@ def valid_perm(f, x, n):
 
 > **Note:** The von Neumann schema can simulate any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, because of step 2, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
 >
-> **Example:** Using the class of _sorted permutations_, we can generate a Poisson(_&lambda;_) random variate via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; return 1 if a Poisson(_&lambda;_) random variate is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm converges slowly as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson(floor(_c_)) random variate to a Poisson(_c_&minus;floor(_c_)) variate generates a Poisson(_c_) random variate.
+> **Example:** Using the class of _sorted permutations_, we can generate a Poisson(_&lambda;_) random variate via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &minus; 1 if a Poisson(_&lambda;_) random variate is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson(floor(_c_)) random variate to a Poisson(_c_&minus;floor(_c_)) variate generates a Poisson(_c_) random variate.
 
 A variation on the von Neumann schema occurs if _G_ is generated differently than given in step 2, but is still generated by flipping the input coin.  In that case, the algorithm above will return _n_ with probability&mdash;
 
