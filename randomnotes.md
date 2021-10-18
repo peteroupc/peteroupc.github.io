@@ -74,7 +74,7 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup>[**(2)**](#Note2)
 > 3. The following are some approximations to the normal distribution that papers have suggested:
 >    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`, to generate an approximate normal variate with mean 0 and standard deviation `sigma`. (Kabal 2000/2019)<sup>[**(6)**](#Note6)</sup> "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution"**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution), namely the sum of `n` many `RNDRANGE(0, 1)` numbers, on Wikipedia.  D. Thomas (2014)<sup>[**(7)**](#Note7)</sup>, describes a more general approximation called CLT<sub>k</sub>, which combines `k` numbers in [0, 1] sampled from the uniform distribution as follows: `RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...`.
 >    - Numerical [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup>[**(8)**](#Note8)</sup>.  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
-> 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGE(0, 1)`), and the two variates are not independent of each other (Thistleton et al. 2007)<sup>[**(9)**](#Note9)</sup>.
+> 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGE(0, 1)`), and the two variates are not statistically independent (Thistleton et al. 2007)<sup>[**(9)**](#Note9)</sup>.
 > 5. A well-known result says that adding `n` many `Normal(0, 1)` variates, and dividing by `sqrt(n)`, results in a new `Normal(0, 1)` variate.
 
 <a id=Gamma_Distribution></a>
@@ -162,10 +162,10 @@ I give an [**error-bounded sampler**](https://peteroupc.github.io/exporand.html)
 
 The following variants of the hypergeometric distribution are described in detail by Agner Fog in "[**Biased Urn Theory**](https://cran.r-project.org/web/packages/BiasedUrn/vignettes/UrnTheory.pdf)".
 
-Let there be _m_ balls that each have one of two or more colors.  For each color, assign each ball of that color the same weight (0 or greater).  Then:
+Let there be _m_ balls that each have one of two or more colors.  For each color, assign each ball of that color the same weight (a real number 0 or greater).  Then:
 
 1. **Wallenius's hypergeometric distribution:** Choose one ball not yet chosen, with probability equal to its weight divided by the sum of weights of balls not yet chosen.  Repeat until exactly _n_ items are chosen this way.  Then for each color, count the number of items of that color chosen this way.
-2. **Fisher's hypergeometric distribution:** For each ball, choose it with probability equal to its weight divided by the sum of weights of all balls.  (Thus, each ball is independently chosen or not chosen depending on its weight.)  If exactly _n_ items were chosen this way, stop.  Otherwise, start over.  Then for each color, count the number of items of that color chosen this way.
+2. **Fisher's hypergeometric distribution:** For each ball, choose it with probability equal to its weight divided by the sum of weights of all balls.  (Thus, each ball is independently chosen or not chosen depending on its weight.)  If exactly _n_ items were chosen this way, stop.  Otherwise, start over.  Then among the last _n_ items chosen this way, count the number of items of each color.
 
 For both distributions, if there are two colors, there are four parameters: _m_, _ones_, _n_, _weight_, such that&mdash;
 
@@ -394,7 +394,7 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 > 3. The _**T**&ndash;Poisson hierarchy_ (Knudson et al. 2021)<sup>[**(16)**](#Note16)</sup> is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter `lamda` and a marginal that must be a _continuous non-negative_ probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  To sample from the **T**&ndash;Poisson hierarchy&mdash;
 >
 >     1. sample an N-dimensional random vector via a copula (such as `GaussianCopula`), producing an N-dimensional vector of correlated uniform numbers; then
->     2. for each component in the vector, take that component's quantile for the corresponding marginal; then
+>     2. for each component in the vector, replace it with that component's quantile for the corresponding marginal; then
 >     3. for each component in the vector, replace it with `Poisson(lamda * c)`, where `c` is that component and `lamda` is the `lamda` parameter for the corresponding dimension.
 >
 >     The following example implements the T-Poisson hierarchy using a Gaussian copula and exponential marginals.
