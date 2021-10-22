@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/10/07"><meta name="citation_online_date" content="2021/10/07"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/10/22"><meta name="citation_online_date" content="2021/10/22"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -12,6 +12,8 @@
 <p>This page presents general-purpose algorithms for estimating the mean value of a stream of random variates, or estimating the mean value of a function of those numbers.  The estimates are either <em>unbiased</em> (they have no systematic bias from the true mean value), or they come close to the true value with a user-specified error tolerance.</p>
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
+
+<p>Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (e.g., estimators that average an increasing number of sample points).  See, for example, Vihola (2018)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.</p>
 
 <p><a id=Concepts></a></p>
 
@@ -442,6 +444,7 @@ pprint(Max(1,kappa))
 <li><small><sup id=Note8>(8)</sup> Jiang, L., Hickernell, F.J., &quot;<a href="https://arxiv.org/abs/1411.1151"><strong>Guaranteed Monte Carlo Methods for Bernoulli Random Variables</strong></a>&quot;, arXiv:1411.1151 [math.NA], 2014.</small></li>
 <li><small><sup id=Note9>(9)</sup> Kunsch, R.J., Rudolf, D., &quot;<a href="https://arxiv.org/abs/1809.09890"><strong>Optimal confidence for Monte Carlo integration of smooth functions</strong></a>&quot;, arXiv:1809.09890, 2018.</small></li>
 <li><small><sup id=Note10>(10)</sup> Agarwal, A., Agarwal, S., et al., &quot;Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons&quot;, <em>Proceedings of Machine Learning Research</em> 65 (2017).</small></li>
+<li><small><sup id=Note11>(11)</sup> Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</small></li>
 </ul>
 
 <p><a id=License></a></p>

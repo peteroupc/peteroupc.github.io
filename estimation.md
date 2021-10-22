@@ -9,6 +9,8 @@ This page presents general-purpose algorithms for estimating the mean value of a
 
 The algorithms are described to make them easy to implement by programmers.
 
+Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (e.g., estimators that average an increasing number of sample points).  See, for example, Vihola (2018)<sup>[**(11)**](#Note11)</sup>.
+
 <a id=Concepts></a>
 ## Concepts
 
@@ -326,6 +328,7 @@ Let _X_ be an endless stream of random variates and let _f_(_x_) be a known cont
 - <small><sup id=Note8>(8)</sup> Jiang, L., Hickernell, F.J., "[**Guaranteed Monte Carlo Methods for Bernoulli Random Variables**](https://arxiv.org/abs/1411.1151)", arXiv:1411.1151 [math.NA], 2014.</small>
 - <small><sup id=Note9>(9)</sup> Kunsch, R.J., Rudolf, D., "[**Optimal confidence for Monte Carlo integration of smooth functions**](https://arxiv.org/abs/1809.09890)", arXiv:1809.09890, 2018.</small>
 - <small><sup id=Note10>(10)</sup> Agarwal, A., Agarwal, S., et al., "Learning with Limited Rounds of Adaptivity: Coin Tossing, Multi-Armed Bandits, and Ranking from Pairwise Comparisons", _Proceedings of Machine Learning Research_ 65 (2017).</small>
+- <small><sup id=Note11>(11)</sup> Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</small>
 
 <a id=License></a>
 ## License

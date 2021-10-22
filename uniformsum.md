@@ -1,10 +1,10 @@
-# Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Numbers
+# Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates
 
 [**Peter Occil**](mailto:poccil14@gmail.com)
 
 **2020 Mathematics Subject Classification:** 68W20, 60-08.
 
-This page presents new algorithms to sample the sum of uniform(0, 1) random numbers and the ratio of two uniform(0, 1) random numbers, with the help of [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) (PSRNs), with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including **SampleGeometricBag** and **FillGeometricBag**.
+This page presents new algorithms to sample the sum of uniform(0, 1) random variates and the ratio of two uniform(0, 1) random variates, with the help of [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html) (PSRNs), with arbitrary precision and without relying on floating-point arithmetic.  See that page for more information on some of the algorithms made use of here, including **SampleGeometricBag** and **FillGeometricBag**.
 
 The algorithms on this page work no matter what base the digits of the partially-sampled number are stored in (such as base 2 for decimal or base 10 for binary), unless noted otherwise.
 
@@ -14,17 +14,17 @@ The algorithms on this page work no matter what base the digits of the partially
 - [**Contents**](#Contents)
 - [**About the Uniform Sum Distribution**](#About_the_Uniform_Sum_Distribution)
 - [**Finding Parameters**](#Finding_Parameters)
-- [**Sum of Two Uniform Random Numbers**](#Sum_of_Two_Uniform_Random_Numbers)
-- [**Sum of Three Uniform Random Numbers**](#Sum_of_Three_Uniform_Random_Numbers)
-- [**Ratio of Two Uniform Random Numbers**](#Ratio_of_Two_Uniform_Random_Numbers)
-- [**Reciprocal of Uniform Random Number**](#Reciprocal_of_Uniform_Random_Number)
+- [**Sum of Two Uniform Random Variates**](#Sum_of_Two_Uniform_Random_Variates)
+- [**Sum of Three Uniform Random Variates**](#Sum_of_Three_Uniform_Random_Variates)
+- [**Ratio of Two Uniform Random Variates**](#Ratio_of_Two_Uniform_Random_Variates)
+- [**Reciprocal of Uniform Random Variate**](#Reciprocal_of_Uniform_Random_Variate)
 - [**Notes**](#Notes)
 - [**License**](#License)
 
 <a id=About_the_Uniform_Sum_Distribution></a>
 ## About the Uniform Sum Distribution
 
-The sum of _n_ uniform(0, 1) random numbers has the following probability density function (PDF) (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
+The sum of _n_ uniform(0, 1) random variates has the following probability density function (PDF) (see [**MathWorld**](https://mathworld.wolfram.com/UniformSumDistribution.html)):
 
 &nbsp;&nbsp;&nbsp;&nbsp;_f_(_x_) = (&sum;<sub>_k_ = 0, ..., _n_</sub> (&minus;1)<sup>_k_</sup> * choose(_n_, _k_) * (_x_ &minus; _k_)<sup>_n_ &minus; 1</sup> * sign(_x_ &minus; _k_)) / (2*(n&minus;1)!),
 
@@ -47,7 +47,7 @@ The samplers given below for the uniform sum logically work as follows:
     where _a_\[_k_\] are the control points and _m_ is the polynomial's degree (here, _n_ &minus; 1). In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _x_ = 0, and 0.6 when _x_ = 1.  (Note that the curve is not at 0.3 when _x_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 
     Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.
-4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random number.)
+4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random variate.)
 5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\]. (See (Goyal and Sigman 2012)<sup>[**(2)**](#Note2)</sup>.)
 6. If the PSRN is accepted, the sampler optionally fills it up with uniform random digits, then sets the PSRN's integer part to _i_, then the sampler returns the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.
 
@@ -56,14 +56,14 @@ The samplers given below for the uniform sum logically work as follows:
 
 Using the uniform sum sampler for an arbitrary _n_ requires finding the Bernstein control points for each of the _n_ pieces of the uniform sum PDF.  This can be found, for example, with the Python code below, which uses the SymPy computer algebra library.  In the code:
 
-- `unifsum(x,n,v)` calculates the PDF of the sum of `n` uniform random numbers when the variable `x` is shifted by `v` units.
-- `find_control_points` returns the control points for each piece of the PDF for the sum of `n` uniform random numbers, starting with piece 0.
+- `unifsum(x,n,v)` calculates the PDF of the sum of `n` uniform random variates when the variable `x` is shifted by `v` units.
+- `find_control_points` returns the control points for each piece of the PDF for the sum of `n` uniform random variates, starting with piece 0.
 - `find_areas` returns the relative areas for each piece of that PDF.  This can be useful to implement a variant of the sampler above, as detailed later in this section.
 
 ```
 def unifsum(x,n,v):
     # Builds up the PDF at x (with offset v)
-    # of the sum of n uniform random numbers
+    # of the sum of n uniform random variates
     ret=0
     x=x+v # v is an offset
     for k in range(n+1):
@@ -118,7 +118,7 @@ def find_control_points(n, scale_pieces=False):
 
 The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)<sup>[**(3)**](#Note3)</sup>.
 
-For example, if _n_ = 4 (so a sum of four uniform random numbers is desired), the following control points are used for each piece of the PDF:
+For example, if _n_ = 4 (so a sum of four uniform random variates is desired), the following control points are used for each piece of the PDF:
 
 | Piece | Control Points |
  --- | --- |
@@ -143,7 +143,7 @@ Notice the following:
     - Piece 0: 0, 0, ..., 0, 1/((_n_ &minus; 1)!), where (_n_ &minus; 1)! = 1\*2\*3\*...\*(_n_&minus;1).
     - Piece _n_ &minus; 1: 1/((_n_ &minus; 1)!), 0, 0, ..., 0.
 
-If the areas of the PDF's pieces are known in advance (and SymPy makes them easy to find as the `find_areas` method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random number there will be sampled:
+If the areas of the PDF's pieces are known in advance (and SymPy makes them easy to find as the `find_areas` method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random variate there will be sampled:
 
 - Step 2 is changed to read: "An integer in \[0, _n_\) is chosen with probability proportional to the corresponding piece's area, call the integer _i_, then the piece identified by _i_ is chosen.  There are many [**algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement) this way, but it's recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup> comes within 6 bits of the optimal number of random bits used on average."
 - The last sentence in step 6 is changed to read: "If the PSRN is not accepted, the sampler starts over from step 3."  With this, the same piece is sampled again.
@@ -160,10 +160,10 @@ If the areas of the PDF's pieces are known in advance (and SymPy makes them easy
 | 2 | 1, 1, 1/2, 1/4 |
 | 3 | 1, 0, 0, 0 |
 
-<a id=Sum_of_Two_Uniform_Random_Numbers></a>
-## Sum of Two Uniform Random Numbers
+<a id=Sum_of_Two_Uniform_Random_Variates></a>
+## Sum of Two Uniform Random Variates
 
-The following algorithm samples the sum of two uniform random numbers.
+The following algorithm samples the sum of two uniform random variates.
 
 1. Create a positive-sign zero-integer-part uniform PSRN (partially-sampled random number), call it _ret_.
 2. Generate an unbiased random bit (that is, either 0 or 1, chosen with equal probability).
@@ -185,7 +185,7 @@ And here is Python code that implements this algorithm. It uses floating-point a
 ```
 def sum_of_uniform(bern, precision=53):
     """ Exact simulation of the sum of two uniform
-          random numbers. """
+          random variates. """
     bag=[]
     rb=bern.randbit()
     while True:
@@ -201,7 +201,7 @@ def sum_of_uniform(bern, precision=53):
 
 def sum_of_uniform_base2(bern, precision=53):
     """ Exact simulation of the sum of two uniform
-          random numbers (base 2). """
+          random variates (base 2). """
     if bern.randbit()==1:
       g=0
       while bern.randbit()==0:
@@ -218,15 +218,15 @@ def sum_of_uniform_base2(bern, precision=53):
       return bern.fill_geometric_bag(bag) + 1.0
 ```
 
-<a id=Sum_of_Three_Uniform_Random_Numbers></a>
-## Sum of Three Uniform Random Numbers
+<a id=Sum_of_Three_Uniform_Random_Variates></a>
+## Sum of Three Uniform Random Variates
 
-The following algorithm samples the sum of three uniform random numbers.
+The following algorithm samples the sum of three uniform random variates.
 
 1. Create a positive-sign zero-integer-part uniform PSRN, call it _ret_.
 2. Choose an integer in [0, 6), uniformly at random. (With this, the left piece is chosen at a 1/6 chance, the right piece at 1/6, and the middle piece at 2/3, corresponding to the relative areas occupied by the three pieces.)
 3. Remove all digits from _ret_.
-4. If 0 was chosen by step 2, we will sample from the left piece of the function for the sum of three uniform random numbers.  This piece runs along the interval \[0, 1\) and is a polynomial with Bernstein coefficients of (0, 1, 1/2) (and is thus a Bézier curve with those control points).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:
+4. If 0 was chosen by step 2, we will sample from the left piece of the function for the sum of three uniform random variates.  This piece runs along the interval \[0, 1\) and is a polynomial with Bernstein coefficients of (0, 1, 1/2) (and is thus a Bézier curve with those control points).  Due to the particular form of the control points, the piece can be sampled in one of the following ways:
 
     - Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_ with probability 1/2.  This is the most "naïve" approach.
     - Call the **SampleGeometricBag** algorithm twice on _ret_.  If both of these calls return 1, then accept _ret_.  This version of the step is still correct since it merely scales the polynomial so its upper bound is closer to 1, which is the top of the left piece, thus improving the acceptance rate of this step.
@@ -248,7 +248,7 @@ And here is Python code that implements this algorithm.
 ```
 def sum_of_uniform3(bern):
     """ Exact simulation of the sum of three uniform
-          random numbers. """
+          random variates. """
     r=6
     while r>=6:
        r=bern.randbit() + bern.randbit() * 2 + bern.randbit() * 4
@@ -280,10 +280,10 @@ def sum_of_uniform3(bern):
              return 2.0 + bern.fill_geometric_bag(bag)
 ```
 
-<a id=Ratio_of_Two_Uniform_Random_Numbers></a>
-## Ratio of Two Uniform Random Numbers
+<a id=Ratio_of_Two_Uniform_Random_Variates></a>
+## Ratio of Two Uniform Random Variates
 
-The ratio of two uniform(0,1) random numbers has the following PDF (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
+The ratio of two uniform(0,1) random variates has the following PDF (see [**MathWorld**](https://mathworld.wolfram.com/UniformRatioDistribution.html)):
 
 - 1/2 if _x_ >= 0 and _x_ <= 1,
 - ( 1/ _x_<sup>2</sup>) / 2 if _x_ > 1, and
@@ -291,7 +291,7 @@ The ratio of two uniform(0,1) random numbers has the following PDF (see [**MathW
 
 The following algorithm simulates this PDF.
 
-1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random number.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**), then return the PSRN.
+1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), we have a uniform(0, 1) random variate.  Create a positive-sign zero-integer-part uniform PSRN, then optionally fill the PSRN with uniform random digits as necessary to give the number's fractional part the desired number of digits (similarly to **FillGeometricBag**), then return the PSRN.
 2. At this point, the result will be 1 or greater.  Set _intval_ to 1 and set _size_ to 1.
 3. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), go to step 4.  Otherwise, add _size_ to _intval_, then multiply _size_ by 2, then repeat this step.  (This step chooses an interval beyond 1, taking advantage of the fact that the area under the PDF between 1 and 2 is 1/4, between 2 and 4 is 1/8, between 4 and 8 is 1/16, and so on, so that an appropriate interval is chosen with the correct probability.)
 4. Generate an integer in the interval [_intval_, _intval_ + _size_) uniformly at random, call it _i_.
@@ -316,7 +316,7 @@ def numerator_div(bern, numerator, intpart, bag):
       if bern.geometric_bag(bag)==1: return 0
 
 def ratio_of_uniform(bern):
-    """ Exact simulation of the ratio of uniform random numbers."""
+    """ Exact simulation of the ratio of uniform random variates."""
     # First, simulate the integer part
     if bern.randbit():
        # This is 0 to 1, which follows a uniform distribution
@@ -343,15 +343,15 @@ def ratio_of_uniform(bern):
              return intpart + bern.fill_geometric_bag(bag)
 ```
 
-<a id=Reciprocal_of_Uniform_Random_Number></a>
-## Reciprocal of Uniform Random Number
+<a id=Reciprocal_of_Uniform_Random_Variate></a>
+## Reciprocal of Uniform Random Variate
 
-The reciprocal of a uniform(0, 1) random number has the PDF&mdash;
+The reciprocal of a uniform(0, 1) random variate has the PDF&mdash;
 
 - 1 / _x_<sup>2</sup> if _x_ > 1, and
 - 0 otherwise.
 
-The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random numbers, except step 1 is omitted.
+The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.
 
 <a id=Notes></a>
 ## Notes

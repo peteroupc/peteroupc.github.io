@@ -197,7 +197,7 @@ In the following algorithms:
 -  choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Manolopoulos 2002)<sup>[**(5)**](#Note5)</sup>.  For every _m_>0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 - _n_! = 1\*2\*3\*...\*_n_ is also known as _n_ factorial.
 - The instruction to "generate a uniform(0, 1) random variate" can be implemented&mdash;
-    - by creating a [**uniform partially-sampled random variate (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
+    - by creating a [**uniform partially-sampled random number (PSRN)**](https://peteroupc.github.io/exporand.html) with a positive sign, an integer part of 0, and an empty fractional part (most accurate), or
     - by generating a uniform random variate in the half-open interval [**0, 1) (e.g., `RNDRANGEMaxExc(0, 1)` in "[**Randomization and Sampling Methods**](https://peteroupc.github.io/randomfunc.html)" (less accurate).
 - The instruction to "generate an exponential random variate" can be implemented&mdash;
     - by creating an empty [**exponential PSRN**](https://peteroupc.github.io/exporand.html) (most accurate), or
@@ -375,7 +375,10 @@ where&mdash;
 
 An extension to this algorithm, not mentioned in the Flajolet et al. paper, is the use of stochastic grammars with a bigger alphabet than two "letters".  For example, in the case of _ternary stochastic grammars_, the alphabet size is 3 and _&beta;_ is 3 in the algorithm above.  In general, for <em>_&beta;_-ary stochastic grammars</em>, the alphabet size is _&beta;_, which can be any integer 2 or greater.
 
-> **Note:** The _radius of convergence_ of OGF is the greatest number _&rho;_ such that the function is defined on the interval [0, _&rho;_).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987)<sup>[**(20)**](#Note20)</sup>.  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
+> **Notes:**
+>
+> 1. The _radius of convergence_ of OGF is the greatest number _&rho;_ such that the function is defined on the interval [0, _&rho;_).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987)<sup>[**(20)**](#Note20)</sup>.  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
+> 2. The number of flips used by this algorithm grows without bound as _&lambda;_ approaches 1.
 >
 > **Examples:**
 >
@@ -425,9 +428,9 @@ In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ 
 
 One of these cases is when _f_(_&lambda;_) can be written as&mdash;
 
-_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
+_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>1</sup> + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
 
-which is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
+which is an alternating series, where _d_\[_i_\] must all be in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
 
 The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
 
@@ -438,11 +441,13 @@ The following is the general algorithm for this kind of series, called the **gen
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-Another case is when _f_(_&lambda;_) can be written as&mdash;
+More generally, if _f_(_&lambda;_) can be written as&mdash;
 
-_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...,
+_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _g_(_&lambda;_)<sup>1</sup> + _d[2]_ * _g_(_&lambda;_)<sup>2</sup> &minus; ...,
 
-which, again, is an alternating series where _d_\[_i_\] are all in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).  In that case, modify the general martingale algorithm by adding the following after step 3: "3a. Repeat step 3 once."  (Examples of this kind of series are found in sin(_&lambda;_) and cos(_&lambda;_).)
+where _d_\[_i_\] are as before and _g_(_&lambda;_) is a factory function, step 3 is rewritten as "3. If _w_ is not 0, run a Bernoulli factory algorithm for _g_(_&lambda;_) using the input coin, and multiply _w_ by the result."
+
+> **Example:** If _f_ can be written as&mdash;<br>_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...<br>= _d[0]_ &minus; _d[1]_ * (_&lambda;_<sup>2</sup>)<sup>1</sup> + _d[2]_ * (_&lambda;_<sup>2</sup>)<sup>2</sup> &minus; ...,<br> then _g_(_&lambda;_) = _&lambda;_<sup>2</sup>, so that the algorithm above can be used, except step 3 is "3. If _w_ is not 0, flip the input coin twice and multiply _w_ by each result of the flip."
 
 ----
 
@@ -1231,7 +1236,7 @@ In this algorithm, _c_ is a rational number that must be in the interval (0, 6],
 3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
 4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _cprod_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _cprod_ / _fac_.
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then multiply _cprod_ by _c_, then go to step 4.
+6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then multiply _cprod_ by _c_, then go to step 3.
 
 <a id=sin___lambda></a>
 #### sin(_&lambda;_)
@@ -1340,6 +1345,7 @@ Algorithms in bold are given in this page.
 | _&nu;_ * _&lambda;_ | (_Logical AND_ or _Product_. Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&mu;_ = 0. _&nu;_ and _&lambda;_ are unknown heads probabilities of two coins.)<br>Flip the _&nu;_ input coin and the _&lambda;_ input coin.  Return 1 if both flips return 1, and 0 otherwise. |
 | (_&lambda;_ + _&mu;_)/2 = (1/2)\*_&lambda;_ + (1/2)\*_&mu;_ | (_Mean_. Nacu and Peres 2005, proposition 14(iii)<sup>[**(16)**](#Note16)</sup>; Flajolet et al., 2010<sup>[**(1)**](#Note1)</sup>.  Special case of _&nu;_ * _&lambda;_ + (1 &minus; _&nu;_) * _&mu;_ with _&nu;_ = 1/2. _&lambda;_ and _&mu;_ are unknown heads probabilities of two coins.)<br> Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the _&lambda;_ input coin and return the result.  Otherwise, flip the _&mu;_ input coin and return the result. |
 | 1 &minus; ln(1+_&lambda;_) | Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.<sup>[**(51)**](#Note51)</sup> |
+| sin(sqrt(_&lambda;_)\*sqrt(_c_)) / (sqrt(_&lambda;_)\*sqrt(_c_)) | (_c_ is a rational number in (0, 6].  _&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for  **sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**, except delete the sentence "Do this step again." |
 
 <a id=Algorithms_for_Specific_Constants></a>
 ### Algorithms for Specific Constants
