@@ -141,6 +141,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
 A _Bernoulli factory_ (Keane and O'Brien 1994)<sup>[**(2)**](#Note2)</sup> is an algorithm that takes an input coin (a method that returns 1, or heads, with an unknown probability, or 0, or tails, otherwise) and returns 0 or 1 with a probability that depends on the input coin's probability of heads.
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
+- The Bernoulli factory's outputs are statistically independent.
 - Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the biased coin.
 - A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].
 
@@ -443,7 +444,7 @@ The following is the general algorithm for this kind of series, called the **gen
 
 More generally, if _f_(_&lambda;_) can be written as&mdash;
 
-_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _g_(_&lambda;_)<sup>1</sup> + _d[2]_ * _g_(_&lambda;_)<sup>2</sup> &minus; ...,
+_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * (_g_(_&lambda;_))<sup>1</sup> + _d[2]_ * (_g_(_&lambda;_))<sup>2</sup> &minus; ...,
 
 where _d_\[_i_\] are as before and _g_(_&lambda;_) is a factory function, step 3 is rewritten as "3. If _w_ is not 0, run a Bernoulli factory algorithm for _g_(_&lambda;_) using the input coin, and multiply _w_ by the result."
 

@@ -794,7 +794,7 @@ A related topic is a Bernoulli factory that takes a coin with unknown probabilit
 
 Obviously, any single-output Bernoulli factory can produce multiple outputs by running itself multiple times.  But for some functions _f_, there may be a more efficient algorithm in terms of input coin flips.
 
-Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100].  Define the _entropy bound_ as _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is the Shannon entropy function.  The question is:
+Let _J_ be a closed interval on (0, 1), such as [1/100, 99/100].  Define the _entropy bound_ as _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is related to the Shannon entropy function.  The question is:
 
 _When the probability &lambda; can be any value in J, is there a multiple-output Bernoulli factory for f(&lambda;) with an expected number of input coin flips per sample that is arbitrarily close to the entropy bound?  Call such a Bernoulli factory an **optimal factory**._
 

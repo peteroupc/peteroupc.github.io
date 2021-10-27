@@ -1329,7 +1329,7 @@ For fixed-point number formats representing multiples of 1/`n`, these methods ar
 <a id=For_Rational_Number_Formats></a>
 #### For Rational Number Formats
 
-For rational number formats with a fixed denominator, the `RNDRANGE` family can be implemented in the numerator as given in the previous section for fixed-point formats.
+A _rational number_ is a ratio of integers.  If the rational number's denominator is `n` (which must be 1 or greater), use the previous section to generate its numerator, which will be a multiple of 1/`n`.
 
 <a id=For_Floating_Point_Number_Formats></a>
 #### For Floating-Point Number Formats
