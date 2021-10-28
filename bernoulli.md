@@ -378,7 +378,7 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 
 > **Notes:**
 >
-> 1. The _radius of convergence_ of OGF is the greatest number _&rho;_ such that the function is defined on the interval [0, _&rho;_).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987)<sup>[**(20)**](#Note20)</sup>.  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
+> 1. The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987)<sup>[**(20)**](#Note20)</sup>.  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
 > 2. The number of flips used by this algorithm grows without bound as _&lambda;_ approaches 1.
 >
 > **Examples:**
