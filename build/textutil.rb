@@ -25,7 +25,7 @@ def prepareMarkdown(data)
   data=data.gsub(/\)<\/sup>\:/,")</sup>\:")
   data=data.gsub(/([\s\S])\[\^(\d+)\](?!\s*\:)/){
      next $& if $1=="\n"
-     next "#{$1}<sup>[(#{$2})](\#Note#{$2})</sup>"
+     next "#{$1}<sup>[#{$2}](\#Note#{$2})</sup>"
   }
   data=data.gsub(/<sup>\s*\[(?:\*\*)?\(\d+\)(?:\*\*)?\]\s*\(\#([^>]+)\)\s*<\/sup>/){
      noteref=$1
@@ -50,7 +50,7 @@ def prepareMarkdown(data)
      #next "<sup>[(#{newref+1})](##{newrefid})</sup>"
      next "[^#{newref+1}]"
   }
-  data=data.gsub( /([^\\])\)\s*\[\^(\d+)\]/ ) { $1+"\\) [^"+$2+"]" } #/
+  data=data.gsub( /([^\\])\)\s*\[\^(\d+)\]/ ) { $1+"\\)[^"+$2+"]" } #/
   data=data.gsub( /<<([^\|\n>]*)\|([^\|]+?)>>/ ){
      noteref=$1||""
      notedata=$2
@@ -67,14 +67,13 @@ def prepareMarkdown(data)
      noteref=noterefparen+"[^#{newrefid}]"
      next noteref
   }
-
   #data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
   #  next newnotetexts.join("\n")+"\n\n"
   #}
   data=data.gsub(/^(\#\#+)[ \t]+Notes[ \t]*\n+[\s\S]*?(?=\#\#|\z)/){
    p1=$1
    p2=$2
-   ret="#{p1} #{p2}\n\n"+newnotetexts.join("\n\n")+"\n\n"
+   ret="#{p1} Notes\n\n"+newnotetexts.join("\n\n")+"\n\n"
   }
   data.scan(/^(\#\#+)\s+(.*)\s+?/){|heading|
    h0=heading[0]

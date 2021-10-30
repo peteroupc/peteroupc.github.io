@@ -19,7 +19,7 @@
 <li><a href="#More_Algorithms_for_Arbitrary_Precision_Sampling"><strong>More Algorithms for Arbitrary-Precision Sampling</strong></a></li>
 <li><a href="#Randomized_Estimation_Algorithms"><strong>Randomized Estimation Algorithms</strong></a></li>
 <li><a href="#Color_Topics_for_Programmers"><strong>Color Topics for Programmers</strong></a></li>
-<li><a href="#1_Keane_M_S_and_O_Brien_G_L_A_Bernoulli_factory_ACM_Transactions_on_Modeling_and_Computer_Simulation_4_2_1994">[^1]: Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</a></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -50,7 +50,7 @@
 
 <p><a href="https://peteroupc.github.io/bernoulli.html"><strong>https://peteroupc.github.io/bernoulli.html</strong></a></p>
 
-<p>This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994) [^1].</p>
+<p>This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as <em>Bernoulli factories</em>.  A <em>factory function</em> is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O&#39;Brien 1994)[^1].</p>
 
 <p>Attention is drawn to the requests and open questions on that page:</p>
 
@@ -70,7 +70,7 @@
 <li>Should not use rational arithmetic or increasingly complex approximations, except as a last resort.</li>
 </ul>
 
-<p>See also Flajolet et al. (2010) [^2].  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:</p>
+<p>See also Flajolet et al. (2010)[^2].  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:</p>
 
 <ul>
 <li>For irrational constants:
@@ -105,7 +105,7 @@
 
 <p>Obviously, these answers depend on the specific permutation class and/or distributions <em>D</em> and <em>E</em>.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question <a href="https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations"><strong>Probabilities arising from permutations</strong></a>.</p></li>
 <li>Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;.</li>
-<li><p>Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011) <a href="see" title="[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)">^3</a> to simulate a factory function <em>f</em>(<em>&lambda;</em>) is as follows.  For each <em>n</em> starting with 1:</p>
+<li><p>Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011)<a href="see" title="[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)">^3</a> to simulate a factory function <em>f</em>(<em>&lambda;</em>) is as follows.  For each <em>n</em> starting with 1:</p>
 
 <ol>
 <li>Flip the input coin, and compute the <em>n</em><sup>th</sup> upper and lower bounds of <em>f</em> given the number of heads so far, call them <em>L</em> and <em>U</em>.</li>
@@ -113,7 +113,7 @@
 </ol>
 
 <p>These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to <em>f</em>, where <em>L</em> or <em>L&prime;</em> and <em>U</em> or <em>U&prime;</em> are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to <em>f</em>) are rational functions whose coefficients are integers? Rational functions whose coefficients are rational numbers? Arbitrary approximating functions?</p></li>
-<li>A <em>pushdown automaton</em> is a state machine that holds a stack of symbols.  Mossel and Peres (2005) [^4] investigated which functions (<em>f</em>(<em>&lambda;</em>)) can be simulated by these machines when they&#39;re given an infinite &quot;tape&quot; of flips of a coin that shows heads with probability <em>&lambda;</em>.  They showed that pushdown automata can simulate only <em>algebraic functions</em>, but perhaps not all of them. The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  Can it simulate the functions min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) and <em>&lambda;</em><sup>1/<em>p</em></sup> where <em>p</em>&gt;2 is a prime number?  I have written an <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions"><strong>article appendix</strong></a> showing my progress, but are there other results on this question?</li>
+<li>A <em>pushdown automaton</em> is a state machine that holds a stack of symbols.  Mossel and Peres (2005)[^4] investigated which functions (<em>f</em>(<em>&lambda;</em>)) can be simulated by these machines when they&#39;re given an infinite &quot;tape&quot; of flips of a coin that shows heads with probability <em>&lambda;</em>.  They showed that pushdown automata can simulate only <em>algebraic functions</em>, but perhaps not all of them. The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  Can it simulate the functions min(<em>&lambda;</em>, 1&minus;<em>&lambda;</em>) and <em>&lambda;</em><sup>1/<em>p</em></sup> where <em>p</em>&gt;2 is a prime number?  I have written an <a href="https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions"><strong>article appendix</strong></a> showing my progress, but are there other results on this question?</li>
 <li>The following is an open question in Nacu and Peres 2005.  Let <em>J</em> be a closed interval on (0, 1), such as [1/100, 99/100], and let <em>f</em>(<em>&lambda;</em>) be a function that admits a Bernoulli factory.  Suppose there is an algorithm that takes a coin with unknown probability of heads <em>&lambda;</em> and produces one or more samples of the probability <em>f</em>(<em>&lambda;</em>).  When the probability <em>&lambda;</em> can be any value in <em>J</em>, is it possible for this algorithm to have an expected number of input coin flips per sample that is arbitrarily close to the so-called <em>entropy bound</em>?  The entropy bound is <em>h</em>(<em>f</em>(<em>&lambda;</em>))/<em>h</em>(<em>&lambda;</em>) where <em>h</em>(<em>x</em>) = &minus;<em>x</em>*ln(<em>x</em>)&minus;(1&minus;<em>x</em>)*ln(1&minus;<em>x</em>) is related to the Shannon entropy function.  Does the answer change if the algorithm can also use a separate source of unbiased random bits?  See my section &quot;<a href="https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory"><strong>Multiple-Output Bernoulli Factory</strong></a>&quot;.</li>
 <li>A factory function <em>f</em>(<em>&lambda;</em>) is <em>strongly simulable</em> if there is an algorithm to toss heads with probability <em>f</em>(<em>&lambda;</em>) using only a coin that shows heads with probability <em>&lambda;</em> and no other randomness.  Keane and O&#39;Brien (1994) showed already that <em>f</em>(<em>&lambda;</em>) is strongly simulable if neither 0 nor 1 is in <em>f</em>&#39;s domain.  It&#39;s also easy to show that if <em>f</em> is strongly simulable, then <em>f</em>(0) and <em>f</em>(1) must each be 0, 1, or undefined.  Is this a <em>sufficient condition</em> to be strongly simulable?  I have written an <a href="https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate"><strong>article appendix</strong></a> showing my progress, but are there other results on this question?</li>
 </ol>
@@ -205,9 +205,11 @@
 <li>Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.</li>
 </ul>
 
-<p><a id=1_Keane_M_S_and_O_Brien_G_L_A_Bernoulli_factory_ACM_Transactions_on_Modeling_and_Computer_Simulation_4_2_1994></a></p>
+<p><a id=Notes></a></p>
 
-<h2>[^1]: Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</h2>
+<h2>Notes</h2>
+
+<p>[^1]: Keane, M. S., and O&#39;Brien, G. L., &quot;A Bernoulli factory&quot;, ACM Transactions on Modeling and Computer Simulation 4(2), 1994.</p>
 
 <p>[^2]: Flajolet, P., Pelletier, M., Soria, M., &quot;<a href="https://arxiv.org/abs/0906.5560"><strong>On Buffon machines and numbers</strong></a>&quot;, arXiv:0906.5560  [math.PR], 2010.</p>
 

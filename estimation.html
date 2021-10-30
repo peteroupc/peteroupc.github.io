@@ -13,7 +13,7 @@
 
 <p>The algorithms are described to make them easy to implement by programmers.</p>
 
-<p>Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (e.g., estimators that average an increasing number of sample points).  See, for example, Vihola (2018) [^1].</p>
+<p>Not yet covered are unbiased mean estimation algorithms that take a sequence of estimators that get better and better at estimating the desired mean (e.g., estimators that average an increasing number of sample points).  See, for example, Vihola (2018)[^1].</p>
 
 <p><a id=Concepts></a></p>
 
@@ -38,7 +38,7 @@
 
 <h2>A Relative-Error Algorithm for a Bernoulli Stream</h2>
 
-<p>The following algorithm from Huber (2017) [^2] estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
+<p>The following algorithm from Huber (2017)[^2] estimates the probability that a stream of random zeros and ones produces the number 1.  The algorithm&#39;s relative error is independent of that probability, however, and the algorithm produces <em>unbiased</em> estimates.  Specifically, the stream of numbers has the following properties:</p>
 
 <ul>
 <li>The stream produces only zeros and ones (that is, the stream follows the <strong>Bernoulli distribution</strong>).</li>
@@ -74,7 +74,7 @@
 </ol>
 
 <p>and we can use the new stream of zeros and ones in the algorithm to get an unbiased estimate of the unknown mean.</p></li>
-<li>As can be seen in Feng et al. (2016) [^3], the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
+<li>As can be seen in Feng et al. (2016)[^3], the following is equivalent to steps 2 and 3 of <em>Algorithm A</em>: &quot;Let G be 0. Do this <em>k</em> times: &#39;Flip a coin until it shows heads, let <em>r</em> be the number of flips (including the last), generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated probability of heads is then (<em>k</em>&minus;1)/G.&quot;, and the following is likewise equivalent if the stream of random variates follows a (zero-truncated) &quot;geometric&quot; distribution with unknown mean: &quot;Let G be 0. Do this <em>k</em> times: &#39;Take a sample from the stream, call it <em>r</em>, generate a gamma random variate with shape parameter <em>r</em> and scale 1, and add that variate to G.&#39; The estimated mean is then (<em>k</em>&minus;1)/G.&quot; (This is with the understanding that the geometric distribution is defined differently in different academic works.)  The geometric algorithm produces unbiased estimates just like <em>Algorithm A</em>.</li>
 <li>The generation of a gamma random variate and the division by that variate can cause numerical errors in practice, such as rounding and cancellations, unless care is taken.</li>
 </ol>
 </blockquote>
@@ -83,7 +83,7 @@
 
 <h2>A Relative-Error Algorithm for a Bounded Stream</h2>
 
-<p>The following algorithm comes from Huber and Jones (2019) [^4]; see also Huber (2017) [^5].  It estimates the expected value of a stream of random variates with the following properties:</p>
+<p>The following algorithm comes from Huber and Jones (2019)[^4]; see also Huber (2017)[^5].  It estimates the expected value of a stream of random variates with the following properties:</p>
 
 <ul>
 <li>The numbers in the stream lie in the closed interval [0, 1].</li>
@@ -154,7 +154,7 @@
 
 <h2>An Absolute-Error Adaptive Algorithm</h2>
 
-<p>The following algorithm comes from Kunsch et al. (2019) [^6].  It estimates the mean of a stream of random variates with the following properties:</p>
+<p>The following algorithm comes from Kunsch et al. (2019)[^6].  It estimates the mean of a stream of random variates with the following properties:</p>
 
 <ul>
 <li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m.</li>
@@ -172,7 +172,7 @@
 <li><em>&epsilon;</em>, <em>&delta;</em>: Both parameters must be greater than 0, and <em>&delta;</em> must be less than 1.  The algorithm will return an estimate within <em>&epsilon;</em> of the true expected value with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers.  The algorithm is not guaranteed to maintain a finite mean squared error or expected error in its estimates.</li>
 <li><em>p</em>: The degree of the <em>p</em><sup>th</sup> c.a.m. that the algorithm will estimate to determine the mean.</li>
 <li><em>q</em>: The degree of the <em>q</em><sup>th</sup> c.a.m.  <em>q</em> must be greater than <em>p</em>.</li>
-<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012) [^7] [^8].) <em>&kappa;</em> may not be less than 1.</li>
+<li><em>&kappa;</em>: Maximum value allowed for the following value: the <em>q</em><sup>th</sup> c.a.m.&#39;s  <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root.  (If <em>p</em> = 2 and <em>q</em> = 4, this is the maximum value allowed for the kurtosis&#39;s 4th root (Hickernell et al. 2012)[^7] [^8].) <em>&kappa;</em> may not be less than 1.</li>
 </ul>
 
 <p>Both <em>p</em> and <em>q</em> must be 1 or greater and are usually integers.</p>
@@ -229,7 +229,7 @@
 
 <ol>
 <li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
-<li>Theorem 3.4 of Kunsch et al. (2019) [^6] shows that there is no mean estimation algorithm that&mdash;
+<li>Theorem 3.4 of Kunsch et al. (2019)[^6] shows that there is no mean estimation algorithm that&mdash;
 
 <ul>
 <li>produces an estimate within a user-specified error tolerance (in terms of <em>absolute error</em>, as opposed to <em>relative error</em>) with probability greater than a user-specified value, and</li>
@@ -279,7 +279,7 @@
 <li>Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question; see also Jiang and Hickernell (2014) [^9].  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
+<p>A simpler version of <em>Algorithm D</em> was given as an answer to the linked-to question; see also Jiang and Hickernell (2014)[^9].  As with <em>Algorithm D</em>, this algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will be in the interval [0, 1].  The algorithm, called <strong>Algorithm E</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
@@ -287,7 +287,7 @@
 <li>(Calculate the sample mean.) Get <em>n</em> samples from the stream, sum them, then divide the sum by <em>n</em>, then call the result <em>&mu;</em>.  Return <em>f</em>(<em>&mu;</em>).</li>
 </ol>
 
-<p>If the stream is <strong>unbounded</strong> (can take on any real number) and its distribution has a <strong>known upper bound on the standard deviation</strong> <em>&sigma;</em> (<strong>or the variance</strong> <em>&sigma;</em><sup>2</sup>), then a similar algorithm follows from Chebyshev&#39;s inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013) [^7], but is adapted to find the mean for <em>f</em>(<em>x</em>), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers. The algorithm, called <strong>Algorithm F</strong> in this document, follows.</p>
+<p>If the stream is <strong>unbounded</strong> (can take on any real number) and its distribution has a <strong>known upper bound on the standard deviation</strong> <em>&sigma;</em> (<strong>or the variance</strong> <em>&sigma;</em><sup>2</sup>), then a similar algorithm follows from Chebyshev&#39;s inequality.  This was mentioned as Equation 14 in Hickernell et al. (2012/2013)[^7], but is adapted to find the mean for <em>f</em>(<em>x</em>), which must be bounded and continuous on every closed interval of the real line. The algorithm will return an estimate within <em>&epsilon;</em> of <em>f</em>(<strong>E</strong>[<strong>z</strong>]) with probability 1 &minus; <em>&delta;</em> or greater, and the estimate will not go beyond the bounds of the stream&#39;s numbers. The algorithm, called <strong>Algorithm F</strong> in this document, follows.</p>
 
 <ol>
 <li>Calculate <em>&gamma;</em> as given in step 1 of <em>Algorithm D</em>.</li>
@@ -365,7 +365,7 @@ pprint(Max(1,kappa))
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018) [^10], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
+<p><strong>Note:</strong> As an alternative to the usual process of choosing a point uniformly in the <em>whole</em> sampling domain, <em>stratified sampling</em> (Kunsch and Rudolf 2018)[^10], which divides the sampling domain in equally sized boxes and finds the mean of random points in those boxes, can be described as follows (assuming the sampling domain is the <em>d</em>-dimensional hypercube [0, 1]<sup><em>d</em></sup>):</p>
 
 <ol>
 <li>For a sample size <em>n</em>, set <em>m</em> to floor(<em>n</em><sup>1/<em>d</em></sup>), where <em>d</em> is the number of dimensions in the sampling domain (number of components of each point).  Set <em>s</em> to 0.</li>
@@ -396,7 +396,7 @@ pprint(Max(1,kappa))
 
 <p>In this section, ilog(<em>a</em>, <em>r</em>) means either <em>a</em> if <em>r</em> is 0, or max(ln(ilog(<em>a</em>, <em>r</em>&minus;1)), 1) otherwise.</p>
 
-<p>Agarwal et al. (2017) [^11] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
+<p>Agarwal et al. (2017)[^11] called this algorithm &quot;aggressive elimination&quot;, and it can be described as follows.</p>
 
 <ol>
 <li>Let <em>t</em> be ceil((ilog(<em>m</em>, <em>r</em>) + ln(8*<em>k</em>/<em>&delta;</em>)) * 2/(<em>D</em>*<em>D</em>)).</li>
@@ -429,9 +429,11 @@ pprint(Max(1,kappa))
 <li><p>Is it true that <em>Algorithm F</em> remains valid when the sample size <em>n</em> is ceil(abs(<em>M</em>)/(<em>&delta;</em>*<em>&gamma;</em><sup><em>k</em></sup>)), given that the stream&#39;s distribution is known to have a maximum <em>k</em><sup>th</sup> central absolute moment of <em>M</em>?</p></li>
 </ol>
 
-<p><a id=1_Vihola_M_2018_Unbiased_estimators_and_multilevel_Monte_Carlo_Operations_Research_66_2_pp_448_462></a></p>
+<p><a id=Notes></a></p>
 
-<h2>[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</h2>
+<h2>Notes</h2>
+
+<p>[^1]: Vihola, M., 2018. Unbiased estimators and multilevel Monte Carlo. Operations Research, 66(2), pp.448-462.</p>
 
 <p>[^2]: Huber, M., 2017. A Bernoulli mean estimate with known relative error distribution. Random Structures &amp; Algorithms, 50(2), pp.173-182. (preprint in arXiv:1309.5413v2  [math.ST], 2015).</p>
 

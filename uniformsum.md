@@ -18,7 +18,7 @@ The algorithms on this page work no matter what base the digits of the partially
 - [**Sum of Three Uniform Random Variates**](#Sum_of_Three_Uniform_Random_Variates)
 - [**Ratio of Two Uniform Random Variates**](#Ratio_of_Two_Uniform_Random_Variates)
 - [**Reciprocal of Uniform Random Variate**](#Reciprocal_of_Uniform_Random_Variate)
-- [\[^1\]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \\[_n_&minus;_k_+1, _n_\\], then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: \[**https://doi.org/10.1145/820127.820168**\](https://doi.org/10.1145/820127.820168)).  Note that for every _m_&gt;0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.](#1_choose__n___k__1_2_3__n__1__k__1__n__minus__k___n___k___n__minus__k__is_a__binomial_coefficient__or_the_number_of_ways_to_choose__k__out_of__n__labeled_items_It_can_be_calculated_for_example_by_calculating__i___n__minus__i__1_for_each_integer__i__in__n__minus__k__1__n__then_multiplying_the_results_Yannis_Manolopoulos_2002_Binomial_coefficient_computation_recursion_or_iteration_SIGCSE_Bull_34_4_December_2002_65_67_DOI_https_doi_org_10_1145_820127_820168_https_doi_org_10_1145_820127_820168_Note_that_for_every__m__gt_0_choose__m__0_choose__m___m__1_and_choose__m__1_choose__m___m__minus_1__m__also_in_this_document_choose__n___k__is_0_when__k__is_less_than_0_or_greater_than__n)
+- [**Notes**](#Notes)
 - [**License**](#License)
 
 <a id=About_the_Uniform_Sum_Distribution></a>
@@ -46,9 +46,9 @@ The samplers given below for the uniform sum logically work as follows:
 
     where _a_\[_k_\] are the control points and _m_ is the polynomial's degree (here, _n_ &minus; 1). In this case, there will be _n_ control points, which together trace out a 1-dimensional Bézier curve.  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when _x_ = 0, and 0.6 when _x_ = 1.  (Note that the curve is not at 0.3 when _x_ = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)
 
-    Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012\) [^2].
+    Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in \[0, 1\] (Goyal and Sigman 2012\)[^2].
 4. The sampler creates a "coin" made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called **SampleGeometricBag**.  It flips this "coin" _n_ &minus; 1 times and counts the number of times the coin returned 1 this way, call it _j_. (The "coin" will return 1 with probability equal to the to-be-determined uniform random variate.)
-5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\]. (See (Goyal and Sigman 2012\) [^2].)
+5. Based on _j_, the sampler accepts the PSRN with probability equal to the control point _a_\[_j_\]. (See (Goyal and Sigman 2012\)[^2].)
 6. If the PSRN is accepted, the sampler optionally fills it up with uniform random digits, then sets the PSRN's integer part to _i_, then the sampler returns the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.
 
 <a id=Finding_Parameters></a>
@@ -116,7 +116,7 @@ def find_control_points(n, scale_pieces=False):
  return controls
 ```
 
-The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012\) [^3].
+The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012\)[^3].
 
 For example, if _n_ = 4 (so a sum of four uniform random variates is desired), the following control points are used for each piece of the PDF:
 
@@ -145,7 +145,7 @@ Notice the following:
 
 If the areas of the PDF's pieces are known in advance (and SymPy makes them easy to find as the `find_areas` method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random variate there will be sampled:
 
-- Step 2 is changed to read: "An integer in \[0, _n_\) is chosen with probability proportional to the corresponding piece's area, call the integer _i_, then the piece identified by _i_ is chosen.  There are many [**algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement) this way, but it's recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020\) [^4] comes within 6 bits of the optimal number of random bits used on average."
+- Step 2 is changed to read: "An integer in \[0, _n_\) is chosen with probability proportional to the corresponding piece's area, call the integer _i_, then the piece identified by _i_ is chosen.  There are many [**algorithms to choose an integer**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement) this way, but it's recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020\)[^4] comes within 6 bits of the optimal number of random bits used on average."
 - The last sentence in step 6 is changed to read: "If the PSRN is not accepted, the sampler starts over from step 3."  With this, the same piece is sampled again.
 - The following are additional modifications that should be done to the sampler.  However, not applying them does not affect the sampler's correctness.
 
@@ -353,8 +353,10 @@ The reciprocal of a uniform(0, 1) random variate has the PDF&mdash;
 
 The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.
 
-<a id=1_choose__n___k__1_2_3__n__1__k__1__n__minus__k___n___k___n__minus__k__is_a__binomial_coefficient__or_the_number_of_ways_to_choose__k__out_of__n__labeled_items_It_can_be_calculated_for_example_by_calculating__i___n__minus__i__1_for_each_integer__i__in__n__minus__k__1__n__then_multiplying_the_results_Yannis_Manolopoulos_2002_Binomial_coefficient_computation_recursion_or_iteration_SIGCSE_Bull_34_4_December_2002_65_67_DOI_https_doi_org_10_1145_820127_820168_https_doi_org_10_1145_820127_820168_Note_that_for_every__m__gt_0_choose__m__0_choose__m___m__1_and_choose__m__1_choose__m___m__minus_1__m__also_in_this_document_choose__n___k__is_0_when__k__is_less_than_0_or_greater_than__n></a>
-## [^1]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  Note that for every _m_&gt;0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
+<a id=Notes></a>
+## Notes
+
+[^1]: choose(_n_, _k_) = (1\*2\*3\*...\*_n_)/((1\*...\*_k_)\*(1\*...\*(_n_&minus;_k_))) =  _n_!/(_k_! * (_n_ &minus; _k_)!) is a _binomial coefficient_, or the number of ways to choose _k_ out of _n_ labeled items.  It can be calculated, for example, by calculating _i_/(_n_&minus;_i_+1) for each integer _i_ in \[_n_&minus;_k_+1, _n_\], then multiplying the results (Yannis Manolopoulos. 2002. "Binomial coefficient computation: recursion or iteration?", SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [**https://doi.org/10.1145/820127.820168**](https://doi.org/10.1145/820127.820168)).  Note that for every _m_&gt;0, choose(_m_, 0) = choose(_m_, _m_) = 1 and choose(_m_, 1) = choose(_m_, _m_&minus;1) = _m_; also, in this document, choose(_n_, _k_) is 0 when _k_ is less than 0 or greater than _n_.
 
 [^2]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.
 

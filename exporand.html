@@ -15,12 +15,12 @@
 
 <ul>
 <li>while avoiding floating-point arithmetic, and</li>
-<li>to an arbitrary precision and with user-specified error bounds (and thus in an &quot;exact&quot; manner in the sense defined in (Karney 2014) [^1]).</li>
+<li>to an arbitrary precision and with user-specified error bounds (and thus in an &quot;exact&quot; manner in the sense defined in (Karney 2014)[^1]).</li>
 </ul>
 
-<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random variates using random bits (Flajolet and Saheb 1982) [^2], (Karney 2014) [^1], (Devroye and Gravel 2020) [^3], (Thomas and Luk 2008) [^4], but most if not all of them don&#39;t deal with generating exponential PSRNs using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010) [^5] is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.</p>
+<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random variates using random bits (Flajolet and Saheb 1982)[^2], (Karney 2014)[^1], (Devroye and Gravel 2020)[^3], (Thomas and Luk 2008)[^4], but most if not all of them don&#39;t deal with generating exponential PSRNs using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)[^5] is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.</p>
 
-<p>The samplers discussed here also draw on work dealing with a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994) [^6] (Flajolet et al., 2010) [^7], which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
+<p>The samplers discussed here also draw on work dealing with a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)[^6] (Flajolet et al., 2010)[^7], which can simulate an arbitrary probability by transforming biased coins to biased coins.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
 
 <p>This page shows <a href="#Sampler_Code"><strong>Python code</strong></a> for these samplers.</p>
 
@@ -109,7 +109,7 @@
 <li><a href="#Open_Questions"><strong>Open Questions</strong></a></li>
 <li><a href="#Acknowledgments"><strong>Acknowledgments</strong></a></li>
 <li><a href="#Other_Documents"><strong>Other Documents</strong></a></li>
-<li><a href="#1_Karney_C_F_F_Sampling_exactly_from_the_normal_distribution_https_arxiv_org_abs_1303_6257v2_arXiv_1303_6257v2_physics_comp_ph_2014">[^1]: Karney, C.F.F., &quot;[<strong>Sampling exactly from the normal distribution</strong>](https://arxiv.org/abs/1303.6257v2)&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</a></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
@@ -143,7 +143,7 @@
 
 <p>The <em>exponential distribution</em> takes a parameter <em>&lambda;</em>.  Informally speaking, a random variate that follows an exponential distribution is the number of units of time between one event and the next, and <em>&lambda;</em> is the expected average number of events per unit of time.  Usually, <em>&lambda;</em> is equal to 1.</p>
 
-<p>An exponential random variate is commonly generated as follows: <code>-ln(1 - X) / lamda</code>, where <code>X</code> is a uniformly-distributed random real number in the interval [0, 1).  (This particular algorithm, however, is not robust in practice, for reasons that are outside the scope of this document, but see (Pedersen 2018) [^8].)  This page presents an alternative way to sample exponential random variates.</p>
+<p>An exponential random variate is commonly generated as follows: <code>-ln(1 - X) / lamda</code>, where <code>X</code> is a uniformly-distributed random real number in the interval [0, 1).  (This particular algorithm, however, is not robust in practice, for reasons that are outside the scope of this document, but see (Pedersen 2018)[^8].)  This page presents an alternative way to sample exponential random variates.</p>
 
 <p><a id=About_Partially_Sampled_Random_Numbers></a></p>
 
@@ -174,17 +174,17 @@
 <p>The most trivial example of a PSRN is that of the uniform distribution.</p>
 
 <ul>
-<li>Flajolet et al. (2010) [^7] use the term <em>geometric bag</em> to refer to a uniform PSRN in the interval [0, 1] that stores binary (base-2) digits, some of which may be unsampled.  In this case, the PSRN can consist of just a fractional part, which can be implemented as described earlier.</li>
-<li>(Karney 2014) [^1] uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
+<li>Flajolet et al. (2010)[^7] use the term <em>geometric bag</em> to refer to a uniform PSRN in the interval [0, 1] that stores binary (base-2) digits, some of which may be unsampled.  In this case, the PSRN can consist of just a fractional part, which can be implemented as described earlier.</li>
+<li>(Karney 2014)[^1] uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
 </ul>
 
-<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951) [^9] in the binary case.[^10]  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if it was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniform random variate in a given interval.  For example, if the PSRN is 3.356..., then it represents a uniformly distributed random variate in the interval [3.356, 3.357].)</p>
+<p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)[^9] in the binary case.[^10]  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if it was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniform random variate in a given interval.  For example, if the PSRN is 3.356..., then it represents a uniformly distributed random variate in the interval [3.356, 3.357].)</p>
 
 <p><a id=Exponential_Partially_Sampled_Random_Numbers></a></p>
 
 <h3>Exponential Partially-Sampled Random Numbers</h3>
 
-<p>In this document, an <strong>exponential PSRN</strong> (or <strong><em>e-rand</em></strong>, named similarly to Karney&#39;s &quot;u-rands&quot; for partially-sampled uniform random variates (Karney 2014) [^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because <code>-ln(1 - X)</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)</p>
+<p>In this document, an <strong>exponential PSRN</strong> (or <strong><em>e-rand</em></strong>, named similarly to Karney&#39;s &quot;u-rands&quot; for partially-sampled uniform random variates (Karney 2014)[^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because <code>-ln(1 - X)</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)</p>
 
 <p>Algorithms for sampling e-rands are given in the section &quot;Algorithms for the Beta and Exponential Distributions&quot;.</p>
 
@@ -196,11 +196,11 @@
 
 <ul>
 <li>The beta and continuous Bernoulli distributions, as discussed later in this document.</li>
-<li>The standard normal distribution, as shown in (Karney 2014) [^1] by running Karney&#39;s Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020) [^11].</li>
+<li>The standard normal distribution, as shown in (Karney 2014)[^1] by running Karney&#39;s Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)[^11].</li>
 <li>Sampling uniform distributions in [0, <em>n</em>) (not just [0, 1]), is described later in &quot;<a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a>&quot;.)</li>
 </ul>
 
-<p>For all these distributions, the PSRN&#39;s unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or more generally, to so-called &quot;absolutely continuous&quot;[^12] distributions) (Oberhoff 2018) [^13], (Hill and Schürger 2005, Corollary 4.4) [^14].</p>
+<p>For all these distributions, the PSRN&#39;s unsampled trailing digits converge to the uniform distribution, and this also applies to any continuous distribution with a continuous probability density function (or more generally, to so-called &quot;absolutely continuous&quot;[^12] distributions) (Oberhoff 2018)[^13], (Hill and Schürger 2005, Corollary 4.4)[^14].</p>
 
 <p>PSRNs could also be implemented via rejection from the exponential distribution, although no concrete examples are presented here.</p>
 
@@ -214,7 +214,7 @@
 <li>The algorithm relies only on a source of independent and unbiased random bits for randomness.</li>
 <li>The algorithm does not rely on floating-point arithmetic or fixed-precision approximations of irrational or transcendental numbers. (The algorithm may calculate approximations that converge to an irrational number, as long as those approximations use arbitrary precision.)</li>
 <li>The algorithm may use rational arithmetic (such as <code>Fraction</code> in Python or <code>Rational</code> in Ruby), as long as the arithmetic is exact.</li>
-<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2020) [^3] suggests Wasserstein distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
+<li>If the algorithm outputs a PSRN, the number represented by the sampled digits must follow a distribution that is close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>, where <em>b</em> is the PSRN&#39;s base, or radix (such as 2 for binary), and <em>m</em> is the position, starting from 1, of the rightmost sampled digit of the PSRN&#39;s fractional part.  ((Devroye and Gravel 2020)[^3] suggests Wasserstein distance, or &quot;earth-mover distance&quot;, as the distance to use for this purpose.) The number has to be close this way even if the algorithm&#39;s caller later samples unsampled digits of that PSRN at random (e.g., uniformly at random in the case of a uniform PSRN).</li>
 <li>If the algorithm fills a PSRN&#39;s unsampled fractional digits at random (e.g., uniformly at random in the case of a uniform PSRN), so that the number&#39;s fractional part has <em>m</em> digits, the number&#39;s distribution must remain close to the ideal distribution by a distance of not more than <em>b</em><sup>&minus;<em>m</em></sup>.</li>
 </ol>
 
@@ -223,7 +223,7 @@
 
 <ol>
 <li>It is not easy to turn a sampler for a continuous distribution into an algorithm that meets these properties.  Some reasons for this are given in the section &quot;<a href="#Discussion"><strong>Discussion</strong></a>&quot; later in this document.</li>
-<li>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018) [^13] produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008) [^4]).  For completeness, Oberhoff&#39;s method appears in the appendix.</li>
+<li>The <em>exact rejection sampling</em> algorithm described by Oberhoff (2018)[^13] produces samples that act like PSRNs; however, the algorithm doesn&#39;t have the properties described in this section.  This is because the method requires calculating minimums of probabilities and, in practice, requires the use of floating-point arithmetic in most cases (see property 2 above).  Moreover, the algorithm&#39;s progression depends on the value of previously sampled bits, not just on the position of those bits as with the uniform and exponential distributions (see also (Thomas and Luk 2008)[^4]).  For completeness, Oberhoff&#39;s method appears in the appendix.</li>
 </ol>
 </blockquote>
 
@@ -247,7 +247,7 @@
 
 <ol>
 <li>To represent a point on the edge of a circle, a PSRN can store a random variate in the interval [0, 2*<em>&pi;</em>), via the <strong>RandUniformFromReal</strong> method, given later, for 2*<em>&pi;</em> (for example, it can store an integer part of 2 and a fractional part of [1, 3, 5] and thus represent a number in the interval [2.135, 2.136]), and the number stored this way indicates the distance on the circular arc relative to its starting position.  A program that cares about the point&#39;s X and Y coordinates can then generate enough digits of the PSRN to compute an approximation of cos(<em>P</em>) and sin(<em>P</em>), respectively, to the desired accuracy, where <em>P</em> is the number stored by the PSRN.  (However, the direct use of mathematical functions such as <code>cos</code> and <code>sin</code> is outside the scope of this document, because the focus here is on &quot;exact sampling&quot;.)</li>
-<li>Example 1 is quite trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval&#39;s or box&#39;s points don&#39;t map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone&#39;s surface: [1.135, 1.136] for U and [0.288, 0.289] for V, and the cone&#39;s coordinates are X = U*cos(V), Y = U*sin(V), Z = U. In this example, the PSRNs form a box that&#39;s mapped to a small part of the cone.  However, the points in the box don&#39;t map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987) [^15] for one solution).</li>
+<li>Example 1 is quite trivial, because each point on the interval maps evenly to a point on the circle.  But this is not true in general: an interval&#39;s or box&#39;s points don&#39;t map evenly to points on a curve or surface in general.  For example, take two PSRNs describing the U and V coordinates of a 3 dimensional cone&#39;s surface: [1.135, 1.136] for U and [0.288, 0.289] for V, and the cone&#39;s coordinates are X = U*cos(V), Y = U*sin(V), Z = U. In this example, the PSRNs form a box that&#39;s mapped to a small part of the cone.  However, the points in the box don&#39;t map to the cone evenly this way, so generating enough digits to calculate X, Y, and Z to the desired accuracy will not sample uniformly from that part of the cone without more work (see Williamson (1987)[^15] for one solution).</li>
 </ol>
 </blockquote>
 
@@ -281,7 +281,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>Karney (2014, end of sec. 4) [^1] discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.</li>
+<li>Karney (2014, end of sec. 4)[^1] discusses how even the integer part can be partially sampled rather than generating the whole integer as in step 2 of the algorithm.  However, incorporating this suggestion will add a non-trivial amount of complexity to the algorithm given above.</li>
 <li>The <strong>RandUniform</strong> algorithm is equivalent to generating the product of a random variate (<strong>b</strong>) and a uniform random variate in the interval [0, 1].</li>
 <li>If <strong>b</strong> is a uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part, the <strong>RandUniform</strong> algorithm is equivalent to generating the product of two uniform random variate in the interval [0, 1].</li>
 </ol>
@@ -378,7 +378,7 @@
 <li>If a coin flip with probability of heads of 1/(1+exp(<em>&lambda;</em>/2<sup><em>k</em></sup>)) is heads, the exponential random variate is increased by 2<sup>-<em>k</em></sup>, where <em>k</em> &gt; 0 is an integer.</li>
 </ul>
 
-<p>Devroye and Gravel (2020) [^3] already made these observations in section 3.8, but only for <em>&lambda;</em> = 1.</p>
+<p>Devroye and Gravel (2020)[^3] already made these observations in section 3.8, but only for <em>&lambda;</em> = 1.</p>
 
 <p>To implement these probabilities using just random bits, the sampler uses two algorithms, which both enable e-rands with rational valued <em>&lambda;</em> parameters:</p>
 
@@ -611,7 +611,7 @@
 <p>The algorithms given above for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, <em>location</em> and <em>scale</em>, that are both rational numbers.</p>
 
 <ol>
-<li>Generate a uniform PSRN, then transform it into a variate of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney&#39;s algorithm for the standard normal distribution (Karney 2014) [^1])).  This procedure won&#39;t work for exponential PSRNs (e-rands).</li>
+<li>Generate a uniform PSRN, then transform it into a variate of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney&#39;s algorithm for the standard normal distribution (Karney 2014)[^1])).  This procedure won&#39;t work for exponential PSRNs (e-rands).</li>
 <li>Run the <strong>UniformMultiplyRational</strong> algorithm to multiply the uniform PSRN by the rational parameter <em>scale</em> to get a new uniform PSRN.</li>
 <li>Run the <strong>UniformAddRational</strong> algorithm to add the new uniform PSRN and the rational parameter <em>location</em> to get a third uniform PSRN.  Return this third PSRN.</li>
 </ol>
@@ -624,7 +624,7 @@
 
 <p>Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.</p>
 
-<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise (see also (Karney 2014) [^1])).</p>
+<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise (see also (Karney 2014)[^1])).</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part according to the kind of PSRN <strong>a</strong> is.  Do the same for <strong>b</strong>.</li>
@@ -680,7 +680,7 @@
 <li>Add 1 to <em>i</em> and go to step 5.</li>
 </ol>
 
-<p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019) [^16]):</p>
+<p>An alternative version of steps 6 through 9 in the algorithm above are as follows (see also (Brassard et al. 2019)[^16]):</p>
 
 <ul>
 <li>(6.) Calculate <em>bp</em>, which is an approximation to <strong>b</strong> such that abs(<strong>b</strong> &minus; <em>bp</em>) &lt;= <em>&beta;</em><sup>&minus;<em>i</em> &minus; 1</sup>, and such that <em>bp</em> has the same sign as <strong>b</strong>.  Let <em>bk</em> be <em>bp</em>&#39;s digit expansion up to the <em>i</em> + 1 digits after the point (ignoring its sign).  For example, if <strong>b</strong> is &pi; or &minus;&pi;, <em>&beta;</em> is 10, and <em>i</em> is 4, one possibility is <em>bp</em> = 3.14159 and <em>bk</em> = 314159.</li>
@@ -713,18 +713,18 @@
 
 <p>This section discusses issues involving arithmetic with PSRNs.</p>
 
-<p><strong>Uniform PSRN arithmetic produces non-uniform distributions in general.</strong> As can be seen in the arithmetic algorithms earlier in this section (such as <strong>UniformAdd</strong> and <strong>UniformMultiplyRational</strong>), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019) [^16]) are not as trivial as adding, multiplying, etc. their integer and fractional parts.  A uniform PSRN is ultimately a uniform random variate inside an interval (this is its nature), yet arithmetic on random variates does not produce a uniform distribution in general.</p>
+<p><strong>Uniform PSRN arithmetic produces non-uniform distributions in general.</strong> As can be seen in the arithmetic algorithms earlier in this section (such as <strong>UniformAdd</strong> and <strong>UniformMultiplyRational</strong>), addition, multiplication, and other arithmetic operations with PSRNs (see also (Brassard et al., 2019)[^16]) are not as trivial as adding, multiplying, etc. their integer and fractional parts.  A uniform PSRN is ultimately a uniform random variate inside an interval (this is its nature), yet arithmetic on random variates does not produce a uniform distribution in general.</p>
 
 <p>An example illustrates this. Say we have two uniform PSRNs: <em>A</em> = 0.12345... and <em>B</em> = 0.38901....  They represent random variates in the intervals <em>AI</em> = [0.12345, 0.12346] and <em>BI</em> = [0.38901, 0.38902], respectively.  Adding two uniform PSRNs is akin to adding their intervals (using interval arithmetic), so that in this example, the result <em>C</em> lies in <em>CI</em> = [0.12345 + 0.38901, 0.12346 + 0.38902] = [0.51246, 0.51248].  However, the resulting random variate is <em>not</em> uniformly distributed in [0.51246, 0.51248], so that simply choosing a uniform random variate in the interval won&#39;t work.  (This is true in general for other arithmetic operations besides addition.)  This can be demonstrated by generating many pairs of uniform random variates in the intervals <em>AI</em> and <em>BI</em>, summing the numbers in each pair, and building a histogram using the sums (which will all lie in the interval <em>CI</em>).  In this case, the histogram will show a triangular distribution that peaks at 0.51247.</p>
 
 <p>The example applies in general to most other math operations besides addition (including multiplication, division, <code>log</code>, <code>sin</code>, and so on): do the math operation on the intervals <em>AI</em> and <em>BI</em>, and build a histogram of random results (products, quotients, etc.) that lie in the resulting interval to find out what distribution forms this way.</p>
 
-<p><strong>Implementing other operations.</strong> In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014) [^1], and operations affecting the PSRN&#39;s integer part only.</p>
+<p><strong>Implementing other operations.</strong> In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)[^1], and operations affecting the PSRN&#39;s integer part only.</p>
 
 <p>Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.</p>
 
 <ul>
-<li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007) [^17], (Nezhad et al., 2013) [^18].  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding and cancellation errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
+<li>There is previous work that relates continuous distributions to digit probabilities in a similar manner (but only in base 10) (Habibizad Navin et al., 2007)[^17], (Nezhad et al., 2013)[^18].  This previous work points to building a probability tree, where the probability of the next digit depends on the value of the previous digits.  However, calculating each probability requires knowing the distribution&#39;s cumulative distribution function (CDF), and the calculations can incur rounding and cancellation errors especially when the digit probabilities are not rational numbers or they have no simple mathematical form, as is often the case.</li>
 <li>For some distributions, the digit probabilities don&#39;t depend on previous digits, only on the position of the digit.  However, the uniform and exponential distributions are the only practical distributions of this kind.  See the <a href="#Setting_Digits_by_Digit_Probabilities"><strong>appendix</strong></a> for details.</li>
 </ul>
 
@@ -732,7 +732,7 @@
 
 <p><strong>Reusing PSRNs.</strong> The arithmetic algorithms in this section may give incorrect results if the <em>same PSRN</em> is used more than once in different runs of these algorithms.</p>
 
-<p>This issue happens in general when the original sampler uses the same random variate for different purposes in the algorithm (an example is &quot;<em>W</em>*<em>Y</em>, (1&minus;<em>W</em>)*<em>Y</em>&quot;, where <em>W</em> and <em>Y</em> are independent random variates (Devroye 1986, p. 394) [^19]).  In this case, if one PSRN spawns additional PSRNs (so that they become <em>dependent</em> on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it&#39;s hard to characterize when the additional PSRNs become inaccurate this way and when not.)</p>
+<p>This issue happens in general when the original sampler uses the same random variate for different purposes in the algorithm (an example is &quot;<em>W</em>*<em>Y</em>, (1&minus;<em>W</em>)*<em>Y</em>&quot;, where <em>W</em> and <em>Y</em> are independent random variates (Devroye 1986, p. 394)[^19]).  In this case, if one PSRN spawns additional PSRNs (so that they become <em>dependent</em> on the first), those additional PSRNs may become inaccurate once additional digits of the first PSRN are sampled uniformly at random. (This is not always the case, but it&#39;s hard to characterize when the additional PSRNs become inaccurate this way and when not.)</p>
 
 <p>This issue is easy to see for the <strong>UniformAddRational</strong> or <strong>UniformMultiplyRational</strong> algorithm when it&#39;s called more than once with the same PSRN and the same rational number:  although the same random variate ought to be returned each time, in reality different variates will be generated this way with probability 1, especially when additional digits are sampled from them afterwards.</p>
 
@@ -755,13 +755,13 @@
 
 <p>This document relies on several building blocks described in this section.</p>
 
-<p>One of them is the &quot;geometric bag&quot; technique by Flajolet and others (2010) [^7], which generates heads or tails with a probability that is built up digit by digit.</p>
+<p>One of them is the &quot;geometric bag&quot; technique by Flajolet and others (2010)[^7], which generates heads or tails with a probability that is built up digit by digit.</p>
 
 <p><a id=SampleGeometricBag></a></p>
 
 <h3>SampleGeometricBag</h3>
 
-<p>The algorithm <strong>SampleGeometricBag</strong> returns 1 with a probability built up by a uniform PSRN&#39;s fractional part.  (Flajolet et al., 2010) [^7] described an algorithm for the base-2 (binary) case, but that algorithm is difficult to apply to other digit bases.  Thus the following is a general version of the algorithm for any digit base.  For convenience, this algorithm ignores the PSRN&#39;s integer part and sign.</p>
+<p>The algorithm <strong>SampleGeometricBag</strong> returns 1 with a probability built up by a uniform PSRN&#39;s fractional part.  (Flajolet et al., 2010)[^7] described an algorithm for the base-2 (binary) case, but that algorithm is difficult to apply to other digit bases.  Thus the following is a general version of the algorithm for any digit base.  For convenience, this algorithm ignores the PSRN&#39;s integer part and sign.</p>
 
 <ol>
 <li>Set <em>i</em> to 0, and set <strong>b</strong> to a uniform PSRN with a positive sign and an integer part of 0.</li>
@@ -790,7 +790,7 @@
 <p><strong>FillGeometricBag</strong> takes a uniform PSRN and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
-<li>For each position in [0, <code>p</code>), if the item at that position in the uniform PSRN&#39;s fractional part is unsampled, set the item there to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part&#39;s capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8) [^13].)</li>
+<li>For each position in [0, <code>p</code>), if the item at that position in the uniform PSRN&#39;s fractional part is unsampled, set the item there to a digit chosen uniformly at random (e.g., either 0 or 1 for binary), increasing the fractional part&#39;s capacity as necessary. (Positions start at 0 where 0 is the most significant digit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
 <li>Let <code>sign</code> be -1 if the PSRN&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the PSRN&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + &sum;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * <em>b</em><sup>&minus;<em>i</em>&minus;1</sup>), where <em>b</em> is the base, or radix.</li>
 </ol>
 
@@ -800,7 +800,7 @@
 
 <h3>kthsmallest</h3>
 
-<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random variate in the interval [0, 1] out of &#39;n&#39; of them (also known as the &#39;n&#39;th <em>order statistic</em>), is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variate in this case is the <code>a</code>th smallest uniform random variate in the interval [0, 1] out of <code>a + b - 1</code> of them (Devroye 1986, p. 431) [^19].</p>
+<p>The <strong>kthsmallest</strong> method generates the &#39;k&#39;th smallest &#39;bitcount&#39;-digit uniform random variate in the interval [0, 1] out of &#39;n&#39; of them (also known as the &#39;n&#39;th <em>order statistic</em>), is also relied on by this beta sampler.  It is used when both <code>a</code> and <code>b</code> are integers, based on the known property that a beta random variate in this case is the <code>a</code>th smallest uniform random variate in the interval [0, 1] out of <code>a + b - 1</code> of them (Devroye 1986, p. 431)[^19].</p>
 
 <p><strong>kthsmallest</strong>, however, doesn&#39;t simply generate &#39;n&#39; &#39;bitcount&#39;-digit numbers and then sort them.  Rather, it builds up their digit expansions digit by digit, via PSRNs.    It uses the observation that (in the binary case) each uniform random variate in the interval [0, 1] is equally likely to be less than half or greater than half; thus, the number of uniform numbers that are less than half vs. greater than half follows a binomial(n, 1/2) distribution (and of the numbers less than half, say, the less-than-one-quarter vs. greater-than-one-quarter numbers follows the same distribution, and so on).    Thanks to this observation, the algorithm can generate a sorted sample &quot;on the fly&quot;.  A similar observation applies to other bases than base 2 if we use the multinomial distribution instead of the binomial distribution.  I am not aware of any other article or paper (besides one by me) that describes the <strong>kthsmallest</strong> algorithm given here.</p>
 
@@ -828,7 +828,7 @@
 <p>It makes use of a number of algorithms as follows:</p>
 
 <ul>
-<li>It uses an algorithm for <a href="https://peteroupc.github.io/randmisc.html"><strong>sampling unbounded monotone PDFs</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4) [^19].  This is needed because when <em>px</em>/<em>py</em> is greater than 1, the distribution of <em>U</em><sup><em>px</em>/<em>py</em></sup> has the PDF <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
+<li>It uses an algorithm for <a href="https://peteroupc.github.io/randmisc.html"><strong>sampling unbounded monotone PDFs</strong></a>, which in turn is similar to the inversion-rejection algorithm in (Devroye 1986, ch. 7, sec. 4.4)[^19].  This is needed because when <em>px</em>/<em>py</em> is greater than 1, the distribution of <em>U</em><sup><em>px</em>/<em>py</em></sup> has the PDF <code>(py/px) / pow(U, 1-py/px)</code>, which has an unbounded peak at 0.</li>
 <li>It uses a number of Bernoulli factory algorithms, including <strong>SampleGeometricBag</strong> and some algorithms described in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;.</li>
 </ul>
 
@@ -873,7 +873,7 @@
 <li>In the binary case, if <em>a</em> is 1 and <em>b</em> is less than 1, call the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>b</em>, and the <em>complement</em> flag set to 1, and return the result of that algorithm as is (without filling it as described in substep 7.2 of that algorithm).</li>
 <li>In the binary case, if <em>b</em> is 1 and <em>a</em> is less than 1, call the <strong>power-of-uniform sub-algorithm</strong> described below, with <em>px</em>/<em>py</em> = 1/<em>a</em>, and the <em>complement</em> flag set to 0, and return the result of that algorithm as is (without filling it as described in substep 7.2 of that algorithm).</li>
 </ul></li>
-<li>If <em>a</em> &gt; 2 and <em>b</em> &gt; 2, do the following steps, which split <em>a</em> and <em>b</em> into two parts that are faster to simulate (and implement the generalized rejection strategy in (Devroye 1986, top of page 47) [^19]):
+<li>If <em>a</em> &gt; 2 and <em>b</em> &gt; 2, do the following steps, which split <em>a</em> and <em>b</em> into two parts that are faster to simulate (and implement the generalized rejection strategy in (Devroye 1986, top of page 47)[^19]):
 
 <ol>
 <li>Set <em>aintpart</em> to floor(<em>a</em>) &minus; 1, set <em>bintpart</em> to floor(<em>b</em>) &minus; 1, set <em>arest</em> to <em>a</em> &minus; <em>aintpart</em>, and set <em>brest</em> to <em>b</em> &minus; <em>bintpart</em>.</li>
@@ -921,13 +921,13 @@
 <p>The <strong>ExpRandFill</strong> algorithm takes an e-rand and generates a number whose fractional part has <code>p</code> digits as follows:</p>
 
 <ol>
-<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8) [^13].)</li>
+<li>For each position <em>i</em> in [0, <code>p</code>), if the item at that position in the e-rand&#39;s fractional part is unsampled, call the <strong>LogisticExp</strong> algorithm with <em>x</em> = <em>&lambda;</em>&#39;s numerator, <em>y</em> = <em>&lambda;</em>&#39;s denominator, and <em>prec</em> = <em>i</em> + 1, and set the item at position <em>i</em> to the result (which will be either 0 or 1), increasing the fractional part&#39;s capacity as necessary. (Bit positions start at 0 where 0 is the most significant bit after the point, 1 is the next, etc.  See also (Oberhoff 2018, sec. 8)[^13].)</li>
 <li>Let <code>sign</code> be -1 if the e-rand&#39;s sign is negative, or 1 otherwise; let <code>ipart</code> be the e-rand&#39;s integer part; and let <code>bag</code> be the PSRN&#39;s fractional part.  Take the first <code>p</code> digits of <code>bag</code> and return <code>sign</code> * (<code>ipart</code> + &sum;<sub><em>i</em>=0, ..., <code>p</code>&minus;1</sub> bag[<em>i</em>] * 2<sup>&minus;<em>i</em>&minus;1</sup>).</li>
 </ol>
 
 <p>See the discussion in <strong>FillGeometricBag</strong> for advice on how to handle the case when if it somehow happens that bits beyond <code>p</code> in the PSRN&#39;s fractional part were already sampled (that is, they were already set to a digit) after step 2 of this algorithm.</p>
 
-<p>Here is a third algorithm (called <strong>ExpRand</strong>) that generates a <em>uniform PSRN</em>, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate <em>&lambda;</em> is given as a rational number greater than 0.  The method is based on von Neumann&#39;s algorithm (von Neumann 1951) [^9].</p>
+<p>Here is a third algorithm (called <strong>ExpRand</strong>) that generates a <em>uniform PSRN</em>, rather than an e-rand, that follows the exponential distribution.   In the algorithm, the rate <em>&lambda;</em> is given as a rational number greater than 0.  The method is based on von Neumann&#39;s algorithm (von Neumann 1951)[^9].</p>
 
 <ol>
 <li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
@@ -939,12 +939,12 @@
 <li>Add <em>recip</em> to <em>highpart</em> and go to step 2.</li>
 </ol>
 
-<p>The following alternative version of the previous algorithm (called <strong>ExpRand2</strong>) includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014) [^1], namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
+<p>The following alternative version of the previous algorithm (called <strong>ExpRand2</strong>) includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014)[^1], namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
 
 <ol>
 <li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
 <li>Set <em>u</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
-<li>Run the <strong>URandLessThanReal</strong> algorithm on <em>u</em> with the parameter <em>recip</em>/2.  If the call returns 0, add <em>recip</em>/2 to <em>highpart</em> and go to step 2.  (This is Karney&#39;s &quot;early rejection step&quot;, where the parameter is 1/2 when <em>&lambda;</em> is 1.  However, Fan et al. (2019) [^20] point out that the parameter 1/2 in Karney&#39;s &quot;early rejection step&quot; is not optimal.)</li>
+<li>Run the <strong>URandLessThanReal</strong> algorithm on <em>u</em> with the parameter <em>recip</em>/2.  If the call returns 0, add <em>recip</em>/2 to <em>highpart</em> and go to step 2.  (This is Karney&#39;s &quot;early rejection step&quot;, where the parameter is 1/2 when <em>&lambda;</em> is 1.  However, Fan et al. (2019)[^20] point out that the parameter 1/2 in Karney&#39;s &quot;early rejection step&quot; is not optimal.)</li>
 <li>Set <em>val</em> to point to the same value as <em>u</em>, and set <em>accept</em> to 1.</li>
 <li>Set <em>v</em> to the result of <strong>RandUniformFromReal</strong> with the parameter <em>recip</em>.</li>
 <li>Run the <strong>URandLess</strong> algorithm on <em>u</em> and <em>v</em>, in that order.  If the call returns 0, set <em>u</em> to <em>v</em>, then set <em>accept</em> to 1 minus <em>accept</em>, then go to step 5.</li>
@@ -1098,7 +1098,7 @@ def _fill_geometric_bag(b, bag, precision):
         lb=min(len(bag), precision)
         for i in range(lb):
            if i&gt;=len(bag) or bag[i]==None:
-              ret=(ret(1)\) [^21] 1) + 1
+              ret=(ret(1)\)[^21] 1) + 1
         return ret|(a[2]&lt;&lt;bits)
     # Fill the fractional part if necessary.
     while a[1] &lt; bits:
@@ -1821,7 +1821,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h2>Accurate Simulation of Continuous Distributions Supported on 0 to 1</h2>
 
-<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14) [^19].)</p>
+<p>The beta sampler in this document shows one case of a general approach to simulating a wide class of continuous distributions supported on [0, 1], thanks to Bernoulli factories.  This general approach can sample a number that follows one of these distributions, using the algorithm below.  The algorithm allows any arbitrary base (or radix) <em>b</em> (such as 2 for binary).  (See also (Devroye 1986, ch. 2, sec. 3.8, exercise 14)[^19].)</p>
 
 <ol>
 <li>Create an uniform PSRN with a positive sign, an integer part of 0, and an empty fractional part.  Create a <strong>SampleGeometricBag</strong> Bernoulli factory that uses that PSRN.</li>
@@ -1854,7 +1854,7 @@ def exprandscore(ln,ld,ln2,ld2):
 
 <h3>An Example: The Continuous Bernoulli Distribution</h3>
 
-<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019) [^24] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
+<p>The continuous Bernoulli distribution (Loaiza-Ganem and Cunningham 2019)[^24] was designed to considerably improve performance of variational autoencoders (a machine learning model) in modeling continuous data that takes values in the interval [0, 1], including &quot;almost-binary&quot; image data.</p>
 
 <p>The continous Bernoulli distribution takes one parameter <code>lamda</code> (a number in [0, 1]), and takes on values in the interval [0, 1] with a probability proportional to&mdash;</p>
 
@@ -1932,8 +1932,8 @@ def contbernoullidist(b, lamda, precision=53):
 <p>Existing work shows how to calculate the bit complexity for any probability distribution:</p>
 
 <ul>
-<li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020) [^3].</li>
-<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976) [^25].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
+<li>For a 1-dimensional continuous distribution, the bit complexity is bounded from below by <code>DE + prec - 1</code> random bits, where <code>DE</code> is the differential entropy for the distribution and <em>prec</em> is the number of bits in the random variate&#39;s fractional part (Devroye and Gravel 2020)[^3].</li>
+<li>For a discrete distribution (a distribution of random integers with separate probabilities of occurring), the bit complexity is bounded from below by the binary entropies of all the probabilities involved, summed together (Knuth and Yao 1976)[^25].  (For a given probability <em>p</em>, the binary entropy is <code>0 - p*log2(p)</code> where <code>log2(x) = ln(x)/ln(2)</code>.)  An optimal algorithm will come within 2 bits of this lower bound on average.</li>
 </ul>
 
 <p>For example, in the case of the exponential distribution, <code>DE</code> is log2(exp(1)/<em>&lambda;</em>), so the minimum bit complexity for this distribution is log2(exp(1)/<em>&lambda;</em>) + <em>prec</em> &minus; 1, so that if <em>prec</em> = 20, this minimum is about 20.443 bits when <em>&lambda;</em> = 1, decreases when <em>&lambda;</em> goes up, and increases when <em>&lambda;</em> goes down.  In the case of any other continuous distribution, <code>DE</code> is the integral of <code>f(x) * log2(1/f(x))</code> over all valid values <code>x</code>, where <code>f</code> is the distribution&#39;s PDF.</p>
@@ -1953,7 +1953,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>The beta and exponential samplers given here will generally use many more bits on average than the lower bounds on bit complexity, especially since they generate a PSRN one digit at a time.</p>
 
-<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B) [^26].  However, it uses no random bits if both its parameters are the same.</p>
+<p>The <code>zero_or_one</code> method generally uses 2 random bits on average, due to its nature as a Bernoulli trial involving random bits, see also (Lumbroso 2013, Appendix B)[^26].  However, it uses no random bits if both its parameters are the same.</p>
 
 <p>For <strong>SampleGeometricBag</strong> with base 2, the bit complexity has two components.</p>
 
@@ -1983,7 +1983,7 @@ def contbernoullidist(b, lamda, precision=53):
 <li>choosing the item with the smallest key</li>
 </ul>
 
-<p>(see also (Efraimidis 2015) [^27]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
+<p>(see also (Efraimidis 2015)[^27]). However, using fully-sampled exponential random variates as keys (such as the naïve idiom <code>-ln(1-X)/w</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], in common floating-point arithmetic) can lead to inexact sampling, since the keys have a limited precision, it&#39;s possible for multiple items to have the same random key (which can make sampling those items depend on their order rather than on randomness), and the maximum weight is unknown.  Partially-sampled e-rands, as given in this document, eliminate the problem of inexact sampling.  This is notably because the <code>exprandless</code> method returns one of only two answers&mdash;either &quot;less&quot; or &quot;greater&quot;&mdash;and samples from both e-rands as necessary so that they will differ from each other by the end of the operation.  (This is not a problem because randomly generated real numbers are expected to differ from each other with probability 1.) Another reason is that partially-sampled e-rands have potentially arbitrary precision.</p>
 
 <p><a id=Open_Questions></a></p>
 
@@ -2017,9 +2017,11 @@ def contbernoullidist(b, lamda, precision=53):
 <li><a href="https://peteroupc.github.io/hqprng.html"><strong>Examples of High-Quality PRNGs</strong></a></li>
 </ul>
 
-<p><a id=1_Karney_C_F_F_Sampling_exactly_from_the_normal_distribution_https_arxiv_org_abs_1303_6257v2_arXiv_1303_6257v2_physics_comp_ph_2014></a></p>
+<p><a id=Notes></a></p>
 
-<h2>[^1]: Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</h2>
+<h2>Notes</h2>
+
+<p>[^1]: Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^2]: Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</p>
 
@@ -2111,7 +2113,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>To find the PDF for the algorithm, find the expected value of UPDF(<em>x</em>, 0, <em>Z</em>+<em>b</em>*<em>c</em>), where <em>Z</em> is distributed as uniform(0, <em>K</em>).  This is done by finding the integral (area under the graph) with respect to <em>z</em> of UPDF(<em>x</em>, 0, <em>z</em>+<em>b</em>*<em>c</em>)*UPDF(<em>z</em>, 0, <em>K</em>) in the interval [0, <em>K</em>] (the set of values <em>Z</em> can take on).  The result is <code>PDF1(x) = ln(b**2*c**2 - b**2*c*d + (b*c - b*d)*min(b*(-c + d), max(0, -b*c + x)))/(b*c - b*d) - ln(b**2*c**2 - b**2*c*d + b*(-c + d)*(b*c - b*d))/(b*c - b*d)</code>.</li>
-<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004) [^28]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
+<li>The second PDF is the PDF for the product of two uniform random variates, one in [0, <em>b</em>] and the other in [<em>c</em>, <em>d</em>].  By Rohatgi&#39;s formula (see also (Glen et al. 2004)[^28]), it can be found by finding the integral with respect to <em>z</em> of UPDF(<em>z</em>, 0, <em>b</em>)*UPDF(<em>x</em>/<em>z</em>, <em>c</em>, <em>d</em>)/<em>z</em>, in the interval [0, &infin;) (noting that <em>z</em> is never negative here).  The result is <code>PDF2(x) = (ln(max(c,x/b)) - ln(max(c,d,x/b)))/(b*c-b*d)</code>.</li>
 </ul>
 
 <p>Now it must be shown that <code>PDF1</code> and <code>PDF2</code> are equal whenever <em>x</em> is in the interval (0, <em>b</em>*<em>d</em>).  Subtracting one PDF from the other and simplifying, it is seen that:</p>
@@ -2125,7 +2127,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h3>Oberhoff&#39;s &quot;Exact Rejection Sampling&quot; Method</h3>
 
-<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous &quot;almost everywhere&quot; and bounded from above (Oberhoff 2018, section 3) [^13], see also (Devroye and Gravel 2020) [^3]. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
+<p>The following describes an algorithm described by Oberhoff for sampling a continuous distribution supported on the interval [0, 1], as long as its probability density function (PDF) is continuous &quot;almost everywhere&quot; and bounded from above (Oberhoff 2018, section 3)[^13], see also (Devroye and Gravel 2020)[^3]. (Note that if the PDF&#39;s domain is wider than [0, 1], then the function needs to be divided into one-unit-long pieces, one piece chosen at random with probability proportional to its area, and that piece shifted so that it lies in [0, 1] rather than its usual place; see Oberhoff pp. 11-12.)</p>
 
 <ol>
 <li>Set <em>pdfmax</em> to an upper bound of the PDF (or the PDF times a possibly unknown constant factor) on the domain at [0, 1].  Let <em>base</em> be the base, or radix, of the digits in the return value (such as 2 for binary or 10 for decimal).</li>
@@ -2156,9 +2158,9 @@ def contbernoullidist(b, lamda, precision=53):
 
 <p>Let <em>a</em><sub><em>j</em></sub> be the probability that the digit at position <em>j</em> equals 1 (starting with <em>j</em> = 1 for the first digit after the point).</p>
 
-<p>Then Kakutani&#39;s theorem (Kakutani 1948) [^29] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971) [^30], (Chatterji 1964) [^31].</p>
+<p>Then Kakutani&#39;s theorem (Kakutani 1948)[^29] says that <em>X</em> has an <em>absolutely continuous</em>[^12] distribution if and only if the sum of squares of (<em>a</em><sub><em>j</em></sub> &minus; 1/2) converges.  In other words, the binary digits become less and less biased as they move farther and farther from the binary point.  See also (Marsaglia 1971)[^30], (Chatterji 1964)[^31].</p>
 
-<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971) [^30] showed, the absolutely continuous distribution can only be one of the following:</p>
+<p>This kind of absolutely continuous distribution can thus be built if we can find an infinite sequence <em>a</em><sub><em>j</em></sub> that converges to 1/2, and set <em>X</em>&#39;s binary digits using those probabilities.  However, as Marsaglia (1971)[^30] showed, the absolutely continuous distribution can only be one of the following:</p>
 
 <ol>
 <li>The distribution&#39;s probability density function (PDF) is zero somewhere in every open interval in (0, 1), without being 0 on all of [0, 1].  Thus, the PDF is not continuous.</li>
@@ -2176,7 +2178,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <ul>
 <li>The uniform distribution (<em>w</em> = 0).</li>
-<li>The fractional part of an exponential random variate with rate 1 (<em>w</em> = &minus;1; (Devroye and Gravel 2020) [^3]).</li>
+<li>The fractional part of an exponential random variate with rate 1 (<em>w</em> = &minus;1; (Devroye and Gravel 2020)[^3]).</li>
 <li>More general, the fractional part of an exponential variate with rate <em>&lambda;</em> (<em>w</em> = &minus;<em>&lambda;</em>).</li>
 <li>1 minus the fractional part of an exponential variate with rate <em>w</em> when <em>w</em> &gt; 0.</li>
 <li><em>a</em><sub><em>j</em></sub> = <em>y</em><sup><em>v</em>/2<sup><em>j</em></sup></sup>/(1 + <em>y</em><sup><em>v</em>/2<sup><em>j</em></sup></sup>), with <em>w</em> = ln(<em>y</em>)*<em>v</em> where <em>y</em> &gt; 0 and <em>v</em> are constants.</li>

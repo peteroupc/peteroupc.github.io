@@ -124,7 +124,7 @@
 <li><a href="#Color_Mixture"><strong>Color Mixture</strong></a></li>
 </ul></li>
 <li><a href="#Conclusion"><strong>Conclusion</strong></a></li>
-<li><a href="#1_The_CIE_publishes_tabulated_data_http_www_cie_co_at_technical_work_technical_resources_for_the_D65_illuminant_and_the_CIE_1931_and_1964_standard_observers_at_its_Web_site_In_some_cases_the_CIE_1931_standard_observer_can_be_approximated_using_the_methods_given_in_Wyman_Sloan_and_Shirley_Simple_analytic_approximations_to_the_CIE_XYZ_color_matching_functions_http_jcgt_org_published_0002_02_01_Journal_of_Computer_Graphics_Techniques_2_2_2013_pp_1_11">[^1]: The CIE publishes [<strong>tabulated data</strong>](http://www.cie.co.at/technical-work/technical-resources) for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in Wyman, Sloan, and Shirley, [<strong>&quot;Simple analytic approximations to the CIE XYZ color matching functions&quot;</strong>](http://jcgt.org/published/0002/02/01/), Journal of Computer Graphics Techniques 2(2), 2013, pp. 1-11.</a></li>
+<li><a href="#Notes"><strong>Notes</strong></a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -245,14 +245,14 @@
 <li><p><strong>&quot;Transfer function&quot;.</strong> This is a function used to convert, component by component, a so-called <strong><em>linear RGB</em></strong> color to an <strong><em>encoded RGB</em> (<em>R&prime;G&prime;B&prime;</em>)</strong> color in the same color space.  Examples include the sRGB transfer function given <a href="#sRGB"><strong>later</strong></a>; <em>gamma</em> functions such as <em>c</em><sup>1/<em>&gamma;</em></sup>, where <em>c</em> is the red, green, or blue component and <em>&gamma;</em> is a positive number; and the PQ and HLG functions.</p></li>
 </ul>
 
-<p>In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-appearing RGB color in different RGB color spaces.  In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>.  (Lindbloom) [^8] contains further information on many RGB color spaces.</p>
+<p>In general, the same three numbers, such as (1, 0.5, 0.3), identify a different-appearing RGB color in different RGB color spaces.  In this document, the only RGB color space described in detail is <a href="#sRGB"><strong>sRGB</strong></a>.  (Lindbloom)[^8] contains further information on many RGB color spaces.</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
 
 <ol>
 <li>In this document, all techniques involving RGB colors apply to such colors in linear or encoded form, unless noted otherwise.</li>
-<li>In the TV and film industries, some RGB color spaces, including sRGB, belong in the category of so-called <em>standard dynamic range</em> (<em>SDR</em>) color spaces, while others cover a wider range of colors (<em>wide color gamut</em> or <em>WCG</em>), a wider &quot;brightness&quot; range (<em>high dynamic range</em> or <em>HDR</em>), or both. (Mano 2018) [^9] contains an introduction to WCG/HDR images.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.</li>
+<li>In the TV and film industries, some RGB color spaces, including sRGB, belong in the category of so-called <em>standard dynamic range</em> (<em>SDR</em>) color spaces, while others cover a wider range of colors (<em>wide color gamut</em> or <em>WCG</em>), a wider &quot;brightness&quot; range (<em>high dynamic range</em> or <em>HDR</em>), or both. (Mano 2018)[^9] contains an introduction to WCG/HDR images.  See also Rep. 2390-4, a more advanced overview, from the International Telecommunication Union.</li>
 <li>RGB colors encoded in images and video or specified in documents are usually 8-bpc or 10-bpc <em>encoded RGB</em> colors.</li>
 </ol>
 </blockquote>
@@ -827,7 +827,7 @@ END METHOD
 <p>The following summarizes the transformations needed to convert a color from (relative) XYZ through RGB to an encoding form suitable for images or video.</p>
 
 <ol>
-<li>An XYZ-to-linear-RGB transform.  This is usually a <a href="#Conversion_Matrices_Between_XYZ_and_RGB"><strong>matrix</strong></a> generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s red, green, blue, and white points, but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above) [^17].</li>
+<li>An XYZ-to-linear-RGB transform.  This is usually a <a href="#Conversion_Matrices_Between_XYZ_and_RGB"><strong>matrix</strong></a> generated using the <a href="#RGB_Color_Spaces"><strong>RGB color space</strong></a>&#39;s red, green, blue, and white points, but can also include a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> if the XYZ and RGB color spaces use different white points (see the <code>XYZFromsRGBD50</code> and <code>XYZTosRGBD50</code> methods above)[^17].</li>
 <li>A linear-to-encoded-RGB transform.  This is the RGB color space&#39;s &quot;transfer function&quot;.  This can be left out if linear RGB colors are desired.</li>
 <li>A pixel encoding transform.  This transforms the RGB color into <a href="#Y_prime_C_B_C_R_and_Other_Video_Color_Formats"><strong>Y&prime;C<sub><em>B</em></sub>C<sub><em>R</em></sub></strong></a> or another form.  This can be left out.</li>
 <li>The final color form is serialized into a binary, text, or other representation (see also &quot;<a href="#Representing_RGB_Colors"><strong>Representing RGB Colors</strong></a>&quot;).</li>
@@ -921,7 +921,7 @@ END METHOD
 <ul>
 <li>Lightness (<em>L*</em>) remains unchanged.</li>
 <li><em>Chroma</em> (<em>C*</em>) is the distance of the color from the &quot;gray&quot; line.[^22]</li>
-<li><em>Hue</em> (<em>h</em>, an angle) [^12] ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.</li>
+<li><em>Hue</em> (<em>h</em>, an angle)[^12] ranges from magenta at roughly 0 to red to yellow to green to cyan to blue to magenta.</li>
 </ul>
 
 <p>In the following pseudocode:</p>
@@ -1161,7 +1161,7 @@ END METHOD
 
 <p>A <a href="#RGB_Color_Spaces"><strong><em>linear RGB</em> color</strong></a>&#39;s luminance factor is <code>(color[0] * r + color[1] * g + color[2] * b)</code>, where <code>r</code>, <code>g</code>, and <code>b</code> are the luminance factors (relative Y components) of the RGB color space&#39;s red, green, and blue points, respectively.  (If a different white point than the RGB color space&#39;s usual white point should have a luminance factor of 1, then <code>r</code>, <code>g</code>, and <code>b</code> are the corresponding values after a <a href="https://en.wikipedia.org/wiki/Chromatic_adaptation"><strong><em>chromatic adaptation transform</em></strong></a> from one white point to another.[^17])</p>
 
-<p>An <strong><em>encoded RGB</em> color</strong> needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements <code>Luminance(color)</code> for encoded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>) [^16].</p>
+<p>An <strong><em>encoded RGB</em> color</strong> needs to be converted to linear RGB (in the same RGB color space) before finding its luminance factor.  For example, the pseudocode below implements <code>Luminance(color)</code> for encoded sRGB colors (<code>LuminanceSRGB</code> and <code>LuminanceSRGBD50</code>)[^16].</p>
 
 <pre>// Convert encoded sRGB to luminance factor
 METHOD LuminanceSRGB(color)
@@ -1195,8 +1195,8 @@ END METHOD
 <li><strong>Single channel</strong> of a multicomponent color; for example, <code>color[0]</code>, <code>color[1]</code>, or <code>color[2]</code> for an RGB color&#39;s red, green, or blue component, respectively.</li>
 <li><strong>Average</strong> of the multicomponent color&#39;s components (see <a href="#Alpha_Blending"><strong>Alpha Blending</strong></a>).</li>
 <li><strong>Maximum</strong>; e.g., <code>max(max(color[0], color[1]), color[2])</code> for three-component colors.</li>
-<li><strong>Minimum</strong>; e.g., <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland) [^25].)</li>
-<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009) [^26]).</li>
+<li><strong>Minimum</strong>; e.g., <code>min(min(color[0], color[1]), color[2])</code> for three-component colors. (For techniques 1-4, see also (Helland)[^25].)</li>
+<li><strong>Light/dark factor</strong>: A <a href="#CIELAB"><strong>CIELAB</strong></a> or <a href="#CIELUV"><strong>CIELUV</strong></a> color&#39;s lightness (<em>L*</em>) divided by 100 (or a similar ratio in other color spaces with a light/dark dimension, such as <a href="#HSL"><strong>HSL</strong></a> &quot;lightness&quot; (Cook 2009)[^26]).</li>
 </ol>
 </blockquote>
 
@@ -1208,7 +1208,7 @@ END METHOD
 
 <ul>
 <li><code>color1</code> and <code>color2</code> are the two colors, and</li>
-<li><code>alpha</code>, the <em>alpha component</em>, is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (Haeberli and Voorhees) [^28].</li>
+<li><code>alpha</code>, the <em>alpha component</em>, is usually 0 or greater and 1 or less (from <code>color1</code> to <code>color2</code>), but need not be (Haeberli and Voorhees)[^28].</li>
 </ul>
 
 <p>&nbsp;</p>
@@ -1441,7 +1441,7 @@ END METHOD
 </ul>
 </blockquote>
 
-<p><strong>Riemersma&#39;s method.</strong> (Riemersma) [^35] suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>.</p>
+<p><strong>Riemersma&#39;s method.</strong> (Riemersma)[^35] suggests an algorithm for color difference, to be applied to <strong>encoded RGB colors</strong>.</p>
 
 <p><strong>CMC.</strong> The following pseudocode implements the Color Measuring Committee color difference formula published in 1984, used above all in the textile industry. Note that in this formula, the order of the two <a href="#CIELAB"><strong>CIELAB</strong></a> colors is important (the first color is the reference, and the second color is the test). Here, the formula is referred to as CMC(<code>LPARAM</code>:<code>CPARAM</code>) where&mdash;</p>
 
@@ -1530,7 +1530,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> An improvement to CIEDE2000 (Huang et al. 2015) [^36], recently recommended in CIE 230:2019 for small color differences, is not yet in common use.</p>
+<p><strong>Note:</strong> An improvement to CIEDE2000 (Huang et al. 2015)[^36], recently recommended in CIE 230:2019 for small color differences, is not yet in common use.</p>
 </blockquote>
 
 <p><strong>Commercial factors.</strong> A <em>commercial factor</em> (<code>cf</code>) is an additional parameter to CMC and other color difference formulas.  The <code>COLORDIFF</code> result is divided by <code>cf</code> (which is usually 1) to get the final color difference.</p>
@@ -1612,7 +1612,7 @@ END METHOD
 <li><strong>Unique colors</strong>: Finding the number of unique colors in an image color list can be done by storing those colors as keys in a hash table, then counting the number of keys stored this way.[^38]</li>
 <li><strong>Disqualifying dominant colors</strong>:  An application can disqualify certain kinds of colors from being dominant, and use a substitute color as the dominant color if no dominant color remains.  For example, the application can ignore colors in the background or near the image&#39;s edges, can ignore certain kinds of colors (e.g., gray or nearly gray colors) while sampling the image color list, or can delete certain colors from the dominant color list.</li>
 <li>Averaging the colors of an image, component-by-component, can lead to a meaningless result, especially if there is a wide color variety represented in the image (see <code>stackoverflow.com/questions/43111029</code>).</li>
-<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from [<strong><em>scene-referred</em> image data</strong>](<a href="http://eilv.cie.co.at/term/567%5C">http://eilv.cie.co.at/term/567\</a>) [^39]. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
+<li><strong>Extracting a scene&#39;s &quot;true colors&quot;</strong>: For applications where matching colors from the real world is important, colors need to be measured using a <a href="https://peteroupc.github.io/suppcolor.html#Color_Measurement_Devices"><strong>color measurement device</strong></a>, or be calculated from [<strong><em>scene-referred</em> image data</strong>](<a href="http://eilv.cie.co.at/term/567%5C)%5B%5E39%5D">http://eilv.cie.co.at/term/567\)[^39]</a>. PNG and many other image formats store image data commonly interpreted as <a href="#sRGB"><strong>sRGB</strong></a> by default; however, sRGB is an <a href="http://eilv.cie.co.at/term/565"><strong><em>output-referred</em></strong></a> color space, not a scene-referred one (it&#39;s based on the color output of cathode-ray-tube monitors), making sRGB images unsuitable for real-world color-matching without more.<br>Getting scene-referred image data from a digital camera, including a smartphone camera, is not trivial and is not discussed in detail in this document.  It requires knowing, among other things, whether the camera offers access to raw image data, the format of that raw data, and possibly whether the camera does color rendering (which happens before generating output-referred image data).  A raw image&#39;s colors can be estimated by the use of a raw image of a color calibration chart (test target) or by another technique.  The ISO 17321 series and IEC 61966-9 touch on this subject.</li>
 </ol>
 </blockquote>
 
@@ -1651,13 +1651,13 @@ END METHOD
 <p>Converting a color (such as an RGB color) to a color name can be done by&mdash;</p>
 
 <ul>
-<li>retrieving the name keyed to that color in a hash table (or returning an error if that color doesn&#39;t exist in the hash table) [^38], or</li>
+<li>retrieving the name keyed to that color in a hash table (or returning an error if that color doesn&#39;t exist in the hash table)[^38], or</li>
 <li>finding the <a href="#Nearest_Colors"><strong>nearest color</strong></a> to that color among the named colors, and returning the name of the color found this way.</li>
 </ul>
 
 <p>Converting a color name to a color can be done by retrieving the color keyed to that name (or optionally, its lower-cased form) in a hash table, or returning an error if no such color exists.[^38]</p>
 
-<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em> (Venn et al.) [^42].</p>
+<p>If each name, number, or code in a color map is associated with one or several colors, optionally with a weighting factor for each color, then the color map is also known as a <em>color dictionary</em> (Venn et al.)[^42].</p>
 
 <blockquote>
 <p><strong>Notes:</strong></p>
@@ -1682,7 +1682,7 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <p>In general, the greater the number of colors used, the harder it is to distinguish them from each other.  Any application that needs to distinguish many items (especially more than 22 items, the number of colors in Kelly&#39;s list) should use other visual means in addition to color (or rather than color) to help users identify them, such as numbered labels, text labels, different shapes, different shading, different dash patterns, or a combination of these. (Note that under the <a href="https://www.w3.org/TR/2008/REC-WCAG20-20081211/"><strong>Web Content Accessibility Guidelines 2.0</strong></a> level A, color may not be <a href="http://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-without-color"><strong>&quot;the only visual means of conveying information&quot;</strong></a>.)</p>
 
-<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize) [^44].)</p>
+<p>In general, any method that seeks to choose colors that are maximally distant in a particular color space (that is, where the smallest <a href="#Color_Differences"><strong>color difference</strong></a> [<code>COLORDIFF</code>] between them is maximized as much as feasible) can be used to select visually distinct colors. Such colors can be pregenerated or generated at runtime, and such colors can be limited to those in a particular <em>color gamut</em>. Here, the color difference method should be <em>&Delta;E*</em><sub>ab</sub> or another color difference method that takes human color perception into account. (See also (Tatarize)[^44].)</p>
 
 <p><a id=Pseudocode></a></p>
 
@@ -1976,9 +1976,11 @@ END METHOD
 <li>Reference source code for a method to match a desired color on paper given spectral reflectance curves of the paper and of the inks being used in various concentrations, provided that method is not covered by any active patents or pending patent applications.</li>
 </ul>
 
-<p><a id=1_The_CIE_publishes_tabulated_data_http_www_cie_co_at_technical_work_technical_resources_for_the_D65_illuminant_and_the_CIE_1931_and_1964_standard_observers_at_its_Web_site_In_some_cases_the_CIE_1931_standard_observer_can_be_approximated_using_the_methods_given_in_Wyman_Sloan_and_Shirley_Simple_analytic_approximations_to_the_CIE_XYZ_color_matching_functions_http_jcgt_org_published_0002_02_01_Journal_of_Computer_Graphics_Techniques_2_2_2013_pp_1_11></a></p>
+<p><a id=Notes></a></p>
 
-<h2>[^1]: The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources"><strong>tabulated data</strong></a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in Wyman, Sloan, and Shirley, <a href="http://jcgt.org/published/0002/02/01/"><strong>&quot;Simple analytic approximations to the CIE XYZ color matching functions&quot;</strong></a>, Journal of Computer Graphics Techniques 2(2), 2013, pp. 1-11.</h2>
+<h2>Notes</h2>
+
+<p>[^1]: The CIE publishes <a href="http://www.cie.co.at/technical-work/technical-resources"><strong>tabulated data</strong></a> for the D65 illuminant and the CIE 1931 and 1964 standard observers at its Web site.  In some cases, the CIE 1931 standard observer can be approximated using the methods given in Wyman, Sloan, and Shirley, <a href="http://jcgt.org/published/0002/02/01/"><strong>&quot;Simple analytic approximations to the CIE XYZ color matching functions&quot;</strong></a>, Journal of Computer Graphics Techniques 2(2), 2013, pp. 1-11.</p>
 
 <p>[^2]: This overview has none of the heavy baggage from color teachings involving &quot;red, yellow, and blue&quot;, &quot;primary/secondary/tertiary&quot; colors, or using a &quot;color wheel&quot; to &quot;predict&quot; color mixtures.  Also deliberately missing are discussions on color psychology, &quot;color forecasting&quot;, or color in natural language, all topics that are generally irrelevant in programming.</p>
 

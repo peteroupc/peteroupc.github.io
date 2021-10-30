@@ -13,11 +13,13 @@ Hash functions are used for the following purposes:
     - Pseudorandom functions, for deriving secrets from other secrets.
     - Key derivation functions for verifying secrets without storing the secrets themselves.  Because the secret may be easy to guess, like a password, some of these functions are designed to deliberately take time to calculate.
 
-For the use in hash tables, (Richter et al. 2015\) [^1] recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
+For the use in hash tables, (Richter et al. 2015\)[^1] recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
 
 There are security attacks that serve to trigger worst-case performance on hash tables via carefully chosen keys, and keyed hash functions (such as SipHash) have been developed to mitigate them, but not everyone believes such hash functions should be used in hash tables (e.g., see R. Urban's SMHasher fork).
 
 Bret Mulvey has written a page on [**how hash functions are built**](https://papa.bretmulvey.com/post/124027987928).  According to him, hash functions have as their core a _mixing function_ (a function that maps N-bit inputs to N-bit outputs), and for hash functions the "best" mixing functions tend to produce wildly dispersed outputs for similar inputs.
 
-<a id=1_Richter_Alvarez_Dittrich_A_Seven_Dimensional_Analysis_of_Hashing_Methods_and_its_Implications_on_Query_Processing__Proceedings_of_the_VLDB_Endowment__9_3_2015></a>
-## [^1]: Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.
+<a id=Notes></a>
+## Notes
+
+[^1]: Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.
