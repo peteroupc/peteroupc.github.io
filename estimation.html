@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/10/27"><meta name="citation_online_date" content="2021/10/27"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/10/30"><meta name="citation_online_date" content="2021/10/30"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomized Estimation Algorithms</h1>
@@ -21,10 +21,10 @@
 
 <p>The following concepts are used in this document.</p>
 
-<p>Each algorithm takes a stream of independent random variates (numbers).  These numbers follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.</p>
+<p>Each algorithm takes a stream of independent random variates (numbers).  These variates follow a <em>probability distribution</em> or simply <em>distribution</em>, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.</p>
 
 <ul>
-<li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the average value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  In other words, take random samples and then take their average.  Then with probability 1, the average will approach the expected value as <em>n</em> gets large (the <em>law of large numbers</em>).</li>
+<li>The <em>expectation</em>, <em>expected value</em>, or <em>mean</em> is the average value of the distribution.  It is expressed as <strong>E</strong>[<em>X</em>], where <em>X</em> is a number taken from the stream.  If we take independent random samples and then take their average, then with probability 1, the average will approach the expected value as <em>n</em> gets large (the <em>law of large numbers</em>).</li>
 <li>An <em>n<sup>th</sup> moment</em> is the expected value of <em>X</em><sup><em>n</em></sup>.  In other words, take random samples, raise them to the power <em>n</em>, then take their average.  Then with probability 1, the average approaches the <em>n</em><sup>th</sup> moment as <em>n</em> gets large.</li>
 <li>An <em>n<sup>th</sup> central moment (about the mean)</em> is the expected value of (<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  The 2nd central moment is called <em>variance</em>.</li>
 <li>An <em>n<sup>th</sup> central absolute moment</em> (c.a.m.) is the expected value of abs(<em>X</em> &minus; <em>&mu;</em>)<sup><em>n</em></sup>, where <em>&mu;</em> is the distribution&#39;s mean.  This is the same as the central moment when <em>n</em> is even.</li>
@@ -157,7 +157,7 @@
 <p>The following algorithm comes from Kunsch et al. (2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup>.  It estimates the mean of a stream of random variates with the following properties:</p>
 
 <ul>
-<li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. (also called <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m., respectively, in this section).</li>
+<li>The distribution of numbers in the stream has a finite <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m.</li>
 <li>The exact <em>q</em><sup>th</sup> c.a.m. and <em>p</em><sup>th</sup> c.a.m. need not be known in advance.</li>
 <li>The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root divided by the <em>p</em><sup>th</sup> c.a.m.&#39;s <em>p</em><sup>th</sup> root is no more than <em>&kappa;</em>, where <em>&kappa;</em> is 1 or greater. (The <em>q</em><sup>th</sup> c.a.m.&#39;s <em>q</em><sup>th</sup> root is also known as <em>standard deviation</em> if <em>q</em> = 2, and <em>mean deviation</em> if <em>q</em> = 1; similarly for <em>p</em>.)</li>
 </ul>
@@ -228,7 +228,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.</li>
+<li>If the stream of random variates meets the condition for <em>Algorithm C</em> for a given <em>q</em>, <em>p</em>, and <em>&kappa;</em>, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.</li>
 <li>Theorem 3.4 of Kunsch et al. (2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> shows that there is no mean estimation algorithm that&mdash;
 
 <ul>

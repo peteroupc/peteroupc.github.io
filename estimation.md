@@ -16,9 +16,9 @@ Not yet covered are unbiased mean estimation algorithms that take a sequence of 
 
 The following concepts are used in this document.
 
-Each algorithm takes a stream of independent random variates (numbers).  These numbers follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
+Each algorithm takes a stream of independent random variates (numbers).  These variates follow a _probability distribution_ or simply _distribution_, or a rule that says which kinds of numbers are more likely to occur than others.  A distribution has the following properties.
 
-- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  In other words, take random samples and then take their average.  Then with probability 1, the average will approach the expected value as _n_ gets large (the _law of large numbers_).
+- The _expectation_, _expected value_, or _mean_ is the average value of the distribution.  It is expressed as **E**\[_X_\], where _X_ is a number taken from the stream.  If we take independent random samples and then take their average, then with probability 1, the average will approach the expected value as _n_ gets large (the _law of large numbers_).
 - An _n<sup>th</sup> moment_ is the expected value of _X_<sup>_n_</sup>.  In other words, take random samples, raise them to the power _n_, then take their average.  Then with probability 1, the average approaches the _n_<sup>th</sup> moment as _n_ gets large.
 - An _n<sup>th</sup> central moment (about the mean)_ is the expected value of (_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  The 2nd central moment is called _variance_.
 - An _n<sup>th</sup> central absolute moment_ (c.a.m.) is the expected value of abs(_X_ &minus; _&mu;_)<sup>_n_</sup>, where _&mu;_ is the distribution's mean.  This is the same as the central moment when _n_ is even.
@@ -116,7 +116,7 @@ The standard deviation sub-algorithm follows.
 
 The following algorithm comes from Kunsch et al. (2019)<sup>[**(6)**](#Note6)</sup>.  It estimates the mean of a stream of random variates with the following properties:
 
-- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. (also called _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m., respectively, in this section).
+- The distribution of numbers in the stream has a finite _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m.
 - The exact _q_<sup>th</sup> c.a.m. and _p_<sup>th</sup> c.a.m. need not be known in advance.
 - The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root divided by the _p_<sup>th</sup> c.a.m.'s _p_<sup>th</sup> root is no more than _&kappa;_, where _&kappa;_ is 1 or greater. (The _q_<sup>th</sup> c.a.m.'s _q_<sup>th</sup> root is also known as _standard deviation_ if _q_ = 2, and _mean deviation_ if _q_ = 1; similarly for _p_.)
 
@@ -163,7 +163,7 @@ The algorithm, called **Algorithm C** in this document, follows.
 
 > **Notes:**
 >
-> 1. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those numbers are multiplied by a constant or a constant is added to them.
+> 1. If the stream of random variates meets the condition for _Algorithm C_ for a given _q_, _p_, and _&kappa;_, then it still meets that condition when those variates are multiplied by a constant or a constant is added to them.
 > 2. Theorem 3.4 of Kunsch et al. (2019)<sup>[**(6)**](#Note6)</sup> shows that there is no mean estimation algorithm that&mdash;
 >      - produces an estimate within a user-specified error tolerance (in terms of _absolute error_, as opposed to _relative error_) with probability greater than a user-specified value, and
 >      - works for all streams whose distribution is known only to have finite moments (the moments are bounded but the bounds are unknown).

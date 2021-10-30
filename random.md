@@ -261,7 +261,7 @@ _Entropy_ is a value that describes how hard it is to guess a nondeterministic s
 <a id=Seed_Generation></a>
 ### Seed Generation
 
-In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(14)**](#Note14)</sup>:
+In general, there are two steps to generate an `N`-bit seed for a PRNG<sup>[**(14)**](#Note14)</sup>\:
 
 1. Gather enough data from independent nondeterministic sources to reach `N` bits of _entropy_ or more.
 2. Then, condense the data into an `N`-bit number, a process called _randomness extraction_.

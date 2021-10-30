@@ -265,7 +265,7 @@ Because the coefficients _a_\[_i_\] must be in the interval [0, 1], some or all 
 >
 > **Examples:**
 >
-> 1. Take the following parabolic function discussed in Thomas and Blanchet (2012)<sup>[**(11)**](#Note11)</sup>: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(12)**](#Note12)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(13)**](#Note13)</sup>
+> 1. Take the following parabolic function discussed in Thomas and Blanchet (2012)<sup>[**(11)**](#Note11)</sup>\: (1&minus;4\*(_&lambda;_&minus;1/2)<sup>2</sup>)\*_c_, where _c_ is in the interval (0, 1).  This is a polynomial of degree 2 that can be rewritten as &minus;4\*_c_\*_&lambda;_<sup>2</sup>+4\*_c_\*_&lambda;_, so that this _power form_ has coefficients (0, 4\*_c_, &minus;4\*_c_) and a degree (_n_) of 2. By rewriting the polynomial in Bernstein form (such as via the matrix method by Ray and Nataraj (2012)<sup>[**(12)**](#Note12)</sup>), we get coefficients (0, 2\*_c_, 0).  Thus, for this polynomial, _a_\[0] is 0,  _a_\[1] is 2\*_c_, and  _a_\[2] is 0.  Thus, if _c_ is in the interval (0, 1/2], we can simulate this function as follows: "Flip the input coin twice.  If exactly one of the flips returns 1, return a number that is 1 with probability 2\*_c_ and 0 otherwise.  Otherwise, return 0."  For other values of _c_, the algorithm requires rewriting the polynomial in Bernstein form, then elevating the degree of the rewritten polynomial enough times to bring its coefficients in [0, 1]; the required degree approaches infinity as _c_ approaches 1.<sup>[**(13)**](#Note13)</sup>
 > 2. The _conditional_ construction, mentioned in Flajolet et al. (2010)<sup>[**(1)**](#Note1)</sup>, has the form&mdash;<br>(_&lambda;_) \* _a_\[0] + (1 &minus; _&lambda;_) \* _a_\[1].<br>This is a degree-1 polynomial in Bernstein form with variable _&lambda;_ and coefficients _a_\[0] and _a_\[1]. The following algorithm simulates this polynomial: "Flip the _&lambda;_ input coin.  If the result is 0, flip the _a_\[0] input coin and return the result.  Otherwise, flip the _a_\[1] input coin and return the result."  Special cases of the conditional construction include complement, mean, product, and logical OR; see "[**Other Factory Functions**](#Other_Factory_Functions)".
 
 &nbsp;
@@ -641,7 +641,7 @@ And the algorithm returns 1 with probability equal to the root, and 0 otherwise.
         2. If _z_ is 0 and _P_(_t_) is less than 0, return 1.
     5. Set _r_ to _r_\*2+_z_, then multiply _d_ by 2.
 
-> **Example** (Penaud and Roques 2002)<sup>[**(31)**](#Note31)</sup>:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
+> **Example** (Penaud and Roques 2002)<sup>[**(31)**](#Note31)</sup>\:  Let _P_(_x_) = 1 &minus; _x_ &minus; _x_<sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/_&phi;_, and _P_(0) > 0.  Then given _P_, the algorithm above samples the probability 1/_&phi;_ exactly.
 
 <a id=Certain_Converging_Series></a>
 #### Certain Converging Series
@@ -721,8 +721,8 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > 1. Generate _X_, a Poisson random variate with mean _&mu;_, then flip the input coin.  With probability 1/(1+_X_), return the result of the coin flip; otherwise, return 0.  This corresponds to _g_(_i_) being the Poisson probabilities and the coin for _h_<sub>_i_</sub> returning 1 with probability 1/(1+_i_), and 0 otherwise.  The probability that this method returns 1 is **E**\[1/(1+_X_)\], or (exp(_&mu;_)&minus;1)/(exp(_&mu;_)\*_&mu;_).
 > 2. Generate _X_, a Poisson random variate with mean _&mu;_, and return 1 if _X_ is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;_&mu;_) mentioned earlier, and corresponds to _g_(_i_) being the Poisson probabilities and the coin for _h_<sub>_i_</sub> returning 1 if _i_ is 0, and 0 otherwise.
 > 3. Generate _X_, a Poisson random variate with mean _&mu;_, run the **algorithm for exp(&minus;_z_)** with _z_ = _X_, and return the result.  The probability of returning 1 this way is **E**\[exp(&minus;_X_)\], or exp(_&mu;_\*exp(&minus;1)&minus;_&mu;_).  The following Python code uses the computer algebra library SymPy to find this probability: `from sympy.stats import *; E(exp(-Poisson('P', x))).simplify()`.
-> 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(36)**](#Note36)</sup>: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
-> 5. (Wästlund 1999)<sup>[**(8)**](#Note8)</sup>: Generate a Poisson random variate _X_ with mean 1, then flip the input coin _X_ times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;_&lambda;_), and corresponds to _g_(_i_) being the Poisson probabilities, namely 1/(_i_!\*exp(1)), and _h_<sub>_i_</sub>() being (1&minus;_&lambda;_)<sup>_i_</sup>.
+> 4. _Bernoulli Race_ (Dughmi et al. 2017)<sup>[**(36)**](#Note36)</sup>\: Say we have _n_ coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return _X_; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to _g_(_i_) being 1/_n_ and _h_<sub>_i_</sub>() being the probability for the corresponding coin _i_.
+> 5. (Wästlund 1999)<sup>[**(8)**](#Note8)</sup>\: Generate a Poisson random variate _X_ with mean 1, then flip the input coin _X_ times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;_&lambda;_), and corresponds to _g_(_i_) being the Poisson probabilities, namely 1/(_i_!\*exp(1)), and _h_<sub>_i_</sub>() being (1&minus;_&lambda;_)<sup>_i_</sup>.
 > 5. Multivariate Bernoulli factory (Huber 2016)<sup>[**(37)**](#Note37)</sup> of the form _R_ = _C_<sub>0</sub>\*_&lambda;_<sub>0</sub> + _C_<sub>1</sub>\*_&lambda;_<sub>1</sub> + ... + _C_<sub>_m_&minus;1</sub>\*_&lambda;_<sub>_m_&minus;1</sub>, where _C_<sub>_i_</sub> are known constants greater than 0, and _R_ &le; 1 &minus; _&#x03F5;_ for any _&#x03F5;_ > 0: Choose an integer in [0, _m_) uniformly at random, call it _i_, then run a linear Bernoulli factory for (_m_\*_C_<sub>_i_</sub>)\*_&lambda;_<sub>_i_</sub>.  This differs from Huber's suggestion of "thinning" a Poisson process driven by multiple input coins.
 > 6. **Probability generating function** (PGF) (Dughmi et al. 2017)<sup>[**(36)**](#Note36)</sup>. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected or average value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 7. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
@@ -877,7 +877,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 <a id=exp___lambda___1_minus___lambda></a>
 #### exp(_&lambda;_)*(1&minus;_&lambda;_)
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>\:
 
 1. Set _k_ and _w_ each to 0.
 2. Flip the input coin.  If it returns 0, return 1.
@@ -1230,7 +1230,7 @@ Based on the algorithm from Flajolet et al. (2010)<sup>[**(1)**](#Note1)</sup>, 
 <a id=arctan___lambda></a>
 #### arctan(_&lambda;_)
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>: Call the **algorithm for arctan(_&lambda;_) /_&lambda;_** and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>\: Call the **algorithm for arctan(_&lambda;_) /_&lambda;_** and flip the input coin.  Return 1 if the call and flip both return 1, or 0 otherwise.
 
 <a id=cos___lambda></a>
 #### cos(_&lambda;_)
@@ -1418,7 +1418,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 <a id=arctan__x___y___y___x></a>
 #### arctan(_x_/_y_) \* _y_/_x_
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>\:
 
 1. Generate a uniform(0, 1) random variate _u_.
 2. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 1.
@@ -1444,7 +1444,7 @@ Two algorithms:
 <a id=pi___4></a>
 #### _&pi;_ / 4
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>\:
 
 1. Generate a random integer in the interval [0, 6), call it _n_.
 2. If _n_ is less than 3, return the result of the **algorithm for arctan(1/2) \* 2**.  Otherwise, if _n_ is 3, return 0.  Otherwise, return the result of the **algorithm for arctan(1/3) \* 3**.
@@ -1452,7 +1452,7 @@ Two algorithms:
 <a id=1___pi></a>
 #### 1 / _&pi;_
 
-(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>:
+(Flajolet et al., 2010)<sup>[**(1)**](#Note1)</sup>\:
 
 1. Set _t_ to 0.
 2. With probability 1/4, add 1 to _t_ and repeat this step.  Otherwise, go to step 3.

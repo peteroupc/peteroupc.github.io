@@ -121,7 +121,7 @@ This algorithm is similar to the "inversion&ndash;rejection" algorithm mentioned
 
 By the way, this algorithm arose while trying to devise an algorithm that can generate an integer power of a uniform random variate, with arbitrary precision, without actually calculating that power (a naïve calculation that is merely an approximation and usually introduces bias); for more information, see my other article on [**partially-sampled random numbers**](https://peteroupc.github.io/exporand.html).  Even so, the algorithm I have come up with in this note may be of independent interest.
 
-In the case of powers of a uniform \[0, 1\] random variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>, which is possible to simulate using a so-called _Bernoulli factory_ algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of _i_.  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
+In the case of powers of a uniform random variate in the interval [0, 1], call the variate _X_, namely _X_<sup>_n_</sup>, the ratio _p_/_t_ in this algorithm has a very simple form, namely (1/2)<sup>1/_n_</sup>, which is possible to simulate using a so-called _Bernoulli factory_ algorithm without actually having to calculate this ratio.  Note that this formula is the same regardless of _i_.  This is found by taking the PDF _f_(_x_) = _x_<sup>1/_n_</sup>/(_x_ * _n_)</sup> and finding the appropriate _p_/_t_ ratios by integrating _f_ over the two intervals mentioned in step 2 of the algorithm.
 
 <a id=Certain_Families_of_Distributions></a>
 ## Certain Families of Distributions
@@ -142,10 +142,10 @@ The following definitions are used:
 
 Certain special cases of the "X-G" families, such as the following, use a specially designed distribution for X:
 
-- The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017)<sup>[**(10)**](#Note10)</sup>. The family uses a shape parameter _&alpha;_ > 0; step 1 is modified to read: "Generate a uniform(0, 1) random variate _U_, then set _x_ to ln((_&alpha;_&minus;1)\*_U_ + 1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
-- The _exponentiated_ family (Mudholkar and Srivastava 1993)<sup>[**(11)**](#Note11)</sup>. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate a uniform(0, 1) random variate _u_, then set _x_ to _u_<sup>1/_a_</sup>."
-- The _transmuted-G_ family (Shaw and Buckley 2007)<sup>[**(12)**](#Note12)</sup>. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup>[**(3)**](#Note3)</sup>: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform(0, 1) random variate. Otherwise, generate two uniform(0, 1) random variates, set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> mentions the same distribution, but with parameter _&lambda;_ = _&eta;_ + 1, in the interval [0, 2].)
-- A _cubic rank transmuted_ distribution (Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform(0, 1) random variates, then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
+- The _alpha power_ or _alpha power transformed_ family (Mahdavi and Kundu 2017)<sup>[**(10)**](#Note10)</sup>. The family uses a shape parameter _&alpha;_ > 0; step 1 is modified to read: "Generate _U_, a uniform random variate in the interval [0, 1], then set _x_ to ln((_&alpha;_&minus;1)\*_U_ + 1)/ln(_&alpha;_) if _&alpha;_ != 1, and _U_ otherwise."
+- The _exponentiated_ family (Mudholkar and Srivastava 1993)<sup>[**(11)**](#Note11)</sup>. The family uses a shape parameter _a_ > 1; step 1 is modified to read: "Generate _u_, a uniform random variate in the interval [0, 1], then set _x_ to _u_<sup>1/_a_</sup>."
+- The _transmuted-G_ family (Shaw and Buckley 2007)<sup>[**(12)**](#Note12)</sup>. The family uses a shape parameter _&eta;_ in the interval [&minus;1, 1]; step 1 is modified to read: "Generate a piecewise linear random variate in [0, 1] with weight 1&minus;_&eta;_ at 0 and weight 1+_&eta;_ at 1, call the number _x_. (It can be generated as follows, see also (Devroye 1986, p. 71-72)<sup>[**(3)**](#Note3)</sup>\: With probability min(1&minus;_&eta;_, 1+_&eta;_), generate _x_, a uniform random variate in the interval [0, 1]. Otherwise, generate two uniform random variates in the interval [0, 1], set _x_ to the higher of the two, then if _&eta;_ is less than 0, set _x_ to 1&minus;_x_.)". ((Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> mentions the same distribution, but with parameter _&lambda;_ = _&eta;_ + 1, in the interval [0, 2].)
+- A _cubic rank transmuted_ distribution (Granzotto et al. 2017)<sup>[**(13)**](#Note13)</sup> uses parameters _&lambda;_<sub>0</sub> and _&lambda;_<sub>1</sub> in the interval [0, 1]; step 1 is modified to read: "Generate three uniform random variates in the interval [0, 1], then sort them in ascending order.  Then, choose 1, 2, or 3 with probability proportional to these weights: \[_&lambda;_<sub>0</sub>, _&lambda;_<sub>1</sub>, 3&minus;_&lambda;_<sub>0</sub>&minus;_&lambda;_<sub>1</sub>\].  Then set _x_ to the first, second, or third variate if 1, 2, or 3 is chosen this way, respectively."
 
 **Transformed&ndash;transformer family.** In fact, the "X-G" families are a special case of the so-called "transformed&ndash;transformer" family of distributions introduced by Alzaatreh et al. (2013)<sup>[**(14)**](#Note14)</sup> that uses two distributions, X and G, where X (the "transformed") is an arbitrary continuous distribution, G (the "transformer") is a distribution with an easy-to-compute quantile function, and _W_ is a nondecreasing function that maps a number in [0, 1] to a number that has the same support as X and meets certain other conditions.  The following algorithm samples a random variate from this kind of family:
 
@@ -171,13 +171,13 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 
 > **Example:** The "geometric zero-truncated Poisson distribution" is a distribution of maximums where _X_ is the distribution of 1 plus the number of failures before the first success, with each success having the same probability, and _Y_ is the zero-truncated Poisson distribution (Akdoğan et al., 2020)<sup>[**(23)**](#Note23)</sup>.
 
-A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)<sup>[**(24)**](#Note24)</sup>:
+A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021)<sup>[**(24)**](#Note24)</sup>\:
 
 1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number _x_.
 2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.<sup>[**(25)**](#Note25)</sup> (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
 
-**Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(26)**](#Note26)</sup> is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform(0, 1) random variate) and may be multiplied by a parameter _&theta;_ > 0.
+**Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982)<sup>[**(26)**](#Note26)</sup> is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.
 
 **Weighted distributions.** A _weighted X distribution_ uses a distribution X and a weight function _w_(_x_) whose values lie in [0, 1] everywhere in X's support.  The following algorithm samples from a weighted distribution (see also (Devroye 1986, p. 47)<sup>[**(3)**](#Note3)</sup>):
 
@@ -191,7 +191,7 @@ Some weighted distributions allow any weight function _w_(_x_) whose values are 
 - _c_ with probability _&alpha;_, and
 - a random variate distributed as X otherwise.
 
-For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha;_ and a beta random variate otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010)<sup>[**(28)**](#Note28)</sup>  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random variate (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021)<sup>[**(29)**](#Note29)</sup>:
+For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha;_ and a beta random variate otherwise (the parameter _c_ is 0) (Ospina and Ferrari 2010)<sup>[**(28)**](#Note28)</sup>  A zero-and-one inflated X distribution is 0 or 1 with probability _&alpha;_ and distributed as X otherwise.  For example, to generate a _zero-and-one-inflated unit Lindley_ random variate (with parameters _&alpha;_, _&theta;_, and _p_) (Chakraborty and Bhattacharjee 2021)<sup>[**(29)**](#Note29)</sup>\:
 
 1. With probability _&alpha;_, return a number that is 0 with probability _p_ and 1 otherwise.
 2. Generate a unit Lindley(_&theta;_) random variate, that is, generate _x_/(1+_x_) where _x_ is a [**Lindley(_&theta;_) random variate**](https://peteroupc.github.io/morealg.html#Lindley_Distribution_and_Lindley_Like_Mixtures).
@@ -199,7 +199,7 @@ For example, a _zero-inflated beta_ random variate is 0 with probability _&alpha
 <a id=Certain_Distributions></a>
 ## Certain Distributions
 
-In the table below, _U_ is a uniform(0, 1) random variate.
+In the table below, _U_ is a uniform random variate in the interval [0, 1].
 
 | This distribution: |  Is distributed as: | And uses these parameters: |
  --- | --- | --- |
