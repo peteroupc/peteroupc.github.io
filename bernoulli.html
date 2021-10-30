@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/27"><meta name="citation_online_date" content="2021/10/27"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/10/29"><meta name="citation_online_date" content="2021/10/29"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -79,6 +79,7 @@
 <ul>
 <li><a href="#exp_minus___lambda"><strong>exp(&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp_minus___lambda___k___c"><strong>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</strong></a></li>
+<li><a href="#exp_minus__m____lambda_____mu"><strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong></a></li>
 <li><a href="#exp_minus__m____lambda____k"><strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong></a></li>
 <li><a href="#exp___lambda___1_minus___lambda"><strong>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</strong></a></li>
 <li><a href="#exp___lambda___minus_1_exp_minus___lambda___or_exp___lambda___minus_1_exp___lambda"><strong>(exp(<em>&lambda;</em>)&minus;1) * exp(&minus;<em>&lambda;</em>) or (exp(<em>&lambda;</em>)&minus;1) / exp(<em>&lambda;</em>)</strong></a></li>
@@ -94,6 +95,7 @@
 <li><a href="#1_1___lambda"><strong>1/(1+<em>&lambda;</em>)</strong></a></li>
 <li><a href="#1_2_minus___lambda"><strong>1/(2 &minus; <em>&lambda;</em>)</strong></a></li>
 <li><a href="#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda"><strong>expit(<em>m</em> + <em>&lambda;</em>) or 1&minus;1/(1+exp(<em>m</em> + <em>&lambda;</em>)) or exp(<em>m</em> + <em>&lambda;</em>)/(1+exp(<em>m</em> + <em>&lambda;</em>)) or 1/(1+exp(&minus;(<em>m</em> + <em>&lambda;</em>)))</strong></a></li>
+<li><a href="#expit__m____lambda_____mu"><strong>expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong></a></li>
 <li><a href="#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda"><strong><em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) / (<em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) + (1 &minus; <em>&lambda;</em>))</strong></a></li>
 <li><a href="#1_1__x___y____lambda"><strong>1 / (1 + (<em>x</em>/<em>y</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
@@ -1175,7 +1177,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>exp(&minus;(<em>&lambda;</em><sup><em>k</em></sup> * <em>c</em>))</h4>
 
-<p>In the algorithms in this section, <em>k</em> is an integer 0 or greater, and <em>c</em> is a real number.</p>
+<p>In the algorithms in this section, <em>k</em> is an integer 0 or greater, and <em>c</em> &ge; 0 is a real number.</p>
 
 <p><strong>Algorithm 1.</strong> Works when <strong><em>c</em> is 0 or greater</strong>.  (See also algorithm for exp(&minus;((1&minus;<em>&lambda;</em>)<sup>1</sup> * <em>c</em>)) in &quot;Other Factory Functions&quot;.)</p>
 
@@ -1209,6 +1211,24 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Let <em>m</em> be floor(<em>c</em>).  Call the second algorithm <em>m</em> times with <em>k</em> = <em>k</em> and <em>c</em> = 1.  If any of these calls returns 0, return 0.</li>
 <li>If <em>c</em> is an integer, return 1.</li>
 <li>Call the second algorithm once, with <em>k</em> = <em>k</em> and <em>c</em> = <em>c</em> &minus; floor(<em>c</em>).  Return the result of this call.</li>
+</ol>
+
+<p><a id=exp_minus__m____lambda_____mu></a></p>
+
+<h4>exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</h4>
+
+<p>In the following algorithm, <em>m</em> is an integer 0 or greater, and <em>&lambda;</em> and <em>&mu;</em> are the probabilities of heads of two input coins.</p>
+
+<ol>
+<li>Set <em>j</em> to 0, then while <em>j</em> &lt; <em>m</em>+1:
+
+<ol>
+<li>Generate <em>N</em>, a Poisson random variate with mean 1.</li>
+<li>If <em>j</em> = <em>m</em>, flip the <em>&lambda;</em> input coin <em>N</em> times and set <em>N</em> to the number of flips that return 1 this way.  (This transforms a Poisson variate with mean 1 to one with mean <em>&lambda;</em>; see (Devroye 1986, p. 487)<sup><a href="#Note28"><strong>(28)</strong></a></sup>.)</li>
+<li>Flip the <em>&mu;</em> input coin until a flip returns 1 or the coin is flipped <em>N</em> times, whichever comes first.  Return 0 if any of the flips, including the last, returns 1.</li>
+<li>Add 1 to <em>j</em>.</li>
+</ol></li>
+<li>Return 1.</li>
 </ol>
 
 <p><a id=exp_minus__m____lambda____k></a></p>
@@ -1455,6 +1475,28 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Create a <em>&nu;</em> input coin that flips the (<em>&lambda;</em>) input coin and returns 1 minus the result.</li>
 <li>Create a <em>&mu;</em> input coin that runs the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong> with <em>k</em>=1, <em>m</em>=abs(<em>m</em>)&minus;1, and <em>&lambda;</em> being the <em>&nu;</em> input coin.</li>
 <li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&mu;</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
+</ol></li>
+</ul>
+
+<p><a id=expit__m____lambda_____mu></a></p>
+
+<h4>expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</h4>
+
+<p>In this algorithm, <em>m</em> is an integer and can be positive or not, and <em>&lambda;</em> and <em>&mu;</em> are the probabilities of heads of two input coins.</p>
+
+<ul>
+<li>If <em>m</em> &ge; 0:
+
+<ol>
+<li>Create a <em>&nu;</em> coin that runs the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> with <em>m</em>=<em>m</em>.</li>
+<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and with  <em>&lambda;</em> being the <em>&nu;</em> coin, and return the result of that run.</li>
+</ol></li>
+<li>If <em>m</em> &lt; 0:
+
+<ol>
+<li>Create a <em>&beta;</em> input coin that flips the <em>&lambda;</em> input coin and returns 1 minus the result.</li>
+<li>Create a <em>&nu;</em> input coin that runs the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong> with <em>m</em>=abs(<em>m</em>)&minus;1, <em>&mu;</em> being the <em>&mu;</em> input coin, and <em>&lambda;</em> being the <em>&beta;</em> input coin.</li>
+<li>Run the algorithm for <strong><em>d</em>/(<em>c</em>+<em>&lambda;</em>)</strong> with <em>d</em>=1, <em>c</em>=1, and <em>&lambda;</em> being the <em>&nu;</em> coin, and return <strong>1 minus the result</strong> of that run.</li>
 </ol></li>
 </ul>
 

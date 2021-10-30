@@ -114,7 +114,7 @@ Let _g_(_&lambda;_) = lim<sub>_&nu;_&rarr;_&lambda;_</sub> _f_(_&nu;_)/_h_(_&nu;
 then _f_ can be simulated using the following algorithm:
 
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
-2. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _g_(.), and return the result of that algorithm.  This involves building polynomials that converge to _g_(.), as described earlier in this section.  (Alternatively, if _g_ is easy to simulate, instead run another Bernoulli factory algorithm for _g_ and return the result of that algorithm.)
+2. Run a Bernoulli factory algorithm for _g_(.) and return the result of that algorithm.  This can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _g_(.) in a manner needed for that algorithm (e.g., if _g_ is described earlier in this section).
 
 > **Notes:**
 >
@@ -239,7 +239,7 @@ To build an approximate Bernoulli factory:
 
     Whatever polynomial is used, the polynomial's coefficients must all lie in \[0, 1\].
 
-2. Then, we use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to simulate that polynomial, given its coefficients.
+2. Then, we use one of the algorithms in the section "[**Certain Polynomials**](https://peteroupc.github.io/bernoulli.html)" to toss heads with probability equal to that polynomial, given its coefficients.
 
 **Examples of approximate Bernoulli factories.** The schemes in the previous section give an upper bound on the error on approximating _f_ with a degree-_n_ polynomial in Bernstein form.  For example, the third scheme does this when _f_ is a Lipschitz continuous function (with Lipschitz constant _L_).  To find a degree _n_ such that _f_ is approximated with a maximum error of _&epsilon;_, we need to solve the following equation for _n_:
 

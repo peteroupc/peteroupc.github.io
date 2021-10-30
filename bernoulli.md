@@ -56,6 +56,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
+        - [**exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)**](#exp_minus__m____lambda_____mu)
         - [**exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)**](#exp_minus__m____lambda____k)
         - [**exp(_&lambda;_)*(1&minus;_&lambda;_)**](#exp___lambda___1_minus___lambda)
         - [**(exp(_&lambda;_)&minus;1) \* exp(&minus;_&lambda;_) or (exp(_&lambda;_)&minus;1) / exp(_&lambda;_)**](#exp___lambda___minus_1_exp_minus___lambda___or_exp___lambda___minus_1_exp___lambda)
@@ -71,6 +72,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**1/(1+_&lambda;_)**](#1_1___lambda)
         - [**1/(2 &minus; _&lambda;_)**](#1_2_minus___lambda)
         - [**expit(_m_ + _&lambda;_) or 1&minus;1/(1+exp(_m_ + _&lambda;_)) or exp(_m_ + _&lambda;_)/(1+exp(_m_ + _&lambda;_)) or 1/(1+exp(&minus;(_m_ + _&lambda;_)))**](#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda)
+        - [**expit((_m_ + _&lambda;_)\*_&mu;_)**](#expit__m____lambda_____mu)
         - [**_&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_))**](#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda)
         - [**1 / (1 + (_x_/_y_)\*_&lambda;_)**](#1_1__x___y____lambda)
         - [**_&lambda;_ + _&mu;_**](#lambda_____mu)
@@ -815,7 +817,7 @@ This algorithm is adapted from the general martingale algorithm (in "Certain Pow
 <a id=exp_minus___lambda___k___c></a>
 #### exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))
 
-In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a real number.
+In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 0 is a real number.
 
 **Algorithm 1.** Works when **_c_ is 0 or greater**.  (See also algorithm for exp(&minus;((1&minus;_&lambda;_)<sup>1</sup> \* _c_)) in "Other Factory Functions".)
 
@@ -841,6 +843,18 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ is a 
 1. Let _m_ be floor(_c_).  Call the second algorithm _m_ times with _k_ = _k_ and _c_ = 1.  If any of these calls returns 0, return 0.
 2. If _c_ is an integer, return 1.
 3. Call the second algorithm once, with _k_ = _k_ and _c_ = _c_ &minus; floor(_c_).  Return the result of this call.
+
+<a id=exp_minus__m____lambda_____mu></a>
+#### exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)
+
+In the following algorithm, _m_ is an integer 0 or greater, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.
+
+1. Set _j_ to 0, then while _j_ < _m_+1:
+    1. Generate _N_, a Poisson random variate with mean 1.
+    2. If _j_ = _m_, flip the _&lambda;_ input coin _N_ times and set _N_ to the number of flips that return 1 this way.  (This transforms a Poisson variate with mean 1 to one with mean _&lambda;_; see (Devroye 1986, p. 487)<sup>[**(28)**](#Note28)</sup>.)
+    3. Flip the _&mu;_ input coin until a flip returns 1 or the coin is flipped _N_ times, whichever comes first.  Return 0 if any of the flips, including the last, returns 1.
+    4. Add 1 to _j_.
+2. Return 1.
 
 <a id=exp_minus__m____lambda____k></a>
 #### exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)
@@ -1008,6 +1022,19 @@ In this algorithm, _m_ is an integer and can be positive or not.
     1. Create a _&nu;_ input coin that flips the (_&lambda;_) input coin and returns 1 minus the result.
     2. Create a _&mu;_ input coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)<sup>_k_</sup>)** with _k_=1, _m_=abs(_m_)&minus;1, and _&lambda;_ being the _&nu;_ input coin.
     3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&mu;_ coin, and return **1 minus the result** of that run.
+
+<a id=expit__m____lambda_____mu></a>
+#### expit((_m_ + _&lambda;_)\*_&mu;_)
+
+In this algorithm, _m_ is an integer and can be positive or not, and _&lambda;_ and _&mu;_ are the probabilities of heads of two input coins.
+
+- If _m_ &ge; 0:
+    1. Create a _&nu;_ coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)** with _m_=_m_.
+    2. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and with  _&lambda;_ being the _&nu;_ coin, and return the result of that run.
+- If _m_ < 0:
+    1. Create a _&beta;_ input coin that flips the _&lambda;_ input coin and returns 1 minus the result.
+    2. Create a _&nu;_ input coin that runs the algorithm for **exp(&minus;(_m_ + _&lambda;_)\*_&mu;_)** with _m_=abs(_m_)&minus;1, _&mu;_ being the _&mu;_ input coin, and _&lambda;_ being the _&beta;_ input coin.
+    3. Run the algorithm for **_d_/(_c_+_&lambda;_)** with _d_=1, _c_=1, and _&lambda;_ being the _&nu;_ coin, and return **1 minus the result** of that run.
 
 <a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda></a>
 #### _&lambda;_\*exp(_m_ + _&nu;_) / (_&lambda;_\*exp(_m_ + _&nu;_) + (1 &minus; _&lambda;_))
