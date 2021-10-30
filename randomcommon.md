@@ -46,13 +46,13 @@ All the randomization methods presented on this page assume we have a source of 
 - [**Random Character Strings**](#Random_Character_Strings)
 - [**Choosing Items with Separate Probabilities**](#Choosing_Items_with_Separate_Probabilities)
 - [**Other Topics**](#Other_Topics)
-- [**Notes**](#Notes)
+- [\[^1\]: Lumbroso, J., "\[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**\](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 \[cs.DS\].](#1_Lumbroso_J_Optimal_Discrete_Uniform_Generation_from_Coin_Flips_and_Applications_https_arxiv_org_abs_1304_1916_arXiv_1304_1916_cs_DS)
 - [**License**](#License)
 
 <a id=Uniform_Numbers_in_a_Range></a>
 ## Uniform Numbers in a Range
 
-For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013)<sup>[**(1)**](#Note1)</sup>:
+For algorithms on generating uniform random _integers_ in a range, see [**"Uniform Random Integers"**](https://peteroupc.github.io/randomfunc.html#Uniform_Random_Integers).  It should be noted there that most pseudorandom number generators in common use output 32- or 64-bit non-negative integers, and for JavaScript, the idiom `(Math.random() < 0.5 ? 0 : 1)` will work in many practical cases to generate bits (zeros and ones) at random.  Here is a JavaScript example of generating a random integer in the interval [**`minInclusive`, `maxExclusive`), using the Fast Dice Roller by J. Lumbroso (2013\) [^1]:
 
     function randomInt(minInclusive, maxExclusive) {
       var maxInclusive = (maxExclusive - minInclusive) - 1
@@ -77,7 +77,7 @@ Many common programming languages have no convenient or correct way to generate 
 - JavaScript until recently has only one API that exposes a random number generator, namely `Math.random()`, and no built-in method for shuffling or producing integers at random, among other things.  Naïve solutions such as `Math.floor(Math.random()*x)+y` are not guaranteed to work reliably, in part because JavaScript doesn't require any particular implementation for `Math.random`.
 - C's `rand` function produces random integers in a predetermined range (\[0, `RAND_MAX`\]) that is not within the application's control.  This is just one of a [**host of issues with `rand`**](https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465), by the way (unspecified algorithm, yet is initializable with "srand" for repeatability; non-thread-safety; unspecified distribution; historical implementations had weak low bits; etc.).
 
-For algorithms on generating uniform random _floating-point numbers_ in a range, see [**"For Floating-Point Number Formats"**](https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats).  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., `Math.random()*x` in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard (2020)<sup>[**(2)**](#Note2)</sup>).
+For algorithms on generating uniform random _floating-point numbers_ in a range, see [**"For Floating-Point Number Formats"**](https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats).  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., `Math.random()*x` in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard (2020\) [^2]).
 
 <a id=Choosing_Random_Items></a>
 ## Choosing Random Items
@@ -115,7 +115,7 @@ With that said, the following specific situations tend to come up in random reco
 
 - Querying one random record from a database.
 - Querying a specified number of random records from a database.
-- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002)<sup>[**(3)**](#Note3)</sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
+- Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: `ln(R) / W` (where `W` is the record's weight greater than 0, itself its own column, and `R` is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002\) [^3]), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.
 
 <a id=Random_Character_Strings></a>
 ## Random Character Strings
@@ -135,7 +135,7 @@ _Weighted choice_ (also known as a _categorical distribution_) is a random choic
 
 For algorithms on weighted choice, see "[**Weighted Choice With Replacement**](https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement)", which covers choices in which items are taken and put back.
 
-The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020)<sup>[**(4)**](#Note4)</sup>.
+The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in [**Python sample code**](https://peteroupc.github.io/randomgen.zip)).  They include rejection sampling, Vose's version of the alias method (`VoseAlias`; see "[**Darts, Dice, and Coins: Sampling from a Discrete Distribution**](https://www.keithschwarz.com/darts-dice-coins/)" by Keith Schwarz for more information), and the Fast Loaded Dice Roller (`FastLoadedDiceRoller`) (Saad et al. 2020\) [^4].
 
 Weighted choice _without replacement_ is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:
 
@@ -160,13 +160,14 @@ Other topics showed up in the analysis, and it's worth mentioning them here.  Th
 - Stratified sampling (per-group sampling).
 - Generating a [**random point inside a circle**](https://peteroupc.github.io/randomfunc.html#Random_Points_Inside_a_Ball_Shell_or_Cone).
 
-<a id=Notes></a>
-## Notes
+<a id=1_Lumbroso_J_Optimal_Discrete_Uniform_Generation_from_Coin_Flips_and_Applications_https_arxiv_org_abs_1304_1916_arXiv_1304_1916_cs_DS></a>
+## [^1]: Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].
 
-- <small><sup id=Note1>(1)</sup> Lumbroso, J., "[**Optimal Discrete Uniform Generation from Coin Flips, and Applications**](https://arxiv.org/abs/1304.1916)", arXiv:1304.1916 [cs.DS].</small>
-- <small><sup id=Note2>(2)</sup> Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. [**https://doi.org/10.1007/978-3-030-50417-5_2**](https://doi.org/10.1007/978-3-030-50417-5_2)</small>
-- <small><sup id=Note3>(3)</sup> Arratia, R., "On the amount of dependence in the prime factorization of a uniform random integer", _Contemporary Combinatorics_ 10(29), 91, 2002.</small>
-- <small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.</small>
+[^2]: Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. [**https://doi.org/10.1007/978-3-030-50417-5_2**](https://doi.org/10.1007/978-3-030-50417-5_2)
+
+[^3]: Arratia, R., "On the amount of dependence in the prime factorization of a uniform random integer", _Contemporary Combinatorics_ 10(29), 91, 2002.
+
+[^4]: Saad, F.A., Freer C.E., et al. "The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions", in _AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research_ 108, Palermo, Sicily, Italy, 2020.
 
 <a id=License></a>
 ## License

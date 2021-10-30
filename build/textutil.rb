@@ -13,8 +13,20 @@ def prepareMarkdown(data)
     textstorefs[notetext]=n[0] if !textstorefs[notetext]
     notetexts[n[0]]=notetext
   }
+  data.scan(/^\[\^(\d+)\]\:\s+([\s\S]+?)(?=\[\^\d+\]\:|\#\#|\z)/){|n|
+    notetext=n[1].gsub(/\s+\z/,"")
+    notetext=notetext.gsub(/<\/?small>/,"").gsub(/<br\/>\s*\z/,"").gsub(/\s+-\s*\z/,"").gsub(/\s+\z/,"")
+    notetext=notetext.gsub(/\n\s*(-\s+|\d+\.)/) { "\n" + " "*4 + $1 }
+    textstorefs[notetext]="Note"+n[0] if !textstorefs[notetext]
+    notetexts["Note"+n[0]]=notetext
+  }
   noterefs={} # Associates old note refs with new refs
   newnotetexts=[]
+  data=data.gsub(/\)<\/sup>\:/,")</sup>\:")
+  data=data.gsub(/([\s\S])\[\^(\d+)\](?!\s*\:)/){
+     next $& if $1=="\n"
+     next "#{$1}<sup>[(#{$2})](\#Note#{$2})</sup>"
+  }
   data=data.gsub(/<sup>\s*\[(?:\*\*)?\(\d+\)(?:\*\*)?\]\s*\(\#([^>]+)\)\s*<\/sup>/){
      noteref=$1
      newrefid=""
@@ -28,15 +40,18 @@ def prepareMarkdown(data)
        newrefid="Note#{newref+1}"
        noterefs[noteref]=newref
        ntext=notetexts[noteref] || "No note text yet."
-       ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
-       newnotetexts.push("- <small>"+ntext+"</small>")
+       #ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
+       #newnotetexts.push("- <small>"+ntext+"</small>")
+       newnotetexts.push("[^#{newref+1}]: "+ntext+"")
      else
        newref=noterefs[noteref]
        newrefid="Note#{newref+1}"
      end
-     next "<sup>[(#{newref+1})](##{newrefid})</sup>"
+     #next "<sup>[(#{newref+1})](##{newrefid})</sup>"
+     next "[^#{newref+1}]"
   }
-  data=data.gsub(/<<([^\|\n>]*)\|([^\|]+?)>>/){
+  data=data.gsub( /([^\\])\)\s*\[\^(\d+)\]/ ) { $1+"\\) [^"+$2+"]" } #/
+  data=data.gsub( /<<([^\|\n>]*)\|([^\|]+?)>>/ ){
      noteref=$1||""
      notedata=$2
      next $& if noteref[/^\s+/] # sanity check
@@ -44,14 +59,22 @@ def prepareMarkdown(data)
      newrefid="Note#{newref+1}"
      noterefs[noteref]=newref
      ntext=notedata
-     ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
-     newnotetexts.push("- <small>"+ntext+"</small>")
-     noterefparen=(noteref.length==0) ? "" : "(#{noteref})"
-     next noterefparen+"<sup>[(#{newref+1})](##{newrefid})</sup>"
+     #ntext="<sup id=#{newrefid}>(#{newref+1})</sup> "+ntext
+     #newnotetexts.push("- <small>"+ntext+"</small>")
+     newnotetexts.push("[^#{newref+1}]: "+ntext+"")
+     noterefparen=(noteref.length==0) ? "" : "\(#{noteref}\)"
+     #noteref=noterefparen+"<sup>[(#{newref+1})](##{newrefid})</sup>"
+     noteref=noterefparen+"[^#{newrefid}]"
+     next noteref
   }
 
-  data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
-    next newnotetexts.join("\n")+"\n\n"
+  #data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
+  #  next newnotetexts.join("\n")+"\n\n"
+  #}
+  data=data.gsub(/^(\#\#+)[ \t]+Notes[ \t]*\n+[\s\S]*?(?=\#\#|\z)/){
+   p1=$1
+   p2=$2
+   ret="#{p1} #{p2}\n\n"+newnotetexts.join("\n\n")+"\n\n"
   }
   data.scan(/^(\#\#+)\s+(.*)\s+?/){|heading|
    h0=heading[0]

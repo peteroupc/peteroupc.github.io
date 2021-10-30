@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates</title><meta name="citation_title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="citation_pdf_url" content="https://peteroupc.github.io/uniformsum.pdf"><meta name="citation_url" content="https://peteroupc.github.io/uniformsum.html"><meta name="citation_date" content="2021/10/22"><meta name="citation_online_date" content="2021/10/22"><meta name="og:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/uniformsum.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates</title><meta name="citation_title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="citation_pdf_url" content="https://peteroupc.github.io/uniformsum.pdf"><meta name="citation_url" content="https://peteroupc.github.io/uniformsum.html"><meta name="citation_date" content="2021/10/30"><meta name="citation_online_date" content="2021/10/30"><meta name="og:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/uniformsum.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Arbitrary-Precision Samplers for the Sum or Ratio of Uniform Random Variates</h1>
@@ -23,7 +23,7 @@
 <li><a href="#Sum_of_Three_Uniform_Random_Variates"><strong>Sum of Three Uniform Random Variates</strong></a></li>
 <li><a href="#Ratio_of_Two_Uniform_Random_Variates"><strong>Ratio of Two Uniform Random Variates</strong></a></li>
 <li><a href="#Reciprocal_of_Uniform_Random_Variate"><strong>Reciprocal of Uniform Random Variate</strong></a></li>
-<li><a href="#Notes"><strong>Notes</strong></a></li>
+<li><a href="#1_choose__n___k__1_2_3__n__1__k__1__n__minus__k___n___k___n__minus__k__is_a__binomial_coefficient__or_the_number_of_ways_to_choose__k__out_of__n__labeled_items_It_can_be_calculated_for_example_by_calculating__i___n__minus__i__1_for_each_integer__i__in__n__minus__k__1__n__then_multiplying_the_results_Yannis_Manolopoulos_2002_Binomial_coefficient_computation_recursion_or_iteration_SIGCSE_Bull_34_4_December_2002_65_67_DOI_https_doi_org_10_1145_820127_820168_https_doi_org_10_1145_820127_820168_Note_that_for_every__m__gt_0_choose__m__0_choose__m___m__1_and_choose__m__1_choose__m___m__minus_1__m__also_in_this_document_choose__n___k__is_0_when__k__is_less_than_0_or_greater_than__n">[^1]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in \[<em>n</em>&minus;<em>k</em>+1, <em>n</em>\], then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: [<strong>https://doi.org/10.1145/820127.820168</strong>](https://doi.org/10.1145/820127.820168)).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</a></li>
 <li><a href="#License"><strong>License</strong></a></li>
 </ul>
 
@@ -35,7 +35,7 @@
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;<em>f</em>(<em>x</em>) = (&sum;<sub><em>k</em> = 0, ..., <em>n</em></sub> (&minus;1)<sup><em>k</em></sup> * choose(<em>n</em>, <em>k</em>) * (<em>x</em> &minus; <em>k</em>)<sup><em>n</em> &minus; 1</sup> * sign(<em>x</em> &minus; <em>k</em>)) / (2*(n&minus;1)!),</p>
 
-<p>where choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.<sup><a href="#Note1"><strong>(1)</strong></a></sup></p>
+<p>where choose(<em>n</em>, <em>k</em>) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.[^1]</p>
 
 <p>For <em>n</em> uniform numbers, the distribution can take on values in the interval [0, <em>n</em>].  Note also that the PDF expresses a polynomial of degree <em>n</em> &minus; 1.</p>
 
@@ -58,9 +58,9 @@
 
 <p>where <em>a</em>[<em>k</em>] are the control points and <em>m</em> is the polynomial&#39;s degree (here, <em>n</em> &minus; 1). In this case, there will be <em>n</em> control points, which together trace out a 1-dimensional Bézier curve.  For example, given control points 0.2, 0.3, and 0.6, the curve is at 0.2 when <em>x</em> = 0, and 0.6 when <em>x</em> = 1.  (Note that the curve is not at 0.3 when <em>x</em> = 1/2; in general, Bézier curves do not cross their control points other than the first and the last.)</p>
 
-<p>Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in [0, 1] (Goyal and Sigman 2012)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.</p></li>
+<p>Moreover, this polynomial can be simulated because its Bernstein coefficients all lie in [0, 1] (Goyal and Sigman 2012) [^2].</p></li>
 <li>The sampler creates a &quot;coin&quot; made up of a uniform partially-sampled random number (PSRN) whose contents are built up on demand using an algorithm called <strong>SampleGeometricBag</strong>.  It flips this &quot;coin&quot; <em>n</em> &minus; 1 times and counts the number of times the coin returned 1 this way, call it <em>j</em>. (The &quot;coin&quot; will return 1 with probability equal to the to-be-determined uniform random variate.)</li>
-<li>Based on <em>j</em>, the sampler accepts the PSRN with probability equal to the control point <em>a</em>[<em>j</em>]. (See (Goyal and Sigman 2012)<sup><a href="#Note2"><strong>(2)</strong></a></sup>.)</li>
+<li>Based on <em>j</em>, the sampler accepts the PSRN with probability equal to the control point <em>a</em>[<em>j</em>]. (See (Goyal and Sigman 2012) [^2].)</li>
 <li>If the PSRN is accepted, the sampler optionally fills it up with uniform random digits, then sets the PSRN&#39;s integer part to <em>i</em>, then the sampler returns the finished PSRN.  If the PSRN is not accepted, the sampler starts over from step 2.</li>
 </ol>
 
@@ -131,7 +131,7 @@ def find_control_points(n, scale_pieces=False):
  return controls
 </pre>
 
-<p>The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
+<p>The basis matrix is found, for example, as Equation 42 of (Ray and Nataraj 2012) [^3].</p>
 
 <p>For example, if <em>n</em> = 4 (so a sum of four uniform random variates is desired), the following control points are used for each piece of the PDF:</p>
 
@@ -200,7 +200,7 @@ def find_control_points(n, scale_pieces=False):
 <p>If the areas of the PDF&#39;s pieces are known in advance (and SymPy makes them easy to find as the <code>find_areas</code> method shows), then the sampler could be modified as follows, since each piece is now chosen with probability proportional to the chance that a random variate there will be sampled:</p>
 
 <ul>
-<li>Step 2 is changed to read: &quot;An integer in [0, <em>n</em>) is chosen with probability proportional to the corresponding piece&#39;s area, call the integer <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are many <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>algorithms to choose an integer</strong></a> this way, but it&#39;s recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020)<sup><a href="#Note4"><strong>(4)</strong></a></sup> comes within 6 bits of the optimal number of random bits used on average.&quot;</li>
+<li>Step 2 is changed to read: &quot;An integer in [0, <em>n</em>) is chosen with probability proportional to the corresponding piece&#39;s area, call the integer <em>i</em>, then the piece identified by <em>i</em> is chosen.  There are many <a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>algorithms to choose an integer</strong></a> this way, but it&#39;s recommended to use one that takes integers rather than floating-point numbers as weights, and perhaps one that is economical in terms of the number of random bits it uses.  In this sense, the Fast Loaded Dice Roller (Saad et al. 2020) [^4] comes within 6 bits of the optimal number of random bits used on average.&quot;</li>
 <li>The last sentence in step 6 is changed to read: &quot;If the PSRN is not accepted, the sampler starts over from step 3.&quot;  With this, the same piece is sampled again.</li>
 <li><p>The following are additional modifications that should be done to the sampler.  However, not applying them does not affect the sampler&#39;s correctness.</p>
 
@@ -447,16 +447,15 @@ def ratio_of_uniform(bern):
 
 <p>The algorithm to simulate this PDF is the same as the algorithm for the ratio of two uniform random variates, except step 1 is omitted.</p>
 
-<p><a id=Notes></a></p>
+<p><a id=1_choose__n___k__1_2_3__n__1__k__1__n__minus__k___n___k___n__minus__k__is_a__binomial_coefficient__or_the_number_of_ways_to_choose__k__out_of__n__labeled_items_It_can_be_calculated_for_example_by_calculating__i___n__minus__i__1_for_each_integer__i__in__n__minus__k__1__n__then_multiplying_the_results_Yannis_Manolopoulos_2002_Binomial_coefficient_computation_recursion_or_iteration_SIGCSE_Bull_34_4_December_2002_65_67_DOI_https_doi_org_10_1145_820127_820168_https_doi_org_10_1145_820127_820168_Note_that_for_every__m__gt_0_choose__m__0_choose__m___m__1_and_choose__m__1_choose__m___m__minus_1__m__also_in_this_document_choose__n___k__is_0_when__k__is_less_than_0_or_greater_than__n></a></p>
 
-<h2>Notes</h2>
+<h2>[^1]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</h2>
 
-<ul>
-<li><small><sup id=Note1>(1)</sup> choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;Binomial coefficient computation: recursion or iteration?&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67. DOI: <a href="https://doi.org/10.1145/820127.820168"><strong>https://doi.org/10.1145/820127.820168</strong></a>).  Note that for every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</small></li>
-<li><small><sup id=Note2>(2)</sup> Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</small></li>
-<li><small><sup id=Note3>(3)</sup> S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</small></li>
-<li><small><sup id=Note4>(4)</sup> Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</small></li>
-</ul>
+<p>[^2]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
+
+<p>[^3]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
+
+<p>[^4]: Saad, F.A., Freer C.E., et al., &quot;<a href="https://arxiv.org/abs/2003.03830v2"><strong>The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions</strong></a>&quot;, arXiv:2003.03830v2 [stat.CO], also in AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research 108, Palermo, Sicily, Italy, 2020.</p>
 
 <p><a id=License></a></p>
 

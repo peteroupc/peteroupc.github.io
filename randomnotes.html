@@ -26,7 +26,7 @@
 <li><a href="#Gaussian_and_Other_Copulas"><strong>Gaussian and Other Copulas</strong></a></li>
 </ul></li>
 </ul></li>
-<li><a href="#Notes"><strong>Notes</strong></a></li>
+<li><a href="#1_Karney_C_F_F_Sampling_exactly_from_the_normal_distribution_https_arxiv_org_abs_1303_6257v2_arXiv_1303_6257v2_physics_comp_ph_2014">[^1]: Karney, C.F.F., &quot;[<strong>Sampling exactly from the normal distribution</strong>](https://arxiv.org/abs/1303.6257v2)&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</a></li>
 <li><a href="#Appendix"><strong>Appendix</strong></a>
 
 <ul>
@@ -59,10 +59,10 @@ probability that a number sampled from the normal distribution will be within on
 <ol>
 <li>The ratio-of-uniforms method (given as <code>NormalRatioOfUniforms</code> below).</li>
 <li>In the <em>Box&ndash;Muller transformation</em>, <code>mu + radius * cos(angle)</code> and <code>mu + radius * sin(angle)</code>, where <code>angle = RNDRANGEMaxExc(0, 2 * pi)</code> and <code>radius = sqrt(Expo(0.5)) * sigma</code>, are two independent values sampled from the normal distribution.  The polar method (given as <code>NormalPolar</code> below) likewise produces two independent values sampled from that distribution at a time.</li>
-<li>Karney&#39;s algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>.</li>
+<li>Karney&#39;s algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014) [^1].</li>
 </ol>
 
-<p>For surveys of Gaussian samplers, see (Thomas et al. 2007)<sup><a href="#Note2"><strong>(2)</strong></a></sup>, and (Malik and Hemani 2016)<sup><a href="#Note3"><strong>(3)</strong></a></sup>.</p>
+<p>For surveys of Gaussian samplers, see (Thomas et al. 2007) [^2], and (Malik and Hemani 2016) [^3].</p>
 
 <pre>METHOD NormalRatioOfUniforms(mu, sigma)
     while true
@@ -95,14 +95,14 @@ END METHOD
 
 <ol>
 <li>The <em>standard normal distribution</em> is implemented as <code>Normal(0, 1)</code>.</li>
-<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that closely follow the normal distribution.  Examples include the one in (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup>, an improved version in (Du et al. 2021)<sup><a href="#Note4"><strong>(4)</strong></a></sup>, as well as so-called &quot;constant-time&quot; methods such as (Micciancio and Walter 2017)<sup><a href="#Note5"><strong>(5)</strong></a></sup> that are used above all in <em>lattice-based cryptography</em>.</li>
+<li>Methods implementing a variant of the normal distribution, the <em>discrete Gaussian distribution</em>, generate <em>integers</em> that closely follow the normal distribution.  Examples include the one in (Karney 2014) [^1], an improved version in (Du et al. 2021) [^4], as well as so-called &quot;constant-time&quot; methods such as (Micciancio and Walter 2017) [^5] that are used above all in <em>lattice-based cryptography</em>.</li>
 <li>The following are some approximations to the normal distribution that papers have suggested:
 
 <ul>
-<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>, to generate an approximate normal variate with mean 0 and standard deviation <code>sigma</code>. (Kabal 2000/2019)<sup><a href="#Note6"><strong>(6)</strong></a></sup> &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDRANGE(0, 1)</code> numbers, on Wikipedia.  D. Thomas (2014)<sup><a href="#Note7"><strong>(7)</strong></a></sup>, describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> numbers in [0, 1] sampled from the uniform distribution as follows: <code>RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...</code>.</li>
-<li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016)<sup><a href="#Note8"><strong>(8)</strong></a></sup>.  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
+<li>The sum of twelve <code>RNDRANGEMaxExc(0, sigma)</code> numbers, subtracted by 6 * <code>sigma</code>, to generate an approximate normal variate with mean 0 and standard deviation <code>sigma</code>. (Kabal 2000/2019) [^6] &quot;warps&quot; this sum in the following way (before adding the mean <code>mu</code>) to approximate the normal distribution better: <code>ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum</code>. See also <a href="https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution"><strong>&quot;Irwin&ndash;Hall distribution&quot;</strong></a>, namely the sum of <code>n</code> many <code>RNDRANGE(0, 1)</code> numbers, on Wikipedia.  D. Thomas (2014) [^7], describes a more general approximation called CLT<sub>k</sub>, which combines <code>k</code> numbers in [0, 1] sampled from the uniform distribution as follows: <code>RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...</code>.</li>
+<li>Numerical <a href="#Inverse_Transform_Sampling"><strong>inversions</strong></a> of the normal distribution&#39;s cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016) [^8].  See also <a href="https://www.johndcook.com/blog/normal_cdf_inverse/"><strong>&quot;A literate program to compute the inverse of the normal CDF&quot;</strong></a>.  Notice that the normal distribution&#39;s inverse CDF has no closed form.</li>
 </ul></li>
-<li>A pair of <em>q-Gaussian</em> random variates with parameter <code>q</code> less than 3 can be generated using the Box&ndash;Muller transformation, except <code>radius</code> is <code>radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))</code> (where <code>qp=(1+q)/(3-q)</code> and <code>u=RNDRANGE(0, 1)</code>), and the two variates are not statistically independent (Thistleton et al. 2007)<sup><a href="#Note9"><strong>(9)</strong></a></sup>.</li>
+<li>A pair of <em>q-Gaussian</em> random variates with parameter <code>q</code> less than 3 can be generated using the Box&ndash;Muller transformation, except <code>radius</code> is <code>radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))</code> (where <code>qp=(1+q)/(3-q)</code> and <code>u=RNDRANGE(0, 1)</code>), and the two variates are not statistically independent (Thistleton et al. 2007) [^9].</li>
 <li>A well-known result says that adding <code>n</code> many <code>Normal(0, 1)</code> variates, and dividing by <code>sqrt(n)</code>, results in a new <code>Normal(0, 1)</code> variate.</li>
 </ol>
 </blockquote>
@@ -111,7 +111,7 @@ END METHOD
 
 <h4>Gamma Distribution</h4>
 
-<p>The following method samples a number from a <em>gamma distribution</em> and is based on Marsaglia and Tsang&#39;s method from 2000<sup><a href="#Note10"><strong>(10)</strong></a></sup> and (Liu et al. 2015)<sup><a href="#Note11"><strong>(11)</strong></a></sup>.  Usually, the number expresses either&mdash;</p>
+<p>The following method samples a number from a <em>gamma distribution</em> and is based on Marsaglia and Tsang&#39;s method from 2000[^10] and (Liu et al. 2015) [^11].  Usually, the number expresses either&mdash;</p>
 
 <ul>
 <li>the lifetime (in days, hours, or other fixed units) of a random component with an average lifetime of <code>meanLifetime</code>, or</li>
@@ -169,7 +169,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> The following is a useful identity for the gamma distribution: <code>GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)</code> (Stuart 1962)<sup><a href="#Note12"><strong>(12)</strong></a></sup>.</p>
+<p><strong>Note:</strong> The following is a useful identity for the gamma distribution: <code>GammaDist(a) = BetaDist(a, b - a) * GammaDist(b)</code> (Stuart 1962) [^12].</p>
 </blockquote>
 
 <p><a id=Beta_Distribution></a></p>
@@ -222,7 +222,7 @@ END METHOD
 
 <p>The <em>von Mises distribution</em> describes a distribution of circular angles and uses two parameters: <code>mean</code> is the mean angle and <code>kappa</code> is a shape parameter.  The distribution is uniform at <code>kappa = 0</code> and approaches a normal distribution with increasing <code>kappa</code>.</p>
 
-<p>The algorithm below samples a number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986)<sup><a href="#Note13"><strong>(13)</strong></a></sup> with errata incorporated).</p>
+<p>The algorithm below samples a number from the von Mises distribution, and is based on the Best&ndash;Fisher algorithm from 1979 (as described in (Devroye 1986) [^13] with errata incorporated).</p>
 
 <pre>METHOD VonMises(mean, kappa)
     if kappa &lt; 0: return error
@@ -287,7 +287,7 @@ END METHOD
 END METHOD
 </pre>
 
-<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is not more than min(1, 2/<code>alpha</code> &minus; 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
+<p>Methods implementing the strictly geometric stable and general geometric stable distributions are shown below (Kozubowski 2000) [^14].  Here, <code>alpha</code> is in (0, 2], <code>lamda</code> is greater than 0, and <code>tau</code>&#39;s absolute value is not more than min(1, 2/<code>alpha</code> &minus; 1).  The result of <code>GeometricStable</code> is a symmetric Linnik distribution if <code>tau = 0</code>, or a Mittag-Leffler distribution if <code>tau = 1</code> and <code>alpha &lt; 1</code>.</p>
 
 <pre>METHOD GeometricStable(alpha, lamda, tau)
    rho = alpha*(1-tau)/2
@@ -406,7 +406,7 @@ method for generating multiple random vectors in one call.</p>
 <li>A <strong>Rice (Rician) distribution</strong> is a Beckmann distribution in which the binormal random pair is generated with <code>m1 = m2 = a / sqrt(2)</code>, <code>rho = 0</code>, and <code>s1 = s2 = b</code>, where <code>a</code> and <code>b</code> are the parameters to the Rice distribution.</li>
 <li><strong>Rice&ndash;Norton distribution</strong>: Generate <code>vec = MultivariateNormal([v,v,v],[[w,0,0],[0,w,0],[0,0,w]])</code> (where <code>v = a/sqrt(m*2)</code>, <code>w = b*b/m</code>, and <code>a</code>, <code>b</code>, and <code>m</code> are the parameters to the Rice&ndash;Norton distribution), then apply <code>Norm(vec)</code> to that vector.</li>
 <li>A <strong>standard</strong> <a href="https://en.wikipedia.org/wiki/Complex_normal_distribution"><strong>complex normal distribution</strong></a> is a binormal distribution in which the binormal random pair is generated with <code>s1 = s2 = sqrt(0.5)</code> and <code>mu1 = mu2 = 0</code> and treated as the real and imaginary parts of a complex number.</li>
-<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000)<sup><a href="#Note14"><strong>(14)</strong></a></sup>.</li>
+<li><strong>Multivariate Linnik distribution</strong>: Generate a multinormal random vector, then multiply each component by <code>GeometricStable(alpha/2.0, 1, 1)</code>, where <code>alpha</code> is a parameter in (0, 2] (Kozubowski 2000) [^14].</li>
 </ol>
 </blockquote>
 
@@ -436,7 +436,7 @@ method for generating multiple random vectors in one call.</p>
 END METHOD
 </pre>
 
-<p>Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> or <em>marginal</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997)<sup><a href="#Note15"><strong>(15)</strong></a></sup>.)</p>
+<p>Each of the resulting uniform random values will be in the interval [0, 1], and each one can be further transformed to any other probability distribution (which is called a <em>marginal distribution</em> or <em>marginal</em> here) by taking the quantile of that uniform number for that distribution (see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Inverse_Transform_Sampling"><strong>Inverse Transform Sampling</strong></a>&quot;, and see also (Cario and Nelson 1997) [^15].)</p>
 
 <blockquote>
 <p><strong>Note:</strong> The Gaussian copula is also known as the <em>normal-to-anything</em> method.</p>
@@ -455,7 +455,7 @@ END METHOD
      -log1p(-copula[1]) / rate2]
 END METHOD
 </pre></li>
-<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021)<sup><a href="#Note16"><strong>(16)</strong></a></sup> is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter <code>lamda</code> and a marginal that must be a <em>continuous non-negative</em> probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  To sample from the <strong>T</strong>&ndash;Poisson hierarchy&mdash;</p>
+<li><p>The <em><strong>T</strong>&ndash;Poisson hierarchy</em> (Knudson et al. 2021) [^16] is a way to generate N-dimensional Poisson-distributed random vectors via copulas.  Each of the N dimensions is associated with a parameter <code>lamda</code> and a marginal that must be a <em>continuous non-negative</em> probability distribution (one that takes on any of an uncountable number of non-negative values, such as any number 0 or greater).  To sample from the <strong>T</strong>&ndash;Poisson hierarchy&mdash;</p>
 
 <ol>
 <li>sample an N-dimensional random vector via a copula (such as <code>GaussianCopula</code>), producing an N-dimensional vector of correlated uniform numbers; then</li>
@@ -479,34 +479,48 @@ END METHOD
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding upper bound copula</strong> <em>[x, x, ..., x]</em> (e.g., <code>[x, x]</code>), where <code>x = RNDRANGE(0, 1)</code>,</li>
 <li>the <strong>Fr&eacute;chet&ndash;Hoeffding lower bound copula</strong> <code>[x, 1.0 - x]</code> where <code>x = RNDRANGE(0, 1)</code>,</li>
 <li>the <strong>product copula</strong>, where each number is a separately generated <code>RNDRANGE(0, 1)</code> (indicating no dependence between the numbers), and</li>
-<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011)<sup><a href="#Note17"><strong>(17)</strong></a></sup>.</li>
+<li>the <strong>Archimedean copulas</strong>, described by M. Hofert and M. M&auml;chler (2011) [^17].</li>
 </ul>
 
-<p><a id=Notes></a></p>
+<p><a id=1_Karney_C_F_F_Sampling_exactly_from_the_normal_distribution_https_arxiv_org_abs_1303_6257v2_arXiv_1303_6257v2_physics_comp_ph_2014></a></p>
 
-<h2>Notes</h2>
+<h2>[^1]: Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</h2>
 
-<ul>
-<li><small><sup id=Note1>(1)</sup> Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</small></li>
-<li><small><sup id=Note2>(2)</sup> Thomas, D., et al., &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007.</small></li>
-<li><small><sup id=Note3>(3)</sup> Malik, J.S., Hemani, A., &quot;Gaussian random number generation: A survey on hardware architectures&quot;, <em>ACM Computing Surveys</em> 49(3), 2016.</small></li>
-<li><small><sup id=Note4>(4)</sup> Du, Yusong, Baoying Fan, and Baodian Wei. &quot;An improved exact sampling algorithm for the standard normal distribution.&quot; Computational Statistics (2021): 1-17, also arXiv:2008.03855 [cs.DS].</small></li>
-<li><small><sup id=Note5>(5)</sup> Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</small></li>
-<li><small><sup id=Note6>(6)</sup> Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</small></li>
-<li><small><sup id=Note7>(7)</sup> Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In <em>2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines</em> (pp. 149-156).</small></li>
-<li><small><sup id=Note8>(8)</sup> Luu, T., &quot;Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation&quot;, Dissertation, University College London, 2016.</small></li>
-<li><small><sup id=Note9>(9)</sup> Thistleton, W., Marsh, J., et al., &quot;Generalized Box-Müller Method for Generating q-Gaussian Random Deviates&quot;, <em>IEEE Transactions on Information Theory</em> 53(12), 2007.</small></li>
-<li><small><sup id=Note10>(10)</sup> Marsaglia, G., Tsang, W.W., &quot;A simple method for generating gamma variables&quot;, <em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</small></li>
-<li><small><sup id=Note11>(11)</sup> Liu, C., Martin, R., Syring, N., &quot;<a href="https://arxiv.org/abs/1302.1884v3"><strong>Simulating from a gamma distribution with small shape parameter</strong></a>&quot;, arXiv:1302.1884v3  [stat.CO], 2015.</small></li>
-<li><small><sup id=Note12>(12)</sup> A. Stuart, &quot;Gamma-distributed products of independent random variables&quot;, <em>Biometrika</em> 49, 1962.</small></li>
-<li><small><sup id=Note13>(13)</sup> Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</small></li>
-<li><small><sup id=Note14>(14)</sup> Tomasz J. Kozubowski, &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0377042799003180"><strong>Computer simulation of geometric stable distributions</strong></a>&quot;, <em>Journal of Computational and Applied Mathematics</em> 116(2), pp. 221-229, 2000. <a href="https://doi.org/10.1016/S0377-0427%2899%2900318-0"><strong>https://doi.org/10.1016/S0377-0427(99)00318-0</strong></a></small></li>
-<li><small><sup id=Note15>(15)</sup> Cario, M. C., B. L. Nelson, &quot;Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix&quot;, 1997.</small></li>
-<li><small><sup id=Note16>(16)</sup> Knudson, A.D., Kozubowski, T.J., et al., &quot;A flexible multivariate model for high-dimensional correlated count data&quot;, <em>Journal of Statistical Distributions and Applications</em> 8:6, 2021.</small></li>
-<li><small><sup id=Note17>(17)</sup> Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</small></li>
-<li><small><sup id=Note18>(18)</sup> Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</small></li>
-<li><small><sup id=Note19>(19)</sup> Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</small></li>
-</ul>
+<p>[^2]: Thomas, D., et al., &quot;Gaussian Random Number Generators&quot;, <em>ACM Computing Surveys</em> 39(4), 2007.</p>
+
+<p>[^3]: Malik, J.S., Hemani, A., &quot;Gaussian random number generation: A survey on hardware architectures&quot;, <em>ACM Computing Surveys</em> 49(3), 2016.</p>
+
+<p>[^4]: Du, Yusong, Baoying Fan, and Baodian Wei. &quot;An improved exact sampling algorithm for the standard normal distribution.&quot; Computational Statistics (2021): 1-17, also arXiv:2008.03855 [cs.DS].</p>
+
+<p>[^5]: Micciancio, D. and Walter, M., &quot;Gaussian sampling over the integers: Efficient, generic, constant-time&quot;, in Annual International Cryptology Conference, August 2017 (pp. 455-485).</p>
+
+<p>[^6]: Kabal, P., &quot;Generating Gaussian Pseudo-Random Variates&quot;, McGill University, 2000/2019.</p>
+
+<p>[^7]: Thomas, D.B., 2014, May. FPGA Gaussian random number generators with guaranteed statistical accuracy. In <em>2014 IEEE 22nd Annual International Symposium on Field-Programmable Custom Computing Machines</em> (pp. 149-156).</p>
+
+<p>[^8]: Luu, T., &quot;Fast and Accurate Parallel Computation of Quantile Functions for Random Number Generation&quot;, Dissertation, University College London, 2016.</p>
+
+<p>[^9]: Thistleton, W., Marsh, J., et al., &quot;Generalized Box-Müller Method for Generating q-Gaussian Random Deviates&quot;, <em>IEEE Transactions on Information Theory</em> 53(12), 2007.</p>
+
+<p>[^10]: Marsaglia, G., Tsang, W.W., &quot;A simple method for generating gamma variables&quot;, <em>ACM Transactions on Mathematical Software</em> 26(3), 2000.</p>
+
+<p>[^11]: Liu, C., Martin, R., Syring, N., &quot;<a href="https://arxiv.org/abs/1302.1884v3"><strong>Simulating from a gamma distribution with small shape parameter</strong></a>&quot;, arXiv:1302.1884v3  [stat.CO], 2015.</p>
+
+<p>[^12]: A. Stuart, &quot;Gamma-distributed products of independent random variables&quot;, <em>Biometrika</em> 49, 1962.</p>
+
+<p>[^13]: Devroye, L., <a href="http://luc.devroye.org/rnbookindex.html"><strong><em>Non-Uniform Random Variate Generation</em></strong></a>, 1986.</p>
+
+<p>[^14]: Tomasz J. Kozubowski, &quot;<a href="https://www.sciencedirect.com/science/article/pii/S0377042799003180"><strong>Computer simulation of geometric stable distributions</strong></a>&quot;, <em>Journal of Computational and Applied Mathematics</em> 116(2), pp. 221-229, 2000. <a href="https://doi.org/10.1016/S0377-0427%2899%2900318-0"><strong>https://doi.org/10.1016/S0377-0427(99)00318-0</strong></a></p>
+
+<p>[^15]: Cario, M. C., B. L. Nelson, &quot;Modeling and generating random vectors with arbitrary marginal distributions and correlation matrix&quot;, 1997.</p>
+
+<p>[^16]: Knudson, A.D., Kozubowski, T.J., et al., &quot;A flexible multivariate model for high-dimensional correlated count data&quot;, <em>Journal of Statistical Distributions and Applications</em> 8:6, 2021.</p>
+
+<p>[^17]: Hofert, M., and Maechler, M.  &quot;Nested Archimedean Copulas Meet R: The nacopula Package&quot;.  <em>Journal of Statistical Software</em> 39(9), 2011, pp. 1-20.</p>
+
+<p>[^18]: Devroye, L., Gravel, C., &quot;<a href="https://arxiv.org/abs/1502.02539v6"><strong>Random variate generation using only finitely many unbiased, independently and identically distributed random bits</strong></a>&quot;, arXiv:1502.02539v6  [cs.IT], 2020.</p>
+
+<p>[^19]: Oberhoff, Sebastian, &quot;<a href="https://dc.uwm.edu/etd/1888"><strong>Exact Sampling and Prefix Distributions</strong></a>&quot;, <em>Theses and Dissertations</em>, University of Wisconsin Milwaukee, 2018.</p>
 
 <p><a id=Appendix></a></p>
 
@@ -559,7 +573,7 @@ END METHOD
 <li>can generate independent uniform random real numbers</li>
 </ul>
 
-<p>(Devroye 1986, p. 1-2)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2)<sup><a href="#Note13"><strong>(13)</strong></a></sup>. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGE</code> method is exact in theory, but has no required implementation.</p></li>
+<p>(Devroye 1986, p. 1-2) [^13].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an <em>error-bounded algorithm</em>) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2) [^13]. All methods given on this page are exact unless otherwise noted.  Note that the <code>RNDRANGE</code> method is exact in theory, but has no required implementation.</p></li>
 <li><p>An <em>error-bounded algorithm</em> is a sampling algorithm with the following requirements:</p>
 
 <ul>
@@ -569,19 +583,19 @@ END METHOD
 </ul>
 
 <p>Many error-bounded algorithms use random bits as their only source of randomness. An application should use error-bounded algorithms whenever possible.</p></li>
-<li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2)<sup><a href="#Note13"><strong>(13)</strong></a></sup>.  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
+<li>An <em>inexact</em>, <em>approximate</em>, or <em>biased algorithm</em> is neither exact nor error-bounded; it uses &quot;a mathematical approximation of sorts&quot; to sample from a distribution that is close to the desired distribution (Devroye 1986, p. 2) [^13].  An application should use this kind of algorithm only if it&#39;s willing to trade accuracy for speed.</li>
 </ol>
 
 <p>Most algorithms on this page, though, are not <em>error-bounded</em>, but even so, they may still be useful to an application willing to trade accuracy for speed.</p>
 
-<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020)<sup><a href="#Note18"><strong>(18)</strong></a></sup> is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
+<p>There are many ways to describe closeness between two distributions.  One suggestion by Devroye and Gravel (2020) [^18] is Wasserstein distance (or &quot;earth-mover distance&quot;).  Here, an algorithm has accuracy &epsilon; (the user-specified error tolerance) if it samples from a distribution that is close to the ideal distribution by a Wasserstein distance of not more than &epsilon;.</p>
 
 <blockquote>
 <p><strong>Examples:</strong></p>
 
 <ol>
 <li>Sampling from the exponential distribution via <code>-ln(RNDRANGE(0, 1))</code> is an <em>exact algorithm</em> (in theory), but not an <em>error-bounded</em> one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.</li>
-<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014)<sup><a href="#Note1"><strong>(1)</strong></a></sup> is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018)<sup><a href="#Note19"><strong>(19)</strong></a></sup>.</li>
+<li>Sampling from the exponential distribution using the <code>ExpoExact</code> method in the page &quot;<a href="https://peteroupc.github.io/randmisc.html#ExpoExact"><strong>Miscellaneous Observations on Randomization</strong></a>&quot; is an <em>error-bounded algorithm</em>.  Karney&#39;s algorithm for the normal distribution (Karney 2014) [^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018) [^19].</li>
 <li>Examples of <em>approximate algorithms</em> include sampling from a Gaussian-like distribution via a sum of <code>RNDRANGE(0, 1)</code>, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section &quot;<a href="https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N"><strong>RNDINT</strong></a>&quot;).</li>
 </ol>
 </blockquote>
