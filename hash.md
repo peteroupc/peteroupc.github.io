@@ -13,7 +13,7 @@ Hash functions are used for the following purposes:
     - Pseudorandom functions, for deriving secrets from other secrets.
     - Key derivation functions for verifying secrets without storing the secrets themselves.  Because the secret may be easy to guess, like a password, some of these functions are designed to deliberately take time to calculate.
 
-For the use in hash tables, (Richter et al. 2015\)[^1] recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
+For the use in hash tables, (Richter et al. 2015\)<sup>[**1**](#Note1)</sup> recommends multiply-then-shift hashing over more complicated hash functions in most cases. [**_Fibonacci hashing_**](https://probablydance.com/2018/06/16/fibonacci-hashing-the-optimization-that-the-world-forgot-or-a-better-alternative-to-integer-modulo/) is a special case of multiply-then-shift hashing that serves to improve hash codes.
 
 There are security attacks that serve to trigger worst-case performance on hash tables via carefully chosen keys, and keyed hash functions (such as SipHash) have been developed to mitigate them, but not everyone believes such hash functions should be used in hash tables (e.g., see R. Urban's SMHasher fork).
 
@@ -21,5 +21,3 @@ Bret Mulvey has written a page on [**how hash functions are built**](https://pap
 
 <a id=Notes></a>
 ## Notes
-
-[^1]: Richter, Alvarez, Dittrich, "A Seven-Dimensional Analysis of Hashing Methods and its Implications on Query Processing", _Proceedings of the VLDB Endowment_ 9(3), 2015.

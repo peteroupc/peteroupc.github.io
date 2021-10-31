@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Randomization</title><meta name="citation_title" content="The Most Common Topics Involving Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomcommon.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomcommon.html"><meta name="citation_date" content="2021/10/30"><meta name="citation_online_date" content="2021/10/30"><meta name="og:title" content="The Most Common Topics Involving Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomcommon.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Most Common Topics Involving Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>The Most Common Topics Involving Randomization</title><meta name="citation_title" content="The Most Common Topics Involving Randomization"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomcommon.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomcommon.html"><meta name="citation_date" content="2021/10/31"><meta name="citation_online_date" content="2021/10/31"><meta name="og:title" content="The Most Common Topics Involving Randomization"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomcommon.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="The Most Common Topics Involving Randomization"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>The Most Common Topics Involving Randomization</h1>
@@ -90,7 +90,7 @@
 <li>C&#39;s <code>rand</code> function produces random integers in a predetermined range ([0, <code>RAND_MAX</code>]) that is not within the application&#39;s control.  This is just one of a <a href="https://stackoverflow.com/questions/52869166/why-is-the-use-of-rand-considered-bad/52881465#52881465"><strong>host of issues with <code>rand</code></strong></a>, by the way (unspecified algorithm, yet is initializable with &quot;srand&quot; for repeatability; non-thread-safety; unspecified distribution; historical implementations had weak low bits; etc.).</li>
 </ul>
 
-<p>For algorithms on generating uniform random <em>floating-point numbers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats"><strong>&quot;For Floating-Point Number Formats&quot;</strong></a>.  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., <code>Math.random()*x</code> in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard (2020)[^2]).</p>
+<p>For algorithms on generating uniform random <em>floating-point numbers</em> in a range, see <a href="https://peteroupc.github.io/randomfunc.html#For_Floating_Point_Number_Formats"><strong>&quot;For Floating-Point Number Formats&quot;</strong></a>.  Floating-point number generation has a myriad of issues not present with integer generation.  For example, no computer can choose from all real numbers between two others, since there are infinitely many of them, and also, naïvely multiplying or dividing an integer by a constant (e.g., <code>Math.random()*x</code> in JavaScript) will necessarily miss many representable floating-point numbers (for details, see Goualard (2020)<sup><a href="#Note2"><strong>2</strong></a></sup>).</p>
 
 <p><a id=Choosing_Random_Items></a></p>
 
@@ -135,7 +135,7 @@
 <ul>
 <li>Querying one random record from a database.</li>
 <li>Querying a specified number of random records from a database.</li>
-<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, itself its own column, and <code>R</code> is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002)[^3]), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
+<li>Querying one or more records each with a probability proportional to its weight.  Very generally, this can be done by giving the table a column where each entry is a number generated as follows: <code>ln(R) / W</code> (where <code>W</code> is the record&#39;s weight greater than 0, itself its own column, and <code>R</code> is a per-record uniform random variate in the open interval (0, 1)) (see also (Arratia 2002)<sup><a href="#Note3"><strong>3</strong></a></sup>), then taking the records with the highest values of that column, but the efficiency of this technique depends on the DBMS.</li>
 </ul>
 
 <p><a id=Random_Character_Strings></a></p>
@@ -160,7 +160,7 @@
 
 <p>For algorithms on weighted choice, see &quot;<a href="https://peteroupc.github.io/randomfunc.html#Weighted_Choice_With_Replacement"><strong>Weighted Choice With Replacement</strong></a>&quot;, which covers choices in which items are taken and put back.</p>
 
-<p>The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  They include rejection sampling, Vose&#39;s version of the alias method (<code>VoseAlias</code>; see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information), and the Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)[^4].</p>
+<p>The pseudocode shown there is a straightforward way to implement weighted choice, but there are other alternatives (many of which are implemented in <a href="https://peteroupc.github.io/randomgen.zip"><strong>Python sample code</strong></a>).  They include rejection sampling, Vose&#39;s version of the alias method (<code>VoseAlias</code>; see &quot;<a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>Darts, Dice, and Coins: Sampling from a Discrete Distribution</strong></a>&quot; by Keith Schwarz for more information), and the Fast Loaded Dice Roller (<code>FastLoadedDiceRoller</code>) (Saad et al. 2020)<sup><a href="#Note4"><strong>4</strong></a></sup>.</p>
 
 <p>Weighted choice <em>without replacement</em> is a choice where each item can be chosen no more than once.  If the weights have the property that higher-weighted items are more likely to appear first, then:</p>
 
@@ -193,14 +193,6 @@
 <p><a id=Notes></a></p>
 
 <h2>Notes</h2>
-
-<p>[^1]: Lumbroso, J., &quot;<a href="https://arxiv.org/abs/1304.1916"><strong>Optimal Discrete Uniform Generation from Coin Flips, and Applications</strong></a>&quot;, arXiv:1304.1916 [cs.DS].</p>
-
-<p>[^2]: Goualard F. (2020) Generating Random Floating-Point Numbers by Dividing Integers: A Case Study. In: Krzhizhanovskaya V. et al. (eds) Computational Science – ICCS 2020. ICCS 2020. Lecture Notes in Computer Science, vol 12138. Springer, Cham. <a href="https://doi.org/10.1007/978-3-030-50417-5_2"><strong>https://doi.org/10.1007/978-3-030-50417-5_2</strong></a></p>
-
-<p>[^3]: Arratia, R., &quot;On the amount of dependence in the prime factorization of a uniform random integer&quot;, <em>Contemporary Combinatorics</em> 10(29), 91, 2002.</p>
-
-<p>[^4]: Saad, F.A., Freer C.E., et al. &quot;The Fast Loaded Dice Roller: A Near-Optimal Exact Sampler for Discrete Probability Distributions&quot;, in <em>AISTATS 2020: Proceedings of the 23rd International Conference on Artificial Intelligence and Statistics, Proceedings of Machine Learning Research</em> 108, Palermo, Sicily, Italy, 2020.</p>
 
 <p><a id=License></a></p>
 

@@ -15,9 +15,9 @@ For some PRNGs, each bit of the PRNG's state can be described as a linear recurr
 - PRNGs in the xoroshiro and xoshiro families.
 - Linear or generalized feedback shift register generators, including Mersenne Twister.
 
-For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008\)[^1].  See also (Vigna 2017\)[^2]. To calculate the jump-ahead parameters needed to advance the PRNG N steps:
+For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (and arbitrary) number of its outputs (to "jump the PRNG ahead").  This jump-ahead strategy is further described in (Haramoto et al., 2008\)<sup>[**1**](#Note1)</sup>.  See also (Vigna 2017\)<sup>[**2**](#Note2)</sup>. To calculate the jump-ahead parameters needed to advance the PRNG N steps:
 
-1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019\)[^3], where it should be noted that the additions inside the matrix are actually XORs.
+1. Build `M`, an S&times;S matrix of zeros and ones that describes the linear transformation of the PRNG's state, where S is the size of that state in bits.  For an example, see sections 3.1 and 3.2 of (Blackman and Vigna 2019\)<sup>[**3**](#Note3)</sup>, where it should be noted that the additions inside the matrix are actually XORs.
 2. Find the _characteristic polynomial_ of `M`.  This has to be done in the two-element field F<sub>2</sub>, so that each coefficient of the polynomial is either 0 or 1.
 
     For example, SymPy's `charpoly()` method alone is inadequate for this purpose, since it doesn't operate on the correct field.  However, it's easy to adapt that method's output for the field F<sub>2</sub>: even coefficients become zeros and odd coefficients become ones.
@@ -33,7 +33,7 @@ For an F<sub>2</sub>-linear PRNG, there is an efficient way to discard a given (
 <a id=Counter_Based_PRNGs></a>
 ### Counter-Based PRNGs
 
-Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011\)[^4].
+Counter-based PRNGs, in which their state is updated simply by incrementing a counter, can be trivially jumped ahead just by changing the seed, the counter, or both (Salmon et al. 2011\)<sup>[**4**](#Note4)</sup>.
 
 <a id=Multiple_Recursive_Generators></a>
 ### Multiple Recursive Generators
@@ -53,7 +53,7 @@ To calculate the parameter needed to jump the MRG ahead N steps, calculate `M`<s
 
 Then, to jump the MRG ahead N steps, calculate `J * S` mod `modulus`, where `J` is the jump matrix and `S` is the state in the form of a column vector; the result is a new state for the MRG.
 
-This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002\)[^5].
+This technique was mentioned (but for binary matrices) in Haramoto, in sections 1 and 3.1.  They point out, though, that it isn't efficient if the transition matrix is large.  See also (L'Ecuyer et al., 2002\)<sup>[**5**](#Note5)</sup>.
 
 <a id=Example></a>
 #### Example
@@ -82,7 +82,7 @@ Transforming the MRG's state with J (and reducing mod 1449) will transform the s
 
 A _linear congruential generator_ (LCG) generates numbers by transforming its state using the following formula: `x(k) = (x(k-1)*a + c) mod modulus`, where `a` is the _multiplier_, `c` is the additive constant, and `modulus` is the _modulus_.
 
-An efficient way to jump an LCG ahead is described in (Brown 1994\)[^6]. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
+An efficient way to jump an LCG ahead is described in (Brown 1994\)<sup>[**6**](#Note6)</sup>. This also applies to LCGs that transform each `x(k)` before outputting it, such as M.O'Neill's PCG32 and PCG64.
 
 An MRG with only one multiplier expresses the special case of an LCG with `c = 0` (also known as a _multiplicative_ LCG).  For `c` other than 0, the following matrix describes the state transition `[x(k-1), 1]` to `[x(k), 1]` (mod `modulus`):
 
@@ -128,15 +128,3 @@ Sebastiano Vigna reviewed this page and gave comments.
 
 <a id=Notes></a>
 ## Notes
-
-[^1]: Haramoto, Matsumoto, Nishimura, Panneton, L'Ecuyer, "Efficient Jump Ahead for F<sub>2</sub>-Linear Random Number Generators", _INFORMS Journal on Computing_ 20(3), Summer 2008.
-
-[^2]: Vigna, S., "Further scramblings of Marsaglia's xorshift generators", _Journal of Computational and Applied Mathematics_ 315 (2017).
-
-[^3]: Blackman, Vigna, "Scrambled Linear Pseudorandom Number Generators", 2019.
-
-[^4]: Salmon, John K., Mark A. Moraes, Ron O. Dror, and David E. Shaw. "Parallel random numbers: as easy as 1, 2, 3." In _Proceedings of 2011 International Conference for High Performance Computing, Networking, Storage and Analysis_, pp. 1-12. 2011.
-
-[^5]: L'Ecuyer, Simard, Chen, Kelton, "An Object-Oriented Random-Number Package with Many Long Streams and Substreams", _Operations Research_ 50(6), 2002.
-
-[^6]: Brown, F., "Random Number Generation with Arbitrary Strides", _Transactions of the American Nuclear Society_ Nov. 1994.
