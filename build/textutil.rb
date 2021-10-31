@@ -70,7 +70,7 @@ def prepareMarkdown(data)
      newnotetexts.push("[^#{newref+1}]: "+ntext+"")
      noterefparen=(noteref.length==0) ? "" : "\(#{noteref}\)"
      #noteref=noterefparen+"<sup>[(#{newref+1})](##{newrefid})</sup>"
-     noteref=noterefparen+"[^#{newrefid}]"
+     noteref=noterefparen+"[^#{newref+1}]"
      next noteref
   }
   #data=data.gsub(/(<small>)?(-\s+)?<sup\s+id[\s\S]+?(?=\#\#|\z)/){
