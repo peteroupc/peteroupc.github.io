@@ -1693,16 +1693,16 @@ In addition, the following methods approximate the quantile if the application c
 <a id=Rejection_Sampling_with_a_PDF_Like_Function></a>
 #### Rejection Sampling with a PDF-Like Function
 
-If the distribution **has a known PDF-like function** (`PDF`), and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random variates with the latter distribution until a variate (call it `n`) that satisfies `r <= PDF(n)`, where `r = RNDRANGEMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
+If the distribution **has a known PDF-like function** (`PDF`), and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random variates with the latter distribution until a variate (call it `n`) that satisfies `r < PDF(n)`, where `r = RNDRANGEMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
 
-A variant of rejection sampling is the _squeeze principle_, in which a third PDF-like function (`PDF3`) is chosen that is "dominated" by the first one (`PDF`) and easier to sample than `PDF`.  Here, a number is accepted if `r <= PDF3(n)` or `r <= PDF(n)` , where `r = RNDRANGEMaxExc(0, PDF2(n))` (Devroye 1986, p. 53\)[^20].
+A variant of rejection sampling is the _squeeze principle_, in which a third PDF-like function (`PDF3`) is chosen that is "dominated" by the first one (`PDF`) and easier to sample than `PDF`.  Here, a number is accepted if `r < PDF3(n)` or `r < PDF(n)` , where `r = RNDRANGEMaxExc(0, PDF2(n))` (Devroye 1986, p. 53\)[^20].
 
 See also (von Neumann 1951\)[^48]; (Devroye 1986\)[^20], pp. 41-43; "[**Rejection Sampling**](#Rejection_Sampling)"; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".
 
 > **Examples:**
 >
 > 1. To sample a random variate in the interval [`low`, `high`) from a PDF-like function with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete** and integer-valued, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
-> 2. A PDF-like function for a custom distribution, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's, `PDF2`, is `exp(-x)`.  The exponential PDF-like function `PDF2` "dominates" `PDF` (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `PDF(n) >= RNDRANGEMaxExc(0, PDF2(n))`.
+> 2. A PDF-like function for a custom distribution, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's, `PDF2`, is `exp(-x)`.  The exponential PDF-like function `PDF2` "dominates" `PDF` (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `RNDRANGEMaxExc(0, PDF2(n)) < PDF(n)`.
 > 3. The normal distribution's upside-down bell curve has the PDF-like function `1-exp(-(x*x))`, and the highest point for this function is `peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))`. Sampling this distribution then uses the algorithm in example 1.
 >
 > **Note:** In the Python sample code, [**moore.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py) and `numbers_from_dist` sample from a distribution via rejection sampling (Devroye and Gravel 2020\)[^12], (Sainudiin and York 2013\)[^82].
@@ -1710,7 +1710,7 @@ See also (von Neumann 1951\)[^48]; (Devroye 1986\)[^20], pp. 41-43; "[**Rejectio
 <a id=Alternating_Series></a>
 #### Alternating Series
 
-If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006\)[^81]\: (1) Sample from the "dominating" distribution, and let `x` be the sampled number; (2) set `n` to 0; (3) accept `x` if `r <= LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMaxExc(0, PDF2(n))`.
+If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006\)[^81]\: (1) Sample from the "dominating" distribution, and let `x` be the sampled number; (2) set `n` to 0; (3) accept `x` if `r < LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMaxExc(0, PDF2(n))`.
 
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
@@ -1789,7 +1789,7 @@ Most commonly used:
 - **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975\)[^87]\: Generate `x = RNDRANGEMinExc(0,1)` and `y = RNDRANGEMinExc(0,1)` until `x * x + y * y <= 1`, then generate `(RNDINT(1) * 2 - 1) * y / x`.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
-- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDRANGE(0, 1)) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018\)[^1], as well as returning infinity if `RNDRANGE(0, 1)` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDRANGE(0, 1))`), chosen at random each time; an alternative is `ln(1/RNDRANGEMinExc(0,1))` mentioned in (Devroye 2006\)[^81].
+- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018\)[^1], as well as returning infinity if `RNDRANGEMinMaxExc(0, 1)` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDRANGEMinMaxExc(0, 1))`), chosen at random each time; an alternative is `ln(1/RNDRANGEMinExc(0,1))` mentioned in (Devroye 2006\)[^81].
 - **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution). Generalized gamma distributions include the **Stacy distribution** (`pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter) and the **Amoroso distribution** (Crooks 2015\)[^88], (`pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
@@ -1798,17 +1798,17 @@ Most commonly used:
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
 - **Laplace (double exponential) distribution**&dagger;: `(Expo(1) - Expo(1))`.  Also, `Normal(0,1) * Normal(0, 1) - Normal(0, 1) * Normal(0, 1)` (Kotz et al. 2012\)[^89].
-- **Logarithmic distribution**&#x2b26;: `RNDRANGE(0, 1) * RNDRANGE(0, 1)` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
+- **Logarithmic distribution**&#x2b26;: `RNDRANGEMinMaxExc(0, 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 26).  In this distribution, lower numbers are exponentially more likely than higher numbers.
 - **Logarithmic normal distribution**: `exp(Normal(mu, sigma))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
 - **Multinormal distribution**: See multivariate normal distribution.
 - **Multivariate normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution).
 - **Normal distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
 - **Poisson distribution**: See "[**Poisson Distribution**](#Poisson_Distribution)". If the application can trade accuracy for convenience, the following can be used (Devroye 1986, p. 504\)[^20]\: `c = 0; s = 0; while true; sum = sum + Expo(1); if sum>=mean: return c; else: c = c + 1; end`; and in addition the following optimization from (Devroye 1991\)[^90] can be used: `while mean > 20; n=ceil(mean-pow(mean,0.7)); g=GammaDist(n, 1); if g>=mean: return c+(n-1-Binomial(n-1,(g-mean)/g)); mean = mean - g; c = c + n; end`, or the following approximation suggested in (Giammatteo and Di Mascio 2020\)[^91] for `mean` greater than 50: `floor(1.0/3 + pow(max(0, Normal(0, 1)*pow(mean,1/6.0)*2/3 + pow(mean, 2.0/3)), 3.0/2))`.
-- **Pareto distribution**: `pow(RNDRANGE(0, 1), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
+- **Pareto distribution**: `pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
-- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random variate.  A `cent` other than 0 indicates a _noncentral_ distribution.  Alternatively, `cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDRANGE(0, 1),-2.0/df)-1) * df)` (Bailey 1994\)[^92].
-- **Triangular distribution**&dagger; (Stein and Keblis 2009\)[^93]\: `(1-alpha) * min(a, b) + alpha * max(a, b)`, where `alpha` is in [0, 1], `a = RNDRANGE(0, 1)`, and `b = RNDRANGE(0, 1)`.
+- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random variate.  A `cent` other than 0 indicates a _noncentral_ distribution.  Alternatively, `cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)` (Bailey 1994\)[^92].
+- **Triangular distribution**&dagger; (Stein and Keblis 2009\)[^93]\: `(1-alpha) * min(a, b) + alpha * max(a, b)`, where `alpha` is in [0, 1], `a = RNDRANGEMinMaxExc(0, 1)`, and `b = RNDRANGEMinMaxExc(0, 1)`.
 - **Weibull distribution**: See generalized extreme value distribution.
 
 </small>
@@ -1829,14 +1829,14 @@ Miscellaneous:
 - **Birnbaum&ndash;Saunders distribution**: `pow(sqrt(4+x*x)+x,2)/(4.0*lamda)`, where `x = Normal(0,gamma)`, `gamma` is a shape parameter, and `lamda` is a scale parameter.
 - **Chi distribution**: Square root of a chi-squared random variate.  See chi-squared distribution.
 - **Compound Poisson distribution**: See [**Transformations of Random Variates: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
-- **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = (RNDINT(1) * 2 - 1) * RNDRANGE(0, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
+- **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Dagum distribution**: See beta prime distribution.
 - **Dirichlet distribution**: [**This distribution**](https://en.wikipedia.org/wiki/Dirichlet_distribution) \(e.g., (Devroye 1986\)[^24], p. 593-594) can be sampled by generating _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomfunc.md#Gamma_Distribution) numbers, each with separate parameters, taking their sum[^26], dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
-- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDRANGE(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).
+- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`, where `n` is an integer greater than 0.  Returns a number that simulates a sum of `n` exponential random variates with the given `lamda` parameter.
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)`, where `a` is a shape parameter.
-- **Extended xgamma distribution** (Saha et al. 2019\)[^94]\: `GammaDist(alpha + x, theta)`, where `x` is 0 with probability `theta/(theta+beta)` (e.g., if  `RNDRANGE(0, 1) <= theta/(theta+beta)`) and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016\)[^95].
+- **Extended xgamma distribution** (Saha et al. 2019\)[^94]\: `GammaDist(alpha + x, theta)`, where `x` is 0 with probability `theta/(theta+beta)` (e.g., if  `RNDRANGEMinMaxExc(0, 1) <= theta/(theta+beta)`) and 2 otherwise, and where `alpha`, `theta`, and `beta` are shape parameters.  If `alpha = 0`, the result is an **xgamma distribution** (Sen et al., 2016\)[^95].
 - **Fr&eacute;chet distribution**: See generalized extreme value distribution.
 - **Fr&eacute;chet&ndash;Hoeffding lower bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
 - **Fr&eacute;chet&ndash;Hoeffding upper bound copula**: See [**Gaussian and Other Copulas**](#Gaussian_and_Other_Copulas).
@@ -1846,7 +1846,7 @@ Miscellaneous:
     - A parameter of `c = 0` results in an _extreme value distribution_.
     - **Weibull distribution**: `1 - 1.0/a * GEV(-1.0/a)` (or `pow(Expo(1), 1.0/a)`), where `a` is a shape parameter.
     - **Fr&eacute;chet distribution**: `1 + 1.0/a * GEV(1.0/a)` (or `pow(Expo(1), -1.0/a)`), where `a` is a shape parameter.
-- **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDRANGE(0, 1)`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
+- **Generalized Tukey lambda distribution**: `(s1 * (pow(x, lamda1)-1.0)/lamda1 - s2 * (pow(1.0-x, lamda2)-1.0)/lamda2) + loc`, where `x` is `RNDRANGEMinMaxExc(0, 1)`, `lamda1` and `lamda2` are shape parameters, `s1` and `s2` are scale parameters, and `loc` is a location parameter.
 - **Half-normal distribution**. Parameterizations include:
     - _Mathematica_: `abs(Normal(0, sqrt(pi * 0.5) / invscale)))`, where `invscale` is a parameter of the half-normal distribution.
     - MATLAB: `abs(Normal(mu, sigma)))`, where `mu` and `sigma` are the underlying normal distribution's parameters.
@@ -1854,7 +1854,7 @@ Miscellaneous:
 - **Hypergeometric distribution**: See [**Hypergeometric Distribution**](#Hypergeometric_Distribution).
 - **Hypoexponential distribution**: See [**Transformations of Random Variates**](#Transformations_of_Random_Numbers).
 - **Inverse chi-squared distribution**&dagger;: `df / (GammaDist(df * 0.5, 2))`, where `df` is the number of degrees of freedom.  The scale parameter (`sigma`) is usually `1.0 / df`.
-- **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` with probability `mu / (mu + n)` (e.g., if `RNDRANGE(0, 1) <= mu / (mu + n)`), or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986\)[^20].
+- **Inverse Gaussian distribution (Wald distribution)**: Generate `n = mu + (mu*mu*y/(2*lamda)) - mu * sqrt(4 * mu * lamda * y + mu * mu * y * y) / (2 * lamda)`, where `y = pow(Normal(0, 1), 2)`, then return `n` with probability `mu / (mu + n)` (e.g., if `RNDRANGEMinMaxExc(0, 1) <= mu / (mu + n)`), or `mu * mu / n` otherwise. `mu` is the mean and `lamda` is the scale; both parameters are greater than 0. Based on method published in (Devroye 1986\)[^20].
 - **`k`th-order statistic**: `BetaDist(k, n+1-k)`. Returns the `k`th smallest out of `n` uniform random variates in [**0, 1). See also (Devroye 1986, p. 210\)[^20].
 - **Kumaraswamy distribution**&#x2b26;: `pow(BetaDist(1, b), 1.0 / a)`, where `a` and `b` are shape parameters.
 - **Landau distribution**: See stable distribution.
@@ -1895,8 +1895,8 @@ Miscellaneous:
 - **Stable distribution**: See [**Stable Distribution**](https://peteroupc.github.io/randomnotes.html#Stable_Distribution). _Four-parameter stable distribution_: `Stable(alpha, beta) * sigma + mu`, where `mu` is the mean and `sigma` is the scale; if `alpha` and `beta` are 1, the result is a _Landau distribution_.  _"Type 0" stable distribution_: `Stable(alpha, beta) * sigma + (mu - sigma * beta * x)`, where `x` is `ln(sigma)*2.0/pi` if `alpha` is 1, and `tan(pi*0.5*alpha)` otherwise.
 - **Standard complex normal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution).
 - **Suzuki distribution**: See Rayleigh distribution.
-- **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDRANGE(0, 1)` and `lamda` is a shape parameter.
-- **Twin-_t_ distribution** (Baker and Jackson 2018\)[^99]\: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` with probability `z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)` (e.g., if `RNDRANGE(0, 1) < z`), where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
+- **Tukey lambda distribution**: `(pow(x, lamda)-pow(1.0-x,lamda))/lamda`, where `x` is `RNDRANGEMinMaxExc(0, 1)` and `lamda` is a shape parameter.
+- **Twin-_t_ distribution** (Baker and Jackson 2018\)[^99]\: Generate `x`, a random Student's _t_-distributed number (not a noncentral one).  Accept `x` with probability `z = pow((1 + y) / ((1 + y * y) + y), (df + 1) * 0.5)` (e.g., if `RNDRANGEMinMaxExc(0, 1) < z`), where `y = x * x / df` and `df` is the degrees of freedom used to generate the number; repeat this process otherwise.
 - **von Mises distribution**: See [**von Mises Distribution**](https://peteroupc.github.io/randomnotes.html#von_Mises_Distribution).
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
 - **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
@@ -1930,9 +1930,9 @@ The following pseudocode generates a random point inside an _n_-dimensional simp
          return ret
        end
        if size(points)==3
-          // Equivalent to sqrt(RNDRANGE(0,1))
-         rs=max(RNDRANGE(0,1), RNDRANGE(0,1))
-         r2=RNDRANGE(0,1)
+          // Equivalent to sqrt(RNDRANGEMinMaxExc(0, 1))
+         rs=max(RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1))
+         r2=RNDRANGEMinMaxExc(0, 1)
          ret=[0,0,0]
          VecAddProd(ret,points[0],1.0-rs)
          VecAddProd(ret,points[1],(1.0-r2)*rs)
@@ -1972,21 +1972,21 @@ The following pseudocode shows how to generate a random N-dimensional point on t
 
 > **Note:** The [**Python sample code**](https://peteroupc.github.io/randomgen.zip) contains an optimized method for points on the edge of a circle.
 >
-> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> **Example:** To generate a random point on the surface of a cylinder running along the Z axis, generate random X and Y coordinates on the edge of a circle (2-dimensional hypersphere) and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 
 <a id=Random_Points_Inside_a_Box_Ball_Shell_or_Cone></a>
 #### Random Points Inside a Box, Ball, Shell, or Cone
 
 To generate a random point on or inside&mdash;
 
-- an **N-dimensional box**, generate `RNDRANGEMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
-    - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMaxExc(0,2), RNDRANGEMaxExc(3,6)]`, and
-    - to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGE(0, 1), RNDRANGE(0, 1)]`.
+- an **N-dimensional box**, generate `RNDRANGEMinMaxExc(mn, mx)` for each coordinate, where `mn` and `mx` are the lower and upper bounds for that coordinate.  For example&mdash;
+    - to generate a random point inside a rectangle bounded in \[0, 2\) along the X axis and \[3, 6\) along the Y axis, generate `[RNDRANGEMinMaxExc(0,2), RNDRANGEMinMaxExc(3,6)]`, and
+    - to generate a _complex number_ with real and imaginary parts bounded in \[0, 1\], generate `[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]`.
 - an **N-dimensional ball**, centered at the origin, of radius R, either&mdash;
     - generate a random (N+2)-dimensional point on the surface of an (N+2)-dimensional hypersphere with that radius (e.g., using `RandomPointInHypersphere`), then discard the last two coordinates (Voelker et al., 2017\)[^103], or
     - follow the pseudocode in `RandomPointInHypersphere`, except replace `Norm(ret)` with `sqrt(S + Expo(1))`, where `S` is the sum of squares of the numbers in `ret`.
-- an **N-dimensional spherical shell** (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGE(pow(A, N), pow(B, N)), 1.0 / N)`[^104].
-- a **cone** with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGE(0, H), RNDRANGE(0, H)), RNDRANGE(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGE(0,R*Z/H), RNDRANGE(0,R*Z/H))`[^105].
+- an **N-dimensional spherical shell** (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)`[^104].
+- a **cone** with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))`[^105].
 
 > **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
