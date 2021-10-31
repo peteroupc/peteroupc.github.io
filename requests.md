@@ -40,7 +40,7 @@ Here are my goals for both articles:
 
 [**https://peteroupc.github.io/bernoulli.html**](https://peteroupc.github.io/bernoulli.html)
 
-This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O'Brien 1994\)<sup>[**1**](#Note1)</sup>.
+This is a page showing algorithms to turn a coin with an unknown probability of heads into a coin with a different probability of heads, also known as _Bernoulli factories_.  A _factory function_ is a function that relates the old probability to the new one.  Roughly speaking, a function can be a factory function only if it is the constant 0 or 1, or if it is continuous on its domain and equals neither 0 nor 1 on the open interval (0, 1) (Keane and O'Brien 1994\)[^1].
 
 Attention is drawn to the requests and open questions on that page:
 
@@ -54,7 +54,7 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
     - Does not calculate base-_n_ expansions directly.
     - Should not use rational arithmetic or increasingly complex approximations, except as a last resort.
 
-    See also Flajolet et al. (2010\)<sup>[**2**](#Note2)</sup>.  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
+    See also Flajolet et al. (2010\)[^2].  There are many ways to describe the irrational probability or factory function. I seek references to papers or books that describe irrational constants or factory functions in any of the following ways:
 
     - For irrational constants:
         - Simple [**continued fraction**](https://peteroupc.github.io/bernoulli.html#Continued_Fractions) expansions.
@@ -75,12 +75,12 @@ Among other things, they relate to finding polynomial sequences, probabilities, 
 
     Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)".
-4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011\)<sup>[**3**](#Note3)</sup> (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
+4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011\)[^3] (see "[**General Factory Functions**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
     1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
     2. Compute the (_n_&minus;1)<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L&prime;_ and _U&prime;_.  (These bounds must be the same regardless of the outcomes of future coin flips, and the interval [_L&prime;_, _U&prime;_] must equal or entirely contain the interval [_L_, _U_].)
 
     These parts of the algorithm appear to work for any two sequences of functions (not just polynomials) that converge to _f_, where _L_ or _L&prime;_ and _U_ or _U&prime;_ are their lower and upper bound approximations.  The section on general factory functions shows how this algorithm can be implemented for polynomials.  But how do these steps work when the approximating functions (the functions that converge to _f_) are rational functions whose coefficients are integers? Rational functions whose coefficients are rational numbers? Arbitrary approximating functions?
-5. A _pushdown automaton_ is a state machine that holds a stack of symbols.  Mossel and Peres (2005\)<sup>[**4**](#Note4)</sup> investigated which functions (_f_(_&lambda;_)) can be simulated by these machines when they're given an infinite "tape" of flips of a coin that shows heads with probability _&lambda;_.  They showed that pushdown automata can simulate only _algebraic functions_, but perhaps not all of them. The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  Can it simulate the functions min(_&lambda;_, 1&minus;_&lambda;_) and _&lambda;_<sup>1/_p_</sup> where _p_>2 is a prime number?  I have written an [**article appendix**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions) showing my progress, but are there other results on this question?
+5. A _pushdown automaton_ is a state machine that holds a stack of symbols.  Mossel and Peres (2005\)[^4] investigated which functions (_f_(_&lambda;_)) can be simulated by these machines when they're given an infinite "tape" of flips of a coin that shows heads with probability _&lambda;_.  They showed that pushdown automata can simulate only _algebraic functions_, but perhaps not all of them. The question is: What is the exact class of algebraic functions a pushdown automaton can simulate?  Can it simulate the functions min(_&lambda;_, 1&minus;_&lambda;_) and _&lambda;_<sup>1/_p_</sup> where _p_>2 is a prime number?  I have written an [**article appendix**](https://peteroupc.github.io/morealg.html#Pushdown_Automata_and_Algebraic_Functions) showing my progress, but are there other results on this question?
 6. The following is an open question in Nacu and Peres 2005.  Let _J_ be a closed interval on (0, 1), such as \[1/100, 99/100], and let _f_(_&lambda;_) be a function that admits a Bernoulli factory.  Suppose there is an algorithm that takes a coin with unknown probability of heads _&lambda;_ and produces one or more samples of the probability _f_(_&lambda;_).  When the probability _&lambda;_ can be any value in _J_, is it possible for this algorithm to have an expected number of input coin flips per sample that is arbitrarily close to the so-called _entropy bound_?  The entropy bound is _h_(_f_(_&lambda;_))/_h_(_&lambda;_) where _h_(_x_) = &minus;_x_\*ln(_x_)&minus;(1&minus;_x_)\*ln(1&minus;_x_) is related to the Shannon entropy function.  Does the answer change if the algorithm can also use a separate source of unbiased random bits?  See my section "[**Multiple-Output Bernoulli Factory**](https://peteroupc.github.io/bernsupp.html#Multiple_Output_Bernoulli_Factory)".
 7. A factory function _f_(_&lambda;_) is _strongly simulable_ if there is an algorithm to toss heads with probability _f_(_&lambda;_) using only a coin that shows heads with probability _&lambda;_ and no other randomness.  Keane and O'Brien (1994) showed already that _f_(_&lambda;_) is strongly simulable if neither 0 nor 1 is in _f_'s domain.  It's also easy to show that if _f_ is strongly simulable, then _f_(0) and _f_(1) must each be 0, 1, or undefined.  Is this a _sufficient condition_ to be strongly simulable?  I have written an [**article appendix**](https://peteroupc.github.io/bernsupp.html#Which_functions_don_t_require_outside_randomness_to_simulate) showing my progress, but are there other results on this question?
 
@@ -151,6 +151,14 @@ Does any of the following exist?
 
 <a id=Notes></a>
 ## Notes
+
+[^1]: Keane, M. S., and O'Brien, G. L., "A Bernoulli factory", ACM Transactions on Modeling and Computer Simulation 4(2), 1994.
+
+[^2]: Flajolet, P., Pelletier, M., Soria, M., "[**On Buffon machines and numbers**](https://arxiv.org/abs/0906.5560)", arXiv:0906.5560  [math.PR], 2010.
+
+[^3]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., "[**Simulating events of unknown probabilities via reverse time martingales**](https://arxiv.org/abs/0907.4018v2)", arXiv:0907.4018v2 [stat.CO], 2009/2011.
+
+[^4]: Mossel, Elchanan, and Yuval Peres. New coins from old: computing with unknown bias. Combinatorica, 25(6), pp.707-724.
 
 <a id=License></a>
 ## License
