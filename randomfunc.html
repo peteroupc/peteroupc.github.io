@@ -2063,7 +2063,7 @@ END METHOD
 </pre>
 
 <blockquote>
-<p><strong>Note:</strong> In addition, some discrete (and continuous) distributions are known only through an <em>oracle</em> (or &quot;black box&quot;) that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (average) of the new variates equals the oracle&#39;s, the algorithm is called an <em>unbiased estimator</em> (because in a way, it &quot;estimates&quot; some aspect of the oracle&#39;s numbers).  One example is the Bernoulli factory (see my article &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), which takes flips of a biased &quot;coin&quot; (the oracle) and produces the flip of a new &quot;coin&quot; biased a different way.  Another example is the &quot;Bernoulli race&quot; described in <a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>.</p>
+<p><strong>Note:</strong> In addition, some discrete (and continuous) distributions are known only through an <em>oracle</em> (or &quot;black box&quot;) that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (long-run average) of the new variates equals the oracle&#39;s, the algorithm is called an <em>unbiased estimator</em> (because in a way, it &quot;estimates&quot; some aspect of the oracle&#39;s numbers).  One example is the Bernoulli factory (see my article &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;), which takes flips of a biased &quot;coin&quot; (the oracle) and produces the flip of a new &quot;coin&quot; biased a different way.  Another example is the &quot;Bernoulli race&quot; described in <a href="#Weighted_Choice"><strong>Weighted Choice</strong></a>.</p>
 </blockquote>
 
 <p><a id=Inverse_Transform_Sampling></a></p>
@@ -2504,7 +2504,7 @@ END METHOD
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGE(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
+<p><strong>Example:</strong> To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by <code>RNDRANGEMinMaxExc(mn, mx)</code>, where <code>mn</code> and <code>mx</code> are the highest and lowest Z coordinates possible.</p>
 
 <p><strong>Notes:</strong></p>
 
@@ -2522,7 +2522,7 @@ END METHOD
 
 <ul>
 <li>generate the longitude <code>RNDRANGEMaxExc(-pi, pi)</code>, where the longitude is in the interval [-&pi;, &pi;), and</li>
-<li>generate the latitude <code>atan2(sqrt(1 - x * x), x) - pi / 2</code>, where <code>x = RNDRANGE(-1, 1)</code> and the latitude is in the interval [-&pi;/2, &pi;/2] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate <code>x</code> until neither -1 nor 1 is generated this way).</li>
+<li>generate the latitude <code>atan2(sqrt(1 - x * x), x) - pi / 2</code>, where <code>x = RNDRANGEMinMaxExc(-1, 1)</code> and the latitude is in the interval [-&pi;/2, &pi;/2] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate <code>x</code> until neither -1 nor 1 is generated this way).</li>
 </ul>
 
 <p><a id=Acknowledgments></a></p>

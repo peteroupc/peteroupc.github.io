@@ -313,6 +313,11 @@ This algorithm `ExpoExact`, samples an exponential random variate given the rate
       r = 1
       oy = y
       while true
+        // ZeroOrOne(x, y) returns 1 with probability
+        // x/y, and 0 otherwise.  For example, ZeroOrOne
+        // could generate a uniform random integer
+        // in [0, y) and output either 1 if that integer
+        // is less than x, or 0 otherwise.
         if ZeroOrOne(x, y) == 0: return r
         r=1-r; y = y + oy
       end

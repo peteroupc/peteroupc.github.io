@@ -1605,7 +1605,7 @@ METHOD FPRatio(fp)
 END METHOD
 ```
 
-> **Note:** In addition, some discrete (and continuous) distributions are known only through an _oracle_ (or "black box") that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (average) of the new variates equals the oracle's, the algorithm is called an _unbiased estimator_ (because in a way, it "estimates" some aspect of the oracle's numbers).  One example is the Bernoulli factory (see my article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)"), which takes flips of a biased "coin" (the oracle) and produces the flip of a new "coin" biased a different way.  Another example is the "Bernoulli race" described in [**Weighted Choice**](#Weighted_Choice).
+> **Note:** In addition, some discrete (and continuous) distributions are known only through an _oracle_ (or "black box") that produces random variates that follow that distribution.  Algorithms can use this oracle to produce new random variates that follow a different distribution.  When the mean (long-run average) of the new variates equals the oracle's, the algorithm is called an _unbiased estimator_ (because in a way, it "estimates" some aspect of the oracle's numbers).  One example is the Bernoulli factory (see my article "[**Bernoulli Factory Algorithms**](https://peteroupc.github.io/bernoulli.html)"), which takes flips of a biased "coin" (the oracle) and produces the flip of a new "coin" biased a different way.  Another example is the "Bernoulli race" described in [**Weighted Choice**](#Weighted_Choice).
 
 <a id=Inverse_Transform_Sampling></a>
 #### Inverse Transform Sampling
@@ -1988,7 +1988,7 @@ To generate a random point on or inside&mdash;
 - an **N-dimensional spherical shell** (a hollow ball), centered at the origin, with inner radius A and outer radius B (where A is less than B), generate a random point on the surface of an N-dimensional hypersphere with radius equal to `pow(RNDRANGEMinMaxExc(pow(A, N), pow(B, N)), 1.0 / N)`[^104].
 - a **cone** with height `H` and radius `R` at its base, running along the Z axis, generate a random Z coordinate by `Z = max(max(RNDRANGEMinMaxExc(0, H), RNDRANGEMinMaxExc(0, H)), RNDRANGEMinMaxExc(0, H))`, then generate random X and Y coordinates inside a disc (2-dimensional ball) with radius equal to `max(RNDRANGEMinMaxExc(0,Z*(R/H)), RNDRANGEMinMaxExc(0,Z*(R/H)))`[^105].
 
-> **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGE(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
+> **Example:** To generate a random point inside a cylinder running along the Z axis, generate random X and Y coordinates inside a disc (2-dimensional ball) and generate a random Z coordinate by `RNDRANGEMinMaxExc(mn, mx)`, where `mn` and `mx` are the highest and lowest Z coordinates possible.
 >
 > **Notes:**
 >
@@ -2001,7 +2001,7 @@ To generate a random point on or inside&mdash;
 To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative\)[^106]&mdash;
 
 - generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
-- generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGE(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
+- generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGEMinMaxExc(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
 
 <a id=Acknowledgments></a>
 ## Acknowledgments
