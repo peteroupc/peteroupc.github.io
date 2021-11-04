@@ -59,6 +59,9 @@ Gets a value indicating whether surrogate code points not part of a
 surrogate pair (which consists of two consecutive char s
 forming one Unicode code point) are each replaced with a replacement
 character (U+FFFD).</li>
+<li><code>boolean getWriteBasic()</code><br>
+Gets a value indicating whether JSON is written using only code points from
+the Basic Latin block (U+0000 to U+007F), also known as ASCII.</li>
 <li><code>java.lang.String toString()</code><br>
 Gets the values of this options object&#39;s properties in text form.</li>
 </ul>
@@ -132,6 +135,19 @@ true.</li>
 <ul>
 <li>A value indicating how JSON numbers are decoded to CBOR. The default
 is <code>ConversionMode.Full</code>.</li>
+</ul>
+
+<h3><a id='getWriteBasic()'>getWriteBasic</a></h3>
+
+<p>Gets a value indicating whether JSON is written using only code points from
+ the Basic Latin block (U+0000 to U+007F), also known as ASCII.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether JSON is written using only code points
+from the Basic Latin block (U+0000 to U+007F), also known as ASCII.
+Default is false.</li>
 </ul>
 
 <h3><a id='getAllowDuplicateKeys()'>getAllowDuplicateKeys</a></h3>
