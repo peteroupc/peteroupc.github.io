@@ -5,54 +5,6 @@
 
 <h1>com.upokecenter.text.ProtocolStrings</h1>
 
-<pre>public final class ProtocolStrings extends java.lang.Object
-</pre>
-
-<p>Contains methods for preparing user-facing protocol strings (such as user
- identifiers) for equality comparison and validity checking. Such
- strings can be _internationalized_, that is, contain characters beyond
- the Basic Latin block (U+0000 to U+007F) of the Unicode Standard. See
- RFC 8264. Currently there are four profiles for internationalized
- strings: two for strings serving as user identifiers, one for
- arbitrary single-line strings (such as passwords), and one for display
- names.</p><p> </p><ul> <li>Other user-facing internationalized strings not
- expressly handled by this class include the following. Their
- preparation and comparison are outside the scope of this class. <br/>
- -- File and directory names. <br/> -- Domain names. <br/> -- Text
- strings with multiple language versions (such as a checkbox's label or
- a dialog box's title). <br/> -- Profile data voluntarily entered by
- users. <br/> -- The text of article, post, and message bodies.</li>
- <li>The methods in this class are not well suited for
- <i>collation</i>, or lexicographic ordering, which is a comparison of
- text strings that is usually language-dependent and goes beyond
- equality comparison. Further discussion on collation can be found in
-  Unicode Technical Standard 10 (UTS 10), "Unicode Collation
-  Algorithm".</li> <li>As explained in UTS 10 sec. 1.6, collation serves
- the purposes of searching and selection (e.g., searches by name or by
- title). However, this class is directed more to equality comparisons
- for authentication or authorization purposes, or to avoid creating
- multiple items that use the same string, rather than, say, to
- comparisons of names or parts of names for the purpose of showing
- matching records.</li></ul> <p><b>Security Considerations</b></p>
-
-<p><p>Many of the methods in this class take text strings and output text
- strings. However, specifying text strings as these methods do is not
- ideal if the string represents a password or other sensitive data,
- since strings are immutable in.NET and Java, so that they can&#39;t be
- modified, and the memory they occupy is not guaranteed to be cleared
- in a timely fashion due to garbage collection.</p> <p>The methods in
-  this class are not guaranteed to be &quot;constant-time&quot;
- (non-data-dependent) for all relevant inputs. Neither are string
- comparison methods (such as string.equals) necessarily guaranteed to
-  be &quot;constant-time&quot;. Certain attacks that involve encrypted
- communications have exploited the timing and other aspects of such
- communications to derive keying material or cleartext indirectly, or
- for example, to leak information about whether a user name and
- password were accepted by the server, or whether a user name or
- display name was already taken. This is an important consideration
- especially for strings representing account identifiers or passwords,
- even when comparing two such strings of the same length.</p></p>
-
 <h2>Methods</h2>
 
 <ul>
@@ -77,7 +29,7 @@ Checks the validity of a string that can serve to identify a user or account
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
 letters in the string is mapped to lowercase.</li>
 <li><code>static java.lang.String UsernameEnforce​(java.lang.String str,
-           boolean preserveCase)</code><br>
+boolean preserveCase)</code><br>
 Checks the validity of a string that can serve to identify a user or account
 (a &quot;username&quot;), where the string is made of one or more parts called
 &quot;userparts&quot; separated by spaces (U+0020) and where the case of
@@ -87,7 +39,7 @@ Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
 string is mapped to lowercase.</li>
 <li><code>static java.lang.String UserpartEnforce​(java.lang.String str,
-           boolean preserveCase)</code><br>
+boolean preserveCase)</code><br>
 Checks the validity of a string without spaces that can serve to identify a
 user or account (a &quot;userpart&quot;), where the case of letters in the
 string is either mapped to lowercase or preserved.</li>
@@ -95,10 +47,7 @@ string is either mapped to lowercase or preserved.</li>
 
 <h2>Method Details</h2>
 
-<h3>IsInIdentifierClass</h3>
-
-<pre>public static boolean IsInIdentifierClass​(java.lang.String str)
-</pre>
+<h3><a id='IsInIdentifierClass(java.lang.String)'>IsInIdentifierClass</a></h3>
 
 <p>Determines whether the given string belongs in RFC 8264&#39;s IdentifierClass.
  In general, the IdentifierClass contains all code points in the
@@ -121,10 +70,7 @@ required); otherwise, <code>false</code>. Returns <code>false</code> if <code>
 str</code> is null.</li>
 </ul>
 
-<h3>IsInFreeformClass</h3>
-
-<pre>public static boolean IsInFreeformClass​(java.lang.String str)
-</pre>
+<h3><a id='IsInFreeformClass(java.lang.String)'>IsInFreeformClass</a></h3>
 
 <p>Determines whether the given string belongs in RFC 8264&#39;s FreeformClass. In
  general, the FreeformClass contains most letters, digits, spaces,
@@ -149,10 +95,7 @@ required); otherwise, <code>false</code>. Returns <code>false</code> if <code>
 str</code> is null.</li>
 </ul>
 
-<h3>UserpartEnforce</h3>
-
-<pre>public static java.lang.String UserpartEnforce​(java.lang.String str)
-</pre>
+<h3><a id='UserpartEnforce(java.lang.String)'>UserpartEnforce</a></h3>
 
 <p>Checks the validity of a string without spaces that can serve to identify a
   user or account (a &quot;userpart&quot;), where the case of letters in the
@@ -176,10 +119,7 @@ values of this method should be compared code point by code point
 (see RFC 8265, sec. 3.3.4).</li>
 </ul>
 
-<h3>UsernameEnforce</h3>
-
-<pre>public static java.lang.String UsernameEnforce​(java.lang.String str)
-</pre>
+<h3><a id='UsernameEnforce(java.lang.String)'>UsernameEnforce</a></h3>
 
 <p>Checks the validity of a string that can serve to identify a user or account
   (a &quot;username&quot;), where the string is made of one or more parts called
@@ -210,10 +150,7 @@ purposes, return values of this method should be compared code point
 by code point (see RFC 8265, sec. 3.3.4).</li>
 </ul>
 
-<h3>UserpartEnforce</h3>
-
-<pre>public static java.lang.String UserpartEnforce​(java.lang.String str, boolean preserveCase)
-</pre>
+<h3><a id='UserpartEnforce(java.lang.String,boolean)'>UserpartEnforce</a></h3>
 
 <p>Checks the validity of a string without spaces that can serve to identify a
   user or account (a &quot;userpart&quot;), where the case of letters in the
@@ -240,10 +177,7 @@ or empty). For comparison purposes, return values of this method
 code point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 </ul>
 
-<h3>UsernameEnforce</h3>
-
-<pre>public static java.lang.String UsernameEnforce​(java.lang.String str, boolean preserveCase)
-</pre>
+<h3><a id='UsernameEnforce(java.lang.String,boolean)'>UsernameEnforce</a></h3>
 
 <p>Checks the validity of a string that can serve to identify a user or account
   (a &quot;username&quot;), where the string is made of one or more parts called
@@ -278,10 +212,7 @@ the same value for <code>preserveCase</code>) should be compared code
 point by code point (see RFC 8265, secs. 3.3.4 and 3.4.4).</li>
 </ul>
 
-<h3>OpaqueStringEnforce</h3>
-
-<pre>public static java.lang.String OpaqueStringEnforce​(java.lang.String str)
-</pre>
+<h3><a id='OpaqueStringEnforce(java.lang.String)'>OpaqueStringEnforce</a></h3>
 
 <p>Checks the validity of a string serving as an arbitrary single-line sequence
  of characters, such as a passphrase. This checking is done using the
@@ -304,10 +235,7 @@ values of this method should be compared code point by code point
 (see RFC 8265, sec. 4.2.3).</li>
 </ul>
 
-<h3>NicknameEnforce</h3>
-
-<pre>public static java.lang.String NicknameEnforce​(java.lang.String str)
-</pre>
+<h3><a id='NicknameEnforce(java.lang.String)'>NicknameEnforce</a></h3>
 
 <p>Checks the validity of a string serving as a &quot;memorable, human-friendly
   name&quot; for something (see RFC 8266), as opposed to that thing&#39;s
@@ -333,10 +261,7 @@ sec. 2.3); for such purposes, use the NicknameForComparison method
 instead.</li>
 </ul>
 
-<h3>NicknameForComparison</h3>
-
-<pre>public static java.lang.String NicknameForComparison​(java.lang.String str)
-</pre>
+<h3><a id='NicknameForComparison(java.lang.String)'>NicknameForComparison</a></h3>
 
 <p>Prepares for comparison a string serving as a &quot;memorable, human-friendly
   name&quot; for something (see RFC 8266), as opposed to that thing&#39;s

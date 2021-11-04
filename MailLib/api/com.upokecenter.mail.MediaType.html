@@ -5,32 +5,16 @@
 
 <h1>com.upokecenter.mail.MediaType</h1>
 
-<pre>public final class MediaType extends java.lang.Object
-</pre>
-
-<p>Specifies what kind of data a message body is.</p> <p>A media type
- consists of a top-level type (the general category of the data), a
- subtype (the specific type), and an optional list of parameters. For
- example, the media type <code>text/plain;charset = utf-8</code> is a text
-  media type ("text"), namely, a plain text type ("plain"), and the
- parameters say that the data uses UTF-8, a Unicode character encoding
-  ("charset = utf-8"). Other top-level types include "audio", "video",
-  and "application".</p> <p>A media type is sometimes known as a "MIME
-  type", for Multipurpose Internet Mail Extensions, the standard that
- introduced media types.</p> <p>This type is immutable, meaning its
- values can't be changed once it's created. To create a changeable
- media type object, use the MediaType.Builder class.</p>
-
-<p><p><b>Note:</b> According to RFC 2049, unrecognized subtypes of the
- top-level type <code>multipart</code> must be treated as
- <code>multipart/mixed</code> and unrecognized media types as the media type
- <code>application/octet-stream</code>.</p></p>
-
-<h2>Fields</h2>
+<h2>Nested Classes</h2>
 
 <ul>
 <li><code>static class  MediaType.Builder</code><br>
 A mutable data type that allows a media type object to be built.</li>
+</ul>
+
+<h2>Fields</h2>
+
+<ul>
 <li><code>static MediaType ApplicationOctetStream</code><br>
 Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
 binary data.</li>
@@ -44,13 +28,6 @@ within the basic Latin range (U+0000 to U+007F).</li>
 Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
 used for plain text data that may contain characters outside the
 basic Latin range (U+0000 to U+007F).</li>
-</ul>
-
-<h2>Nested Classes</h2>
-
-<ul>
-<li><code>static class  MediaType.Builder</code><br>
-A mutable data type that allows a media type object to be built.</li>
 </ul>
 
 <h2>Methods</h2>
@@ -87,7 +64,7 @@ Gets a value indicating whether this is a text media type (&quot;text/*&quot;).<
 <li><code>static MediaType Parse​(java.lang.String mediaTypeValue)</code><br>
 Parses a media type string and returns a media type object.</li>
 <li><code>static MediaType Parse​(java.lang.String str,
- MediaType defaultValue)</code><br>
+MediaType defaultValue)</code><br>
 Parses a media type string and returns a media type object, or the default
 value if the string is invalid.</li>
 <li><code>java.lang.String ToSingleLineString()</code><br>
@@ -102,45 +79,30 @@ Converts this media type to a text string form suitable for data URIs.</li>
 
 <h2>Field Details</h2>
 
-<h3>TextPlainAscii</h3>
-
-<pre>public static final MediaType TextPlainAscii
-</pre>
+<h3><a id='TextPlainAscii'>TextPlainAscii</a></h3>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter
   &quot;US-ASCII&quot;, used for plain text data that contains only characters
  within the basic Latin range (U+0000 to U+007F).</p>
 
-<h3>TextPlainUtf8</h3>
-
-<pre>public static final MediaType TextPlainUtf8
-</pre>
+<h3><a id='TextPlainUtf8'>TextPlainUtf8</a></h3>
 
 <p>Specifies the media type &quot;text/plain&quot; and the &quot;charset&quot; parameter &quot;utf-8&quot;,
  used for plain text data that may contain characters outside the
  basic Latin range (U+0000 to U+007F).</p>
 
-<h3>MessageRfc822</h3>
-
-<pre>public static final MediaType MessageRfc822
-</pre>
+<h3><a id='MessageRfc822'>MessageRfc822</a></h3>
 
 <p>Specifies the media type &quot;message/rfc822&quot;, used for Internet mail messages.</p>
 
-<h3>ApplicationOctetStream</h3>
-
-<pre>public static final MediaType ApplicationOctetStream
-</pre>
+<h3><a id='ApplicationOctetStream'>ApplicationOctetStream</a></h3>
 
 <p>Specifies the media type &quot;application/octet-stream&quot;, used for arbitrary
  binary data.</p>
 
 <h2>Method Details</h2>
 
-<h3>getTopLevelType</h3>
-
-<pre>public final java.lang.String getTopLevelType()
-</pre>
+<h3><a id='getTopLevelType()'>getTopLevelType</a></h3>
 
 <p>Gets the name of this media type&#39;s top-level type (such as &quot;text&quot; in
   &quot;text/plain&quot;, or &quot;audio&quot; in &quot;audio/basic&quot;). The resulting string
@@ -154,10 +116,7 @@ Converts this media type to a text string form suitable for data URIs.</li>
 &quot;audio&quot; .</li>
 </ul>
 
-<h3>HasStructuredSuffix</h3>
-
-<pre>public boolean HasStructuredSuffix​(java.lang.String suffix)
-</pre>
+<h3><a id='HasStructuredSuffix(java.lang.String)'>HasStructuredSuffix</a></h3>
 
 <p>Returns whether this media type&#39;s subtype has the given structured syntax
  suffix.</p>
@@ -186,10 +145,7 @@ but returns true if <code>suffix</code> is &quot;xml&quot; and the subtype is
 string.</li>
 </ul>
 
-<h3>equals</h3>
-
-<pre>public boolean equals​(java.lang.Object obj)
-</pre>
+<h3><a id='equals(java.lang.Object)'>equals</a></h3>
 
 <p>Determines whether this object and another object are equal.</p>
 
@@ -212,10 +168,7 @@ string.</li>
 otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>hashCode</h3>
-
-<pre>public int hashCode()
-</pre>
+<h3><a id='hashCode()'>hashCode</a></h3>
 
 <p>Calculates the hash code of this object. The exact algorithm used by this
  method may change between versions of this library, and no
@@ -233,10 +186,7 @@ otherwise, <code>false</code>.</li>
 <li>A 32-bit signed integer.</li>
 </ul>
 
-<h3>getSubType</h3>
-
-<pre>public final java.lang.String getSubType()
-</pre>
+<h3><a id='getSubType()'>getSubType</a></h3>
 
 <p>Gets this media type&#39;s subtype (for example, &quot;plain&quot; in &quot;text/plain&quot;). The
  resulting string will be in lower case; that is, with its basic
@@ -249,10 +199,7 @@ otherwise, <code>false</code>.</li>
 <li>This media type&#39;s subtype.</li>
 </ul>
 
-<h3>isText</h3>
-
-<pre>public final boolean isText()
-</pre>
+<h3><a id='isText()'>isText</a></h3>
 
 <p>Gets a value indicating whether this is a text media type (&quot;text/*&quot;).</p>
 
@@ -262,10 +209,7 @@ otherwise, <code>false</code>.</li>
 <li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isMultipart</h3>
-
-<pre>public final boolean isMultipart()
-</pre>
+<h3><a id='isMultipart()'>isMultipart</a></h3>
 
 <p>Gets a value indicating whether this is a multipart media type.</p>
 
@@ -276,10 +220,7 @@ otherwise, <code>false</code>.</li>
 false</code>.</li>
 </ul>
 
-<h3>getParameters</h3>
-
-<pre>public final java.util.Map&lt;java.lang.String,​java.lang.String&gt; getParameters()
-</pre>
+<h3><a id='getParameters()'>getParameters</a></h3>
 
 <p>Gets a list of the parameter names contained in this media type object and
  their values. Each parameter name will be in lower case; that is,
@@ -296,10 +237,7 @@ fact, the names will not be guaranteed to appear in any particular
 order; this is at least the case in version 0.10.0.</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Converts this media type to a text string form suitable for inserting in
  email headers. Notably, the string contains the value of a
@@ -319,10 +257,7 @@ order; this is at least the case in version 0.10.0.</li>
 <li>A text string form of this media type.</li>
 </ul>
 
-<h3>ToSingleLineString</h3>
-
-<pre>public java.lang.String ToSingleLineString()
-</pre>
+<h3><a id='ToSingleLineString()'>ToSingleLineString</a></h3>
 
 <p>Converts this media type to a text string form suitable for inserting in
  HTTP headers. Notably, the string contains the value of a
@@ -336,10 +271,7 @@ order; this is at least the case in version 0.10.0.</li>
 <li>A text string form of this media type.</li>
 </ul>
 
-<h3>ToUriSafeString</h3>
-
-<pre>public java.lang.String ToUriSafeString()
-</pre>
+<h3><a id='ToUriSafeString()'>ToUriSafeString</a></h3>
 
 <p>Converts this media type to a text string form suitable for data URIs.
  Notably, the string contains the value of a Content-Type header
@@ -354,10 +286,7 @@ order; this is at least the case in version 0.10.0.</li>
 <li>A text string form of this media type.</li>
 </ul>
 
-<h3>GetCharset</h3>
-
-<pre>public java.lang.String GetCharset()
-</pre>
+<h3><a id='GetCharset()'>GetCharset</a></h3>
 
 <p>Gets this media type&#39;s &quot;charset&quot; parameter, naming a character encoding used
  to represent text in the data that uses this media type.</p>
@@ -375,10 +304,7 @@ parameter given the media type (e.g., &quot;us-ascii&quot; if the media type
 is &quot;text/plain&quot;; see RFC2046), or the empty string if there is none.</li>
 </ul>
 
-<h3>GetParameter</h3>
-
-<pre>public java.lang.String GetParameter​(java.lang.String name)
-</pre>
+<h3><a id='GetParameter(java.lang.String)'>GetParameter</a></h3>
 
 <p>Gets the value of a parameter in this media type, such as &quot;charset&quot; or
   &quot;format&quot;.</p>
@@ -407,10 +333,7 @@ doesn&#39;t exist.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Name is empty.</p></li>
 </ul>
 
-<h3>getTypeAndSubType</h3>
-
-<pre>public final java.lang.String getTypeAndSubType()
-</pre>
+<h3><a id='getTypeAndSubType()'>getTypeAndSubType</a></h3>
 
 <p>Gets the top level type and subtype of this media type, separated by a
   slash; for example, &quot;text/plain&quot;. The resulting string will be in
@@ -423,10 +346,7 @@ doesn&#39;t exist.</li>
 slash; for example, &quot;text/plain&quot;.</li>
 </ul>
 
-<h3>Parse</h3>
-
-<pre>public static MediaType Parse​(java.lang.String mediaTypeValue)
-</pre>
+<h3><a id='Parse(java.lang.String)'>Parse</a></h3>
 
 <p>Parses a media type string and returns a media type object. For further
  information, see the overload taking a MediaType parameter.</p>
@@ -445,10 +365,7 @@ type can include parameters.</li>
 mediaTypeValue</code> is empty or syntactically invalid.</li>
 </ul>
 
-<h3>Parse</h3>
-
-<pre>public static MediaType Parse​(java.lang.String str, MediaType defaultValue)
-</pre>
+<h3><a id='Parse(java.lang.String,com.upokecenter.mail.MediaType)'>Parse</a></h3>
 
 <p>Parses a media type string and returns a media type object, or the default
  value if the string is invalid. This method checks the syntactic

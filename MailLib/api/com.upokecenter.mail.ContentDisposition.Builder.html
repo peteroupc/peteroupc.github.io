@@ -5,12 +5,7 @@
 
 <h1>com.upokecenter.mail.ContentDisposition.Builder</h1>
 
-<pre>public static final class ContentDisposition.Builder extends java.lang.Object
-</pre>
-
-<p>A mutable data type that allows a content disposition to be built.</p>
-
-<h2>Methods</h2>
+<h2>Constructors</h2>
 
 <ul>
 <li><code>Builder() DispositionBuilder</code><br>
@@ -23,6 +18,11 @@ the given content disposition.</li>
 Initializes a new instance of the {@link
 com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
 given disposition type.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
 <li><code>java.lang.String getDispositionType()</code><br>
 Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</li>
 <li><code>boolean isMultipart()</code><br>
@@ -39,7 +39,7 @@ Removes a parameter from this content disposition.</li>
 <li><code>ContentDisposition.Builder SetDispositionType​(java.lang.String str)</code><br>
 Sets the disposition type, such as &quot;inline&quot;.</li>
 <li><code>ContentDisposition.Builder SetParameter​(java.lang.String name,
-        java.lang.String value)</code><br>
+java.lang.String value)</code><br>
 Sets a parameter of this content disposition.</li>
 <li><code>ContentDisposition ToDisposition()</code><br>
 Converts this object to an immutable ContentDisposition object.</li>
@@ -47,77 +47,9 @@ Converts this object to an immutable ContentDisposition object.</li>
 Converts this object to a text string.</li>
 </ul>
 
-<h2>Constructors</h2>
-
-<ul>
-<li><code>Builder() DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the
-disposition type &quot;attachment&quot; .</li>
-<li><code>Builder​(ContentDisposition mt) DispositionBuilder</code><br>
-Initializes a new instance of the DispositionBuilder class using the data from
-the given content disposition.</li>
-<li><code>Builder​(java.lang.String type)</code><br>
-Initializes a new instance of the {@link
-com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
-given disposition type.</li>
-</ul>
-
 <h2>Method Details</h2>
 
-<h3>Builder</h3>
-
-<pre>public Builder()
-</pre>
-
-<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the
-  disposition type &quot;attachment&quot; .</p>
-
-<h3>Builder</h3>
-
-<pre>public Builder​(ContentDisposition mt)
-</pre>
-
-<p>Initializes a new instance of the <code>DispositionBuilder</code> class using the data from
- the given content disposition.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>mt</code> - The parameter <code>mt</code> is a ContentDisposition object.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><code>java.lang.NullPointerException</code> - The parameter <code>mt</code> is null.</li>
-</ul>
-
-<h3>Builder</h3>
-
-<pre>public Builder​(java.lang.String type)
-</pre>
-
-<p>Initializes a new instance of the {@link
- com.upokecenter.mail.ContentDisposition.getBuilder()} class using the
- given disposition type.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>type</code> - The parameter <code>type</code> is a text string.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>type</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - Type is empty.</p></li>
-</ul>
-
-<h3>getDispositionType</h3>
-
-<pre>public final java.lang.String getDispositionType()
-</pre>
+<h3><a id='getDispositionType()'>getDispositionType</a></h3>
 
 <p>Gets this value&#39;s disposition type, such as &quot;inline&quot; or &quot;attachment&quot;.</p>
 
@@ -136,18 +68,11 @@ null.</p></li>
 empty string.</p></li>
 </ul>
 
-<h3>setDispositionType</h3>
+<h3><a id='setDispositionType(java.lang.String)'>setDispositionType</a></h3>
 
-<pre>public final void setDispositionType​(java.lang.String value)
-</pre>
+<h3><a id='isText()'>isText</a></h3>
 
-<h3>isText</h3>
-
-<pre>@Deprecated public final boolean isText()
-</pre>
-
-<p>Deprecated.
-Irrelevant for content dispositions; will be removed in the future.</p>
+<p>Gets a value indicating whether this is a text media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -155,13 +80,9 @@ Irrelevant for content dispositions; will be removed in the future.</p>
 <li><code>true</code> If this is a text media type; otherwise, <code>false</code>.</li>
 </ul>
 
-<h3>isMultipart</h3>
+<h3><a id='isMultipart()'>isMultipart</a></h3>
 
-<pre>@Deprecated public final boolean isMultipart()
-</pre>
-
-<p>Deprecated.
-Irrelevant for content dispositions; will be removed in the future.</p>
+<p>Gets a value indicating whether this is a multipart media type.</p>
 
 <p><strong>Returns:</strong></p>
 
@@ -170,10 +91,7 @@ Irrelevant for content dispositions; will be removed in the future.</p>
 false</code>.</li>
 </ul>
 
-<h3>ToDisposition</h3>
-
-<pre>public ContentDisposition ToDisposition()
-</pre>
+<h3><a id='ToDisposition()'>ToDisposition</a></h3>
 
 <p>Converts this object to an immutable ContentDisposition object.</p>
 
@@ -183,10 +101,7 @@ false</code>.</li>
 <li>A MediaType object.</li>
 </ul>
 
-<h3>SetDispositionType</h3>
-
-<pre>public ContentDisposition.Builder SetDispositionType​(java.lang.String str)
-</pre>
+<h3><a id='SetDispositionType(java.lang.String)'>SetDispositionType</a></h3>
 
 <p>Sets the disposition type, such as &quot;inline&quot;. This method enables the pattern
  of method chaining (e.g., <code>new ...().getSet()...().getSet()...()</code>)
@@ -212,10 +127,7 @@ false</code>.</li>
 <li><p><code>java.lang.IllegalArgumentException</code> - Str is empty.</p></li>
 </ul>
 
-<h3>RemoveParameter</h3>
-
-<pre>public ContentDisposition.Builder RemoveParameter​(java.lang.String name)
-</pre>
+<h3><a id='RemoveParameter(java.lang.String)'>RemoveParameter</a></h3>
 
 <p>Removes a parameter from this content disposition. Does nothing if the
  parameter&#39;s name doesn&#39;t exist.</p>
@@ -242,10 +154,7 @@ lower-case letters.).</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>name</code> is null.</li>
 </ul>
 
-<h3>SetParameter</h3>
-
-<pre>public ContentDisposition.Builder SetParameter​(java.lang.String name, java.lang.String value)
-</pre>
+<h3><a id='SetParameter(java.lang.String,java.lang.String)'>SetParameter</a></h3>
 
 <p>Sets a parameter of this content disposition.</p>
 
@@ -275,10 +184,7 @@ lower-case letters.).</p></li>
 well-formed parameter name.</p></li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Converts this object to a text string.</p>
 

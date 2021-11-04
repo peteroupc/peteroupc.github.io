@@ -5,17 +5,17 @@
 
 <h1>com.upokecenter.mail.Address</h1>
 
-<pre>public class Address extends java.lang.Object
-</pre>
-
-<p>Represents an email address.</p>
-
-<h2>Methods</h2>
+<h2>Constructors</h2>
 
 <ul>
 <li><code>Address​(java.lang.String addressValue) Address</code><br>
 Initializes a new instance of the Address
 class.</li>
+</ul>
+
+<h2>Methods</h2>
+
+<ul>
 <li><code>boolean equals​(java.lang.Object obj)</code><br>
 Determines whether this object and another object are equal.</li>
 <li><code>java.lang.String getDomain()</code><br>
@@ -28,70 +28,9 @@ Returns a hash code for this address object.</li>
 Converts this address object to a text string.</li>
 </ul>
 
-<h2>Constructors</h2>
-
-<ul>
-<li><code>Address​(java.lang.String addressValue) Address</code><br>
-Initializes a new instance of the Address
-class.</li>
-</ul>
-
 <h2>Method Details</h2>
 
-<h3>Address</h3>
-
-<pre>public Address​(java.lang.String addressValue)
-</pre>
-
-<p>Initializes a new instance of the <code>Address</code>
- class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addressValue</code> - An email address. This parameter must contain an
-at-sign, and may not contain extraneous whitespace, and comments
-enclosed in parentheses are also not allowed.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>addressValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - AddressValue is empty.; Address doesn&#39;t contain a
-&#39;@&#39;sign; Invalid local part; Expected &#39;@&#39;sign after local part;
-Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
-</ul>
-
-<h3>Address</h3>
-
-<pre>public Address​(java.lang.String addressValue)
-</pre>
-
-<p>Initializes a new instance of the <code>Address</code>
- class.</p>
-
-<p><strong>Parameters:</strong></p>
-
-<ul>
-<li><code>addressValue</code> - An email address. This parameter must contain an
-at-sign, and may not contain extraneous whitespace, and comments
-enclosed in parentheses are also not allowed.</li>
-</ul>
-
-<p><strong>Throws:</strong></p>
-
-<ul>
-<li><p><code>java.lang.NullPointerException</code> - The parameter <code>addressValue</code> is null.</p></li>
-<li><p><code>java.lang.IllegalArgumentException</code> - AddressValue is empty.; Address doesn&#39;t contain a
-&#39;@&#39;sign; Invalid local part; Expected &#39;@&#39;sign after local part;
-Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
-</ul>
-
-<h3>equals</h3>
-
-<pre>public boolean equals​(java.lang.Object obj)
-</pre>
+<h3><a id='equals(java.lang.Object)'>equals</a></h3>
 
 <p>Determines whether this object and another object are equal.</p>
 
@@ -114,10 +53,7 @@ Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 <code>false</code>.</li>
 </ul>
 
-<h3>getLocalPart</h3>
-
-<pre>public final java.lang.String getLocalPart()
-</pre>
+<h3><a id='getLocalPart()'>getLocalPart</a></h3>
 
 <p>Gets the local part of this email address (the part before the &quot;@&quot; sign).</p>
 
@@ -127,10 +63,7 @@ Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 <li>The local part of this email address (the part before the &quot;@&quot; sign).</li>
 </ul>
 
-<h3>toString</h3>
-
-<pre>public java.lang.String toString()
-</pre>
+<h3><a id='toString()'>toString</a></h3>
 
 <p>Converts this address object to a text string.</p>
 
@@ -146,10 +79,7 @@ Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 <li>A string representation of this object.</li>
 </ul>
 
-<h3>hashCode</h3>
-
-<pre>public int hashCode()
-</pre>
+<h3><a id='hashCode()'>hashCode</a></h3>
 
 <p>Returns a hash code for this address object. No application or process
  identifiers are used in the hash code calculation.</p>
@@ -166,10 +96,7 @@ Expected domain after &#39;@&#39;; Invalid domain; Address too long.</p></li>
 <li>A hash code for this instance.</li>
 </ul>
 
-<h3>getDomain</h3>
-
-<pre>public final java.lang.String getDomain()
-</pre>
+<h3><a id='getDomain()'>getDomain</a></h3>
 
 <p>Gets the domain of this email address (the part after the &quot;@&quot; sign).</p>
 

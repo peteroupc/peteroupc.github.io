@@ -5,13 +5,6 @@
 
 <h1>com.upokecenter.mail.DataUris</h1>
 
-<pre>public final class DataUris extends java.lang.Object
-</pre>
-
-<p>Contains methods for parsing and generating Data URIs (uniform resource
- identifiers). Data URIs are described in RFC 2397. Examples for Data
- URIs follow. <pre>data:, hello%20world</pre> <pre>data:text/markdown, hello%20world</pre> <pre>data:application/octet-stream;base64, AAAAAA==</pre>.</p>
-
 <h2>Methods</h2>
 
 <ul>
@@ -28,7 +21,7 @@ form of a text string.</li>
 Extracts the media type from a Data URI (uniform resource identifier) in the
 form of a URI object.</li>
 <li><code>static java.lang.String MakeDataUri​(byte[] bytes,
-       MediaType mediaType)</code><br>
+MediaType mediaType)</code><br>
 Encodes data with the given media type in a Data URI (uniform resource
 identifier).</li>
 <li><code>static java.lang.String MakeDataUri​(java.lang.String textString)</code><br>
@@ -37,10 +30,7 @@ Encodes text as a Data URI (uniform resource identifier).</li>
 
 <h2>Method Details</h2>
 
-<h3>DataUriMediaType</h3>
-
-<pre>public static MediaType DataUriMediaType​(java.lang.String uri)
-</pre>
+<h3><a id='DataUriMediaType(java.lang.String)'>DataUriMediaType</a></h3>
 
 <p>Extracts the media type from a Data URI (uniform resource identifier) in the
  form of a text string.</p>
@@ -64,10 +54,7 @@ syntactically invalid, or is not a Data URI.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3>DataUriMediaType</h3>
-
-<pre>public static MediaType DataUriMediaType​(java.net.URI uri)
-</pre>
+<h3><a id='DataUriMediaType(java.net.URI)'>DataUriMediaType</a></h3>
 
 <p>Extracts the media type from a Data URI (uniform resource identifier) in the
  form of a URI object.</p>
@@ -91,10 +78,7 @@ syntactically invalid, or is not a Data URI.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3>DataUriBytes</h3>
-
-<pre>public static byte[] DataUriBytes​(java.net.URI uri)
-</pre>
+<h3><a id='DataUriBytes(java.net.URI)'>DataUriBytes</a></h3>
 
 <p>Extracts the data from a Data URI (uniform resource identifier) in the form
  of a byte array, where the Data URI is given as a URI object.</p>
@@ -118,10 +102,7 @@ syntactically invalid, or is not a data URI.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3>DataUriBytes</h3>
-
-<pre>public static byte[] DataUriBytes​(java.lang.String uri)
-</pre>
+<h3><a id='DataUriBytes(java.lang.String)'>DataUriBytes</a></h3>
 
 <p>Extracts the data from a Data URI (uniform resource identifier) in the form
  of a byte array.</p>
@@ -145,10 +126,7 @@ syntactically invalid, or is not a data URI.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>uri</code> is null.</li>
 </ul>
 
-<h3>MakeDataUri</h3>
-
-<pre>public static java.lang.String MakeDataUri​(java.lang.String textString)
-</pre>
+<h3><a id='MakeDataUri(java.lang.String)'>MakeDataUri</a></h3>
 
 <p>Encodes text as a Data URI (uniform resource identifier).</p>
 
@@ -170,10 +148,7 @@ syntactically invalid, or is not a data URI.</li>
 <li><code>java.lang.NullPointerException</code> - The parameter <code>textString</code> is null.</li>
 </ul>
 
-<h3>MakeDataUri</h3>
-
-<pre>public static java.lang.String MakeDataUri​(byte[] bytes, MediaType mediaType)
-</pre>
+<h3><a id='MakeDataUri(byte[],com.upokecenter.mail.MediaType)'>MakeDataUri</a></h3>
 
 <p>Encodes data with the given media type in a Data URI (uniform resource
  identifier).</p>

@@ -157,7 +157,7 @@ In this algorithm, the error term, which follows from the _Lagrange remainder_ f
 
 The second algorithm is one I found that takes advantage of the convex combination method.
 
-1. ("Geometric" random variate _n_.)  Generate unbiased random bits until a zero is generated this way.  Set _n_ to 2 plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
+1. ("Geometric" random variate _n_.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to 2 plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
 2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  If _n_ is odd, return 0.  Otherwise, with probability 2<sup>_n_&minus;1</sup>/(_n_!), go to the next step.  Otherwise, return 0.
 3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
 
