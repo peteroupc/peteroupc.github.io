@@ -33,7 +33,7 @@ Perhaps the most familiar example of randomness extraction is the one by von Neu
 1. Flip a coin twice (whose probability of heads is unknown).
 2. If the coin lands heads then tails, return heads.  If it lands tails then heads, return tails.  If neither is the case, go to step 1.
 
-An algorithm found in (Morina et al. 2019\)[^6] (called **Algorithm M** in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
+An algorithm found in (Morina et al. 2019\)[^6] \(called **Algorithm M** in this note) extends this to loaded dice.  According to personal communication with K. Łatuszyński, the key "is to find two non overlapping events of the same probability" via "symmetric events {X_1 < X_2}  and  {X_2 < X_1} that have the same probability".
 
 1. Throw a (loaded) die, call the result _X_.  Throw the die again, call the result _Y_.
 2. If _X_ is less than _Y_, return 0.  If _X_ is greater than _Y_, return 1.  If neither is the case, go to step 1.

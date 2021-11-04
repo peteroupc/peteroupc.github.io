@@ -174,7 +174,7 @@ A family very similar to the "transformed&ndash;transformer" family uses a _decr
 A distribution of minimums or of maximums can be generated as follows (Duarte-López et al. 2021\)[^24]\:
 
 1. Generate a uniform random variate in (0, 1). (Or generate a uniform PSRN with integer part 0, positive sign, and empty fractional part.)  Call the number _x_.
-2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^25] (If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
+2. For minimums, calculate the quantile for _X_ of 1&minus;_W_<sup>&minus;1</sup>(_x_) (where _W_<sup>&minus;1</sup>(.) is the inverse of _Y_'s probability generating function), and return that quantile.[^25] \(If _x_ is a uniform PSRN, see "Random Variate Generation via Quantiles", later.)
 3. For maximums, calculate the quantile for _X_ of _W_<sup>&minus;1</sup>(_x_), and return that quantile.
 
 **Inverse distributions.** An _inverse X distribution_ (or _inverted X distribution_) is generally the distribution of 1 divided by a random variate distributed as _X_.  For example, an _inverse exponential_ random variate (Keller and Kamath 1982\)[^26] is 1 divided by an exponential random variate with rate 1 (and so is distributed as &minus;1/ln(_U_) where _U_ is a uniform random variate in the interval [0, 1]) and may be multiplied by a parameter _&theta;_ > 0.

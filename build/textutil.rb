@@ -22,7 +22,6 @@ def prepareMarkdown(data)
   }
   noterefs={} # Associates old note refs with new refs
   newnotetexts=[]
-  data=data.gsub(/\)<\/sup>\:/,")</sup>\:")
   data=data.gsub(/([\s\S])\[\^(\d+)\](?!\s*\:)/){
      next $& if $1=="\n"
      next "#{$1}<sup>[(#{$2})](\#Note#{$2})</sup>"
@@ -56,7 +55,7 @@ def prepareMarkdown(data)
   if data.include?("](\#Note6")
      raise "Sanity check failure"
   end
-  data=data.gsub( /([^\\])\)\s*\[\^(\d+)\]/ ) { $1+"\\)[^"+$2+"]" } #/
+  data=data.gsub( /\[\^(\d+)\](\s*)\(/ ) { "[^#{$1}]#{$2}\\(" } #/
   data=data.gsub( /<<([^\|\n>]*)\|([^\|]+?)>>/ ){
      noteref=$1||""
      notedata=$2

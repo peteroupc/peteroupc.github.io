@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/10/31"><meta name="citation_online_date" content="2021/10/31"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomization and Sampling Methods</title><meta name="citation_title" content="Randomization and Sampling Methods"><meta name="citation_pdf_url" content="https://peteroupc.github.io/randomfunc.pdf"><meta name="citation_url" content="https://peteroupc.github.io/randomfunc.html"><meta name="citation_date" content="2021/11/03"><meta name="citation_online_date" content="2021/11/03"><meta name="og:title" content="Randomization and Sampling Methods"><meta name="og:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these methods."><meta name="twitter:description" content="This page discusses many ways applications can sample randomized content by transforming the numbers produced by an underlying source of random numbers, such as numbers produced by a pseudorandom number generator, and offers pseudocode and Python sample code for many of these ..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/randomfunc.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomization and Sampling Methods"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Randomization and Sampling Methods</h1>
@@ -353,13 +353,13 @@ END METHOD
 <td>Constant</td>
 </tr>
 <tr>
-<td><em>Fast Dice Roller</em> (Lumbroso 2013)<a href="see%20pseudocode%20above">^7</a>.</td>
+<td><em>Fast Dice Roller</em> (Lumbroso 2013)[^7] (see pseudocode above).</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
 </tr>
 <tr>
-<td>Math Forum (2004)[^8] or (Mennucci 2018)<a href="batching/recycling%20random%20bits">^9</a>.</td>
+<td>Math Forum (2004)[^8] or (Mennucci 2018)[^9] (batching/recycling random bits).</td>
 <td>Yes</td>
 <td>Yes</td>
 <td>Runs forever in worst case</td>
@@ -1111,7 +1111,7 @@ END METHOD
 </tr>
 <tr>
 <td>&quot;Loaded Die from Biased Coins&quot;</td>
-<td>Given a list of probabilities <code>probs</code> that must sum to 1 and should be rational numbers: (1) Set <code>cumu</code> to 1 and <code>i</code> to 0; (2) with probability <code>probs[i]/cumu</code>, return <code>i</code>; (3) subtract <code>probs[i]</code> from <code>cumu</code>, then add 1 to <code>i</code>, then go to step 2.  For a correctness proof, see &quot;Darts, Dice, and Coins&quot;.  If each probability in <code>probs</code> is calculated &quot;on the fly&quot;, this is also called sequential search; see chapter 10 of Devroye (1986)<a href="but%20this%20generally%20won&#x27;t%20be%20exact%20unless%20all%20the%20probabilities%20involved%20are%20rational%20numbers">^20</a>.</td>
+<td>Given a list of probabilities <code>probs</code> that must sum to 1 and should be rational numbers: (1) Set <code>cumu</code> to 1 and <code>i</code> to 0; (2) with probability <code>probs[i]/cumu</code>, return <code>i</code>; (3) subtract <code>probs[i]</code> from <code>cumu</code>, then add 1 to <code>i</code>, then go to step 2.  For a correctness proof, see &quot;Darts, Dice, and Coins&quot;.  If each probability in <code>probs</code> is calculated &quot;on the fly&quot;, this is also called sequential search; see chapter 10 of Devroye (1986)[^20] (but this generally won&#39;t be exact unless all the probabilities involved are rational numbers).</td>
 </tr>
 <tr>
 <td>Knuth and Yao (1976)[^10]</td>
@@ -1880,7 +1880,7 @@ END METHOD
 
 <p>The points of a low-discrepancy sequence can be &quot;scrambled&quot; with the help of a pseudorandom number generator (or another device or program that simulates a &quot;source of random numbers&quot;).  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient &quot;random&quot; sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020)[^67].</p>
 
-<p>Other examples of point sample selection include the following.</p>
+<p>Other examples of point sample selection, which likewise produce a uniform-behaving point sample, include the following.</p>
 
 <ul>
 <li><em>Stratified sampling</em> divides an N-dimensional box into smaller boxes of the same size and chooses one or more points uniformly at random in each box.</li>
@@ -2283,7 +2283,7 @@ above for returning more than one random variate in one call.</p>
 <li><strong>Extreme value distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Gamma distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Gamma_Distribution"><strong>Gamma Distribution</strong></a>. Generalized gamma distributions include the <strong>Stacy distribution</strong> (<code>pow(GammaDist(a, 1), 1.0 / c) * b</code>, where <code>c</code> is another shape parameter) and the <strong>Amoroso distribution</strong> (Crooks 2015)[^88], (<code>pow(GammaDist(a, 1), 1.0 / c) * b + d</code>, where <code>d</code> is the minimum value).</li>
 <li><strong>Gaussian distribution</strong>: See <a href="https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution"><strong>Normal (Gaussian) Distribution</strong></a>.</li>
-<li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.  If the application can trade accuracy for speed: <code>floor(-Expo(1)/ln(1-p))</code> (Devroye 1986, p. 500)<a href="ceil%20replaced%20with%20floor%20because%20this%20page%20defines%20geometric%20distribution%20differently">^20</a>.</li>
+<li><strong>Geometric distribution</strong>: See <a href="#Geometric_Distribution"><strong>Geometric Distribution</strong></a>.  If the application can trade accuracy for speed: <code>floor(-Expo(1)/ln(1-p))</code> (Devroye 1986, p. 500)[^20] (ceil replaced with floor because this page defines geometric distribution differently).</li>
 <li><strong>Gumbel distribution</strong>: See generalized extreme value distribution.</li>
 <li><strong>Inverse gamma distribution</strong>: <code>b / GammaDist(a, 1)</code>, where <code>a</code> and <code>b</code> have the
 same meaning as in the gamma distribution.  Alternatively, <code>1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)</code>, where <code>c</code> and <code>d</code> are shape and location parameters, respectively.</li>
@@ -2705,7 +2705,7 @@ and &quot;<a href="https://randomascii.wordpress.com/2013/07/16/floating-point-d
 
 <p>[^74]: &quot;Jitter&quot;, as used in this step, follows a distribution formally called a <em>kernel</em>, of which the normal distribution is one example.  <em>Bandwidth</em> should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of &quot;jitter&quot; (for multi-component data points) consists of a point generated from a <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution"><strong>multinormal distribution</strong></a> with all the means equal to 0 and a <em>covariance matrix</em> that, in this context, serves as a <em>bandwidth matrix</em>.  &quot;Jitter&quot; and bandwidth are not further discussed in this document.</p>
 
-<p>[^75]: A <em>discrete distribution</em> is a distribution that associates a countable number of items with a separate probability. These items are usually integers, but they need not be.  For example, the items can be non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
+<p>[^75]: A <em>discrete distribution</em> is a distribution that associates a countable number of items with a separate probability per item. These items are usually integers, but they need not be.  For example, the items can be non-integer values (e.g., <code>x/y</code> with probability <code>x/(1+y)</code>) as long as the values can be converted to and from integers. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in &quot;deep-learning&quot; neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a &quot;look-up table&quot; that maps 256 integers to real numbers.</p>
 

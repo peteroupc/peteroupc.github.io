@@ -619,7 +619,7 @@ The [**CIE 1931 standard colorimetric system**](https://en.wikipedia.org/wiki/CI
 Conventions for XYZ colors include the following:
 
 - **Absolute XYZ.** In this convention, the Y component represents an absolute _luminance_ in candelas per square meter (cd/m<sup>2</sup>).
-- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.[^14] (In sRGB, the white point's luminance is 80 cd/m<sup>2</sup>.)
+- **Relative XYZ.** In this convention, the three components are divided by the luminance of a given white point.  In this case, the Y component represents a _luminance factor_; the white point has a luminance factor of 1.[^14] \(In sRGB, the white point's luminance is 80 cd/m<sup>2</sup>.)
 
 The conversion between RGB and XYZ varies by [**RGB color space**](#RGB_Color_Spaces).  For example, the pseudocode below shows two methods that convert a color between **encoded sRGB** (`rgb`) and relative XYZ:
 - For `XYZFromsRGB(rgb)` and  `XYZTosRGB(xyz)`, the white point is the D65/2 white point.

@@ -238,8 +238,8 @@ The table below shows algorithms that have been proposed for choosing an integer
 | _Rejection sampling_: Sample in a bigger range until a sampled number fits the smaller range. | Not always | Yes | Runs forever in worst case |
 | _Multiply-and-shift reduction_: Generate `bignumber`, an integer made of `k` unbiased bits, where `k` is much greater than `n`, then find `(bignumber * n) >> k` (see (Lemire 2016\)[^5], (Lemire 2018\)[^6], and the "Integer Multiplication" algorithm surveyed by M. O'Neill). | No | No | Constant |
 | _Modulo reduction_: Generate `bignumber` as above, then find `rem(bignumber, n)`.  | No | No | Constant |
-| _Fast Dice Roller_ (Lumbroso 2013\)[^7] (see pseudocode above). | Yes | Yes | Runs forever in worst case |
-| Math Forum (2004\)[^8] or (Mennucci 2018\)[^9] (batching/recycling random bits). | Yes | Yes | Runs forever in worst case |
+| _Fast Dice Roller_ (Lumbroso 2013\)[^7] \(see pseudocode above). | Yes | Yes | Runs forever in worst case |
+| Math Forum (2004\)[^8] or (Mennucci 2018\)[^9] \(batching/recycling random bits). | Yes | Yes | Runs forever in worst case |
 | "FP Multiply" surveyed by [**M. O'Neill**](http://www.pcg-random.org/posts/bounded-rands.html). | No | No | Constant |
 | Algorithm in "Conclusion" section by O'Neill. | No | Yes | Runs forever in worst case |
 | "Debiased" and "Bitmask with Rejection" surveyed by M. O'Neill. | No | Yes | Runs forever in worst case |
@@ -810,7 +810,7 @@ The following are various ways to implement `WeightedChoice`. Many of them requi
 | The Bringmann&ndash;Larsen succinct data structure (Bringmann and Larsen 2013\)[^40] | Uses rejection sampling if the sum of weights is large, and a compressed structure otherwise. |
 | Hübschle-Schneider and Sanders (2019\)[^41]. | Parallel weighted random samplers. |
 | (Tang 2019\)[^42]. | Presents various algorithms, including two- and multi-level search, binary search (with cumulative weights), and a new "flat" method. |
-| "Loaded Die from Biased Coins" | Given a list of probabilities `probs` that must sum to 1 and should be rational numbers: (1) Set `cumu` to 1 and `i` to 0; (2) with probability `probs[i]/cumu`, return `i`; (3) subtract `probs[i]` from `cumu`, then add 1 to `i`, then go to step 2.  For a correctness proof, see "Darts, Dice, and Coins".  If each probability in `probs` is calculated "on the fly", this is also called sequential search; see chapter 10 of Devroye (1986\)[^20] (but this generally won't be exact unless all the probabilities involved are rational numbers). |
+| "Loaded Die from Biased Coins" | Given a list of probabilities `probs` that must sum to 1 and should be rational numbers: (1) Set `cumu` to 1 and `i` to 0; (2) with probability `probs[i]/cumu`, return `i`; (3) subtract `probs[i]` from `cumu`, then add 1 to `i`, then go to step 2.  For a correctness proof, see "Darts, Dice, and Coins".  If each probability in `probs` is calculated "on the fly", this is also called sequential search; see chapter 10 of Devroye (1986\)[^20] \(but this generally won't be exact unless all the probabilities involved are rational numbers). |
 | Knuth and Yao (1976\)[^10] | Generates a binary DDG tree from the binary expansions of the probabilities (that is, they have the base-2 form 0.bbbbbb... where b is 0 or 1). Comes within 2 bits, on average, of the optimal number of random bits per sample.  This is suggested in exercise 3.4.2 of chapter 15 of Devroye (1986\)[^20], implemented in _randomgen.py_ as the `discretegen` method, and also described in (Devroye and Gravel 2020\)[^12].  `discretegen` can work with probabilities that are irrational numbers (which have infinite binary expansions) as long as there is a way to calculate the binary expansion "on the fly". |
 | Han and Hoshi (1997\)[^43] | Uses cumulative probabilities as input and comes within 3 bits, on average, of the optimal number of random bits per sample.  Also described in (Devroye and Gravel 2020\)[^12].  |
 
@@ -1460,7 +1460,7 @@ Among these methods, a [**_low-discrepancy sequence_**](https://en.wikipedia.org
 
 The points of a low-discrepancy sequence can be "scrambled" with the help of a pseudorandom number generator (or another device or program that simulates a "source of random numbers").  In Monte Carlo sampling, low-discrepancy sequences are often used to achieve more efficient "random" sampling, but in general, they can be safely used this way only if none of their points is skipped (Owen 2020\)[^67].
 
-Other examples of point sample selection include the following.
+Other examples of point sample selection, which likewise produce a uniform-behaving point sample, include the following.
 
 - _Stratified sampling_ divides an N-dimensional box into smaller boxes of the same size and chooses one or more points uniformly at random in each box.
 - _Latin hypercube sampling_ can be implemented using the following pseudocode for an `n`-number sequence: `lhs = []; for i in 0...n: AddItem(RNDRANGEMinMaxExc(i*1.0/n,(i+1)*1.0/n)); lhs = Shuffle(lhs)`.
@@ -1793,7 +1793,7 @@ Most commonly used:
 - **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution). Generalized gamma distributions include the **Stacy distribution** (`pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter) and the **Amoroso distribution** (Crooks 2015\)[^88], (`pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
-- **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).  If the application can trade accuracy for speed: `floor(-Expo(1)/ln(1-p))` (Devroye 1986, p. 500\)[^20] (ceil replaced with floor because this page defines geometric distribution differently).
+- **Geometric distribution**: See [**Geometric Distribution**](#Geometric_Distribution).  If the application can trade accuracy for speed: `floor(-Expo(1)/ln(1-p))` (Devroye 1986, p. 500\)[^20] \(ceil replaced with floor because this page defines geometric distribution differently).
 - **Gumbel distribution**: See generalized extreme value distribution.
 - **Inverse gamma distribution**: `b / GammaDist(a, 1)`, where `a` and `b` have the
  same meaning as in the gamma distribution.  Alternatively, `1.0 / (pow(GammaDist(a, 1), 1.0 / c) / b + d)`, where `c` and `d` are shape and location parameters, respectively.
@@ -2178,7 +2178,7 @@ and "[**Floating-Point Determinism**](https://randomascii.wordpress.com/2013/07/
 
 [^74]: "Jitter", as used in this step, follows a distribution formally called a _kernel_, of which the normal distribution is one example.  _Bandwidth_ should be set so that the estimated distribution fits the data and remains smooth.  A more complex kind of "jitter" (for multi-component data points) consists of a point generated from a [**multinormal distribution**](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) with all the means equal to 0 and a _covariance matrix_ that, in this context, serves as a _bandwidth matrix_.  "Jitter" and bandwidth are not further discussed in this document.
 
-[^75]: A _discrete distribution_ is a distribution that associates a countable number of items with a separate probability. These items are usually integers, but they need not be.  For example, the items can be non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
+[^75]: A _discrete distribution_ is a distribution that associates a countable number of items with a separate probability per item. These items are usually integers, but they need not be.  For example, the items can be non-integer values (e.g., `x/y` with probability `x/(1+y)`) as long as the values can be converted to and from integers. Two examples:
     - A rational number in lowest terms can be converted to an integer by interleaving the bits of the numerator and denominator.
     - Integer-quantized numbers (popular in "deep-learning" neural networks) take a relatively small number of bits (usually 8 bits or even smaller).  An 8-bit quantized number format is effectively a "look-up table" that maps 256 integers to real numbers.
 

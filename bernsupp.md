@@ -125,7 +125,7 @@ then _f_ can be simulated using the following algorithm:
 >     - _h_(_&lambda;_) = _&lambda;_, and
 >     - _f&prime;_(_&lambda;_), the "slope" function of _f_, is continuous on [0, 1], maps (0, 1) to (0, 1), and belongs in one of the classes of functions given earlier,
 >
->     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random variate _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^4] (the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
+>     then step 2 can be implemented by taking _g_ as _f&prime;_, except: (A) a uniform(0, 1) random variate _u_ is generated at the start of the step; (B) instead of flipping the input coin as normal during that step, a different coin is flipped that does the following: "Flip the input coin, then [**sample from the number _u_**](https://peteroupc.github.io/bernoulli.html#Algorithms). Return 1 if both the call and the flip return 1, and return 0 otherwise."<br/>This is the "**integral method**" of Flajolet et al. (2010\)[^4] \(the modified step 2 simulates 1/_&lambda;_ times the _integral_ of _f_.).
 >
 > **Examples:**
 >
@@ -706,9 +706,9 @@ The function _f_(_&lambda;_) is _strongly simulable_ if it admits a Bernoulli fa
 3. _f_(0) equals 0 or 1 whenever 0 is in the domain of _f_, and
 4. _f_(1) equals 0 or 1 whenever 1 is in the domain of _f_.
 
-Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory problem for _f_ must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
+Keane and O'Brien already showed that _f_ is strongly simulable if conditions 1 and 2 are true and neither 0 nor 1 are included in the domain of _f_.  Conditions 3 and 4 are required because _&lambda;_ (the probability of heads) can be 0 or 1 so that the input coin returns 0 or 1, respectively, every time.  This is called a "degenerate" coin.  When given just a degenerate coin, no algorithm can produce one value with probability greater than 0, and another value with the opposite probability.  Rather, the algorithm can only produce a constant value with probability 1.  In the Bernoulli factory problem, that constant is either 0 or 1, so a Bernoulli factory algorithm for _f_ must return 1 with probability 1, or 0 with probability 1, when given just a degenerate coin and no outside randomness, resulting in conditions 3 and 4.
 
-We can show that _f_ is strongly simulable on its domain by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
+We can show that _f_ is strongly simulable by showing that there is a Bernoulli factory for _f_ that must flip the input coin and get 0 and 1 before it uses any outside randomness.
 
 **Proposition 1.** _If f(&lambda;) is described in the strong simulability statement and is a polynomial with computable coefficients, it is strongly simulable._
 
