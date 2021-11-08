@@ -1931,6 +1931,13 @@ CLASSES
      |      - cx, cy: numerator and denominator of c; the probability of heads (p) is multiplied
      |        by c. c must be in (0, 1).
      |
+     |  martingale(self, coin, coeff)
+     |      General martingale algorithm for alternating power
+     |      series.
+     |      'coin' is the coin to be flipped; 'coeff' is a function
+     |      that takes an index 'i' and calculates the coefficient
+     |      for index 'i'.  Indices start at 0.
+     |
      |  mean(self, f1, f2)
      |      Mean: B(p), B(q) => B((p+q)/2)  (Flajolet et al. 2010)
      |      - f1, f2: Functions that return 1 if heads and 0 if tails.

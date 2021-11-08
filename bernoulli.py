@@ -749,6 +749,30 @@ class Bernoulli:
             n += 1
             fac *= (n * 2) * (n * 2 + 1)
 
+    def martingale(self, coin, coeff):
+        """General martingale algorithm for alternating power
+        series.
+        'coin' is the coin to be flipped; 'coeff' is a function
+        that takes an index 'i' and calculates the coefficient
+        for index 'i'.  Indices start at 0."""
+        u = Fraction(coeff(0))
+        l = Fraction(0)
+        w = Fraction(1)
+        bag = []
+        n = 1
+        while True:
+            if w != 0:
+                w *= coin()
+            if n % 2 == 0:
+                u = l + w * coeff(n)
+            else:
+                l = u - w * coeff(n)
+            if self._uniform_less(bag, l) == 1:
+                return 1
+            if self._uniform_less(bag, u) == 0:
+                return 0
+            n += 1
+
     def cos(self, f):
         """Cosine Bernoulli factory: B(p) => B(cos(p)).  Special
         case of Algorithm3 of reverse-time martingale paper.

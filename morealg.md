@@ -38,6 +38,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**(1 + exp(_k_)) / (1 + exp(_k_ + 1))**](#1_exp__k__1_exp__k__1)
     - [**Other Probabilities and Factory Functions**](#Other_Probabilities_and_Factory_Functions)
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
+    - [**Certain Power Series**](#Certain_Power_Series)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
 - [**General Arbitrary-Precision Samplers**](#General_Arbitrary_Precision_Samplers)
@@ -441,6 +442,76 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 | 1 at 0; 1/2 at 1/2; and _&mu;_ at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return 1 minus the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
 | _&mu;_ at 0; 1/2 at 1/2; and 1 at 1. | Flip the _&mu;_ input coin.  If it returns 0, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return 1 minus the result of that run. |
 | _B_ at 0; _B_+(_A_/2) at 1/2; and _B_+(_A_/2) at 1. | (_A_&le;1 and _B_&le;1&minus;_A_ are rational numbers.) With probability 1&minus;_A_, return a number that is 1 with probability _B_/(1&minus;_A_) and 0 otherwise.  Otherwise, generate an unbiased random bit.  If that bit is 1, flip the _&lambda;_ input coin and return the result.  Otherwise, run the algorithm for min(_&lambda;_, 1&minus;_&lambda;_) using the _&lambda;_ input coin, and return the result of that run. |
+
+<a id=Certain_Power_Series></a>
+### Certain Power Series
+
+The following way to design Bernoulli factories covers a broader class of alternating power series than given in the main Bernoulli Factory Algorithms article.
+
+Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number that can be positive or negative.
+
+Suppose the following:
+
+- $f(\lambda)$ is bounded above by a rational number $Z$ for every $\lambda$ in $[0, 1]$, and $Z$ is less than 1.
+- There is an even integer $m\ge 0$ such that the function&mdash; $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i,$$ admits a Bernoulli factory, and&mdash; $$A(\lambda) = f(\lambda) - C(\lambda)$$ maps the interval [0, 1] to [0, 1].  One way to satisfy the condition on $C$ is if $C$ is an alternating series (even-indexed $a$'s are positive and the rest negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence).
+
+Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;
+
+- $A(\lambda) = f(\lambda) - C(\lambda)$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
+- $B(\lambda) = C(\lambda) / (g(\lambda))^{m}$.
+
+Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$.  Let $b_0, ..., b_{m-1}$ be the polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
+
+**Algorithm:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
+
+- **Sub-algorithm:** Generate an unbiased random bit.  If that bit is 1, sample the polynomial $A$ as follows:
+    1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m-1$ times.  Let $j$ be the number of runs that return 1.
+    2. With probability $b_j$, return 1.  Otherwise, return 0.
+
+    If the bit is 0, do the following:
+
+    1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
+    2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.</ol></ul>
+
+**Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$.  $f$ is an alternating power series in $\lambda$, but its even coefficients are zeros.  $f$ is bounded above by $Z=1/2 \lt 1$, and satisfies $m=8$ (ignoring the zero coefficients), and can be rewritten as&mdash;
+
+$$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$
+
+where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise, but the series given above in the rewrite has coefficients that don't form a numerically decreasing sequence.  Rearranging the series to give such a sequence, we have:
+
+$$f(\lambda) = A(\lambda) + \lambda^8 \left(\lambda \sum_{i\ge 0} a_{8+1+2i} (\lambda^2)^i\right).    \tag{1}$$
+
+(Here, $A(\lambda)$ is a "truncation" of the power series for $f(\lambda)$.) Now, rewrite $A(\lambda)$ as a polynomial in Bernstein form.  The polynomial's degree is $8-1 = 7$ and its coefficients, in order, are [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
+
+Now, assume we have a coin that shows heads with probability $\lambda$.  Then the algorithm above simulates $f(\lambda)$, where:
+
+- $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
+- The coefficients $b_0, ..., b_7$, in order, were just given above.
+- The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
+    1. Flip the input coin.  If it returns 0, return 0.
+    2. Run the [**general martingale algorithm**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series), with $d[i] = |a_{8+1+2i}| = \frac{3^{8+1+2i}}{(8+1+2i)! \times 2}$, and return the result.  Whenever that algorithm "flips the input coin", flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.
+
+**Example 2:** Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$.  $f$ is again an alternating power series in $\lambda$ whose even coefficients are zeros (except coefficient 0 which is 1/2), and can be rewritten similarly to (1) above, namely as:
+
+$$f(\lambda) = A(\lambda) + \lambda^{16} \left(\lambda \sum_{i\ge 0} a_{16+1+2i} (\lambda^2)^i\right),    \tag{1}$$
+
+where $a_i$ is&mdash;
+
+- $1/2$ if $i = 0$,
+- $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd, and
+- 0 otherwise.
+
+For this function, $m = 16$ satisfies the requirements ($m = 12$ doesn't because then $A$ wouldn't map the interval [0, 1] to [0, 1], and $m=14$ doesn't because $C$ would be negative), and $f$ is bounded above by $Z = 3/4$. $A(\lambda)$ is a truncation of the power series for $f$, and the remainder of the function is a "nice" power series whose nonzero coefficients decrease.  After rewriting $A(\lambda)$ as a polynomial in Bernstein form, its coefficients are:
+
+- [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
+
+That's everything needed to use the algorithm above to simulate $f(\lambda)$, where:
+
+- $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
+- The coefficients $b_0, ..., b_{15}$, in order, were just given above.
+- The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
+    1. Flip the input coin.  If it returns 0, return 0.
+    2. Run the [**general martingale algorithm**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series), with $d[i] = |a_{16+1+2i}| = \frac{6^{16+1+2i}}{(16+1+2i)! \times 4}$, and return the result.  Whenever that algorithm "flips the input coin", flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
 ### Sampling Distributions Using Incomplete Information
