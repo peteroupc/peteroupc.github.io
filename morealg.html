@@ -690,7 +690,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <h3>Certain Power Series</h3>
 
-<p>The following way to design Bernoulli factories covers a broader class of alternating power series than given in the main Bernoulli Factory Algorithms article.</p>
+<p>The following way to design Bernoulli factories covers a broader class of alternating power series than given in the main Bernoulli Factory Algorithms article.[^53]</p>
 
 <p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number that can be positive or negative.</p>
 
@@ -705,10 +705,10 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <ul>
 <li>$A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and</li>
-<li>$B(\lambda) = C(\lambda) / (g(\lambda))^{m}$.</li>
+<li>$B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_i (g(\lambda))^{i-m}$.</li>
 </ul>
 
-<p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^10].)  Let $b_0, ..., b_{m-1}$ be the polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
+<p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_{m+1}$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^10].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
 
 <p><strong>Algorithm:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory &quot;flips the input coin&quot;, it runs the sub-algorithm below.</p>
 
@@ -1618,6 +1618,8 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <p>[^51]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^52]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^53]: A blog post by John D. Cook, &quot;A more powerful alternating series theorem&quot;, Nov. 7, 2021, played a major role in leading me to this idea for Bernoulli factory designs.</p>
 
 <p><a id=Appendix></a></p>
 
