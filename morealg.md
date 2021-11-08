@@ -453,25 +453,25 @@ Let $f(\lambda)$ be a factory function that can be written as the following seri
 Suppose the following:
 
 - $f(\lambda)$ is bounded above by a rational number $Z$ for every $\lambda$ in $[0, 1]$, and $Z$ is less than 1.
-- There is an even integer $m\ge 0$ such that the function&mdash; $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i,$$ admits a Bernoulli factory, and&mdash; $$A(\lambda) = f(\lambda) - C(\lambda)$$ maps the interval [0, 1] to [0, 1].  One way to satisfy the condition on $C$ is if $C$ is an alternating series (even-indexed $a$'s are positive and the rest negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence).
+- There is an even integer $m\ge 0$ such that the function&mdash; $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i,$$ admits a Bernoulli factory, and&mdash; $$A(\lambda) = f(\lambda) - C(\lambda)$$ maps the interval [0, 1] to [0, 1].  One way to satisfy the condition on $C$ is if $C$ is an alternating series (even-indexed $a$'s are positive and the rest negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^2].
 
 Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;
 
-- $A(\lambda) = f(\lambda) - C(\lambda)$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
+- $A(\lambda) = f(\lambda) - C(\lambda) = \sum_{0 \le i\le m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
 - $B(\lambda) = C(\lambda) / (g(\lambda))^{m}$.
 
-Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$.  Let $b_0, ..., b_{m-1}$ be the polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
+Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form is the so-called "matrix method" from Ray and Nataraj (2012)[^52].)  Let $b_0, ..., b_{m-1}$ be the polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
 
 **Algorithm:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
 
-- **Sub-algorithm:** Generate an unbiased random bit.  If that bit is 1, sample the polynomial $A$ as follows:
+- **Sub-algorithm:** Generate an unbiased random bit.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman 2012\)[^9]:
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m-1$ times.  Let $j$ be the number of runs that return 1.
     2. With probability $b_j$, return 1.  Otherwise, return 0.
 
     If the bit is 0, do the following:
 
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
-    2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.</ol></ul>
+    2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.
 
 **Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$.  $f$ is an alternating power series in $\lambda$, but its even coefficients are zeros.  $f$ is bounded above by $Z=1/2 \lt 1$, and satisfies $m=8$ (ignoring the zero coefficients), and can be rewritten as&mdash;
 
@@ -483,7 +483,7 @@ $$f(\lambda) = A(\lambda) + \lambda^8 \left(\lambda \sum_{i\ge 0} a_{8+1+2i} (\l
 
 (Here, $A(\lambda)$ is a "truncation" of the power series for $f(\lambda)$.) Now, rewrite $A(\lambda)$ as a polynomial in Bernstein form.  The polynomial's degree is $8-1 = 7$ and its coefficients, in order, are [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
 
-Now, assume we have a coin that shows heads with probability $\lambda$.  Then the algorithm above simulates $f(\lambda)$, where:
+Now, assume we have a coin that shows heads (returns 1) with probability $\lambda$.  Then the algorithm above simulates $f(\lambda)$, where:
 
 - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
 - The coefficients $b_0, ..., b_7$, in order, were just given above.
@@ -1152,6 +1152,8 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 [^50]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^51]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^52]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
 
 <a id=Appendix></a>
 ## Appendix
