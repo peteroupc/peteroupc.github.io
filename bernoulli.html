@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/03"><meta name="citation_online_date" content="2021/11/03"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"></head><body>  <div class="header">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/07"><meta name="citation_online_date" content="2021/11/07"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css"><script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script></head><body>  <div class="header">
 <nav><p><a href="#navigation">Menu</a> - <a href="#top">Top</a> - <a href="/">Home</a></nav></div>
 <div class="mainarea" id="top">
 <h1>Bernoulli Factory Algorithms</h1>
@@ -2449,7 +2449,7 @@ kind of irrational number.</p>
 <li>A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence&#39;s polynomials must have coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  For a formal statement of these polynomials, see my <a href="https://mathoverflow.net/questions/379858"><strong>question on MathOverflow</strong></a>.<br><br>The <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a> include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn&#39;t possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous &quot;slope&quot; functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?  Examples worth thinking about are sin(<em>&pi;</em>*<em>&lambda;</em>)/2 and sin(2*<em>&pi;</em>*<em>&lambda;</em>)/4 + 1/2.</li>
 </ul></li>
 </ul></li>
-<li><p>Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way, minus 1.  In this case:</p>
+<li><p>Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way minus 1.  In this case:</p>
 
 <ol>
 <li>What is the probability that <em>n</em> is returned?</li>
@@ -2798,9 +2798,11 @@ def valid_perm(f, x, n):
 
 <h3>Probabilities Arising from Certain Permutations</h3>
 
-<p>Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.  Inspired by the <a href="#The_von_Neumann_schema"><strong>von Neumann schema</strong></a> given earlier in this appendix, we can describe the following algorithm:</p>
+<p>Certain interesting probability functions can arise from permutations, such as permutations that are sorted or permutations whose highest number appears first.  When checking whether a sequence follows a permutation, only less-than and greater-than comparisons between two numbers are allowed.</p>
 
-<p>Let a <em>permutation class</em> (such as numbers in descending order) and two continuous probability distributions <em>D</em> and <em>E</em> be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as <em>D</em> and the rest as <em>E</em>) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way, minus 1.</p>
+<p>Inspired by the <a href="#The_von_Neumann_schema"><strong>von Neumann schema</strong></a> given earlier in this appendix, we can describe the following algorithm:</p>
+
+<p>Let a <em>permutation class</em> (such as numbers in descending order) and two distributions <em>D</em> and <em>E</em>, which are both continuous with probability density functions, be given. Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as <em>D</em> and the rest as <em>E</em>) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way minus 1.</p>
 
 <p>Then the algorithm&#39;s behavior is given in the tables below.</p>
 
@@ -2814,9 +2816,9 @@ def valid_perm(f, x, n):
 </thead><tbody>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Both uniform(0,1)</td>
+<td>Arbitrary; <em>D</em> = <em>E</em></td>
 <td><em>n</em> / ((<em>n</em> + 1)!).</td>
-<td>Odd is 1&minus;exp(&minus;1).<br/>Even is exp(&minus;1).</td>
+<td>Odd is 1&minus;exp(&minus;1); even is exp(&minus;1). See note 3.</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
@@ -2826,15 +2828,15 @@ def valid_perm(f, x, n):
 </tr>
 <tr>
 <td>Alternating numbers</td>
-<td>Both uniform(0,1)</td>
+<td>Arbitrary; <em>D</em> = <em>E</em></td>
 <td>(<em>a</em><sub><em>n</em></sub> * (<em>n</em> + 1) &minus; <em>a</em><sub><em>n</em> + 1</sub>) / (<em>n</em> + 1)!, where <em>a</em><sub><em>i</em></sub> is the integer at position <em>i</em> (starting at 0) of the sequence <a href="https://oeis.org/A000111"><strong>A000111</strong></a> in the <em>On-Line Encyclopedia of Integer Sequences</em>.</td>
-<td>Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).</td>
+<td>Odd is 1&minus;cos(1)/(sin(1)+1); even is cos(1)/(sin(1)+1).  See note 3.</td>
 </tr>
 <tr>
 <td>Any</td>
-<td>Both uniform(0,1)</td>
-<td>(&int;<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>&minus;1</sup>*V(<em>n</em>)/((<em>n</em>&minus;1)!) &minus; <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that meet the permutation class&#39;s requirements. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!]; this algorithm won&#39;t work, for example, if there are 0 permutations of odd size.</td>
-<td>Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).</td>
+<td>Arbitrary; <em>D</em> = <em>E</em></td>
+<td>(&int;<sub>[0, 1]</sub> 1 * (<em>z</em><sup><em>n</em>&minus;1</sup>*V(<em>n</em>)/((<em>n</em>&minus;1)!) &minus; <em>z</em><sup><em>n</em></sup>*V(<em>n</em>+1)/(<em>n</em>!)) <em>dz</em>), for every <em>n</em> &gt; 0.  <em>V</em>(<em>n</em>) is the number of permutations of size <em>n</em> that belong in the permutation class. For this algorithm, <em>V</em>(<em>n</em>) must be in the interval (0, <em>n</em>!]; this algorithm won&#39;t work, for example, if there are 0 permutations of odd size.</td>
+<td>Odd is 1 &minus; 1 / EGF(1); even is 1/EGF(1).<br/>Less than <em>k</em> is (<em>V</em>(0) &minus; <em>V</em>(<em>k</em>)/(<em>k</em>!)) / <em>V</em>(0).  See note 3.</td>
 </tr>
 </tbody></table>
 
@@ -2857,12 +2859,12 @@ def valid_perm(f, x, n):
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td>Both uniform(0,1)</td>
+<td>Both uniform in (0,1)</td>
 <td>Odd is ((1&minus;exp(&minus;<em>x</em>))&minus;exp(1))/(1&minus;exp(1)).  Therefore, the first number in the sequence is distributed as exponential(1) and &quot;truncated&quot; to the interval [0, 1] (von Neumann 1951)[^55].</td>
 </tr>
 <tr>
 <td>Numbers sorted in descending order</td>
-<td><em>D</em> is uniform(0,1); <em>E</em> is max. of two uniform(0,1)</td>
+<td><em>D</em> is uniform in (0,1); <em>E</em> is max. of two uniform variates in (0,1).</td>
 <td>Odd is erf(<em>x</em>)/erf(1) (uses Formula 1, where DPDF(<em>z</em>) = 1 and ECDF(<em>z</em>) = <em>z</em><sup>2</sup> for <em>z</em> in [0, 1]; see also <a href="#erf__x__erf_1"><strong>erf(<em>x</em>)/erf(1)</strong></a>).</td>
 </tr>
 </tbody></table>
@@ -2873,6 +2875,7 @@ def valid_perm(f, x, n):
 <ol>
 <li>All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called <em>cumulative distribution functions</em>, namely <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is odd) or <em>F</em><sub><em>D</em></sub>(<em>x</em> given that <em>n</em> is even), respectively.</li>
 <li>EGF(<em>z</em>) is the <em>exponential generating function</em> (EGF) for the kind of permutation involved in the algorithm.  For example, the class of <em>alternating permutations</em> (permutations whose numbers alternate between low and high, that is, <em>X1</em> &gt; <em>X2</em> &lt; <em>X3</em> &gt; ...) uses the EGF tan(<em>&lambda;</em>)+1/cos(<em>&lambda;</em>).  Other examples of EGFs were given in the section on the von Neumann schema.</li>
+<li>The results that point to this note have the special case that both <em>D</em> and <em>E</em> are uniform in (0, 1).  Indeed, if each variate <em>x</em> in the sequence is transformed with <em>CDF</em>(<em>x</em>), where <em>CDF</em> is <em>D</em>&#39;s cumulative distribution function, then the variates become uniform in (0, 1), with the same numerical order as before (with probability 1).  See also <a href="https://stats.stackexchange.com/questions/550847/probability-of-winning-a-game-where-you-sample-an-increasing-sequence-from-a-uni/550854#550854"><strong>this Stack Exchange question</strong></a>.</li>
 </ol>
 </blockquote>
 
