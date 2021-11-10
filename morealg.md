@@ -276,7 +276,7 @@ The algorithm is then as follows:
 <a id=Euler_ndash_Mascheroni_Constant___gamma></a>
 ### Euler&ndash;Mascheroni Constant _&gamma;_
 
-As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional part of 1/_U_, where _U_ is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant _&gamma;_.[^4]  This leads to the following algorithm to sample a probability equal to _&gamma;_:
+As [**I learned**](https://stats.stackexchange.com/a/539564), the fractional part of 1/_U_, where _U_ is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant _&gamma;_, about 0.5772.[^4]  This leads to the following algorithm to sample a probability equal to _&gamma;_:
 
 1. Generate a PSRN for the reciprocal of a uniform random variate, as described in [**another page of mine**](https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number).
 2. Set the PSRN's integer part to 0, then run **SampleGeometricBag** on that PSRN.  Return 0 if the run returns 1, or 1 otherwise.
@@ -427,8 +427,8 @@ It would be interesting to find general formulas to find the appropriate polynom
 > **Note:** In Nacu and Peres (2005\)[^8], the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$, provided $\varepsilon \lt 1/8$, where _n_ is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
 >
 > - **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$.
-> - **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)+(
- \frac{\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2+\sqrt{2})} \sqrt{2/n}+(72 \max(0,k/n-1/9)/(1-\exp(-\varepsilon^2 2))) \exp(-(2\varepsilon n\varepsilon))$.
+> - **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)+$<br> $
+ \frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})} \sqrt{2/n}+$<br> $\frac{72\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-(2n\times\varepsilon^2))$.
 
 My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
 

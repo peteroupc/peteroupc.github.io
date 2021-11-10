@@ -425,7 +425,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <h3>Euler&ndash;Mascheroni Constant <em>&gamma;</em></h3>
 
-<p>As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>.[^4]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
+<p>As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^4]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
 
 <ol>
 <li>Generate a PSRN for the reciprocal of a uniform random variate, as described in <a href="https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number"><strong>another page of mine</strong></a>.</li>
@@ -660,8 +660,8 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <ul>
 <li><strong>fbelow(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$.</li>
-<li><strong>fabove(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)+(
-\frac{\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2+\sqrt{2})} \sqrt{2/n}+(72 \max(0,k/n-1/9)/(1-\exp(-\varepsilon^2 2))) \exp(-(2\varepsilon n\varepsilon))$.</li>
+<li><strong>fabove(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)+$<br> $
+\frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})} \sqrt{2/n}+$<br> $\frac{72\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-(2n\times\varepsilon^2))$.</li>
 </ul>
 </blockquote>
 

@@ -934,7 +934,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol>
 
 <blockquote>
-<p><strong>Example</strong> (Penaud and Roques 2002)[^31]:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em>, and <em>P</em>(0) &gt; 0.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
+<p><strong>Example</strong> (Penaud and Roques 2002)[^31]:  Let <em>P</em>(<em>x</em>) = 1 &minus; <em>x</em> &minus; <em>x</em><sup>2</sup>.  This is a polynomial whose only root on [0, 1] is 2/(1+sqrt(5)), that is, 1 divided by the golden ratio or 1/<em>&phi;</em> or about 0.618, and <em>P</em>(0) &gt; 0.  Then given <em>P</em>, the algorithm above samples the probability 1/<em>&phi;</em> exactly.</p>
 </blockquote>
 
 <p><a id=Certain_Converging_Series></a></p>
@@ -2038,7 +2038,7 @@ kind of irrational number.</p>
 
 <h4>1 / <em>&phi;</em> (1 divided by the golden ratio)</h4>
 
-<p>This algorithm uses the algorithm described in the section on <a href="#Continued_Fractions"><strong>continued fractions</strong></a> to simulate 1 divided by the golden ratio, whose continued fraction&#39;s partial denominators are 1, 1, 1, 1, ....</p>
+<p>This algorithm uses the algorithm described in the section on <a href="#Continued_Fractions"><strong>continued fractions</strong></a> to simulate 1 divided by the golden ratio (about 0.618), whose continued fraction&#39;s partial denominators are 1, 1, 1, 1, ....</p>
 
 <ol>
 <li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.</li>
@@ -2363,7 +2363,7 @@ kind of irrational number.</p>
 
 <h4>Euler&ndash;Mascheroni constant <em>&gamma;</em></h4>
 
-<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> is due to Mendo (2020)[^32].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^54]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
+<p>The following algorithm to simulate the Euler&ndash;Mascheroni constant <em>&gamma;</em> (about 0.5772) is due to Mendo (2020)[^32].  This solves an open question given in (Flajolet et al., 2010)[^1].   The series used was given by Sondow (2005)[^54]. An algorithm for <em>&gamma;</em> appears here even though it is not yet known whether this constant is irrational.</p>
 
 <ol>
 <li>Set <em>&#x03F5;</em> to 1, then set <em>n</em>, <em>lamunq</em>, <em>lam</em>, <em>s</em>, <em>k</em>, and <em>prev</em> to 0 each.</li>
