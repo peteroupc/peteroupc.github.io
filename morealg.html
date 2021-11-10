@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/09"><meta name="citation_online_date" content="2021/11/09"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/10"><meta name="citation_online_date" content="2021/11/10"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -220,7 +220,7 @@
 <li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
 
-<p>Derivation: Follows from rewriting cosh(<em>&lambda;</em>)&minus;1 as the following series:&mdash; $$\sum{n\ge 0} w_n(\lambda) = \sum{n\ge 0} g(n) \frac{w_n(\lambda)}{g_n},$$ where &mdash;</p>
+<p>Derivation: Follows from rewriting cosh(<em>&lambda;</em>)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where &mdash;</p>
 
 <ul>
 <li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>&minus;2</sup> if <em>n</em>&ge;2, or 0 otherwise, and</li>
@@ -275,7 +275,7 @@
 </tr>
 </tbody></table>
 
-<p>The table below shows functions shifted downward and shows the values of <em>P</em> and <em>C</em> required to simulate the modified function.  In the table, <em>D</em> is a rational number in the interval [0, <em>f</em>(0)), where <em>f</em>(.) is the original function.</p>
+<p>The table below shows functions shifted downward and shows the values of <em>P</em> and <em>C</em> required to simulate the modified function.  In the table, <em>D</em> is a rational number in the interval [0, <em>f</em>(0)], where <em>f</em>(.) is the original function.</p>
 
 <table><thead>
 <tr>
@@ -730,7 +730,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <p>The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^10]</p>
 
-<p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number that need not be positive.</p>
+<p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number less than, greater than, or equal to 0.</p>
 
 <p>Suppose the following:</p>
 
@@ -970,7 +970,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 </ol>
 
 <p>The following algorithm simulates the probability&mdash; $$
-f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where ${\n choose m}$ = choose($n$, $m$) is a binomial coefficient, <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise; and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable <em>g</em>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.  <em>V</em>(<em>n</em>, <em>m</em>) is the number of <em>n</em>-letter words that have <em>m</em> heads <em>and</em> describe a walk that ends at the beginning.)</p>
+f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise; and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable <em>g</em>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.  <em>V</em>(<em>n</em>, <em>m</em>) is the number of <em>n</em>-letter words that have <em>m</em> heads <em>and</em> describe a walk that ends at the beginning.)</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>
@@ -1064,7 +1064,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>The symbolic form of <em>B</em> will help determine which Bernoulli factory algorithm, if any, will simulate the probability; if a Bernoulli factory exists, it should be used.</li>
 </ul></li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
-<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
 <li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Run a Bernoulli factory algorithm that simulates the probability <em>C</em>(<em>i</em>, <em>&lambda;</em>), using the input coin (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.
 
 <ul>
@@ -1216,7 +1216,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
 <li>With probability (4<sup><em>x</em></sup>&minus;2<sup><em>x</em></sup>)/4<sup><em>x</em></sup>, go to step 3.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
-<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
 <li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for <em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em>, <em>c</em> = <em>i</em>, and <em>k</em> = <em>x</em> + 1 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 3.</li>
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
 </ol>
@@ -1240,7 +1240,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>Set <em>intval</em> to 1 and set <em>size</em> to 1.</li>
 <li>With probability <em>size</em>/(<em>size</em> + <em>intval</em> + 1), go to step 4.  Otherwise, add <em>size</em> to <em>intval</em>, then multiply <em>size</em> by 2, then repeat this step.</li>
 <li>Generate an integer in the interval [<em>intval</em>, <em>intval</em> + <em>size</em>) uniformly at random, call it <em>i</em>.</li>
-<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.</li>
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.</li>
 <li>Create an input coin that calls <strong>SampleGeometricBag</strong> on the PSRN <em>ret</em>.  Call the <strong>algorithm for <em>d</em><sup><em>k</em></sup> / (<em>c</em> + <em>&lambda;</em>)<sup><em>k</em></sup></strong> in &quot;<a href="https://peteroupc.github.io/bernoulli.html"><strong>Bernoulli Factory Algorithms</strong></a>&quot;, using the input coin, where <em>d</em> = <em>intval</em> + 1, <em>c</em> = <em>i</em> + 1, and <em>k</em> = 2 (here, <em>&lambda;</em> is the probability built up in <em>ret</em> via <strong>SampleGeometricBag</strong>, and lies in the interval [0, 1]).  If the call returns 0, go to step 4.</li>
 <li>The PSRN <em>ret</em> was accepted, so set <em>ret</em>&#39;s integer part to <em>i</em>, then optionally fill <em>ret</em> with uniform random digits as necessary to give its fractional part the desired number of digits (similarly to <strong>FillGeometricBag</strong>), then return <em>ret</em>.</li>
 </ol>
@@ -1451,7 +1451,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>The second algorithm takes a parameter <em>a</em>, which must be a rational number in the interval (0, 1].  Adapted from Berman&#39;s gamma generator, as given in Devroye 1986, p. 419.  Because of the power-of-uniform sub-algorithm this algorithm works only if the PSRN&#39;s fractional digits are binary (zeros or ones).</p>
 
 <ol>
-<li>Create a positive-sign zero-integer-part uniform PSRN, <em>ret</em>.  If <em>a</em> is 1, instead generate an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or
+<li>Create <em>ret</em>, a uniform PSRN with a positive sign and an integer part of 0.  If <em>a</em> is 1, instead generate an exponential random variate with a rate of 1 via the <strong>ExpRand</strong> or
 <strong>ExpRand2</strong> algorithm and return that variate.</li>
 <li>Generate a PSRN <em>ret</em> using the <strong>power-of-uniform sub-algorithm</strong> (in the page on PSRNs) with <em>px</em>/<em>py</em> = 1/<em>a</em>.</li>
 <li>(The following two steps succeed with probability (1&minus;<em>ret</em>)<sup>1&minus;<em>a</em></sup>.)  Create an input coin that does the following: &quot;Flip the input coin and return 1 minus the result.&quot;</li>
