@@ -162,7 +162,7 @@ The second algorithm is one I found that takes advantage of the convex combinati
 2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  If _n_ is odd, return 0.  Otherwise, with probability 2<sup>_n_&minus;1</sup>/(_n_!), go to the next step.  Otherwise, return 0.
 3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
 
-Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: &Sum;<sub>_n_=0,1,...</sub>&nbsp;_w_<sub>_n_</sub>(_&lambda;_) = &Sum;<sub>_n_=0,1,...</sub>&nbsp;_g_(_n_)\*(_w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_)), where&mdash;
+Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series:&mdash; $$\sum{n\ge 0} w_n(\lambda) = \sum{n\ge 0} g(n) \frac{w_n(\lambda)}{g_n},$$ where &mdash;
 
 - _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;2</sup> if _n_&ge;2, or 0 otherwise, and
 - _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&ge;2 and _n_ is even, or 0 otherwise.
@@ -170,25 +170,39 @@ Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following ser
 <a id=exp___lambda___4_2></a>
 ### exp(_&lambda;_/4)/2
 
-1. ("Geometric" random variate _n_.)  Let _c_ be 0.  Generate unbiased random bits until a zero is generated this way.  Set _n_ to _c_ plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
-2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  With probability 1/(2<sup>_n_</sup>\*(_n_!)), go to the next step.  Otherwise, return 0.
+1. ("Geometric" random variate _n_.)  Let _C_ be 0.  Generate unbiased random bits until a zero is generated this way.  Set _n_ to _C_ plus the number of ones generated this way. (The number _n_ is generated with probability _g_(_n_), as given below.)
+2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 1/(2<sup>_n_</sup>\*(_n_!)).  With probability _P_ go to the next step.  Otherwise, return 0.
 3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
 
 Derivation: Follows from rewriting exp(_&lambda;_/4)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time&mdash;
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;_c_</sup> if _n_&ge;_c_, or 0 otherwise (the "geometric" probabilities"), and
-- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion at 0, starting with _n_ = _c_.
+- _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;_C_</sup> if _n_&ge;_C_, or 0 otherwise (the "geometric" probabilities"), and
+- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion at 0, starting with _n_ = _C_.
 
 Additional functions:
 
-| To simulate: | Follow this algorithm, except the probability in step 2 is: | And _c_ is: |
+| Function | Value of _P_ | Value of _C_ |
   ------- | -------- | --- |
 | exp(_&lambda;_)/4. |  2<sup>_n_&minus;1</sup>/(_n_!). | 0. |
 | exp(_&lambda;_)/6. |  2<sup>_n_</sup>/(3\*(_n_!)). | 0. |
 | exp(_&lambda;_/2)/2. | 1/(_n_!). | 0. |
 | (exp(_&lambda;_)&minus;1)/2. | 2<sup>_n_&minus;1</sup>/(_n_!). | 1. |
 
-> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as _f_(_x_) = _a_\[0]\*_x_<sup>0</sup> + ... + _a_\[_i_]\*_x_<sup>_i_</sup> + ..., where the _coefficients_ _a_\[_i_] are 0 or greater.<br>This kind of function has three properties: (1) it's non-negative for every _x_; (2) it's either constant or monotone increasing; (3) it's _convex_ (its "slope" or "velocity" doesn't decrease as _x_ increases).<br>To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace _a_\[_i_]\*_x_<sup>_i_</sup> with _a_\[_i_]\*_i_\*_x_<sup>_i_&minus;1</sup>.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
+The table below shows functions shifted downward and shows the values of _P_ and _C_ required to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)), where _f_(.) is the original function.
+
+| Original function (_f_(_&lambda;_)) | Modified function | Value of _P_ | Value of _C_ |
+  ------- | -------- | --- | --- |
+| exp(_&lambda;_)/4 | _f_(_&lambda;_) &minus; _D_ | (1/4&minus;_D_)\*2 or (_f_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/6  | _f_(_&lambda;_) &minus; _D_ | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
+| exp(_&lambda;_/2)/2  | _f_(_&lambda;_) &minus; _D_ | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
+
+> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(x)=a_0 x^0 + ... + a_i x^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
+>
+> - is non-negative for every _x_,
+> - is either constant or monotone increasing, and
+> - is _convex_ (its "slope" or "velocity" doesn't decrease as _x_ increases).
+>
+> To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace $a_i x^i$ with $a_i i x^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
 
 <a id=sinh___lambda___2></a>
 ### sinh(_&lambda;_)/2
@@ -446,14 +460,14 @@ The min(_&lambda;_, 1&minus;_&lambda;_) algorithm can be used to simulate certai
 <a id=Certain_Power_Series></a>
 ### Certain Power Series
 
-The following way to design Bernoulli factories covers a broader class of alternating power series than given in the main Bernoulli Factory Algorithms article.[^10]
+The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^10]
 
-Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number that can be positive or negative.
+Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number that need not be positive.
 
 Suppose the following:
 
-- $f(\lambda)$ is bounded above by a rational number $Z$ for every $\lambda$ in $[0, 1]$, and $Z$ is less than 1.
-- There is an even integer $m\ge 0$ such that the functions&mdash; $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i,$$ and&mdash; $$A(\lambda) = f(\lambda) - C(\lambda),$$ admit a Bernoulli factory.  One way to satisfy the condition on $C$ is if $C$ is an alternating series (even-indexed $a$'s are positive and the rest negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^2]. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)
+- There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $f(\lambda) \le Z \lt 1$.
+- There is an even integer $m$ defined as follows. The series above can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$'s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^2]. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)
 
 Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;
 
@@ -501,7 +515,7 @@ where $a_i$ is&mdash;
 - $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd, and
 - 0 otherwise.
 
-For this function, $m = 16$ satisfies the requirements ($m = 12$ doesn't because then $A$ wouldn't map the interval [0, 1] to [0, 1], and $m=14$ doesn't because $C$ would be negative), and $f$ is bounded above by $Z = 3/4$. $A(\lambda)$ is a truncation of the power series for $f$, and the remainder of the function is a "nice" power series whose nonzero coefficients decrease.  After rewriting $A(\lambda)$ as a polynomial in Bernstein form, its coefficients are:
+For this function, $m = 16$ satisfies the requirements ($m = 12$ doesn't because then $A$ wouldn't map the interval [0, 1] to [0, 1], and $m=14$ doesn't because $C$ would be negative), and $f$ is bounded above by $Z = 3/4$. $A(\lambda)$ is a truncation of the power series for $f$, and the remainder of the function is a "nice" power series whose nonzero coefficients decrease in absolute value.  After rewriting $A(\lambda)$ as a polynomial in Bernstein form, its coefficients are:
 
 - [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 
@@ -615,17 +629,15 @@ As a pushdown automaton, this algorithm (except the "Do this substep again" part
 
 The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
-For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} \choose{Hn}{n},$$ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
+For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.  (Note: This substep is not done again.)
 
-The following algorithm simulates the probability&mdash; $$\eqalign {
-f(\lambda) &= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right) \\
-&= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),
-}$$ where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)
+The following algorithm simulates the probability&mdash; $$
+f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where ${\n choose m}$ = choose($n$, $m$) is a binomial coefficient, _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
