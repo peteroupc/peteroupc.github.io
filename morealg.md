@@ -162,7 +162,7 @@ The second algorithm is one I found that takes advantage of the convex combinati
 2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  If _n_ is odd, return 0.  Otherwise, with probability 2<sup>_n_&minus;1</sup>/(_n_!), go to the next step.  Otherwise, return 0.
 3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
 
-Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where &mdash;
+Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where&mdash;
 
 - _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;2</sup> if _n_&ge;2, or 0 otherwise, and
 - _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&ge;2 and _n_ is even, or 0 otherwise.
@@ -424,10 +424,11 @@ The code in the [**appendix**](#Appendix) uses the computer algebra library SymP
 
 It would be interesting to find general formulas to find the appropriate polynomials (degrees and _Y parameters_) given only the values for _mult_ and _&epsilon;_, rather than find them "the hard way" via `calc_linear_func`.  For this procedure, the degrees and _Y parameters_ can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.
 
-> **Note:** In Nacu and Peres (2005\)[^8], the following polynomial sequences were suggested to simulate min(_&lambda;_\*2, 1 &minus; 2\*_&epsilon;_), provided _&epsilon;_ &lt; 1/8, where _n_ is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
+> **Note:** In Nacu and Peres (2005\)[^8], the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$, provided $\varepsilon \lt 1/8$, where _n_ is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.
 >
-> - **fbelow(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_).
-> - **fabove(_n_, _k_)** = min((_k_/_n_)\*2, 1 &minus; 2\*_&epsilon;_) +<br>(max(0, _k_/_n_+3\*_&epsilon; &minus;_ 1/2)/(_&epsilon;_/(1&minus;sqrt(2)/2)))\*sqrt(2/_n_) +<br>(72\*max(0, _k_/_n_&minus;1/9)/(1&minus;exp(&minus;2\*_&epsilon;_\*_&epsilon;_)))\*exp(&minus;2\*_&epsilon;_\*_&epsilon;_\*_n_).
+> - **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$.
+> - **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)+(
+ \frac{\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2+\sqrt{2})} \sqrt{2/n}+(72 \max(0,k/n-1/9)/(1-\exp(-\varepsilon^2 2))) \exp(-(2\varepsilon n\varepsilon))$.
 
 My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
 
