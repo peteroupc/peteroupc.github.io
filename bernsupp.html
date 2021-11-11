@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/10"><meta name="citation_online_date" content="2021/11/10"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/11"><meta name="citation_online_date" content="2021/11/11"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -103,8 +103,8 @@
 
 <p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:
        * <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)
-       * <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).
-      * <strong>fbound</strong>(<em>n</em>) = [0, 1].</p>
+       * <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) (because <em>f</em> is convex).
+       * <strong>fbound</strong>(<em>n</em>) = [0, 1].</p>
 </blockquote>
 
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
@@ -263,7 +263,7 @@
 
 <h3>Schemes That Don&#39;t Work</h3>
 
-<p>In the academic literature (papers and books), there are many approximation schemes that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function <em>f</em> in the Bernoulli Factory setting, because they don&#39;t ensure the consistency requirement described earlier.</p>
+<p>In the academic literature (papers and books), there are many approximation methods that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function <em>f</em> in the Bernoulli Factory setting, because they don&#39;t ensure the consistency requirement described earlier.</p>
 
 <p>The following are approximation schemes with counterexamples to consistency.</p>
 
@@ -599,23 +599,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&l
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(<em>&lambda;</em>)</strong>.  Then simulate <em>f</em> by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: &quot;Flip the input coin and return 1 minus the result.&quot;<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em>))/<em>&lambda;</em> otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 147735488601/(80000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 147735488601/(5120000000*n<sup>1/4</sup>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1 &minus; <em>&lambda;</em><sup>2</sup></strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
 Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
@@ -721,24 +704,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 1043/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 104371067/(11200000*n).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8957/10000 if <em>n</em>&lt;64; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 104371067/(11200000*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(2*<em>&lambda;</em>)/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>The function was detected to be concave and twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 2851/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 2/(7*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 5613/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 1/(4*n).</li>
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>

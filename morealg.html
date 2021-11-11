@@ -35,7 +35,6 @@
 <ul>
 <li><a href="#Certain_Numbers_Based_on_the_Golden_Ratio"><strong>Certain Numbers Based on the Golden Ratio</strong></a></li>
 <li><a href="#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1"><strong>Ratio of Lower Gamma Functions (&gamma;(<em>m</em>, <em>x</em>)/&gamma;(<em>m</em>, 1)).</strong></a></li>
-<li><a href="#Derivative_slope_of_arctan___lambda"><strong>Derivative (slope) of arctan(<em>&lambda;</em>)</strong></a></li>
 <li><a href="#cosh___lambda___minus_1"><strong>cosh(<em>&lambda;</em>) &minus; 1</strong></a></li>
 <li><a href="#exp___lambda___4_2"><strong>exp(<em>&lambda;</em>/4)/2</strong></a></li>
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
@@ -173,24 +172,9 @@
 <p>Derivation:  See Formula 1 in the section &quot;<a href="https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations"><strong>Probabilities Arising from Certain Permutations</strong></a>&quot;, where:</p>
 
 <ul>
-<li><code>ECDF(x)</code>  is the cumulative distribution function for the uniform distribution on the interval [0, 1], namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
-<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform(0,1) random variates, namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
+<li><code>ECDF(x)</code>  is the probability that a uniform random variate in [0, 1] is <em>x</em> or less, namely <em>x</em> if <em>x</em> is in [0, 1], 0 if <em>x</em> is less than 0, and 1 otherwise.</li>
+<li><code>DPDF(x)</code> is the probability density function for the maximum of <em>m</em> uniform random variates in [0, 1], namely <em>m</em>*<em>x</em><sup><em>m</em>&minus;1</sup> if <em>x</em> is in [0, 1], and 0 otherwise.</li>
 </ul>
-
-<p><a id=Derivative_slope_of_arctan___lambda></a></p>
-
-<h3>Derivative (slope) of arctan(<em>&lambda;</em>)</h3>
-
-<p>This algorithm involves the series expansion of this function (1 &minus; <em>&lambda;</em><sup>2</sup> + <em>&lambda;</em><sup>4</sup> &minus; ...) and involves the general martingale algorithm.</p>
-
-<ol>
-<li>Set <em>u</em> to 1, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>(The remaining steps are done repeatedly, until the algorithm returns a value.) If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
-<li>If <em>n</em> is even, set <em>u</em> to <em>&#x2113;</em> + <em>w</em>.  Otherwise, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em> and go to step 3.</li>
-</ol>
 
 <p><a id=cosh___lambda___minus_1></a></p>
 
@@ -342,8 +326,9 @@
 
 <h3>1/(exp(1) + <em>c</em> &minus; 2)</h3>
 
-<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  In this algorithm, <em>c</em>&ge;1 is a rational number.
-The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
+<p>Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  In this algorithm, <em>c</em>&ge;1 is a rational number.</p>
+
+<p>The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are taken.</p>
 
 <ul>
 <li>Do the following process repeatedly until this run of the algorithm returns a value:
@@ -773,9 +758,9 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <ul>
 <li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
+<li>The series has infinitely many nonzero coefficients.</li>
 <li>Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
-<li>$(b_j)$ is infinitely long.</li>
-<li>The even-indexed elements of $(b_j)$ are positive, and the odd-indexed are negative. (The first element has index 0.)</li>
+<li>$b_0$ is greater than 0, and the elements in $(b_j)$ alternate in sign.</li>
 <li>The absolute values of $(b_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that converges to 0.</li>
 </ul>
 
@@ -791,7 +776,8 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <li>Set <em>u</em> to abs($b_0$) (the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>If <em>w</em> is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply <em>w</em> by the result of the run.</li>
-<li>If $a_n$ is greater than 0, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * abs($a_n$).  If $a_n$ is less than 0, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$).</li>
+<li>If $a_n$ is greater than 0, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * abs($a_n$).</li>
+<li>If $a_n$ is less than 0, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$).</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 <li>Add 1 to <em>n</em> and go to step 3.</li>
 </ol>
@@ -841,10 +827,12 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <ul>
 <li>$f$ is bounded above by $Z=3/4 \lt 1$.</li>
 <li>$f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.</li>
-<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^16 \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.</li>
 <li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].</li>
 <li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ in the same manner as for Example 1.</li>
 </ul>
+
+<p><strong>Example 3:</strong> Take $f(\lambda) = \lambda/(exp(\lambda)-1)$, which is a function that satisfies <strong>Algorithm 2</strong>.  The coefficients for the series are $a_i = B(i)/(i!)$, where $B(i)$ is the $i$<sup>th</sup> Bernoulli number (see section &quot;tanh(<em>&lambda;</em>)&quot;), so $b_0 = 1$ since that&#39;s the first nonzero coefficient.  To simulate $f$, run <strong>Algorithm 2</strong> using $b_0 = 1$ and the coefficients $a_i$.</p>
 
 <p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
 
@@ -1590,7 +1578,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <p>[^11]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
-<p>[^12]: \lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.</p>
+<p>[^12]: $\lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.</p>
 
 <p>[^13]: Jacob, P.E., Thiery, A.H., &quot;On nonnegative unbiased estimators&quot;, Ann. Statist., Volume 43, Number 2 (2015), 769-784.</p>
 

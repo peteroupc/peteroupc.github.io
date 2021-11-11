@@ -74,8 +74,8 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 >
 > **Example:** Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for _f_ is valid:
 >        * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
->        * **fabove**(_n_, _k_) = _f_(_k_/_n_).
->       * **fbound**(_n_) = [0, 1].
+>        * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
+>        * **fbound**(_n_) = [0, 1].
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -174,7 +174,7 @@ Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classe
 <a id=Schemes_That_Don_t_Work></a>
 ### Schemes That Don't Work
 
-In the academic literature (papers and books), there are many approximation schemes that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function _f_ in the Bernoulli Factory setting, because they don't ensure the consistency requirement described earlier.
+In the academic literature (papers and books), there are many approximation methods that involve polynomials that converge from above and below to a function.  Unfortunately, most of them cannot be used as is to simulate a function _f_ in the Bernoulli Factory setting, because they don't ensure the consistency requirement described earlier.
 
 The following are approximation schemes with counterexamples to consistency.
 
@@ -385,14 +385,6 @@ The following are approximation schemes and hints to simulate a coin of probabil
         * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
         * **fabove**(_n_, _k_) = 8313/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 14557719/(44800000\*n).
         * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **sqrt(_&lambda;_)**.  Then simulate _f_ by first simulating a polynomial with the following coefficients: [0, 1].  If it returns 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.  During the simulation, instead of flipping the input coin as usual, a different coin is flipped which does the following: "Flip the input coin and return 1 minus the result."<br>
-    Let _g_(_&lambda;_) = 1/2 if _&lambda;_ = 0; (1 &minus; sqrt(1 &minus; _&lambda;_))/_&lambda;_ otherwise. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * Detected to be convex and (1/2)-Hölder continuous using numerical methods, which may be inaccurate:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 147735488601/(80000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _g_(_k_/_n_) &minus; 147735488601/(5120000000\*n<sup>1/4</sup>).
-        * **fabove**(_n_, _k_) = _g_(_k_/_n_).
 * Let _f_(_&lambda;_) = **1 &minus; _&lambda;_<sup>2</sup>**.  Then simulate _f_ by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate _g_(_&lambda;_) (a function described below) and return 1 minus the result.<br>
     Let _g_(_&lambda;_) = 1/(2 &minus; _&lambda;_). Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be convex and twice differentiable, leading to:
@@ -446,15 +438,6 @@ The following are approximation schemes and hints to simulate a coin of probabil
     * Generated using tighter bounds than necessarily proven:
         * **fbelow**(_n_, _k_) = 1043/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) &minus; 104371067/(11200000\*n).
         * **fabove**(_n_, _k_) = 8957/10000 if _n_&lt;64; otherwise, _f_(_k_/_n_) + 104371067/(11200000\*n).
-        * **fbound**(_n_) = [0, 1].
-* Let _f_(_&lambda;_) = **sin(2\*_&lambda;_)/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
-    * The function was detected to be concave and twice differentiable, leading to:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 2851/5000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 2/(7\*n).
-        * **fbound**(_n_) = [0, 1].
-    * Generated using tighter bounds than necessarily proven:
-        * **fbelow**(_n_, _k_) = _f_(_k_/_n_).
-        * **fabove**(_n_, _k_) = 5613/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) + 1/(4\*n).
         * **fbound**(_n_) = [0, 1].
 * Let _f_(_&lambda;_) = **sin(4\*&pi;\*_&lambda;_)/4 + 1/2**. Then, for every integer _n_ that's a power of 2, starting from 1:
     * The function was detected to be twice differentiable, leading to:

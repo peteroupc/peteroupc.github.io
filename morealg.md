@@ -22,7 +22,6 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Bernoulli Factories and Irrational Probability Simulation**](#Bernoulli_Factories_and_Irrational_Probability_Simulation)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
-    - [**Derivative (slope) of arctan(_&lambda;_)**](#Derivative_slope_of_arctan___lambda)
     - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
     - [**exp(_&lambda;_/4)/2**](#exp___lambda___4_2)
     - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
@@ -124,20 +123,8 @@ An application of the continued fraction algorithm is the following algorithm th
 
 Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain Permutations**](https://peteroupc.github.io/bernoulli.html#Probabilities_Arising_from_Certain_Permutations)", where:
 
-- `ECDF(x)`  is the cumulative distribution function for the uniform distribution on the interval \[0, 1\], namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
-- `DPDF(x)` is the probability density function for the maximum of _m_ uniform(0,1) random variates, namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
-
-<a id=Derivative_slope_of_arctan___lambda></a>
-### Derivative (slope) of arctan(_&lambda;_)
-
-This algorithm involves the series expansion of this function (1 &minus; _&lambda;_<sup>2</sup> + _&lambda;_<sup>4</sup> &minus; ...) and involves the general martingale algorithm.
-
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
-2. Generate a uniform(0, 1) random variate _ret_.
-3. (The remaining steps are done repeatedly, until the algorithm returns a value.) If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.  Do this step again.
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_ and go to step 3.
+- `ECDF(x)`  is the probability that a uniform random variate in [0, 1] is _x_ or less, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
+- `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates in [0, 1], namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
 
 <a id=cosh___lambda___minus_1></a>
 ### cosh(_&lambda;_) &minus; 1
@@ -223,6 +210,7 @@ This algorithm involves an application of the general martingale algorithm to th
 ### 1/(exp(1) + _c_ &minus; 2)
 
 Involves the continued fraction expansion and Bernoulli Factory algorithm 3 for continued fractions.  In this algorithm, _c_&ge;1 is a rational number.
+
 The algorithm begins with _pos_ equal to 1.  Then the following steps are taken.
 
 - Do the following process repeatedly until this run of the algorithm returns a value:
@@ -493,9 +481,9 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
 Now, suppose the following:
 
 - $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
+- The series has infinitely many nonzero coefficients.
 - Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
-- $(b_j)$ is infinitely long.
-- The even-indexed elements of $(b_j)$ are positive, and the odd-indexed are negative. (The first element has index 0.)
+- $b_0$ is greater than 0, and the elements in $(b_j)$ alternate in sign.
 - The absolute values of $(b_j)$'s elements are 1 or less and form a nonincreasing sequence that converges to 0.
 
 > **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.
@@ -507,9 +495,10 @@ Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (r
 1. Set _u_ to abs($b_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
-4. If $a_n$ is greater than 0, set _u_ to _&#x2113;_ + _w_ * abs($a_n$).  If $a_n$ is less than 0, set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$).
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_ and go to step 3.
+4. If $a_n$ is greater than 0, set _u_ to _&#x2113;_ + _w_ * abs($a_n$).
+5. If $a_n$ is less than 0, set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$).
+6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+7. Add 1 to _n_ and go to step 3.
 
 > **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 >
@@ -544,9 +533,11 @@ The following examples show how these methods lead to algorithms for simulating 
 
 - $f$ is bounded above by $Z=3/4 \lt 1$.
 - $f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.
-- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^16 \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
+
+**Example 3:** Take $f(\lambda) = \lambda/(exp(\lambda)-1)$, which is a function that satisfies **Algorithm 2**.  The coefficients for the series are $a_i = B(i)/(i!)$, where $B(i)$ is the $i$<sup>th</sup> Bernoulli number (see section "tanh(_&lambda;_)"), so $b_0 = 1$ since that's the first nonzero coefficient.  To simulate $f$, run **Algorithm 2** using $b_0 = 1$ and the coefficients $a_i$.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
 ### Sampling Distributions Using Incomplete Information
@@ -1101,7 +1092,7 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 
 [^11]: S. Ray, P.S.V. Nataraj, "A Matrix Method for Efficient Computation of Bernstein Coefficients", _Reliable Computing_ 17(1), 2012.
 
-[^12]: \lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.
+[^12]: $\lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.
 
 [^13]: Jacob, P.E., Thiery, A.H., "On nonnegative unbiased estimators", Ann. Statist., Volume 43, Number 2 (2015), 769-784.
 
