@@ -405,25 +405,28 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-Mendo (2019\)[^23] gave a Bernoulli factory algorithm for certain functions that can be rewritten as a power series.  The algorithm uses parameter _v_ and is given below.  A table of supported power series will follow the algorithm.
+Mendo (2019\)[^23] gave a Bernoulli factory algorithm for certain functions that can be rewritten as a _power series_.  The algorithm uses parameter _v_ and is given below.  A table of supported power series will follow the algorithm.
 
-1. Set _dsum_ to 0 and _i_ to 0.
+1. Set _dsum_ to 0 and _i_ to 1.
 2. Do the following process repeatedly, until this algorithm returns a value:
     1. Flip the input coin.  If it returns _v_, return 1.
-    2. If this is an infinite series or if _i_ is less than the number of coefficients:
-        - With probability _c_\[_i_\]/(1 &minus; _dsum_), return 0.  Otherwise, add _c_\[_i_\] to _dsum_.
+    2. If this is an infinite series or if _i_ is equal to or less than the number of coefficients:
+        - With probability _c_\[_i_\]/(_CS_ &minus; _dsum_), return 0.  Otherwise, add _c_\[_i_\] to _dsum_. (_CS_ is defined later.)
     3. Add 1 to _i_.
 
 A table of supported power series follows:
 
-|   Power Series  |   Algorithm  |
+| No. |   Power Series  |   Algorithm  |
   --- | --- |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return the result.  Otherwise, return 0. |
-| _f_(_&lambda;_) = (_c_\[0\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return 1 minus the result.  Otherwise, return 1. |
-| _f_(_&lambda;_) = (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
-| _f_(_&lambda;_) = 1 &minus; (_c_\[0\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_ + 1</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return the result.  Otherwise, return 1. |
+| 1 | _f_(_&lambda;_) = 1 &minus; (_c_\[1\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return the result.  Otherwise, return 0. |
+| 2 | _f_(_&lambda;_) = (_c_\[1\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return 1 minus the result.  Otherwise, return 1. |
+| 3 | _f_(_&lambda;_) = (_c_\[1\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
+| 4 | _f_(_&lambda;_) = 1 &minus; (_c_\[1\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return the result.  Otherwise, return 1. |
 
-In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ is the sum of all the coefficients and must be 1 or less.   (According to Mendo, this implies that the series is differentiable &mdash; its graph has no "sharp corners".)
+In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ is the sum of all the coefficients, must be 1 or less, and should be a rational number.  This implies that&mdash;
+
+- _f_(0) is either 0 for series 1 and 3, or 1 for series 2 and 4, and
+- _f_(1) is either _CS_ for series 1 and 3, or 1&minus;_CS_ for series 2 and 4.
 
 ----
 

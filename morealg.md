@@ -428,7 +428,7 @@ It would be interesting to find general formulas to find the appropriate polynom
 >
 > - **fbelow(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)$.
 > - **fabove(_n_, _k_)** = $\min(2(k/n), 1-2\varepsilon)+$<br> $
- \frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})} \sqrt{2/n}+$<br> $\frac{72\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-(2n\times\varepsilon^2))$.
+ \frac{2\times\max(0, k/n+3\varepsilon - 1/2)}{\varepsilon(2-\sqrt{2})} \sqrt{2/n}+$<br> $\frac{72\times\max(0,k/n-1/9)}{1-\exp(-2\times\varepsilon^2)} \exp(-2n\times\varepsilon^2)$.
 
 My own algorithm for min(_&lambda;_, 1/2) is as follows.  See the [**appendix**](https://peteroupc.github.io/morealg.html#Derivation_of_My_Algorithm_for_min___lambda___1_2) for the derivation of this algorithm.
 
@@ -527,6 +527,41 @@ That's everything needed to use the algorithm above to simulate $f(\lambda)$, wh
 - The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
     1. Flip the input coin.  If it returns 0, return 0.
     2. Run the [**general martingale algorithm**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series), with $d[i] = |a_{16+1+2i}| = \frac{6^{16+1+2i}}{(16+1+2i)! \times 4}$, and return the result.  Whenever that algorithm "flips the input coin", flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.
+
+----------
+
+Now, suppose the following:
+
+- $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
+- Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
+- $(b_j)$ is infinitely long.
+- The even-indexed elements of $(b_j)$ are positive, the odd-indexed, negative.
+- The absolute values of $(b_j)$'s elements are 1 or less and form a nonincreasing sequence that converges to 0.
+
+> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^2 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.
+
+Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
+
+1. Set _u_ to abs($a_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+2. Generate a uniform(0, 1) random variate _ret_.
+3. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
+4. If $a_n$ is greater than 0, set _u_ to _&#x2113;_ + _w_ * abs($a_n$).  If $a_n$ is less than 0, set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$).
+5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
+6. Add 1 to _n_ and go to step 3.
+
+> **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_0, X_1, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
+>
+> - $U_0=b_0$ and $L_0=0$.
+> - $U_n$ is either $L_n + a_n\timesX_0\times...\timesX_n$ if $a_n > 0$, or $U_{n-1}$ otherwise.
+> - $L_n$ is either $U_n - a_n\timesX_0\times...\timesX_n$ if $a_n < 0$, or $L_{n-1}$ otherwise.
+>
+> Then it's clear that with probability 1, for every $n\ge 1$&mdash;
+>
+> - $L_n \le U_n$,
+> - $U_n$ is 0 or greater and $L_n$ is 1 or less,
+> - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$,
+>
+> and the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
 ### Sampling Distributions Using Incomplete Information
