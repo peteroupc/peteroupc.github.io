@@ -477,7 +477,7 @@ Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m}
 
 Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_{m-1}$, is the so-called "matrix method" from Ray and Nataraj (2012)[^11].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
 
-**Algorithm:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
+**Algorithm 1:** Run a [**linear Bernoulli factory**](https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories), with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory "flips the input coin", it runs the sub-algorithm below.
 
 - **Sub-algorithm:** Generate an unbiased random bit.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman 2012\)[^9]:
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m-1$ times.  Let $j$ be the number of runs that return 1.
@@ -488,46 +488,6 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
     2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.
 
-**Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$.  $f$ is an alternating power series in $\lambda$, but its even coefficients are zeros.  $f$ is bounded above by $Z=1/2 \lt 1$, and satisfies $m=8$ (ignoring the zero coefficients), and can be rewritten as&mdash;
-
-$$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$
-
-where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise, but the series given above in the rewrite has coefficients that don't form a numerically decreasing sequence. ($\lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.)  Rearranging the series to give such a sequence, we have:
-
-$$f(\lambda) = A(\lambda) + \lambda^8 \left(\lambda \sum_{i\ge 0} a_{8+1+2i} (\lambda^2)^i\right).    \tag{1}$$
-
-(Here, $A(\lambda)$ is a "truncation" of the power series for $f(\lambda)$.) Now, rewrite $A(\lambda)$ as a polynomial in Bernstein form.  The polynomial's degree is $8-1 = 7$ and its coefficients, in order, are [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
-
-Now, assume we have a coin that shows heads (returns 1) with probability $\lambda$.  Then the algorithm above simulates $f(\lambda)$, where:
-
-- $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
-- The coefficients $b_0, ..., b_7$, in order, were just given above.
-- The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
-    1. Flip the input coin.  If it returns 0, return 0.
-    2. Run the [**general martingale algorithm**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series), with $d[i] = |a_{8+1+2i}| = \frac{3^{8+1+2i}}{(8+1+2i)! \times 2}$, and return the result.  Whenever that algorithm "flips the input coin", flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.
-
-**Example 2:** Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$.  $f$ is again an alternating power series in $\lambda$ whose even coefficients are zeros (except coefficient 0 which is 1/2), and can be rewritten similarly to (1) above, namely as:
-
-$$f(\lambda) = A(\lambda) + \lambda^{16} \left(\lambda \sum_{i\ge 0} a_{16+1+2i} (\lambda^2)^i\right),$$
-
-where $a_i$ is&mdash;
-
-- $1/2$ if $i = 0$,
-- $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd, and
-- 0 otherwise.
-
-For this function, $m = 16$ satisfies the requirements ($m = 12$ doesn't because then $A$ wouldn't map the interval [0, 1] to [0, 1], and $m=14$ doesn't because $C$ would be negative), and $f$ is bounded above by $Z = 3/4$. $A(\lambda)$ is a truncation of the power series for $f$, and the remainder of the function is a "nice" power series whose nonzero coefficients decrease in absolute value.  After rewriting $A(\lambda)$ as a polynomial in Bernstein form, its coefficients are:
-
-- [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
-
-That's everything needed to use the algorithm above to simulate $f(\lambda)$, where:
-
-- $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
-- The coefficients $b_0, ..., b_{15}$, in order, were just given above.
-- The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
-    1. Flip the input coin.  If it returns 0, return 0.
-    2. Run the [**general martingale algorithm**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series), with $d[i] = |a_{16+1+2i}| = \frac{6^{16+1+2i}}{(16+1+2i)! \times 4}$, and return the result.  Whenever that algorithm "flips the input coin", flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.
-
 ----------
 
 Now, suppose the following:
@@ -535,25 +495,27 @@ Now, suppose the following:
 - $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
 - Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
 - $(b_j)$ is infinitely long.
-- The even-indexed elements of $(b_j)$ are positive, the odd-indexed, negative.
+- The even-indexed elements of $(b_j)$ are positive, and the odd-indexed are negative. (The first element has index 0.)
 - The absolute values of $(b_j)$'s elements are 1 or less and form a nonincreasing sequence that converges to 0.
 
-> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^2 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.
+> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.
 
 Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
 
-1. Set _u_ to abs($a_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+**Algorithm 2:**
+
+1. Set _u_ to abs($b_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
 4. If $a_n$ is greater than 0, set _u_ to _&#x2113;_ + _w_ * abs($a_n$).  If $a_n$ is less than 0, set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$).
 5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 6. Add 1 to _n_ and go to step 3.
 
-> **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_0, X_1, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
+> **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_0, X_1, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 >
 > - $U_0=b_0$ and $L_0=0$.
-> - $U_n$ is either $L_n + a_n\timesX_0\times...\timesX_n$ if $a_n > 0$, or $U_{n-1}$ otherwise.
-> - $L_n$ is either $U_n - a_n\timesX_0\times...\timesX_n$ if $a_n < 0$, or $L_{n-1}$ otherwise.
+> - $U_n$ is either $L_n + a_n\times X_0\times...\times X_n$ if $a_n > 0$, or $U_{n-1}$ otherwise.
+> - $L_n$ is either $U_n - a_n\times X_0\times...\times X_n$ if $a_n < 0$, or $L_{n-1}$ otherwise.
 >
 > Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 >
@@ -562,6 +524,32 @@ Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (r
 > - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$,
 >
 > and the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
+
+-------
+
+The following examples show how these methods lead to algorithms for simulating certain factory functions.
+
+**Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.
+
+- $f$ is bounded above by $Z=1/2 \lt 1$.
+- $f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise.[^54]
+- $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
+- Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
+    - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
+    - The coefficients $b_0, ..., b_7$, in order, were the Bernstein coefficients just given above.
+    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run **Algorithm 2** with $a_i = h_{8+1+2i}$.
+
+**Example 2:** Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, another power series.
+
+- $f$ is bounded above by $Z=3/4 \lt 1$.
+- $f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\lambda \sum_{i\ge 0} a_{16+1+2i} (\lambda^2)^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.
+- $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
+- Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
+    - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
+    - The coefficients $b_0, ..., b_15$, in order, were the Bernstein coefficients just given above.
+    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run **Algorithm 2** with $a_i = h_{16+1+2i}$.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
 ### Sampling Distributions Using Incomplete Information
@@ -1199,6 +1187,8 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 [^52]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^53]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^54]: \lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.
 
 <a id=Appendix></a>
 ## Appendix

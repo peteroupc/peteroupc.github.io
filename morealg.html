@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/10"><meta name="citation_online_date" content="2021/11/10"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/11"><meta name="citation_online_date" content="2021/11/11"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -749,7 +749,7 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_{m-1}$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^11].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
 
-<p><strong>Algorithm:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory &quot;flips the input coin&quot;, it runs the sub-algorithm below.</p>
+<p><strong>Algorithm 1:</strong> Run a <a href="https://peteroupc.github.io/bernoulli.html#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a>, with parameters $x=2$, $y=1$, and $\epsilon=1-Z$.  Whenever the linear Bernoulli factory &quot;flips the input coin&quot;, it runs the sub-algorithm below.</p>
 
 <ul>
 <li><p><strong>Sub-algorithm:</strong> Generate an unbiased random bit.  If that bit is 1, sample the polynomial $A$ as follows (Goyal and Sigman 2012)[^9]:</p>
@@ -767,60 +767,6 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 </ol></li>
 </ul>
 
-<p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$.  $f$ is an alternating power series in $\lambda$, but its even coefficients are zeros.  $f$ is bounded above by $Z=1/2 \lt 1$, and satisfies $m=8$ (ignoring the zero coefficients), and can be rewritten as&mdash;</p>
-
-<p>$$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$</p>
-
-<p>where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise, but the series given above in the rewrite has coefficients that don&#39;t form a numerically decreasing sequence. ($\lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.)  Rearranging the series to give such a sequence, we have:</p>
-
-<p>$$f(\lambda) = A(\lambda) + \lambda^8 \left(\lambda \sum_{i\ge 0} a_{8+1+2i} (\lambda^2)^i\right).    \tag{1}$$</p>
-
-<p>(Here, $A(\lambda)$ is a &quot;truncation&quot; of the power series for $f(\lambda)$.) Now, rewrite $A(\lambda)$ as a polynomial in Bernstein form.  The polynomial&#39;s degree is $8-1 = 7$ and its coefficients, in order, are [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].</p>
-
-<p>Now, assume we have a coin that shows heads (returns 1) with probability $\lambda$.  Then the algorithm above simulates $f(\lambda)$, where:</p>
-
-<ul>
-<li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
-<li>The coefficients $b_0, ..., b_7$, in order, were just given above.</li>
-<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
-
-<ol>
-<li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Run the <a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>general martingale algorithm</strong></a>, with $d[i] = |a_{8+1+2i}| = \frac{3^{8+1+2i}}{(8+1+2i)! \times 2}$, and return the result.  Whenever that algorithm &quot;flips the input coin&quot;, flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.</li>
-</ol></li>
-</ul>
-
-<p><strong>Example 2:</strong> Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$.  $f$ is again an alternating power series in $\lambda$ whose even coefficients are zeros (except coefficient 0 which is 1/2), and can be rewritten similarly to (1) above, namely as:</p>
-
-<p>$$f(\lambda) = A(\lambda) + \lambda^{16} \left(\lambda \sum_{i\ge 0} a_{16+1+2i} (\lambda^2)^i\right),$$</p>
-
-<p>where $a_i$ is&mdash;</p>
-
-<ul>
-<li>$1/2$ if $i = 0$,</li>
-<li>$\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd, and</li>
-<li>0 otherwise.</li>
-</ul>
-
-<p>For this function, $m = 16$ satisfies the requirements ($m = 12$ doesn&#39;t because then $A$ wouldn&#39;t map the interval [0, 1] to [0, 1], and $m=14$ doesn&#39;t because $C$ would be negative), and $f$ is bounded above by $Z = 3/4$. $A(\lambda)$ is a truncation of the power series for $f$, and the remainder of the function is a &quot;nice&quot; power series whose nonzero coefficients decrease in absolute value.  After rewriting $A(\lambda)$ as a polynomial in Bernstein form, its coefficients are:</p>
-
-<ul>
-<li>[1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].</li>
-</ul>
-
-<p>That&#39;s everything needed to use the algorithm above to simulate $f(\lambda)$, where:</p>
-
-<ul>
-<li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
-<li>The coefficients $b_0, ..., b_{15}$, in order, were just given above.</li>
-<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows:
-
-<ol>
-<li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Run the <a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>general martingale algorithm</strong></a>, with $d[i] = |a_{16+1+2i}| = \frac{6^{16+1+2i}}{(16+1+2i)! \times 4}$, and return the result.  Whenever that algorithm &quot;flips the input coin&quot;, flip the coin for $\lambda$ twice and output either 1 if both flips return 1, or 0 otherwise.</li>
-</ol></li>
-</ul>
-
 <hr>
 
 <p>Now, suppose the following:</p>
@@ -829,15 +775,17 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 <li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
 <li>Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
 <li>$(b_j)$ is infinitely long.</li>
-<li>The even-indexed elements of $(b_j)$ are positive, the odd-indexed, negative.</li>
+<li>The even-indexed elements of $(b_j)$ are positive, and the odd-indexed are negative. (The first element has index 0.)</li>
 <li>The absolute values of $(b_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that converges to 0.</li>
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^2 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.</p>
+<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.</p>
 </blockquote>
 
 <p>Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).</p>
+
+<p><strong>Algorithm 2:</strong></p>
 
 <ol>
 <li>Set <em>u</em> to abs($b_0$) (the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
@@ -849,12 +797,12 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_0, X_1, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
+<p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_0, X_1, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
 
 <ul>
 <li>$U_0=b_0$ and $L_0=0$.</li>
-<li>$U_n$ is either $L_n + a_n\timesX_0\times...\timesX_n$ if $a_n &gt; 0$, or $U_{n-1}$ otherwise.</li>
-<li>$L_n$ is either $U_n - a_n\timesX_0\times...\timesX_n$ if $a_n &lt; 0$, or $L_{n-1}$ otherwise.</li>
+<li>$U_n$ is either $L_n + a_n\times X_0\times...\times X_n$ if $a_n &gt; 0$, or $U_{n-1}$ otherwise.</li>
+<li>$L_n$ is either $U_n - a_n\times X_0\times...\times X_n$ if $a_n &lt; 0$, or $L_{n-1}$ otherwise.</li>
 </ul>
 
 <p>Then it&#39;s clear that with probability 1, for every $n\ge 1$&mdash;</p>
@@ -867,6 +815,42 @@ The algorithm begins with <em>pos</em> equal to 1.  Then the following steps are
 
 <p>and the <em>U</em> and <em>L</em> sequences have expected values converging to $f(\lambda)$ with probability 1.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
 </blockquote>
+
+<hr>
+
+<p>The following examples show how these methods lead to algorithms for simulating certain factory functions.</p>
+
+<p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
+
+<ul>
+<li>$f$ is bounded above by $Z=1/2 \lt 1$.</li>
+<li>$f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise.[^54]</li>
+<li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].</li>
+<li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
+
+<ul>
+<li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
+<li>The coefficients $b_0, ..., b_7$, in order, were the Bernstein coefficients just given above.</li>
+<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run <strong>Algorithm 2</strong> with $a_i = h_{8+1+2i}$.</li>
+</ul></li>
+</ul>
+
+<p><strong>Example 2:</strong> Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, another power series.</p>
+
+<ul>
+<li>$f$ is bounded above by $Z=3/4 \lt 1$.</li>
+<li>$f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\lambda \sum_{i\ge 0} a_{16+1+2i} (\lambda^2)^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.</li>
+<li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].</li>
+<li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
+
+<ul>
+<li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
+<li>The coefficients $b_0, ..., b_15$, in order, were the Bernstein coefficients just given above.</li>
+<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run <strong>Algorithm 2</strong> with $a_i = h_{16+1+2i}$.</li>
+</ul></li>
+</ul>
 
 <p><a id=Sampling_Distributions_Using_Incomplete_Information></a></p>
 
@@ -1695,6 +1679,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>[^52]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^53]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^54]: \lfloor x \rfloor$ = floor($x$) is the highest integer less than $x$.</p>
 
 <p><a id=Appendix></a></p>
 
