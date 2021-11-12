@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/11"><meta name="citation_online_date" content="2021/11/11"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/12"><meta name="citation_online_date" content="2021/11/12"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -38,6 +38,7 @@
 <li><a href="#cosh___lambda___minus_1"><strong>cosh(<em>&lambda;</em>) &minus; 1</strong></a></li>
 <li><a href="#exp___lambda___4_2"><strong>exp(<em>&lambda;</em>/4)/2</strong></a></li>
 <li><a href="#sinh___lambda___2"><strong>sinh(<em>&lambda;</em>)/2</strong></a></li>
+<li><a href="#cosh___lambda___2"><strong>cosh(<em>&lambda;</em>)/2</strong></a></li>
 <li><a href="#1_exp_1__c__minus_2"><strong>1/(exp(1) + <em>c</em> &minus; 2)</strong></a></li>
 <li><a href="#exp_1_minus_2"><strong>exp(1) &minus; 2</strong></a></li>
 <li><a href="#tanh___lambda"><strong>tanh(<em>&lambda;</em>)</strong></a></li>
@@ -180,35 +181,20 @@
 
 <h3>cosh(<em>&lambda;</em>) &minus; 1</h3>
 
-<p>There are two algorithms.</p>
-
-<p>The first algorithm involves an application of the general martingale algorithm to a power series that equals cosh(<em>&lambda;</em>)&minus;1.  Specifically, the power series is the function&#39;s <em>Taylor series</em> at 0, which is <em>&lambda;</em><sup>2</sup>/(2!) + <em>&lambda;</em><sup>4</sup>/(4!) + ....  See (Łatuszyński et al. 2009/2011, algorithm 3)[^2]. (In this document, <em>n</em>! = 1*2*3*...*<em>n</em> is known as <em>n</em> factorial.)</p>
+<p>The following algorithm I found takes advantage of the convex combination method.</p>
 
 <ol>
-<li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this step again.</li>
-<li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to step 6.  (The estimate <em>&lambda;</em><sup><em>n</em>*2</sup> is 0, so no more terms are added and we use <em>&#x2113;</em> as the final estimate for cosh(<em>&lambda;</em>)&minus;1.)</li>
-<li>Let <em>m</em> be (<em>n</em>*2), let <em>&alpha;</em> be 1/(<em>m</em>!) (a term of the Taylor series at 0), and let <em>err</em> be 2/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next step.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em> and go to step 3.</li>
-</ol>
-
-<p>In this algorithm, the error term, which follows from the <em>Lagrange remainder</em> for Taylor series, has a numerator of 2 because 2 is higher than the maximum value that the function&#39;s slope, slope-of-slope, etc. functions can achieve anywhere in the interval [0, 1].</p>
-
-<p>The second algorithm is one I found that takes advantage of the convex combination method.</p>
-
-<ol>
-<li>(&quot;Geometric&quot; random variate <em>n</em>.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set <em>n</em> to 2 plus the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
-<li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  If <em>n</em> is odd, return 0.  Otherwise, with probability 2<sup><em>n</em>&minus;1</sup>/(<em>n</em>!), go to the next step.  Otherwise, return 0.</li>
+<li>(The first two steps generate a number <em>n</em> with probability <em>g</em>(<em>n</em>), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way.</li>
+<li>Set <em>n</em> to 2*<em>n</em> + 2.</li>
+<li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  Let <em>P</em> be 2<sup><em>n</em>/2</sup>/(<em>n</em>!).  With probability <em>P</em>, go to the next step.  Otherwise, return 0.</li>
 <li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
 
 <p>Derivation: Follows from rewriting cosh(<em>&lambda;</em>)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where&mdash;</p>
 
 <ul>
-<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>&minus;2</sup> if <em>n</em>&ge;2, or 0 otherwise, and</li>
-<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is <em>&lambda;</em><sup><em>n</em></sup>/(<em>n</em>!) if <em>n</em>&ge;2 and <em>n</em> is even, or 0 otherwise.</li>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup>(<em>n</em>&minus;2)/2</sup> if <em>n</em>&gt;0 and <em>n</em> is even, or 0 otherwise, and</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) (a term of the Taylor series at 0) is <em>&lambda;</em><sup><em>n</em></sup>/(<em>n</em>!) if <em>n</em>&gt;0 and <em>n</em> is even, or 0 otherwise.</li>
 </ul>
 
 <p><a id=exp___lambda___4_2></a></p>
@@ -216,7 +202,7 @@
 <h3>exp(<em>&lambda;</em>/4)/2</h3>
 
 <ol>
-<li>(&quot;Geometric&quot; random variate <em>n</em>.)  Let <em>C</em> be 0.  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to <em>C</em> plus the number of ones generated this way. (The number <em>n</em> is generated with probability <em>g</em>(<em>n</em>), as given below.)</li>
+<li>(The first step generates a number <em>n</em> with probability <em>g</em>(<em>n</em>), as given later.)  Let <em>C</em> be 0.  Generate unbiased random bits until a zero is generated this way.  Set <em>n</em> to <em>C</em> plus the number of ones generated this way.</li>
 <li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  Let <em>P</em> be 1/(2<sup><em>n</em></sup>*(<em>n</em>!)).  With probability <em>P</em> go to the next step.  Otherwise, return 0.</li>
 <li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
@@ -224,7 +210,7 @@
 <p>Derivation: Follows from rewriting exp(<em>&lambda;</em>/4)/2 in a similar manner to cosh(<em>&lambda;</em>)&minus;1, where this time&mdash;</p>
 
 <ul>
-<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>&minus;<em>C</em></sup> if <em>n</em>&ge;<em>C</em>, or 0 otherwise (the &quot;geometric&quot; probabilities&quot;), and</li>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>&minus;<em>C</em></sup> if <em>n</em>&ge;<em>C</em>, or 0 otherwise, and</li>
 <li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) is the appropriate term for <em>n</em> in the target function&#39;s Taylor series expansion at 0, starting with <em>n</em> = <em>C</em>.</li>
 </ul>
 
@@ -305,22 +291,30 @@
 
 <h3>sinh(<em>&lambda;</em>)/2</h3>
 
-<p>This algorithm involves an application of the general martingale algorithm to the Taylor series at 0 for sinh(<em>&lambda;</em>)/2, which is <em>&lambda;</em><sup>1</sup>/(1!*2) + <em>&lambda;</em><sup>3</sup>/(3!*2) + ..., or as used here, <em>&lambda;</em>*(1/2 + <em>&lambda;</em><sup>2</sup>/(3!*2) + <em>&lambda;</em><sup>4</sup>/(5!*2) + ...).</p>
-
 <ol>
-<li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Set <em>u</em> to 0, set <em>w</em> to 1, set <em>&#x2113;</em> to 1/2 (the first term is added already), and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>Do the following process repeatedly, until this algorithm returns a value:
-
-<ol>
-<li>If <em>w</em> is not 0, flip the input coin and multiply <em>w</em> by the result of the flip.  Do this substep again.</li>
-<li>If <em>w</em> is 0, set <em>u</em> to <em>&#x2113;</em> and go to the fourth substep. (No more terms are added here.)</li>
-<li>Let <em>m</em> be (<em>n</em>*2+1), let <em>&alpha;</em> be 1/(<em>m</em>!*2) (a term of the Taylor series at 0), and let <em>err</em> be 1/((<em>m</em>+1)!) (the error term).  Add <em>&alpha;</em> to <em>&#x2113;</em>, then set <em>u</em> to <em>&#x2113;</em> + <em>err</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  If <em>ret</em> is less than <em>u</em>, go to the next substep.  If neither is the case, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-<li>Add 1 to <em>n</em>.</li>
-</ol></li>
+<li>(The first two steps generate a number <em>n</em> with probability <em>g</em>(<em>n</em>), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way.</li>
+<li>Set <em>n</em> to 2*<em>n</em> + 1.</li>
+<li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  Let <em>P</em> be 2<sup>(<em>n</em>&minus;1)/2</sup>/(<em>n</em>!).  With probability <em>P</em>, go to the next step.  Otherwise, return 0.</li>
+<li>Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.</li>
 </ol>
+
+<p>Derivation: Follows from rewriting sinh(<em>&lambda;</em>)/2 in a similar manner to cosh(<em>&lambda;</em>)&minus;1, where this time&mdash;</p>
+
+<ul>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup>(<em>n</em>&minus;1)/2</sup> if <em>n</em>&gt;0 and <em>n</em> is odd, or 0 otherwise, and</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) (a term of the Taylor series at 0) is <em>&lambda;</em><sup><em>n</em></sup>/(2*(<em>n</em>!)) if <em>n</em>&gt;0 and <em>n</em> is odd, or 0 otherwise.</li>
+</ul>
+
+<p><a id=cosh___lambda___2></a></p>
+
+<h3>cosh(<em>&lambda;</em>)/2</h3>
+
+<p>Follows the algorithm for sinh(<em>&lambda;</em>)/2, except step 2 reads &quot;Set <em>n</em> to 2*<em>n</em>.&quot; and the <em>P</em> in step 3 equals 2<sup><em>n</em>/2</sup>/(<em>n</em>!).  In the derivation:</p>
+
+<ul>
+<li><em>g</em>(<em>n</em>) is (1/2)*(1/2)<sup><em>n</em>/2</sup> if <em>n</em>&ge;0 and <em>n</em> is even, or 0 otherwise, and</li>
+<li><em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) (a term of the Taylor series at 0) is 1/(2*(<em>n</em>!)) if <em>n</em>&ge;0 and <em>n</em> is even, or 0 otherwise.</li>
+</ul>
 
 <p><a id=1_exp_1__c__minus_2></a></p>
 
@@ -382,7 +376,7 @@
 <li>While <em>i</em> is less than <em>m</em>:
 
 <ol>
-<li><strong>Get the <em>i</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>.  Add <em>b</em>*choose(<em>m</em>+1, <em>i</em>) to <em>v</em>.[^3]</li>
+<li><strong>Get the <em>i</em><sup>th</sup> Bernoulli number</strong>, call it <em>b</em>.  Add <em>b</em>*choose(<em>m</em>+1, <em>i</em>) to <em>v</em>.[^2]</li>
 <li>Add 2 to <em>i</em>.</li>
 </ol></li>
 <li>Return &minus;<em>v</em>/(<em>m</em>+1).</li>
@@ -410,7 +404,7 @@
 
 <h3>Euler&ndash;Mascheroni Constant <em>&gamma;</em></h3>
 
-<p>As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^4]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
+<p>As <a href="https://stats.stackexchange.com/a/539564"><strong>I learned</strong></a>, the fractional part of 1/<em>U</em>, where <em>U</em> is a uniform random variate in (0, 1), has a mean equal to 1 minus the Euler&ndash;Mascheroni constant <em>&gamma;</em>, about 0.5772.[^3]  This leads to the following algorithm to sample a probability equal to <em>&gamma;</em>:</p>
 
 <ol>
 <li>Generate a PSRN for the reciprocal of a uniform random variate, as described in <a href="https://peteroupc.github.io/uniformsum.html#Reciprocal_of_Uniform_Random_Number"><strong>another page of mine</strong></a>.</li>
@@ -527,7 +521,7 @@
 
 <h3>(1 + exp(<em>k</em>)) / (1 + exp(<em>k</em> + 1))</h3>
 
-<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated through an algorithm by Citterio and Pavani (2016)[^5].  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)[^6] in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
+<p>This algorithm simulates this probability by computing lower and upper bounds of exp(1), which improve as more and more digits are calculated.  These bounds are calculated through an algorithm by Citterio and Pavani (2016)[^4].  Note the use of the methodology in Łatuszyński et al. (2009/2011, algorithm 2)[^5] in this algorithm.  In this algorithm, <em>k</em> must be an integer 0 or greater.</p>
 
 <ol>
 <li>If <em>k</em> is 0, run the <strong>algorithm for 2 / (1 + exp(2))</strong> and return the result.  If <em>k</em> is 1, run the <strong>algorithm for (1 + exp(1)) / (1 + exp(2))</strong> and return the result.</li>
@@ -624,7 +618,7 @@
 
 <p>Let <em>f</em>(<em>&lambda;</em>) be a function of the form min(<em>&lambda;</em>*<em>mult</em>, 1&minus;<em>&epsilon;</em>). This is a piecewise linear function with two pieces: a rising linear part and a constant part.</p>
 
-<p>This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to <em>f</em>, based on Thomas and Blanchet (2012)[^7].  These polynomials can then be used to generate heads with probability <em>f</em>(<em>&lambda;</em>) using the algorithms given in &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;.</p>
+<p>This section describes how to calculate the Bernstein coefficients for polynomials that converge from above and below to <em>f</em>, based on Thomas and Blanchet (2012)[^6].  These polynomials can then be used to generate heads with probability <em>f</em>(<em>&lambda;</em>) using the algorithms given in &quot;<a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>General Factory Functions</strong></a>&quot;.</p>
 
 <p>In this section, <strong>fbelow(<em>n</em>, <em>k</em>)</strong> and <strong>fabove(<em>n</em>, <em>k</em>)</strong> are the <em>k</em><sup>th</sup> coefficients (with <em>k</em> starting at 0) of the lower and upper polynomials, respectively, in Bernstein form of degree <em>n</em>.</p>
 
@@ -641,7 +635,7 @@
 <p>It would be interesting to find general formulas to find the appropriate polynomials (degrees and <em>Y parameters</em>) given only the values for <em>mult</em> and <em>&epsilon;</em>, rather than find them &quot;the hard way&quot; via <code>calc_linear_func</code>.  For this procedure, the degrees and <em>Y parameters</em> can be upper bounds, as long as the sequence of degrees is monotonically increasing and the sequence of Y parameters is nonincreasing.</p>
 
 <blockquote>
-<p><strong>Note:</strong> In Nacu and Peres (2005)[^8], the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$, provided $\varepsilon \lt 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.</p>
+<p><strong>Note:</strong> In Nacu and Peres (2005)[^7], the following polynomial sequences were suggested to simulate $\min(2\lambda, 1-2\varepsilon)$, provided $\varepsilon \lt 1/8$, where <em>n</em> is a power of 2.  However, with these sequences, an extraordinary number of input coin flips is required to simulate this function each time.</p>
 
 <ul>
 <li><strong>fbelow(<em>n</em>, <em>k</em>)</strong> = $\min(2(k/n), 1-2\varepsilon)$.</li>
@@ -662,7 +656,7 @@
 <ol>
 <li>(Random walk.) Generate unbiased random bits until more zeros than ones are generated this way for the first time.  Then set <em>m</em> to (<em>n</em>&minus;1)/2+1, where <em>n</em> is the number of bits generated this way.</li>
 <li>(Build a degree-<em>m</em>*2 polynomial equivalent to (4*<em>&lambda;</em>*(1&minus;<em>&lambda;</em>))<sup><em>m</em></sup>/2.) Let <em>z</em> be (4<sup><em>m</em></sup>/2)/choose(<em>m</em>*2,<em>m</em>).  Define a polynomial of degree <em>m</em>*2 whose (<em>m</em>*2)+1 Bernstein coefficients are all zero except the <em>m</em><sup>th</sup> coefficient (starting at 0), whose value is <em>z</em>.  Elevate the degree of this polynomial enough times so that all its coefficients are 1 or less (degree elevation increases the polynomial&#39;s degree without changing its shape or position; see the derivation in the appendix).  Let <em>d</em> be the new polynomial&#39;s degree.</li>
-<li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)[^9].) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
+<li>(Simulate the polynomial, whose degree is <em>d</em> (Goyal and Sigman 2012)[^8].) Flip the input coin <em>d</em> times and set <em>h</em> to the number of ones generated this way.  Let <em>a</em> be the <em>h</em><sup>th</sup> Bernstein coefficient (starting at 0) of the new polynomial.  With probability <em>a</em>, return 1.  Otherwise, return 0.</li>
 </ol>
 
 <p>I suspected that the required degree <em>d</em> would be floor(<em>m</em>*2/3)+1, as described in the appendix.  With help from the <a href="https://mathoverflow.net/questions/381419"><strong>MathOverflow community</strong></a>, steps 2 and 3 of the algorithm above can be described more efficiently as follows:</p>
@@ -714,7 +708,7 @@
 
 <h3>Certain Power Series</h3>
 
-<p>The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^10]</p>
+<p>The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^9]</p>
 
 <p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number less than, greater than, or equal to 0.</p>
 
@@ -722,7 +716,7 @@
 
 <ul>
 <li>There is a rational number $Z$ defined as follows. For every $\lambda$ in $[0, 1]$, $f(\lambda) \le Z \lt 1$.</li>
-<li>There is an even integer $m$ defined as follows. The series above can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^2]. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)</li>
+<li>There is an even integer $m$ defined as follows. The series above can be split into two parts: the first part ($A$) is the sum of the first $m$ terms, and the second part ($C$) is the sum of the remaining terms.  Moreover, both parts admit a Bernoulli factory algorithm.  Specifically: $$C(\lambda) = \sum_{i\ge m} a_i (g(\lambda))^i, A(\lambda) = f(\lambda) - C(\lambda).$$  One way to satisfy the condition on $C$ is if $C$ is an alternating series (starting at $m$, even-indexed $a$&#39;s are positive and odd-indexed are negative) and if $0 \le |a_{i+1}| \le |a_i| \le 1$ for every $i\ge m$ (that is, the coefficients starting with coefficient $m$ have absolute values that are 1 or less and form a nonincreasing sequence); such functions $C$ admit an algorithm given in Łatuszyński et al. (2019/2011)[^10]. ($C$ and $A$ admit a Bernoulli factory only if they map the interval [0, 1] to [0, 1], among other requirements.)</li>
 </ul>
 
 <p>Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;</p>
@@ -783,7 +777,7 @@
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^2], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
+<p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^10], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
 
 <ul>
 <li>$U_0=b_0$ and $L_0=0$.</li>
@@ -1558,23 +1552,23 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 
 <p>[^1]: Fishman, D., Miller, S.J., &quot;Closed Form Continued Fraction Expansions of Special Quadratic Irrationals&quot;, ISRN Combinatorics Vol. 2013, Article ID 414623 (2013).</p>
 
-<p>[^2]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^2]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</p>
 
-<p>[^3]: choose(<em>n</em>, <em>k</em>) = (1*2*3*...*<em>n</em>)/((1*...*<em>k</em>)*(1*...*(<em>n</em>&minus;<em>k</em>))) =  <em>n</em>!/(<em>k</em>! * (<em>n</em> &minus; <em>k</em>)!) is a <em>binomial coefficient</em>, or the number of ways to choose <em>k</em> out of <em>n</em> labeled items.  It can be calculated, for example, by calculating <em>i</em>/(<em>n</em>&minus;<em>i</em>+1) for each integer <em>i</em> in the interval [<em>n</em>&minus;<em>k</em>+1, <em>n</em>], then multiplying the results (Yannis Manolopoulos. 2002. &quot;<a href="https://doi.org/10.1145/820127.820168"><strong>Binomial coefficient computation: recursion or iteration?</strong></a>&quot;, SIGCSE Bull. 34, 4 (December 2002), 65–67).  For every <em>m</em>&gt;0, choose(<em>m</em>, 0) = choose(<em>m</em>, <em>m</em>) = 1 and choose(<em>m</em>, 1) = choose(<em>m</em>, <em>m</em>&minus;1) = <em>m</em>; also, in this document, choose(<em>n</em>, <em>k</em>) is 0 when <em>k</em> is less than 0 or greater than <em>n</em>.</p>
+<p>[^3]: It can also be said that the area under the graph of <em>x</em> &minus; floor(1/<em>x</em>), where <em>x</em> is in the closed interval [0, 1], equals 1 minus <em>&gamma;</em>.  See, for example, Havil, J., <em>Gamma: Exploring Euler&#39;s Constant</em>, 2003.</p>
 
-<p>[^4]: It can also be said that the area under the graph of <em>x</em> &minus; floor(1/<em>x</em>), where <em>x</em> is in the closed interval [0, 1], equals 1 minus <em>&gamma;</em>.  See, for example, Havil, J., <em>Gamma: Exploring Euler&#39;s Constant</em>, 2003.</p>
+<p>[^4]: Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, Mediterranean Journal of Mathematics 13 (2016).</p>
 
-<p>[^5]: Citterio, M., Pavani, R., &quot;A Fast Computation of the Best k-Digit Rational Approximation to a Real Number&quot;, Mediterranean Journal of Mathematics 13 (2016).</p>
+<p>[^5]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
-<p>[^6]: Łatuszyński, K., Kosmidis, I., Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
+<p>[^6]: Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</p>
 
-<p>[^7]: Thomas, A.C., Blanchet, J., &quot;<a href="https://arxiv.org/abs/1106.2508v3"><strong>A Practical Implementation of the Bernoulli Factory</strong></a>&quot;, arXiv:1106.2508v3  [stat.AP], 2012.</p>
+<p>[^7]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
 
-<p>[^8]: Nacu, Şerban, and Yuval Peres. &quot;<a href="https://projecteuclid.org/euclid.aoap/1106922322"><strong>Fast simulation of new coins from old</strong></a>&quot;, The Annals of Applied Probability 15, no. 1A (2005): 93-115.</p>
+<p>[^8]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
 
-<p>[^9]: Goyal, V. and Sigman, K., 2012. On simulating a class of Bernstein polynomials. ACM Transactions on Modeling and Computer Simulation (TOMACS), 22(2), pp.1-5.</p>
+<p>[^9]: A blog post by John D. Cook, &quot;A more powerful alternating series theorem&quot;, Nov. 7, 2021, played a major role in leading me to this idea for Bernoulli factory designs.</p>
 
-<p>[^10]: A blog post by John D. Cook, &quot;A more powerful alternating series theorem&quot;, Nov. 7, 2021, played a major role in leading me to this idea for Bernoulli factory designs.</p>
+<p>[^10]: Łatuszyński, K., Kosmidis, I.,  Papaspiliopoulos, O., Roberts, G.O., &quot;<a href="https://arxiv.org/abs/0907.4018v2"><strong>Simulating events of unknown probabilities via reverse time martingales</strong></a>&quot;, arXiv:0907.4018v2 [stat.CO], 2009/2011.</p>
 
 <p>[^11]: S. Ray, P.S.V. Nataraj, &quot;A Matrix Method for Efficient Computation of Bernstein Coefficients&quot;, <em>Reliable Computing</em> 17(1), 2012.</p>
 
@@ -1788,7 +1782,7 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <li>Otherwise, <em>f</em>(<em>U</em>) must map the interval [0, 1] to [0, 1] and be continuous everywhere or &quot;almost everywhere&quot;.</li>
 </ul>
 
-<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)[^2].</p></li>
+<p>The first set of conditions is the same as those for the Bernoulli factory problem (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#About_Bernoulli_Factories"><strong>About Bernoulli Factories</strong></a>) and ensure this algorithm is unbiased (see also Łatuszyński et al. 2009/2011)[^10].</p></li>
 </ul>
 
 <p>The algorithm follows.</p>
@@ -2100,7 +2094,7 @@ calc_linear_func(count=8)
 
 <p><em>where n is the polynomial&#39;s degree and a[i] is a function in the class <strong>PDA</strong>.</em></p>
 
-<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^9]: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
+<p><em>Proof Sketch</em>: This corresponds to a two-stage pushdown automaton that follows the algorithm of Goyal and Sigman (2012)[^8]: The first stage counts the number of &quot;heads&quot; shown when flipping the f(&lambda;) coin, and the second stage flips another coin that has success probability <em>a</em>[<em>i</em>], where <em>i</em> is the number of &quot;heads&quot;. The automaton&#39;s transitions take advantage of Lemma 1A.  &#x25a1;</p>
 
 <p><strong>Proposition 1:</strong> <em>If f(&lambda;) and g(&lambda;) are functions in the class <strong>PDA</strong>, then so is their product, namely f(&lambda;)*g(&lambda;).</em></p>
 
