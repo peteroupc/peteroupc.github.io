@@ -22,10 +22,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
 - [**Bernoulli Factories and Irrational Probability Simulation**](#Bernoulli_Factories_and_Irrational_Probability_Simulation)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
-    - [**cosh(_&lambda;_) &minus; 1**](#cosh___lambda___minus_1)
-    - [**exp(_&lambda;_/4)/2**](#exp___lambda___4_2)
-    - [**sinh(_&lambda;_)/2**](#sinh___lambda___2)
-    - [**cosh(_&lambda;_)/2**](#cosh___lambda___2)
+    - [**cosh(_&lambda;_) &minus; 1, and Certain Other Convex Functions**](#cosh___lambda___minus_1_and_Certain_Other_Convex_Functions)
     - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
     - [**exp(1) &minus; 2**](#exp_1_minus_2)
     - [**tanh(_&lambda;_)**](#tanh___lambda)
@@ -127,78 +124,53 @@ Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain
 - `ECDF(x)`  is the probability that a uniform random variate in [0, 1] is _x_ or less, namely _x_ if _x_ is in \[0, 1\], 0 if _x_ is less than 0, and 1 otherwise.
 - `DPDF(x)` is the probability density function for the maximum of _m_ uniform random variates in [0, 1], namely _m_\*_x_<sup>_m_&minus;1</sup> if _x_ is in \[0, 1\], and 0 otherwise.
 
-<a id=cosh___lambda___minus_1></a>
-### cosh(_&lambda;_) &minus; 1
+<a id=cosh___lambda___minus_1_and_Certain_Other_Convex_Functions></a>
+### cosh(_&lambda;_) &minus; 1, and Certain Other Convex Functions
 
 The following algorithm I found takes advantage of the convex combination method.
 
 1. (The first two steps generate a number _n_ with probability _g_(_n_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
 2. Set _n_ to 2\*_n_ + 2.
 3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!).  With probability _P_, go to the next step.  Otherwise, return 0.
-4. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
+4. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
-Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where&mdash;
+Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 0 otherwise, and
-- _w_<sub>_n_</sub>(_&lambda;_) (a term of the Taylor series at 0) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&gt;0 and _n_ is even, or 0 otherwise.
+- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 0 otherwise.  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, ...
+- _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&gt;0 and _n_ is even, or 0 otherwise.  This is a term of the Taylor series expansion at 0.
 
-<a id=exp___lambda___4_2></a>
-### exp(_&lambda;_/4)/2
+Additional functions can be simulated using this algorithm, by modifying it as in the following table. (The note at the end of this section describes what these functions have in common.)
 
-1. (The first step generates a number _n_ with probability _g_(_n_), as given later.)  Let _C_ be 0.  Generate unbiased random bits until a zero is generated this way.  Set _n_ to _C_ plus the number of ones generated this way.
-2. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 1/(2<sup>_n_</sup>\*(_n_!)).  With probability _P_ go to the next step.  Otherwise, return 0.
-3. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
-
-Derivation: Follows from rewriting exp(_&lambda;_/4)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time&mdash;
-
-- _g_(_n_) is (1/2)\*(1/2)<sup>_n_&minus;_C_</sup> if _n_&ge;_C_, or 0 otherwise, and
-- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for _n_ in the target function's Taylor series expansion at 0, starting with _n_ = _C_.
-
-Additional functions:
-
-| Function | Value of _P_ | Value of _C_ |
+| Function | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- |
-| exp(_&lambda;_)/4. |  2<sup>_n_&minus;1</sup>/(_n_!). | 0. |
-| exp(_&lambda;_)/6. |  2<sup>_n_</sup>/(3\*(_n_!)). | 0. |
-| exp(_&lambda;_/2)/2. | 1/(_n_!). | 0. |
-| (exp(_&lambda;_)&minus;1)/2. | 2<sup>_n_&minus;1</sup>/(_n_!). | 1. |
+| exp(_&lambda;_/4)/2. | _n_. |  1/(2<sup>_n_</sup>\*(_n_!)). |
+| exp(_&lambda;_)/4. | _n_. |  2<sup>_n_&minus;1</sup>/(_n_!). |
+| exp(_&lambda;_)/6. | _n_. |  2<sup>_n_</sup>/(3\*(_n_!)). |
+| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!). |
+| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 2<sup>_n_&minus;1</sup>/(_n_!). |
+| sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
+| cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
 
-The table below shows functions shifted downward and shows the values of _P_ and _C_ required to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)], where _f_(.) is the original function.
+The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)], where _f_(.) is the original function.
 
-| Original function (_f_(_&lambda;_)) | Modified function | Value of _P_ | Value of _C_ |
+| Original function (_f_(_&lambda;_)) | Modified function | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
-| exp(_&lambda;_)/4 | _f_(_&lambda;_) &minus; _D_ | (1/4&minus;_D_)\*2 or (_f_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
-| exp(_&lambda;_)/6  | _f_(_&lambda;_) &minus; _D_ | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
-| exp(_&lambda;_/2)/2  | _f_(_&lambda;_) &minus; _D_ | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/4 | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_f_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/6  | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
+| exp(_&lambda;_/2)/2  | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
 
-> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(x)=a_0 x^0 + ... + a_i x^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
+The functions have similar derivations as follows:
+
+- _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. If a certain value of _n_ can't occur in the algorithm after step 2 is complete, then _g_(_n_) is 0 instead.  (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
+- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for n in the target function's Taylor series expansion at 0.  If a certain value of _n_ can't occur in the algorithm after step 2 is complete, then _w_(_n_) is 0 instead.
+
+> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
 >
-> - is non-negative for every _x_,
+> - is non-negative for every _&lambda;_,
 > - is either constant or monotone increasing, and
-> - is _convex_ (its "slope" or "velocity" doesn't decrease as _x_ increases).
+> - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases).
 >
-> To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _x_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace $a_i x^i$ with $a_i i x^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
-
-<a id=sinh___lambda___2></a>
-### sinh(_&lambda;_)/2
-
-1. (The first two steps generate a number _n_ with probability _g_(_n_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
-2. Set _n_ to 2\*_n_ + 1.
-3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>(_n_&minus;1)/2</sup>/(_n_!).  With probability _P_, go to the next step.  Otherwise, return 0.
-4. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1.  Otherwise, return 0.
-
-Derivation: Follows from rewriting sinh(_&lambda;_)/2 in a similar manner to cosh(_&lambda;_)&minus;1, where this time&mdash;
-
-- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;1)/2</sup> if _n_&gt;0 and _n_ is odd, or 0 otherwise, and
-- _w_<sub>_n_</sub>(_&lambda;_) (a term of the Taylor series at 0) is _&lambda;_<sup>_n_</sup>/(2\*(_n_!)) if _n_&gt;0 and _n_ is odd, or 0 otherwise.
-
-<a id=cosh___lambda___2></a>
-### cosh(_&lambda;_)/2
-
-Follows the algorithm for sinh(_&lambda;_)/2, except step 2 reads "Set _n_ to 2\*_n_." and the _P_ in step 3 equals 2<sup>_n_/2</sup>/(_n_!).  In the derivation:
-
-- _g_(_n_) is (1/2)\*(1/2)<sup>_n_/2</sup> if _n_&ge;0 and _n_ is even, or 0 otherwise, and
-- _w_<sub>_n_</sub>(_&lambda;_) (a term of the Taylor series at 0) is 1/(2\*(_n_!)) if _n_&ge;0 and _n_ is even, or 0 otherwise.
+> To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
 
 <a id=1_exp_1__c__minus_2></a>
 ### 1/(exp(1) + _c_ &minus; 2)
