@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2021/11/03"><meta name="citation_online_date" content="2021/11/03"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Color Topics for Programmers</title><meta name="citation_title" content="Color Topics for Programmers"><meta name="citation_pdf_url" content="https://peteroupc.github.io/colorgen.pdf"><meta name="citation_url" content="https://peteroupc.github.io/colorgen.html"><meta name="citation_date" content="2021/11/14"><meta name="citation_online_date" content="2021/11/14"><meta name="og:title" content="Color Topics for Programmers"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/colorgen.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Color Topics for Programmers"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -1727,7 +1727,7 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 <p>The following techniques can be used to generate random colors. In this section:</p>
 
 <ul>
-<li><code>RNDRANGE</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
+<li><code>RNDRANGEMinMaxExc</code>, <code>RNDINT</code>, and <code>RNDINTEXC</code> are methods defined in my article on <a href="https://peteroupc.github.io/randomfunc.html"><strong>random number generation methods</strong></a>.</li>
 <li><p>Some techniques here refer to a <strong><em>light&ndash;dark factor</em></strong>.  This factor can be implemented by any of the following, in order of preference from most to least.</p>
 
 <ol>
@@ -1742,36 +1742,36 @@ were intended for readers with normal and <a href="#Defective_and_Animal_Color_V
 
 <ul>
 <li>Generating a random string in the <a href="#HTML_Format_and_Other_Text_Formats"><strong>HTML color format</strong></a> can be done by generating a <a href="https://peteroupc.github.io/randomfunc.html#Creating_a_Random_Character_String"><strong>random hexadecimal string</strong></a> with length 6, then inserting the string &quot;#&quot; at the beginning of that string.</li>
-<li>Generating a random three-component color in the <strong>0-1 format</strong> can be done as follows: <code>[RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]</code>.</li>
+<li>Generating a random three-component color in the <strong>0-1 format</strong> can be done as follows: <code>[RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code>.</li>
 <li>Generating a random <strong>8-bpc encoded RGB color</strong> can be done as follows: <code>From888(RNDINT(16777215))</code>.</li>
 <li>To generate a random <strong>dark RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]</code> until a <em>light&ndash;dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [RNDRANGE(0, maxComp), RNDRANGE(0, maxComp), RNDRANGE(0, maxComp)]</code>, where <code>maxComp</code> is the
+<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em>  is less than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp), RNDRANGEMinMaxExc(0, maxComp)]</code>, where <code>maxComp</code> is the
 maximum value of each color component, e.g., 0.5.</li>
 </ul></li>
 <li>To generate a random <strong>light RGB color</strong>, either&mdash;
 
 <ul>
-<li>generate <code>color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
-<li>generate <code>color = [minComp + RNDRANGE(0, 1) * (1.0 - minComp), minComp + RNDRANGE(0, 1) * (1.0 - minComp), minComp + RNDRANGE(0, 1) * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
+<li>generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than a given threshold, e.g., 0.5, or</li>
+<li>generate <code>color = [minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp), minComp + RNDRANGEMinMaxExc(0, 1) * (1.0 - minComp)]</code>, where <code>minComp</code> is the minimum value of each color component, e.g., 0.5.</li>
 </ul></li>
-<li>One way to generate a random <strong>pastel RGB color</strong> is to generate <code>color = [RNDRANGE(0, 1), RNDRANGE(0, 1), RNDRANGE(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than 0.75 and less than 0.9.</li>
-<li>To generate a <strong>random three-component color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDRANGE(0, 1))</code>.</li>
-<li>To generate a <strong>random shade</strong> of a given RGB color, generate <code>Lerp3(color1, [0, 0, 0], RNDRANGE(0.2, 1.0))</code>.</li>
-<li>To generate a <strong>random tint</strong> of a given RGB color, generate <code>Lerp3(color1, [1, 1, 1], RNDRANGE(0.0, 0.9))</code>.</li>
-<li>To generate a <strong>random tone</strong> of a given RGB color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGE(0.0, 0.9))</code>.</li>
-<li>To generate a <strong>random monochrome RGB color</strong>, generate <code>HslToRgb(H, RNDRANGE(0, 1),RNDRANGE(0, 1))</code>, where <code>H</code> is an arbitrary <a href="#HSV"><strong>hue</strong></a>.</li>
+<li>One way to generate a random <strong>pastel RGB color</strong> is to generate <code>color = [RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1), RNDRANGEMinMaxExc(0, 1)]</code> until a <em>light&ndash;dark factor</em> is greater than 0.75 and less than 0.9.</li>
+<li>To generate a <strong>random three-component color at or between two others</strong> (<code>color1</code> and <code>color2</code>), generate <code>Lerp3(color1, color2, RNDRANGEMinMaxExc(0, 1))</code>.</li>
+<li>To generate a <strong>random shade</strong> of a given RGB color, generate <code>Lerp3(color1, [0, 0, 0], RNDRANGEMinMaxExc(0.2, 1.0))</code>.</li>
+<li>To generate a <strong>random tint</strong> of a given RGB color, generate <code>Lerp3(color1, [1, 1, 1], RNDRANGEMinMaxExc(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random tone</strong> of a given RGB color, generate <code>Lerp3(color1, [0.5, 0.5, 0.5], RNDRANGEMinMaxExc(0.0, 0.9))</code>.</li>
+<li>To generate a <strong>random monochrome RGB color</strong>, generate <code>HslToRgb(H, RNDRANGEMinMaxExc(0, 1),RNDRANGEMinMaxExc(0, 1))</code>, where <code>H</code> is an arbitrary <a href="#HSV"><strong>hue</strong></a>.</li>
 <li><strong>Random color sampling:</strong>
 
 <ul>
-<li>To select a random continuous color from a color map (<code>colormap</code>): <code>ColorMapContinuous(colormap, RNDRANGE(0, 1))</code>.</li>
+<li>To select a random continuous color from a color map (<code>colormap</code>): <code>ColorMapContinuous(colormap, RNDRANGEMinMaxExc(0, 1))</code>.</li>
 <li>To select one random color from a color map (<code>colormap</code>): <code>colormap[RNDINTEXC(size(colormap))]</code>.  See also <a href="https://peteroupc.github.io/randomfunc.html#Sampling_With_Replacement_Choosing_a_Random_Item_from_a_List"><strong>&quot;Sampling With Replacement: Choosing a Random Item from a List&quot;</strong></a>.</li>
 <li>To select several random colors from a color map: See <a href="https://peteroupc.github.io/randomfunc.html#Sampling_Without_Replacement_Choosing_Several_Unique_Items"><strong>&quot;Sampling Without Replacement: Choosing Several Unique Items&quot;</strong></a>.</li>
 </ul></li>
 <li><strong>Similar random colors:</strong> Generating a random color that&#39;s similar to another can be done by generating a random color (<code>color1</code>) until <code>COLORDIFF(color1, color2)</code> (defined <a href="#Color_Differences"><strong>earlier</strong></a>) is less than a predetermined threshold, where <code>color2</code> is the color to compare.</li>
-<li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDRANGE(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel by black or white at a predetermined probability each.</li>
+<li><strong>Image noise:</strong> This alters a color using random numbers, such as by adding or multiplying random numbers to that color.  For example, in <em>uniform noise</em>, each component of a multicomponent color is changed to  <code>min(1,max(0,c+RNDRANGEMinMaxExc(-level, level)))</code>, where <code>c</code> is the value of the previous component and <code>level</code> is the noise level.  Other kinds of image noise include noise following a Gaussian, Poisson, or other <a href="https://peteroupc.github.io/randomfunc.html#Specific_Non_Uniform_Distributions"><strong>probability distribution</strong></a>, and <em>salt-and-pepper noise</em> that involves replacing each pixel by black or white at a predetermined probability each.</li>
 </ul>
 
 <blockquote>

@@ -522,7 +522,7 @@ A **programming language API** designed for reuse by applications could implemen
 3.  If the API provides a PRNG that an application can seed for reproducible "randomness", it should document that PRNG and any methods the API provides that use that PRNG (such as shuffling and Gaussian number generation), and should not change that PRNG or those methods in a way that would change the "random" numbers they deliver for a given seed. See example 2.
 4.  A new programming language's **standard library** ought to include the following methods for generating numbers that behave like independent uniformly distributed numbers (see my document on [**randomization and sampling methods**](https://peteroupc.github.io/randomfunc.html) for details).
     - Four methods for integers: 0 to `n` including `n`, 0 to `n` excluding `n`, `a` to `b` including `b`, and `a` to `b` excluding `b`.
-    - Four methods for real numbers bounded by `a` and `b`, with and without the endpoints.
+    - A method to sample real numbers from the open interval `(a, b)`.
 
 &nbsp;
 

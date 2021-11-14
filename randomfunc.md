@@ -1307,24 +1307,22 @@ The methods in this section should not be used to sample at random for informati
 <a id=Uniform_Random_Real_Numbers></a>
 ### Uniform Random Real Numbers
 
-This section defines the following methods that generate independent uniform random real numbers:
+This section defines a method to generate independent uniform random real numbers in the open interval (`a`, `b`), namely `RNDRANGEMinMaxExc(a, b)`.  (Both bounds are excluded because mathematically, any specific real number is generated this way with probability 0.)
 
-* `RNDRANGE(a, b)`: Interval [a, b].
-* `RNDRANGEMaxExc(a, b)`: Interval [a, b).
-* `RNDRANGEMinExc(a, b)`: Interval (a, b].
-* `RNDRANGEMinMaxExc(a, b)`: Interval (a, b).
-
-The sections that follow show how these methods can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
+The sections that follow show how this methods can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
 
 <a id=For_Fixed_Point_Number_Formats></a>
 #### For Fixed-Point Number Formats
 
-For fixed-point number formats representing multiples of 1/`n`, these methods are trivial.  The following implementations return integers that represent fixed-point numbers.  In each method below, `fpa` and `fpb` are the bounds of the fixed-point number generated and are integers that represent fixed-point numbers (such that `fpa = a * n` and `fpb = b * n`).  For example, if `n` is 100, to generate a number in [6.35, 9.96], generate `RNDRANGE(6.35, 9.96)` or `RNDINTRANGE(635, 996)`.
+For fixed-point number formats representing multiples of 1/`n`, this method is trivial.  The following implementations return integers that represent fixed-point numbers.  In the method below (and in the note), `fpa` and `fpb` are the bounds of the fixed-point number generated and are integers that represent fixed-point numbers (such that `fpa = a * n` and `fpb = b * n`).  For example, if `n` is 100, to generate a number in the open interval (6.35, 9.96), generate `RNDRANGEMinMaxExc(6.35, 9.96)` or `RNDINTRANGE(635 + 1, 996 - 1)`.
 
-* `RNDRANGE(a, b)`: `RNDINTRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINT(n)`.
-* `RNDRANGEMinExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 1) + 1)` or `(RNDINTEXC(n) + 1)`.
-* `RNDRANGEMaxExc(a, b)`: `RNDINTEXCRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINTEXC(n)` or `RNDINT(n - 1)`.
 * `RNDRANGEMinMaxExc(a, b)`: `RNDINTRANGE(fpa + 1, fpb - 1)`, or an error if `fpa >= fpb or a == fpb - 1`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 2) + 1)` or `(RNDINTEXC(n - 1) + 1)`.
+
+> **Note:** Additional methods to sample integers in a different interval are given below, but are not used in the rest of this article.
+>
+> * `RNDRANGE(a, b)`, interval [`a`, `b`]: `RNDINTRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINT(n)`.
+> * `RNDRANGEMinExc(a, b)`, interval (`a`, `b`]: `RNDINTRANGE(fpa + 1, fpb)`, or an error if `fpa >= fpb`.  But if `a` is 0 and `b` is 1: `(RNDINT(n - 1) + 1)` or `(RNDINTEXC(n) + 1)`.
+> * `RNDRANGEMaxExc(a, b)`, interval [`a`, `b`): `RNDINTEXCRANGE(fpa, fpb)`.  But if `a` is 0 and `b` is 1: `RNDINTEXC(n)` or `RNDINT(n - 1)`.
 
 <a id=For_Rational_Number_Formats></a>
 #### For Rational Number Formats
@@ -1334,7 +1332,7 @@ A _rational number_ is a ratio of integers.  If the rational number's denominato
 <a id=For_Floating_Point_Number_Formats></a>
 #### For Floating-Point Number Formats
 
-For floating-point number formats representing numbers of the form `FPSign` * `s` * `FPRADIX`<sup>`e`</sup> [^59], the following pseudocode implements `RNDRANGE(lo, hi)`.  In the pseudocode:
+For floating-point number formats representing numbers of the form `FPSign` * `s` * `FPRADIX`<sup>`e`</sup> [^59], the following pseudocode implements `RNDRANGEMinMaxExc(lo, hi)`.  In the pseudocode:
 
 - `MINEXP` is the lowest exponent a number can have in the floating-point format.  For the IEEE 754 binary64 format (Java `double`), `MINEXP = -1074`.  For the IEEE 754 binary32 format (Java `float`), `MINEXP = -149`.
 - `FPPRECISION` is the number of significant digits in the floating-point format, whether the format stores them as such or not. Equals 53 for binary64, or 24 for binary32.
@@ -1345,7 +1343,12 @@ For floating-point number formats representing numbers of the form `FPSign` * `s
 
 See also (Downey 2007\)[^60] and the [**Rademacher Floating-Point Library**](https://gitlab.com/christoph-conrads/rademacher-fpl).
 
-    METHOD RNDRANGE(lo, hi)
+    METHOD RNDRANGEMinMaxExc(lo, hi)
+       if mn >= mx: return error
+       return RNDRANGEHelper(lo, hi)
+    END METHOD
+
+    METHOD RNDRANGEHelper(lo, hi)
       losgn = FPSign(lo)
       hisgn = FPSign(hi)
       loexp = FPExponent(lo)
@@ -1359,7 +1362,7 @@ See also (Downey 2007\)[^60] and the [**Rademacher Floating-Point Library**](htt
         // NOTE: Changes negative zero to positive
         mabs = max(abs(lo),abs(hi))
         while true // until a value is returned
-           ret=RNDRANGE(0, mabs)
+           ret=RNDRANGEHelper(0, mabs)
            neg=RNDINT(1)
            if neg==0: ret=-ret
            if ret>=lo and ret<=hi: return ret
@@ -1368,7 +1371,7 @@ See also (Downey 2007\)[^60] and the [**Rademacher Floating-Point Library**](htt
       if lo == hi: return lo
       if losgn == -1
         // Negative range
-        return -RNDRANGE(abs(lo), abs(hi))
+        return -RNDRANGEHelper(abs(lo), abs(hi))
       end
       // Positive range
       expdiff=hiexp-loexp
@@ -1408,16 +1411,15 @@ See also (Downey 2007\)[^60] and the [**Rademacher Floating-Point Library**](htt
       end
     END METHOD
 
-The other members of the `RNDRANGE` family can be derived from `RNDRANGE` as follows:
-
-- **`RNDRANGEMaxExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mx` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
-- **`RNDRANGEMinExc`, interval \[`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
-- **`RNDRANGEMinMaxExc`, interval \(`mn`, `mx`\)**:
-    - Generate `RNDRANGE(mn, mx)` in a loop until a number other than `mn` or `mx` is generated this way.  Return an error if `mn >= mx` (treating positive and negative zero as different).
-
-> **Note:** In many software libraries, a real number in a range is chosen uniformly at random by dividing or multiplying a random integer by a constant.  For example, the equivalent of `RNDRANGEMaxExc(0, 1)` is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.[^61] The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020\)[^62].  As another example, `RNDRANGEMaxExc(a, b)` is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` returns a number in the interval \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985\)[^63].
+> **Notes:**
+>
+> 1. Additional methods to sample real numbers in a different interval are given below, but are not used in the rest of this article.
+>
+> - **`RNDRANGE(mn, mx)`, interval \[`mn`, `mx`\]**.  Generate `RNDRANGEHelper(mn, mx)`.
+> - **`RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\)**: If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.
+> - **`RNDRANGEMinExc(mn, mx)`, interval \(`mn`, `mx`\]** If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mn` is generated this way.
+>
+> 2. In many software libraries, a real number in a range is chosen uniformly at random by dividing or multiplying a random integer by a constant.  For example, a method to sample uniformly at random from the half-open interval \[0, 1\) is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.[^61] The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020\)[^62].  As another example, a method to sample uniformly at random from the half-open interval \[`a`, `b`\) is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` samples uniformly at random from \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985\)[^63].
 
 <a id=Monte_Carlo_Sampling_Expected_Values_Integration_and_Optimization></a>
 ### Monte Carlo Sampling: Expected Values, Integration, and Optimization
@@ -1480,16 +1482,16 @@ Other examples of point sample selection, which likewise produce a uniform-behav
 - If `STATEJUMP()` is `RNDRANGEMinMaxExc(-1, 1)`, the random state is advanced by a random real number in the interval (-1, 1).
 - A **continuous-time process** models random behavior at every moment, not just at discrete times.  There are two popular examples:
     - A _Wiener process_ (also known as _Brownian motion_) has random states and jumps that are normally distributed. For a random walk that follows a Wiener process, `STATEJUMP()` is `Normal(mu * timediff, sigma * sqrt(timediff))`, where  `mu` is the drift (or average value per time unit), `sigma` is the volatility, and `timediff` is the time difference between samples.  A _Brownian bridge_ (Revuz and Yor 1999\)[^69] modifies a Wiener process as follows: For each time X, calculate `W(X) - W(E) * (X - S) / (E - S)`, where `S` and `E` are the starting and ending times of the process, respectively, and `W(X)` and `W(E)` are the state at times X and E, respectively.
-    - In a _Poisson point process_, the time between each event is its own exponential random variate with its own rate parameter (e.g., `Expo(rate)`) (see "[**Exponential Distribution**](#Exponential_Distribution)"), and sorting N random `RNDRANGE(x, y)` expresses N arrival times in the interval `[x, y]`. The process is _homogeneous_ if all the rates are the same, and _inhomogeneous_ if the rate is a function of the "timestamp" before each event jump (the _hazard rate function_); to generate arrival times here, potential arrival times are generated at the maximum possible rate (`maxrate`) and each one is accepted if `RNDRANGE(0, maxrate) < thisrate`, where `thisrate` is the rate for the given arrival time (Lewis and Shedler 1979\)[^70].
+    - In a _Poisson point process_, the time between each event is its own exponential random variate with its own rate parameter (e.g., `Expo(rate)`) (see "[**Exponential Distribution**](#Exponential_Distribution)"), and sorting N random `RNDRANGEMinMaxExc(x, y)` expresses N arrival times in the interval `[x, y]`. The process is _homogeneous_ if all the rates are the same, and _inhomogeneous_ if the rate is a function of the "timestamp" before each event jump (the _hazard rate function_); to generate arrival times here, potential arrival times are generated at the maximum possible rate (`maxrate`) and each one is accepted if `RNDRANGEMinMaxExc(0, maxrate) < thisrate`, where `thisrate` is the rate for the given arrival time (Lewis and Shedler 1979\)[^70].
 
 <a id=Transformations_Additional_Examples></a>
 #### Transformations: Additional Examples
 
-1. **Bates distribution**: Find the mean of _n_ uniform random variates in a given range (such as by `RNDRANGE(minimum, maximum)`) (strategy 8, mean).
+1. **Bates distribution**: Find the mean of _n_ uniform random variates in a given range (such as by `RNDRANGEMinMaxExc(minimum, maximum)`) (strategy 8, mean).
 2. A random point (`x`, `y`) can be transformed (strategy 9, geometric transformation) to derive a point with **correlated random** coordinates (old `x`, new `x`) as follows (see (Saucier 2000\)[^71], sec. 3.8): `[x, y*sqrt(1 - rho * rho) + rho * x]`, where `x` and `y` are independent numbers chosen at random in the same way, and `rho` is a _correlation coefficient_ in the interval \[-1, 1\] (if `rho` is 0, `x` and `y` are uncorrelated).
 3. It is reasonable to talk about sampling the sum or mean of N random variates, where N has a fractional part.  In this case, `ceil(N)` random variates are generated and the last variate is multiplied by that fractional part.  For example, to sample the sum of 2.5 random variates, generate three random variates, multiply the last by 0.5 (the fractional part of 2.5), then add together all three variates.
 4. A **hypoexponential distribution** models the sum of _n_ random variates that follow an exponential distribution and each have a separate rate parameter (see "[**Exponential Distribution**](#Exponential_Distribution)").
-5. The **maximal coupling** method mentioned by [**P. Jacob**](https://statisfaction.wordpress.com/2017/09/06/sampling-from-a-maximal-coupling/) generates correlated random variates from two distributions, _P_ and _Q_, with known probability density functions or PDFs (`PPDF` and `QPDF`, respectively); this works only if the area under each PDF is 1: Sample a number `x` at random from distribution _P_, and if `RNDRANGE(0, PPDF(x)) < QPDF(x)`, return `[x, x]`.  Otherwise, sample a number `y` at random from distribution _Q_ until `PPDF(y) < RNDRANGE(0, QPDF(y))`, then return `[x, y]`.
+5. The **maximal coupling** method mentioned by [**P. Jacob**](https://statisfaction.wordpress.com/2017/09/06/sampling-from-a-maximal-coupling/) generates correlated random variates from two distributions, _P_ and _Q_, with known probability density functions or PDFs (`PPDF` and `QPDF`, respectively); this works only if the area under each PDF is 1: Sample a number `x` at random from distribution _P_, and if `RNDRANGEMinMaxExc(0, PPDF(x)) < QPDF(x)`, return `[x, x]`.  Otherwise, sample a number `y` at random from distribution _Q_ until `PPDF(y) < RNDRANGEMinMaxExc(0, QPDF(y))`, then return `[x, y]`.
 
 <a id=Sampling_from_a_Distribution_of_Data_Points></a>
 ### Sampling from a Distribution of Data Points
@@ -1693,16 +1695,16 @@ In addition, the following methods approximate the quantile if the application c
 <a id=Rejection_Sampling_with_a_PDF_Like_Function></a>
 #### Rejection Sampling with a PDF-Like Function
 
-If the distribution **has a known PDF-like function** (`PDF`), and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random variates with the latter distribution until a variate (call it `n`) that satisfies `r < PDF(n)`, where `r = RNDRANGEMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
+If the distribution **has a known PDF-like function** (`PDF`), and that function can be more easily sampled by another distribution with its own PDF-like function (`PDF2`) that "dominates" `PDF` in the sense that `PDF2(x) >= PDF(x)` at every valid `x`, then generate random variates with the latter distribution until a variate (call it `n`) that satisfies `r < PDF(n)`, where `r = RNDRANGEMinMaxExc(0, PDF2(n))`, is generated this way (that is, sample points in `PDF2` until a point falls within `PDF`).
 
-A variant of rejection sampling is the _squeeze principle_, in which a third PDF-like function (`PDF3`) is chosen that is "dominated" by the first one (`PDF`) and easier to sample than `PDF`.  Here, a number is accepted if `r < PDF3(n)` or `r < PDF(n)` , where `r = RNDRANGEMaxExc(0, PDF2(n))` (Devroye 1986, p. 53\)[^19].
+A variant of rejection sampling is the _squeeze principle_, in which a third PDF-like function (`PDF3`) is chosen that is "dominated" by the first one (`PDF`) and easier to sample than `PDF`.  Here, a number is accepted if `r < PDF3(n)` or `r < PDF(n)` , where `r = RNDRANGEMinMaxExc(0, PDF2(n))` (Devroye 1986, p. 53\)[^19].
 
 See also (von Neumann 1951\)[^47]; (Devroye 1986\)[^19], pp. 41-43; "[**Rejection Sampling**](#Rejection_Sampling)"; and "[**Generating Pseudorandom Numbers**](https://mathworks.com/help/stats/generating-random-data.html)".
 
 > **Examples:**
 >
-> 1. To sample a random variate in the interval [`low`, `high`) from a PDF-like function with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMaxExc(low, high)` and `y = RNDRANGEMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete** and integer-valued, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
-> 2. A PDF-like function for a custom distribution, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's, `PDF2`, is `exp(-x)`.  The exponential PDF-like function `PDF2` "dominates" `PDF` (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `RNDRANGEMaxExc(0, PDF2(n)) < PDF(n)`.
+> 1. To sample a random variate in the interval [`low`, `high`) from a PDF-like function with a positive maximum value no greater than `peak` at that interval, generate `x = RNDRANGEMinMaxExc(low, high)` and `y = RNDRANGEMinMaxExc(0, peak)` until `y < PDF(x)`, then take the last `x` generated this way. (See also Saucier 2000, pp. 6-7.)  If the distribution **is discrete** and integer-valued, generate `x` with `x = RNDINTEXCRANGE(low, high)` instead.
+> 2. A PDF-like function for a custom distribution, `PDF`, is `exp(-abs(x*x*x))`, and the exponential distribution's, `PDF2`, is `exp(-x)`.  The exponential PDF-like function `PDF2` "dominates" `PDF` (at every `x` 0 or greater) if we multiply it by 1.5, so that `PDF2` is now `1.5 * exp(-x)`.  Now we can generate numbers from our custom distribution by sampling exponential points until a point falls within `PDF`.  This is done by generating `n = Expo(1)` until `RNDRANGEMinMaxExc(0, PDF2(n)) < PDF(n)`.
 > 3. The normal distribution's upside-down bell curve has the PDF-like function `1-exp(-(x*x))`, and the highest point for this function is `peak = max(1-exp(-(low*low)), 1-exp(-(high*high)))`. Sampling this distribution then uses the algorithm in example 1.
 >
 > **Note:** In the Python sample code, [**moore.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/moore.py) and `numbers_from_dist` sample from a distribution via rejection sampling (Devroye and Gravel 2020\)[^11], (Sainudiin and York 2013\)[^81].
@@ -1710,7 +1712,7 @@ See also (von Neumann 1951\)[^47]; (Devroye 1986\)[^19], pp. 41-43; "[**Rejectio
 <a id=Alternating_Series></a>
 #### Alternating Series
 
-If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006\)[^80]\: (1) Sample from the "dominating" distribution, and let `x` be the sampled number; (2) set `n` to 0; (3) accept `x` if `r < LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMaxExc(0, PDF2(n))`.
+If a PDF-like function for the target distribution is not known exactly, but can be approximated from above and below by two series expansions that converge to that function as more terms are added, the  _alternating series method_ can be used.  This still requires a "dominating" PDF-like function (`PDF2(x)`) to serve as the "easy-to-sample" distribution.  Call the series expansions `UPDF(x, n)` and `LPDF(x, n)`, respectively, where `n` is the number of terms in the series to add.  To sample the distribution using this method (Devroye 2006\)[^80]\: (1) Sample from the "dominating" distribution, and let `x` be the sampled number; (2) set `n` to 0; (3) accept `x` if `r < LPDF(x, n)`, or go to step 1 if `r >= UPDF(x, n)`, or repeat this step with `n` increased by 1 if neither is the case, where `r = RNDRANGEMinMaxExc(0, PDF2(n))`.
 
 <a id=Markov_Chain_Monte_Carlo></a>
 #### Markov-Chain Monte Carlo
@@ -1754,8 +1756,8 @@ A [**_piecewise linear distribution_**](http://en.cppreference.com/w/cpp/numeric
       m=(weights[index+1]-weights[index])/w
       h2=(weights[index+1]+weights[index])
       ww=w/2.0; hh=h2/2.0
-      x=RNDRANGEMaxExc(-ww, ww)
-      if RNDRANGEMaxExc(-hh, hh)>x*m: x=-x
+      x=RNDRANGEMinMaxExc(-ww, ww)
+      if RNDRANGEMinMaxExc(-hh, hh)>x*m: x=-x
       return values[index]+x+ww
     END METHOD
 
@@ -1786,10 +1788,10 @@ Most commonly used:
 - **Beta distribution**&#x2b26;: See [**Beta Distribution**](https://peteroupc.github.io/randomnotes.html#Beta_Distribution).
 - **Binomial distribution**: See [**Binomial Distribution**](#Binomial_Distribution).
 - **Binormal distribution**: See [**Multivariate Normal (Multinormal) Distribution**](https://peteroupc.github.io/randomnotes.html#Multivariate_Normal_Multinormal_Distribution).
-- **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975\)[^86]\: Generate `x = RNDRANGEMinExc(0,1)` and `y = RNDRANGEMinExc(0,1)` until `x * x + y * y <= 1`, then generate `(RNDINT(1) * 2 - 1) * y / x`.
+- **Cauchy (Lorentz) distribution**&dagger;:  `Stable(1, 0)`.  This distribution is similar to the normal distribution, but with "fatter" tails. Alternative algorithm based on one mentioned in (McGrath and Irving 1975\)[^86]\: Generate `x = RNDRANGEMinMaxExc(0,1)` and `y = RNDRANGEMinMaxExc(0,1)` until `x * x + y * y <= 1`, then generate `(RNDINT(1) * 2 - 1) * y / x`.
 - **Chi-squared distribution**: `GammaDist(df * 0.5 + Poisson(sms * 0.5), 2)`, where `df` is the number of degrees of freedom and `sms` is the sum of mean squares (where `sms` other than 0 indicates a _noncentral_ distribution).
 - **Dice**: See [**Dice**](#Dice).
-- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018\) [^1], as well as returning infinity if `RNDRANGEMinMaxExc(0, 1)` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinExc(0, 0.5))` or `-log1p(-RNDRANGEMinExc(0, 0.5))` (rather than `-ln(1-RNDRANGEMinMaxExc(0, 1))`), chosen at random each time; an alternative is `ln(1/RNDRANGEMinExc(0,1))` mentioned in (Devroye 2006\)[^80].
+- **Exponential distribution**: See [**Exponential Distribution**](#Exponential_Distribution).  The na&iuml;ve implementation `-ln(1-RNDRANGEMinMaxExc(0, 1)) / lamda` has several problems, such as being ill-conditioned at large values because of the distribution's right-sided tail (Pedersen 2018\) [^1], as well as returning infinity if `RNDRANGEMinMaxExc(0, 1)` becomes 1. An application can reduce some of these problems by applying Pedersen's suggestion of using either `-ln(RNDRANGEMinMaxExc(0, 0.5))` or `-log1p(-RNDRANGEMinMaxExc(0, 0.5))` (rather than `-ln(1-RNDRANGEMinMaxExc(0, 1))`), chosen at random each time; an alternative is `ln(1/RNDRANGEMinMaxExc(0,1))` mentioned in (Devroye 2006\)[^80].
 - **Extreme value distribution**: See generalized extreme value distribution.
 - **Gamma distribution**: See [**Gamma Distribution**](https://peteroupc.github.io/randomnotes.html#Gamma_Distribution). Generalized gamma distributions include the **Stacy distribution** (`pow(GammaDist(a, 1), 1.0 / c) * b`, where `c` is another shape parameter) and the **Amoroso distribution** (Crooks 2015\)[^87], (`pow(GammaDist(a, 1), 1.0 / c) * b + d`, where `d` is the minimum value).
 - **Gaussian distribution**: See [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
@@ -1807,7 +1809,7 @@ Most commonly used:
 - **Pareto distribution**: `pow(RNDRANGEMinMaxExc(0, 1), -1.0 / alpha) * minimum`, where `alpha`  is the shape and `minimum` is the minimum.
 - **Rayleigh distribution**&dagger;: `sqrt(Expo(0.5))`.  If the scale parameter (`sigma`) follows a logarithmic normal distribution, the result is a _Suzuki distribution_.
 - **Standard normal distribution**&dagger;: `Normal(0, 1)`.  See also [**Normal (Gaussian) Distribution**](https://peteroupc.github.io/randomnotes.html#Normal_Gaussian_Distribution).
-- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random variate.  A `cent` other than 0 indicates a _noncentral_ distribution.  Alternatively, `cos(RNDRANGE(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)` (Bailey 1994\)[^91].
+- **Student's _t_-distribution**: `Normal(cent, 1) / sqrt(GammaDist(df * 0.5, 2 / df))`, where `df` is the number of degrees of freedom, and _cent_ is the mean of the normally-distributed random variate.  A `cent` other than 0 indicates a _noncentral_ distribution.  Alternatively, `cos(RNDRANGEMinMaxExc(0, pi * 2)) * sqrt((pow(RNDRANGEMinMaxExc(0, 1),-2.0/df)-1) * df)` (Bailey 1994\)[^91].
 - **Triangular distribution**&dagger; (Stein and Keblis 2009\)[^92]\: `(1-alpha) * min(a, b) + alpha * max(a, b)`, where `alpha` is in [0, 1], `a = RNDRANGEMinMaxExc(0, 1)`, and `b = RNDRANGEMinMaxExc(0, 1)`.
 - **Weibull distribution**: See generalized extreme value distribution.
 
@@ -1832,7 +1834,7 @@ Miscellaneous:
 - **Cosine distribution**&#x2b26;: `atan2(x, sqrt(1 - x * x)) / pi`, where `x = (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 1)` (Saucier 2000, p. 17; inverse sine replaced with `atan2` equivalent).
 - **Dagum distribution**: See beta prime distribution.
 - **Dirichlet distribution**: [**This distribution**](https://en.wikipedia.org/wiki/Dirichlet_distribution) \(e.g., (Devroye 1986\)[^23], p. 593-594) can be sampled by generating _n_+1 random [**gamma-distributed**](https://peteroupc.github.io/randomfunc.md#Gamma_Distribution) numbers, each with separate parameters, taking their sum[^25], dividing them by that sum, and taking the first _n_ numbers. (The _n_+1 numbers sum to 1, but the Dirichlet distribution models the first _n_ of them, which will generally sum to less than 1.)
-- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).
+- **Double logarithmic distribution**&#x2b26;: `(0.5 + (RNDINT(1) * 2 - 1) * RNDRANGEMinMaxExc(0, 0.5) * RNDRANGEMinMaxExc(0, 1))` (see also Saucier 2000, p. 15, which shows the wrong X axes).
 - **Erlang distribution**: `GammaDist(n, 1.0 / lamda)`, where `n` is an integer greater than 0.  Returns a number that simulates a sum of `n` exponential random variates with the given `lamda` parameter.
 - **Estoup distribution**: See zeta distribution.
 - **Exponential power distribution** (generalized normal distribution version 1): `(RNDINT(1) * 2 - 1) * pow(GammaDist(1.0/a, 1), a)`, where `a` is a shape parameter.
@@ -1881,7 +1883,7 @@ Miscellaneous:
 - **Piecewise linear distribution**: See [**Continuous Weighted Choice**](#Continuous_Weighted_Choice).
 - **P&oacute;lya&ndash;Aeppli distribution**: See [**Transformations of Random Variates: Additional Examples**](#Transformations_of_Random_Numbers_Additional_Examples).
 - **Power distribution**: `BetaDist(alpha, 1) / b`, where `alpha`  is the shape and `b` is the domain.  Nominally in the interval (0, 1).
-- **Power law distribution**: `pow(RNDRANGE(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
+- **Power law distribution**: `pow(RNDRANGEMinMaxExc(pow(mn,n+1),pow(mx,n+1)), 1.0 / (n+1))`, where `n`  is the exponent, `mn` is the minimum, and `mx` is the maximum.  [**Reference**](http://mathworld.wolfram.com/RandomNumber.html).
 - **Power lognormal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Power normal distribution**: See the [**Python sample code**](https://peteroupc.github.io/randomgen.zip).
 - **Product copula**: See [**Gaussian and Other Copulas**](https://peteroupc.github.io/randomnotes.html#Gaussian_and_Other_Copulas).
@@ -1901,7 +1903,7 @@ Miscellaneous:
 - **Waring&ndash;Yule distribution**: See beta negative binomial distribution.
 - **Wigner (semicircle) distribution**&dagger;: `(BetaDist(1.5, 1.5)*2-1)`.  The scale parameter (`sigma`) is the semicircular radius.
 - **Yule&ndash;Simon distribution**: See beta negative binomial distribution.
-- **Zeta distribution**: Generate `n = floor(pow(RNDRANGEMinMaxExc(0, 1), -1.0 / r))`, and if `d / pow(2, r) < RNDRANGEMaxExc((d - 1) * n / (pow(2, r) - 1.0))`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in (Devroye 1986\)[^19]. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some integer greater than 0 is called a _Zipf distribution_ or _Estoup distribution_. (Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
+- **Zeta distribution**: Generate `n = floor(pow(RNDRANGEMinMaxExc(0, 1), -1.0 / r))`, and if `d / pow(2, r) < RNDRANGEMinMaxExc((d - 1) * n / (pow(2, r) - 1.0))`, where `d = pow((1.0 / n) + 1, r)`, repeat this process. The parameter `r` is greater than 0. Based on method described in (Devroye 1986\)[^19]. A zeta distribution [**truncated**](#Rejection_Sampling) by rejecting random values greater than some integer greater than 0 is called a _Zipf distribution_ or _Estoup distribution_. (Devroye uses "Zipf distribution" to refer to the untruncated zeta distribution.)
 - **Zipf distribution**: See zeta distribution.
 
 </small>
@@ -2002,7 +2004,7 @@ To generate a random point on or inside&mdash;
 
 To generate a random point on the surface of a sphere in the form of a latitude and longitude (in radians with west and south coordinates negative\)[^105]&mdash;
 
-- generate the longitude `RNDRANGEMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
+- generate the longitude `RNDRANGEMinMaxExc(-pi, pi)`, where the longitude is in the interval [-&pi;, &pi;), and
 - generate the latitude `atan2(sqrt(1 - x * x), x) - pi / 2`, where `x = RNDRANGEMinMaxExc(-1, 1)` and the latitude is in the interval \[-&pi;/2, &pi;/2\] (the interval excludes the poles, which have many equivalent forms; if poles are not desired, generate `x` until neither -1 nor 1 is generated this way).
 
 <a id=Acknowledgments></a>

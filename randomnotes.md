@@ -37,15 +37,15 @@ probability that a number sampled from the normal distribution will be within on
 There are a number of methods for sampling the normal distribution. An application can combine some or all of these.
 
 1. The ratio-of-uniforms method (given as `NormalRatioOfUniforms` below).
-2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent values sampled from the normal distribution.  The polar method (given as `NormalPolar` below) likewise produces two independent values sampled from that distribution at a time.
+2. In the _Box&ndash;Muller transformation_, `mu + radius * cos(angle)` and `mu + radius * sin(angle)`, where `angle = RNDRANGEMinMaxExc(0, 2 * pi)` and `radius = sqrt(Expo(0.5)) * sigma`, are two independent values sampled from the normal distribution.  The polar method (given as `NormalPolar` below) likewise produces two independent values sampled from that distribution at a time.
 3. Karney's algorithm to sample from the normal distribution, in a manner that minimizes approximation error and without using floating-point numbers (Karney 2014\)[^1].
 
 For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and Hemani 2016\)[^3].
 
     METHOD NormalRatioOfUniforms(mu, sigma)
         while true
-            a=RNDRANGEMinExc(0,1)
-            b=RNDRANGE(0,sqrt(2.0/exp(1.0)))
+            a=RNDRANGEMinMaxExc(0,1)
+            b=RNDRANGEMinMaxExc(0,sqrt(2.0/exp(1.0)))
             if b*b <= -a * a * 4 * ln(a)
               return (RNDINT(1) * 2 - 1) *
                 (b * sigma / a) + mu
@@ -55,8 +55,8 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and 
 
     METHOD NormalPolar(mu, sigma)
       while true
-        a = RNDRANGEMinExc(0,1)
-        b = RNDRANGEMinExc(0,1)
+        a = RNDRANGEMinMaxExc(0,1)
+        b = RNDRANGEMinMaxExc(0,1)
         if RNDINT(1) == 0: a = 0 - a
         if RNDINT(1) == 0: b = 0 - b
         c = a * a + b * b
@@ -72,9 +72,9 @@ For surveys of Gaussian samplers, see (Thomas et al. 2007\)[^2], and (Malik and 
 > 1. The _standard normal distribution_ is implemented as `Normal(0, 1)`.
 > 2. Methods implementing a variant of the normal distribution, the _discrete Gaussian distribution_, generate _integers_ that closely follow the normal distribution.  Examples include the one in (Karney 2014\)[^1], an improved version in (Du et al. 2021\)[^4], as well as so-called "constant-time" methods such as (Micciancio and Walter 2017\)[^5] that are used above all in _lattice-based cryptography_.
 > 3. The following are some approximations to the normal distribution that papers have suggested:
->    - The sum of twelve `RNDRANGEMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`, to generate an approximate normal variate with mean 0 and standard deviation `sigma`. (Kabal 2000/2019\)[^6] "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution"**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution), namely the sum of `n` many `RNDRANGE(0, 1)` numbers, on Wikipedia.  D. Thomas (2014\)[^7], describes a more general approximation called CLT<sub>k</sub>, which combines `k` numbers in [0, 1] sampled from the uniform distribution as follows: `RNDRANGE(0, 1) - RNDRANGE(0, 1) + RNDRANGE(0, 1) - ...`.
+>    - The sum of twelve `RNDRANGEMinMaxExc(0, sigma)` numbers, subtracted by 6 * `sigma`, to generate an approximate normal variate with mean 0 and standard deviation `sigma`. (Kabal 2000/2019\)[^6] "warps" this sum in the following way (before adding the mean `mu`) to approximate the normal distribution better: `ssq = sum * sum; sum = ((((0.0000001141*ssq - 0.0000005102) * ssq + 0.00007474) * ssq + 0.0039439) * ssq + 0.98746) * sum`. See also [**"Irwin&ndash;Hall distribution"**](https://en.wikipedia.org/wiki/Irwin%E2%80%93Hall_distribution), namely the sum of `n` many `RNDRANGEMinMaxExc(0, 1)` numbers, on Wikipedia.  D. Thomas (2014\)[^7], describes a more general approximation called CLT<sub>k</sub>, which combines `k` numbers in [0, 1] sampled from the uniform distribution as follows: `RNDRANGEMinMaxExc(0, 1) - RNDRANGEMinMaxExc(0, 1) + RNDRANGEMinMaxExc(0, 1) - ...`.
 >    - Numerical [**inversions**](#Inverse_Transform_Sampling) of the normal distribution's cumulative distribution function (CDF), including those by Wichura, by Acklam, and by Luu (Luu 2016\)[^8].  See also [**"A literate program to compute the inverse of the normal CDF"**](https://www.johndcook.com/blog/normal_cdf_inverse/).  Notice that the normal distribution's inverse CDF has no closed form.
-> 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGE(0, 1)`), and the two variates are not statistically independent (Thistleton et al. 2007\)[^9].
+> 4. A pair of _q-Gaussian_ random variates with parameter `q` less than 3 can be generated using the Box&ndash;Muller transformation, except `radius` is `radius=sqrt(-2*(pow(u,1-qp)-1)/(1-qp))` (where `qp=(1+q)/(3-q)` and `u=RNDRANGEMinMaxExc(0, 1)`), and the two variates are not statistically independent (Thistleton et al. 2007\)[^9].
 > 5. A well-known result says that adding `n` many `Normal(0, 1)` variates, and dividing by `sqrt(n)`, results in a new `Normal(0, 1)` variate.
 
 <a id=Gamma_Distribution></a>
@@ -99,14 +99,14 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
            r = 1.0/(1+w)
            while true
                 z = 0
-                x = RNDRANGE(0, 1)
+                x = RNDRANGEMinMaxExc(0, 1)
                 if x <= r: z = -ln(x/r)
                 else: z = -Expo(lamda)
                 ret = exp(-z/meanLifetime)
                 eta = 0
                 if z>=0: eta=exp(-z)
                 else: eta=w*lamda*exp(lamda*z)
-                if RNDRANGE(0, eta) < exp(-ret-z): return ret * scale
+                if RNDRANGEMinMaxExc(0, eta) < exp(-ret-z): return ret * scale
            end
         end
         d = meanLifetime
@@ -122,14 +122,14 @@ Here, `meanLifetime` must be an integer or noninteger greater than 0, and `scale
                v = v * v * v
                if v > 0: break
             end
-            u = RNDRANGEMinExc(0,1)
+            u = RNDRANGEMinMaxExc(0,1)
             x2 = x * x
             if u < 1 - (0.0331 * x2 * x2): break
             if ln(u) < (0.5 * x2) + (d * (1 - v + ln(v))): break
         end
         ret = d * v
         if meanLifetime < 1
-           ret = ret * pow(RNDRANGE(0, 1), 1.0 / meanLifetime)
+           ret = ret * pow(RNDRANGEMinMaxExc(0, 1), 1.0 / meanLifetime)
         end
         return ret * scale
     END METHOD
@@ -144,13 +144,13 @@ The beta distribution is a bounded-domain probability distribution; its two para
 The following method samples a number from a _beta distribution_, in the interval [0, 1).
 
     METHOD BetaDist(a, b)
-      if b==1 and a==1: return RNDRANGE(0, 1)
+      if b==1 and a==1: return RNDRANGEMinMaxExc(0, 1)
       // Min-of-uniform
-      if a==1: return 1.0-pow(RNDRANGE(0, 1),1.0/b)
+      if a==1: return 1.0-pow(RNDRANGEMinMaxExc(0, 1),1.0/b)
       // Max-of-uniform.  Use only if a is small to
       // avoid accuracy problems, as pointed out
       // by Devroye 1986, p. 675.
-      if b==1 and a < 10: return pow(RNDRANGE(0, 1),1.0/a)
+      if b==1 and a < 10: return pow(RNDRANGEMinMaxExc(0, 1),1.0/a)
       x=GammaDist(a,1)
       return x/(x+GammaDist(b,1))
     END METHOD
@@ -189,7 +189,7 @@ The algorithm below samples a number from the von Mises distribution, and is bas
         rho = (r - sqrt(2 * r)) / (kappa * 2)
         s = (1 + rho * rho) / (2 * rho)
         while true
-            u = RNDRANGEMaxExc(-pi, pi)
+            u = RNDRANGEMinMaxExc(-pi, pi)
             v = RNDRANGEMinMaxExc(0, 1)
             z = cos(u)
             w = (1 + s*z) / (s + z)
@@ -243,14 +243,14 @@ Methods implementing the strictly geometric stable and general geometric stable 
     METHOD GeometricStable(alpha, lamda, tau)
        rho = alpha*(1-tau)/2
        sign = -1
-       if tau==1 or RNDINT(1)==0 or RNDRANGE(0, 1) < tau
+       if tau==1 or RNDINT(1)==0 or RNDRANGEMinMaxExc(0, 1) < tau
            rho = alpha*(1+tau)/2
            sign = 1
        end
        w = 1
        if rho != 1
           rho = rho * pi
-          cotparam = RNDRANGE(0, rho)
+          cotparam = RNDRANGEMinMaxExc(0, rho)
           w = sin(rho)*cos(cotparam)/sin(cotparam)-cos(rho)
        end
        return Expo(1) * sign * pow(lamda*w, 1.0/alpha)
@@ -407,9 +407,9 @@ Each of the resulting uniform random values will be in the interval [0, 1], and 
 
 Other kinds of copulas describe different kinds of dependence between randomly sampled numbers.  Examples of other copulas are&mdash;
 
-- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDRANGE(0, 1)`,
-- the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDRANGE(0, 1)`,
-- the **product copula**, where each number is a separately generated `RNDRANGE(0, 1)` (indicating no dependence between the numbers), and
+- the **Fr&eacute;chet&ndash;Hoeffding upper bound copula** _\[x, x, ..., x\]_ (e.g., `[x, x]`), where `x = RNDRANGEMinMaxExc(0, 1)`,
+- the **Fr&eacute;chet&ndash;Hoeffding lower bound copula** `[x, 1.0 - x]` where `x = RNDRANGEMinMaxExc(0, 1)`,
+- the **product copula**, where each number is a separately generated `RNDRANGEMinMaxExc(0, 1)` (indicating no dependence between the numbers), and
 - the **Archimedean copulas**, described by M. Hofert and M. M&auml;chler (2011\)[^17].
 
 <a id=Notes></a>
@@ -497,7 +497,7 @@ There are three kinds of randomization algorithms:
     - can store and operate on real numbers (which have unlimited precision), and
     - can generate independent uniform random real numbers
 
-    (Devroye 1986, p. 1-2\)[^13].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2\)[^13]. All methods given on this page are exact unless otherwise noted.  Note that the `RNDRANGE` method is exact in theory, but has no required implementation.
+    (Devroye 1986, p. 1-2\)[^13].  However, an exact algorithm implemented on real-life computers can incur error due to the use of fixed precision, such as rounding and cancellations, especially when floating-point numbers are involved. An exact algorithm can achieve a guaranteed bound on accuracy (and thus be an _error-bounded algorithm_) using either arbitrary-precision or interval arithmetic (see also Devroye 1986, p. 2\)[^13]. All methods given on this page are exact unless otherwise noted.  Note that the `RNDRANGEMinMaxExc` method is exact in theory, but has no required implementation.
 2. An _error-bounded algorithm_ is a sampling algorithm with the following requirements:
 
     - If the ideal distribution is discrete (takes on a countable number of values), the algorithm samples exactly from that distribution.
@@ -514,9 +514,9 @@ There are many ways to describe closeness between two distributions.  One sugges
 >
 > **Examples:**
 >
-> 1. Sampling from the exponential distribution via `-ln(RNDRANGE(0, 1))` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
+> 1. Sampling from the exponential distribution via `-ln(RNDRANGEMinMaxExc(0, 1))` is an _exact algorithm_ (in theory), but not an _error-bounded_ one for common floating-point number formats.  The same is true of the Box&ndash;Muller transformation.
 > 2. Sampling from the exponential distribution using the `ExpoExact` method in the page "[**Miscellaneous Observations on Randomization**](https://peteroupc.github.io/randmisc.html#ExpoExact)" is an _error-bounded algorithm_.  Karney's algorithm for the normal distribution (Karney 2014\)[^1] is also error-bounded because it returns a result that can be made to come close to the normal distribution within any error tolerance desired simply by appending more random digits to the end.  See also (Oberhoff 2018\)[^19].
-> 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGE(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
+> 3. Examples of _approximate algorithms_ include sampling from a Gaussian-like distribution via a sum of `RNDRANGEMinMaxExc(0, 1)`, or most cases of modulo reduction to produce uniform-like integers at random (see notes in the section "[**RNDINT**](https://peteroupc.github.io/randomfunc.html#RNDINT_Random_Integers_in_0_N)").
 
 <a id=License></a>
 ## License
