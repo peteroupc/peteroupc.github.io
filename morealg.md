@@ -127,50 +127,55 @@ Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain
 <a id=cosh___lambda___minus_1_and_Certain_Other_Convex_Functions></a>
 ### cosh(_&lambda;_) &minus; 1, and Certain Other Convex Functions
 
-The following algorithm I found takes advantage of the convex combination method.
+The following algorithm I found, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), samples the probability cosh(_&lambda;_) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.
 
 1. (The first two steps generate a number _n_ with probability _g_(_n_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
 2. Set _n_ to 2\*_n_ + 2.
 3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!).  With probability _P_, go to the next step.  Otherwise, return 0.
-4. Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
+4. (At this point, _n_ equals _i_ with probability _w_<sub>_i_</sub>(1).) Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
 
 Derivation: Follows from rewriting cosh(_&lambda;_)&minus;1 as the following series: $$\sum_{n\ge 0} w_n(\lambda) = \sum_{n\ge 0} g(n) \frac{w_n(\lambda)}{g(n)},$$ where:
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 0 otherwise.  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, ...
+- _g_(_n_) is (1/2)\*(1/2)<sup>(_n_&minus;2)/2</sup> if _n_&gt;0 and _n_ is even, or 1 otherwise.  This serves to send nonzero probabilities to terms in the series with nonzero coefficients.  For example, in the case of cosh(_&lambda;_) &minus; 1, the nonzero terms are at 2, 4, 6, 8, and so on, so these terms are assigned the probabilities 1/2, 1/4, 1/8, 1/16, and so on, respectively.
 - _w_<sub>_n_</sub>(_&lambda;_) is _&lambda;_<sup>_n_</sup>/(_n_!) if _n_&gt;0 and _n_ is even, or 0 otherwise.  This is a term of the Taylor series expansion at 0.
 
-Additional functions can be simulated using this algorithm, by modifying it as in the following table. (The note at the end of this section describes what these functions have in common.)
+Additional functions can be simulated using this algorithm, by modifying it as in the following table.  For convenience, the table also includes cosh(_&lambda;_)&minus;1. (Note 1 at the end of this section describes what these functions have in common.)
 
-| Function | Step 2 reads "Set _n_ to ..." | Value of _P_ |
+| Target function _f_(_&lambda;_) | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- |
-| exp(_&lambda;_/4)/2. | _n_. |  1/(2<sup>_n_</sup>\*(_n_!)). |
-| exp(_&lambda;_)/4. | _n_. |  2<sup>_n_&minus;1</sup>/(_n_!). |
-| exp(_&lambda;_)/6. | _n_. |  2<sup>_n_</sup>/(3\*(_n_!)). |
-| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!). |
-| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 2<sup>_n_&minus;1</sup>/(_n_!). |
+| exp(_&lambda;_/4)/2. | _n_. |  1/(2<sup>_n_</sup>\*(_n_!)) |
+| exp(_&lambda;_)/4. | _n_. |  2<sup>_n_&minus;1</sup>/(_n_!) |
+| exp(_&lambda;_)/6. | _n_. |  2<sup>_n_</sup>/(3\*(_n_!)) |
+| exp(_&lambda;_/2)/2. | _n_. | 1/(_n_!) |
+| (exp(_&lambda;_)&minus;1)/2. | _n_ + 1. | 2<sup>_n_&minus;1</sup>/(_n_!) |
 | sinh(_&lambda;_)/2 | 2\*_n_ + 1. | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
-| cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>(_n_&minus;1)/2</sup>/(_n_!) |
+| cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>_n_/2</sup>/(_n_!) |
+| cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 2<sup>_n_/2</sup>/(_n_!) |
 
-The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)], where _f_(.) is the original function.
+The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)], where _&phi;_(.) is the original function.
 
-| Original function (_f_(_&lambda;_)) | Modified function | Step 2 reads "Set _n_ to ..." | Value of _P_ |
+| Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
-| exp(_&lambda;_)/4 | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_f_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
-| exp(_&lambda;_)/6  | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
-| exp(_&lambda;_/2)/2  | _f_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/6  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
+| exp(_&lambda;_/2)/2  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
 
 The functions have similar derivations as follows:
 
-- _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. If a certain value of _n_ can't occur in the algorithm after step 2 is complete, then _g_(_n_) is 0 instead.  (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
-- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for n in the target function's Taylor series expansion at 0.  If a certain value of _n_ can't occur in the algorithm after step 2 is complete, then _w_(_n_) is 0 instead.
+- _g_(_n_) is (1/2)\*(1/2)<sup>_h_(_n_)</sup>, where _h_(_n_) is the inverse of the "Step 2" columns above. If a certain value for _n_, call it _i_, can't occur in the algorithm after step 2 is complete, then _g_(_i_) is 1 instead.  (For example, if the column reads "2\*_n_ + 1", then _h_(_n_) is (_n_&minus;1)/2.)
+- _w_<sub>_n_</sub>(_&lambda;_) is the appropriate term for n in the target function's Taylor series expansion at 0.  If a certain value for _n_, call it _i_, can't occur in the algorithm after step 2 is complete, then _w_<sub>_i_</sub>(_&lambda;_) is 0 instead.
 
-> **Note:** All these functions are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
+> **Notes:**
+>
+> 1. All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
 >
 > - is non-negative for every _&lambda;_,
 > - is either constant or monotone increasing, and
 > - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases).
 >
 > To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
+>
+> 2. The target function _f_(_&lambda;_) is also a _probability generating function_, written as given in Note 1 where each $a_i$ is the probability that the $n$ value used in step 4 equals $i$.
 
 <a id=1_exp_1__c__minus_2></a>
 ### 1/(exp(1) + _c_ &minus; 2)
@@ -210,7 +215,7 @@ First, define the following operation:
 - **Get the _m_<sup>th</sup> Bernoulli number**:
     1. If _m_ is 0, 1, 2, 3, or 4, return 1, &minus;1/2, 1/6, 0, or &minus;1/30, respectively.  Otherwise, if _m_ is odd, return 0.
     2. Set _i_ to 2 and _v_ to 1 &minus; (_m_+1)/2.
-    3. While _i_ is less than _m_:
+    3. While _i_ is less than _m_:peteroupc
         1. **Get the _i_<sup>th</sup> Bernoulli number**, call it _b_.  Add _b_\*choose(_m_+1, _i_) to _v_.[^2]
         2. Add 2 to _i_.
     4. Return &minus;_v_/(_m_+1).
@@ -503,7 +508,7 @@ The following examples show how these methods lead to algorithms for simulating 
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
 
-**Example 3:** Take $f(\lambda) = \lambda/(exp(\lambda)-1)$, which is a function that satisfies **Algorithm 2**.  The coefficients for the series are $a_i = B(i)/(i!)$, where $B(i)$ is the $i$<sup>th</sup> Bernoulli number (see section "tanh(_&lambda;_)"), so $b_0 = 1$ since that's the first nonzero coefficient.  To simulate $f$, run **Algorithm 2** using $b_0 = 1$ and the coefficients $a_i$.
+**Example 3:** Take $f(\lambda) = \lambda/(\exp(\lambda)-1)$, which is a function that satisfies **Algorithm 2**.  The coefficients for the series are $a_i = B(i)/(i!)$, where $B(i)$ is the $i$<sup>th</sup> Bernoulli number (see section "tanh(_&lambda;_)"), so $b_0 = 1$ since that's the first nonzero coefficient.  To simulate $f$, run **Algorithm 2** using $b_0 = 1$ and the coefficients $a_i$.
 
 <a id=Sampling_Distributions_Using_Incomplete_Information></a>
 ### Sampling Distributions Using Incomplete Information

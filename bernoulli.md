@@ -417,7 +417,7 @@ Mendo (2019\)[^23] gave a Bernoulli factory algorithm for certain functions that
 A table of supported power series follows:
 
 | No. |   Power Series  |   Algorithm  |
-  --- | --- |
+  --- | --- | --- |
 | 1 | _f_(_&lambda;_) = 1 &minus; (_c_\[1\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return the result.  Otherwise, return 0. |
 | 2 | _f_(_&lambda;_) = (_c_\[1\] \* (1 &minus; _&lambda;_) + ... + _c_\[_i_\] * (1 &minus; _&lambda;_)<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=1 and return 1 minus the result.  Otherwise, return 1. |
 | 3 | _f_(_&lambda;_) = (_c_\[1\] \* _&lambda;_ + ... + _c_\[_i_\] * _&lambda;_<sup>_i_</sup> + ...) | With probability _CS_, run the algorithm above with _v_=0 and return 1 minus the result.  Otherwise, return 0. |
@@ -1124,7 +1124,7 @@ In the algorithm below, the case where _x_/_y_ is in the open interval (0, 1) is
 
 > **Notes:**
 >
-> 1. When _x_/_y_ is less than 1, the minimum number of coin flips needed, on average, by this algorithm will grow without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019\)[^23].
+> 1. When _x_/_y_ is less than 1, the expected number of flips grows without bound as _&lambda;_ approaches 0.  In fact, no fast Bernoulli factory algorithm can avoid this unbounded growth without additional information on _&lambda;_ (Mendo 2019\)[^23].
 > 2. Another algorithm is discussed in the online community [**Cross Validated**](https://stats.stackexchange.com/questions/50272).
 
 <a id=lambda____mu></a>
@@ -1319,7 +1319,7 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=ln__c___d____lambda____c></a>
 #### ln((_c_ + _d_ + _&lambda;_)/_c_)
 
-In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_ &lt; _d_, and _d_ &ge; 0.
+In this algorithm, _d_ and _c_ are integers, 0 &lt; _c_ &lt; _d_, and _d_ &ge; 0, and (_c_ + _d_ + _&lambda;_)/_c_ &le; exp(1).
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), run the **algorithm for (_d_ + _&lambda;_) / _c_** with _d_ = _d_ and _c_ = _c_, and return the result.
@@ -1615,7 +1615,7 @@ In this algorithm, _k_ must be an integer 0 or greater.
 
 1. If _k_ is 0, run the **algorithm for 2 / (1 + exp(2))** and return the result.  If _k_ is 1, run the **algorithm for (1 + exp(1)) / (1 + exp(2))** and return the result.
 2. Create a _&mu;_ input coin that runs the sub-algorithm given below.
-3. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&mu;_ input coin, _x_/_y_ = 2/1, and _&#x03F5;_ = 6/10 (6/10 because it's less than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.
+3. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) using the _&mu;_ input coin, _x_=2, _y_=1, and _&#x03F5;_ = 6/10 (6/10 because it's less than 1 minus (1 + exp(2)) / (1 + exp(2+1))), and return the result of that run.
 
 The sub-algorithm referred to is the following (which simulates the probability (1/(1+exp(_k_+1)) + exp(_k_)/(1+exp(_k_+1)))/2):
 
@@ -1692,13 +1692,13 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
             - Series with non-negative terms that can be "tucked" under a discrete probability mass function (see "[**Convex Combinations**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations)").
             - Alternating power series (see "[**Certain Power Series**](https://peteroupc.github.io/bernoulli.html#Certain_Power_Series)").
             - Series with non-negative terms and bounds on the truncation error (see "[**Certain Converging Series**](https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series)").
-        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on MathOverflow**](https://mathoverflow.net/questions/379858).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?  Examples worth thinking about are sin(_&pi;_\*_&lambda;_)/2 and sin(2\*_&pi;_\*_&lambda;_)/4 + 1/2.
+        - A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence's polynomials must have coefficients lying in \[0, 1\], and be of increasing degree; (b) the degree-_n_ polynomials' coefficients must lie at or "inside" those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree _n_).  For a formal statement of these polynomials, see my [**question on MathOverflow**](https://mathoverflow.net/questions/379858).<br><br>The [**supplemental notes**](https://peteroupc.github.io/bernsupp.html) include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn't possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous "slope" functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?
 2. Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return _n_, which is how many numbers were generated this way minus 1.  In this case:
     1. What is the probability that _n_ is returned?
     2. What is the probability that _n_ is odd or even or belongs to a certain class of numbers?
     3. For each _x_, what is the probability that the first generated number is _x_ or less given that _n_ is odd? ...given that _n_ is even?
 
-    Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_.  Thus, answers that work only for particular classes and/or distributions are welcome.  See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
+    Obviously, these answers depend on the specific permutation class and/or distributions _D_ and _E_. See also my Stack Exchange question [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations).
 3. Is there a simpler or faster way to implement the base-2 or natural logarithm of binomial coefficients?  See the example in the section "[**Certain Converging Series**](#Certain_Converging_Series)".
 4. Part of the reverse-time martingale algorithm of Łatuszyński et al. (2009/2011\)[^24] \(see "[**General Factory Functions**](#General_Factory_Functions)") to simulate a factory function _f_(_&lambda;_) is as follows.  For each _n_ starting with 1:
     1. Flip the input coin, and compute the _n_<sup>th</sup> upper and lower bounds of _f_ given the number of heads so far, call them _L_ and _U_.
@@ -2030,8 +2030,6 @@ Then the algorithm's behavior is given in the tables below.
 > 1. All the functions possible for formulas 1 and 2 are nondecreasing functions.  Both formulas express what are called _cumulative distribution functions_, namely _F_<sub>_D_</sub>(_x_ given that _n_ is odd) or _F_<sub>_D_</sub>(_x_ given that _n_ is even), respectively.
 > 2. EGF(_z_) is the _exponential generating function_ (EGF) for the kind of permutation involved in the algorithm.  For example, the class of _alternating permutations_ (permutations whose numbers alternate between low and high, that is, _X1_ > _X2_ < _X3_ > ...) uses the EGF tan(_&lambda;_)+1/cos(_&lambda;_).  Other examples of EGFs were given in the section on the von Neumann schema.
 > 3. The results that point to this note have the special case that both _D_ and _E_ are uniform in (0, 1).  Indeed, if each variate _x_ in the sequence is transformed with _CDF_(_x_), where _CDF_ is _D_'s cumulative distribution function, then the variates become uniform in (0, 1), with the same numerical order as before (with probability 1).  See also [**this Stack Exchange question**](https://stats.stackexchange.com/questions/550847/probability-of-winning-a-game-where-you-sample-an-increasing-sequence-from-a-uni/550854#550854).
-
-**Open Question:**  How can the tables above be filled for other permutation classes and different combinations of distributions _D_ and _E_?
 
 <a id=Sketch_of_Derivation_of_the_Algorithm_for_1___pi></a>
 ### Sketch of Derivation of the Algorithm for 1 / _&pi;_
