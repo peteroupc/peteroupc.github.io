@@ -1415,9 +1415,9 @@ See also (Downey 2007\)[^60] and the [**Rademacher Floating-Point Library**](htt
 >
 > 1. Additional methods to sample real numbers in a different interval are given below, but are not used in the rest of this article.
 >
-> - **`RNDRANGE(mn, mx)`, interval \[`mn`, `mx`\]**.  Generate `RNDRANGEHelper(mn, mx)`.
-> - **`RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\)**: If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.
-> - **`RNDRANGEMinExc(mn, mx)`, interval \(`mn`, `mx`\]** If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mn` is generated this way.
+>     - `RNDRANGE(mn, mx)`, interval \[`mn`, `mx`\]: Generate `RNDRANGEHelper(mn, mx)`.
+>     - `RNDRANGEMaxExc(mn, mx)`, interval \[`mx`, `mx`\): If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mx` is generated this way.
+>     - `RNDRANGEMinExc(mn, mx)`, interval \(`mn`, `mx`\]: If `mn >= mx`, return an error.  Otherwise, generate `RNDRANGEHelper(mn, mx)` in a loop until a number other than `mn` is generated this way.
 >
 > 2. In many software libraries, a real number in a range is chosen uniformly at random by dividing or multiplying a random integer by a constant.  For example, a method to sample uniformly at random from the half-open interval \[0, 1\) is often implemented like `RNDINTEXC(X) * (1.0/X)` or `RNDINTEXC(X) / X`, where X varies based on the software library.[^61] The disadvantage here is that doing so does not necessarily cover all numbers a floating-point format can represent in the range (Goualard 2020\)[^62].  As another example, a method to sample uniformly at random from the half-open interval \[`a`, `b`\) is often implemented like `a + Math.random() * (b - a)`, where `Math.random()` samples uniformly at random from \[0, 1\); however, this not only has the same disadvantage, but has many other issues where floating-point numbers are involved (Monahan 1985\)[^63].
 
