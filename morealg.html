@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/14"><meta name="citation_online_date" content="2021/11/14"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/15"><meta name="citation_online_date" content="2021/11/15"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -178,10 +178,10 @@
 
 <h3>cosh(<em>&lambda;</em>) &minus; 1, and Certain Other Convex Functions</h3>
 
-<p>The following algorithm I found, which takes advantage of the <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination method</strong></a>, samples the probability cosh(<em>&lambda;</em>) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.</p>
+<p>The following algorithm, which takes advantage of the <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination method</strong></a>, samples the probability cosh(<em>&lambda;</em>) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.</p>
 
 <ol>
-<li>(The first two steps generate a number <em>n</em> with probability <em>g</em>(<em>n</em>), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way.</li>
+<li>(The first two steps generate a number <em>n</em> that equals <em>i</em> with probability <em>g</em>(<em>i</em>), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set <em>n</em> to the number of ones generated this way.</li>
 <li>Set <em>n</em> to 2*<em>n</em> + 2.</li>
 <li>(The next two steps succeed with probability <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>n</em>).)  Let <em>P</em> be 2<sup><em>n</em>/2</sup>/(<em>n</em>!).  With probability <em>P</em>, go to the next step.  Otherwise, return 0.</li>
 <li>(At this point, <em>n</em> equals <em>i</em> with probability <em>w</em><sub><em>i</em></sub>(1).) Flip the input coin <em>n</em> times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if <em>n</em> is 0).  Otherwise, return 0.</li>
@@ -245,7 +245,7 @@
 </tr>
 </tbody></table>
 
-<p>The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, <em>D</em> is a rational number in the interval [0, <em>f</em>(0)], where <em>&phi;</em>(.) is the original function.</p>
+<p>The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, <em>D</em> is a rational number in the interval [0, <em>&phi;</em>(0)], where <em>&phi;</em>(.) is the original function.</p>
 
 <table><thead>
 <tr>
@@ -286,8 +286,7 @@
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p>All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the <em>coefficients</em> $a_i$ are 0 or greater.<br>This kind of function&mdash;</p></li>
-</ol>
+<li><p>All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the <em>coefficients</em> $a_i$ are 0 or greater. (This way of writing the function is called a <em>Taylor series expansion at 0</em>.)<br>This kind of function&mdash;</p>
 
 <ul>
 <li>is non-negative for every <em>&lambda;</em>,</li>
@@ -295,10 +294,8 @@
 <li>is <em>convex</em> (its &quot;slope&quot; or &quot;velocity&quot; doesn&#39;t decrease as <em>&lambda;</em> increases).</li>
 </ul>
 
-<p>To show the function is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term, replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p>
-
-<ol>
-<li>The target function <em>f</em>(<em>&lambda;</em>) is also a <em>probability generating function</em>, written as given in Note 1 where each $a_i$ is the probability that the $n$ value used in step 4 equals $i$.</li>
+<p>To show the function is convex, find the &quot;slope-of-slope&quot; function of <em>f</em> and show it&#39;s non-negative for every <em>&lambda;</em> in the domain.  To do so, first find the &quot;slope&quot;: omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting &quot;slope&quot; function is still an infinite series with coefficients 0 or greater.  Hence, so will the &quot;slope&quot; of this &quot;slope&quot; function, so the result follows by induction.</p></li>
+<li><p>The target function <em>f</em>(<em>&lambda;</em>) is also a <em>probability generating function</em>, written as given in Note 1 where each $a_i$ is the probability that the $n$ value used in step 4 equals $i$ (cf. Dughmi et al. (2017)[^55]).</p></li>
 </ol>
 </blockquote>
 
@@ -699,14 +696,13 @@
 
 <ul>
 <li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
-<li>The series has infinitely many nonzero coefficients.</li>
-<li>Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
-<li>$b_0$ is greater than 0, and the elements in $(b_j)$ alternate in sign.</li>
-<li>The absolute values of $(b_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that converges to 0.</li>
+<li>Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
+<li>$d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.</li>
+<li>The absolute values of $(d_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.</li>
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.</p>
+<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.</p>
 </blockquote>
 
 <p>Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).</p>
@@ -714,14 +710,14 @@
 <p><strong>Algorithm 2:</strong></p>
 
 <ol>
-<li>Set <em>u</em> to abs($b_0$) (the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
+<li>Set <em>u</em> to abs($d_0$) (the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
 <li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
 <li>Do the following process repeatedly, until this algorithm returns a value:
 
 <ol>
 <li>If <em>w</em> is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply <em>w</em> by the result of the run.</li>
-<li>If $a_n$ is greater than 0, set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * $a_n$.</li>
-<li>If $a_n$ is less than 0, set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$).</li>
+<li>If $a_n$ is greater than 0: Set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * $a_n$, then, if no further nonzero coefficients follow $a_n$, set <em>&#x2113; to _u</em>.</li>
+<li>If $a_n$ is less than 0: Set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set <em>u</em> to _&#x2113;.</li>
 <li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  Otherwise, if <em>ret</em> is less than <em>u</em>, add 1 to <em>n</em>.  Otherwise, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
 </ol></li>
 </ol>
@@ -730,20 +726,20 @@
 <p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^9], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
 
 <ul>
-<li>$U_0=b_0$ and $L_0=0$.</li>
-<li>For each $n&gt;0$, $U_n$ is either $L_n + a_n\times X_1\times...\times X_n$ if $a_n &gt; 0$, or $U_{n-1}$ otherwise.</li>
-<li>For each $n&gt;0$, $L_n$ is either $U_n - a_n\times X_1\times...\times X_n$ if $a_n &lt; 0$, or $L_{n-1}$ otherwise.</li>
+<li>$U_0=d_0$ and $L_0=0$.</li>
+<li>For each $n&gt;0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n &gt; 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n &lt; 0$, otherwise $U_{n-1}$.</li>
+<li>For each $n&gt;0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n &lt; 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n &gt; 0$, otherwise $L_{n-1}$.</li>
 </ul>
 
 <p>Then it&#39;s clear that with probability 1, for every $n\ge 1$&mdash;</p>
 
 <ul>
 <li>$L_n \le U_n$,</li>
-<li>$U_n$ is 0 or greater and $L_n$ is 1 or less,</li>
-<li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$,</li>
+<li>$U_n$ is 0 or greater and $L_n$ is 1 or less, and</li>
+<li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.</li>
 </ul>
 
-<p>and the <em>U</em> and <em>L</em> sequences have expected values converging to $f(\lambda)$ with probability 1.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
+<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
 </blockquote>
 
 <hr>
@@ -782,7 +778,7 @@
 <tr>
 <th>Function $f(\lambda)$</th>
 <th>Coefficients</th>
-<th>Value of $b_0$</th>
+<th>Value of $d_0$</th>
 </tr>
 </thead><tbody>
 <tr>
@@ -795,9 +791,14 @@
 <td>$a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise.</td>
 <td>1.</td>
 </tr>
+<tr>
+<td>$\cos(\sqrt \lambda)$</td>
+<td>$a_i = \frac{(-1)^i}{(2i)!}$.</td>
+<td>1.</td>
+</tr>
 </tbody></table>
 
-<p>To simulate a function in the table, run <strong>Algorithm 2</strong> using the given coefficients and value of $b_0$ ($b_0$ is the first nonzero coefficient).</p>
+<p>To simulate a function in the table, run <strong>Algorithm 2</strong> using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
 
 <blockquote>
 <p><strong>Note:</strong> Bernoulli numbers can be computed with the following algorithm, namely <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>:</p>
@@ -1644,6 +1645,8 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 <p>[^53]: Adamczewski, B., Bugeaud, Y., &quot;On the complexity of algebraic numbers I. Expansions in integer bases&quot;, <em>Annals of Mathematics</em> 165 (2007).</p>
 
 <p>[^54]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.</p>
+
+<p>[^55]: Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In <em>Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing</em>, Montreal, Canada, June 2017 (STOC’17).</p>
 
 <p><a id=Appendix></a></p>
 

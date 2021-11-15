@@ -127,9 +127,9 @@ Derivation:  See Formula 1 in the section "[**Probabilities Arising from Certain
 <a id=cosh___lambda___minus_1_and_Certain_Other_Convex_Functions></a>
 ### cosh(_&lambda;_) &minus; 1, and Certain Other Convex Functions
 
-The following algorithm I found, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), samples the probability cosh(_&lambda;_) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.
+The following algorithm, which takes advantage of the [**convex combination method**](https://peteroupc.github.io/bernoulli.html#Convex_Combinations), samples the probability cosh(_&lambda;_) &minus; 1, and can serve as a framework for sampling probabilities equal to certain other functions.
 
-1. (The first two steps generate a number _n_ with probability _g_(_n_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
+1. (The first two steps generate a number _n_ that equals _i_ with probability _g_(_i_), as given later.)  Generate unbiased random bits (each bit is 0 or 1 with equal probability) until a zero is generated this way.  Set _n_ to the number of ones generated this way.
 2. Set _n_ to 2\*_n_ + 2.
 3. (The next two steps succeed with probability _w_<sub>_n_</sub>(_&lambda;_)/_g_(_n_).)  Let _P_ be 2<sup>_n_/2</sup>/(_n_!).  With probability _P_, go to the next step.  Otherwise, return 0.
 4. (At this point, _n_ equals _i_ with probability _w_<sub>_i_</sub>(1).) Flip the input coin _n_ times or until a flip returns 0, whichever happens first.  Return 1 if all the flips, including the last, returned 1 (or if _n_ is 0).  Otherwise, return 0.
@@ -152,7 +152,7 @@ Additional functions can be simulated using this algorithm, by modifying it as i
 | cosh(_&lambda;_)/2 | 2\*_n_. | 2<sup>_n_/2</sup>/(_n_!) |
 | cosh(_&lambda;_)&minus;1 | 2\*_n_ + 2. | 2<sup>_n_/2</sup>/(_n_!) |
 
-The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _f_(0)], where _&phi;_(.) is the original function.
+The table below shows functions shifted downward and shows the algorithm changes needed to simulate the modified function.  In the table, _D_ is a rational number in the interval [0, _&phi;_(0)], where _&phi;_(.) is the original function.
 
 | Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
@@ -167,15 +167,15 @@ The functions have similar derivations as follows:
 
 > **Notes:**
 >
-> 1. All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater.<br>This kind of function&mdash;
+> 1. All target functions in this section are infinite series that map the interval [0, 1] to [0, 1] and can be written as&mdash; $$f(\lambda)=a_0 \lambda^0 + ... + a_i \lambda^i + ..., $$ where the _coefficients_ $a_i$ are 0 or greater. (This way of writing the function is called a _Taylor series expansion at 0_.)<br>This kind of function&mdash;
 >
-> - is non-negative for every _&lambda;_,
-> - is either constant or monotone increasing, and
-> - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases).
+>     - is non-negative for every _&lambda;_,
+>     - is either constant or monotone increasing, and
+>     - is _convex_ (its "slope" or "velocity" doesn't decrease as _&lambda;_ increases).
 >
-> To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term, replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
+>     To show the function is convex, find the "slope-of-slope" function of _f_ and show it's non-negative for every _&lambda;_ in the domain.  To do so, first find the "slope": omit the first term and for each remaining term (with $i\ge 1$), replace $a_i \lambda^i$ with $a_i i \lambda^{i-1}$.  The resulting "slope" function is still an infinite series with coefficients 0 or greater.  Hence, so will the "slope" of this "slope" function, so the result follows by induction.
 >
-> 2. The target function _f_(_&lambda;_) is also a _probability generating function_, written as given in Note 1 where each $a_i$ is the probability that the $n$ value used in step 4 equals $i$.
+> 2. The target function _f_(_&lambda;_) is also a _probability generating function_, written as given in Note 1 where each $a_i$ is the probability that the $n$ value used in step 4 equals $i$ (cf. Dughmi et al. (2017)[^55]).
 
 <a id=1_exp_1__c__minus_2></a>
 ### 1/(exp(1) + _c_ &minus; 2)
@@ -426,38 +426,37 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
 Now, suppose the following:
 
 - $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
-- The series has infinitely many nonzero coefficients.
-- Let $(b_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
-- $b_0$ is greater than 0, and the elements in $(b_j)$ alternate in sign.
-- The absolute values of $(b_j)$'s elements are 1 or less and form a nonincreasing sequence that converges to 0.
+- Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
+- $d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.
+- The absolute values of $(d_j)$'s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.
 
-> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $b_0 = 1/2$), which meets the requirements above.
+> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(b_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.
 
 Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
 
 **Algorithm 2:**
 
-1. Set _u_ to abs($b_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+1. Set _u_ to abs($d_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. Do the following process repeatedly, until this algorithm returns a value:
     1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
-    2. If $a_n$ is greater than 0, set _u_ to _&#x2113;_ + _w_ * $a_n$.
-    3. If $a_n$ is less than 0, set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$).
+    2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero coefficients follow $a_n$, set _&#x2113; to _u_.
+    3. If $a_n$ is less than 0: Set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set _u_ to _&#x2113;.
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  Otherwise, if _ret_ is less than _u_, add 1 to _n_.  Otherwise, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 
 > **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^9], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 >
-> - $U_0=b_0$ and $L_0=0$.
-> - For each $n>0$, $U_n$ is either $L_n + a_n\times X_1\times...\times X_n$ if $a_n > 0$, or $U_{n-1}$ otherwise.
-> - For each $n>0$, $L_n$ is either $U_n - a_n\times X_1\times...\times X_n$ if $a_n < 0$, or $L_{n-1}$ otherwise.
+> - $U_0=d_0$ and $L_0=0$.
+> - For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n < 0$, otherwise $U_{n-1}$.
+> - For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n > 0$, otherwise $L_{n-1}$.
 >
 > Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 >
 > - $L_n \le U_n$,
-> - $U_n$ is 0 or greater and $L_n$ is 1 or less,
-> - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$,
+> - $U_n$ is 0 or greater and $L_n$ is 1 or less, and
+> - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
 >
-> and the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
+> Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
 
 -------
 
@@ -484,12 +483,13 @@ The following examples show how these methods lead to algorithms for simulating 
 
 **Example 3:** The following functions can be written as power series that satisfy **Algorithm 2**.  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
 
-| Function $f(\lambda)$ |  Coefficients | Value of $b_0$ |
+| Function $f(\lambda)$ |  Coefficients | Value of $d_0$ |
  --- | --- | --- |
 | $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
 | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
+| $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
 
-To simulate a function in the table, run **Algorithm 2** using the given coefficients and value of $b_0$ ($b_0$ is the first nonzero coefficient).
+To simulate a function in the table, run **Algorithm 2** using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
 
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >
@@ -1138,6 +1138,8 @@ For a full rectellipse, step 5.3 in the algorithm is done for each of the two di
 [^53]: Adamczewski, B., Bugeaud, Y., "On the complexity of algebraic numbers I. Expansions in integer bases", _Annals of Mathematics_ 165 (2007).
 
 [^54]: Richman, F. (2012). Algebraic functions, calculus style. Communications in Algebra, 40(7), 2671-2683.
+
+[^55]: Shaddin Dughmi, Jason D. Hartline, Robert Kleinberg, and Rad Niazadeh. 2017. Bernoulli Factories and Black-Box Reductions in Mechanism Design. In _Proceedings of 49th Annual ACM SIGACT Symposium on the Theory of Computing_, Montreal, Canada, June 2017 (STOC’17).
 
 <a id=Appendix></a>
 ## Appendix
