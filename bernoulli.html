@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/13"><meta name="citation_online_date" content="2021/11/13"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/15"><meta name="citation_online_date" content="2021/11/15"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -99,6 +99,7 @@
 <li><a href="#1_2_minus___lambda"><strong>1/(2 &minus; <em>&lambda;</em>)</strong></a></li>
 <li><a href="#expit__m____lambda___or_1_minus_1_1_exp__m____lambda___or_exp__m____lambda___1_exp__m____lambda___or_1_1_exp_minus__m____lambda"><strong>expit(<em>m</em> + <em>&lambda;</em>) or 1&minus;1/(1+exp(<em>m</em> + <em>&lambda;</em>)) or exp(<em>m</em> + <em>&lambda;</em>)/(1+exp(<em>m</em> + <em>&lambda;</em>)) or 1/(1+exp(&minus;(<em>m</em> + <em>&lambda;</em>)))</strong></a></li>
 <li><a href="#expit__m____lambda_____mu"><strong>expit((<em>m</em> + <em>&lambda;</em>)*<em>&mu;</em>)</strong></a></li>
+<li><a href="#expit__m____lambda___2_minus_1_or_tanh__m____lambda___2"><strong>expit(<em>m</em> + <em>&lambda;</em>)*2 &minus; 1 or tanh((<em>m</em> + <em>&lambda;</em>)/2)</strong></a></li>
 <li><a href="#lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda"><strong><em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) / (<em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) + (1 &minus; <em>&lambda;</em>))</strong></a></li>
 <li><a href="#1_1__x___y____lambda"><strong>1 / (1 + (<em>x</em>/<em>y</em>)*<em>&lambda;</em>)</strong></a></li>
 <li><a href="#lambda_____mu"><strong><em>&lambda;</em> + <em>&mu;</em></strong></a></li>
@@ -122,6 +123,7 @@
 <li><a href="#ln__c___d____lambda____c"><strong>ln((<em>c</em> + <em>d</em> + <em>&lambda;</em>)/<em>c</em>)</strong></a></li>
 <li><a href="#arcsin___lambda___sqrt_1_minus___lambda__2_minus_1"><strong>arcsin(<em>&lambda;</em>) + sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1</strong></a></li>
 <li><a href="#arcsin___lambda___2"><strong>arcsin(<em>&lambda;</em>) / 2</strong></a></li>
+<li><a href="#tanh__m____lambda"><strong>tanh(<em>m</em> + <em>&lambda;</em>)</strong></a></li>
 <li><a href="#Expressions_Involving_Polylogarithms"><strong>Expressions Involving Polylogarithms</strong></a></li>
 <li><a href="#Other_Factory_Functions"><strong>Other Factory Functions</strong></a></li>
 </ul></li>
@@ -1513,6 +1515,25 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </ol></li>
 </ul>
 
+<p><a id=expit__m____lambda___2_minus_1_or_tanh__m____lambda___2></a></p>
+
+<h4>expit(<em>m</em> + <em>&lambda;</em>)*2 &minus; 1 or tanh((<em>m</em> + <em>&lambda;</em>)/2)</h4>
+
+<p>In this algorithm, <em>m</em> is an integer 0 or greater, and <em>&lambda;</em> is the probability of heads of an input coin.</p>
+
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Run the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong> with <em>k</em>=1 and <em>m</em>=<em>m</em>.  Let <em>r</em> be the result of that run.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;<em>r</em>.  Otherwise, if <em>r</em> is 1, return 0.</li>
+</ol></li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> Follows from observing that tanh((<em>m</em>+<em>&lambda;</em>)/2) = (<em>d</em> + (1 &minus; <em>&mu;</em>)) / (<em>c</em> + <em>&mu;</em>), where <em>&mu;</em> = exp(&minus;(<em>m</em>+<em>&lambda;</em>)), <em>d</em> = 0, and <em>c</em> = 1.</p>
+</blockquote>
+
 <p><a id=lambda___exp__m____nu_____lambda___exp__m____nu___1_minus___lambda></a></p>
 
 <h4><em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) / (<em>&lambda;</em>*exp(<em>m</em> + <em>&nu;</em>) + (1 &minus; <em>&lambda;</em>))</h4>
@@ -1953,6 +1974,25 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Create a secondary coin <em>&mu;</em> that does the following: &quot;Flip the input coin twice.  If both flips return 1, return 0.  Otherwise, return 1.&quot; (The coin simulates 1 &minus; <em>&lambda;</em><sup>2</sup>.)</li>
 <li>Call the <strong>algorithm for <em>&mu;</em><sup>1/2</sup></strong> using the secondary coin <em>&mu;</em>.  If it returns 0, return 1; otherwise, return 0. (This step effectively cancels out the sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>) &minus; 1 part and divides by 2.)</li>
 </ol>
+
+<p><a id=tanh__m____lambda></a></p>
+
+<h4>tanh(<em>m</em> + <em>&lambda;</em>)</h4>
+
+<p>In this algorithm, <em>m</em> is an integer 0 or greater, and <em>&lambda;</em> is the probability of heads of an input coin.[^61]</p>
+
+<ul>
+<li>Do the following process repeatedly, until this algorithm returns a value:
+
+<ol>
+<li>Run the algorithm for <strong>exp(&minus;(<em>m</em> + <em>&lambda;</em>)<sup><em>k</em></sup>)</strong> twice, with <em>k</em>=1 and <em>m</em>=<em>m</em>.  Let <em>r</em> be a number that is 1 if both runs returned 1, or 0 otherwise.</li>
+<li>Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1&minus;<em>r</em>.  Otherwise, if <em>r</em> is 1, return 0.</li>
+</ol></li>
+</ul>
+
+<blockquote>
+<p><strong>Note:</strong> Follows from observing that tanh(<em>m</em>+<em>&lambda;</em>) = (<em>d</em> + (1 &minus; <em>&mu;</em>)) / (<em>c</em> + <em>&mu;</em>), where <em>&mu;</em> = exp(&minus;(<em>m</em>+<em>&lambda;</em>))<sup>2</sup>, <em>d</em> = 0, and <em>c</em> = 1.</p>
+</blockquote>
 
 <p><a id=Expressions_Involving_Polylogarithms></a></p>
 
@@ -2628,6 +2668,8 @@ kind of irrational number.</p>
 <p>[^59]: Monahan, J.. &quot;Extensions of von Neumann’s method for generating random variables.&quot; Mathematics of Computation 33 (1979): 1065-1069.</p>
 
 <p>[^60]: Tsai, Yi-Feng, Farouki, R.T., &quot;Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form&quot;, <em>ACM Trans. Math. Softw.</em> 27(2), 2001.</p>
+
+<p>[^61]: There is another algorithm for tanh(<em>&lambda;</em>), based on Lambert&#39;s continued fraction for tanh(.), but it works only for <em>&lambda;</em> in [0, 1].  The algorithm begins with <em>k</em> equal to 1.  Then: (1) If <em>k</em> is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If <em>k</em> is greater than 1, then with probability <em>k</em>/(1+<em>k</em>), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 2.  If the separate run returns 1, return 0; (4) Go to step 2.</p>
 
 <p><a id=Appendix></a></p>
 

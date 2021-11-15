@@ -1309,7 +1309,7 @@ The methods in this section should not be used to sample at random for informati
 
 This section defines a method to generate independent uniform random real numbers in the open interval (`a`, `b`), namely `RNDRANGEMinMaxExc(a, b)`.  (Both bounds are excluded because mathematically, any specific real number is generated this way with probability 0.)
 
-The sections that follow show how this methods can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
+The sections that follow show how this method can be implemented for fixed-point, rational, and floating-point numbers.  An additional format for random real numbers is the [**partially-sampled random number**](https://peteroupc.github.io/exporand.html).
 
 <a id=For_Fixed_Point_Number_Formats></a>
 #### For Fixed-Point Number Formats
