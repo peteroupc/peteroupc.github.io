@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/15"><meta name="citation_online_date" content="2021/11/15"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/16"><meta name="citation_online_date" content="2021/11/16"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -279,60 +279,7 @@
 
 <hr>
 
-<p>Now, suppose the following:</p>
-
-<ul>
-<li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
-<li>$g(\lambda)$ is a function that admits a Bernoulli factory.</li>
-<li>Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
-<li>$d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.</li>
-<li>The absolute values of $(d_j)$&#39;s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.</li>
-</ul>
-
-<blockquote>
-<p><strong>Example:</strong> Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.</p>
-</blockquote>
-
-<p>Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).</p>
-
-<p><strong>Algorithm 2:</strong></p>
-
-<ol>
-<li>Set <em>u</em> to abs($d_0$) (the first nonzero coefficient of the series), set <em>w</em> to 1, set <em>&#x2113;</em> to 0, and set <em>n</em> to 1.</li>
-<li>Generate a uniform(0, 1) random variate <em>ret</em>.</li>
-<li>Do the following process repeatedly, until this algorithm returns a value:
-
-<ol>
-<li>If <em>w</em> is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply <em>w</em> by the result of the run.</li>
-<li>If $a_n$ is greater than 0: Set <em>u</em> to <em>&#x2113;</em> + <em>w</em> * $a_n$, then, if no further nonzero coefficients follow $a_n$, set <em>&#x2113;</em> to <em>u</em>.</li>
-<li>If $a_n$ is less than 0: Set <em>&#x2113;</em> to <em>u</em> &minus; <em>w</em> * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set <em>u</em> to <em>&#x2113;</em>.</li>
-<li>If <em>ret</em> is less than (or equal to) <em>&#x2113;</em>, return 1.  Otherwise, if <em>ret</em> is less than <em>u</em>, add 1 to <em>n</em>.  Otherwise, return 0.  (If <em>ret</em> is a uniform PSRN, these comparisons should be done via the <strong>URandLessThanReal algorithm</strong>, which is described in my <a href="https://peteroupc.github.io/exporand.html"><strong>article on PSRNs</strong></a>.)</li>
-</ol></li>
-</ol>
-
-<blockquote>
-<p><strong>Note:</strong> The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^3], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
-
-<ul>
-<li>$U_0=d_0$ and $L_0=0$.</li>
-<li>For each $n&gt;0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n &gt; 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n &lt; 0$, otherwise $U_{n-1}$.</li>
-<li>For each $n&gt;0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n &lt; 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n &gt; 0$, otherwise $L_{n-1}$.</li>
-</ul>
-
-<p>Then it&#39;s clear that with probability 1, for every $n\ge 1$&mdash;</p>
-
-<ul>
-<li>$L_n \le U_n$,</li>
-<li>$U_n$ is 0 or greater and $L_n$ is 1 or less, and</li>
-<li>$L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.</li>
-</ul>
-
-<p>Moreover, if there are infinitely many nonzero coefficients, the <em>U</em> and <em>L</em> sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper&#39;s Algorithm 3 (and thus the algorithm given above) to be valid.</p>
-</blockquote>
-
-<hr>
-
-<p>The following examples show how these methods lead to algorithms for simulating certain factory functions.</p>
+<p>The following examples show how this method leads to algorithms for simulating certain factory functions.</p>
 
 <p><strong>Example 1:</strong> Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.</p>
 
@@ -346,7 +293,7 @@
 <ul>
 <li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
 <li>The coefficients $b_0, ..., b_{m-1}$, in order, are the Bernstein-form coefficients found for $A$.</li>
-<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run <strong>Algorithm 2</strong> with $a_i = h_{m+i}$.</li>
+<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $a_i = h_{m+i}$.</li>
 </ul></li>
 </ul>
 
@@ -360,35 +307,15 @@
 <li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ in the same manner as for Example 1.</li>
 </ul>
 
-<p><strong>Example 3:</strong> The following functions can be written as power series that satisfy <strong>Algorithm 2</strong> (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
-
-<table><thead>
-<tr>
-<th>Function $f(\lambda)$</th>
-<th>Coefficients</th>
-<th>Value of $d_0$</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>$\lambda/(\exp(\lambda)-1)$</td>
-<td>$a_i = B(i)/(i!)$</td>
-<td>1.</td>
-</tr>
-<tr>
-<td>$\tanh(\lambda)$</td>
-<td>$a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise.</td>
-<td>1.</td>
-</tr>
-<tr>
-<td>$\cos(\sqrt \lambda)$</td>
-<td>$a_i = \frac{(-1)^i}{(2i)!}$.</td>
-<td>1.</td>
-</tr>
-</tbody></table>
-
-<p>To simulate a function in the table, run <strong>Algorithm 2</strong> using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
-
 <blockquote>
+<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).
+| Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
+ --- | --- | --- |
+| $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
+| $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
+| $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
+To simulate a function in the table, run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
+
 <p><strong>Note:</strong> Bernoulli numbers can be computed with the following algorithm, namely <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>:</p>
 
 <ol>

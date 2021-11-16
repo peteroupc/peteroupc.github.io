@@ -131,6 +131,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
     - [**Using the Biased Coin Alone for Randomness**](#Using_the_Biased_Coin_Alone_for_Randomness)
     - [**The Entropy Bound**](#The_Entropy_Bound)
     - [**Bernoulli Factories and Unbiased Estimation**](#Bernoulli_Factories_and_Unbiased_Estimation)
+    - [**Proof of Algorithm 2 in "Certain Power Series"**](#Proof_of_Algorithm_2_in_Certain_Power_Series)
     - [**Correctness Proof for the Continued Logarithm Simulation Algorithm**](#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm)
     - [**Correctness Proof for Continued Fraction Simulation Algorithm 3**](#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3)
     - [**The von Neumann Schema**](#The_von_Neumann_Schema)
@@ -434,28 +435,32 @@ In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ 
 
 (Łatuszyński et al. 2009/2011\)[^24] gave an algorithm that works for a wide class of series and other constructs that converge to the desired probability from above and from below.
 
-One of these cases is when _f_(_&lambda;_) can be written as&mdash;
+For example, suppose the following:
 
-_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>1</sup> + _d[2]_ * _&lambda;_<sup>2</sup> &minus; ...,
+- $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
+- $g(\lambda)$ is a function that admits a Bernoulli factory.
+- Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
+- $d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.
+- The absolute values of $(d_j)$'s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.
 
-which is an alternating series, where _d_\[_i_\] must all be in the interval [0, 1] and form a nonincreasing sequence of coefficients, and _f_(1) must converge to a number in the half-open interval [0, 1).
+> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.
 
-The following is the general algorithm for this kind of series, called the **general martingale algorithm**.  It takes a list of coefficients and an input coin, and returns 1 with the probability given by the series above, and 0 otherwise.
+Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
 
-1. Let _d[0]_, _d[1]_, etc. be the first, second, etc. coefficients of the alternating series.  Set _u_ to _d[0]_, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+**General martingale algorithm:**
+
+1. Set _u_ to abs($d_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
-3. If _w_ is not 0, flip the input coin and multiply _w_ by the result of the flip.
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ * _d[n]_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ * _d[n]_.
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_ and go to step 3.
+3. Do the following process repeatedly, until this algorithm returns a value:
+    1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
+    2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero coefficients follow $a_n$, set _&#x2113;_ to _u_.
+    3. If $a_n$ is less than 0: Set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set _u_ to _&#x2113;_.
+    4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  Otherwise, if _ret_ is less than _u_, add 1 to _n_.  Otherwise, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 
-More generally, if _f_(_&lambda;_) can be written as&mdash;
-
-_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * (_g_(_&lambda;_))<sup>1</sup> + _d[2]_ * (_g_(_&lambda;_))<sup>2</sup> &minus; ...,
-
-where _d_\[_i_\] are as before and _g_(_&lambda;_) is a factory function, step 3 is rewritten as "3. If _w_ is not 0, run a Bernoulli factory algorithm for _g_(_&lambda;_) using the input coin, and multiply _w_ by the result."
-
-> **Example:** If _f_ can be written as&mdash;<br>_f_(_&lambda;_) = _d[0]_ &minus; _d[1]_ * _&lambda;_<sup>2</sup> + _d[2]_ * _&lambda;_<sup>4</sup> &minus; ...<br>= _d[0]_ &minus; _d[1]_ * (_&lambda;_<sup>2</sup>)<sup>1</sup> + _d[2]_ * (_&lambda;_<sup>2</sup>)<sup>2</sup> &minus; ...,<br> then _g_(_&lambda;_) = _&lambda;_<sup>2</sup>, so that the algorithm above can be used, except step 3 is "3. If _w_ is not 0, flip the input coin twice and multiply _w_ by each result of the flip."
+> **Note:**
+>
+> 1. This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper's framework.  A proof of its correctness is given in the appendix.
+> 2. Other algorithms in this page may refer to the **general martingale algorithm**.  If they do so, but don't specify $g(\lambda)$, then $g(\lambda)$ is $\lambda$ and to run a Bernoulli factory algorithm for $g(\lambda)$ simply means to flip the input coin that shows heads (returns 1) with probability $\lambda$.
 
 ----
 
@@ -807,15 +812,7 @@ This section describes algorithms for specific functions, especially when they h
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This algorithm is adapted from the general martingale algorithm (in "Certain Power Series", above), and makes use of the fact that exp(&minus;_&lambda;_) can be rewritten as 1 &minus; _&lambda;_ + _&lambda;_<sup>2</sup>/2 &minus; _&lambda;_<sup>3</sup>/6 + _&lambda;_<sup>4</sup>/24 &minus; ..., which is an alternating series whose coefficients are 1, 1, 1/(2!), 1/(3!), 1/(4!), .... This algorithm converges quickly everywhere in the open interval (0, 1).  (In other words, the algorithm is _uniformly fast_, meaning the average running time is finite for every choice of _&lambda;_ and other parameters (Devroye 1986, esp. p. 717\)[^28].[^40])
-
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ **to 1**.
-2. Generate a uniform(0, 1) random variate _ret_.
-3. Do the following process repeatedly until this algorithm returns a value:
-    1. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
-    2. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
-    3. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-    4. Add 1 to _n_.
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)", with parameter $b_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]
 
 > **Note:** exp(&minus;_&lambda;_) = exp(1&minus;_&lambda;_)/exp(1).
 
@@ -833,17 +830,12 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
     2. Add 1 to _i_.
 4. Return 1.
 
-**Algorithm 2.**  Applies the general martingale algorithm, but works only when **_c_ is a rational number in the interval \[0, 1\]**.  The target function is represented as a series 1 &minus; _&lambda;_<sup>_k_</sup>\*_c_ + _&lambda;_<sup>2\*_k_</sup>\*_c_/2! &minus; _&lambda;_<sup>3\*_k_</sup>\*_x_/3!, ..., and the coefficients are 1, _c_, _c_/(2!), _c_/(3!), ....
+**Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number in the interval \[0, 1\]**.
 
 1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
-2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
-3. Generate a uniform(0, 1) random variate _ret_.
-4. If _w_ is not 0, flip the input coin _k_ times or until the flip returns 0.  If any of the flips returns 0, set _w_ to 0, or if all the flips return 1, divide _w_ by _n_.  Then, multiply _w_ by a number that is 1 with probability _c_ and 0 otherwise.
-5. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
-6. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-7. Add 1 to _n_ and go to step 4.
+2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)", with parameter $b_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
 
-**Algorithm 3.** Builds on Algorithm 3 and works when **_c_ is a rational number 0 or greater**.
+**Algorithm 3.** Builds on Algorithm 2 and works when **_c_ is a rational number 0 or greater**.
 
 1. Let _m_ be floor(_c_).  Call the second algorithm _m_ times with _k_ = _k_ and _c_ = 1.  If any of these calls returns 0, return 0.
 2. If _c_ is an integer, return 1.
@@ -893,16 +885,8 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 <a id=exp___lambda___minus_1_exp_minus___lambda___or_exp___lambda___minus_1_exp___lambda></a>
 #### (exp(_&lambda;_)&minus;1) \* exp(&minus;_&lambda;_) or (exp(_&lambda;_)&minus;1) / exp(_&lambda;_)
 
-This algorithm uses the general martingale algorithm; this function can be rewritten as _&lambda;_\*(1 &minus; _&lambda;_/2 + _&lambda;_<sup>2</sup>/6 &minus; _&lambda;_<sup>3</sup>/24 + ...), which includes an alternating series whose coefficients are 1, 1/(2!), 1/(3!), 1/(4!), ....
-
 1. Flip the input coin.  If it returns 0, return 0.
-2. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, and set _n_ **to 2**.
-3. Generate a uniform(0, 1) random variate _ret_.
-4. Do the following process repeatedly until this algorithm returns a value:
-    1. If _w_ is not 0, flip the input coin, multiply _w_ by the result of the flip, and divide _w_ by _n_. (This is changed from the general martingale algorithm to take account of the factorial more efficiently in the second and later coefficients.)
-    2. If _n_ is even, set _u_ to _&#x2113;_ + _w_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_.
-    3. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next substep.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-    4. Add 1 to _n_.
+2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)", with parameter $b_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
 
 <a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a>
 #### 1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))
@@ -995,7 +979,7 @@ In this algorithm, _c_ and _d_ must be rational numbers, _c_ &ge; 1, and 0 &le; 
 <a id=1_1___lambda></a>
 #### 1/(1+_&lambda;_)
 
-This algorithm is a special case of the two-coin algorithm of (Gonçalves et al., 2017\)[^41] and is uniformly fast.[^43]
+This algorithm is a special case of the two-coin algorithm of (Gonçalves et al., 2017\)[^41] and has bounded expected running time for all _&lambda;_ parameters.[^43]
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Flip the input coin.  If it returns 1, return 0.  Otherwise, go to step 1.
@@ -1236,7 +1220,7 @@ In this document, a **linear Bernoulli factory** refers to one of the following:
 <a id=arctan___lambda_____lambda></a>
 #### arctan(_&lambda;_) /_&lambda;_
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which is uniformly fast for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^48]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^48]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
@@ -1251,36 +1235,12 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=cos___lambda></a>
 #### cos(_&lambda;_)
 
-This algorithm adapts the general martingale algorithm for this function's series expansion.  In fact, this is a special case of Algorithm 3 of (Łatuszyński et al. 2009/2011\)[^24] \(which is more general than Proposition 3.4, the general martingale algorithm). The series expansion for cos(_&lambda;_) is 1 &minus; _&lambda;_<sup>2</sup>/(2!) + _&lambda;_<sup>4</sup>/(4!) &minus; ..., which is an alternating series except the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, 1/(2!), 1/(4!), ....  A _lower truncation_ of the series is a truncation of that series that ends with a minus term, and the corresponding _upper truncation_ is the same truncation but without the last minus term.  This series expansion meets the requirements of Algorithm 3 because, with probability 1&mdash;
-
-- the lower truncation is less than or equal to its corresponding upper truncation,
-- the lower and upper truncations are in the interval [0, 1],
-- each lower truncation is greater than or equal to the previous lower truncation,
-- each upper truncation is less than or equal to the previous upper truncation, and
-- the lower and upper truncations have an expected value that approaches _&lambda;_ from below and above.
-
-The algorithm to simulate cos(_&lambda;_) follows.
-
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, and set _fac_ to 2.
-2. Generate a uniform(0, 1) random variate _ret_.
-3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again. (Usually, in the general martingale algorithm, only one coin is flipped in this step. Up to two coins are flipped instead because the exponent increases by 2 rather than 1.)
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ / _fac_. (Here we divide by the factorial of 2-times-_n_.)
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2 &minus; 1) * (_n_ * 2), then go to step 3.
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)", with parameter $b_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.
 
 <a id=sin___lambda___sqrt__c____lambda___sqrt__c></a>
 #### sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))
 
-This function can be rewritten as 1 &minus; _&lambda;_<sup>2</sup>/(3!) + _&lambda;_<sup>4</sup>/(5!) &minus; ..., which is an alternating series where the exponent is increased by 2 (rather than 1) with each term.  The coefficients are thus 1, _c_<sup>1</sup>/(3!), _c_<sup>2</sup>/(5!), ....  Thus, there is an algorithm to simulate this alternating series (see "[**Certain Power Series**](#Certain_Power_Series)").
-
-In this algorithm, _c_ is a rational number that must be in the interval (0, 6], since the algorithm requires a nonincreasing sequence of coefficients.
-
-1. Set _u_ to 1, set _w_ to 1, set _&#x2113;_ to 0, set _n_ to 1, set _cprod_ to _c_, and set _fac_ to 6.
-2. Generate a uniform(0, 1) random variate _ret_.
-3. If _w_ is not 0, flip the input coin. If the flip returns 0, set _w_ to 0. Do this step again.
-4. If _n_ is even, set _u_ to _&#x2113;_ + _w_ \* _cprod_ / _fac_.  Otherwise, set _&#x2113;_ to _u_ &minus; _w_ \* _cprod_ / _fac_.
-5. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  If _ret_ is less than _u_, go to the next step.  If neither is the case, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-6. Add 1 to _n_, then multiply _fac_ by (_n_ * 2) * (_n_ * 2 + 1), then multiply _cprod_ by _c_, then go to step 3.
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)", with parameter $b_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, _c_ must be a rational number in the interval (0, 6].
 
 <a id=sin___lambda></a>
 #### sin(_&lambda;_)
@@ -1322,7 +1282,7 @@ Equals the previous function times _&lambda;_, with _c_ = 1.
 <a id=ln_1___lambda></a>
 #### ln(1+_&lambda;_)
 
-Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which is uniformly fast for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^49]
+Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin algorithm (which has bounded expected running time for every _&lambda;_ parameter) rather than the even-parity construction (which is not).[^49]
 
 - Do the following process repeatedly, until this algorithm returns a value:
     1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), flip the input coin and return the result.
@@ -1455,7 +1415,7 @@ The algorithm begins with _k_ equal to 2.  Then the following steps are taken.
 4. Generate a number that is 1 with probability _x_ * _x_/(_y_ * _y_), or 0 otherwise.  If the number is 0, return 0.
 5. [**Sample from the number _u_**](#Implementation_Notes) twice.  If either of these calls returns 0, return 0.  Otherwise, go to step 2.
 
-Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin algorithm, which is uniformly fast, the algorithm above can be made uniformly fast as follows:
+Observing that the even-parity construction used in the Flajolet paper is equivalent to the two-coin algorithm, which has bounded expected running time for all _&lambda;_ parameters, the algorithm above can be modified as follows:
 
 1. Generate an unbiased random bit.  If that bit is 1 (which happens with probability 1/2), return 1.
 2. Generate a uniform(0, 1) random variate _u_, if it wasn't generated yet.
@@ -1538,7 +1498,7 @@ More specifically:
 
 The algorithm is then as follows:
 
-- For each component _LC_\[_i_\], call the **algorithm for exp(&minus; _LI_\[_i_\]/1)**, and call the **general martingale algorithm** adapted for **exp(&minus;_&lambda;_)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020\)[^53].)
+- For each component _LC_\[_i_\], run the **algorithm for exp(&minus; _x_/_y_)** with _x_=LI\_[_i_] and _y_=1, then run the algorithm for **exp(&minus;_&lambda;_)** using the input coin that simulates  _LF_\[_i_\].  If any of these calls returns 0, return 0; otherwise, return 1. (See also (Canonne et al. 2020\)[^53].)
 
 <a id=a___b___z></a>
 #### (_a_/_b_)<sup>_z_</sup>
@@ -1830,7 +1790,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^42]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory MCMC for intractable posteriors", _Biometrika_, 2021 (also in arXiv:2004.07471 [stat.CO]).
 
-[^43]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the general martingale algorithm, since when _&lambda;_ is in \[0, 1\], this function is an alternating series of the form `1 - x + x^2 - x^3 + ...`, whose coefficients are 1, 1, 1, 1, ....  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
+[^43]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with parameters $b_0=1$ and $a_i=(-1)^i$, due to the function's form as an alternating series.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
 [^44]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.
 
@@ -1848,7 +1808,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^51]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only for _&lambda;_ in \[0, 1\].  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^52]: Another algorithm for this function uses the general martingale algorithm, but uses more bits on average as _&lambda;_ approaches 1.  Here, the alternating series is `1 - x + x^2/2 - x^3/3 + ...`, whose coefficients are 1, 1, 1/2, 1/3, ...
+[^52]: Another algorithm for this function uses the **general martingale algorithm** with parameters $b_0=1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$, but uses more bits on average as _&lambda;_ approaches 1.
 
 [^53]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
@@ -1915,6 +1875,23 @@ is not necessarily an unbiased estimator of _f_(_&lambda;_), even if _&lambda;&p
 This page focuses on _unbiased_ estimators because "exact sampling" depends on it. See also (Mossel and Peres 2005, section 4\)[^15].
 
 > **Note:** Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for _f_(_&lambda;_) equals _f_(_&lambda;_) \* (1&minus;_f_(_&lambda;_)) and can go as high as 1/4.  There are ways to reduce this variance, which are outside the scope of this document.  An estimation algorithm's _mean squared error_ equals variance plus square of bias.
+
+<a id=Proof_of_Algorithm_2_in_Certain_Power_Series></a>
+### Proof of Algorithm 2 in "Certain Power Series"
+
+The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^3], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
+
+- $U_0=d_0$ and $L_0=0$.
+- For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n < 0$, otherwise $U_{n-1}$.
+- For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n > 0$, otherwise $L_{n-1}$.
+
+Then it's clear that with probability 1, for every $n\ge 1$&mdash;
+
+- $L_n \le U_n$,
+- $U_n$ is 0 or greater and $L_n$ is 1 or less, and
+- $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
+
+Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
 
 <a id=Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm></a>
 ### Correctness Proof for the Continued Logarithm Simulation Algorithm

@@ -161,47 +161,9 @@ Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (On
     1. Run a Bernoulli factory algorithm for $g(\lambda)$, $m$ times.  Return 0 if any of the runs returns 0.
     2. Run a Bernoulli factory algorithm for $B(\lambda)$, and return the result.
 
-----------
-
-Now, suppose the following:
-
-- $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
-- $g(\lambda)$ is a function that admits a Bernoulli factory.
-- Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
-- $d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.
-- The absolute values of $(d_j)$'s elements are 1 or less and form a nonincreasing sequence that is finite or converges to 0.
-
-> **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.
-
-Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
-
-**Algorithm 2:**
-
-1. Set _u_ to abs($d_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
-2. Generate a uniform(0, 1) random variate _ret_.
-3. Do the following process repeatedly, until this algorithm returns a value:
-    1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
-    2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero coefficients follow $a_n$, set _&#x2113;_ to _u_.
-    3. If $a_n$ is less than 0: Set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set _u_ to _&#x2113;_.
-    4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  Otherwise, if _ret_ is less than _u_, add 1 to _n_.  Otherwise, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
-
-> **Note:** The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^3], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
->
-> - $U_0=d_0$ and $L_0=0$.
-> - For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n < 0$, otherwise $U_{n-1}$.
-> - For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n > 0$, otherwise $L_{n-1}$.
->
-> Then it's clear that with probability 1, for every $n\ge 1$&mdash;
->
-> - $L_n \le U_n$,
-> - $U_n$ is 0 or greater and $L_n$ is 1 or less, and
-> - $L_{n-1} \le L_n$ and $U_{n-1} \ge U_n$.
->
-> Moreover, if there are infinitely many nonzero coefficients, the _U_ and _L_ sequences have expected values converging to $f(\lambda)$ with probability 1; otherwise $f(\lambda)$ is a polynomial in $g(\lambda)$, and $U_n$ and $L_n$ have expected values equal to $f(\lambda)$ for large enough $n$.  These conditions are required for the paper's Algorithm 3 (and thus the algorithm given above) to be valid.
-
 -------
 
-The following examples show how these methods lead to algorithms for simulating certain factory functions.
+The following examples show how this method leads to algorithms for simulating certain factory functions.
 
 **Example 1:** Take $f(\lambda) = \sin(3\lambda)/2$, which is a power series.
 
@@ -212,7 +174,7 @@ The following examples show how these methods lead to algorithms for simulating 
 - Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
     - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
     - The coefficients $b_0, ..., b_{m-1}$, in order, are the Bernstein-form coefficients found for $A$.
-    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run **Algorithm 2** with $a_i = h_{m+i}$.
+    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $a_i = h_{m+i}$.
 
 **Example 2:** Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, another power series.
 
@@ -222,16 +184,14 @@ The following examples show how these methods lead to algorithms for simulating 
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
 
-**Example 3:** The following functions can be written as power series that satisfy **Algorithm 2** (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
-
-| Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
- --- | --- | --- |
-| $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
-| $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
-| $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
-
-To simulate a function in the table, run **Algorithm 2** using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
-
+> **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
+> | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
+>  --- | --- | --- |
+> | $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
+> | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
+> | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
+> To simulate a function in the table, run the **general martingale algorithm** (in "Bernoulli Factory Algorithms") using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
+>
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >
 > 1. If _m_ is 0, 1, 2, 3, or 4, return 1, &minus;1/2, 1/6, 0, or &minus;1/30, respectively.  Otherwise, if _m_ is odd, return 0.
