@@ -136,7 +136,7 @@ The functions have similar derivations as follows:
 
 The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^2]
 
-Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number less than, greater than, or equal to 0.
+Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number.
 
 Suppose the following:
 
@@ -185,12 +185,14 @@ The following examples show how this method leads to algorithms for simulating c
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
 
 > **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
+>
 > | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
 >  --- | --- | --- |
 > | $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
 > | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
 > | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
-> To simulate a function in the table, run the **general martingale algorithm** (in "Bernoulli Factory Algorithms") using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
+>
+> To simulate a function in the table, run **Algorithm 2** using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
 >
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >

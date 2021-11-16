@@ -241,7 +241,7 @@
 
 <p>The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^2]</p>
 
-<p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number less than, greater than, or equal to 0.</p>
+<p>Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number.</p>
 
 <p>Suppose the following:</p>
 
@@ -308,13 +308,33 @@
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).
-| Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
- --- | --- | --- |
-| $\lambda/(\exp(\lambda)-1)$ |  $a_i = B(i)/(i!)$ |  1. |
-| $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
-| $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
-To simulate a function in the table, run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
+<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
+
+<table><thead>
+<tr>
+<th>Function $f(\lambda)$</th>
+<th>Coefficients</th>
+<th>Value of $d_0$</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>$\lambda/(\exp(\lambda)-1)$</td>
+<td>$a_i = B(i)/(i!)$</td>
+<td>1.</td>
+</tr>
+<tr>
+<td>$\tanh(\lambda)$</td>
+<td>$a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise.</td>
+<td>1.</td>
+</tr>
+<tr>
+<td>$\cos(\sqrt \lambda)$</td>
+<td>$a_i = \frac{(-1)^i}{(2i)!}$.</td>
+<td>1.</td>
+</tr>
+</tbody></table>
+
+<p>To simulate a function in the table, run <strong>Algorithm 2</strong> using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
 
 <p><strong>Note:</strong> Bernoulli numbers can be computed with the following algorithm, namely <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>:</p>
 

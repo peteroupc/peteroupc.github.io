@@ -164,7 +164,7 @@
 <li><a href="#Using_the_Biased_Coin_Alone_for_Randomness"><strong>Using the Biased Coin Alone for Randomness</strong></a></li>
 <li><a href="#The_Entropy_Bound"><strong>The Entropy Bound</strong></a></li>
 <li><a href="#Bernoulli_Factories_and_Unbiased_Estimation"><strong>Bernoulli Factories and Unbiased Estimation</strong></a></li>
-<li><a href="#Proof_of_Algorithm_2_in_Certain_Power_Series"><strong>Proof of Algorithm 2 in &quot;Certain Power Series&quot;</strong></a></li>
+<li><a href="#Proof_of_the_General_Martingale_Algorithm"><strong>Proof of the General Martingale Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_the_Continued_Logarithm_Simulation_Algorithm"><strong>Correctness Proof for the Continued Logarithm Simulation Algorithm</strong></a></li>
 <li><a href="#Correctness_Proof_for_Continued_Fraction_Simulation_Algorithm_3"><strong>Correctness Proof for Continued Fraction Simulation Algorithm 3</strong></a></li>
 <li><a href="#The_von_Neumann_Schema"><strong>The von Neumann Schema</strong></a></li>
@@ -720,7 +720,7 @@ functions, or functions in general.</p>
 <li>One sequence of polynomials converges from above to <em>f</em>, the other from below.</li>
 <li>For each sequence, the polynomials must have increasing degree.</li>
 <li>The polynomials are written in <em>Bernstein form</em> (see &quot;<a href="#Certain_Polynomials"><strong>Certain Polynomials</strong></a>&quot;).</li>
-<li>For each sequence, the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  This is also called the <em>consistency requirement</em>.</li>
+<li>For each sequence, the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).</li>
 </ul>
 
 <p>This section sets forth two algorithms to simulate factory functions via polynomials.  In both algorithms:</p>
@@ -1183,7 +1183,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>exp(&minus;<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;, with parameter $b_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]</p>
 
 <blockquote>
 <p><strong>Note:</strong> exp(&minus;<em>&lambda;</em>) = exp(1&minus;<em>&lambda;</em>)/exp(1).</p>
@@ -1213,7 +1213,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Special cases: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;, with parameter $b_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
+<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
 </ol>
 
 <p><strong>Algorithm 3.</strong> Builds on Algorithm 2 and works when <strong><em>c</em> is a rational number 0 or greater</strong>.</p>
@@ -1289,7 +1289,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;, with parameter $b_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
+<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
 </ol>
 
 <p><a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a></p>
@@ -1812,13 +1812,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>cos(<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;, with parameter $b_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.</p>
 
 <p><a id=sin___lambda___sqrt__c____lambda___sqrt__c></a></p>
 
 <h4>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;, with parameter $b_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
 
 <p><a id=sin___lambda></a></p>
 
@@ -2457,12 +2457,12 @@ kind of irrational number.</p>
 <li>Functions with any of the following series expansions, using rational arithmetic only:
 
 <ul>
-<li>Power series where <em>f</em>(0) is 0 and <em>f</em>(1) is rational or vice versa (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;).</li>
+<li>Series with non-negative terms where <em>f</em>(0) is 0 and <em>f</em>(1) is rational or vice versa (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;).</li>
 <li>Series with non-negative terms that can be &quot;tucked&quot; under a discrete probability mass function (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>Convex Combinations</strong></a>&quot;).</li>
 <li>Alternating power series (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;).</li>
 <li>Series with non-negative terms and bounds on the truncation error (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Converging_Series"><strong>Certain Converging Series</strong></a>&quot;).</li>
 </ul></li>
-<li>A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence&#39;s polynomials must have coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  For a formal statement of these polynomials, see my <a href="https://mathoverflow.net/questions/379858"><strong>question on MathOverflow</strong></a>.<br><br>The <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a> include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn&#39;t possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous &quot;slope&quot; functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?</li>
+<li>A way to compute two sequences of polynomials written in Bernstein form that converge from above and below to a factory function as follows: (a) Each sequence&#39;s polynomials must have coefficients lying in [0, 1], and be of increasing degree; (b) the degree-<em>n</em> polynomials&#39; coefficients must lie at or &quot;inside&quot; those of the previous upper polynomial and the previous lower one (once the polynomials are elevated to degree <em>n</em>).  For a formal statement of these polynomials, see my <a href="https://mathoverflow.net/questions/379858"><strong>question on MathOverflow</strong></a>.<br><br>The <a href="https://peteroupc.github.io/bernsupp.html"><strong>supplemental notes</strong></a> include formulas for computing these polynomials for large classes of factory functions, but none of them ensure a finite expected number of coin flips in general, and it is suspected that a finite number of flips isn&#39;t possible unless the factory function is C<sup>2</sup> continuous (has two or more continuous &quot;slope&quot; functions).  Thus one question is: Given a C<sup>2</sup> continuous factory function, are there practical algorithms for building polynomials described here, where the expected number of coin flips is finite (besides the algorithms in this article or the supplemental notes)?  One example worth pondering is sin(<em>&lambda;</em> * <em>&pi;</em>/2) = cos((1&minus;<em>&lambda;</em>)* <em>&pi;</em>/2), which equals 0 at 0 and 1 at 1.</li>
 </ul></li>
 </ul></li>
 <li><p>Let a permutation class (such as numbers in descending order) and two continuous probability distributions D and E be given.  Consider the following algorithm: Generate a sequence of independent random variates (where the first is distributed as D and the rest as E) until the sequence no longer follows the permutation class, then return <em>n</em>, which is how many numbers were generated this way minus 1.  In this case:</p>
@@ -2688,9 +2688,9 @@ kind of irrational number.</p>
 <p><strong>Note:</strong> Bias and variance are the two sources of error in a randomized estimation algorithm.  An unbiased estimator has no bias, but is not without error.  In the case at hand here, the variance of a Bernoulli factory for <em>f</em>(<em>&lambda;</em>) equals <em>f</em>(<em>&lambda;</em>) * (1&minus;<em>f</em>(<em>&lambda;</em>)) and can go as high as 1/4.  There are ways to reduce this variance, which are outside the scope of this document.  An estimation algorithm&#39;s <em>mean squared error</em> equals variance plus square of bias.</p>
 </blockquote>
 
-<p><a id=Proof_of_Algorithm_2_in_Certain_Power_Series></a></p>
+<p><a id=Proof_of_the_General_Martingale_Algorithm></a></p>
 
-<h3>Proof of Algorithm 2 in &quot;Certain Power Series&quot;</h3>
+<h3>Proof of the General Martingale Algorithm</h3>
 
 <p>The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^3], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences <em>U</em> and <em>L</em> as follows:</p>
 
