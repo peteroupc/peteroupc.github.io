@@ -39,7 +39,7 @@
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information"><strong>Sampling Distributions Using Incomplete Information</strong></a></li>
 <li><a href="#Pushdown_Automata_for_Square_Root_Like_Functions"><strong>Pushdown Automata for Square-Root-Like Functions</strong></a></li>
 </ul></li>
-<li><a href="#Irrational_Probability_Simulation"><strong>Irrational Probability Simulation</strong></a>
+<li><a href="#Irrational_Probabilities"><strong>Irrational Probabilities</strong></a>
 
 <ul>
 <li><a href="#Certain_Numbers_Based_on_the_Golden_Ratio"><strong>Certain Numbers Based on the Golden Ratio</strong></a></li>
@@ -633,7 +633,7 @@
 
 <p>The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).</p>
 
-<p>For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where <em>H</em> &ge; 2 is an integer, and <em>g</em> has the same meaning as earlier.</p>
+<p>For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; <em>H</em> &ge; 2 is an integer; and <em>g</em> has the same meaning as earlier.</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>
@@ -646,7 +646,7 @@
 </ol>
 
 <p>The following algorithm simulates the probability&mdash; $$
-f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise; and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable <em>g</em>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.  <em>V</em>(<em>n</em>, <em>m</em>) is the number of <em>n</em>-letter words that have <em>m</em> heads <em>and</em> describe a walk that ends at the beginning.)</p>
+f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where <em>g</em> has the same meaning as earlier; <em>W</em>(<em>n</em>, <em>m</em>) is 1 if <em>m</em>*<em>H</em> equals (<em>n</em>&minus;<em>m</em>)*<em>T</em>, or 0 otherwise; and <em>H</em>&ge;1 and <em>T</em>&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable <em>g</em>(<em>&lambda;</em>) and with only zeros and ones as coefficients.  Because of the <em>&lambda;</em><sup><em>n</em></sup>, the polynomial gets smaller as <em>n</em> gets larger.  <em>V</em>(<em>n</em>, <em>m</em>) is the number of <em>n</em>-letter words that have <em>m</em> heads <em>and</em> describe a walk that ends at the beginning.)</p>
 
 <ol>
 <li>Set <em>d</em> to 0.</li>
@@ -658,9 +658,9 @@ f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\
 </ol></li>
 </ol>
 
-<p><a id=Irrational_Probability_Simulation></a></p>
+<p><a id=Irrational_Probabilities></a></p>
 
-<h2>Irrational Probability Simulation</h2>
+<h2>Irrational Probabilities</h2>
 
 <p><a id=Certain_Numbers_Based_on_the_Golden_Ratio></a></p>
 

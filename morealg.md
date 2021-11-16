@@ -25,7 +25,7 @@ This page contains additional algorithms for arbitrary-precision sampling of con
     - [**Certain Piecewise Linear Functions**](#Certain_Piecewise_Linear_Functions)
     - [**Sampling Distributions Using Incomplete Information**](#Sampling_Distributions_Using_Incomplete_Information)
     - [**Pushdown Automata for Square-Root-Like Functions**](#Pushdown_Automata_for_Square_Root_Like_Functions)
-- [**Irrational Probability Simulation**](#Irrational_Probability_Simulation)
+- [**Irrational Probabilities**](#Irrational_Probabilities)
     - [**Certain Numbers Based on the Golden Ratio**](#Certain_Numbers_Based_on_the_Golden_Ratio)
     - [**Ratio of Lower Gamma Functions (&gamma;(_m_, _x_)/&gamma;(_m_, 1)).**](#Ratio_of_Lower_Gamma_Functions_gamma__m___x__gamma__m__1)
     - [**1/(exp(1) + _c_ &minus; 2)**](#1_exp_1__c__minus_2)
@@ -396,7 +396,7 @@ As a pushdown automaton, this algorithm (except the "Do this substep again" part
 
 The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
-For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where _H_ &ge; 2 is an integer, and _g_ has the same meaning as earlier.
+For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; _H_ &ge; 2 is an integer; and _g_ has the same meaning as earlier.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -404,15 +404,15 @@ For the following algorithm, which extends the end of Note 1 of the Flajolet pap
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1, add (_H_&minus;1) to _d_.  Otherwise, subtract 1 from _d_.  (Note: This substep is not done again.)
 
 The following algorithm simulates the probability&mdash; $$
-f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)
+f(\lambda) = (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} W(n,m) g(\lambda)^m (1-g(\lambda))^{n-m} {n \choose m}\right)$$ $$= (1-\lambda) \sum_{n\ge 0} \lambda^n \left( \sum_{m\ge 0} V(n,m) g(\lambda)^m (1-g(\lambda))^{n-m}\right),$$ where _g_ has the same meaning as earlier; _W_(_n_, _m_) is 1 if _m_\*_H_ equals (_n_&minus;_m_)\*_T_, or 0 otherwise; and _H_&ge;1 and _T_&ge;1 are integers. (In the first formula, the sum in parentheses is a polynomial in Bernstein form, in the variable _g_(_&lambda;_) and with only zeros and ones as coefficients.  Because of the _&lambda;_<sup>_n_</sup>, the polynomial gets smaller as _n_ gets larger.  _V_(_n_, _m_) is the number of _n_-letter words that have _m_ heads _and_ describe a walk that ends at the beginning.)
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
     1. Flip the input coin.  If it returns 1, go to the next substep.  Otherwise, return either 1 if _d_ is 0, or 0 otherwise.
     2. Run a Bernoulli factory algorithm for _g_(_&lambda;_).  If the run returns 1 ("heads"), add _H_ to _d_.  Otherwise ("tails"), subtract _T_ from _d_.  (Note: This substep is not done again.)
 
-<a id=Irrational_Probability_Simulation></a>
-## Irrational Probability Simulation
+<a id=Irrational_Probabilities></a>
+## Irrational Probabilities
 
 <a id=Certain_Numbers_Based_on_the_Golden_Ratio></a>
 ### Certain Numbers Based on the Golden Ratio
