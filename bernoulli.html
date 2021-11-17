@@ -591,7 +591,11 @@ functions, or functions in general.</p>
 
 <h4>Certain Power Series</h4>
 
-<p>Mendo (2019)[^23] gave a Bernoulli factory algorithm for certain functions that can be rewritten as a <em>power series</em>.  The algorithm uses parameter <em>v</em> and is given below.  A table of supported power series will follow the algorithm.</p>
+<p>A <em>power series</em> is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are <em>coefficients</em> and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series converge to a value, but all power series that matter in this article must be factory functions.</p>
+
+<hr>
+
+<p>For certain power series with non-negative coefficients, Mendo (2019)[^23] gave the following algorithm.  The algorithm uses parameter <em>v</em> and is given below.  A table of supported power series will follow the algorithm.</p>
 
 <ol>
 <li>Set <em>dsum</em> to 0 and <em>i</em> to 1.</li>
@@ -642,9 +646,31 @@ functions, or functions in general.</p>
 <p>In the table above, <em>c</em>[<em>i</em>] &ge; 0 are the coefficients of the series.  <em>CS</em> is the sum of all the coefficients, must be 1 or less, and should be a rational number.  This implies that&mdash;</p>
 
 <ul>
-<li><em>f</em>(0) is either 0 for series 1 and 3, or 1 for series 2 and 4, and</li>
-<li><em>f</em>(1) is either <em>CS</em> for series 1 and 3, or 1&minus;<em>CS</em> for series 2 and 4.</li>
+<li>for series 1, <em>f</em>(0) = 1&minus;<em>CS</em> and <em>f</em>(1) = 1,</li>
+<li>for series 2, <em>f</em>(0) = <em>CS</em> and <em>f</em>(1) = 0,</li>
+<li>for series 3, <em>f</em>(0) = 0 and <em>f</em>(1) = <em>CS</em>, and</li>
+<li>for series 4, <em>f</em>(0) = 1 and <em>f</em>(1) = 1&minus;<em>CS</em>.</li>
 </ul>
+
+<hr>
+
+<p>For certain other power series with non-negative coefficients (especially those that equal 1 or greater somewhere in the interval [0, 1]), Nacu and Peres (2005, proposition 16)[^16] gave the following algorithm.  It works on functions of the form&mdash;</p>
+
+<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
+
+<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameters:</p>
+
+<ul>
+<li><em>t</em> is a rational number in the interval (<em>B</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
+<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2].</li>
+</ul>
+
+<p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads) and in the interval (0, 1).</p>
+
+<ol>
+<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these runs returns 0, return 0.  Otherwise, return 1.&quot;</li>
+<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
+</ol>
 
 <hr>
 
@@ -654,6 +680,7 @@ functions, or functions in general.</p>
 
 <ul>
 <li>$f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the <em>coefficients</em> of the series and form a sequence called $(a_i)$.</li>
+<li>The coefficients should be rational numbers.</li>
 <li>$g(\lambda)$ is a function that admits a Bernoulli factory.</li>
 <li>Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.</li>
 <li>$d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.</li>
@@ -682,7 +709,7 @@ functions, or functions in general.</p>
 </ol>
 
 <blockquote>
-<p><strong>Note:</strong></p>
+<p><strong>Notes:</strong></p>
 
 <ol>
 <li>This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</li>
@@ -692,23 +719,15 @@ functions, or functions in general.</p>
 
 <hr>
 
-<p>(Nacu and Peres 2005, proposition 16)[^16].  The algorithm below simulates a function of the form&mdash;</p>
-
-<p><em>f</em>(<em>&lambda;</em>) = <em>d[0]</em> + <em>d[1]</em> * <em>&lambda;</em> + <em>d[2]</em> * <em>&lambda;</em><sup>2</sup> + ...,</p>
-
-<p>where each <em>d</em>[<em>i</em>] is 0 or greater, and takes the following parameters:</p>
+<blockquote>
+<p><strong>Note:</strong> Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
 
 <ul>
-<li><em>t</em> is a rational number in the interval (<em>B</em>, 1] such that <em>f</em>(<em>t</em>) &lt; 1.</li>
-<li><em>&#x03F5;</em> is a rational number in the interval (0, (<em>t</em> &minus; <em>B</em>)/2].</li>
+<li>Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered by Mendo&#39;s algorithm but they become inexact in practice.)</li>
+<li>Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0.</li>
+<li>Series with negative and positive coefficients that do not alternate in sign (ignoring zeros).</li>
 </ul>
-
-<p><em>B</em> is not a parameter, but is the maximum allowed value for <em>&lambda;</em> (probability of heads) and in the interval (0, 1).</p>
-
-<ol>
-<li>Create a <em>&nu;</em> input coin that does the following: &quot;(1) Set <em>n</em> to 0. (2) With probability <em>&#x03F5;</em>/<em>t</em>, go to the next substep.  Otherwise, add 1 to <em>n</em> and repeat this substep. (3) With probability 1 &minus; <em>d</em>[<em>n</em>]*<em>t</em><sup><em>n</em></sup>, return 0. (4) Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> <em>n</em> times, using the (<em>&lambda;</em>) input coin, <em>x</em>/<em>y</em> = 1/(<em>t</em> &minus; <em>&#x03F5;</em>), and <em>&#x03F5;</em> = <em>&#x03F5;</em>.  If any of these runs returns 0, return 0.  Otherwise, return 1.&quot;</li>
-<li>Run a <a href="#Linear_Bernoulli_Factories"><strong>linear Bernoulli factory</strong></a> once, using the <em>&nu;</em> input coin described earlier, <em>x</em>/<em>y</em> = <em>t</em>/<em>&#x03F5;</em>, and <em>&#x03F5;</em> = <em>&#x03F5;</em>, and return the result.</li>
-</ol>
+</blockquote>
 
 <p><a id=General_Factory_Functions></a></p>
 

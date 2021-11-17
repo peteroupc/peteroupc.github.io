@@ -408,7 +408,11 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-Mendo (2019\)[^23] gave a Bernoulli factory algorithm for certain functions that can be rewritten as a _power series_.  The algorithm uses parameter _v_ and is given below.  A table of supported power series will follow the algorithm.
+A _power series_ is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series converge to a value, but all power series that matter in this article must be factory functions.
+
+----
+
+For certain power series with non-negative coefficients, Mendo (2019\)[^23] gave the following algorithm.  The algorithm uses parameter _v_ and is given below.  A table of supported power series will follow the algorithm.
 
 1. Set _dsum_ to 0 and _i_ to 1.
 2. Do the following process repeatedly, until this algorithm returns a value:
@@ -428,8 +432,26 @@ A table of supported power series follows:
 
 In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ is the sum of all the coefficients, must be 1 or less, and should be a rational number.  This implies that&mdash;
 
-- _f_(0) is either 0 for series 1 and 3, or 1 for series 2 and 4, and
-- _f_(1) is either _CS_ for series 1 and 3, or 1&minus;_CS_ for series 2 and 4.
+- for series 1, _f_(0) = 1&minus;_CS_ and _f_(1) = 1,
+- for series 2, _f_(0) = _CS_ and _f_(1) = 0,
+- for series 3, _f_(0) = 0 and _f_(1) = _CS_, and
+- for series 4, _f_(0) = 1 and _f_(1) = 1&minus;_CS_.
+
+----
+
+For certain other power series with non-negative coefficients (especially those that equal 1 or greater somewhere in the interval [0, 1]), Nacu and Peres (2005, proposition 16\)[^16] gave the following algorithm.  It works on functions of the form&mdash;
+
+_f_(_&lambda;_) = _d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
+
+where each _d_\[_i_\] is 0 or greater, and takes the following parameters:
+
+- _t_ is a rational number in the interval (_B_, 1] such that _f_(_t_) < 1.
+- _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2].
+
+_B_ is not a parameter, but is the maximum allowed value for _&lambda;_ (probability of heads) and in the interval (0, 1).
+
+1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If any of these runs returns 0, return 0.  Otherwise, return 1."
+2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
 
 ----
 
@@ -438,6 +460,7 @@ In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ 
 For example, suppose the following:
 
 - $f(\lambda)$ is a function written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are the _coefficients_ of the series and form a sequence called $(a_i)$.
+- The coefficients should be rational numbers.
 - $g(\lambda)$ is a function that admits a Bernoulli factory.
 - Let $(d_j)$ be the sequence formed from $(a_i)$ by deleting the zero coefficients.
 - $d_0$ is greater than 0, and the elements in $(d_j)$ alternate in sign.
@@ -457,26 +480,18 @@ Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (r
     3. If $a_n$ is less than 0: Set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set _u_ to _&#x2113;_.
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  Otherwise, if _ret_ is less than _u_, add 1 to _n_.  Otherwise, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 
-> **Note:**
+> **Notes:**
 >
 > 1. This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper's framework.  A proof of its correctness is given in the appendix.
 > 2. Other algorithms in this page may refer to the **general martingale algorithm**.  If they do so, but don't specify $g(\lambda)$, then $g(\lambda)$ is $\lambda$ and to run a Bernoulli factory algorithm for $g(\lambda)$ simply means to flip the input coin that shows heads (returns 1) with probability $\lambda$.
 
 ----
 
-(Nacu and Peres 2005, proposition 16\)[^16].  The algorithm below simulates a function of the form&mdash;
-
-_f_(_&lambda;_) = _d[0]_ + _d[1]_ * _&lambda;_ + _d[2]_ * _&lambda;_<sup>2</sup> + ...,
-
-where each _d_\[_i_\] is 0 or greater, and takes the following parameters:
-
-- _t_ is a rational number in the interval (_B_, 1] such that _f_(_t_) < 1.
-- _&#x03F5;_ is a rational number in the interval (0, (_t_ &minus; _B_)/2].
-
-_B_ is not a parameter, but is the maximum allowed value for _&lambda;_ (probability of heads) and in the interval (0, 1).
-
-1. Create a _&nu;_ input coin that does the following: "(1) Set _n_ to 0. (2) With probability _&#x03F5;_/_t_, go to the next substep.  Otherwise, add 1 to _n_ and repeat this substep. (3) With probability 1 &minus; _d_\[_n_\]\*_t_<sup>_n_</sup>, return 0. (4) Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) _n_ times, using the (_&lambda;_) input coin, _x_/_y_ = 1/(_t_ &minus; _&#x03F5;_), and _&#x03F5;_ = _&#x03F5;_.  If any of these runs returns 0, return 0.  Otherwise, return 1."
-2. Run a [**linear Bernoulli factory**](#Linear_Bernoulli_Factories) once, using the _&nu;_ input coin described earlier, _x_/_y_ = _t_/_&#x03F5;_, and _&#x03F5;_ = _&#x03F5;_, and return the result.
+> **Note:** Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
+>
+> - Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered by Mendo's algorithm but they become inexact in practice.)
+> - Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0.
+> - Series with negative and positive coefficients that do not alternate in sign (ignoring zeros).
 
 <a id=General_Factory_Functions></a>
 #### General Factory Functions
