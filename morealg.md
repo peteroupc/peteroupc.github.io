@@ -146,7 +146,7 @@ Suppose the following:
 Then rewrite the function as&mdash; $$f(\lambda) = A(\lambda) + (g(\lambda))^{m} B(\lambda),$$ where&mdash;
 
 - $A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and
-- $B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_i (g(\lambda))^{i-m}$.
+- $B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_{i+m} (g(\lambda))^i$.
 
 Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the "power" coefficients $a_0, ..., a_{m-1}$, is the so-called "matrix method" from Ray and Nataraj (2012)[^4].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial's coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.
 
@@ -169,7 +169,7 @@ The following examples show how this method leads to algorithms for simulating c
 
 - $f$ is bounded above by $Z=1/2 \lt 1$.
 - $f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.
-- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise.[^5]
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.[^5]
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].
 - Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
     - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
@@ -180,11 +180,11 @@ The following examples show how this method leads to algorithms for simulating c
 
 - $f$ is bounded above by $Z=3/4 \lt 1$.
 - $f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.
-- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
 
-> **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
+> **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
 >
 > | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
 >  --- | --- | --- |
@@ -192,7 +192,7 @@ The following examples show how this method leads to algorithms for simulating c
 > | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
 > | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
 >
-> To simulate a function in the table, run **Algorithm 2** using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).
+> To simulate a function in the table, run the **general martingale algorithm** using the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).
 >
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >

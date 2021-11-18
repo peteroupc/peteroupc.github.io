@@ -73,9 +73,10 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 > **Note:** For this method, the "slope-of-slope" function need not be continuous (Y. Peres, pers. comm., 2021).
 >
 > **Example:** Take _f_(_&lambda;_) = exp(&minus;_&lambda;_).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for _f_ is valid:
->        * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
->        * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
->        * **fbound**(_n_) = [0, 1].
+>
+> * **fbelow**(_n_, _k_) = 3321/10000 if _n_&lt;4; otherwise, _f_(_k_/_n_) &minus; 1/(7\*n). (Observe that _f_(_k_/4) &minus; 1/(7\*4) &ge; 3321/10000.)
+> * **fabove**(_n_, _k_) = _f_(_k_/_n_) (because _f_ is convex).
+> * **fbound**(_n_) = [0, 1].
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
@@ -139,7 +140,7 @@ then _f_ can be simulated using the following algorithm:
 >
 >     1. (Simulate _h_.) Flip the input coin.  If it returns 0, return 0.
 >     2. (Simulate _H_.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.
->     3. Run a Bernoulli factory algorithm for _G_ (which involves building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
+>     3. Run a Bernoulli factory algorithm for _G_ (which might involve building polynomials that converge to _G_, noticing that _G_ is twice differentiable) and return the result of that algorithm.
 
 **Certain functions that equal 0 at 0 and 1 at 1.**  Let _f_, _g_, and _h_ be functions as defined earlier, except that _f_(0) = 0 and _f_(1) = 1.  Define the following additional functions:
 
@@ -152,13 +153,15 @@ then _f_ can be simulated using the following algorithm:
 
 Roughly speaking, _&omega;_ is a function that bounds _f_ from below, just as _h_ bounds _f_ from above. _&omega;_ should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both _&omega;_ and _h_ are polynomials of the same degree, _q_ will be a rational function with a relatively simple Bernoulli factory algorithm (see "[**Certain Rational Functions**](https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions)").
 
-Now, if _r_(_&lambda;_) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then _f_ can be simulated using the following algorithm:
+Now, if _r_(_&lambda;_) is continuous on [0, 1], then _f_ can be simulated using the following algorithm:
 
 1. Run a Bernoulli factory algorithm for _h_.  If the call returns 0, return 0. (For example, if _h_(_&lambda;_) = _&lambda;_, then this step amounts to the following: "Flip the input coin.  If it returns 0, return 0.")
 2. Run a Bernoulli factory algorithm for _q_(.).  If the call returns 1, return 1.
-3. Run one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) for _r_(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to _r_(.), as described earlier in this section.
+3. Run a Bernoulli factory algorithm for _r_(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the [**general factory function algorithms**](https://peteroupc.github.io/bernoulli.html#General_Factory_Functions) if there is a way to calculate polynomials that converge to _r_(.) in a manner needed for that algorithm (e.g., if _r_ is described earlier in this section).
 
-> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&omega;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following SymPy code: `fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
+> **Note:** Quick proof: Rewrite $f=h\dot{}(q\dot{}1+(1-q)\dot{}(1-r))+(1-h)\dot{}0$.
+>
+> **Example:** If _f_(_&lambda;_) = (1&minus;exp(_&lambda;_))/(1&minus;exp(1)), then _f_ is bounded from above by _h_(_&lambda;_) = _&lambda;_, and from below by _&omega;_(_&lambda;_) = _&lambda;_<sup>2</sup>.  As a result, _q_(_&lambda;_) = _&lambda;_, and _r_(_&lambda;_) = (2 &minus; exp(1))/(1 &minus; exp(1)) if _&lambda;_ = 0; 1/(exp(1)&minus;1) if _&lambda;_ = 1; and (&minus;_&lambda;_\*(1 &minus; exp(1)) &minus; exp(_&lambda;_) + 1)/(_&lambda;_\*(1 &minus; exp(1))\*(_&lambda;_ &minus; 1)) otherwise.  This can be computed using the following SymPy code: `fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)`.
 
 **Other functions that equal 0 or 1 at the endpoints 0 and/or 1.** If _f_ does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:
 

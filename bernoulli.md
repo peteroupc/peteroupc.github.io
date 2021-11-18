@@ -408,7 +408,7 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 <a id=Certain_Power_Series></a>
 #### Certain Power Series
 
-A _power series_ is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series converge to a value, but all power series that matter in this article must be factory functions.
+A _power series_ is a function written as&mdash; $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $a_i$ are _coefficients_ and $g(\lambda)$ is a function in the variable $\lambda$.  Not all power series sum to a definite value, but all power series that matter in this article must be factory functions.
 
 ----
 
@@ -490,7 +490,7 @@ Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (r
 > **Note:** Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
 >
 > - Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered by Mendo's algorithm but they become inexact in practice.)
-> - Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0.
+> - Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)
 > - Series with negative and positive coefficients that do not alternate in sign (ignoring zeros).
 
 <a id=General_Factory_Functions></a>
@@ -710,7 +710,7 @@ The case when the sequence _a_ converges to a _natural logarithm_ rather than a 
 
 > **Examples**:
 >
-> - Let _f_(_&lambda;_) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  That algorithm can simulate this constant if step 6 is modified to read: "Let _m_ be ((_n_+1)\*2), and let _&alpha;_ be 1/(_m_!) (a term of the series).  Add _&alpha;_ to _lamunq_ and set _&#x03F5;_ to 2/((_m_+1)!) (the error term).".[^33]
+> - Let _f_(_&lambda;_) = cosh(1)&minus;1.  This function can be rewritten as a series required by the first algorithm in this section, namely _f_'s _Taylor series_ at 0.  Then this algorithm can be used with _a_\[_i_] = 1/(((_i_+1)\*2)!) and _err_\[_i_] = 2/((((_i_+1)\*2)+1)!). [^33]
 > - Logarithms can form the basis of efficient algorithms to simulate the probability _z_ = choose(_n_, _k_)/2<sup>_n_</sup> when _n_ can be very large (e.g., as large as 2<sup>30</sup>), without relying on floating-point arithmetic.  In this example, the trivial algorithm for choose(_n_, _k_), the binomial coefficient, will generally require a growing amount of storage that depends on _n_ and _k_. On the other hand, any constant can be simulated using up to two unbiased random bits on average, and even slightly less than that for the constants at hand here (Kozen 2014\)[^34].  Instead of calculating the binomial coefficient directly, a series can be calculated that sums to that coefficient's logarithm, such as ln(choose(_n_, _k_)), which is economical in space even for large _n_ and _k_.  Then the algorithm above can be used with that series to simulate the probability _z_.  A similar approach has been implemented (see [**interval.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/interval.py#L694) and [**betadist.py**](https://github.com/peteroupc/peteroupc.github.io/blob/master/betadist.py#L700)).  See also an appendix in (Bringmann et al. 2014\)[^35].
 
 <a id=Other_General_Algorithms></a>
@@ -853,7 +853,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 **Algorithm 3.** Builds on Algorithm 2 and works when **_c_ is a rational number 0 or greater**.
 
 1. Let _m_ be floor(_c_).  Call the second algorithm _m_ times with _k_ = _k_ and _c_ = 1.  If any of these calls returns 0, return 0.
-2. If _c_ is an integer, return 1.
+2. If _c_ is an integer (that is, if floor(_c_) = _c_), return 1.
 3. Call the second algorithm once, with _k_ = _k_ and _c_ = _c_ &minus; floor(_c_).  Return the result of this call.
 
 <a id=exp_minus__m____lambda_____mu></a>
@@ -1897,8 +1897,8 @@ This page focuses on _unbiased_ estimators because "exact sampling" depends on i
 The proof is similar to the proof for certain alternating series with only nonzero coefficients, given in Łatuszyński et al. (2019/2011)[^3], section 3.1.  Suppose we repeatedly flip a coin that shows heads with probability $g(\lambda)$ and we get the following results: $X_1, X_2, ...$, where each result is either 1 if the coin shows heads or 0 otherwise.  Then define two sequences _U_ and _L_ as follows:
 
 - $U_0=d_0$ and $L_0=0$.
-- For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n < 0$, otherwise $U_{n-1}$.
-- For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n$ is the last nonzero coefficient and $a_n > 0$, otherwise $L_{n-1}$.
+- For each $n>0$, $U_n$ is $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if $a_n > 0$, otherwise $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n < 0$, otherwise $U_{n-1}$.
+- For each $n>0$, $L_n$ is $U_{n-1} - |a_n|\times X_1\times...\times X_n$ if $a_n < 0$, otherwise $L_{n-1} + |a_n|\times X_1\times...\times X_n$ if no nonzero coefficients follow $a_n$ and $a_n > 0$, otherwise $L_{n-1}$.
 
 Then it's clear that with probability 1, for every $n\ge 1$&mdash;
 

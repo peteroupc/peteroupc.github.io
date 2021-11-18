@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/16"><meta name="citation_online_date" content="2021/11/16"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>More Algorithms for Arbitrary-Precision Sampling</title><meta name="citation_title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="citation_pdf_url" content="https://peteroupc.github.io/morealg.pdf"><meta name="citation_url" content="https://peteroupc.github.io/morealg.html"><meta name="citation_date" content="2021/11/17"><meta name="citation_online_date" content="2021/11/17"><meta name="og:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="og:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli factory algorithms and partially-sampled random numbers."><meta name="twitter:description" content="This page contains additional algorithms for arbitrary-precision sampling of continuous distributions, Bernoulli factory algorithms (biased-coin to biased-coin algorithms), and algorithms to produce heads with an irrational probability.  They supplement my pages on Bernoulli f..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/morealg.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="More Algorithms for Arbitrary-Precision Sampling"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -254,7 +254,7 @@
 
 <ul>
 <li>$A(\lambda) = f(\lambda) - C(\lambda) = \sum_{i=0}^{m-1} a_i (g(\lambda))^i$ is a polynomial in $g(\lambda)$ of degree $m-1$, and</li>
-<li>$B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_i (g(\lambda))^{i-m}$.</li>
+<li>$B(\lambda) = C(\lambda) / (g(\lambda))^{m} = \sum_{i\ge m} a_{i+m} (g(\lambda))^i$.</li>
 </ul>
 
 <p>Rewrite $A$ as a polynomial in Bernstein form, in the variable $g(\lambda)$. (One way to transform a polynomial to Bernstein form, given the &quot;power&quot; coefficients $a_0, ..., a_{m-1}$, is the so-called &quot;matrix method&quot; from Ray and Nataraj (2012)[^4].)  Let $b_0, ..., b_{m-1}$ be the Bernstein-form polynomial&#39;s coefficients.  Then if those coefficients all lie in $[0, 1]$, then the following algorithm simulates $f(\lambda)$.</p>
@@ -286,7 +286,7 @@
 <ul>
 <li>$f$ is bounded above by $Z=1/2 \lt 1$.</li>
 <li>$f$ satisfies $m=8$ since splitting the series at 8 leads to two functions that admit Bernoulli factories.</li>
-<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd and 0 otherwise.[^5]</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^8 \left(\sum_{i\ge 0} a_{8+i} \lambda^i\right),$$ where $a_i = \frac{3^i}{i! \times 2}(-1)^{(i-1)/2}$ if $i$ is odd and 0 otherwise.[^5]</li>
 <li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [0, 3/14, 3/7, 81/140, 3/5, 267/560, 81/280, 51/1120].</li>
 <li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
 
@@ -302,13 +302,13 @@
 <ul>
 <li>$f$ is bounded above by $Z=3/4 \lt 1$.</li>
 <li>$f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.</li>
-<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{\lfloor i/2\rfloor}$ if $i$ is odd; and 0 otherwise.</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.</li>
 <li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].</li>
 <li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ in the same manner as for Example 1.</li>
 </ul>
 
 <blockquote>
-<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) (with $g(\lambda)=\lambda$).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
+<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
 
 <table><thead>
 <tr>
@@ -334,7 +334,7 @@
 </tr>
 </tbody></table>
 
-<p>To simulate a function in the table, run <strong>Algorithm 2</strong> using the given coefficients and value of $d_0$ ($b_0$ is the first nonzero coefficient).</p>
+<p>To simulate a function in the table, run the <strong>general martingale algorithm</strong> using the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).</p>
 
 <p><strong>Note:</strong> Bernoulli numbers can be computed with the following algorithm, namely <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>:</p>
 

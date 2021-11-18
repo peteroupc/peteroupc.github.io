@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/15"><meta name="citation_online_date" content="2021/11/15"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/18"><meta name="citation_online_date" content="2021/11/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -101,10 +101,13 @@
 <blockquote>
 <p><strong>Note:</strong> For this method, the &quot;slope-of-slope&quot; function need not be continuous (Y. Peres, pers. comm., 2021).</p>
 
-<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:
-       * <strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)
-       * <strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) (because <em>f</em> is convex).
-       * <strong>fbound</strong>(<em>n</em>) = [0, 1].</p>
+<p><strong>Example:</strong> Take <em>f</em>(<em>&lambda;</em>) = exp(&minus;<em>&lambda;</em>).  This is a convex and twice differentiable function, and bounded below by 3321/10000.  Then it can be shown that the following scheme for <em>f</em> is valid:</p>
+
+<ul>
+<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 3321/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 1/(7*n). (Observe that <em>f</em>(<em>k</em>/4) &minus; 1/(7*4) &ge; 3321/10000.)</li>
+<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>) (because <em>f</em> is convex).</li>
+<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
+</ul>
 </blockquote>
 
 <p><strong>Hölder and Lipschitz continuous functions.</strong> I have found a way to extend the results of Nacu and Peres (2005)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements <strong>fabove</strong> and <strong>fbelow</strong> if <em>f</em>(<em>&lambda;</em>)&mdash;</p>
@@ -193,7 +196,7 @@
 <ol>
 <li>(Simulate <em>h</em>.) Flip the input coin.  If it returns 0, return 0.</li>
 <li>(Simulate <em>H</em>.) Flip the input coin twice.  If both flips return 0, return 0.  Otherwise, with probability 4/10 (that is, 1 minus 6/10), return 0.</li>
-<li>Run a Bernoulli factory algorithm for <em>G</em> (which involves building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
+<li>Run a Bernoulli factory algorithm for <em>G</em> (which might involve building polynomials that converge to <em>G</em>, noticing that <em>G</em> is twice differentiable) and return the result of that algorithm.</li>
 </ol></li>
 </ol>
 </blockquote>
@@ -214,16 +217,18 @@
 
 <p>Roughly speaking, <em>&omega;</em> is a function that bounds <em>f</em> from below, just as <em>h</em> bounds <em>f</em> from above. <em>&omega;</em> should be a function with a simple Bernoulli factory algorithm, such as a polynomial in Bernstein form.  If both <em>&omega;</em> and <em>h</em> are polynomials of the same degree, <em>q</em> will be a rational function with a relatively simple Bernoulli factory algorithm (see &quot;<a href="https://peteroupc.github.io/bernoulli.html#Certain_Rational_Functions"><strong>Certain Rational Functions</strong></a>&quot;).</p>
 
-<p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on [0, 1] and belongs in one of the classes of functions given earlier, then <em>f</em> can be simulated using the following algorithm:</p>
+<p>Now, if <em>r</em>(<em>&lambda;</em>) is continuous on [0, 1], then <em>f</em> can be simulated using the following algorithm:</p>
 
 <ol>
 <li>Run a Bernoulli factory algorithm for <em>h</em>.  If the call returns 0, return 0. (For example, if <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, then this step amounts to the following: &quot;Flip the input coin.  If it returns 0, return 0.&quot;)</li>
 <li>Run a Bernoulli factory algorithm for <em>q</em>(.).  If the call returns 1, return 1.</li>
-<li>Run one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> for <em>r</em>(.).  If the call returns 0, return 1.  Otherwise, return 0.  This step involves building polynomials that converge to <em>r</em>(.), as described earlier in this section.</li>
+<li>Run a Bernoulli factory algorithm for <em>r</em>(.), and return 1 minus the result of that call.  The Bernoulli factory algorithm can be one of the <a href="https://peteroupc.github.io/bernoulli.html#General_Factory_Functions"><strong>general factory function algorithms</strong></a> if there is a way to calculate polynomials that converge to <em>r</em>(.) in a manner needed for that algorithm (e.g., if <em>r</em> is described earlier in this section).</li>
 </ol>
 
 <blockquote>
-<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following SymPy code: <code>fx=(1-exp(x))/(1-exp(1)); h=x; phi=x**2; q=(phi/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
+<p><strong>Note:</strong> Quick proof: Rewrite $f=h\dot{}(q\dot{}1+(1-q)\dot{}(1-r))+(1-h)\dot{}0$.</p>
+
+<p><strong>Example:</strong> If <em>f</em>(<em>&lambda;</em>) = (1&minus;exp(<em>&lambda;</em>))/(1&minus;exp(1)), then <em>f</em> is bounded from above by <em>h</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and from below by <em>&omega;</em>(<em>&lambda;</em>) = <em>&lambda;</em><sup>2</sup>.  As a result, <em>q</em>(<em>&lambda;</em>) = <em>&lambda;</em>, and <em>r</em>(<em>&lambda;</em>) = (2 &minus; exp(1))/(1 &minus; exp(1)) if <em>&lambda;</em> = 0; 1/(exp(1)&minus;1) if <em>&lambda;</em> = 1; and (&minus;<em>&lambda;</em>*(1 &minus; exp(1)) &minus; exp(<em>&lambda;</em>) + 1)/(<em>&lambda;</em>*(1 &minus; exp(1))*(<em>&lambda;</em> &minus; 1)) otherwise.  This can be computed using the following SymPy code: <code>fx=(1-exp(x))/(1-exp(1)); h=x; omega=x**2; q=(omega/h); r=(1-fx/h)/(1-q); r=Piecewise((limit(r, x, 0), Eq(x,0)), (limit(r,x,1),Eq(x,1)), (r,True)).simplify(); pprint(r)</code>.</p>
 </blockquote>
 
 <p><strong>Other functions that equal 0 or 1 at the endpoints 0 and/or 1.</strong> If <em>f</em> does not fully admit an approximation scheme under the convex, concave, twice differentiable, and Hölder classes:</p>
