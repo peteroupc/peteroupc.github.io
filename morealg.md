@@ -134,9 +134,9 @@ The functions have similar derivations as follows:
 <a id=Certain_Power_Series></a>
 ### Certain Power Series
 
-The following way to design Bernoulli factories covers a broader class of power series than given in the main Bernoulli Factory Algorithms article.[^2]
+The following way to design Bernoulli factories covers a broad class of power series (see also  the main Bernoulli Factory Algorithms article).[^2]
 
-Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$ is a rational number.
+Let $f(\lambda)$ be a factory function that can be written as the following series expansion: $$f(\lambda) = \sum_{i\ge 0} a_i (g(\lambda))^i,$$ where $g(\lambda)$ is a factory function and each $a_i$, a _coefficient_, should be a rational number.
 
 Suppose the following:
 

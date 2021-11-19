@@ -80,7 +80,7 @@ My [**GitHub repository**](https://github.com/peteroupc/peteroupc.github.io/blob
 
 **Hölder and Lipschitz continuous functions.** I have found a way to extend the results of Nacu and Peres (2005\)[^1] to certain functions with a slope that tends to a vertical slope.  The following scheme, proved in the appendix, implements **fabove** and **fbelow** if _f_(_&lambda;_)&mdash;
 
-- is _&alpha;_-[**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) in [0, 1], meaning its vertical slopes there, if any, are no "steeper" than that of _m_\*_&lambda;_<sup>_&alpha;_</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
+- is _&alpha;_-[**_Hölder continuous_**](https://en.wikipedia.org/wiki/Hölder_condition) on [0, 1], meaning its vertical slopes there, if any, are no "steeper" than that of _m_\*_&lambda;_<sup>_&alpha;_</sup>, for some number _m_ greater than 0 (the Hölder constant) and for some _&alpha;_ in the interval (0, 1], and
 - in the interval \[0, 1\]&mdash;
     - has a minimum of greater than 0 and a maximum of less than 1, or
     - is convex and has a minimum of greater than 0, or
