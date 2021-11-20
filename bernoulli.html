@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/18"><meta name="citation_online_date" content="2021/11/18"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Bernoulli Factory Algorithms</title><meta name="citation_title" content="Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernoulli.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernoulli.html"><meta name="citation_date" content="2021/11/19"><meta name="citation_online_date" content="2021/11/19"><meta name="og:title" content="Bernoulli Factory Algorithms"><meta name="og:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactly sample probabilities that are irrational numbers, using only random bits, which is related to the Bernoulli factory problem. This page is focused on methods that _exactly_ sample a given probability without introducing new errors, assuming &quot;truly random&quot; numbers are available.  The page links to a Python module that implements several Bernoulli factories."><meta name="twitter:description" content="This page catalogs algorithms to turn coins biased one way into coins biased another way, also known as _Bernoulli factories_.  It provides step-by-step instructions to help programmers implement these Bernoulli factory algorithms.  This page also contains algorithms to exactl..."><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernoulli.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -579,11 +579,7 @@ functions, or functions in general.</p>
 </ul>
 
 <p>The ordinary generating function for this modified algorithm is thus&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;OGF(<em>z</em>) = <sub><em>&alpha;</em>&minus;1</sub><em>F</em><sub><em>&alpha;</em>&minus;2</sub>(1/<em>&alpha;</em>, 2/<em>&alpha;</em>, ..., (<em>&alpha;</em>&minus;1)/<em>&alpha;</em>; 1/(<em>&alpha;</em>&minus;1), ..., (<em>&alpha;</em>&minus;2)/(<em>&alpha;</em>&minus;1); <em>z</em>*<em>&alpha;</em><sup><em>&alpha;</em></sup>*(<em>&beta;</em>&minus;1)<sup><em>&alpha;</em>&minus;1</sup>/((<em>&alpha;</em>&minus;1)<sup><em>&alpha;</em>&minus;1</sup> * <em>&beta;</em><sup><em>&alpha;</em>&minus;1</sup>)).</p></li>
-<li><p>The probability involved in example 2 likewise involves hypergeometric functions:</p>
-
-<ul>
-<li>(1 &minus; <em>&lambda;</em>) * <sub><em>t</em>&minus;1</sub><em>F</em><sub><em>t</em>&minus;2</sub>(1/<em>t</em>, 2/<em>t</em>, ..., (<em>t</em>&minus;1)/<em>t</em>; 1/(<em>t</em>&minus;1), ..., (<em>t</em>&minus;2)/(<em>t</em>&minus;1); <em>&lambda;</em><sup><em>t</em></sup>*<em>t</em><sup><em>t</em></sup>*(<em>&beta;</em>&minus;1)<sup><em>t</em>&minus;1</sup>/((<em>t</em>&minus;1)<sup><em>t</em>&minus;1</sup> * <em>&beta;</em><sup><em>t</em></sup>)).</li>
-</ul></li>
+<li> The probability involved in example 2 likewise involves hypergeometric functions: $$(1-\lambda) <em>{t-1}F</em>{t-2}\left( 1/t, 2/t, ..., (t-1)/t; \frac{1}{t-1}, ..., \frac{t-2}{t-1}; \frac{\lambda^t t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}). $$</li>
 </ol>
 </blockquote>
 
@@ -724,7 +720,7 @@ functions, or functions in general.</p>
 
 <ul>
 <li>Algorithms that handle power series with non-negative coefficients that are irrational numbers or sum to an irrational number.  (The series are technically covered by Mendo&#39;s algorithm but they become inexact in practice.)</li>
-<li>Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)</li>
+<li>Series with coefficients that alternate in sign, but do not satisfy the general martingale algorithm.  This includes nearly all such series that equal 0 at 0 and 1 at 1, or equal 0 at 1 and 1 at 0. (An example is $\sin(\lambda\pi/2)$.)</li>
 <li>Series with negative and positive coefficients that do not alternate in sign (ignoring zeros).</li>
 </ul>
 </blockquote>
@@ -1056,7 +1052,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>Convex Combinations</h4>
 
-<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that return heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  See (Wästlund 1999, Theorem 2.7)[^8].  (Alternatively, the algorithm can be seen as returning heads with probability <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected or average value of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
+<p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that return heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  See (Wästlund 1999, Theorem 2.7)[^8].  (Alternatively, the algorithm can be seen as returning heads with probability <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected value, or &quot;long-run average&quot;, of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
 <li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random variate.  (Specifically, the number <em>X</em> is generated with probability <em>g</em>(<em>X</em>).)</li>
@@ -1094,7 +1090,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><em>Bernoulli Race</em> (Dughmi et al. 2017)[^36]: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
 <li>(Wästlund 1999)[^8]: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&lambda;</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1&minus;<em>&lambda;</em>)<sup><em>i</em></sup>.</li>
 <li>Multivariate Bernoulli factory (Huber 2016)[^37] of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>&lambda;</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>&lambda;</em><sub>1</sub> + ... + <em>C</em><sub><em>m</em>&minus;1</sub>*<em>&lambda;</em><sub><em>m</em>&minus;1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0, and <em>R</em> &le; 1 &minus; <em>&#x03F5;</em> for any <em>&#x03F5;</em> &gt; 0: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>&lambda;</em><sub><em>i</em></sub>.  This differs from Huber&#39;s suggestion of &quot;thinning&quot; a Poisson process driven by multiple input coins.</li>
-<li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2017)[^36]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected or average value of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
+<li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2017)[^36]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 <li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</li>
 </ol>
 </blockquote>
@@ -1202,7 +1198,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>exp(&minus;<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]</p>
 
 <blockquote>
 <p><strong>Note:</strong> exp(&minus;<em>&lambda;</em>) = exp(1&minus;<em>&lambda;</em>)/exp(1).</p>
@@ -1232,7 +1228,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Special cases: If <em>c</em> is 0, return 1.  If <em>k</em> is 0, run the <strong>algorithm for exp(&minus;<em>x</em>/<em>y</em>)</strong> (given later in this page) with <em>x</em>/<em>y</em> = <em>c</em>, and return the result.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
+<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)</li>
 </ol>
 
 <p><strong>Algorithm 3.</strong> Builds on Algorithm 2 and works when <strong><em>c</em> is a rational number 0 or greater</strong>.</p>
@@ -1308,7 +1304,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Flip the input coin.  If it returns 0, return 0.</li>
-<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
+<li>Run the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $d_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.</li>
 </ol>
 
 <p><a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a></p>
@@ -1831,13 +1827,13 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <h4>cos(<em>&lambda;</em>)</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.</p>
 
 <p><a id=sin___lambda___sqrt__c____lambda___sqrt__c></a></p>
 
 <h4>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</h4>
 
-<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $b_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
+<p>This function can be rewritten as a power series expansion.  To simulate it, use the <strong>general martingale algorithm</strong> (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>&quot;), with parameter $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, <em>c</em> must be a rational number in the interval (0, 6].</p>
 
 <p><a id=sin___lambda></a></p>
 
@@ -2056,6 +2052,10 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <tr>
 <td>sin(sqrt(<em>&lambda;</em>)*sqrt(<em>c</em>)) / (sqrt(<em>&lambda;</em>)*sqrt(<em>c</em>))</td>
 <td>(<em>c</em> is a rational number in (0, 6].  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Run algorithm for  <strong>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</strong>, except delete the sentence &quot;Do this step again.&quot;</td>
+</tr>
+<tr>
+<td>exp(<em>&lambda;</em><sup>2</sup>) &minus; <em>&lambda;</em>*exp(<em>&lambda;</em><sup>2</sup>)</td>
+<td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run <strong>general martingale algorithm</strong> with $d_0=1$ and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$.</td>
 </tr>
 </tbody></table>
 
@@ -2607,7 +2607,7 @@ kind of irrational number.</p>
 
 <p>[^42]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., &quot;Efficient Bernoulli factory MCMC for intractable posteriors&quot;, <em>Biometrika</em>, 2021 (also in arXiv:2004.07471 [stat.CO]).</p>
 
-<p>[^43]: There are two other algorithms for this function, but they both converge very slowly when <em>&lambda;</em> is very close to 1.  One is the <strong>general martingale algorithm</strong> with parameters $b_0=1$ and $a_i=(-1)^i$, due to the function&#39;s form as an alternating series.  The other is the so-called &quot;even-parity&quot; construction from Flajolet et al. 2010: &quot;(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.&quot;</p>
+<p>[^43]: There are two other algorithms for this function, but they both converge very slowly when <em>&lambda;</em> is very close to 1.  One is the <strong>general martingale algorithm</strong> with parameters $d_0 = 1$ and $a_i=(-1)^i$, due to the function&#39;s form as an alternating series.  The other is the so-called &quot;even-parity&quot; construction from Flajolet et al. 2010: &quot;(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1.&quot;</p>
 
 <p>[^44]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.</p>
 
@@ -2625,7 +2625,7 @@ kind of irrational number.</p>
 
 <p>[^51]: There is another algorithm for tanh(<em>&lambda;</em>), based on Lambert&#39;s continued fraction for tanh(.), but it works only for <em>&lambda;</em> in [0, 1].  The algorithm begins with <em>k</em> equal to 1.  Then: (1) If <em>k</em> is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If <em>k</em> is greater than 1, then with probability <em>k</em>/(1+<em>k</em>), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/<em>k</em> and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with <em>k</em> = <em>k</em> + 2.  If the separate run returns 1, return 0; (4) Go to step 2.</p>
 
-<p>[^52]: Another algorithm for this function uses the <strong>general martingale algorithm</strong> with parameters $b_0=1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$, but uses more bits on average as <em>&lambda;</em> approaches 1.</p>
+<p>[^52]: Another algorithm for this function uses the <strong>general martingale algorithm</strong> with parameters $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$, but uses more bits on average as <em>&lambda;</em> approaches 1.</p>
 
 <p>[^53]: Canonne, C., Kamath, G., Steinke, T., &quot;<a href="https://arxiv.org/abs/2004.00010"><strong>The Discrete Gaussian for Differential Privacy</strong></a>&quot;, arXiv:2004.00010 [cs.DS], 2020.</p>
 

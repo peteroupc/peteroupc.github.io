@@ -8,6 +8,7 @@ This page lists questions and issues relating to my articles posted on this site
 ## Contents
 
 - [**Contents**](#Contents)
+- [**My Probability Questions**](#My_Probability_Questions)
 - [**Randomization and Sampling Methods**](#Randomization_and_Sampling_Methods)
 - [**Bernoulli Factory Algorithms**](#Bernoulli_Factory_Algorithms)
 - [**Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions**](#Partially_Sampled_Random_Numbers_for_Accurate_Sampling_of_Continuous_Distributions)
@@ -16,6 +17,22 @@ This page lists questions and issues relating to my articles posted on this site
 - [**Color Topics for Programmers**](#Color_Topics_for_Programmers)
 - [**Notes**](#Notes)
 - [**License**](#License)
+
+<a id=My_Probability_Questions></a>
+## My Probability Questions
+
+The following is a list of my questions on _MathOverflow_ and other _Stack Exchange_ sites.  Can you help answer any of these?  Answers to them will greatly improve my articles on this site.
+
+- [**Conditions to bound a power series's coefficients from above**](https://mathoverflow.net/questions/406801/conditions-to-bound-a-power-seriess-coefficients-from-above)
+- [**Polynomials that converge to a Bernoulli factory function**](https://mathoverflow.net/questions/379858/what-are-ways-to-compute-polynomials-that-converge-from-above-and-below-to-a-con)
+- [**Holtz method for polynomials that converge to a Bernoulli factory function**](https://mathoverflow.net/questions/407179/using-the-holtz-method-to-build-polynomials-that-converge-to-a-continuous-functi)
+- [**Relatively simple simulations that succeed with an irrational probability**](https://stats.stackexchange.com/questions/541402/what-are-relatively-simple-simulations-that-succeed-with-an-irrational-probabili)
+- [**Probabilities arising from permutations**](https://stats.stackexchange.com/questions/499864/probabilities-arising-from-permutations)
+- [**Estimating f(E(X)) with a guaranteed error performance**](https://stats.stackexchange.com/questions/522429/estimating-f-mathbbex-with-a-guaranteed-error-performance)
+- [**From coin flips to algebraic functions via pushdown automata**](https://mathoverflow.net/questions/404956/from-coin-flips-to-algebraic-functions-via-pushdown-automata)
+- [**From biased coins, and nothing else, to biased coins**](https://mathoverflow.net/questions/404961/from-biased-coins-and-nothing-else-to-biased-coins)
+- [**Reverse time martingale for non-polynomial approximating functions**](https://mathoverflow.net/questions/385244/reverse-time-martingale-for-non-polynomial-approximating-functions)
+- [**Checking if a shape covers a box**](https://math.stackexchange.com/questions/3882545/what-conditions-ensure-that-checking-if-a-shape-covers-a-box-can-be-done-just-by)
 
 <a id=Randomization_and_Sampling_Methods></a>
 ## Randomization and Sampling Methods
