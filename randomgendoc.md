@@ -1749,7 +1749,7 @@ CLASSES
      |  This class contains methods that generate Bernoulli random numbers,
      |     (either 1 or heads with a given probability, or 0 or tails otherwise).
      |     This class also includes implementations of so-called "Bernoulli factories", algorithms
-     |  that turn coins biased one way into coins biased another way.
+     |  that sample a new probability given a coin that shows heads with an unknown probability.
      |  Written by Peter O.
      |
      |  References:
@@ -2078,7 +2078,7 @@ CLASSES
      |  with a different probability of heads.  Specifically, it supports specifying
      |  the probability that the output die will land on a given
      |  number, as a polynomial function of the input die's probability of heads.
-     |  The case of biased coins to biased coins is also called
+     |  The case of coins to coins is also called
      |  the Bernoulli factory problem; this class allows the output
      |  coin's probability of heads to be specified as a polynomial function of the
      |  input coin's probability of heads.

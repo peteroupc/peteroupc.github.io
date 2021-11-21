@@ -128,7 +128,7 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
 - [**Acknowledgments**](#Acknowledgments)
 - [**Notes**](#Notes)
 - [**Appendix**](#Appendix)
-    - [**Using the Biased Coin Alone for Randomness**](#Using_the_Biased_Coin_Alone_for_Randomness)
+    - [**Using the Input Coin Alone for Randomness**](#Using_the_Input_Coin_Alone_for_Randomness)
     - [**The Entropy Bound**](#The_Entropy_Bound)
     - [**Bernoulli Factories and Unbiased Estimation**](#Bernoulli_Factories_and_Unbiased_Estimation)
     - [**Proof of the General Martingale Algorithm**](#Proof_of_the_General_Martingale_Algorithm)
@@ -147,7 +147,7 @@ A _Bernoulli factory_ (Keane and O'Brien 1994\)[^2] is an algorithm that takes a
 
 - The Greek letter lambda (_&lambda;_) represents the unknown probability of heads.
 - The Bernoulli factory's outputs are statistically independent.
-- Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the biased coin.
+- Many Bernoulli factories also use a _fair coin_ in addition to the input coin.  A fair coin shows heads or tails with equal probability, and represents a source of randomness outside the input coin.
 - A _factory function_ is a known function that relates the old probability to the new one.  Its domain is the _closed_ interval [0, 1] or a subset of that interval, and returns a probability in [0, 1].
 
 > **Example:** A Bernoulli factory algorithm can take a coin that returns heads with probability _&lambda;_ and produce a coin that returns heads with probability exp(&minus;_&lambda;_).  In this example, exp(&minus;_&lambda;_) is the factory function.
@@ -1847,10 +1847,10 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 &nbsp;
 
-<a id=Using_the_Biased_Coin_Alone_for_Randomness></a>
-### Using the Biased Coin Alone for Randomness
+<a id=Using_the_Input_Coin_Alone_for_Randomness></a>
+### Using the Input Coin Alone for Randomness
 
-A function _f_(_&lambda;_) is _strongly simulable_ (Keane and O'Brien 1994\)[^23] if there is a Bernoulli factory algorithm for that function that uses _only_ the input coin ("biased coin") as its source of randomness.
+A function _f_(_&lambda;_) is _strongly simulable_ (Keane and O'Brien 1994\)[^23] if there is a Bernoulli factory algorithm for that function that uses _only_ the input coin as its source of randomness.
 
 If a Bernoulli factory algorithm uses a fair coin, it can often generate flips of the fair coin using the input coin instead, with the help of [**_randomness extraction_**](https://peteroupc.github.io/randextract.html) techniques.
 

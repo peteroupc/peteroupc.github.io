@@ -275,14 +275,14 @@ pprint(Max(1,kappa))
 >
 > The paper also implied a sample size _n_ for use in stratified sampling when _f_ is _&beta;_-Hölder continuous (is continuous and no "steeper" than **z**<sup>_&beta;_</sup>) and is defined on [0, 1]<sup>_d_</sup>, namely _n_ = ceil((ln(2/_&delta;_)/2\*_&epsilon;_<sup>2</sup>)<sup>_d_/(2\*_&beta;_+_d_)</sup>).
 
-<a id=Finding_Biased_Coins></a>
-## Finding Biased Coins
+<a id=Finding_Coins_with_Maximum_Success_Probabilities></a>
+## Finding Coins with Maximum Success Probabilities
 
 Given _m_ coins each with unknown probability of heads, the following algorithm finds the _k_ coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; _&delta;_.  It uses the following parameters:
 
 - _k_ is the number of coins to return.
-- _&delta;_ is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; _&delta;_.
-- _D_ is a _gap parameter_ or a lesser number, but must be greater than 0.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most biased coin and the (_k_+1)<sup>th</sup> most biased coin.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
+- _&delta;_ is the confidence level; the algorithm correctly finds the coins most likely to show heads with probability at least 1 &minus; _&delta;_.
+- _D_ is a _gap parameter_ or a lesser number, but must be greater than 0.  The _gap parameter_ is the difference between the _k_<sup>th</sup> most likely coin to show heads and the (_k_+1)<sup>th</sup> most likely coin to show heads.  Practically speaking, _D_ is the smallest possible difference between one probability of heads and another.
 - _r_ is the number of rounds to run the algorithm and must be an integer 1 or greater.
 
 In this section, ilog(_a_, _r_) means either _a_ if _r_ is 0, or max(ln(ilog(_a_, _r_&minus;1)), 1) otherwise.

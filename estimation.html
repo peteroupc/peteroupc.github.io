@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/10/31"><meta name="citation_online_date" content="2021/10/31"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Randomized Estimation Algorithms</title><meta name="citation_title" content="Randomized Estimation Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/estimation.pdf"><meta name="citation_url" content="https://peteroupc.github.io/estimation.html"><meta name="citation_date" content="2021/11/21"><meta name="citation_online_date" content="2021/11/21"><meta name="og:title" content="Randomized Estimation Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/estimation.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Randomized Estimation Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -384,16 +384,16 @@ pprint(Max(1,kappa))
 <p>The paper also implied a sample size <em>n</em> for use in stratified sampling when <em>f</em> is <em>&beta;</em>-Hölder continuous (is continuous and no &quot;steeper&quot; than <strong>z</strong><sup><em>&beta;</em></sup>) and is defined on [0, 1]<sup><em>d</em></sup>, namely <em>n</em> = ceil((ln(2/<em>&delta;</em>)/2*<em>&epsilon;</em><sup>2</sup>)<sup><em>d</em>/(2*<em>&beta;</em>+<em>d</em>)</sup>).</p>
 </blockquote>
 
-<p><a id=Finding_Biased_Coins></a></p>
+<p><a id=Finding_Coins_with_Maximum_Success_Probabilities></a></p>
 
-<h2>Finding Biased Coins</h2>
+<h2>Finding Coins with Maximum Success Probabilities</h2>
 
 <p>Given <em>m</em> coins each with unknown probability of heads, the following algorithm finds the <em>k</em> coins that are most likely to show heads, such that the algorithm correctly finds them with probability at least 1 &minus; <em>&delta;</em>.  It uses the following parameters:</p>
 
 <ul>
 <li><em>k</em> is the number of coins to return.</li>
-<li><em>&delta;</em> is the confidence level; the algorithm correctly finds the most biased coins with probability at least 1 &minus; <em>&delta;</em>.</li>
-<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be greater than 0.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most biased coin and the (<em>k</em>+1)<sup>th</sup> most biased coin.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
+<li><em>&delta;</em> is the confidence level; the algorithm correctly finds the coins most likely to show heads with probability at least 1 &minus; <em>&delta;</em>.</li>
+<li><em>D</em> is a <em>gap parameter</em> or a lesser number, but must be greater than 0.  The <em>gap parameter</em> is the difference between the <em>k</em><sup>th</sup> most likely coin to show heads and the (<em>k</em>+1)<sup>th</sup> most likely coin to show heads.  Practically speaking, <em>D</em> is the smallest possible difference between one probability of heads and another.</li>
 <li><em>r</em> is the number of rounds to run the algorithm and must be an integer 1 or greater.</li>
 </ul>
 
