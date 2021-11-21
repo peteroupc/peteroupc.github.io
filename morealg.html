@@ -1868,20 +1868,20 @@ calc_linear_func(count=8)
 <p>The following algorithm returns 1 with probability sin(<em>&lambda;</em>*<em>&pi;</em>/2) and 0 otherwise, given a coin that shows heads with probability <em>&lambda;</em>.  However, this algorithm appears in the appendix since it requires manipulating irrational numbers, particularly numbers involving <em>&pi;</em>.</p>
 
 <ol>
-<li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup><em>n</em>*4+2</sup>/((<em>n</em>*4+2)!) &minus; (<em>&pi;</em>/2)<sup><em>n</em>*4+4</sup>/((<em>n</em>*4+4)!).</li>
+<li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup>4*<em>n</em>+2</sup>/((4*<em>n</em>+2)!) &minus; (<em>&pi;</em>/2)<sup><em>n</em>*4+4</sup>/((<em>n</em>*4+4)!).</li>
 <li>Let <em>v</em> = ((<em>n</em>*4+4)!)*2<sup><em>n</em>*4+4</sup> / ((<em>n</em>*4+2)!)*2<sup><em>n</em>*4+2</sup>.</li>
-<li>Flip the input coin <em>n</em>*4+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way.</li>
+<li>Flip the input coin <em>n</em>*4+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This is the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
 <li>If <em>tails</em> = <em>n</em>*4+4, return 0.</li>
-<li>If <em>tails</em> = <em>n</em>*4+3, return a number that is 0 with probability 8*(<em>n</em>*4+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
+<li>If <em>tails</em> = <em>n</em>*4+3, return a number that is 0 with probability 8*(4*<em>n</em>+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
 <li>If <em>tails</em> = <em>n</em>*4+2, return a number that is 0 with probability 8/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
 <li>Return 1.</li>
 </ol>
 
-<p>Derivation:</p>
+<p>Derivation:  Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\mu) = 1-\sin((1-\mu) \pi/2) = \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$</p>
 
-<p>Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\lambda) = 1-\sin((1-\lambda) \pi/2) = \sum{n\ge 0} \frac{(\lambda\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\lambda\pi/2)^{4n+4}}{(4n+4)!} = \sum{n\ge 0} w_n(\lambda).$$  Then each term $w_n(\lambda)$ is a polynomial in $\lambda$ bounded above by $w_n(1)$.</p>
+<p>This is a <a href="https://peteroupc.github.io/bernoulli.html#Convex_Combinations"><strong>convex combination</strong></a> of $w_n(1)$ and $\frac{w_n(\mu)}{w_n(1)}$ &mdash; to simulate $g(\mu)$, first an integer <em>n</em> is chosen with probability $w_n(1)$ and then a coin that shows heads with probability $\frac{w_n(\mu)}{w_n(1)}$ is flipped.  Finally, to simulate $f(\lambda)$, the input coin is &quot;inverted&quot; ($\mu = 1-\lambda$), $g(\mu)$ is simulated using the &quot;inverted&quot; coin, and 1 minus the simulation result is returned.</p>
 
-<p>Each polynomial $w_n(\lambda)$ can be transformed into a polynomial in Bernstein form with the following coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1)$$, where the polynomial is of degree $4n+4$ and so has $4n+5$ coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}}$.</p>
+<p>As given above, each term $w_n(\mu)$ is a polynomial in $\mu$, is monotone increasing, and equals 1 or less everywhere on the interval [0, 1]$, and $w_n(1)$ is a constant so that $w_n(\mu)/w_n(1)$ remains a polynomial.  Each polynomial $w_n(\mu)/w_n(1)$ can be transformed into a polynomial in Bernstein form with the following coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1),$$ where the polynomial is of degree $4n+4$ and so has $4n+5$ coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}}$.  These are the coefficients used in steps 4 through 7 of the algorithm above.</p>
 
 <p><a id=Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms></a></p>
 
