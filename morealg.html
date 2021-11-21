@@ -210,6 +210,12 @@
 <td><em>n</em>.</td>
 <td>(1/2&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>1/(<em>n</em>!) otherwise.</td>
 </tr>
+<tr>
+<td>cosh(<em>&lambda;</em>)/4</td>
+<td><em>&phi;</em>(<em>&lambda;</em>) &minus; <em>D</em>.</td>
+<td>2*<em>n</em>.</td>
+<td>(1/4&minus;<em>D</em>)*2 if <em>n</em> = 0;<br>2<sup><em>n</em>/2</sup>/(2*(<em>n</em>!)) otherwise.</td>
+</tr>
 </tbody></table>
 
 <p>The functions have similar derivations as follows:</p>
@@ -303,10 +309,27 @@
 <ul>
 <li>$f$ is bounded above by $Z=3/4 \lt 1$.</li>
 <li>$f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.</li>
-<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.</li>
+<li>Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{m} \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),$$ where $m=16$, and where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.</li>
 <li>$A$ is rewritten from &quot;power&quot; form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].</li>
 <li>Now, <strong>Algorithm 1</strong> can be used to simulate $f$ in the same manner as for Example 1.</li>
 </ul>
+
+<p><strong>Example 3:</strong> Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$.  To simulate this probability:</p>
+
+<ol>
+<li>Create a <em>&mu;</em> coin that does the following: &quot;With probability 1/3, return 1.  Otherwise, run the algorithm for <strong><em>&pi;</em>/4</strong> (in &#39;Bernoulli Factory Algorithms&#39;) and return the result.&quot; (Simulates <em>&pi;</em>/6.)</li>
+<li>Run the algorithm for $1/2 + \sin(6\lambda)/4$ in Example 2, using the <em>&mu;</em> coin.</li>
+</ol>
+
+<p><strong>Example 4:</strong> Take $f(\lambda) = 1/2 + \cos(6\lambda)/4$.  This is as in Example 2, except&mdash;</p>
+
+<ul>
+<li>$Z=3/4$ and $m=16$;</li>
+<li>$a_i$ is $3/4$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{i/2}$ if $i$ is even and greater than 0; and 0 otherwise; and</li>
+<li>the Bernstein-form coefficients for $A$, in order, are [3/4, 3/4, 255/364, 219/364, 267/572, 1293/4004, 4107/20020, 417/2860, 22683/140140, 6927/28028, 263409/700700, 2523/4900, 442797/700700, 38481/53900, 497463/700700].</li>
+</ul>
+
+<p><strong>Example 5:</strong> Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.</p>
 
 <blockquote>
 <p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
@@ -1868,12 +1891,12 @@ calc_linear_func(count=8)
 <p>The following algorithm returns 1 with probability sin(<em>&lambda;</em>*<em>&pi;</em>/2) and 0 otherwise, given a coin that shows heads with probability <em>&lambda;</em>.  However, this algorithm appears in the appendix since it requires manipulating irrational numbers, particularly numbers involving <em>&pi;</em>.</p>
 
 <ol>
-<li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup>4*<em>n</em>+2</sup>/((4*<em>n</em>+2)!) &minus; (<em>&pi;</em>/2)<sup><em>n</em>*4+4</sup>/((<em>n</em>*4+4)!).</li>
-<li>Let <em>v</em> = ((<em>n</em>*4+4)!)*2<sup><em>n</em>*4+4</sup> / ((<em>n</em>*4+2)!)*2<sup><em>n</em>*4+2</sup>.</li>
-<li>Flip the input coin <em>n</em>*4+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This is the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
-<li>If <em>tails</em> = <em>n</em>*4+4, return 0.</li>
-<li>If <em>tails</em> = <em>n</em>*4+3, return a number that is 0 with probability 8*(4*<em>n</em>+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
-<li>If <em>tails</em> = <em>n</em>*4+2, return a number that is 0 with probability 8/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
+<li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup>4*<em>n</em>+2</sup>/((4*<em>n</em>+2)!) &minus; (<em>&pi;</em>/2)<sup>4*<em>n</em>+4</sup>/((4*<em>n</em>+4)!).</li>
+<li>Let <em>v</em> = ((4*<em>n</em>+4)!)*2<sup>4*<em>n</em>+4</sup> / ((4*<em>n</em>+2)!)*2<sup>4*<em>n</em>+2</sup>.</li>
+<li>Flip the input coin 4*<em>n</em>+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This is the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
+<li>If <em>tails</em> = 4*<em>n</em>+4, return 0.</li>
+<li>If <em>tails</em> = 4*<em>n</em>+3, return a number that is 0 with probability 8*(4*<em>n</em>+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
+<li>If <em>tails</em> = 4*<em>n</em>+2, return a number that is 0 with probability 8/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
 <li>Return 1.</li>
 </ol>
 

@@ -111,9 +111,10 @@ The table below shows functions shifted downward and shows the algorithm changes
 
 | Original function (_&phi;_(_&lambda;_)) | Target function _f_(_&lambda;_) | Step 2 reads "Set _n_ to ..." | Value of _P_ |
   ------- | -------- | --- | --- |
-| exp(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. | 0. |
-| exp(_&lambda;_)/6  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. | 0. |
-| exp(_&lambda;_/2)/2  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. | 0. |
+| exp(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/4&minus;_D_)\*2 or (_&phi;_(0)&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_&minus;1</sup>/(_n_!) otherwise. |
+| exp(_&lambda;_)/6  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/6&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_</sup>/(3\*(_n_!)) otherwise. |
+| exp(_&lambda;_/2)/2  | _&phi;_(_&lambda;_) &minus; _D_ | _n_. | (1/2&minus;_D_)\*2 if _n_ = 0;<br>1/(_n_!) otherwise. |
+| cosh(_&lambda;_)/4 | _&phi;_(_&lambda;_) &minus; _D_. | 2\*_n_. | (1/4&minus;_D_)\*2 if _n_ = 0;<br>2<sup>_n_/2</sup>/(2\*(_n_!)) otherwise. |
 
 The functions have similar derivations as follows:
 
@@ -181,9 +182,22 @@ The following examples show how this method leads to algorithms for simulating c
 
 - $f$ is bounded above by $Z=3/4 \lt 1$.
 - $f$ satisfies $m=16$ since splitting the series at 16 leads to two functions that admit Bernoulli factories.
-- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{16} \left(\sum_{i\ge 0} a_{16+i} \lambda^i\right),$$ where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.
+- Thus, $f$ can be written as&mdash; $$f(\lambda) = A(\lambda) + \lambda^{m} \left(\sum_{i\ge 0} a_{m+i} \lambda^i\right),$$ where $m=16$, and where $a_i$ is $1/2$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{(i-1)/2}$ if $i$ is odd; and 0 otherwise.
 - $A$ is rewritten from "power" form (with coefficients $a_0, ..., a_{m-1}$) to Bernstein form, with the following coefficients, in order: [1/2, 3/5, 7/10, 71/91, 747/910, 4042/5005, 1475/2002, 15486/25025, 167/350, 11978/35035, 16869/70070, 167392/875875, 345223/1751750, 43767/175175, 83939/250250, 367343/875875].
 - Now, **Algorithm 1** can be used to simulate $f$ in the same manner as for Example 1.
+
+**Example 3:** Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$.  To simulate this probability:
+
+1. Create a _&mu;_ coin that does the following: "With probability 1/3, return 1.  Otherwise, run the algorithm for **_&pi;_/4** (in 'Bernoulli Factory Algorithms') and return the result." (Simulates _&pi;_/6.)
+2. Run the algorithm for $1/2 + \sin(6\lambda)/4$ in Example 2, using the _&mu;_ coin.
+
+**Example 4:** Take $f(\lambda) = 1/2 + \cos(6\lambda)/4$.  This is as in Example 2, except&mdash;
+
+- $Z=3/4$ and $m=16$;
+- $a_i$ is $3/4$ if $i = 0$; $\frac{6^i}{i! \times 4}(-1)^{i/2}$ if $i$ is even and greater than 0; and 0 otherwise; and
+- the Bernstein-form coefficients for $A$, in order, are [3/4, 3/4, 255/364, 219/364, 267/572, 1293/4004, 4107/20020, 417/2860, 22683/140140, 6927/28028, 263409/700700, 2523/4900, 442797/700700, 38481/53900, 497463/700700].
+
+**Example 5:** Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.
 
 > **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
 >
@@ -1321,12 +1335,12 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 
 The following algorithm returns 1 with probability sin(_&lambda;_\*_&pi;_/2) and 0 otherwise, given a coin that shows heads with probability _&lambda;_.  However, this algorithm appears in the appendix since it requires manipulating irrational numbers, particularly numbers involving _&pi;_.
 
-1. Choose at random an integer _n_ (0 or greater) with probability (_&pi;_/2)<sup>4\*_n_+2</sup>/((4\*_n_+2)!) &minus; (_&pi;_/2)<sup>_n_\*4+4</sup>/((_n_\*4+4)!).
-2. Let _v_ = ((_n_\*4+4)!)\*2<sup>_n_\*4+4</sup> / ((_n_\*4+2)!)\*2<sup>_n_\*4+2</sup>.
-3. Flip the input coin _n_\*4+4 times.  Let _tails_ be the number of flips that returned 0 this way. (This is the number of heads if the probability _&lambda;_ were 1 &minus; _&lambda;_.)
-4. If _tails_ = _n_\*4+4, return 0.
-5. If _tails_ = _n_\*4+3, return a number that is 0 with probability 8\*(4\*_n_+3)/(_v_&minus;_&pi;_<sup>2</sup>) and 1 otherwise.
-6. If _tails_ = _n_\*4+2, return a number that is 0 with probability 8/(_v_&minus;_&pi;_<sup>2</sup>) and 1 otherwise.
+1. Choose at random an integer _n_ (0 or greater) with probability (_&pi;_/2)<sup>4\*_n_+2</sup>/((4\*_n_+2)!) &minus; (_&pi;_/2)<sup>4\*_n_+4</sup>/((4\*_n_+4)!).
+2. Let _v_ = ((4\*_n_+4)!)\*2<sup>4\*_n_+4</sup> / ((4\*_n_+2)!)\*2<sup>4\*_n_+2</sup>.
+3. Flip the input coin 4\*_n_+4 times.  Let _tails_ be the number of flips that returned 0 this way. (This is the number of heads if the probability _&lambda;_ were 1 &minus; _&lambda;_.)
+4. If _tails_ = 4\*_n_+4, return 0.
+5. If _tails_ = 4\*_n_+3, return a number that is 0 with probability 8\*(4\*_n_+3)/(_v_&minus;_&pi;_<sup>2</sup>) and 1 otherwise.
+6. If _tails_ = 4\*_n_+2, return a number that is 0 with probability 8/(_v_&minus;_&pi;_<sup>2</sup>) and 1 otherwise.
 7. Return 1.
 
 Derivation:  Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\mu) = 1-\sin((1-\mu) \pi/2)$$ $$= \sum_{n\ge 0} \frac{(\mu\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\mu\pi/2)^{4n+4}}{(4n+4)!}$$ $$= \sum_{n\ge 0} w_n(\mu) = \sum_{n\ge 0} w_n(1) \frac{w_n(\mu)}{w_n(1)}.$$

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/18"><meta name="citation_online_date" content="2021/11/18"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/21"><meta name="citation_online_date" content="2021/11/21"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -519,25 +519,6 @@
 <li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cosh(<em>&lambda;</em>)/4 &minus; 1/4</strong>.  Then simulate <em>f</em> by first flipping the input coin twice.  If both flips return 0, return 0.  Otherwise, flip the input coin.  If it returns 0, return 0.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&lambda;</em>) &minus; 1)/(4*<em>&lambda;</em><sup>2</sup>*(<em>&lambda;</em> &minus; 2)) otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>Detected to be convex and twice differentiable using numerical methods, which may be inaccurate:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 503/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 17063/(350000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 23/400 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 221819/(11200000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>3/4 &minus; sqrt(&minus;<em>&lambda;</em>*(<em>&lambda;</em> &minus; 1))</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
 <ul>
@@ -586,43 +567,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/16 if <em>&lambda;</em> = 0; -(cosh(<em>&l
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
 </ul></li>
 </ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sin(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>The function was detected to be concave and twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4191/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 246741/(700000*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>f</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 8313/10000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 14557719/(44800000*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>1 &minus; <em>&lambda;</em><sup>2</sup></strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin twice.  If both flips return 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
-Let <em>g</em>(<em>&lambda;</em>) = 1/(2 &minus; <em>&lambda;</em>). Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>The function was detected to be convex and twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 857/2000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 2/(7*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 4709/10000 if <em>n</em>&lt;4; otherwise, <em>g</em>(<em>k</em>/<em>n</em>) &minus; 13/(112*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-</ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong>sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>)</strong>.  Then simulate <em>f</em> by first flipping the input coin.  If it returns 0, return 1.  Otherwise, flip the input coin.  If it returns 0, return 1.  Otherwise, simulate <em>g</em>(<em>&lambda;</em>) (a function described below) and return 1 minus the result.<br>
 Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqrt(1 &minus; <em>&lambda;</em><sup>2</sup>))/<em>&lambda;</em><sup>2</sup> otherwise. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
 
@@ -638,24 +582,6 @@ Let <em>g</em>(<em>&lambda;</em>) = 1/2 if <em>&lambda;</em> = 0; (1 &minus; sqr
 <ul>
 <li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>) &minus; 6331850627006240413824/(1953125*n<sup>1/4</sup>).</li>
 <li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = <em>g</em>(<em>k</em>/<em>n</em>).</li>
-</ul></li>
-</ul></li>
-<li>Let <em>f</em>(<em>&lambda;</em>) = <strong>cos(&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:
-
-<ul>
-<li>The function was detected to be twice differentiable, leading to:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 809/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 246741/(700000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 4191/5000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 246741/(700000*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
-</ul></li>
-<li>Generated using tighter bounds than necessarily proven:
-
-<ul>
-<li><strong>fbelow</strong>(<em>n</em>, <em>k</em>) = 409/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) &minus; 8142453/(44800000*n).</li>
-<li><strong>fabove</strong>(<em>n</em>, <em>k</em>) = 1591/2000 if <em>n</em>&lt;4; otherwise, <em>f</em>(<em>k</em>/<em>n</em>) + 8142453/(44800000*n).</li>
-<li><strong>fbound</strong>(<em>n</em>) = [0, 1].</li>
 </ul></li>
 </ul></li>
 <li>Let <em>f</em>(<em>&lambda;</em>) = <strong><em>&lambda;</em>*sin(7*&pi;*<em>&lambda;</em>)/4 + 1/2</strong>. Then, for every integer <em>n</em> that&#39;s a power of 2, starting from 1:

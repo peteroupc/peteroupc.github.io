@@ -435,6 +435,8 @@ In the table above, _c_\[_i_\] &ge; 0 are the coefficients of the series.  _CS_ 
 - for series 3, _f_(0) = 0 and _f_(1) = _CS_, and
 - for series 4, _f_(0) = 1 and _f_(1) = 1&minus;_CS_.
 
+> **Note:** For series 1 with _CS_=1 (the main form in the Mendo paper), a rewrite of this algorithm shows this is actually a special case of [**convex combinations**](#Convex_Combinations) &mdash; simply generate _X_ with probability _c_\[_X_\], then flip a coin that shows heads with probability (1 &minus; _&lambda;_)<sup>_i_</sup>\*_c_\[_X_\]/_c_\[_X_\] = (1 &minus; _&lambda;_)<sup>_X_</sup> (or flip the input coin _X_ times and show heads only if all the flips return 0), then return either 0 if heads is shown, or 1 otherwise.
+
 ----
 
 For certain other power series with non-negative coefficients (especially those that equal 1 or greater somewhere in the interval [0, 1]), Nacu and Peres (2005, proposition 16\)[^16] gave the following algorithm.  It works on functions of the form&mdash;
@@ -466,23 +468,19 @@ For example, suppose the following:
 
 > **Example:** Let $f(\lambda) = (1/2)\lambda^0 - (1/4)\lambda^2 + (1/8)\lambda^4 - ...$.  Then $(a_i) = (1/2, 0, -1/4, 0, 1/8, ...)$ (e.g., $a_0 = 1/2$) and deleting the zeros leads to $(d_i) = (1/2, -1/4, 1/8, ...)$  (e.g., $d_0 = 1/2$), which meets the requirements above.
 
-Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$ (for any $g(\lambda)$ in the interval [0, 1]).
+Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (returns 1) with probability $g(\lambda)$.
 
 **General martingale algorithm:**
 
 1. Set _u_ to abs($d_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. Do the following process repeatedly, until this algorithm returns a value:
-    1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ and multiply _w_ by the result of the run.
+    1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply _w_ by the result of the run.
     2. If $a_n$ is greater than 0: Set _u_ to _&#x2113;_ + _w_ * $a_n$, then, if no further nonzero coefficients follow $a_n$, set _&#x2113;_ to _u_.
     3. If $a_n$ is less than 0: Set _&#x2113;_ to _u_ &minus; _w_ * abs($a_n$), then, if no further nonzero coefficients follow $a_n$, set _u_ to _&#x2113;_.
     4. If _ret_ is less than (or equal to) _&#x2113;_, return 1.  Otherwise, if _ret_ is less than _u_, add 1 to _n_.  Otherwise, return 0.  (If _ret_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal algorithm**, which is described in my [**article on PSRNs**](https://peteroupc.github.io/exporand.html).)
 
-> **Notes:**
->
-> 1. This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper's framework.  A proof of its correctness is given in the appendix.
-> 2. Other algorithms in this page may refer to the **general martingale algorithm**.  If they do so, but don't specify $g(\lambda)$, then $g(\lambda)$ is $\lambda$ and to run a Bernoulli factory algorithm for $g(\lambda)$ simply means to flip the input coin that shows heads (returns 1) with probability $\lambda$.
-
+> **Note:**  This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper's framework.  A proof of its correctness is given in the appendix.
 ----
 
 > **Note:** Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:
@@ -825,7 +823,7 @@ This section describes algorithms for specific functions, especially when they h
 <a id=exp_minus___lambda></a>
 #### exp(&minus;_&lambda;_)
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with parameter $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^i/(i!)$.[^40]
 
 > **Note:** exp(&minus;_&lambda;_) = exp(1&minus;_&lambda;_)/exp(1).
 
@@ -846,7 +844,7 @@ In the algorithms in this section, _k_ is an integer 0 or greater, and _c_ &ge; 
 **Algorithm 2.**  The target function can be rewritten as a power series expansion.  However, the following algorithm works only when **_c_ is a rational number in the interval \[0, 1\]**.
 
 1. Special cases: If _c_ is 0, return 1.  If _k_ is 0, run the **algorithm for exp(&minus;_x_/_y_)** (given later in this page) with _x_/_y_ = _c_, and return the result.
-2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and with $g(\lambda) = \lambda^k$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
+2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda) = \lambda^k$, and with parameter $d_0 = 1$ and coefficients $a_i = \frac{(-1)^i c^i}{i!}$, and return the result of that algorithm.  (To simulate $\lambda^k$, flip the input coin $k$ times and return either 1 if all the flips return 1, or 0 otherwise.)
 
 **Algorithm 3.** Builds on Algorithm 2 and works when **_c_ is a rational number 0 or greater**.
 
@@ -899,7 +897,7 @@ In the following algorithm, _m_ and _k_ are both integers 0 or greater unless no
 #### (exp(_&lambda;_)&minus;1) \* exp(&minus;_&lambda;_) or (exp(_&lambda;_)&minus;1) / exp(_&lambda;_)
 
 1. Flip the input coin.  If it returns 0, return 0.
-2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with parameter $d_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
+2. Run the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients if $a_i = \frac{(-1)^i}{(i+1)!}$, and return the result of that algorithm.
 
 <a id=1_2_k____lambda___or_exp_minus__k____lambda___ln_2></a>
 #### 1/(2<sup>_k_ + _&lambda;_</sup>) or exp(&minus;(_k_ + _&lambda;_)\*ln(2))
@@ -1248,12 +1246,12 @@ Based on the algorithm from Flajolet et al. (2010\)[^1], but uses the two-coin a
 <a id=cos___lambda></a>
 #### cos(_&lambda;_)
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with parameter $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = (-1)^{i/2} / (i!)$ if $i$ is even and 0 otherwise.
 
 <a id=sin___lambda___sqrt__c____lambda___sqrt__c></a>
 #### sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))
 
-This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with parameter $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, _c_ must be a rational number in the interval (0, 6].
+This function can be rewritten as a power series expansion.  To simulate it, use the **general martingale algorithm** (see "[**Certain Power Series**](#Certain_Power_Series)"), with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i/2} c^{i/2}}{(i+1)!}$ if $i$ is even and 0 otherwise.  In this algorithm, _c_ must be a rational number in the interval (0, 6].
 
 <a id=sin___lambda></a>
 #### sin(_&lambda;_)
@@ -1376,7 +1374,7 @@ Algorithms in bold are given in this page.
 | 1 &minus; ln(1+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.[^52] |
 | (1&minus;_&lambda;_)\*exp(_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for power series 1, with _c_\[_i_\] = (_i_&minus;1)/(_i_!), and _CS_ = 1 (see "[**Certain Power Series**](#Certain_Power_Series)). |
 | sin(sqrt(_&lambda;_)\*sqrt(_c_)) / (sqrt(_&lambda;_)\*sqrt(_c_)) | (_c_ is a rational number in (0, 6].  _&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for  **sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**, except delete the sentence "Do this step again." |
-| exp(_&lambda;_<sup>2</sup>) &minus; _&lambda;_\*exp(_&lambda;_<sup>2</sup>) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $d_0=1$ and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$. |
+| exp(_&lambda;_<sup>2</sup>) &minus; _&lambda;_\*exp(_&lambda;_<sup>2</sup>) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0=1$, and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$. |
 
 <a id=Algorithms_for_Specific_Constants></a>
 ### Algorithms for Specific Constants
@@ -1804,7 +1802,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^42]: Vats, D., Gonçalves, F. B., Łatuszyński, K. G., Roberts, G. O., "Efficient Bernoulli factory MCMC for intractable posteriors", _Biometrika_, 2021 (also in arXiv:2004.07471 [stat.CO]).
 
-[^43]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with parameters $d_0 = 1$ and $a_i=(-1)^i$, due to the function's form as an alternating series.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
+[^43]: There are two other algorithms for this function, but they both converge very slowly when _&lambda;_ is very close to 1.  One is the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$, and $a_i=(-1)^i$, due to the function's form as an alternating series.  The other is the so-called "even-parity" construction from Flajolet et al. 2010: "(1) Flip the input coin.  If it returns 0, return 1. (2) Flip the input coin.  If it returns 0, return 0.  Otherwise, go to step 1."
 
 [^44]: Peres, N., Lee, A.R. and Keich, U., 2021. Exactly computing the tail of the Poisson-Binomial Distribution. ACM Transactions on Mathematical Software (TOMS), 47(4), pp.1-19.
 
@@ -1822,7 +1820,7 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^51]: There is another algorithm for tanh(_&lambda;_), based on Lambert's continued fraction for tanh(.), but it works only for _&lambda;_ in \[0, 1\].  The algorithm begins with _k_ equal to 1.  Then: (1) If _k_ is 1, generate an unbiased random bit, then if that bit is 1, flip the input coin and return the result; (2) If _k_ is greater than 1, then with probability _k_/(1+_k_), flip the input coin twice, and if either or both flips returned 0, return 0, and if both flips returned 1, return a number that is 1 with probability 1/_k_ and 0 otherwise; (3) Do a separate run of the currently running algorithm, but with _k_ = _k_ + 2.  If the separate run returns 1, return 0; (4) Go to step 2.
 
-[^52]: Another algorithm for this function uses the **general martingale algorithm** with parameters $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$, but uses more bits on average as _&lambda;_ approaches 1.
+[^52]: Another algorithm for this function uses the **general martingale algorithm** with $g(\lambda)=\lambda$, $d_0 = 1$ and $a_i=(-1)^{i+1}/i$ (except $a_0 = 0$, but uses more bits on average as _&lambda;_ approaches 1.
 
 [^53]: Canonne, C., Kamath, G., Steinke, T., "[**The Discrete Gaussian for Differential Privacy**](https://arxiv.org/abs/2004.00010)", arXiv:2004.00010 [cs.DS], 2020.
 
