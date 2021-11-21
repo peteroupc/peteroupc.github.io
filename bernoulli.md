@@ -401,7 +401,7 @@ An extension to this algorithm, not mentioned in the Flajolet et al. paper, is t
 >     - (1 &minus; _&lambda;_) * <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _&lambda;_\*_&alpha;_<sup>_&alpha;_</sup>\*(_&beta;_&minus;1)<sup>_&alpha;_&minus;1</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* _&beta;_<sup>_&alpha;_</sup>)).
 >
 >     The ordinary generating function for this modified algorithm is thus&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;OGF(_z_) = <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _z_\*_&alpha;_<sup>_&alpha;_</sup>\*(_&beta;_&minus;1)<sup>_&alpha;_&minus;1</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* _&beta;_<sup>_&alpha;_&minus;1</sup>)).
-> 4.  The probability involved in example 2 likewise involves hypergeometric functions: $$(1-\lambda)_{t-1} F_t-2\left( 1/t, 2/t, ..., (t-1)/t; \frac{1}{t-1}, ..., \frac{t-2}{t-1}; \frac{\lambda^t t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
+> 4.  The probability involved in example 2 likewise involves hypergeometric functions: $$(1-\lambda)\times_{t-1} F_{t-2}\left( 1/t, 2/t, ..., (t-1)/t; \frac{1}{t-1}, ..., \frac{t-2}{t-1}; \frac{\lambda^t t^t (\beta-1)^{t-1}}{(t-1)^{t-1} \beta^t}\right).$$
 
 <a id=Certain_Power_Series></a>
 #### Certain Power Series

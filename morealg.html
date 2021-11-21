@@ -92,6 +92,7 @@
 <li><a href="#Probability_Transformations"><strong>Probability Transformations</strong></a></li>
 <li><a href="#SymPy_Code_for_Piecewise_Linear_Factory_Functions"><strong>SymPy Code for Piecewise Linear Factory Functions</strong></a></li>
 <li><a href="#Derivation_of_My_Algorithm_for_min___lambda___1_2"><strong>Derivation of My Algorithm for min(<em>&lambda;</em>, 1/2)</strong></a></li>
+<li><a href="#Algorithm_for_sin___lambda_____pi___2"><strong>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</strong></a></li>
 <li><a href="#Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms"><strong>Sampling Distributions Using Incomplete Information: Omitted Algorithms</strong></a></li>
 <li><a href="#Pushdown_Automata_and_Algebraic_Functions"><strong>Pushdown Automata and Algebraic Functions</strong></a>
 
@@ -1859,6 +1860,28 @@ calc_linear_func(count=8)
 </ul></li>
 <li>If all the Bernstein coefficients are 1 or less, return them.  Otherwise, add <em>d</em>/2 to <em>r</em> and go to step 2.</li>
 </ol>
+
+<p><a id=Algorithm_for_sin___lambda_____pi___2></a></p>
+
+<h3>Algorithm for sin(<em>&lambda;</em>*<em>&pi;</em>/2)</h3>
+
+<p>The following algorithm returns 1 with probability sin(<em>&lambda;</em>*<em>&pi;</em>/2) and 0 otherwise, given a coin that shows heads with probability <em>&lambda;</em>.  However, this algorithm appears in the appendix since it requires manipulating irrational numbers, particularly numbers involving <em>&pi;</em>.</p>
+
+<ol>
+<li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup><em>n</em>*4+2</sup>/((<em>n</em>*4+2)!) &minus; (<em>&pi;</em>/2)<sup><em>n</em>*4+4</sup>/((<em>n</em>*4+4)!).</li>
+<li>Let <em>v</em> = ((<em>n</em>*4+4)!)*2<sup><em>n</em>*4+4</sup> / ((<em>n</em>*4+2)!)*2<sup><em>n</em>*4+2</sup>.</li>
+<li>Flip the input coin <em>n</em>*4+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way.</li>
+<li>If <em>tails</em> = <em>n</em>*4+4, return 0.</li>
+<li>If <em>tails</em> = <em>n</em>*4+3, return a number that is 0 with probability 8*(<em>n</em>*4+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
+<li>If <em>tails</em> = <em>n</em>*4+2, return a number that is 0 with probability 8/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
+<li>Return 1.</li>
+</ol>
+
+<p>Derivation:</p>
+
+<p>Write&mdash; $$f(\lambda) = \sin(\lambda \pi/2) = 1-g(1-\lambda),$$ where&mdash; $$g(\lambda) = 1-\sin((1-\lambda) \pi/2) = \sum{n\ge 0} \frac{(\lambda\pi/2)^{4n+2}}{(4n+2)!} - \frac{(\lambda\pi/2)^{4n+4}}{(4n+4)!} = \sum{n\ge 0} w_n(\lambda).$$  Then each term $w_n(\lambda)$ is a polynomial in $\lambda$ bounded above by $w_n(1)$.</p>
+
+<p>Each polynomial $w_n(\lambda)$ can be transformed into a polynomial in Bernstein form with the following coefficients: $$(0, 0, ..., 0, 8/(v-\pi^2), 8(4n+3)/(v-\pi^2), 1)$$, where the polynomial is of degree $4n+4$ and so has $4n+5$ coefficients, and $v = \frac{((4n+4)!)\times 2^{4n+4}}{((4n+2)!)\times 2^{4n+2}}$.</p>
 
 <p><a id=Sampling_Distributions_Using_Incomplete_Information_Omitted_Algorithms></a></p>
 
