@@ -176,7 +176,7 @@ The following examples show how this method leads to algorithms for simulating c
 - Now, **Algorithm 1** can be used to simulate $f$ given a coin that shows heads (returns 1) with probability $\lambda$, where:
     - $g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.
     - The coefficients $b_0, ..., b_{m-1}$, in order, are the Bernstein-form coefficients found for $A$.
-    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $a_i = h_{m+i}$.
+    - The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.
 
 **Example 2:** Take $f(\lambda) = 1/2 + \sin(6\lambda)/4$, another power series.
 
@@ -188,7 +188,7 @@ The following examples show how this method leads to algorithms for simulating c
 
 **Example 3:** Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$.  To simulate this probability:
 
-1. Create a _&mu;_ coin that does the following: "With probability 1/3, return 1.  Otherwise, run the algorithm for **_&pi;_/4** (in 'Bernoulli Factory Algorithms') and return the result." (Simulates _&pi;_/6.)
+1. Create a _&mu;_ coin that does the following: "With probability 1/3, return 0.  Otherwise, run the algorithm for **_&pi;_/4** (in 'Bernoulli Factory Algorithms') and return the result." (Simulates _&pi;_/6.)
 2. Run the algorithm for $1/2 + \sin(6\lambda)/4$ in Example 2, using the _&mu;_ coin.
 
 **Example 4:** Take $f(\lambda) = 1/2 + \cos(6\lambda)/4$.  This is as in Example 2, except&mdash;
@@ -199,7 +199,7 @@ The following examples show how this method leads to algorithms for simulating c
 
 **Example 5:** Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.
 
-> **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms") with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
+> **Example:** The following functions can be written as power series that satisfy the **general martingale algorithm** (in "Bernoulli Factory Algorithms").  In the table, $B(i)$ is the $i$<sup>th</sup> _Bernoulli number_ (see the note after the table).
 >
 > | Function $f(\lambda)$ | Coefficients | Value of $d_0$ |
 >  --- | --- | --- |
@@ -207,9 +207,7 @@ The following examples show how this method leads to algorithms for simulating c
 > | $\tanh(\lambda)$ |  $a_i = \frac{B(i+1) 2^{i+1} (2^{i+1}-1)}{(i+1)!}$ if $i$ is odd, or 0 otherwise. |  1. |
 > | $\cos(\sqrt \lambda)$ |  $a_i = \frac{(-1)^i}{(2i)!}$. |  1. |
 >
-> To simulate a function in the table, run the **general martingale algorithm** using the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).
->
-> **Note:** The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence's nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is bounded above by $\lambda$.
+> To simulate a function in the table, run the **general martingale algorithm** with $g(\lambda) = \lambda$ and with the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).
 >
 > **Note:** Bernoulli numbers can be computed with the following algorithm, namely **Get the _m_<sup>th</sup> Bernoulli number**:
 >
@@ -219,6 +217,8 @@ The following examples show how this method leads to algorithms for simulating c
 >     1. **Get the _i_<sup>th</sup> Bernoulli number**, call it _b_.  Add _b_\*choose(_m_+1, _i_) to _v_.[^5]
 >     2. Add 2 to _i_.
 > 4. Return &minus;_v_/(_m_+1).
+>
+> **Note:** The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence's nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is bounded above by $\lambda$.
 
 <a id=Certain_Piecewise_Linear_Functions></a>
 ### Certain Piecewise Linear Functions
@@ -1336,7 +1336,7 @@ Unfortunately, _z_ is generally greater than 1, so that the polynomial can't be 
 The following algorithm returns 1 with probability sin(_&lambda;_\*_&pi;_/2) and 0 otherwise, given a coin that shows heads with probability _&lambda;_.  However, this algorithm appears in the appendix since it requires manipulating irrational numbers, particularly numbers involving _&pi;_.
 
 1. Choose at random an integer _n_ (0 or greater) with probability (_&pi;_/2)<sup>4\*_n_+2</sup>/((4\*_n_+2)!) &minus; (_&pi;_/2)<sup>4\*_n_+4</sup>/((4\*_n_+4)!).
-2. Let _v_ = ((4\*_n_+4)!)\*2<sup>4\*_n_+4</sup> / ((4\*_n_+2)!)\*2<sup>4\*_n_+2</sup>.
+2. Let _v_ = 16\*(_n_+1)\*(4\*_n_+3).
 3. Flip the input coin 4\*_n_+4 times.  Let _tails_ be the number of flips that returned 0 this way. (This is the number of heads if the probability _&lambda;_ were 1 &minus; _&lambda;_.)
 4. If _tails_ = 4\*_n_+4, return 0.
 5. If _tails_ = 4\*_n_+3, return a number that is 0 with probability 8\*(4\*_n_+3)/(_v_&minus;_&pi;_<sup>2</sup>) and 1 otherwise.

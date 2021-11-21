@@ -649,7 +649,7 @@ functions, or functions in general.</p>
 </ul>
 
 <blockquote>
-<p><strong>Note:</strong> For series 1 with <em>CS</em>=1 (the main form in the Mendo paper), a rewrite of this algorithm shows this is actually a special case of <a href="#Convex_Combinations"><strong>convex combinations</strong></a> &mdash; simply generate <em>X</em> with probability <em>c</em>[<em>X</em>], then flip a coin that shows heads with probability (1 &minus; <em>&lambda;</em>)<sup><em>i</em></sup>*<em>c</em>[<em>X</em>]/<em>c</em>[<em>X</em>] = (1 &minus; <em>&lambda;</em>)<sup><em>X</em></sup> (or flip the input coin <em>X</em> times and show heads only if all the flips return 0), then return either 0 if heads is shown, or 1 otherwise.</p>
+<p><strong>Note:</strong> For series 1 with <em>CS</em>=1 (the main form in the Mendo paper), a rewrite of this algorithm shows this is actually a special case of <a href="#Convex_Combinations"><strong>convex combinations</strong></a> &mdash; simply generate <em>X</em> with probability <em>c</em>[<em>X</em>], then flip a coin that shows heads with probability (1 &minus; <em>&lambda;</em>)<sup><em>X</em></sup>*<em>c</em>[<em>X</em>]/<em>c</em>[<em>X</em>] = (1 &minus; <em>&lambda;</em>)<sup><em>X</em></sup> (or flip the input coin <em>X</em> times and show heads only if all the flips return 0), then return either 0 if heads is shown, or 1 otherwise.</p>
 </blockquote>
 
 <hr>
@@ -709,8 +709,12 @@ functions, or functions in general.</p>
 </ol>
 
 <blockquote>
-<h2><strong>Note:</strong>  This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</h2>
+<p><strong>Note:</strong>  This algorithm supports more functions than in section 3.1 of Łatuszyński et al. (2019/2011), which supports only power series whose coefficients alternate in sign and decrease in absolute value, with no zeros in between nonzero coefficients.  However, the algorithm above uses that paper&#39;s framework.  A proof of its correctness is given in the appendix.</p>
+</blockquote>
 
+<hr>
+
+<blockquote>
 <p><strong>Note:</strong> Not all power series that admit a Bernoulli factory are covered by the algorithms in this section.  They include:</p>
 
 <ul>
@@ -1050,7 +1054,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Assume we have one or more input coins <em>h</em><sub><em>i</em></sub>(<em>&lambda;</em>) that return heads with a probability that depends on <em>&lambda;</em>.  (The number of coins may be infinite.) The following algorithm chooses one of these coins at random then flips that coin.  Specifically, the algorithm generates 1 with probability equal to the following weighted sum: <em>g</em>(0) * <em>h</em><sub>0</sub>(<em>&lambda;</em>) + <em>g</em>(1) * <em>h</em><sub>1</sub>(<em>&lambda;</em>) + ..., where <em>g</em>(<em>i</em>) is the probability that coin <em>i</em> will be chosen, <em>h</em><sub><em>i</em></sub> is the function simulated by coin <em>i</em>, and all the <em>g</em>(<em>i</em>) sum to 1.  See (Wästlund 1999, Theorem 2.7)[^8].  (Alternatively, the algorithm can be seen as returning heads with probability <strong>E</strong>[<em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)], that is, the expected value, or &quot;long-run average&quot;, of <em>h</em><sub><em>X</em></sub> where <em>X</em> is the number that identifies the randomly chosen coin.)</p>
 
 <ol>
-<li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random variate.  (Specifically, the number <em>X</em> is generated with probability <em>g</em>(<em>X</em>).)</li>
+<li>Generate a random integer <em>X</em> in some way.  For example, it could be a uniform random integer in [1, 6], or it could be a Poisson random variate.  (Specifically, the number <em>X</em> is generated with probability <em>g</em>(<em>X</em>).  If every <em>g</em>(<em>i</em>) is a rational number, the <a href="https://www.keithschwarz.com/darts-dice-coins/"><strong>following algorithm</strong></a> can generate <em>X</em>: &quot;(1) Set <em>X</em> to 0 and <em>d</em> to 1. (2) With probability <em>g</em>(<em>X</em>)/<em>d</em>, return <em>X</em>; otherwise subtract <em>g</em>(<em>X</em>) from <em>d</em>, add 1 to <em>X</em>, and repeat this step.&quot;)</li>
 <li>Flip the coin represented by <em>X</em> and return the result.</li>
 </ol>
 
@@ -1058,7 +1062,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p><strong>Notes:</strong></p>
 
 <ol>
-<li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let <em>g</em>(<em>n</em>) be the probability that a randomly chosen number <em>X</em> is <em>n</em>.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash;<br><br><em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) / <em>g</em>(<em>n</em>)),<br><br>but this works only if the following two conditions are met for each integer <em>n</em>&ge;0:</p>
+<li><p><strong>Building convex combinations.</strong> Assume we have a function of the form <em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>), where <em>w</em><sub><em>n</em></sub> are continuous functions whose maximum values in the domain [0, 1] sum to 1 or less.  Let <em>g</em>(<em>n</em>) be the probability that a randomly chosen number <em>X</em> is <em>n</em>, such that <em>g</em>(0) + <em>g</em>(1) + ... = 1.  Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>w</em><sub><em>X</em></sub>(<em>&lambda;</em>)/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability <em>f</em>(<em>&lambda;</em>) as the convex combination&mdash;<br><br><em>f</em>(<em>&lambda;</em>) = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) / <em>g</em>(<em>n</em>)),<br><br>but this works only if the following conditions are met for each integer <em>n</em>&ge;0:</p>
 
 <ul>
 <li><em>g</em>(<em>n</em>) &ge; <em>w</em><sub><em>n</em></sub>(<em>&lambda;</em>) &ge; 0 for every <em>&lambda;</em> in the interval [0, 1] (which roughly means that <em>w</em><sub><em>n</em></sub> is bounded from above or &quot;dominated&quot; by <em>g</em>(<em>n</em>)).</li>
@@ -1069,8 +1073,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li><p><strong>Constants with non-negative series expansions.</strong> A special case of note 1.  Let <em>g</em> be as in note 1.  Assume we have a constant with the following series expansion: <em>c</em> = <em>a</em><sub>0</sub> + <em>a</em><sub>1</sub> + <em>a</em><sub>2</sub> + ..., where&mdash;</p>
 
 <ul>
-<li><em>a</em><sub><em>n</em></sub> are each 0 or greater and sum to 1 or less, and</li>
-<li><em>g</em>(<em>n</em>) &ge; <em>a</em><sub><em>n</em></sub> &ge; 0 for each integer <em>n</em>&ge;0.</li>
+<li><em>a</em><sub><em>n</em></sub> are each 0 or greater and sum to 1 or less,</li>
+<li><em>g</em>(<em>n</em>) &ge; <em>a</em><sub><em>n</em></sub> &ge; 0 for each integer <em>n</em>&ge;0,</li>
 </ul>
 
 <p>Then by <strong>generating <em>X</em> and flipping a coin with probability of heads of <em>a</em><sub><em>X</em></sub>/<em>g</em>(<em>X</em>)</strong>, we can simulate the probability  <em>c</em> as the convex combination&mdash;<br><br><em>c</em> = &sum;<sub><em>n</em>=0,1,...</sub> <em>g</em>(<em>n</em>) * (<em>a</em><sub><em>n</em></sub> / <em>g</em>(<em>n</em>)).</p></li>
@@ -1080,10 +1084,9 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <ol>
 <li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, then flip the input coin.  With probability 1/(1+<em>X</em>), return the result of the coin flip; otherwise, return 0.  This corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and the coin for <em>h</em><sub><em>i</em></sub> returning 1 with probability 1/(1+<em>i</em>), and 0 otherwise.  The probability that this method returns 1 is <strong>E</strong>[1/(1+<em>X</em>)], or (exp(<em>&mu;</em>)&minus;1)/(exp(<em>&mu;</em>)*<em>&mu;</em>).</li>
-<li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, and return 1 if <em>X</em> is 0, or 0 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&mu;</em>) mentioned earlier, and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities and the coin for <em>h</em><sub><em>i</em></sub> returning 1 if <em>i</em> is 0, and 0 otherwise.</li>
+<li>(Wästlund 1999)[^8]: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&lambda;</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1&minus;<em>&lambda;</em>)<sup><em>i</em></sup>.</li>
 <li>Generate <em>X</em>, a Poisson random variate with mean <em>&mu;</em>, run the <strong>algorithm for exp(&minus;<em>z</em>)</strong> with <em>z</em> = <em>X</em>, and return the result.  The probability of returning 1 this way is <strong>E</strong>[exp(&minus;<em>X</em>)], or exp(<em>&mu;</em>*exp(&minus;1)&minus;<em>&mu;</em>).  The following Python code uses the computer algebra library SymPy to find this probability: <code>from sympy.stats import *; E(exp(-Poisson(&#39;P&#39;, x))).simplify()</code>.</li>
 <li><em>Bernoulli Race</em> (Dughmi et al. 2017)[^36]: Say we have <em>n</em> coins, then choose one of them uniformly at random and flip that coin. If the flip returns 1, return <em>X</em>; otherwise, repeat this algorithm.  This algorithm chooses a random coin based on its probability of heads.  Each iteration corresponds to <em>g</em>(<em>i</em>) being 1/<em>n</em> and <em>h</em><sub><em>i</em></sub>() being the probability for the corresponding coin <em>i</em>.</li>
-<li>(Wästlund 1999)[^8]: Generate a Poisson random variate <em>X</em> with mean 1, then flip the input coin <em>X</em> times.  Return 0 if any of the flips returns 1, or 1 otherwise.  This is a Bernoulli factory for exp(&minus;<em>&lambda;</em>), and corresponds to <em>g</em>(<em>i</em>) being the Poisson probabilities, namely 1/(<em>i</em>!*exp(1)), and <em>h</em><sub><em>i</em></sub>() being (1&minus;<em>&lambda;</em>)<sup><em>i</em></sup>.</li>
 <li>Multivariate Bernoulli factory (Huber 2016)[^37] of the form <em>R</em> = <em>C</em><sub>0</sub>*<em>&lambda;</em><sub>0</sub> + <em>C</em><sub>1</sub>*<em>&lambda;</em><sub>1</sub> + ... + <em>C</em><sub><em>m</em>&minus;1</sub>*<em>&lambda;</em><sub><em>m</em>&minus;1</sub>, where <em>C</em><sub><em>i</em></sub> are known constants greater than 0, and <em>R</em> &le; 1 &minus; <em>&#x03F5;</em> for any <em>&#x03F5;</em> &gt; 0: Choose an integer in [0, <em>m</em>) uniformly at random, call it <em>i</em>, then run a linear Bernoulli factory for (<em>m</em>*<em>C</em><sub><em>i</em></sub>)*<em>&lambda;</em><sub><em>i</em></sub>.  This differs from Huber&#39;s suggestion of &quot;thinning&quot; a Poisson process driven by multiple input coins.</li>
 <li><strong>Probability generating function</strong> (PGF) (Dughmi et al. 2017)[^36]. Generates heads with probability <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>], that is, the expected value of <em>&lambda;</em><sup><em>X</em></sup>.  <strong>E</strong>[<em>&lambda;</em><sup><em>X</em></sup>] is the PGF for the distribution of <em>X</em>.  The algorithm follows: (1) Generate a random integer <em>X</em> in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped <em>X</em> times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if <em>X</em> is 0); or return 0 otherwise.</li>
 <li>Assume <em>X</em> is the number of unbiased random bits that show 0 before the first 1 is generated.  Then <em>g</em>(<em>n</em>) = 1/(2<sup><em>n</em>+1</sup>).</li>
@@ -2009,6 +2012,14 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <td>((Dughmi et al. 2017)[^36]; applies an exponential weight&mdash;here, <em>c</em>&mdash;to an input coin)<br>(1) If <em>c</em> is 0, return 1.<br>(2) Generate <em>N</em>, a Poisson random variate with mean <em>c</em>.<br>(3) Flip the input coin until the flip returns 0 or the coin is flipped <em>N</em> times, whichever comes first, then return a number that is 1 if <em>N</em> is 0 or all of the coin flips (including the last) return 1, or 0 otherwise.</td>
 </tr>
 <tr>
+<td>exp(<em>&lambda;</em>)*(1&minus;<em>&lambda;</em>)</td>
+<td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run algorithm for power series 1, with <em>c</em>[<em>i</em>] = (<em>i</em>&minus;1)/(<em>i</em>!), and <em>CS</em> = 1 (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>).</td>
+</tr>
+<tr>
+<td>exp(<em>&lambda;</em><sup>2</sup>) &minus; <em>&lambda;</em>*exp(<em>&lambda;</em><sup>2</sup>)</td>
+<td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run <strong>general martingale algorithm</strong> with $g(\lambda)=\lambda$, $d_0=1$, and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$.</td>
+</tr>
+<tr>
 <td>1 &minus; 1 / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>)) =<br>(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>) / (1+(<em>&mu;</em>*<em>&lambda;</em>/(1 &minus; <em>&mu;</em>))</td>
 <td>(Special case of <strong>logistic Bernoulli factory</strong>; <em>&lambda;</em> is in [0, 1], <em>&mu;</em> is in [0, 1), and both are unknown heads probabilities of two coins.)<br>(1) Flip the <em>&mu;</em> coin.  If it returns 0, return 0. (Coin samples probability <em>&mu;</em>/(<em>&mu;</em> + (1 &minus; <em>&mu;</em>)) = <em>&mu;</em>.) <br>(2) Flip the <em>&lambda;</em> coin.  If it returns 1, return 1.  Otherwise, go to step 1.</td>
 </tr>
@@ -2041,16 +2052,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run algorithm for <strong>ln(1+<em>&lambda;</em>)</strong>, then return 1 minus the result.[^52]</td>
 </tr>
 <tr>
-<td>(1&minus;<em>&lambda;</em>)*exp(<em>&lambda;</em>)</td>
-<td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run algorithm for power series 1, with <em>c</em>[<em>i</em>] = (<em>i</em>&minus;1)/(<em>i</em>!), and <em>CS</em> = 1 (see &quot;<a href="#Certain_Power_Series"><strong>Certain Power Series</strong></a>).</td>
-</tr>
-<tr>
 <td>sin(sqrt(<em>&lambda;</em>)*sqrt(<em>c</em>)) / (sqrt(<em>&lambda;</em>)*sqrt(<em>c</em>))</td>
 <td>(<em>c</em> is a rational number in (0, 6].  <em>&lambda;</em> is unknown heads probability of a coin.)<br>Run algorithm for  <strong>sin(<em>&lambda;</em>*sqrt(<em>c</em>)) / (<em>&lambda;</em>*sqrt(<em>c</em>))</strong>, except delete the sentence &quot;Do this step again.&quot;</td>
-</tr>
-<tr>
-<td>exp(<em>&lambda;</em><sup>2</sup>) &minus; <em>&lambda;</em>*exp(<em>&lambda;</em><sup>2</sup>)</td>
-<td>(<em>&lambda;</em> is unknown heads probability of a coin.)<br>Run <strong>general martingale algorithm</strong> with $g(\lambda)=\lambda$, $d_0=1$, and $a_i=\frac{(-1)^i}{(\text{floor}(i/2))!}$.</td>
 </tr>
 </tbody></table>
 

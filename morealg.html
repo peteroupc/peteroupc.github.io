@@ -300,7 +300,7 @@
 <ul>
 <li>$g(\lambda) = \lambda$, so the Bernoulli factory algorithm for $g(\lambda)$ is simply to flip the coin for $\lambda$.</li>
 <li>The coefficients $b_0, ..., b_{m-1}$, in order, are the Bernstein-form coefficients found for $A$.</li>
-<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $a_i = h_{m+i}$.</li>
+<li>The Bernoulli factory algorithm for $B(\lambda)$ is as follows: Let $h_i = a_i$.  Then run the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $g(\lambda) = \lambda$ and $a_i = h_{m+i}$.</li>
 </ul></li>
 </ul>
 
@@ -317,7 +317,7 @@
 <p><strong>Example 3:</strong> Take $f(\lambda) = 1/2 + \sin(\pi\lambda)/4$.  To simulate this probability:</p>
 
 <ol>
-<li>Create a <em>&mu;</em> coin that does the following: &quot;With probability 1/3, return 1.  Otherwise, run the algorithm for <strong><em>&pi;</em>/4</strong> (in &#39;Bernoulli Factory Algorithms&#39;) and return the result.&quot; (Simulates <em>&pi;</em>/6.)</li>
+<li>Create a <em>&mu;</em> coin that does the following: &quot;With probability 1/3, return 0.  Otherwise, run the algorithm for <strong><em>&pi;</em>/4</strong> (in &#39;Bernoulli Factory Algorithms&#39;) and return the result.&quot; (Simulates <em>&pi;</em>/6.)</li>
 <li>Run the algorithm for $1/2 + \sin(6\lambda)/4$ in Example 2, using the <em>&mu;</em> coin.</li>
 </ol>
 
@@ -332,7 +332,7 @@
 <p><strong>Example 5:</strong> Take $f(\lambda) = 1/2 + \cos(\pi\lambda)/4$.  This is as in Example 3, except step 2 runs the algorithm for $1/2 + \cos(6\lambda)/4$ in Example 4.</p>
 
 <blockquote>
-<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;) with $g(\lambda)=\lambda$.  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
+<p><strong>Example:</strong> The following functions can be written as power series that satisfy the <strong>general martingale algorithm</strong> (in &quot;Bernoulli Factory Algorithms&quot;).  In the table, $B(i)$ is the $i$<sup>th</sup> <em>Bernoulli number</em> (see the note after the table).</p>
 
 <table><thead>
 <tr>
@@ -358,9 +358,7 @@
 </tr>
 </tbody></table>
 
-<p>To simulate a function in the table, run the <strong>general martingale algorithm</strong> using the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).</p>
-
-<p><strong>Note:</strong> The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is bounded above by $\lambda$.</p>
+<p>To simulate a function in the table, run the <strong>general martingale algorithm</strong> with $g(\lambda) = \lambda$ and with the given coefficients and value of $d_0$ ($d_0$ is the first nonzero coefficient).</p>
 
 <p><strong>Note:</strong> Bernoulli numbers can be computed with the following algorithm, namely <strong>Get the <em>m</em><sup>th</sup> Bernoulli number</strong>:</p>
 
@@ -375,6 +373,8 @@
 </ol></li>
 <li>Return &minus;<em>v</em>/(<em>m</em>+1).</li>
 </ol>
+
+<p><strong>Note:</strong> The general martingale algorithm allows the sequence $(a_i)$ to sum to 1, but this appears to be possible only if the sequence&#39;s nonzero values have the form $(1, -z_0, z_0, -z_1, z_1, ..., -z_i, z_i, ...)$, where the $z_i$ are positive, are no greater than 1, and form a non-increasing sequence that is finite or converges to 0.  Moreover, it appears that every power series with this sequence of coefficients is bounded above by $\lambda$.</p>
 </blockquote>
 
 <p><a id=Certain_Piecewise_Linear_Functions></a></p>
@@ -1892,7 +1892,7 @@ calc_linear_func(count=8)
 
 <ol>
 <li>Choose at random an integer <em>n</em> (0 or greater) with probability (<em>&pi;</em>/2)<sup>4*<em>n</em>+2</sup>/((4*<em>n</em>+2)!) &minus; (<em>&pi;</em>/2)<sup>4*<em>n</em>+4</sup>/((4*<em>n</em>+4)!).</li>
-<li>Let <em>v</em> = ((4*<em>n</em>+4)!)*2<sup>4*<em>n</em>+4</sup> / ((4*<em>n</em>+2)!)*2<sup>4*<em>n</em>+2</sup>.</li>
+<li>Let <em>v</em> = 16*(<em>n</em>+1)*(4*<em>n</em>+3).</li>
 <li>Flip the input coin 4*<em>n</em>+4 times.  Let <em>tails</em> be the number of flips that returned 0 this way. (This is the number of heads if the probability <em>&lambda;</em> were 1 &minus; <em>&lambda;</em>.)</li>
 <li>If <em>tails</em> = 4*<em>n</em>+4, return 0.</li>
 <li>If <em>tails</em> = 4*<em>n</em>+3, return a number that is 0 with probability 8*(4*<em>n</em>+3)/(<em>v</em>&minus;<em>&pi;</em><sup>2</sup>) and 1 otherwise.</li>
