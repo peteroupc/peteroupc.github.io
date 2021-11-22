@@ -1132,12 +1132,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <tr>
 <td>Convex combinations</td>
 <td>1 with probability:<br>$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)$</td>
-<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability <em>g</em>(<em>X</em>, <em>&lambda;</em>).<br>(2) Flip the coin represented by <em>X</em> and return the result.</td>
+<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability <em>g</em>(<em>X</em>, <em>&lambda;</em>).<br>(2) Flip the coin represented by <em>X</em> (run a Bernoulli factory algorithm for <em>h</em><sub><em>X</em></sub>(<em>&lambda;</em>)) and return the result.</td>
 </tr>
 <tr>
 <td>Generalized Bernoulli race</td>
-<td>Integer <em>i</em> with probability:<br>$\frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$</td>
-<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability <em>g</em>(<em>i</em>, <em>&lambda;</em>).<br>(2) Run a Bernoulli factory algorithm for <em>h</em><sub><em>X</em></sub>(<strong><em>&lambda;</em></strong>).  If the run returns 0 (<em>X</em> is rejected), go to step 1.  Otherwise (<em>X</em> is accepted), return <em>X</em>.</td>
+<td>Integer <em>i</em> with probability:<br>$\frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\mu) h_k(\mu)}$</td>
+<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability <em>g</em>(<em>X</em>, <em>&lambda;</em>).<br>(2) Run a Bernoulli factory algorithm for <em>h</em><sub><em>X</em></sub>(<strong><em>&mu;</em></strong>).  If the run returns 0 (<em>X</em> is rejected), go to step 1.  Otherwise (<em>X</em> is accepted), return <em>X</em>.</td>
 </tr>
 </tbody></table>
 
@@ -1145,10 +1145,10 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 
 <p><strong>Certain algebraic functions.</strong> Flajolet et al. (2010)[^1] showed sampling methods modeled on <em>pushdown automata</em> (state machines with a stack) that are given flips of a coin with unknown heads probability <em>&lambda;</em>.  These flips form a <em>bitstring</em>, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;.  A pushdown automaton accepts a bitstring with probability <em>f</em>(<em>&lambda;</em>), where <em>f</em> must be an <em>algebraic function over rationals</em> (a function that can be a solution of a nonzero polynomial equation whose coefficients are rational numbers) (Mossel and Peres 2005)[^15].</p>
 
-<p>Specifically, the method simulates the following function: $$f(\lambda) = \sum_{k\ge 0} g(i,\lambda) h_i(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:</p>
+<p>Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(i,\lambda) h_i(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:</p>
 
 <ul>
-<li>$W(k)$ is a number in the interval [0, $\beta^k$].  If $W(k)$ is an integer for every $k$, then $f(\lambda)$ becomes an <em>algebraic function</em> and $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.</li>
+<li>$W(k)$ is a number in the interval [0, $\beta^k$].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.</li>
 <li>$\beta \ge 2$ is an integer.  This is the alphabet size, or the number of &quot;letters&quot; in the alphabet.  This is 2 for the cases discussed in the Flajolet paper (binary stochastic grammars), but it can be greater than two for more general stochastic grammars.</li>
 <li>$OGF(x) = W(0) + W(1) x + W(2) x^2 + W(3) x^3 + ...$ is an <em>ordinary generating function</em>.  This is a <em>power series</em> whose <em>coefficients</em> are $W(i)$ (e.g., $W(2)$ is coefficient 2).</li>
 </ul>
@@ -1193,15 +1193,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>A <em>permutation class</em> is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a <em>permutation</em>.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.</li>
 </ul>
 
-<p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$f(\lambda) = \frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:</p>
+<p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$\frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:</p>
 
 <ul>
 <li>$V(n)$ is a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.</li>
 <li>$EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an <em>exponential generating function</em>, which completely determines a permutation class.</li>
-<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $r p(1 − p)$, where $p=(1-\lambda) EGF(\lambda)$.</li>
+<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.</li>
 </ul>
 
-<p>The von Neumann schema uses the <strong>Bernoulli race algorithm</strong> given earlier in this section.  In principle, the <em>X</em> in step 1 can follow any distribution of integers 0 or greater, but the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^36]  Optionally, step 2 can be done as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform random variates in the interval [0, 1], then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
+<p>The von Neumann schema uses the <strong>Bernoulli race algorithm</strong> given earlier in this section.  In principle, the <em>X</em> in step 1 can follow any distribution of integers 0 or greater, but the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform random variates in the interval [0, 1], then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
 
 <blockquote>
 <p><strong>Note:</strong> The von Neumann schema can sample from any <em>power series distribution</em> (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as <em>&lambda;</em> approaches 1.</p>
