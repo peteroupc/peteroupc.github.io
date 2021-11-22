@@ -50,9 +50,9 @@ For extra notes, see: [**Supplemental Notes for Bernoulli Factory Algorithms**](
         - [**Certain Converging Series**](#Certain_Converging_Series)
     - [**Other General Algorithms**](#Other_General_Algorithms)
         - [**Convex Combinations**](#Convex_Combinations)
-        - [**Integrals**](#Integrals)
         - [**Generalized Bernoulli Race**](#Generalized_Bernoulli_Race)
         - [**Flajolet's Probability Simulation Schemes**](#Flajolet_s_Probability_Simulation_Schemes)
+        - [**Integrals**](#Integrals)
     - [**Algorithms for Specific Functions of _&lambda;_**](#Algorithms_for_Specific_Functions_of___lambda)
         - [**exp(&minus;_&lambda;_)**](#exp_minus___lambda)
         - [**exp(&minus;(_&lambda;_<sup>_k_</sup> * _c_))**](#exp_minus___lambda___k___c)
@@ -699,40 +699,6 @@ Assume we have one or more input coins _h_<sub>_i_</sub>(_&lambda;_) that return
 > 6. **Probability generating function** (PGF) (Dughmi et al. 2017\)[^32]. Generates heads with probability **E**\[_&lambda;_<sup>_X_</sup>\], that is, the expected value of _&lambda;_<sup>_X_</sup>.  **E**\[_&lambda;_<sup>_X_</sup>\] is the PGF for the distribution of _X_.  The algorithm follows: (1) Generate a random integer _X_ in some way; (2) Flip the input coin until the flip returns 0 or the coin is flipped _X_ times, whichever comes first.  Return 1 if all the coin flips, including the last, returned 1 (or if _X_ is 0); or return 0 otherwise.
 > 7. Assume _X_ is the number of unbiased random bits that show 0 before the first 1 is generated.  Then _g_(_n_) = 1/(2<sup>_n_+1</sup>).
 
-<a id=Integrals></a>
-#### Integrals
-
-Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the area under that function's graph when the function is restricted to that interval.
-
-**Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
-
-- (1/_&lambda;_) \* &int;<sub>\[0, _&lambda;_\]</sub> _f_(_u_) _du_, or equivalently,
-- &int;<sub>\[0, 1\]</sub> _f_(_u_ * _&lambda;_) _du_ (an integral),
-
-namely the following algorithm:
-
-1. Generate a uniform(0, 1) random variate _u_.
-2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
-3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
-
-**Algorithm 2.** A special case of Algorithm 1 is the integral &int;<sub>\[0, 1\]</sub> _f_(_u_) _du_, when the original input coin always returns 1:
-
-1. Generate a uniform(0, 1) random variate _u_.
-2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
-3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
-
-**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
-
-- &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
-
-where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using the following algorithm:
-
-1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
-2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
-3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform(0, 1) random variate _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
-
-> **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
-
 <a id=Generalized_Bernoulli_Race></a>
 #### Generalized Bernoulli Race
 
@@ -769,15 +735,15 @@ Then both algorithms are now described as follows:
 | Name |  To sample: | Use this algorithm: |
  --- | --- | --- |
 | Convex combinations | 1 with probability:<br>$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Flip the coin represented by _X_ (run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(_&lambda;_)) and return the result. |
-| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\mu)}$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
+| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
 
 Now Flajolet's schemes are described.
 
-**Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed sampling methods modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.  These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  A pushdown automaton accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose coefficients are rational numbers) (Mossel and Peres 2005\)[^15].
+**Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed a sampling method modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.  These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  If a pushdown automaton terminates, it accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose coefficients are rational numbers) (Mossel and Peres 2005\)[^15].
 
 Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:
 
-- $W(k)$ is a number in the interval \[0, $\beta^k$\].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.
+- $W(k)$ returns a number in the interval \[0, $\beta^k$\].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.
 - $\beta \ge 2$ is an integer.  This is the alphabet size, or the number of "letters" in the alphabet.  This is 2 for the cases discussed in the Flajolet paper (binary stochastic grammars), but it can be greater than two for more general stochastic grammars.
 - $OGF(x) = W(0) + W(1) x + W(2) x^2 + W(3) x^3 + ...$ is an _ordinary generating function_.  This is a _power series_ whose _coefficients_ are $W(i)$ (e.g., $W(2)$ is coefficient 2).
 
@@ -808,13 +774,13 @@ The method uses the **convex combination algorithm** given above, where step 1 i
 
 Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$\frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:
 
-- $V(n)$ is a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
+- $V(n)$ returns a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.
 -  The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.
 
-The von Neumann schema uses the **Bernoulli race algorithm** given earlier in this section.  But in step 1, the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform random variates in the interval \[0, 1\], then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
+The von Neumann schema uses the **generalized Bernoulli race algorithm** given earlier in this section.  But in step 1, the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform(0, 1) random variates, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
 
-> **Note:** The von Neumann schema can sample from any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
+> **Note:** The von Neumann schema can sample from any _power series distribution_ (such as Poisson, negative binomial, geometric [^61], and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
 >
 > **Examples:**
 >
@@ -835,6 +801,40 @@ The von Neumann schema uses the **Bernoulli race algorithm** given earlier in th
 - the _von Neumann schema_ is a **generalized Bernoulli race** with $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = V(k)/(k!)$,
 
 and both schemes implement step 1 in the same way.  However, different choices for $g$ and $h$ will lead to modified schemes that could lead to Bernoulli factory algorithms for new functions.
+
+<a id=Integrals></a>
+#### Integrals
+
+Roughly speaking, the _integral_ of _f_(_x_) on an interval \[_a_, _b_\] is the area under that function's graph when the function is restricted to that interval.
+
+**Algorithm 1.** (Flajolet et al., 2010\)[^1] showed how to turn an algorithm that simulates _f_(_&lambda;_) into an algorithm that simulates the probability&mdash;
+
+- (1/_&lambda;_) \* &int;<sub>\[0, _&lambda;_\]</sub> _f_(_u_) _du_, or equivalently,
+- &int;<sub>\[0, 1\]</sub> _f_(_u_ * _&lambda;_) _du_ (an integral),
+
+namely the following algorithm:
+
+1. Generate a uniform(0, 1) random variate _u_.
+2. Create an input coin that does the following: "Flip the original input coin, then [**sample from the number _u_**](#Implementation_Notes).  Return 1 if both the call and the flip return 1, and return 0 otherwise."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
+
+**Algorithm 2.** A special case of Algorithm 1 is the integral &int;<sub>\[0, 1\]</sub> _f_(_u_) _du_, when the original input coin always returns 1:
+
+1. Generate a uniform(0, 1) random variate _u_.
+2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2 rather than the original input coin.  Return the result of that run.
+
+**Algorithm 3.** I have found that it's possible to simulate the following integral, namely&mdash;
+
+- &int;<sub>\[_a_, _b_\]</sub> _f_(_u_) _du_,
+
+where \[_a_, _b_\] is \[0, 1\] or a closed interval therein, using the following algorithm:
+
+1. Generate a uniform(0, 1) random variate _u_.  Then if _u_ is less than _a_ or is greater than _b_, repeat this step. (If _u_ is a uniform PSRN, these comparisons should be done via the **URandLessThanReal** algorithm.)
+2. Create an input coin that does the following: "[**Sample from the number _u_**](#Implementation_Notes) and return the result."
+3. Run the original Bernoulli factory algorithm, using the input coin described in step 2.  If the run returns 0, return 0.  Otherwise, generate a uniform(0, 1) random variate _v_ and return a number that is 0 if _v_ is less than _a_ or is greater than _b_, or 1 otherwise.
+
+> **Note**: If _a_ is 0 and _b_ is 1, the probability simulated by this algorithm will be monotonically increasing (will keep going up), have a slope no greater than 1, and equal 0 at the point 0.
 
 <a id=Algorithms_for_Specific_Functions_of___lambda></a>
 ### Algorithms for Specific Functions of _&lambda;_
@@ -1709,7 +1709,7 @@ See also the algorithm given earlier for ln(1+_&lambda;_).  In this algorithm, _
     - For irrational constants:
         - Simple [**continued fraction**](#Continued_Fractions) expansions.
         - Closed shapes inside the unit square whose area is an irrational number.  (Includes algorithms that tell whether a box lies inside, outside, or partly inside or outside the shape.)    [**Example.**](https://peteroupc.github.io/morealg.html#pi___4)
-        - Generate a uniform (_x_, _y_) point inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
+        - Generate a uniform point in (_x_, _y_) inside a closed shape, then return 1 with probability _x_.  For what shapes is the expected value of _x_ an irrational number?  [**Example.**](https://peteroupc.github.io/morealg.html#4_3___pi)
         - Functions that map [0, 1] to [0, 1] whose integral (area under curve) is an irrational number.
     - For Bernoulli factory functions:
         - Functions with any of the following series expansions, using rational arithmetic only:
@@ -1866,6 +1866,8 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 [^59]: Monahan, J.. "Extensions of von Neumann’s method for generating random variables." Mathematics of Computation 33 (1979): 1065-1069.
 
 [^60]: Tsai, Yi-Feng, Farouki, R.T., "Algorithm 812: BPOLY: An Object-Oriented Library of Numerical Algorithms for Polynomials in Bernstein Form", _ACM Trans. Math. Softw._ 27(2), 2001.
+
+[^61]: Since academic works define the geometric distribution differently, the use of "geometric" here is deliberately kept ambiguous.
 
 <a id=Appendix></a>
 ## Appendix
