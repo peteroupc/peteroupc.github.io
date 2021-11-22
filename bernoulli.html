@@ -1069,7 +1069,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Flajolet et al. (2010)[^1] described two schemes for probability simulation, inspired by restricted models of computing.  To describe the schemes, there is a need to generalize the convex combination and generalized Bernoulli race algorithms.</p>
 
 <ul>
-<li>In both algorithms, <em>g</em>(<em>i</em>, <em>&lambda;</em>) is now a two-parameter function.  It takes an integer <em>i</em> and the probability of heads of an input coin, called <em>&lambda;</em>.  Thus, there is now a family of ways to choose an integer <em>i</em> at random, given <em>&lambda;</em>. For the convex combination algorithm only, for each <em>&lambda;</em>, the sum <em>g</em>(0, <em>&lambda;</em>) + <em>g</em>(1, <em>&lambda;</em>) + ... must equal 1.</li>
+<li>In both algorithms, <em>g</em>(<em>i</em>, <em>&lambda;</em>) is now a two-parameter function.  It takes an integer <em>i</em> and the probability of heads of an input coin, called <em>&lambda;</em>, and returns a number 0 or greater (a &quot;weight&quot;).  Thus, there is now a family of ways to choose an integer <em>i</em> at random, given <em>&lambda;</em>. For the convex combination algorithm only, the sum <em>g</em>(0, <em>&lambda;</em>) + <em>g</em>(1, <em>&lambda;</em>) + ... must equal 1 for every <em>&lambda;</em>.</li>
 </ul>
 
 <p>Then both algorithms are now described as follows:</p>
@@ -1093,11 +1093,15 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 </tr>
 </tbody></table>
 
+<blockquote>
+<p><strong>Note:</strong>  The probability that $r$ many values of $X$ are rejected by the generalized Bernoulli race is $p(1 − p)^r$, where $p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda)}$.</p>
+</blockquote>
+
 <p>Now Flajolet&#39;s schemes are described.</p>
 
 <p><strong>Certain algebraic functions.</strong> Flajolet et al. (2010)[^1] showed a sampling method modeled on <em>pushdown automata</em> (state machines with a stack) that are given flips of a coin with unknown heads probability <em>&lambda;</em>.  These flips form a <em>bitstring</em>, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a <em>binary stochastic grammar</em>, which uses an alphabet of only two &quot;letters&quot;.  If a pushdown automaton terminates, it accepts a bitstring with probability <em>f</em>(<em>&lambda;</em>), where <em>f</em> must be an <em>algebraic function over rationals</em> (a function that can be a solution of a nonzero polynomial equation whose coefficients are rational numbers) (Mossel and Peres 2005)[^15].</p>
 
-<p>Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:</p>
+<p>Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda),$$ where the paper uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, so that&mdash; $$f(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where .  In turn:</p>
 
 <ul>
 <li>$W(k)$ returns a number in the interval [0, $\beta^k$].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.</li>
@@ -1140,12 +1144,12 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>A <em>permutation class</em> is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a <em>permutation</em>.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.</li>
 </ul>
 
-<p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$\frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:</p>
+<p>Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$w_n(\lambda) = \frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)},$$ where the schema uses $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$, so that&mdash; $$w_n(\lambda)=\frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)} = \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where .  Also:</p>
 
 <ul>
 <li>$V(n)$ returns a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.</li>
 <li>$EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an <em>exponential generating function</em>, which completely determines a permutation class.</li>
-<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}{\sum_{k\ge 0} g(k,\lambda)}=(1-\lambda) EGF(\lambda).$$</li>
+<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema (for the choices of $g$ and $h$ above) is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.</li>
 </ul>
 
 <p>The von Neumann schema uses the <strong>generalized Bernoulli race algorithm</strong> given earlier in this section.  But in step 1, the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform(0, 1) random variates, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
@@ -2933,7 +2937,7 @@ kind of irrational number.</p>
 <li> as a sum of terms of the form <em>z</em>*<em>&lambda;</em><sup><em>i</em></sup>*(1&minus;<em>&lambda;</em>)<sup><em>j</em></sup>, where <em>z</em> is a real number and <em>i</em>&ge;0 and <em>j</em>&ge;0 are integers (called <em>form 1</em> in this section),</li>
 </ul>
 
-<p>then the function can be separated into two polynomials that sum to the denominator.  (Here, <em>i</em>+<em>j</em> is the term&#39;s <em>degree</em>, and the polynomial&#39;s degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (<em>G</em>) such that <em>G</em> = <em>E</em> &minus; <em>D</em> (or <em>D</em> + <em>G</em> = <em>E</em>).  (Then <em>D</em> and <em>G</em> are the two polynomials we will use.) Similarly, if we have multiple rational functions with a common denominator, namely (<em>D1</em>/<em>E</em>), ..., (<em>DN</em>/<em>E</em>), where <em>D1</em>, ..., <em>DN</em> and <em>E</em> are written in form 1, then they can be separated into <em>N</em> + 1 polynomials by subtracting the numerators from the denominator, so that <em>G</em> = <em>E</em> &minus; <em>D1</em> &minus; ... &minus; <em>DN</em>.  (Then <em>D1</em>, ..., <em>DN</em> and <em>G</em> are the polynomials we will use.) To use the polynomials in the algorithm, however, they need to be <em>homogenized</em>, then <em>augmented</em>, as described next.</p>
+<p>then the function can be separated into two polynomials that sum to the denominator.  (Here, <em>i</em>+<em>j</em> is the term&#39;s <em>degree</em>, and the polynomial&#39;s degree is the highest degree among its terms.)  To do this separation, subtract the numerator from the denominator to get a new polynomial (<em>G</em>) such that <em>G</em> = <em>E</em> &minus; <em>D</em> (or <em>D</em> + <em>G</em> = <em>E</em>).  (Then <em>D</em> and <em>G</em> are the two polynomials that will be used.) Similarly, if we have multiple rational functions with a common denominator, namely (<em>D1</em>/<em>E</em>), ..., (<em>DN</em>/<em>E</em>), where <em>D1</em>, ..., <em>DN</em> and <em>E</em> are written in form 1, then they can be separated into <em>N</em> + 1 polynomials by subtracting the numerators from the denominator, so that <em>G</em> = <em>E</em> &minus; <em>D1</em> &minus; ... &minus; <em>DN</em>.  (Then <em>D1</em>, ..., <em>DN</em> and <em>G</em> are the polynomials that will be used.) To use the polynomials in the algorithm, however, they need to be <em>homogenized</em>, then <em>augmented</em>, as described next.</p>
 
 <blockquote>
 <p><strong>Example:</strong> We have the rational function  (4*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>) /  (7 &minus; 5*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>).  Subtracting the numerator from the denominator leads to: 7 &minus; 1*<em>&lambda;</em><sup>1</sup>*(1&minus;<em>&lambda;</em>)<sup>2</sup>.</p>
