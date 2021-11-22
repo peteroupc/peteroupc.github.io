@@ -749,8 +749,7 @@ where:
 The algorithm follows.
 
 1. Choose an integer in \[0, _r_\] with probability proportional to the following weights: \[_g_(0), _g_(1), ..., _g_(_r_)\].  Call the chosen integer _i_.
-2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&lambda;_**).  If the run returns 0, go to step 1.
-3. Return _i_.
+2. Run a Bernoulli factory algorithm for _h_<sub>_i_</sub>(**_&lambda;_**).  If the run returns 0 (_i_ is rejected), go to step 1.  Otherwise (_i_ is accepted), return _i_.
 
 > **Notes:**
 >
@@ -763,20 +762,20 @@ The algorithm follows.
 
 Flajolet et al. (2010\)[^1] described two schemes for probability simulation, inspired by restricted models of computing.  To describe the schemes, there is a need to generalize the convex combination and generalized Bernoulli race algorithms.
 
-- In both algorithms, _g_(_i_, _&lambda;_) is now a two-parameter function.  It takes an integer _i_ and the probability of heads of an input coin, called _&lambda;_.  Thus, we now have a family of ways to choose an integer _i_ at random, given _&lambda;_. However, for each _&lambda;_, the sum _g_(0, _&lambda;_) + _g_(1, _&lambda;_) + ... must equal 1.
+- In both algorithms, _g_(_i_, _&lambda;_) is now a two-parameter function.  It takes an integer _i_ and the probability of heads of an input coin, called _&lambda;_.  Thus, there is now a family of ways to choose an integer _i_ at random, given _&lambda;_. However, for each _&lambda;_, the sum _g_(0, _&lambda;_) + _g_(1, _&lambda;_) + ... must equal 1.
 
 Then both algorithms are now described as follows:
 
 | Name |  To sample: | Use this algorithm: |
  --- | --- | --- |
 | Convex combinations | 1 with probability:<br>$\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Flip the coin represented by _X_ (run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(_&lambda;_)) and return the result. |
-| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\mu) h_k(\mu)}$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
+| Generalized Bernoulli race | Integer _i_ with probability:<br>$\frac{g(i,\lambda) h_i(\mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\mu)}$ | (1) Generate a random integer _X_ in some way, using the input coin for _&lambda;_, such that _X_ is generated with probability _g_(_X_, _&lambda;_).<br>(2) Run a Bernoulli factory algorithm for _h_<sub>_X_</sub>(**_&mu;_**).  If the run returns 0 (_X_ is rejected), go to step 1.  Otherwise (_X_ is accepted), return _X_. |
 
 Now Flajolet's schemes are described.
 
 **Certain algebraic functions.** Flajolet et al. (2010\)[^1] showed sampling methods modeled on _pushdown automata_ (state machines with a stack) that are given flips of a coin with unknown heads probability _&lambda;_.  These flips form a _bitstring_, and each pushdown automaton accepts only a certain class of bitstrings.  The rules for determining whether a bitstring belongs to that class are called a _binary stochastic grammar_, which uses an alphabet of only two "letters".  A pushdown automaton accepts a bitstring with probability _f_(_&lambda;_), where _f_ must be an _algebraic function over rationals_ (a function that can be a solution of a nonzero polynomial equation whose coefficients are rational numbers) (Mossel and Peres 2005\)[^15].
 
-Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(i,\lambda) h_i(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:
+Specifically, the method simulates the following function (not necessarily algebraic): $$f(\lambda) = \sum_{k\ge 0} g(k,\lambda) h_k(\lambda) = (1-\lambda) OGF(\lambda/\beta),$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$.  In turn:
 
 - $W(k)$ is a number in the interval \[0, $\beta^k$\].  If $W(k)$ is an integer for every $k$, then $W(k)$ is the number of $k$-letter words that can be produced by the stochastic grammar in question.
 - $\beta \ge 2$ is an integer.  This is the alphabet size, or the number of "letters" in the alphabet.  This is 2 for the cases discussed in the Flajolet paper (binary stochastic grammars), but it can be greater than two for more general stochastic grammars.
@@ -784,10 +783,7 @@ Specifically, the method simulates the following function (not necessarily algeb
 
 The method uses the **convex combination algorithm** given above, where step 1 is done as follows: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^36]  Optionally, step 2 can be done as described in Flajolet et al., (2010\)[^1]: generate an _X_-letter word uniformly at random and "parse" that word using a stochastic grammar to determine whether that word can be produced by that grammar.
 
-> **Notes:**
->
-> 1. The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^37].  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
-> 2. The number of flips used by this algorithm grows without bound as _&lambda;_ approaches 1.
+> **Note:** The _radius of convergence_ of OGF is the greatest number _&rho;_ such that OGF is defined at every point less than _&rho;_ away from the origin (0, 0).  In this algorithm, the radius of convergence is in the interval \[1/_&beta;_, 1\] (Flajolet 1987\)[^37].  For example, the OGF involved in the square root construction given in the examples below has radius of convergence 1/2.
 >
 > **Examples:**
 >
@@ -798,7 +794,7 @@ The method uses the **convex combination algorithm** given above, where step 1 i
 >     - 0 otherwise,
 >
 >     where _t_ is an integer 2 or greater and _&beta;_ is the alphabet size and is an integer 2 or greater, step 2 of the algorithm can be done as follows: "2. If _X_ is not divisible by _t_, return 0. Otherwise, generate _X_ uniform random integers in the interval [0, _&beta;_) (e.g., _X_ unbiased random bits if _&beta;_ is 2), then return 1 if exactly _X_/_t_ zeros were generated this way, or 0 otherwise."  If _&beta;_ = 2, then this reproduces another example from the Flajolet paper.
-> 3. If W(_X_) has the form&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;choose(_X_ * _&alpha;_, _X_) \* (_&beta;_&minus;1)<sup>_X_\*_&alpha;&minus;g_</sup> / _&beta;_<sup>_X_\*_&alpha;&minus;g_</sup>,<br/>where _&alpha;_ is an integer 1 or greater and _&beta;_ is the alphabet size and is an integer 2 or greater [^39], step 2 of the algorithm can be done as follows: "2. Generate _X_ * _&alpha;_ uniform random integers in the interval [0, _&beta;_) (e.g., _X_ * _&alpha;_ unbiased random bits if _&beta;_ is 2), then return 1 if exactly _X_ zeros were generated this way, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2, then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&beta;_\*(_&lambda;_&minus;1))/(_&lambda;_&minus;_&beta;_).  And interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, the probability becomes&mdash;
+> 3. If W(_X_) has the form&mdash;<br/>&nbsp;&nbsp;&nbsp;&nbsp;choose(_X_ * _&alpha;_, _X_) \* (_&beta;_&minus;1)<sup>_X_\*_&alpha;&minus;X_</sup> / _&beta;_<sup>_X_\*_&alpha;&minus;X_</sup>,<br/>where _&alpha;_ is an integer 1 or greater and _&beta;_ is the alphabet size and is an integer 2 or greater [^39], step 2 of the algorithm can be done as follows: "2. Generate _X_ * _&alpha;_ uniform random integers in the interval [0, _&beta;_) (e.g., _X_ * _&alpha;_ unbiased random bits if _&beta;_ is 2), then return 1 if exactly _X_ zeros were generated this way, or 0 otherwise."  If _&alpha;_ = 2 and _&beta;_ = 2, then this expresses the _square-root construction_ sqrt(1 &minus; _&lambda;_), mentioned in the Flajolet et al. paper.  If _&alpha;_ is 1, the modified algorithm simulates the following probability: (_&beta;_\*(_&lambda;_&minus;1))/(_&lambda;_&minus;_&beta;_).  And interestingly, I have found that if _&alpha;_ is 2 or greater, the probability simplifies to involve a hypergeometric function.  Specifically, the probability becomes&mdash;
 >
 >     - (1 &minus; _&lambda;_) * <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _&lambda;_ \* _&alpha;_<sup>_&alpha;_</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* 2<sup>_&alpha;_</sup>)) if _&beta;_ = 2, or more generally,
 >     - (1 &minus; _&lambda;_) * <sub>_&alpha;_&minus;1</sub>_F_<sub>_&alpha;_&minus;2</sub>(1/_&alpha;_, 2/_&alpha;_, ..., (_&alpha;_&minus;1)/_&alpha;_; 1/(_&alpha;_&minus;1), ..., (_&alpha;_&minus;2)/(_&alpha;_&minus;1); _&lambda;_\*_&alpha;_<sup>_&alpha;_</sup>\*(_&beta;_&minus;1)<sup>_&alpha;_&minus;1</sup>/((_&alpha;_&minus;1)<sup>_&alpha;_&minus;1</sup> \* _&beta;_<sup>_&alpha;_</sup>)).
@@ -810,13 +806,13 @@ The method uses the **convex combination algorithm** given above, where step 1 i
 
 - A _permutation class_ is a rule that describes how a sequence of numbers must be ordered.  The ordering of the numbers is called a _permutation_.  Two examples of permutation classes cover permutations sorted in descending order, and permutations whose highest number appears first.  When checking whether a sequence follows a permutation class, only less-than and greater-than comparisons between two numbers are allowed.
 
-Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$\frac{g(i,\lambda) h_i(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:
+Now, given a permutation class and an input coin, the von Neumann schema generates a random integer $n\ge 1$, with probability equal to&mdash; $$\frac{g(n,\lambda) h_n(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ $$= \frac{(1-\lambda) \lambda^n V(n)/(n!)}{(1-\lambda) EGF(\lambda)}$$ $$= \frac{\lambda^n V(n)/(n!)}{EGF(\lambda)},$$ where $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = \frac{V(k)}{k!}$.  Also:
 
 - $V(n)$ is a number in the interval \[0, _n_!\].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.
 - $EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an _exponential generating function_, which completely determines a permutation class.
 -  The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where $p=(1-\lambda) EGF(\lambda)$.
 
-The von Neumann schema uses the **Bernoulli race algorithm** given earlier in this section.  In principle, the _X_ in step 1 can follow any distribution of integers 0 or greater, but the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform random variates in the interval \[0, 1\], then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
+The von Neumann schema uses the **Bernoulli race algorithm** given earlier in this section.  But in step 1, the von Neumann schema as given in the Flajolet paper does the following: "Flip the input coin repeatedly until it returns 0.  Set _X_ to the number of times the coin returned 1 this way."[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010\)[^1]: generate  _X_ uniform random variates in the interval \[0, 1\], then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.
 
 > **Note:** The von Neumann schema can sample from any _power series distribution_ (such as Poisson, negative binomial, geometric, and logarithmic series), given a suitable exponential generating function.  However, the number of input coin flips required by the schema grows without bound as _&lambda;_ approaches 1.
 >
@@ -831,7 +827,14 @@ The von Neumann schema uses the **Bernoulli race algorithm** given earlier in th
 >     - Alternating permutations of odd size (EGF(_&lambda;_) = tan(_&lambda;_); the V(_n_) starting at _n_ = 0 is [**A000182**](https://oeis.org/A000182)).
 >
 > 2. Using the class of _sorted permutations_, we can generate a Poisson random variate with mean _&lambda;_ via the von Neumann schema, where _&lambda;_ is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;_&lambda;_) &mdash; outputting 1 if a Poisson random variate with mean _&lambda;_ is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as _&lambda;_ approaches 1.  Also, if _c_ &gt; 0 is a real number, adding a Poisson random variate with mean floor(_c_) to one with mean _c_&minus;floor(_c_) generates a Poisson random variate with mean _c_.
-> 3. As mentioned before, the _X_ in step 1 can follow any distribution of integers 0 or greater (because the Bernoulli race algorithm is more general than the von Neumann schema).  For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt 0,  and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
+> 3. The _X_ in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if _X_ is a Poisson random variate with mean _z_<sup>2</sup>/4, where _z_ &gt 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/_I_<sub>0</sub>(_z_), where _I_<sub>0</sub>(.) is the modified Bessel function of the first kind.
+
+**Recap.**  As can be seen&mdash;
+
+- the scheme for algebraic functions is a **convex combination** with $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = W(k)/\beta^k$, and
+- the _von Neumann schema_ is a **generalized Bernoulli race** with $g(k, \lambda) = \lambda^k (1-\lambda)$ and $h_k(\lambda) = V(k)/(k!)$,
+
+and both schemes implement step 1 in the same way.  However, different choices for $g$ and $h$ will lead to modified schemes that could lead to Bernoulli factory algorithms for new functions.
 
 <a id=Algorithms_for_Specific_Functions_of___lambda></a>
 ### Algorithms for Specific Functions of _&lambda;_
@@ -1818,9 +1821,9 @@ I acknowledge Luis Mendo, who responded to one of my open questions, as well as 
 
 [^37]: Flajolet, Ph., "Analytic models and ambiguity of context-free languages", _Theoretical Computer Science_ 49, pp. 283-309, 1987
 
-[^38]: Here, "choose(_g_, _g_/_t_)" means that out of _g_ letters, _g_/_t_ of them must be A's, and "(_&beta;_&minus;1)<sup>_g_&minus;_g_/_t_</sup>" is the number of words that have _g_&minus;_g_/_t_ letters other than A, given that the remaining letters were A's.
+[^38]: Here, "choose(_X_, _X_/_t_)" means that out of _X_ letters, _X_/_t_ of them must be A's, and "(_&beta;_&minus;1)<sup>_X_&minus;_X_/_t_</sup>" is the number of words that have _X_&minus;_X_/_t_ letters other than A, given that the remaining letters were A's.
 
-[^39]: In this formula, which is similar to Example 2's, the division by _&beta;_<sup>_g_\*_&alpha;&minus;g_</sup> brings W(_g_) from the interval \[0, _&beta;_<sup>_g_\*_&alpha;_</sup>\] ((_g_\*_&alpha;_)-letter words) to the interval \[0, _&beta;_<sup>_g_</sup>\] (_g_-letter words), as required by the main algorithm.
+[^39]: In this formula, which is similar to Example 2's, the division by _&beta;_<sup>_X_\*_&alpha;&minus;X_</sup> brings W(_X_) from the interval \[0, _&beta;_<sup>_g_\*_&alpha;_</sup>\] ((_X_\*_&alpha;_)-letter words) to the interval \[0, _&beta;_<sup>_X_</sup>\] (_X_-letter words), as required by the main algorithm.
 
 [^40]: Another algorithm for exp(&minus;_&lambda;_) involves the von Neumann schema, but unfortunately, it converges slowly as _&lambda;_ approaches 1.
 
