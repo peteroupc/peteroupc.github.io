@@ -1069,7 +1069,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <p>Flajolet et al. (2010)[^1] described two schemes for probability simulation, inspired by restricted models of computing.  To describe the schemes, there is a need to generalize the convex combination and generalized Bernoulli race algorithms.</p>
 
 <ul>
-<li>In both algorithms, <em>g</em>(<em>i</em>, <em>&lambda;</em>) is now a two-parameter function.  It takes an integer <em>i</em> and the probability of heads of an input coin, called <em>&lambda;</em>.  Thus, there is now a family of ways to choose an integer <em>i</em> at random, given <em>&lambda;</em>. However, for each <em>&lambda;</em>, the sum <em>g</em>(0, <em>&lambda;</em>) + <em>g</em>(1, <em>&lambda;</em>) + ... must equal 1.</li>
+<li>In both algorithms, <em>g</em>(<em>i</em>, <em>&lambda;</em>) is now a two-parameter function.  It takes an integer <em>i</em> and the probability of heads of an input coin, called <em>&lambda;</em>.  Thus, there is now a family of ways to choose an integer <em>i</em> at random, given <em>&lambda;</em>. For the convex combination algorithm only, for each <em>&lambda;</em>, the sum <em>g</em>(0, <em>&lambda;</em>) + <em>g</em>(1, <em>&lambda;</em>) + ... must equal 1.</li>
 </ul>
 
 <p>Then both algorithms are now described as follows:</p>
@@ -1089,7 +1089,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <tr>
 <td>Generalized Bernoulli race</td>
 <td>Integer <em>i</em> with probability:<br>$\frac{g(i,\lambda) h_i(\pmb \mu)}{\sum_{k\ge 0} g(k,\lambda) h_k(\pmb \mu)}$</td>
-<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability <em>g</em>(<em>X</em>, <em>&lambda;</em>).<br>(2) Run a Bernoulli factory algorithm for <em>h</em><sub><em>X</em></sub>(<strong><em>&mu;</em></strong>).  If the run returns 0 (<em>X</em> is rejected), go to step 1.  Otherwise (<em>X</em> is accepted), return <em>X</em>.</td>
+<td>(1) Generate a random integer <em>X</em> in some way, using the input coin for <em>&lambda;</em>, such that <em>X</em> is generated with probability proportional to <em>g</em>(<em>X</em>, <em>&lambda;</em>).<br>(2) Run a Bernoulli factory algorithm for <em>h</em><sub><em>X</em></sub>(<strong><em>&mu;</em></strong>).  If the run returns 0 (<em>X</em> is rejected), go to step 1.  Otherwise (<em>X</em> is accepted), return <em>X</em>.</td>
 </tr>
 </tbody></table>
 
@@ -1145,7 +1145,7 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <ul>
 <li>$V(n)$ returns a number in the interval [0, <em>n</em>!].  If $V(n)$ is an integer for every $n$, this is the number of permutations of size $n$ that belong in the permutation class.</li>
 <li>$EGF(\lambda) = \sum_{k\ge 0} \lambda^k \frac{V(k)}{k!}$ is an <em>exponential generating function</em>, which completely determines a permutation class.</li>
-<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where&mdash; $$p=\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)=(1-\lambda) EGF(\lambda).$$</li>
+<li> The probability that $r$ many values of $X$ are rejected by the von Neumann schema is $p(1 − p)^r$, where&mdash; $$p=\frac{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}{\sum_{k\ge 0} g(k,\lambda)}=(1-\lambda) EGF(\lambda).$$</li>
 </ul>
 
 <p>The von Neumann schema uses the <strong>generalized Bernoulli race algorithm</strong> given earlier in this section.  But in step 1, the von Neumann schema as given in the Flajolet paper does the following: &quot;Flip the input coin repeatedly until it returns 0.  Set <em>X</em> to the number of times the coin returned 1 this way.&quot;[^36]  Optionally, step 2 can be implemented as described in Flajolet et al., (2010)[^1]: generate  <em>X</em> uniform(0, 1) random variates, then determine whether those numbers satisfy the given permutation class, or generate as many of those numbers as necessary to make this determination.</p>
@@ -1166,8 +1166,8 @@ and let <em>v</em> be min(<em>ones</em>, <em>diff</em>).  (The following substep
 <li>Alternating permutations of odd size (EGF(<em>&lambda;</em>) = tan(<em>&lambda;</em>); the V(<em>n</em>) starting at <em>n</em> = 0 is <a href="https://oeis.org/A000182"><strong>A000182</strong></a>).</li>
 </ul></li>
 <li><p>Using the class of <em>sorted permutations</em>, we can generate a Poisson random variate with mean <em>&lambda;</em> via the von Neumann schema, where <em>&lambda;</em> is the probability of heads of the input coin.  This would lead to an algorithm for exp(&minus;<em>&lambda;</em>) &mdash; outputting 1 if a Poisson random variate with mean <em>&lambda;</em> is 0, or 0 otherwise &mdash; but for the reason given in the note, this algorithm gets slower as <em>&lambda;</em> approaches 1.  Also, if <em>c</em> &gt; 0 is a real number, adding a Poisson random variate with mean floor(<em>c</em>) to one with mean <em>c</em>&minus;floor(<em>c</em>) generates a Poisson random variate with mean <em>c</em>.</p></li>
-<li>By calculating&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=\frac{1}{i!}$), we find that the algorithm&#39;s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.</li>
-<li>The <em>X</em> in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &amp;gt 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
+<li>By calculating&mdash; $$\frac{\sum_{k\ge 0} g(2k+1,\lambda) h_{2k+1}(\lambda)}{\sum_{k\ge 0} g(k,\lambda) h_k(\lambda)}$$ (which is the probability of getting an odd-numbered output), and using the class of sorted permutations ($h_i(\lambda)=1/(i!)$), we find that the algorithm&#39;s output is odd with probability $\exp(-\lambda)\times \sinh(\lambda)$.</li>
+<li>The <em>X</em> in step 1 can follow any distribution of integers 0 or greater, not just the distribution used by the von Neumann schema (because the Bernoulli race algorithm is more general than the von Neumann schema).  (In that case, the function $g(k, \lambda)$ will be the probability of getting $k$ under the new distribution.) For example, if <em>X</em> is a Poisson random variate with mean <em>z</em><sup>2</sup>/4, where <em>z</em> &gt; 0, and if the sorted permutation class is used, the algorithm will return 0 with probability 1/<em>I</em><sub>0</sub>(<em>z</em>), where <em>I</em><sub>0</sub>(.) is the modified Bessel function of the first kind.</li>
 </ol>
 </blockquote>
 
