@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/11/21"><meta name="citation_online_date" content="2021/11/21"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions</title><meta name="citation_title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="citation_pdf_url" content="https://peteroupc.github.io/exporand.pdf"><meta name="citation_url" content="https://peteroupc.github.io/exporand.html"><meta name="citation_date" content="2021/11/22"><meta name="citation_online_date" content="2021/11/22"><meta name="og:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/exporand.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Partially-Sampled Random Numbers for Accurate Sampling of Continuous Distributions"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -18,10 +18,10 @@
 
 <ul>
 <li>while avoiding floating-point arithmetic, and</li>
-<li>to an arbitrary precision and with user-specified error bounds (and thus in an &quot;exact&quot; manner in the sense defined in (Karney 2014)[^1]).</li>
+<li>to an arbitrary precision and with user-specified error bounds (and thus in an &quot;exact&quot; manner in the sense defined in (Karney 2016)[^1]).</li>
 </ul>
 
-<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random variates using random bits (Flajolet and Saheb 1982)[^2], (Karney 2014)[^1], (Devroye and Gravel 2020)[^3], (Thomas and Luk 2008)[^4], but most if not all of them don&#39;t deal with generating exponential PSRNs using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)[^5] is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.</p>
+<p>For instance, these two points distinguish the beta sampler in this document from any other specially-designed beta sampler I am aware of.  As for the exponential distribution, there are papers that discuss generating exponential random variates using random bits (Flajolet and Saheb 1982)[^2], (Karney 2016)[^1], (Devroye and Gravel 2020)[^3], (Thomas and Luk 2008)[^4], but most if not all of them don&#39;t deal with generating exponential PSRNs using an arbitrary rate, not just 1.  (Habibizad Navin et al., 2010)[^5] is perhaps an exception; however the approach appears to involve pregenerated tables of digit probabilities.</p>
 
 <p>The samplers discussed here also draw on work dealing with a construct called the <em>Bernoulli factory</em> (Keane and O&#39;Brien 1994)[^6] (Flajolet et al., 2010)[^7], which can simulate a new probability given a coin that shows heads with an unknown probability.  One important feature of Bernoulli factories is that they can simulate a given probability <em>exactly</em>, without having to calculate that probability manually, which is important if the probability can be an irrational number that no computer can compute exactly (such as <code>pow(p, 1/2)</code> or <code>exp(-2)</code>).</p>
 
@@ -178,7 +178,7 @@
 
 <ul>
 <li>Flajolet et al. (2010)[^7] use the term <em>geometric bag</em> to refer to a uniform PSRN in the interval [0, 1] that stores binary (base-2) digits, some of which may be unsampled.  In this case, the PSRN can consist of just a fractional part, which can be implemented as described earlier.</li>
-<li>(Karney 2014)[^1] uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
+<li>(Karney 2016)[^1] uses the term <em>u-rand</em> to refer to uniform PSRNs that can store a sign, integer part, and a fractional part, where the base of the fractional part&#39;s digits is arbitrary, but Karney&#39;s concept only contemplates sampling digits from left to right without any gaps.</li>
 </ul>
 
 <p>Each additional digit of a uniform PSRN&#39;s fractional part is sampled simply by setting it to an independent uniform random digit, an observation that dates from von Neumann (1951)[^9] in the binary case.[^10]  A PSRN with this property is called a <strong>uniform PSRN</strong> in this document, even if it was generated using a non-uniform random sampling algorithm (such as Karney&#39;s algorithm for the normal distribution). (This is notably because, in general, this kind of PSRN represents a uniform random variate in a given interval.  For example, if the PSRN is 3.356..., then it represents a uniformly distributed random variate in the interval [3.356, 3.357].)</p>
@@ -187,7 +187,7 @@
 
 <h3>Exponential Partially-Sampled Random Numbers</h3>
 
-<p>In this document, an <strong>exponential PSRN</strong> (or <strong><em>e-rand</em></strong>, named similarly to Karney&#39;s &quot;u-rands&quot; for partially-sampled uniform random variates (Karney 2014)[^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because <code>-ln(1 - X)</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)</p>
+<p>In this document, an <strong>exponential PSRN</strong> (or <strong><em>e-rand</em></strong>, named similarly to Karney&#39;s &quot;u-rands&quot; for partially-sampled uniform random variates (Karney 2016)[^1]) samples each bit that, when combined with the existing bits, results in an exponentially-distributed random variate of the given rate.  Also, because <code>-ln(1 - X)</code>, where <code>X</code> is a uniform random variate in the interval [0, 1], is exponentially distributed, e-rands can also represent the natural logarithm of a partially-sampled uniform random variate in (0, 1].  The difference here is that additional bits are sampled not as unbiased random bits, but rather as bits with a vanishing bias.   (More specifically, an exponential PSRN generally represents an exponentially-distributed random variate in a given interval.)</p>
 
 <p>Algorithms for sampling e-rands are given in the section &quot;Algorithms for the Beta and Exponential Distributions&quot;.</p>
 
@@ -199,7 +199,7 @@
 
 <ul>
 <li>The beta and continuous Bernoulli distributions, as discussed later in this document.</li>
-<li>The standard normal distribution, as shown in (Karney 2014)[^1] by running Karney&#39;s Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)[^11].</li>
+<li>The standard normal distribution, as shown in (Karney 2016)[^1] by running Karney&#39;s Algorithm N and filling unsampled digits uniformly at random, or as shown in an improved version of that algorithm by Du et al. (2020)[^11].</li>
 <li>Sampling uniform distributions in [0, <em>n</em>) (not just [0, 1]), is described later in &quot;<a href="#Sampling_Uniform_PSRNs"><strong>Sampling Uniform PSRNs</strong></a>&quot;.)</li>
 </ul>
 
@@ -614,7 +614,7 @@
 <p>The algorithms given above for addition and multiplication are useful for scaling and shifting PSRNs.  For example, they can transform a normally-distributed PSRN into one with an arbitrary mean and standard deviation (by first multiplying the PSRN by the standard deviation, then adding the mean).  Here is a sketch of a procedure that achieves this, given two parameters, <em>location</em> and <em>scale</em>, that are both rational numbers.</p>
 
 <ol>
-<li>Generate a uniform PSRN, then transform it into a variate of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney&#39;s algorithm for the standard normal distribution (Karney 2014)[^1])).  This procedure won&#39;t work for exponential PSRNs (e-rands).</li>
+<li>Generate a uniform PSRN, then transform it into a variate of the desired distribution via an algorithm that employs rejection from the uniform distribution (such as Karney&#39;s algorithm for the standard normal distribution (Karney 2016)[^1])).  This procedure won&#39;t work for exponential PSRNs (e-rands).</li>
 <li>Run the <strong>UniformMultiplyRational</strong> algorithm to multiply the uniform PSRN by the rational parameter <em>scale</em> to get a new uniform PSRN.</li>
 <li>Run the <strong>UniformAddRational</strong> algorithm to add the new uniform PSRN and the rational parameter <em>location</em> to get a third uniform PSRN.  Return this third PSRN.</li>
 </ol>
@@ -627,7 +627,7 @@
 
 <p>Two PSRNs, each of a different distribution but storing digits of the same base (radix), can be exactly compared to each other using algorithms similar to those in this section.</p>
 
-<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise (see also (Karney 2014)[^1])).</p>
+<p>The <strong>RandLess</strong> algorithm compares two PSRNs, <strong>a</strong> and <strong>b</strong> (and samples additional bits from them as necessary) and returns 1 if <strong>a</strong> turns out to be less than <strong>b</strong> with probability 1, or 0 otherwise (see also (Karney 2016)[^1])).</p>
 
 <ol>
 <li>If <strong>a</strong>&#39;s integer part wasn&#39;t sampled yet, sample <strong>a</strong>&#39;s integer part according to the kind of PSRN <strong>a</strong> is.  Do the same for <strong>b</strong>.</li>
@@ -722,7 +722,7 @@
 
 <p>The example applies in general to most other math operations besides addition (including multiplication, division, <code>log</code>, <code>sin</code>, and so on): do the math operation on the intervals <em>AI</em> and <em>BI</em>, and build a histogram of random results (products, quotients, etc.) that lie in the resulting interval to find out what distribution forms this way.</p>
 
-<p><strong>Implementing other operations.</strong> In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2014)[^1], and operations affecting the PSRN&#39;s integer part only.</p>
+<p><strong>Implementing other operations.</strong> In contrast to addition, multiplication, and division, certain other math operations are trivial to carry out in PSRNs.  They include negation, as mentioned in (Karney 2016)[^1], and operations affecting the PSRN&#39;s integer part only.</p>
 
 <p>Partially-sampled-number arithmetic may also be possible by relating the relative probabilities of each digit, in the result&#39;s digit expansion, to some kind of formula.</p>
 
@@ -942,7 +942,7 @@
 <li>Add <em>recip</em> to <em>highpart</em> and go to step 2.</li>
 </ol>
 
-<p>The following alternative version of the previous algorithm (called <strong>ExpRand2</strong>) includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2014)[^1], namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
+<p>The following alternative version of the previous algorithm (called <strong>ExpRand2</strong>) includes Karney&#39;s improvement to the von Neumann algorithm (Karney 2016)[^1], namely a so-called &quot;early rejection step&quot;. The algorithm here allows an arbitrary rate parameter (<em>&lambda;</em>), given as a rational number greater than 0, unlike with the von Neumann and Karney algorithms, where <em>&lambda;</em> is 1.</p>
 
 <ol>
 <li>Set <em>recip</em> to 1/<em>&lambda;</em>, and set <em>highpart</em> to 0.</li>
@@ -2024,7 +2024,7 @@ def contbernoullidist(b, lamda, precision=53):
 
 <h2>Notes</h2>
 
-<p>[^1]: Karney, C.F.F., &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
+<p>[^1]: Karney, C.F.F., 2016. Sampling exactly from the normal distribution. ACM Transactions on Mathematical Software (TOMS), 42(1), pp.1-14. Also: &quot;<a href="https://arxiv.org/abs/1303.6257v2"><strong>Sampling exactly from the normal distribution</strong></a>&quot;, arXiv:1303.6257v2  [physics.comp-ph], 2014.</p>
 
 <p>[^2]: Philippe Flajolet, Nasser Saheb. The complexity of generating an exponentially distributed variate. [Research Report] RR-0159, INRIA. 1982. inria-00076400.</p>
 
