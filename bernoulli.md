@@ -1408,7 +1408,7 @@ Algorithms in bold are given in this page.
 |  (1+_&lambda;_)/2 = (1/2) + (1/2)\*_&lambda;_ | (_&lambda;_ is unknown heads probability of a coin.)<br>Generate an unbiased random bit.  If that bit is 1, return 1.  Otherwise, flip the input coin and return the result. |
 |  (1&minus;_&lambda;_)/2 | (_&lambda;_ is unknown heads probability of a coin.)<br>Generate an unbiased random bit.  If that bit is 1, return 0.  Otherwise, flip the input coin and return 1 minus the result. |
 | 1 &minus; ln(1+_&lambda;_) | (_&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for **ln(1+_&lambda;_)**, then return 1 minus the result.[^54] |
-| sin(sqrt(_&lambda;_)\*sqrt(_c_)) / (sqrt(_&lambda;_)\*sqrt(_c_)) | (_c_ is a rational number in (0, 6].  _&lambda;_ is unknown heads probability of a coin.)<br>Run algorithm for  **sin(_&lambda;_\*sqrt(_c_)) / (_&lambda;_\*sqrt(_c_))**, except delete the sentence "Do this step again." |
+| sin(sqrt(_&lambda;_)\*sqrt(_c_)) / (sqrt(_&lambda;_)\*sqrt(_c_)) | (_c_ is a rational number in (0, 6].  _&lambda;_ is unknown heads probability of a coin.)<br>Run **general martingale algorithm** with $g(\lambda)=\lambda$, and with $d_0 = 1$ and coefficients $a_i = \frac{ (-1)^{i} c^{i}}{(i+i+1)!}$. |
 
 <a id=Algorithms_for_Specific_Constants></a>
 ### Algorithms for Specific Constants
