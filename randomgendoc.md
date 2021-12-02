@@ -1993,10 +1993,10 @@ CLASSES
      |      Simulates a general factory function defined by two
      |      sequences of polynomials that converge from above and below.
      |      - coin(): Function that returns 1 or 0 with a fixed probability.
-     |      - fbelow(n, k): Calculates the Bernstein coordinate (not the value),
-     |        or a lower bound, of the degree-n lower polynomial at the point k/n.
-     |      - fabove(n, k): Calculates the Bernstein coordinate (not the value),
-     |        or an upper bound, of the degree-n upper polynomial at the point k/n.
+     |      - fbelow(n, k): Calculates the kth Bernstein coordinate (not the value),
+     |        or a lower bound, of the degree-n lower polynomial (k starts at 0).
+     |      - fabove(n, k): Calculates the kth Bernstein coordinate (not the value),
+     |        or an upper bound, of the degree-n upper polynomial.
      |      - fbound(n): Returns a tuple or list specifying the highest value of
      |         fbelow and fabove, respectively, for the given n.
      |
