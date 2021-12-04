@@ -137,15 +137,6 @@ class PiecewiseBernsteinPoly:
                 )
         return 0
 
-    def to_degree(self, degree):
-        pbp = PiecewiseBernsteinPoly()
-        for coeffs, mn, mx in self.pieces:
-            piecedeg = len(coeffs) - 1
-            if piecedeg > degree:
-                raise ValueError("Degree already higher than requested")
-            pbp.piece(elevate(coeffs, degree - piecedeg), mn, mx)
-        return pbp
-
     def get_coeffs(self):
         if len(self.pieces) != 1:
             raise ValueError("likely not a polynomial")
@@ -179,23 +170,87 @@ def elevate(coeffs, r):  # Elevate polynomial in Bernstein form by r degrees
 def lorentz2poly(pwpoly, n):
     # Polynomial for Lorentz operator with r=2,
     # of degree n+r = n+2, given C2 continuous piecewise polynomial
-    # NOTE: Currently well-defined only if value and diff are
+    # NOTE: Currently well-defined only if value and diff2 are
     # rational whenever k/n is rational
     r = 2
+    # Stores homogeneous coefficients for the degree n+2 polynomial.
     vals = [0 for i in range(n + r + 1)]
     for k in range(0, n + 1):
         f0v = pwpoly.value(Fraction(k) / n)  # Value
         f2v = pwpoly.diff2(Fraction(k) / n)  # Second derivative
         nck = math.comb(n, k)
-        vals[k + 0] += f0v * 1 * nck
-        vals[k + 1] += (f0v - Fraction(f2v, 4 * n)) * 2 * nck
-        vals[k + 2] += f0v * 1 * nck
+        # Rewrite
+        # $f(k/n) + f^{(2)}(k/n) \tau_{2,2}(x,n)/n^2$
+        # $=f(k/n) + f^{(2)}(k/n) x*(1-x)/(2*n)$
+        # as a Bernstein polynomial of degree r=2.
+        homoc = f0v * 1  # Bernstein coefficient times choose(2,0)
+        # equals 0th homogeneous coefficient
+        # for degree 2 polynomial.
+        homoc *= nck  # Multiply by n choose k to turn it into
+        # part of the (k+0)th homogeneous coefficient of
+        # the degree n+2 polynomial
+        vals[k + 0] += homoc
+        # Bernstein coefficient times choose(2,1)
+        # times n choose k, for the
+        # (k+1)th homogeneous coefficient of
+        # the degree n+2 polynomial
+        homoc = (f0v - Fraction(f2v, 4 * n)) * 2
+        # Alternative to above line:
+        # "homoc = f0v * 2 - Fraction(f2v, 4*n) * 2"
+        homoc *= nck
+        vals[k + 1] += homoc
+        homoc = f0v * 1
+        homoc *= nck
+        vals[k + 2] += homoc
+    # Divide homogeneous coefficient i by (n+r) choose i to turn
+    # it into a Bernstein coefficient
     return PiecewiseBernsteinPoly.fromcoeffs(
         [Fraction(vals[i]) / math.comb(n + r, i) for i in range(n + r + 1)]
     )
 
+def pwp2poly(p):
+    return bernpoly(p.pieces[0][0], x)
+
+def lorentz2polyB(pwpoly, n):
+    # Polynomial for Lorentz operator with r=2,
+    # of degree n+r = n+2, given C2 continuous piecewise polynomial
+    # NOTE: Currently well-defined only if value and diff2 are
+    # rational whenever k/n is rational
+    r = 2
+    # Get degree n coefficients
+    vals = [0 for i in range(n + 1)]
+    for k in range(0, n + 1):
+        f0v = pwpoly.value(Fraction(k) / n)  # Value
+        vals[k] = f0v
+    # Elevate to degree n+r
+    vals = elevate(vals, 2)
+    # Shift downward according to Lorentz operator
+    for k in range(1, n + r):
+        f2v = pwpoly.diff2(Fraction(k - 1) / n)  # Second derivative
+        fv = Fraction(f2v, 4 * n) * 2
+        # fv=fv*math.comb(n,k-1)/math.comb(n+r,k)
+        # Alternative impl.
+        fv = fv * k * (n + 2 - k) / ((n + 1) * (n + 2))
+        vals[k] -= fv
+    return PiecewiseBernsteinPoly.fromcoeffs(vals)
+
+"""
+Note: Let r=2.  Observing that:
+
+A(n,k) = (1/(4*n)) * 2 *(n+2-k)/((n+1)*(n+2))
+
+(where k is an integer in [0,n+r]), equals 0 at 0 and at
+n+r, and has a peak at (n+r)/2, the shift done by
+lorentz2polyB will be no greater than
+A(n,(n+r)/2)*F, where F is the maximum absolute value
+of the second derivative of f(x).  A(n,(n+r)/2) is bounded
+above by (3/16)/n for n>=1, and by (3/22)/n for n>=10.
+
+"""
+
 def iterconstruct(pwp, x):
-    # Iterative construction of polynomials using Lorentz-2 operator
+    # Iterative construction of approximating
+    # polynomials using Lorentz-2 operator
     n = 4
     fn = lorentz2poly(pwp, n)
     ret = [fn.get_coeffs()]
