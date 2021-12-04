@@ -235,30 +235,64 @@ def lorentz2polyB(pwpoly, n):
     return PiecewiseBernsteinPoly.fromcoeffs(vals)
 
 """
-Note: Let r=2.  Observing that:
 
-A(n,k) = (1/(4*n)) * 2 *(n+2-k)/((n+1)*(n+2))
+Here is my current progress for the Lorentz operator for $\alpha=2$, so $r=2$ (which applies to twice-differentiable functions with Hölder continuous second derivative, even though the paper appears not to apply when $\alpha$ is an integer). Is the following work correct?
 
-(where k is an integer in [0,n+r]), equals 0 at 0 and at
-n+r, and has a peak at (n+r)/2, the shift done by
-lorentz2polyB will be no greater than
-A(n,(n+r)/2)*F, where F is the maximum absolute value
-of the second derivative of f(x).  A(n,(n+r)/2) is bounded
-above by (3/16)/n for n>=1, and by (3/22)/n for n>=10.
+The Lorentz operator for $r=2$ finds the degree-n Bernstein polynomial for the target function $f$, elevates it to degree $n+r$, then shifts the coefficient at $k+1$ by $-f\prime\prime(k/n) A(n,k)$ (but the coefficients at 0 and $n+r$ are not shifted this way), where:
 
+$$A(n,k) = (1/(4*n)) * 2 *(n+2-k)/((n+1)*(n+2)),$$
+
+where $k$ is an integer in $[0,n+r]$. Observing that $A(n,k)$ equals 0 at 0 and at $n+r$, and has a peak at $(n+r)/2$,
+the shift will be no greater (in absolute value) than
+$A(n,(n+r)/2)*F$, where $F$ is the maximum absolute value
+of the second derivative of $f(\lambda)$.  $A(n,(n+r)/2)$ is bounded
+above by $(3/16)/n$ for $n\ge 1$, and by $(3/22)/n$ for $n\ge 10$.
+
+Now, find $\theta_\alpha$ for $\alpha=2$, according to Lemma 25:
+
+Let $0<\gamma<2^{\alpha/2}-1$ ($\gamma<1$ if $\alpha=2$).
+
+Solve for $K$: $$(1-(1+\gamma)/2^{\alpha/2} - 4/(4*K)) = 0.$$  The solution for $\alpha=2$ is $K = 2/(1-\gamma)$.
+
+Now find:  $$\theta_a = ((4/4)*K^{\alpha/2}/n^\alpha) / ((1-(1+\gamma)/2^\alpha)/n^\alpha)$$ The solution for $\alpha=2$ is $\theta_a = 8/((\gamma-3)*(\gamma-1))$.
+
+For $\gamma=1/100$ and $\alpha=2$, $\theta_a = 80000/29601 \approx 2.703$.
+
+There's no need to check whether the output polynomials have Bernstein coefficients in $(0, 1)$, since out-of-bounds polynomials will be replaced with 0 or 1 as necessary &mdash; which is more practical and convenient.
+
+Now all that remains is to find $D$ given $\alpha=2$.  I haven't found how to do so yet.
+
+Moreover, there remains to find the parameters for the Lorentz operator when $r>2$.
 """
 
 def iterconstruct(pwp, x):
     # Iterative construction of approximating
     # polynomials using Lorentz-2 operator
     n = 4
-    fn = lorentz2poly(pwp, n)
+    fn = lorentz2polyB(pwp, n)
     ret = [fn.get_coeffs()]
     for i in range(5):
         # Build polynomials of degree 8+r, 16+r,
         # 32+r, 64+r, 128+r, where r=2
         n *= 2
-        resid = lorentz2poly(PolyDiff(pwp, fn), n)
+        resid = lorentz2polyB(PolyDiff(pwp, fn), n)
         fn = PolySum(fn, resid)
         ret.append(fn.get_coeffs())
     return ret
+
+def polyshift(nrcoeffs, theta, d):
+    # Upward shift of polynomial according to step 5
+    # in Holtz et al. 2011, for r=2 (twice differentiable
+    # functions with Hölder continuous second deriv.)
+    if theta < 1:
+        raise ValueError("disallowed theta")
+    r = 2
+    alpha = r
+    n = len(nrcoeffs) - 1 - r
+    phi = [
+        Fraction(theta, n ** alpha) + (Fraction(i, n) * (1 - Fraction(i, n)) / n)
+        for i in range(n)
+    ]
+    phi = elevate(phi, r)
+    phi = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
+    return phi
