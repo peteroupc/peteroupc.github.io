@@ -33,14 +33,15 @@ The algorithms for [**general factory functions**](https://peteroupc.github.io/b
 2. Flip the input coin, then build an upper and lower bound for _f_(_&lambda;_), based on the outcomes of the flips so far.
 3. If _U_ is less than or equal to the lower bound, return 1. If _U_ is greater than the upper bound, return 0.  Otherwise, go to step 2.
 
-These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function _f_(_&lambda;_) from above, the other from below, where _f_ is a function for which the Bernoulli factory problem can be solved.  (These two sequences form a so-called _approximation scheme_ for _f_.) One requirement for these algorithms to work correctly is called the _consistency requirement_:
+These randomized upper and lower bounds come from two sequences of polynomials as follows:
 
-_The difference&mdash;_
+1. One sequence approaches the function _f_(_&lambda;_) from above, the other from below, and both sequences must converge to _f_.
+2. For each sequence, the first polynomial has degree 1 (so is a linear function), and each other polynomial's degree is 1 higher than the previous.
+3. The _consistency requirement_ must be met: The difference&mdash;
+    - between the degree-(_n_&minus;1) upper polynomial and the degree-_n_ upper polynomial, and
+    - between the degree-_n_ lower polynomial and the degree-(_n_&minus;1) lower polynomial,
 
-- _between the degree-(n&minus;1) upper polynomial and the degree-n upper polynomial, and_
-- _between the degree-n lower polynomial and the degree-(n&minus;1) lower polynomial,_
-
-_must have non-negative coefficients, once the polynomials are elevated to degree n and rewritten in Bernstein form._
+    must have non-negative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree _n_
 
 The consistency requirement ensures that the upper polynomials "decrease" and the lower polynomials "increase".  Unfortunately, the reverse is not true in general; even if the upper polynomials "decrease" and the lower polynomials "increase" to _f_, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section "[**Schemes That Don't Work**](#Schemes_That_Don_t_Work)" later in this document.
 

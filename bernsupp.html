@@ -1,4 +1,4 @@
-<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/11/24"><meta name="citation_online_date" content="2021/11/24"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
+<!DOCTYPE html><html xmlns:dc="http://purl.org/dc/terms/" itemscope itemtype="http://schema.org/Article"><head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><title>Supplemental Notes for Bernoulli Factory Algorithms</title><meta name="citation_title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="citation_pdf_url" content="https://peteroupc.github.io/bernsupp.pdf"><meta name="citation_url" content="https://peteroupc.github.io/bernsupp.html"><meta name="citation_date" content="2021/12/05"><meta name="citation_online_date" content="2021/12/05"><meta name="og:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="og:type" content="article"><meta name="og:url" content="https://peteroupc.github.io/bernsupp.html"><meta name="og:site_name" content="peteroupc.github.io"><meta name="twitter:title" content="Supplemental Notes for Bernoulli Factory Algorithms"><meta name="author" content="Peter Occil"/><meta name="viewport" content="width=device-width"><link rel=stylesheet type="text/css" href="/style.css">
             <script type="text/x-mathjax-config"> MathJax.Hub.Config({"HTML-CSS": { availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, preferredFont: "TeX" },
                     tex2jax: { displayMath: [ ["$$","$$"], ["\\[", "\\]"] ], inlineMath: [ ["$", "$"], ["\\\\(","\\\\)"] ], processEscapes: true } });
             </script><script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML-full"></script></head><body>  <div class="header">
@@ -51,16 +51,20 @@
 <li>If <em>U</em> is less than or equal to the lower bound, return 1. If <em>U</em> is greater than the upper bound, return 0.  Otherwise, go to step 2.</li>
 </ol>
 
-<p>These randomized upper and lower bounds come from two sequences of polynomials: one approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, where <em>f</em> is a function for which the Bernoulli factory problem can be solved.  (These two sequences form a so-called <em>approximation scheme</em> for <em>f</em>.) One requirement for these algorithms to work correctly is called the <em>consistency requirement</em>:</p>
+<p>These randomized upper and lower bounds come from two sequences of polynomials as follows:</p>
 
-<p><em>The difference&mdash;</em></p>
+<ol>
+<li>One sequence approaches the function <em>f</em>(<em>&lambda;</em>) from above, the other from below, and both sequences must converge to <em>f</em>.</li>
+<li>For each sequence, the first polynomial has degree 1 (so is a linear function), and each other polynomial&#39;s degree is 1 higher than the previous.</li>
+<li><p>The <em>consistency requirement</em> must be met: The difference&mdash;</p>
 
 <ul>
-<li><em>between the degree-(n&minus;1) upper polynomial and the degree-n upper polynomial, and</em></li>
-<li><em>between the degree-n lower polynomial and the degree-(n&minus;1) lower polynomial,</em></li>
+<li>between the degree-(<em>n</em>&minus;1) upper polynomial and the degree-<em>n</em> upper polynomial, and</li>
+<li>between the degree-<em>n</em> lower polynomial and the degree-(<em>n</em>&minus;1) lower polynomial,</li>
 </ul>
 
-<p><em>must have non-negative coefficients, once the polynomials are elevated to degree n and rewritten in Bernstein form.</em></p>
+<p>must have non-negative coefficients, once the polynomials are rewritten in Bernstein form and elevated to degree <em>n</em></p></li>
+</ol>
 
 <p>The consistency requirement ensures that the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot;.  Unfortunately, the reverse is not true in general; even if the upper polynomials &quot;decrease&quot; and the lower polynomials &quot;increase&quot; to <em>f</em>, this does not mean that the scheme will ensure consistency.  Examples of this fact are shown in the section &quot;<a href="#Schemes_That_Don_t_Work"><strong>Schemes That Don&#39;t Work</strong></a>&quot; later in this document.</p>
 

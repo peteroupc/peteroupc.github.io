@@ -423,7 +423,7 @@ Then the algorithm below simulates $f(\lambda)$ given a coin that shows heads (r
 
 **General martingale algorithm:**
 
-1. Set _u_ to abs($d_0$) (the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
+1. Set _u_ to abs($d_0$) ($d_0$ is the first nonzero coefficient of the series), set _w_ to 1, set _&#x2113;_ to 0, and set _n_ to 1.
 2. Generate a uniform(0, 1) random variate _ret_.
 3. Do the following process repeatedly, until this algorithm returns a value:
     1. If _w_ is not 0, run a Bernoulli factory algorithm for $g(\lambda)$ (if $g(\lambda) = \lambda$, this is done by flipping the input coin), then multiply _w_ by the result of the run.

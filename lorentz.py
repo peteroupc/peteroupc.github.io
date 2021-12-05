@@ -281,9 +281,9 @@ def iterconstruct(pwp, x):
     return ret
 
 def polyshift(nrcoeffs, theta, d):
-    # Upward shift of polynomial according to step 5
+    # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for r=2 (twice differentiable
-    # functions with Hölder continuous second deriv.)
+    # functions with Hölder continuous second derivative)
     if theta < 1:
         raise ValueError("disallowed theta")
     r = 2
@@ -294,5 +294,6 @@ def polyshift(nrcoeffs, theta, d):
         for i in range(n)
     ]
     phi = elevate(phi, r)
-    phi = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
-    return phi
+    upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
+    lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
+    return upper, lower
