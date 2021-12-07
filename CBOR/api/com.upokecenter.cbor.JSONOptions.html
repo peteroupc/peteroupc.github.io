@@ -50,6 +50,10 @@ Gets a value indicating whether to allow duplicate keys when reading JSON.</li>
 Deprecated.
 This property now has no effect.
 This property now has no effect.</li>
+<li><code>boolean getKeepKeyOrder()</code><br>
+Gets a value indicating whether to preserve the order in which a map&#39;s keys
+appear when decoding JSON, by using maps created as though by
+CBORObject.NewOrderedMap.</li>
 <li><code>JSONOptions.ConversionMode getNumberConversion()</code><br>
 Gets a value indicating how JSON numbers are decoded to CBOR objects.</li>
 <li><code>boolean getPreserveNegativeZero()</code><br>
@@ -151,6 +155,19 @@ is <code>ConversionMode.Full</code>.</li>
 <li>A value indicating whether JSON is written using only code points
 from the Basic Latin block (U+0000 to U+007F), also known as ASCII.
 Default is false.</li>
+</ul>
+
+<h3><a id='getKeepKeyOrder()'>getKeepKeyOrder</a></h3>
+
+<p>Gets a value indicating whether to preserve the order in which a map&#39;s keys
+ appear when decoding JSON, by using maps created as though by
+ CBORObject.NewOrderedMap.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether to preserve the order in which a CBOR
+map&#39;s keys appear when decoding JSON. The default is false.</li>
 </ul>
 
 <h3><a id='getAllowDuplicateKeys()'>getAllowDuplicateKeys</a></h3>

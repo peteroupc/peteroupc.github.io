@@ -64,6 +64,10 @@ encoded without loss in a smaller form.</li>
 Gets a value indicating whether to encode floating-point numbers in a CBOR
 object in their 64-bit encoding form regardless of whether their
 value can be encoded without loss in a smaller form.</li>
+<li><code>boolean getKeepKeyOrder()</code><br>
+Gets a value indicating whether to preserve the order in which a CBOR map&#39;s
+keys appear when decoding a CBOR object, by using maps created as
+though by CBORObject.NewOrderedMap.</li>
 <li><code>boolean getResolveReferences()</code><br>
 Gets a value indicating whether to resolve references to sharable objects
 and sharable strings in the process of decoding a CBOR object.</li>
@@ -178,6 +182,19 @@ and sharable strings. The default is false.</li>
 <li>A value indicating whether to encode strings with an
 indefinite-length encoding under certain circumstances. The default
 is false.</li>
+</ul>
+
+<h3><a id='getKeepKeyOrder()'>getKeepKeyOrder</a></h3>
+
+<p>Gets a value indicating whether to preserve the order in which a CBOR map&#39;s
+ keys appear when decoding a CBOR object, by using maps created as
+ though by CBORObject.NewOrderedMap.</p>
+
+<p><strong>Returns:</strong></p>
+
+<ul>
+<li>A value indicating whether to preserve the order in which a CBOR
+map&#39;s keys appear when decoding a CBOR object. The default is false.</li>
 </ul>
 
 <h3><a id='getAllowEmpty()'>getAllowEmpty</a></h3>
