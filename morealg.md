@@ -339,14 +339,17 @@ In the algorithm below, let _K_ be a rational number greater than the maximum va
 
 A _pushdown automaton_ is a state machine that keeps a stack of symbols.  In this document, the input for this automaton is a stream of flips of a coin that shows heads with probability _&lambda;_, and the output is 0 or 1 depending on which state the automaton ends up in when it empties the stack (Mossel and Peres 2005\)[^12].  That paper shows that a pushdown automaton, as defined here, can simulate only _algebraic functions_, that is, functions that can be a solution of a system of polynomial equations.  The [**appendix**](#Pushdown_Automata_and_Algebraic_Functions) defines these machines in more detail and has proofs on which algebraic functions are possible with pushdown automata.
 
+In this section, ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient.
+
 The following algorithm extends the square-root construction of Flajolet et al. (2010\)[^13], takes an input coin with probability of heads _&lambda;_, and returns 1 with probability&mdash;
 
-$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n} = (1-\lambda)\sum_{n\ge 0} (\lambda (g(\lambda)) (1-g(\lambda)))^n {2n \choose n},$$ $$=(1-\lambda) OGF(\lambda g(\lambda)) (1-g(\lambda)),$$
+$$f(\lambda)=\frac{1-\lambda}{\sqrt{1+4\lambda(g(\lambda))^2-1}} = (1-\lambda)\sum_{n\ge 0} \lambda^n (g(\lambda))^n (1-g(\lambda))^n {2n \choose n} = (1-\lambda)\sum_{n\ge 0} (\lambda g(\lambda) (1-g(\lambda)))^n {2n \choose n},$$
 
 and 0 otherwise, where:
 
-- _g_(_&lambda;_) is a continuous function that maps the half-open interval \[0, 1\) to the closed interval \[0, 1\] and admits a Bernoulli factory. If _g_ is a rational function (a ratio of two polynomials) with rational coefficients, then _f_ is algebraic and can be simulated by a _pushdown automaton_, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
-- OGF(_x_) = &sum;<sub>_n_=0,1,...</sub> _x_<sup>_n_</sup>\*choose(2\*_n_, _n_) is the algorithm's ordinary generating function (also known as counting generating function).
+- _g_(_&lambda;_) is a continuous function that maps the closed interval \[0, 1\] to the half-open interval \[0, 1\) and admits a Bernoulli factory. If _g_ is a rational function (a ratio of two polynomials) with rational coefficients, then _f_ is algebraic and can be simulated by a _pushdown automaton_, as in the algorithm below. But this algorithm will still work even if _g_ is not a rational function.
+
+Equivalently&mdash; $$f(\lambda)=(1-\lambda) OGF(\lambda g(\lambda) (1-g(\lambda))),$$ where $OGF(x) = \sum_{n\ge 0} x^n {2n \choose n}$ is the algorithm's ordinary generating function (also known as counting generating function).
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
@@ -373,7 +376,7 @@ As a pushdown automaton, this algorithm (except the "Do this substep again" part
 
 The machine stops when it removes EMPTY from the stack, and the result is either ZERO (0) or ONE (1).
 
-For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g\lambda)^{(H-1)n} {Hn \choose n},$$ where ${n \choose m}$ = choose($n$, $m$) is a binomial coefficient; _H_ &ge; 2 is an integer; and _g_ has the same meaning as earlier.
+For the following algorithm, which extends the end of Note 1 of the Flajolet paper, the probability is&mdash; $$f(\lambda)=(1-\lambda) \sum_{n\ge 0} \lambda^{Hn} g(\lambda)^n (1-g(\lambda))^{Hn-n} {Hn \choose n},$$ where _H_ &ge; 2 is an integer; and _g_ has the same meaning as earlier.
 
 1. Set _d_ to 0.
 2. Do the following process repeatedly until this run of the algorithm returns a value:
