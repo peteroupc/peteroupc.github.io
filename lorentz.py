@@ -270,6 +270,7 @@ def iterconstruct(pwp, x):
     # polynomials using Lorentz-2 operator
     n = 4
     fn = lorentz2polyB(pwp, n)
+    # Polynomial of degree 4+r, where r=2
     ret = [fn.get_coeffs()]
     for i in range(5):
         # Build polynomials of degree 8+r, 16+r,
@@ -280,6 +281,22 @@ def iterconstruct(pwp, x):
         ret.append(fn.get_coeffs())
     return ret
 
+def diffconstruct(pwp, x):
+    # Iterative construction of approximating
+    # polynomials using Lorentz-2 operator;
+    # differences only
+    n = 4
+    fn = lorentz2polyB(pwp, n)
+    ret = []
+    for i in range(5):
+        # Build polynomials of degree 8+r, 16+r,
+        # 32+r, 64+r, 128+r, where r=2
+        n *= 2
+        resid = lorentz2polyB(PolyDiff(pwp, fn), n)
+        fn = PolySum(fn, resid)
+        ret.append(resid.get_coeffs())
+    return ret
+
 def polyshift(nrcoeffs, theta, d):
     # Upward and downward shift of polynomial according to step 5
     # in Holtz et al. 2011, for r=2 (twice differentiable
@@ -288,7 +305,7 @@ def polyshift(nrcoeffs, theta, d):
         raise ValueError("disallowed theta")
     r = 2
     alpha = r
-    n = len(nrcoeffs) - 1 - r
+    n = len(nrcoeffs) - 1 - r  # n+r+1 coefficients
     phi = [
         Fraction(theta, n ** alpha) + (Fraction(i, n) * (1 - Fraction(i, n)) / n)
         for i in range(n)
@@ -297,3 +314,29 @@ def polyshift(nrcoeffs, theta, d):
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
     lower = [nrcoeffs[i] - phi[i] * d for i in range(len(phi))]
     return upper, lower
+
+def example1():
+    # Example function: A concave piecewise polynomial
+    pwp2 = PiecewiseBernsteinPoly()
+    pwp2.piece(
+        [
+            Fraction(29) / 60,
+            Fraction(9, 10),
+            Fraction(9, 10),
+            Fraction(9, 10),
+            Fraction(9, 10),
+        ],
+        Fraction(1, 2),
+        1,
+    )
+    pwp2.piece(
+        [
+            Fraction(163, 320),
+            Fraction(2867, 2880),
+            Fraction(2467, 2880),
+            Fraction(889, 960),
+        ],
+        0,
+        Fraction(1, 2),
+    )
+    return pwp2
