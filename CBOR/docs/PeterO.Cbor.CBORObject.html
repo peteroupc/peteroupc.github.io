@@ -1468,7 +1468,7 @@ This object&#39;s value, if converted to an integer by discarding its fractional
 
 <ul>
 <li>PeterO.Cbor.CBORException:
-Thrown if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key &quot;-&quot; appears in the pointer, or if the pointer is non-empty and this object has a CBOR type other than array or map.</li>
+Thrown if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key &quot;-&quot; appears in the pointer in the context of an array (not a map), or if the pointer is non-empty and this object has a CBOR type other than array or map.</li>
 </ul>
 
 <p><a id="AtJSONPointer_string_PeterO_Cbor_CBORObject"></a></p>
@@ -1493,7 +1493,7 @@ is a Cbor.CBORObject object.</p></li>
 <p><b>Return Value:</b></p>
 
 <p>An object within the specified JSON object. Returns this object if pointer is the empty string (even if this object has a CBOR type other than array or map). Returns  <i>defaultValue</i>
- if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key &quot;-&quot; appears in the pointer, or if the pointer is non-empty and this object has a CBOR type other than array or map.</p>
+ if the pointer is null, or if the pointer is invalid, or if there is no object at the given pointer, or the special key &quot;-&quot; appears in the pointer in the context of an array (not a map), or if the pointer is non-empty and this object has a CBOR type other than array or map.</p>
 
 <p><a id="CalcEncodedSize"></a></p>
 
