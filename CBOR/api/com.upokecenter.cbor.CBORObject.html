@@ -4804,9 +4804,9 @@ array or map).</li>
 <ul>
 <li><code>CBORException</code> - Thrown if the pointer is null, or
 if the pointer is invalid, or if there is no object at the given
-pointer, or the special key &quot;-&quot; appears in the pointer, or if the
-pointer is non-empty and this object has a CBOR type other than
-array or map.</li>
+pointer, or the special key &quot;-&quot; appears in the pointer in the
+context of an array (not a map), or if the pointer is non-empty and
+this object has a CBOR type other than array or map.</li>
 </ul>
 
 <h3><a id='AtJSONPointer(java.lang.String,com.upokecenter.cbor.CBORObject)'>AtJSONPointer</a></h3>
@@ -4845,8 +4845,8 @@ pointer is the empty string (even if this object has a CBOR type
 other than array or map). Returns <code>defaultValue</code> if the
 pointer is null, or if the pointer is invalid, or if there is no
 object at the given pointer, or the special key &quot;-&quot; appears in the
-pointer, or if the pointer is non-empty and this object has a CBOR
-type other than array or map.</li>
+pointer in the context of an array (not a map), or if the pointer is
+non-empty and this object has a CBOR type other than array or map.</li>
 </ul>
 
 <h3><a id='ApplyJSONPatch(com.upokecenter.cbor.CBORObject)'>ApplyJSONPatch</a></h3>
