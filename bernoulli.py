@@ -1138,24 +1138,30 @@ class Bernoulli:
         c = beta * c / (beta - 1)
         return self.linear(f, c, eps=Fraction(1) - m)
 
-    def simulate(self, coin, fbelow, fabove, fbound):
+    def simulate(self, coin, fbelow, fabove, fbound, nextdegree=None):
         """Simulates a general factory function defined by two
         sequences of polynomials that converge from above and below.
         - coin(): Function that returns 1 or 0 with a fixed probability.
-        - fbelow(n, k): Calculates the kth Bernstein coordinate (not the value),
-          or a lower bound, of the degree-n lower polynomial (k starts at 0).
-        - fabove(n, k): Calculates the kth Bernstein coordinate (not the value),
-          or an upper bound, of the degree-n upper polynomial.
-        - fbound(n): Returns a tuple or list specifying the highest value of
-           fbelow and fabove, respectively, for the given n."""
+        - fbelow(n, k): Calculates the kth Bernstein coefficient (not the value),
+          or a lower bound thereof, for the degree-n lower polynomial (k starts at 0).
+        - fabove(n, k): Calculates the kth Bernstein coefficient (not the value),
+          or an upper bound thereof, for the degree-n upper polynomial.
+        - fbound(n): Returns a tuple or list specifying a lower and upper bound
+           among the values of fbelow and fabove, respectively, for the given n.
+         - nextdegree(n): Returns a lambda returning the next degree after the
+           given degree n for which a polynomial is available; the lambda
+           must return an integer greater than n.
+           Optional.  If not given, the first degree is 1 and the next degree is n*2
+           (so that for each power of 2 as well as 1, a polynomial of that degree
+           must be specified)."""
         ones = 0
         lastdegree = 0
-        degree = 1
+        degree = nextdegree(0) if nextdegree != None else 1
         while True:
             fb = fbound(degree)
             if fb[0] >= 0 and fb[1] <= 1:
                 break
-            degree *= 2
+            degree = nextdegree(degree) if nextdegree != None else degree * 2
         startdegree = degree
         a = {}
         b = {}
@@ -1164,7 +1170,6 @@ class Bernoulli:
                 if coin() == 1:
                     ones += 1
             c = int(math.comb(degree, ones))
-            c *= 2 ** degree
             try:
                 a[(degree, ones)] = int(fbelow(degree, ones) * c)
                 b[(degree, ones)] = int((1 - fabove(degree, ones)) * c)
@@ -1178,13 +1183,10 @@ class Bernoulli:
                 diff = degree - lastdegree
                 u = max(ones - lastdegree, 0)
                 v = min(ones, diff)
-                alpha = 0
-                beta = 0
                 g = math.comb(lastdegree, ones - u)
                 for k in range(u, v + 1):
                     o = ones - k
                     comb_lastdegree_o = g
-                    comb_lastdegree_o *= 2 ** lastdegree
                     if not (lastdegree, o) in a:
                         a[(lastdegree, o)] = int(
                             Fraction(fbelow(lastdegree, o)) * comb_lastdegree_o
@@ -1194,12 +1196,10 @@ class Bernoulli:
                             (1 - Fraction(fabove(lastdegree, o))) * comb_lastdegree_o
                         )
                     st = int(math.comb(diff, k))
-                    alpha += a[(lastdegree, o)] * st
-                    beta += b[(lastdegree, o)] * st
+                    acount -= a[(lastdegree, o)] * st
+                    bcount -= b[(lastdegree, o)] * st
                     g *= ones - k
                     g //= lastdegree + 1 - (ones - k)
-                acount -= alpha
-                bcount -= beta
                 if acount + bcount + c <= 0:
                     print(["ac", alpha, beta, acount, bcount, c])
             r = self.rndint((acount + bcount + c) - 1)
@@ -1208,7 +1208,7 @@ class Bernoulli:
             if r < acount + bcount:
                 return 0
             lastdegree = degree
-            degree *= 2
+            degree = nextdegree(degree) if nextdegree != None else degree * 2
 
 def _multinom(n, x):
     # Use "ymulticoeff" algorithm found in https://github.com/leolca/bincoeff#multicoeff

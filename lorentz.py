@@ -1,5 +1,6 @@
 from fractions import Fraction
 import math
+import random
 
 class PiecewisePoly:
     def __init__(self):
@@ -308,7 +309,7 @@ def polyshift(nrcoeffs, theta, d):
     n = len(nrcoeffs) - 1 - r  # n+r+1 coefficients
     phi = [
         Fraction(theta, n ** alpha) + (Fraction(i, n) * (1 - Fraction(i, n)) / n)
-        for i in range(n)
+        for i in range(n + 1)
     ]
     phi = elevate(phi, r)
     upper = [nrcoeffs[i] + phi[i] * d for i in range(len(phi))]
@@ -340,3 +341,164 @@ def example1():
         Fraction(1, 2),
     )
     return pwp2
+
+class C2PiecewisePoly:
+    def __init__(self, pwp):
+        self.pwp = pwp
+        self.initialdeg = 4
+        self.nextdegree = lambda n: max(self.initialdeg + 2, (n - 2) * 2 + 2)
+        self.fbelow = lambda n, k: self._fbelow(n, k)
+        self.fabove = lambda n, k: self._fabove(n, k)
+        self.fbound = lambda n: (0, 1)
+        self.polys = {}
+        self.lastfn = None
+        self.lastdegree = 0
+
+    def _ensure(self, n):
+        if n in self.polys:
+            return self.polys[n]
+        else:
+            d = self.lastdegree
+            while d <= n:
+                d = self.nextdegree(d)
+                if self.lastfn == None:
+                    self.lastfn = lorentz2polyB(self.pwp, d - 2)
+                else:
+                    resid = lorentz2polyB(PolyDiff(self.pwp, self.lastfn), d - 2)
+                    self.lastfn = PolySum(self.lastfn, resid)
+                self.lastdegree = d
+                if d not in self.polys:
+                    up, lo = polyshift(
+                        self.lastfn.get_coeffs(), Fraction(2703, 1000), 1
+                    )
+                    if len(up) != d + 1:
+                        raise ValueError
+                    # Replace out-of-bounds polynomials with constant polynomials
+                    if min(lo) < 0:
+                        lo = [0 for v in lo]
+                    if max(up) > 1:
+                        up = [1 for v in up]
+                    print(float(min(lo)), float(max(up)))
+                    self.polys[d] = [lo, up]
+            if n not in self.polys:
+                raise ValueError
+            return self.polys[n]
+
+    def _fbelow(self, n, k):
+        return self._ensure(n)[0][k]
+
+    def _fabove(self, n, k):
+        return self._ensure(n)[1][k]
+
+    def simulate(self, coin):
+        return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
+
+class C2PiecewisePoly2:
+    def __init__(self, pwp):
+        self.pwp = pwp
+        self.initialdeg = 4
+        self.nextdegree = lambda n: max(self.initialdeg, n * 2)
+        self.fbelow = lambda n, k: self._fbelow(n, k)
+        self.fabove = lambda n, k: self._fabove(n, k)
+        self.fbound = lambda n: (0, 1)
+        self.polys = {}
+
+    def _ensure(self, n):
+        if n in self.polys:
+            return self.polys[n]
+        else:
+            up = [
+                self.pwp.value(Fraction(i, n)) + Fraction(1, 7 * n)
+                for i in range(n + 1)
+            ]
+            lo = [
+                self.pwp.value(Fraction(i, n)) - Fraction(1, 7 * n)
+                for i in range(n + 1)
+            ]
+            # Replace out-of-bounds polynomials with constant polynomials
+            if min(lo) < 0:
+                lo = [0 for v in lo]
+            if max(up) > 1:
+                up = [1 for v in up]
+            print(float(min(lo)), float(max(up)))
+            self.polys[n] = [lo, up]
+            if n not in self.polys:
+                raise ValueError
+            return self.polys[n]
+
+    def _fbelow(self, n, k):
+        return self._ensure(n)[0][k]
+
+    def _fabove(self, n, k):
+        return self._ensure(n)[1][k]
+
+    def simulate(self, coin):
+        return simulate(coin, self.fbelow, self.fabove, self.fbound, self.nextdegree)
+
+def simulate(coin, fbelow, fabove, fbound, nextdegree=None):
+    """Simulates a general factory function defined by two
+    sequences of polynomials that converge from above and below.
+    - coin(): Function that returns 1 or 0 with a fixed probability.
+    - fbelow(n, k): Calculates the kth Bernstein coefficient (not the value),
+      or a lower bound thereof, for the degree-n lower polynomial (k starts at 0).
+    - fabove(n, k): Calculates the kth Bernstein coefficient (not the value),
+      or an upper bound thereof, for the degree-n upper polynomial.
+    - fbound(n): Returns a tuple or list specifying a lower and upper bound
+       among the values of fbelow and fabove, respectively, for the given n.
+     - nextdegree(n): Returns a lambda returning the next degree after the
+       given degree n for which a polynomial is available; the lambda
+       must return an integer greater than n.
+       Optional.  If not given, the first degree is 1 and the next degree is n*2
+       (so that for each power of 2 as well as 1, a polynomial of that degree
+       must be specified)."""
+    ones = 0
+    lastdegree = 0
+    degree = nextdegree(0) if nextdegree != None else 1
+    while True:
+        fb = fbound(degree)
+        if fb[0] >= 0 and fb[1] <= 1:
+            break
+        degree = nextdegree(degree) if nextdegree != None else degree * 2
+    startdegree = degree
+    a = {}
+    b = {}
+    while True:
+        for i in range(degree - lastdegree):
+            if coin() == 1:
+                ones += 1
+        c = int(math.comb(degree, ones))
+        # c *= 2 ** degree
+        # print([degree,float(fbelow(degree, ones)),float(fabove(degree, ones))])
+        a[(degree, ones)] = int(Fraction(fbelow(degree, ones)) * c)
+        b[(degree, ones)] = int((1 - Fraction(fabove(degree, ones))) * c)
+        acount = a[(degree, ones)]
+        bcount = b[(degree, ones)]
+        c -= acount + bcount
+        if degree > startdegree:
+            diff = degree - lastdegree
+            u = max(ones - lastdegree, 0)
+            v = min(ones, diff)
+            g = math.comb(lastdegree, ones - u)
+            h = 1
+            # h = 2 ** degree
+            for k in range(u, v + 1):
+                o = ones - k
+                if not (lastdegree, o) in a:
+                    a[(lastdegree, o)] = int(Fraction(fbelow(lastdegree, o)) * g * h)
+                if not (lastdegree, o) in b:
+                    b[(lastdegree, o)] = int(
+                        (1 - Fraction(fabove(lastdegree, o))) * g * h
+                    )
+                st = math.comb(diff, k)
+                acount -= a[(lastdegree, o)] * st
+                bcount -= b[(lastdegree, o)] * st
+                g *= o
+                g //= lastdegree + 1 - o
+        # print([acount,bcount,c])
+        r = random.randint(0, (acount + bcount + c) - 1)
+        if r < acount:
+            return 1
+        if r < acount + bcount:
+            return 0
+        lastdegree = degree
+        degree = nextdegree(degree) if nextdegree != None else degree * 2

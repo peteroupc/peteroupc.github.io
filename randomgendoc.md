@@ -1989,16 +1989,22 @@ CLASSES
      |  rndintexc(self, maxexc)
      |      Returns a random integer in [0, maxexc).
      |
-     |  simulate(self, coin, fbelow, fabove, fbound)
+     |  simulate(self, coin, fbelow, fabove, fbound, nextdegree=None)
      |      Simulates a general factory function defined by two
      |      sequences of polynomials that converge from above and below.
      |      - coin(): Function that returns 1 or 0 with a fixed probability.
-     |      - fbelow(n, k): Calculates the kth Bernstein coordinate (not the value),
-     |        or a lower bound, of the degree-n lower polynomial (k starts at 0).
-     |      - fabove(n, k): Calculates the kth Bernstein coordinate (not the value),
-     |        or an upper bound, of the degree-n upper polynomial.
-     |      - fbound(n): Returns a tuple or list specifying the highest value of
-     |         fbelow and fabove, respectively, for the given n.
+     |      - fbelow(n, k): Calculates the kth Bernstein coefficient (not the value),
+     |        or a lower bound thereof, for the degree-n lower polynomial (k starts at 0).
+     |      - fabove(n, k): Calculates the kth Bernstein coefficient (not the value),
+     |        or an upper bound thereof, for the degree-n upper polynomial.
+     |      - fbound(n): Returns a tuple or list specifying a lower and upper bound
+     |         among the values of fbelow and fabove, respectively, for the given n.
+     |       - nextdegree(n): Returns a lambda returning the next degree after the
+     |         given degree n for which a polynomial is available; the lambda
+     |         must return an integer greater than n.
+     |         Optional.  If not given, the first degree is 1 and the next degree is n*2
+     |         (so that for each power of 2 as well as 1, a polynomial of that degree
+     |         must be specified).
      |
      |  sin(self, f)
      |      Sine Bernoulli factory: B(p) => B(sin(p)).  Special

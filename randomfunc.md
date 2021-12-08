@@ -736,14 +736,14 @@ Some applications need to choose random values such that some of them are more l
 <a id=Weighted_Choice></a>
 ### Weighted Choice
 
-The weighted choice method generates a random item or number from among a collection of them with separate probabilities of each item or number being chosen.  There are several kinds of weighted choice.
+The weighted choice method generates a random item or value from among a collection of them with separate probabilities of each item or value being chosen.  There are several kinds of weighted choice.
 
 <a id=Weighted_Choice_With_Replacement></a>
 #### Weighted Choice With Replacement
 
 The first kind is called weighted choice _with replacement_ (which can be thought of as drawing a ball, then putting it back) or a _categorical distribution_, where the probability of choosing each item doesn't change as items are chosen.  In the following pseudocode:
 
-- `WeightedChoice` takes a single list `weights` of weights (integers 0 or greater) and returns the index of a weight from that list.  The greater the weight, the more likely its index will be chosen.
+- `WeightedChoice` takes a single list `weights` of weights (integers 0 or greater) and returns the _index_ of a weight from that list.  The greater the weight, the more likely its index will be chosen.
 - `CumulativeWeightedChoice` takes a single list `weights` of N _cumulative weights_; they start at 0 and the next weight is not less than the previous.  Returns a number in the interval [0, N - 1).
 - `NormalizeRatios` calculates a list of integers with the same proportions as the given list of rational numbers (numbers of the form `x/y`).  This is useful for converting rational weights to integer weights for use in `WeightedChoice`.
 - `gcd(a, b)` is the greatest common divisor between two numbers (where `gcd(0, a) = gcd(a, 0) = a` whenever `a >= 0`).
