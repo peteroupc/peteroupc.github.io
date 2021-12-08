@@ -1975,14 +1975,16 @@ deep, or another error occurred when serializing the object.</p></li>
  use the EncodeToBytes method instead.)</li> <li>If the type is a
  one-dimensional or multidimensional array type and this CBOR object
  is an array, returns an array containing the items in this CBOR
- object.</li> <li>If the type is List or the generic or non-generic
- List, ICollection, or Iterable, (or ArrayList, List, Collection, or
- Iterable in Java), and if this CBOR object is an array, returns an
- object conforming to the type, class, or interface passed to this
- method, where the object will contain all items in this CBOR
- array.</li> <li>If the type is Dictionary or the generic or
- non-generic Map (or HashMap or Map in Java), and if this CBOR object
- is a map, returns an object conforming to the type, class, or
+ object.</li> <li>If the type is List, ReadOnlyCollection or the
+ generic or non-generic List, ICollection, Iterable,
+ IReadOnlyCollection, or IReadOnlyList (or ArrayList, List,
+ Collection, or Iterable in Java), and if this CBOR object is an
+ array, returns an object conforming to the type, class, or interface
+ passed to this method, where the object will contain all items in
+ this CBOR array.</li> <li>If the type is Dictionary,
+ ReadOnlyDictionary or the generic or non-generic Map or
+ IReadOnlyDictionary (or HashMap or Map in Java), and if this CBOR
+ object is a map, returns an object conforming to the type, class, or
  interface passed to this method, where the object will contain all
  keys and values in this CBOR map.</li> <li>If the type is an
   enumeration constant (&quot;enum&quot;), and this CBOR object is an integer or
